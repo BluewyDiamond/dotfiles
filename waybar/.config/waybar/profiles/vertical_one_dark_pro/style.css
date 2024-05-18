@@ -1,0 +1,259 @@
+/* -----------------------------------------------------
+ * Color Scheme
+ * ----------------------------------------------------- */
+
+@import url("../css/one_dark_pro.css");
+
+@define-color bg @black3;
+@define-color fg @darker;
+
+/* -----------------------------------------------------
+ * Global Style
+ * ----------------------------------------------------- */
+
+* {
+   font-size: 16px;
+   font-family: "Symbols Nerd Font Mono, Iosevka Nerd Font";
+   font-weight: 500;
+}
+
+/* -----------------------------------------------------
+ * Default Style
+ * ----------------------------------------------------- */
+
+#battery,
+#clock,
+#cpu,
+#custom-launcher,
+#custom-mic,
+#custom-lockgroups-indicator,
+#custom-plus,
+#custom-wallpapers,
+#custom-weather,
+#custom-notifications,
+#custom-wlogout,
+#idle_inhibitor,
+#language,
+#memory,
+#network,
+#privacy-item.audio-in,
+#privacy-item.screenshare,
+#pulseaudio,
+#pulseaudio-slider,
+#temperature,
+#tray,
+#taskbar,
+#wireplumber,
+#template {
+   padding: 5px 4.5px 5px 4.5px;
+   margin: 2px 8.5px 2px 8.5px;
+   color: @text;
+   border-radius: 4px;
+   background-color: @fg;
+}
+
+/* -----------------------------------------------------
+ * Bar
+ * ----------------------------------------------------- */
+
+window#waybar {
+   background-color: @bg;
+   color: @text;
+   border-radius: 4px;
+   border: 3px solid @border;
+}
+
+/* -----------------------------------------------------
+ * Hyprland
+ * ----------------------------------------------------- */
+
+#workspaces {
+   margin: 2px 8.5px 2px 8.5px;
+   border-radius: 4px;
+   background-color: @fg;
+}
+
+#workspaces button {
+   padding: 2px 2px 2px 2px;
+   margin: 3px 0px 3px 0px;
+   background-color: transparent;
+   color: alpha(@text, 0.5);
+}
+
+#workspaces button.empty {
+   color: alpha(@text, 0.1);
+}
+
+#workspaces button.visible {
+   color: @green;
+}
+
+#workspaces button.active {
+   color: @red;
+}
+
+#workspaces button.urgent {
+   color: @purple;
+}
+
+#workspaces button:first-child {
+   margin: 0px 0px 0px 0px;
+}
+
+#workspaces button:last-child {
+   margin: 0px 0px 0px 0px;
+}
+
+#workspaces button:hover {
+   background: rgba(0, 0, 0, 0.2);
+}
+
+/* -----------------------------------------------------
+ * CPU
+ * ----------------------------------------------------- */
+
+#cpu {
+   color: @orange;
+}
+
+/* -----------------------------------------------------
+ * Audio
+ * ----------------------------------------------------- */
+
+#pulseaudio {
+   color: @blue;
+}
+
+#pulseaudio-slider slider {
+   background-color: @cyan;
+   min-height: 0px;
+   min-width: 0px;
+   opacity: 0;
+   background-image: none;
+   border: none;
+   box-shadow: none;
+   border: 1px solid black;
+}
+
+#pulseaudio-slider trough {
+   min-height: 80px;
+   min-width: 10px;
+   border-radius: 5px;
+   background-color: @darker;
+}
+
+#pulseaudio-slider highlight {
+   min-width: 10px;
+   border-radius: 5px;
+   background-color: @blue;
+   border: 1px solid black;
+}
+
+/* -----------------------------------------------------
+ * IDLE
+ * ----------------------------------------------------- */
+
+#idle_inhibitor {
+   color: @purple;
+}
+
+/* -----------------------------------------------------
+ * Memory
+ * ----------------------------------------------------- */
+
+#memory {
+   color: @yellow;
+}
+
+/* -----------------------------------------------------
+ * Network
+ * ----------------------------------------------------- */
+
+#network {
+   color: @blue;
+}
+
+/* -----------------------------------------------------
+ * Taskbar
+ * ----------------------------------------------------- */
+
+#taskbar button:first-child {
+   margin: 0px 0px 0px 0px;
+   padding-top: 0px;
+}
+
+#taskbar button:last-child {
+   margin: 0px 0px 0px 0px;
+   padding-bottom: 0px;
+}
+
+#taskbar button {
+   padding-top: 2px;
+   padding-right: 0px;
+   padding-bottom: 2px;
+   padding-left: 0px;
+}
+
+/* -----------------------------------------------------
+ * Temperature
+ * ----------------------------------------------------- */
+
+#temperature {
+   color: @red;
+}
+
+#temperature.critical {
+   border: 1px solid @purple;
+}
+
+/* -----------------------------------------------------
+ * Tooltip
+ * ----------------------------------------------------- */
+
+tooltip label {
+   color: @text;
+}
+
+tooltip {
+   background: alpha(@black2, 0.9);
+   border: 2px solid @border;
+   border-radius: 10px;
+}
+
+/* -----------------------------------------------------
+ * APP Launcher
+ * ----------------------------------------------------- */
+
+#custom-launcher {
+   color: @blue;
+   margin-top: 10px;
+}
+
+/* -----------------------------------------------------
+ * Notification Center
+ * ----------------------------------------------------- */
+
+#custom-notifications {
+   color: @text;
+}
+
+#custom-notifications.notification {
+   color: @red;
+}
+
+/* -----------------------------------------------------
+ * wlogout
+ * ----------------------------------------------------- */
+
+#custom-wlogout {
+   color: @blue;
+   margin-bottom: 10px;
+}
+
+/* -----------------------------------------------------
+ * Privacy
+ * ----------------------------------------------------- */
+
+#privacy {
+   padding: 0px;
+}

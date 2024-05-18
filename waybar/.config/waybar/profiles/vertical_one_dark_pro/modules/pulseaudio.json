@@ -1,0 +1,24 @@
+{
+   "pulseaudio": {
+      "format": " {icon}\n{volume:3}",
+      "format-bluetooth": " {icon}\n{volume:3}",
+      "format-bluetooth-muted": "\n",
+      "format-icons": {
+         "car": "",
+         "default": ["", "", ""],
+         "hands-free": "󰕾",
+         "headphone": "",
+         "headset": "󰋎",
+         "phone": "",
+         "portable": ""
+      },
+      "format-muted": "",
+      "on-click": "~/.config/waybar/scripts/toggle_mute.fish",
+      "on-click-middle": "pavucontrol"
+   },
+   "pulseaudio/slider": {
+      "max": 100,
+      "min": 0,
+      "orientation": "vertical"
+   }
+}

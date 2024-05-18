@@ -1,0 +1,14 @@
+{
+   "network": {
+      "format-disconnected": "󰇨",
+      "format-ethernet": "󰈀",
+      "format-icons": ["󰤟", "󰤢", "󰤥", "󰤨"],
+      "format-linked": "!",
+      "format-wifi": "{icon}",
+      "on-click": "~/.config/waybar/scripts/toggle_network.fish",
+      "on-click-middle": "nm-connection-editor",
+      "tooltip-format": "ifname: {ifname}\ngateway: {gwaddr}\n {bandwidthUpBytes}\n {bandwidthDownBytes}",
+      "tooltip-format-disconnected": "N/a",
+      "tooltip-format-wifi": "ifname: {ifname}\ngateway: {gwaddr}\n {bandwidthUpBytes}\n {bandwidthDownBytes}\n SSID: {essid}\nStrength: {signalStrength}\n Frequency: {frequency}"
+   }
+}

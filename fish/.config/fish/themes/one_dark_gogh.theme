@@ -1,0 +1,41 @@
+# My personal attempt to theme 'One Dark (Gogh)' in fish.
+
+fish_color_autosuggestion 5C6370
+fish_color_cancel --reverse
+fish_color_command 61AFEF
+fish_color_comment E06C75
+fish_color_cwd 98C379
+fish_color_cwd_root E06C75
+fish_color_end 98C379
+fish_color_error E06C75
+fish_color_escape 56B6C2
+fish_color_gray 6c7086 # fish default
+fish_color_history_current --bold
+fish_color_host normal
+fish_color_host_remote
+fish_color_keyword
+fish_color_match --background=61AFEF # might need to change this one
+fish_color_normal normal
+fish_color_operator 56B6C2
+fish_color_option
+fish_color_param 56B6C2
+fish_color_quote D19A66
+fish_color_redirection '56B6C2'  '--bold'
+fish_color_search_match 'D19A66'  '--background=1E2127'
+fish_color_selection 'ABB2BF'  '--bold'  '--background=1E2127'
+fish_color_status f38ba8 # fish default
+fish_color_user 98C379
+fish_color_valid_path --underline
+fish_pager_color_background
+fish_pager_color_completion normal
+fish_pager_color_description 'D19A66'  '--italics'
+fish_pager_color_prefix 'normal'  '--bold'  '--underline'
+fish_pager_color_progress 'FFFEFE'  '--background=56B6C2'
+fish_pager_color_secondary_background
+fish_pager_color_secondary_completion
+fish_pager_color_secondary_description
+fish_pager_color_secondary_prefix
+fish_pager_color_selected_background --reverse
+fish_pager_color_selected_completion
+fish_pager_color_selected_description
+fish_pager_color_selected_prefix

@@ -1,0 +1,49 @@
+/* -----------------------------------------------------
+ * Color Scheme
+ * ----------------------------------------------------- */
+
+@import url("../css/one_dark_pro.css");
+
+@define-color cc-bg @black3;
+
+@define-color noti-border-color @border;
+@define-color noti-bg @black;
+@define-color noti-bg-opaque rgb(48, 48, 48);
+@define-color noti-bg-darker @darker;
+@define-color noti-bg-hover @black3;
+@define-color noti-bg-hover-opaque rgb(56, 56, 56);
+@define-color noti-bg-focus @darker;
+@define-color noti-close-bg @darker;
+@define-color noti-close-bg-hover @black3;
+
+@define-color text-color @text;
+@define-color text-color-disabled rgb(150, 150, 150);
+
+@define-color bg-selected rgb(0, 128, 255);
+
+/* -----------------------------------------------------
+ * Other
+ * ----------------------------------------------------- */
+
+* {
+   font-family: "Iosevka Nerd Font";
+   font-weight: 500;
+}
+
+.notification {
+   margin-top: 10px;
+   margin-right: 4px;
+   border-radius: 4px;
+   padding: 0;
+   background-color: @black;
+   border: 3px solid @border;
+}
+
+.control-center {
+   margin-top: 16px;
+   margin-bottom: 16px;
+   margin-right: 16px;
+   background: @black3;
+   border: 3px solid @border;
+   border-radius: 10px;
+}

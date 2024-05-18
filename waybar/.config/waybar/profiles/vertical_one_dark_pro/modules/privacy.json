@@ -1,0 +1,35 @@
+{
+   "privacy#1": {
+      "icon-size": 18,
+      "modules": [
+         {
+            "tooltip": true,
+            "tooltip-icon-size": 24,
+            "type": "audio-out"
+         }
+      ],
+      "transition-duration": 250
+   },
+   "privacy#2": {
+      "icon-size": 18,
+      "modules": [
+         {
+            "tooltip": true,
+            "tooltip-icon-size": 24,
+            "type": "audio-in"
+         }
+      ],
+      "transition-duration": 250
+   },
+   "privacy#3": {
+      "icon-size": 18,
+      "modules": [
+         {
+            "tooltip": true,
+            "tooltip-icon-size": 24,
+            "type": "screenshare"
+         }
+      ],
+      "transition-duration": 250
+   }
+}

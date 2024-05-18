@@ -1,0 +1,39 @@
+/* -----------------------------------------------------
+ * Color Scheme
+ * ----------------------------------------------------- */
+
+@define-color unknown #404754; /* from random web page */
+
+@define-color darker #1E2127; /* from 'One Dark Gogh' */ /* used as background color */
+@define-color darker2 #1F2127; /* from random web page */
+@define-color darker3 #1E2227; /* from 'One Dark Pro Darker' */
+@define-color darker4 #23272E; /* from 'One Dark Pro Darker'*/ /*used as background color */
+
+@define-color black #21252B;
+@define-color black2 #282C34; /* used as background color */
+@define-color black3 #323842;
+@define-color black4 #5C6370; /* from 'One Dark Gogh' */ /* used as text color */
+
+@define-color red #E06C75;
+@define-color orange #d19a66;
+@define-color yellow #e5c07b;
+@define-color green #98C379;
+@define-color cyan #56b6c2;
+@define-color blue #61AFEF;
+@define-color purple #c678dd;
+
+@define-color white #F6F7F9; /* from random web page */
+@define-color white2 #abb2bf; /* used as text color */
+@define-color white3 #5c6370;
+
+@define-color highlight #e2be7d; /* from random web page */
+@define-color grey #7f848e; /* used as commenting color */
+
+/* to be removed */
+
+@define-color bg @darker;
+@define-color fg @black2;
+
+@define-color text @white2;
+
+@define-color border @white3;

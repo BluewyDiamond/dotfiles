@@ -1,0 +1,10 @@
+{
+   "custom/weather": {
+      "exec": "wttrbar --vertical-view",
+      "format": "{}",
+      "interval": 3600,
+      "on-click": "xdg-open https://wttr.in/",
+      "return-type": "json",
+      "tooltip": true
+   }
+}

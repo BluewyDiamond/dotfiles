@@ -1,0 +1,6 @@
+{
+   "cpu": {
+      "format": " \n{usage:3}",
+      "interval": 5
+   }
+}

@@ -1,0 +1,14 @@
+{
+   "temperature": {
+      "hwmon-path-abs": "/sys/devices/pci0000:00/0000:00:18.3/hwmon",
+      "input-filename": "temp1_input",
+      "critical-threshold": 90,
+      "format": " {icon}\n{temperatureC:3}",
+      "format-icons": ["", "", "", "", ""],
+      "interval": 5,
+      "tooltip": false
+   },
+   "tray": {
+      "spacing": 10
+   }
+}

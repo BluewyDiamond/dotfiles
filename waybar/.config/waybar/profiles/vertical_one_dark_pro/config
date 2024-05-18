@@ -1,0 +1,49 @@
+{
+   "include": [
+      "$HOME/.config/waybar/profiles/vertical_one_dark_pro/modules/battery.json",
+      "$HOME/.config/waybar/profiles/vertical_one_dark_pro/modules/clock.json",
+      "$HOME/.config/waybar/profiles/vertical_one_dark_pro/modules/cpu.json",
+      "$HOME/.config/waybar/profiles/vertical_one_dark_pro/modules/group_audio.json",
+      "$HOME/.config/waybar/profiles/vertical_one_dark_pro/modules/hyprland.json",
+      "$HOME/.config/waybar/profiles/vertical_one_dark_pro/modules/idle_inhibitor.json",
+      "$HOME/.config/waybar/profiles/vertical_one_dark_pro/modules/launcher.json",
+      "$HOME/.config/waybar/profiles/vertical_one_dark_pro/modules/memory.json",
+      "$HOME/.config/waybar/profiles/vertical_one_dark_pro/modules/network.json",
+      "$HOME/.config/waybar/profiles/vertical_one_dark_pro/modules/notification_center.json",
+      "$HOME/.config/waybar/profiles/vertical_one_dark_pro/modules/privacy.json",
+      "$HOME/.config/waybar/profiles/vertical_one_dark_pro/modules/pulseaudio.json",
+      "$HOME/.config/waybar/profiles/vertical_one_dark_pro/modules/temperature.json",
+      "$HOME/.config/waybar/profiles/vertical_one_dark_pro/modules/wlogout.json"
+   ],
+   "layer": "top",
+   "margin-bottom": 16,
+   "margin-left": 16,
+   "margin-right": 0,
+   "margin-top": 16,
+   "position": "left",
+   "spacing": 5,
+   "width": "auto",
+   "modules-center": [
+      "clock#days_of_the_week",
+      "clock"
+   ],
+   "modules-left": [
+      "custom/launcher",
+      "hyprland/workspaces",
+      "network",
+      "battery",
+      "custom/notifications",
+      "idle_inhibitor"
+   ],
+   "modules-right": [
+      "privacy#3",
+      "privacy#2",
+      "tray",
+      "pulseaudio",
+      "cpu",
+      "temperature",
+      "memory",
+      "custom/weather",
+      "custom/wlogout"
+   ]
+}
