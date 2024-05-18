@@ -18,14 +18,14 @@ Follow these steps to set up the dotfiles:
     git clone https://github.com/BluewyDiamond/dotfiles.git $HOME/dotfiles
     ```
 
-2. **Change to the cloned repository directory:**
+2. **Change to the cloned repository directory and stow directory:**
     ```shell
-    cd $HOME/dotfiles
+    cd $HOME/dotfiles/stow
     ```
 
 3. **Use `stow` to set up the desired configuration:**
     ```shell
-    stow <PACKAGE_NAME>
+    stow <PACKAGE_NAME> -t $HOME
     ```
    Replace `<PACKAGE_NAME>` with the name of the configuration package you want to use (e.g., `vim`, `zsh`, `git`).
 
@@ -35,5 +35,5 @@ If you're using the Fish shell, you can set up all configurations at once with t
 
 ```fish
 for file in *
-    stow $file
+    stow $file -t $HOME
 end
