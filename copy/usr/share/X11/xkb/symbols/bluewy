@@ -1,0 +1,27 @@
+default
+xkb_symbols "colemak_dh_wide_custom_ansi" {
+    include "us(colemak_dh_wide)"
+    name[Group1] = "English (Colemak-DH Wide Custom ANSI)";
+
+    key <CAPS> { [      Return,        Return,          Return,           Return ] };
+    key <RTRN> { [    BackSpace,       Delete,       BackSpace,          Delete  ] };
+    key <BKSP> { [   Caps_Lock,     Caps_Lock,       Caps_Lock,        Caps_Lock ] };
+
+    key <AE06> { [        equal,         plus,        multiply,         division ] };
+    key <AE07> { [            6,  asciicircum,         hstroke,          Hstroke ] };
+};
+
+xkb_symbols "colemak_dh_wide_custom_ansi" {
+    include "us(colemak_dh_wide_iso)"
+    name[Group1] = "English (Colemak-DH Wide Custom ISO)";
+
+    key <AD12> { [   apostrophe,     quotedbl,          otilde,           Otilde ] };
+    key <BKSL> { [    BackSpace,       Delete,       BackSpace,          Delete  ] };
+
+    key <CAPS> { [      Return,        Return,          Return,           Return ] };
+    key <RTRN> { [    BackSpace,       Delete,       BackSpace,          Delete  ] };
+    key <BKSP> { [   Caps_Lock,     Caps_Lock,       Caps_Lock,        Caps_Lock ] };
+
+    key <AE06> { [        equal,         plus,        multiply,         division ] };
+    key <AE07> { [            6,  asciicircum,         hstroke,          Hstroke ] };
+};

@@ -1,0 +1,150 @@
+{
+   "common": {
+      "arch_base_system": {
+         "std": ["base", "base-devel", "refind"]
+      },
+
+      "my_tty_session": {
+         "main": {
+            "std": [
+               "fish",
+               "iwd",
+               "firewalld",
+               "trash-cli",
+               "neovim",
+               "lazygit",
+               "paru"
+            ]
+         },
+
+         "replacements": {
+            "std": ["eza"]
+         },
+
+         "rice": {
+            "std": ["terminus-font", "figlet", "fastfetch"]
+         }
+      },
+
+      "my_graphical_session": {
+         "compositor_and_complements": {
+            "std": [
+               "pipewire",
+               "wireplumber",
+               "sddm",
+               "kwin",
+               "hyprland",
+               "xdg-desktop-portal",
+               "xdg-desktop-portal-hyprland",
+               "xdg-desktop-portal-gtk",
+               "wezterm",
+               "fuzzel",
+               "polkit-kde-agent",
+               "waybar",
+               "wlogout",
+               "cliphist",
+               "grimblast",
+               "hypridle",
+               "hyprlock"
+            ],
+
+            "aur": [
+               "swww",
+               "swaync",
+               "wttrbar-git",
+               "hyprpicker",
+               "wayland-pipewire-idle-inhibit"
+            ]
+         },
+
+         "rice": {
+            "std": [
+               "ttf-nerd-fonts-symbols",
+               "ttf-nerd-fonts-symbols-mono",
+               "ttf-iosevka-nerd",
+               "gsettings-desktop-schemas",
+               "qt6ct",
+               "kvantum",
+               "kvantum-qt5",
+               "nwg-look"
+            ],
+
+            "aur": ["bibata-cursor-theme-bin"]
+         },
+         "compatibility_stuff": {
+            "std": ["xwaylandvideobridge"]
+         },
+
+         "hardware_controllers": {
+            "std": [
+               "pavucontrol",
+               "gparted",
+               "gnome-disk-utility"
+            ]
+         },
+
+         "gui_apps": {
+            "std": [
+               "baobab",
+               "librewolf-bin",
+               "dolphin",
+               "ark",
+               "vlc",
+               "loupe",
+               "evince",
+               "kate",
+               "drawing",
+               "thunderbird",
+               "armcord"
+            ],
+            "aur": ["webapp-manager"]
+         },
+
+         "sound_filters": {
+            "std": [
+               "easyeffects"
+            ]
+         }
+
+         "virtualization": {
+            "std": [
+               "qemu-base",
+               "virt-manager",
+               "virt-viewer",
+               "dnsmasq",
+               "vde2",
+               "bridge-utils",
+               "openbsd-netcat",
+               "spice",
+               "qemu-ui-spice-app",
+               "qemu-audio-spice"
+            ]
+         },
+
+         "security": {
+            "std": ["kwalletmanager", "kwallet5", "kwallet-pam", "ksshaskpass"]
+         },
+
+         "laptop_specific": {
+            "std": ["brightnessctl"]
+         }
+      }
+   },
+
+   "hardware_specific": {
+      "amd_cpu": {
+         "std": ["amd-ucode"]
+      },
+
+      "amd_gpu": {
+         "aur": ["lact"]
+      },
+
+      "intel_cpu": {
+         "std": ["intel-ucode"]
+      },
+
+      "intel_gpu": {},
+      "nvidia_gpu": {}
+   }
+}
