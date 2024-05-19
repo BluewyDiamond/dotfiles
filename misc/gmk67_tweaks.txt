@@ -1,0 +1,7 @@
+from default:
+   -> esc to tilde
+   -> left win to esc
+   -> let alt to right win
+   -> fn to right ctrl
+   -> pg down to fn
+   -> pg up to alt gr (right alt)

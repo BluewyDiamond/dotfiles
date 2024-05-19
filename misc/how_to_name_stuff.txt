@@ -1,0 +1,10 @@
+"PascalCase" for category. "snake_case" if it is an item of the category.
+
+For example, "Pictures/Wallpapers/img.png":
+1. "Pictures" is the super category.
+2. Is "Wallpapers" a picture? No, it should use "PascalCase".
+3. Is "img.png" a picture? Yes, it should use "snake_case".
+
+Other Considerations:
+1. Duplicates should be annotated with a suffix like so "folder-1", "folder-2" and so on.
+2. games stuff or not quite stuff

@@ -1,0 +1,64 @@
+    🌸 Computer Room 🌸
+ -----------------------------------
+
+ ╭─ Linux System
+ │ ╭─ Distro -> CachyOS
+ │ │ ├─ Boot Manager     -> reFInd + Minimal Gruvbox
+ │ │ ├─ Shell            -> Fish
+ │ │ ├─ Network          -> 'systemd-networkd' + 'systemd-resolved'
+ │ │ ├─ Login Manager    -> SDDM + Corners Theme
+ │ │ ├─ WM               -> Hyprland
+ │ │ ├─ Sound Server     -> Pipewire + Wireplumber
+ │ │ ├─ Terminal         -> Wezterm
+ │ │ ├─ Launcher         -> Fuzzel
+ │ │ ╰─ Text Editor      -> Neovim
+ │ ╰─ Distro
+ │
+ │ ╭─ UI
+ │ │ ├─ GTK3             -> Sweet
+ │ │ ├─ GTK4             -> Sweet
+ │ │ ├─ QT5              -> Fusion (Dark Theme)
+ │ │ ├─ QT6 (Kvantum)    -> KvAdaptaDark
+ │ │ ├─ Icons            -> Sweet Rainbow + Candy Icons
+ │ │ ├─ Pointer          -> Bibata-Modern-Classic
+ │ │ ╰─ Font             -> Iosevka Nerd Font
+ │ ╰─ UI
+ │
+ │ ╭─ Other
+ │ │ ├─ Keyboard Layout  -> Colemak DH Wide Custom Mod
+ │ │ ╰─ Mouse Sens       -> 2000 DPI * 0.5 = 1000 EDPI
+ │ ╰─ Other
+ ╰─ Linux System
+
+ ╭─ Preferred Software
+ │ ├─ Planning     -> Plain Text
+ │ ├─ Email Client -> ThunderBird
+ │ ├─ Comms        -> Any Good Open Source Alternatives
+ │ ├─ Social Media -> Any Good Open Source Alternatives
+ │ ├─ Web Browser  -> Librewolf + Sidebery
+ │ ╰─ Code Editor  -> Neovim || Vscodium
+ ╰─ Prefered Software
+
+ ╭─ Hardware
+ │ ╭─ PC
+ │ │ ├─ Motherboard -> MSI X570-A PRO
+ │ │ ├─ CPU         -> Ryzen 5 3600 @ 4.3GHz
+ │ │ ├─ GPU         -> RX 5700XT Sapphire Nitro +
+ │ │ ├─ RAM         -> 16GB @ 3200Mhz
+ │ │ ╰─ Storage     -> 120GB SSD + 240GB SSD + 1TB NVME SSD + 1TB HDD
+ │ ╰─ PC
+ │
+ │ ╭─ Peripherals
+ │ │ ├─ Resolution  -> 1920x1080 @ 240hz
+ │ │ ├─ Keyboard    -> GMK 67 + Akko Cream Blue v3 Pro
+ │ │ ├─ Mouse       -> Steelseries Rival 3
+ │ │ ├─ Mousepad  -> Random Mousepad
+ │ │ ├─ Microphone  -> Fifine K669B
+ │ │ ╰─ Speakers    -> HyperX Cloud Stinger
+ │ ╰─ Peripherals
+ ╰─ Hardware
+
+ ╭─ Furniture
+ │ ├─ Table -> Random Table
+ │ ╰─ Chair -> Siphoo M102C
+ ╰─ Furniture

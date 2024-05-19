@@ -1,0 +1,9 @@
+1st Level (Desktop Environment)
+-> SUPER + non modifier keys
+-> SUPER + SHIFT / CTRL / ALT + non modifier keys
+
+2nd Level (Application)
+-> CTRL + non modifier keys
+-> CTRL + SHIFT + non modifier keys
+-> Avoid CTRL + SHIFT + ALT too convoluted.
+-> Avoid using CTRL + ALT because it is used for big stuff. Example: Change TTY in combination with f keys or keyboard related stuff.
