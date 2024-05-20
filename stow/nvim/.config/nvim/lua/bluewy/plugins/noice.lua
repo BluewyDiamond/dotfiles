@@ -2,6 +2,7 @@ return {
    "folke/noice.nvim",
    event = "VeryLazy",
    opts = {},
+
    dependencies = {
       "MunifTanjim/nui.nvim",
       {
@@ -13,6 +14,7 @@ return {
          end,
       },
    },
+
    config = function()
       require("noice").setup({
          lsp = {
@@ -22,6 +24,7 @@ return {
                ["cmp.entry.get_documentation"] = true,
             },
          },
+
          presets = {
             bottom_search = false,
             command_palette = true,

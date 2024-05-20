@@ -1,6 +1,7 @@
 return {
    "olimorris/onedarkpro.nvim",
    priority = 1000,
+
    config = function()
       require("onedarkpro").setup({
          colors = {
@@ -9,9 +10,11 @@ return {
             cyan = "#56B497",
             cursorline = "#2C313C",
          },
+
          options = {
             cursorline = true,
          },
+
          styles = {
             types = "NONE",
             methods = "NONE",
@@ -27,6 +30,7 @@ return {
             conditionals = "italic",
             virtual_text = "NONE",
          },
+
          highlights = {
             ["@lsp.type.struct.rust"] = { fg = "${yellow}" },
             ["@lsp.type.namespace.rust"] = { fg = "${yellow}" },
@@ -42,11 +46,12 @@ return {
             rustStorage = { fg = "${purple}" },
             rustSelf = { fg = "${purple}" },
 
-            -- Something else is overriding my overrides.
+            -- not working, maybe something else is conflicting with it?
             rustFoldBraces = { fg = "${orange}" },
             rustBoxPlacementBalance = { fg = "${purple}" },
          },
       })
+
       vim.cmd("colorscheme onedark")
    end,
 }
