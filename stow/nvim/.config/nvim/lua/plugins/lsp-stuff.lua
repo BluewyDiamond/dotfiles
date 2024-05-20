@@ -1,9 +1,28 @@
 return {
    {
       "williamboman/mason.nvim",
+
+      dependencies = {
+         "williamboman/mason-lspconfig.nvim",
+      },
+
       lazy = false,
+
       config = function()
          require("mason").setup()
+
+         local mason_tool_installer = require("mason-tool-installer")
+
+         mason_tool_installer.setup({
+            ensure_installed = {
+               "stylua",
+            },
+
+            run_on_start = true,
+            auto_update = false,
+            start_delay = 3000, -- 3 second delay
+            debounce_hours = 5,
+         })
       end,
    },
 
@@ -18,17 +37,20 @@ return {
    {
       "neovim/nvim-lspconfig",
       lazy = false,
+
       config = function()
          local lspconfig = require("lspconfig")
          local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
          lspconfig.lua_ls.setup({
             capabilities = capabilities,
+
             settings = {
                Lua = {
                   diagnostics = {
                      globals = { "vim" },
                   },
+
                   workspace = {
                      library = {
                         [vim.fn.expand("$VIMRUNTIME/lua")] = true,
