@@ -8,6 +8,7 @@
    "spacing": 5,
    "width": "auto",
    "modules-center": ["clock#days_of_the_week", "clock"],
+
    "modules-left": [
       "custom/launcher",
       "hyprland/workspaces",
@@ -16,6 +17,7 @@
       "custom/notifications",
       "idle_inhibitor",
    ],
+
    "modules-right": [
       "privacy#3",
       "privacy#2",
@@ -47,6 +49,7 @@
          "on-scroll-down": "shift_down",
          "on-scroll-up": "shift_up",
       },
+
       "calendar": {
          "format": {
             "days": "<span color='#ecc6d9'><b>{}</b></span>",
@@ -55,17 +58,20 @@
             "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
             "weeks": "<span color='#99ffdd'><b>W{}</b></span>",
          },
+
          "mode": "year",
          "mode-mon-col": 3,
          "on-click": "mode",
          "on-scroll": 1,
          "weeks-pos": "right",
       },
+
       "format": "{:%H\n∙∙\n%M}",
       "format-alt": "{:%d\n──\n<span color='#9ece6a'>%m</span>\n──\n<span color='#e79881'>%y</span>}",
       "on-click-middle": "gnome-clocks",
       "tooltip-format": "<tt><small>{calendar}</small></tt>",
    },
+
    "clock#days_of_the_week": {
       "format": "{:%a}",
    },
@@ -80,6 +86,7 @@
       "exec": "swaync-client -swb",
       "exec-if": "which swaync-client",
       "format": "{icon}",
+
       "format-icons": {
          "dnd-inhibited-none": "󰂛",
          "dnd-inhibited-notification": "󰂛<span foreground='red'><sup></sup></span>",
@@ -90,6 +97,7 @@
          "none": "󰂚",
          "notification": "󱅫",
       },
+
       "on-click": "sleep 0.1 && swaync-client -t -sw",
       "on-click-right": "swaync-client -d -sw",
       "return-type": "json",
@@ -104,6 +112,7 @@
 
    "hyprland/workspaces": {
       "format": "{icon}",
+
       "format-icons": {
          "1": "",
          "2": "󱎓",
@@ -116,6 +125,7 @@
          "default": "",
          "urgent": "",
       },
+
       "persistent-workspaces": {
          "DP-2": [1, 2, 3, 4, 8, 9, 10],
       },
@@ -123,10 +133,12 @@
 
    "idle_inhibitor": {
       "format": "{icon}",
+
       "format-icons": {
          "activated": "",
          "deactivated": "",
       },
+
       "tooltip": false,
    },
 
@@ -157,6 +169,7 @@
 
    "privacy#1": {
       "icon-size": 18,
+
       "modules": [
          {
             "tooltip": true,
@@ -164,10 +177,12 @@
             "type": "audio-out",
          },
       ],
+
       "transition-duration": 250,
    },
    "privacy#2": {
       "icon-size": 18,
+
       "modules": [
          {
             "tooltip": true,
@@ -175,10 +190,12 @@
             "type": "audio-in",
          },
       ],
+
       "transition-duration": 250,
    },
    "privacy#3": {
       "icon-size": 18,
+
       "modules": [
          {
             "tooltip": true,
@@ -186,6 +203,7 @@
             "type": "screenshare",
          },
       ],
+
       "transition-duration": 250,
    },
 
@@ -193,6 +211,7 @@
       "format": " {icon}\n{volume:3}",
       "format-bluetooth": " {icon}\n{volume:3}",
       "format-bluetooth-muted": "\n",
+
       "format-icons": {
          "car": "",
          "default": ["", "", ""],
@@ -202,6 +221,7 @@
          "phone": "",
          "portable": "",
       },
+
       "format-muted": "",
       "on-click": "~/.config/waybar/scripts/toggle_mute.fish",
       "on-click-middle": "pavucontrol",
@@ -216,6 +236,7 @@
       "interval": 5,
       "tooltip": false,
    },
+
    "tray": {
       "spacing": 10,
    },
