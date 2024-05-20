@@ -2,6 +2,7 @@ return {
    {
       "hrsh7th/nvim-cmp",
       event = { "BufReadPost", "BufNewFile" },
+
       dependencies = {
          "hrsh7th/cmp-nvim-lsp",
          "hrsh7th/cmp-buffer",
@@ -13,6 +14,7 @@ return {
          "windwp/nvim-ts-autotag",
          "windwp/nvim-autopairs",
       },
+
       config = function()
          local cmp_autopairs = require("nvim-autopairs.completion.cmp")
          local cmp = require("cmp")
@@ -32,13 +34,16 @@ return {
                   luasnip.lsp_expand(args.body)
                end,
             },
+
             window = {
                completion = cmp.config.window.bordered(),
                documentation = cmp.config.window.bordered(),
             },
+
             mapping = cmp.mapping.preset.insert({
                ["<C-k>"] = cmp.mapping.select_prev_item(), -- previous suggestion
                ["<C-j>"] = cmp.mapping.select_next_item(), -- next suggestion
+
                ["<Tab>"] = cmp.mapping(function(fallback)
                   if cmp.visible() then
                      cmp.select_next_item()
@@ -57,12 +62,14 @@ return {
                      fallback()
                   end
                end, { "i", "s" }),
+
                ["<C-u>"] = cmp.mapping.scroll_docs(4), -- scroll up preview
                ["<C-d>"] = cmp.mapping.scroll_docs(-4), -- scroll down preview
                ["<C-Space>"] = cmp.mapping.complete({}), -- show completion suggestions
                ["<C-c>"] = cmp.mapping.abort(), -- close completion window
                ["<CR>"] = cmp.mapping.confirm({ select = true }), -- select suggestion
             }),
+
             -- sources for autocompletion
             sources = cmp.config.sources({
                { name = "nvim_lsp" }, -- lsp
@@ -70,9 +77,11 @@ return {
                { name = "path", max_item_count = 3 }, -- file system paths
                { name = "luasnip", max_item_count = 3 }, -- snippets
             }),
+
             -- Enable pictogram icons for lsp/autocompletion
             formatting = {
                expandable_indicator = true,
+
                format = lspkind.cmp_format({
                   mode = "symbol_text",
                   maxwidth = 50,
@@ -82,6 +91,7 @@ return {
                   },
                }),
             },
+
             experimental = {
                ghost_text = true,
             },
