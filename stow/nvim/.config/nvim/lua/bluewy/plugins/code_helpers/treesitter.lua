@@ -9,6 +9,9 @@ return {
 
    opts = {
       ensure_installed = {
+         "vim",
+         "regex",
+
          "lua",
          "fish",
       },
