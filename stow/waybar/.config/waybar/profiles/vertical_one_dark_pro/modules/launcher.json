@@ -1,8 +1,0 @@
-{
-   "custom/launcher": {
-      "format": "󱓞",
-      "on-click": "sleep 0.1 && fuzzel",
-      "tooltip": false,
-      "tooltip-format": "App Launcher"
-   }
-}
