@@ -76,11 +76,7 @@
          },
 
          "hardware_controllers": {
-            "std": [
-               "pavucontrol",
-               "gparted",
-               "gnome-disk-utility"
-            ]
+            "std": ["pavucontrol", "gparted", "gnome-disk-utility"]
          },
 
          "gui_apps": {
@@ -101,9 +97,7 @@
          },
 
          "sound_filters": {
-            "std": [
-               "easyeffects"
-            ]
+            "std": ["easyeffects"]
          },
 
          "virtualization": {

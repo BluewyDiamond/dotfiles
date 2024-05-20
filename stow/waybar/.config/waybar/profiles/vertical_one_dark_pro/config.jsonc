@@ -1,222 +1,222 @@
 {
-  "layer": "top",
-  "margin-bottom": 16,
-  "margin-left": 16,
-  "margin-right": 0,
-  "margin-top": 16,
-  "position": "left",
-  "spacing": 5,
-  "width": "auto",
-  "modules-center": ["clock#days_of_the_week", "clock"],
-  "modules-left": [
-    "custom/launcher",
-    "hyprland/workspaces",
-    "network",
-    "battery",
-    "custom/notifications",
-    "idle_inhibitor",
-  ],
-  "modules-right": [
-    "privacy#3",
-    "privacy#2",
-    "taskbar",
-    "tray",
-    "pulseaudio",
-    "cpu",
-    "temperature",
-    "memory",
-    "custom/weather",
-    "custom/wlogout",
-  ],
+   "layer": "top",
+   "margin-bottom": 16,
+   "margin-left": 16,
+   "margin-right": 0,
+   "margin-top": 16,
+   "position": "left",
+   "spacing": 5,
+   "width": "auto",
+   "modules-center": ["clock#days_of_the_week", "clock"],
+   "modules-left": [
+      "custom/launcher",
+      "hyprland/workspaces",
+      "network",
+      "battery",
+      "custom/notifications",
+      "idle_inhibitor",
+   ],
+   "modules-right": [
+      "privacy#3",
+      "privacy#2",
+      "taskbar",
+      "tray",
+      "pulseaudio",
+      "cpu",
+      "temperature",
+      "memory",
+      "custom/weather",
+      "custom/wlogout",
+   ],
 
-  "battery": {
-    "interval": 60,
-    "states": {
-      "warning": 30,
-      "critical": 15,
-    },
-    "format": "{icon}",
-    "format-icons": ["", "", "", "", ""],
-  },
-
-  "clock": {
-    "actions": {
-      "on-click": "mode",
-      "on-click-backward": "tz_down",
-      "on-click-forward": "tz_up",
-      "on-scroll-down": "shift_down",
-      "on-scroll-up": "shift_up",
-    },
-    "calendar": {
-      "format": {
-        "days": "<span color='#ecc6d9'><b>{}</b></span>",
-        "months": "<span color='#ffead3'><b>{}</b></span>",
-        "today": "<span color='#ff6699'><b><u>{}</u></b></span>",
-        "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
-        "weeks": "<span color='#99ffdd'><b>W{}</b></span>",
+   "battery": {
+      "interval": 60,
+      "states": {
+         "warning": 30,
+         "critical": 15,
       },
-      "mode": "year",
-      "mode-mon-col": 3,
-      "on-click": "mode",
-      "on-scroll": 1,
-      "weeks-pos": "right",
-    },
-    "format": "{:%H\n∙∙\n%M}",
-    "format-alt": "{:%d\n──\n<span color='#9ece6a'>%m</span>\n──\n<span color='#e79881'>%y</span>}",
-    "on-click-middle": "gnome-clocks",
-    "tooltip-format": "<tt><small>{calendar}</small></tt>",
-  },
-  "clock#days_of_the_week": {
-    "format": "{:%a}",
-  },
+      "format": "{icon}",
+      "format-icons": ["", "", "", "", ""],
+   },
 
-  "cpu": {
-    "format": " \n{usage:3}",
-    "interval": 5,
-  },
-
-  "custom/notifications": {
-    "escape": true,
-    "exec": "swaync-client -swb",
-    "exec-if": "which swaync-client",
-    "format": "{icon}",
-    "format-icons": {
-      "dnd-inhibited-none": "󰂛",
-      "dnd-inhibited-notification": "󰂛<span foreground='red'><sup></sup></span>",
-      "dnd-none": "󰂛",
-      "dnd-notification": "󰂛<span foreground='red'><sup></sup></span>",
-      "inhibited-none": "󰂚",
-      "inhibited-notification": "󰂚<span foreground='red'><sup></sup></span>",
-      "none": "󰂚",
-      "notification": "󱅫",
-    },
-    "on-click": "sleep 0.1 && swaync-client -t -sw",
-    "on-click-right": "swaync-client -d -sw",
-    "return-type": "json",
-    "tooltip": false,
-  },
-
-  "custom/wlogout": {
-    "format": "",
-    "on-click": "wlogout -p layer-shell",
-    "tooltip": false,
-  },
-
-  "hyprland/workspaces": {
-    "format": "{icon}",
-    "format-icons": {
-      "1": "",
-      "2": "󱎓",
-      "3": "󰋎",
-      "4": "",
-      "7": "",
-      "8": "",
-      "9": "",
-      "10": "󰨞",
-      "default": "",
-      "urgent": "",
-    },
-    "persistent-workspaces": {
-      "DP-2": [1, 2, 3, 4, 8, 9, 10],
-    },
-  },
-
-  "idle_inhibitor": {
-    "format": "{icon}",
-    "format-icons": {
-      "activated": "",
-      "deactivated": "",
-    },
-    "tooltip": false,
-  },
-
-  "custom/launcher": {
-    "format": "󱓞",
-    "on-click": "sleep 0.1 && fuzzel",
-    "tooltip": false,
-    "tooltip-format": "App Launcher",
-  },
-
-  "memory": {
-    "format": " 󰆼\n{percentage:3}",
-    "interval": 5,
-  },
-
-  "network": {
-    "format-disconnected": "󰇨",
-    "format-ethernet": "󰈀",
-    "format-icons": ["󰤟", "󰤢", "󰤥", "󰤨"],
-    "format-linked": "!",
-    "format-wifi": "{icon}",
-    "on-click": "~/.config/waybar/scripts/toggle_network.fish",
-    "on-click-middle": "nm-connection-editor",
-    "tooltip-format": "ifname: {ifname}\ngateway: {gwaddr}\n {bandwidthUpBytes}\n {bandwidthDownBytes}",
-    "tooltip-format-disconnected": "N/a",
-    "tooltip-format-wifi": "ifname: {ifname}\ngateway: {gwaddr}\n {bandwidthUpBytes}\n {bandwidthDownBytes}\n SSID: {essid}\nStrength: {signalStrength}\n Frequency: {frequency}",
-  },
-
-  "privacy#1": {
-    "icon-size": 18,
-    "modules": [
-      {
-        "tooltip": true,
-        "tooltip-icon-size": 24,
-        "type": "audio-out",
+   "clock": {
+      "actions": {
+         "on-click": "mode",
+         "on-click-backward": "tz_down",
+         "on-click-forward": "tz_up",
+         "on-scroll-down": "shift_down",
+         "on-scroll-up": "shift_up",
       },
-    ],
-    "transition-duration": 250,
-  },
-  "privacy#2": {
-    "icon-size": 18,
-    "modules": [
-      {
-        "tooltip": true,
-        "tooltip-icon-size": 24,
-        "type": "audio-in",
+      "calendar": {
+         "format": {
+            "days": "<span color='#ecc6d9'><b>{}</b></span>",
+            "months": "<span color='#ffead3'><b>{}</b></span>",
+            "today": "<span color='#ff6699'><b><u>{}</u></b></span>",
+            "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+            "weeks": "<span color='#99ffdd'><b>W{}</b></span>",
+         },
+         "mode": "year",
+         "mode-mon-col": 3,
+         "on-click": "mode",
+         "on-scroll": 1,
+         "weeks-pos": "right",
       },
-    ],
-    "transition-duration": 250,
-  },
-  "privacy#3": {
-    "icon-size": 18,
-    "modules": [
-      {
-        "tooltip": true,
-        "tooltip-icon-size": 24,
-        "type": "screenshare",
+      "format": "{:%H\n∙∙\n%M}",
+      "format-alt": "{:%d\n──\n<span color='#9ece6a'>%m</span>\n──\n<span color='#e79881'>%y</span>}",
+      "on-click-middle": "gnome-clocks",
+      "tooltip-format": "<tt><small>{calendar}</small></tt>",
+   },
+   "clock#days_of_the_week": {
+      "format": "{:%a}",
+   },
+
+   "cpu": {
+      "format": " \n{usage:3}",
+      "interval": 5,
+   },
+
+   "custom/notifications": {
+      "escape": true,
+      "exec": "swaync-client -swb",
+      "exec-if": "which swaync-client",
+      "format": "{icon}",
+      "format-icons": {
+         "dnd-inhibited-none": "󰂛",
+         "dnd-inhibited-notification": "󰂛<span foreground='red'><sup></sup></span>",
+         "dnd-none": "󰂛",
+         "dnd-notification": "󰂛<span foreground='red'><sup></sup></span>",
+         "inhibited-none": "󰂚",
+         "inhibited-notification": "󰂚<span foreground='red'><sup></sup></span>",
+         "none": "󰂚",
+         "notification": "󱅫",
       },
-    ],
-    "transition-duration": 250,
-  },
+      "on-click": "sleep 0.1 && swaync-client -t -sw",
+      "on-click-right": "swaync-client -d -sw",
+      "return-type": "json",
+      "tooltip": false,
+   },
 
-  "pulseaudio": {
-    "format": " {icon}\n{volume:3}",
-    "format-bluetooth": " {icon}\n{volume:3}",
-    "format-bluetooth-muted": "\n",
-    "format-icons": {
-      "car": "",
-      "default": ["", "", ""],
-      "hands-free": "󰕾",
-      "headphone": "",
-      "headset": "󰋎",
-      "phone": "",
-      "portable": "",
-    },
-    "format-muted": "",
-    "on-click": "~/.config/waybar/scripts/toggle_mute.fish",
-    "on-click-middle": "pavucontrol",
-  },
+   "custom/wlogout": {
+      "format": "",
+      "on-click": "wlogout -p layer-shell",
+      "tooltip": false,
+   },
 
-  "temperature": {
-    "hwmon-path-abs": "/sys/devices/pci0000:00/0000:00:18.3/hwmon",
-    "input-filename": "temp1_input",
-    "critical-threshold": 90,
-    "format": " {icon}\n{temperatureC:3}",
-    "format-icons": ["", "", "", "", ""],
-    "interval": 5,
-    "tooltip": false,
-  },
-  "tray": {
-    "spacing": 10,
-  },
+   "hyprland/workspaces": {
+      "format": "{icon}",
+      "format-icons": {
+         "1": "",
+         "2": "󱎓",
+         "3": "󰋎",
+         "4": "",
+         "7": "",
+         "8": "",
+         "9": "",
+         "10": "󰨞",
+         "default": "",
+         "urgent": "",
+      },
+      "persistent-workspaces": {
+         "DP-2": [1, 2, 3, 4, 8, 9, 10],
+      },
+   },
+
+   "idle_inhibitor": {
+      "format": "{icon}",
+      "format-icons": {
+         "activated": "",
+         "deactivated": "",
+      },
+      "tooltip": false,
+   },
+
+   "custom/launcher": {
+      "format": "󱓞",
+      "on-click": "sleep 0.1 && fuzzel",
+      "tooltip": false,
+      "tooltip-format": "App Launcher",
+   },
+
+   "memory": {
+      "format": " 󰆼\n{percentage:3}",
+      "interval": 5,
+   },
+
+   "network": {
+      "format-disconnected": "󰇨",
+      "format-ethernet": "󰈀",
+      "format-icons": ["󰤟", "󰤢", "󰤥", "󰤨"],
+      "format-linked": "!",
+      "format-wifi": "{icon}",
+      "on-click": "~/.config/waybar/scripts/toggle_network.fish",
+      "on-click-middle": "nm-connection-editor",
+      "tooltip-format": "ifname: {ifname}\ngateway: {gwaddr}\n {bandwidthUpBytes}\n {bandwidthDownBytes}",
+      "tooltip-format-disconnected": "N/a",
+      "tooltip-format-wifi": "ifname: {ifname}\ngateway: {gwaddr}\n {bandwidthUpBytes}\n {bandwidthDownBytes}\n SSID: {essid}\nStrength: {signalStrength}\n Frequency: {frequency}",
+   },
+
+   "privacy#1": {
+      "icon-size": 18,
+      "modules": [
+         {
+            "tooltip": true,
+            "tooltip-icon-size": 24,
+            "type": "audio-out",
+         },
+      ],
+      "transition-duration": 250,
+   },
+   "privacy#2": {
+      "icon-size": 18,
+      "modules": [
+         {
+            "tooltip": true,
+            "tooltip-icon-size": 24,
+            "type": "audio-in",
+         },
+      ],
+      "transition-duration": 250,
+   },
+   "privacy#3": {
+      "icon-size": 18,
+      "modules": [
+         {
+            "tooltip": true,
+            "tooltip-icon-size": 24,
+            "type": "screenshare",
+         },
+      ],
+      "transition-duration": 250,
+   },
+
+   "pulseaudio": {
+      "format": " {icon}\n{volume:3}",
+      "format-bluetooth": " {icon}\n{volume:3}",
+      "format-bluetooth-muted": "\n",
+      "format-icons": {
+         "car": "",
+         "default": ["", "", ""],
+         "hands-free": "󰕾",
+         "headphone": "",
+         "headset": "󰋎",
+         "phone": "",
+         "portable": "",
+      },
+      "format-muted": "",
+      "on-click": "~/.config/waybar/scripts/toggle_mute.fish",
+      "on-click-middle": "pavucontrol",
+   },
+
+   "temperature": {
+      "hwmon-path-abs": "/sys/devices/pci0000:00/0000:00:18.3/hwmon",
+      "input-filename": "temp1_input",
+      "critical-threshold": 90,
+      "format": " {icon}\n{temperatureC:3}",
+      "format-icons": ["", "", "", "", ""],
+      "interval": 5,
+      "tooltip": false,
+   },
+   "tray": {
+      "spacing": 10,
+   },
 }
