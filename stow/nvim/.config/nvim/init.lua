@@ -1,2 +1,2 @@
-require("bluewy.options")
+require("bluewy.core.init")
 require("bluewy.lazy")
