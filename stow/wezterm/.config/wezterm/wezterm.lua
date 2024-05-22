@@ -136,16 +136,16 @@ config.tab_bar_at_bottom = false
 -- Some colors does not seem right with the 'One Dark (Gogh)' color scheme.
 config.colors = {
    tab_bar = {
-      background = "#23272E",
+      background = "#15171C", -- asked chatgpt for a darker variant of #1E2127
 
-      inactive_tab = {
+      active_tab = {
          bg_color = "#1E2127",
          fg_color = "#5C6370",
       },
 
-      active_tab = {
-         bg_color = "#21252B",
-         fg_color = "#7F848E",
+      inactive_tab = {
+         bg_color = "#15171C",
+         fg_color = "#464B56", -- asked chatgpt for a darker variant of #5C6370
       },
    },
 }
