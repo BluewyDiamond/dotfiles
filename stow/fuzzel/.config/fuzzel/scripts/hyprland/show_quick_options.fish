@@ -48,7 +48,9 @@ function main
             $HOME/.config/fuzzel/scripts/swww/show_swww_options.fish
         case "$option_waybar"
             $HOME/.config/fuzzel/scripts/waybar/show_waybar_options.fish
-         case '*'
+        case "$option_hyprpaper"
+            $HOME/.config/fuzzel/scripts/hyprpaper/show_hyprpaper_options.fish
+        case '*'
             notify-send "$CURRENT_NAME" "<span color='#E06C75'>This option has not yet been implemented.</span>"
     end
 end
