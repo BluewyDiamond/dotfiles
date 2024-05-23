@@ -5,14 +5,30 @@ set -g HISTORY_FILE_PATH $HOME/.cache/quick_access_history.txt
 set -g SORTED_ENTRIES
 
 function main
-    set options \
-        "󰸉  Wallpaper" \
-        "󰜬  Waybar"
+    set raw_options
+
+    if which hyprpaper >/dev/null
+        set option_hyprpaper "󰸉  Hyprpaper (Wallpaper)"
+        set raw_options $raw_options $option_hyprpaper
+    end
+
+    if which swww >/dev/null
+        set option_swww "󰸉  Swww (Wallpaper)"
+        set raw_options $raw_options $option_swww
+    end
+
+    if which waybar >/dev/null
+        set option_waybar "󰜬  Waybar"
+        set raw_options $raw_options $option_waybar
+    end
+
+    set options $raw_options
 
     sort_menu_entries $options
 
     # Format entries for fuzzel dmenu.
     set dmenu_in
+
     for option in $SORTED_ENTRIES
         if test -z "$dmenu_in"
             set dmenu_in "$option"
@@ -28,12 +44,12 @@ function main
     echo "$dmenu_out" >>"$HISTORY_FILE_PATH"
 
     switch "$dmenu_out"
-        case "*Network"
-            networkmanager_dmenu
-        case "*Wallpaper"
+        case "$option_swww"
             $HOME/.config/fuzzel/scripts/swww/show_swww_options.fish
-        case "*Waybar"
+        case "$option_waybar"
             $HOME/.config/fuzzel/scripts/waybar/show_waybar_options.fish
+         case '*'
+            notify-send "$CURRENT_NAME" "<span color='#E06C75'>This option has not yet been implemented.</span>"
     end
 end
 
@@ -42,6 +58,7 @@ function sort_menu_entries
     # it will default to raw entries order.
     if not test -e $HISTORY_FILE_PATH
         set SORTED_ENTRIES $argv
+
         return
     end
 
