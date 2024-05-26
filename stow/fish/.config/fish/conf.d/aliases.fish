@@ -84,12 +84,7 @@ function aura
             paru -Ss $argv[2..-1]
         case -W
             paru $argv[2..-1]
-        case '-Q*'
-            paru $argv
-        case '-R*'
-            paru $argv
         case '*'
-            echo "bluewy: operation not recognised"
-            echo "bluewy: maybe use paru?"
+           paru $argv
     end
 end
