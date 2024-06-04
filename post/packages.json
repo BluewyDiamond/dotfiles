@@ -50,6 +50,7 @@
             ],
 
             "aur": [
+               "nwg-dock-hyprland",
                "swaync",
                "wttrbar-git",
                "hyprpicker",
@@ -89,7 +90,6 @@
                "loupe",
                "evince",
                "kate",
-               "drawing",
                "thunderbird",
                "armcord"
             ],
