@@ -8,7 +8,7 @@
          "main": {
             "std": [
                "fish",
-               "iwd", // used with systemd-networkd for wireless connections
+               "iwd",
                "firewalld",
                "trash-cli",
                "neovim",
