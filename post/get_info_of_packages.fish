@@ -19,7 +19,7 @@ function main
 end
 
 function not_in_json
-    set packages (jq -r '.common | .. | .std? // empty | .[]] + [.. | .aur? // empty | .[]] | unique | .[]' packages.json | sort -u)
+    set packages (jq -r '[.common | .. | .std? // empty | .[]] + [.common | .. | .aur? // empty | .[]] | unique | .[]' packages.json | sort -u)
 
     set installed (pacman -Qqe | sort -u)
 
