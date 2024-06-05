@@ -43,16 +43,15 @@
                "waybar",
                "wlogout",
                "cliphist",
-               "grimblast",
+               "grimblast-git",
                "hyprpaper",
                "hypridle",
                "hyprlock"
             ],
 
             "aur": [
-               "nwg-dock-hyprland",
+               "nwg-dock-hyprland-bin",
                "swaync",
-               "wttrbar-git",
                "hyprpicker",
                "wayland-pipewire-idle-inhibit"
             ]
@@ -91,7 +90,7 @@
                "evince",
                "kate",
                "thunderbird",
-               "armcord"
+               "armcord-git"
             ],
             "aur": ["webapp-manager"]
          },
@@ -116,14 +115,16 @@
          },
 
          "security": {
-            "std": ["kwalletmanager", "kwallet5", "kwallet-pam", "ksshaskpass"]
-         },
+            "std": ["kwalletmanager", "kwallet", "kwallet-pam", "ksshaskpass"]
+         }
+
+      }
+   },
+
 
          "laptop_specific": {
             "std": ["brightnessctl"]
-         }
-      }
-   },
+         },
 
    "hardware_specific": {
       "amd_cpu": {

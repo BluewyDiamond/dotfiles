@@ -19,7 +19,7 @@ function main
 end
 
 function not_in_json
-    set packages (jq -r '[.. | .std? // empty | .[]] + [.. | .aur? // empty | .[]] | unique | .[]' packages.json | sort -u)
+    set packages (jq -r '.common | .. | .std? // empty | .[]] + [.. | .aur? // empty | .[]] | unique | .[]' packages.json | sort -u)
 
     set installed (pacman -Qqe | sort -u)
 
@@ -32,9 +32,9 @@ function not_in_json
 end
 
 function in_json
-    set json_packages (jq -r '..|(.std? // empty)[], (.aur? // empty)[]' packages.json | sort -u)
+    set json_packages (jq -r '.common | .. | (.std? // empty) [], (.aur? // empty) []' packages.json | sort -u)
 
-    set explicitly_installed (pacman -Qqe | sort -u)
+    set explicitly_installed (pacman -Qq | sort -u)
 
     for pkg in $json_packages
         if not contains $pkg $explicitly_installed
