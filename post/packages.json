@@ -13,7 +13,8 @@
                "trash-cli",
                "neovim",
                "lazygit",
-               "paru"
+               "paru",
+               "stow"
             ]
          },
 
