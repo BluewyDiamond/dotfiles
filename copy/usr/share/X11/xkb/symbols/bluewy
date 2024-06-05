@@ -1,5 +1,5 @@
 default
-xkb_symbols "colemak_dh_wide_custom_ansi" {
+xkb_symbols "basic" {
     include "us(colemak_dh_wide)"
     name[Group1] = "English (Colemak-DH Wide Custom ANSI)";
 
@@ -9,10 +9,7 @@ xkb_symbols "colemak_dh_wide_custom_ansi" {
 
     key <AE06> { [        equal,         plus,        multiply,         division ] };
     key <AE07> { [            6,  asciicircum,         hstroke,          Hstroke ] };
-};
 
-xkb_symbols "colemak_dh_wide_custom_ansi" {
-    include "us(colemak_dh_wide_iso)"
     name[Group1] = "English (Colemak-DH Wide Custom ISO)";
 
     key <AD12> { [   apostrophe,     quotedbl,          otilde,           Otilde ] };
