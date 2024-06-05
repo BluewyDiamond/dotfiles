@@ -117,14 +117,12 @@
          "security": {
             "std": ["kwalletmanager", "kwallet", "kwallet-pam", "ksshaskpass"]
          }
-
       }
    },
 
-
-         "laptop_specific": {
-            "std": ["brightnessctl"]
-         },
+   "laptop_specific": {
+      "std": ["brightnessctl"]
+   },
 
    "hardware_specific": {
       "amd_cpu": {
