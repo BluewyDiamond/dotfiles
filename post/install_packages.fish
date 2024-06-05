@@ -1,6 +1,6 @@
 #!/usr/bin/env fish
 
-set -g CONFIG_FILE_NAME "packages.json"
+set -g CONFIG_FILE_NAME "packages.jsonc"
 set -g CONFIG_LOCATION "./"
 set -g CONFIG_FULL_PATH "$CONFIG_LOCATION$CONFIG_FILE_NAME"
 
