@@ -14,7 +14,9 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-   { import = "bluewy.plugins" },
-   { import = "bluewy.plugins.ide" },
-   { import = "bluewy.plugins.ide.lsp" },
+   { import = "bluewy.plugins.code" },
+   { import = "bluewy.plugins.code.lsp" },
+   { import = "bluewy.plugins.git" },
+   { import = "bluewy.plugins.ui" },
+   { import = "bluewy.plugins.utils" },
 })
