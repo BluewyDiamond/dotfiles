@@ -132,9 +132,6 @@
 #workspaces,
 #privacy,
 #custom-wlogout,
-#custom-notifications,
-#idle_inhibitor,
-#network,
 #template_g_c {
    padding: 2px 5px 2px 5px;
    margin: 8.5px 8px 8.5px 0px;
@@ -152,6 +149,8 @@
 #custom-cpu_icon,
 #custom-memory_icon,
 #custom-lang_icon,
+#custom-notifications,
+#idle_inhibitor,
 #template_fusion_g_l {
    padding: 2px 5px 2px 5px;
    margin: 8.5px 0px 8.5px 0px;
@@ -166,6 +165,7 @@
    min-height: 29px;
 }
 
+#network,
 #clock.calendar,
 #language,
 #clock,
