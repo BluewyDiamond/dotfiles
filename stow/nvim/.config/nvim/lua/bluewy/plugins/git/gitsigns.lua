@@ -3,6 +3,5 @@ return {
    event = "VeryLazy",
    config = function()
       require("gitsigns").setup()
-
    end,
 }
