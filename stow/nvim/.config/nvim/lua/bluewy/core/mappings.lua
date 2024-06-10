@@ -46,7 +46,7 @@ map("n", "<leader>lt", function()
    lint.try_lint()
 end, { desc = "Trigger linting for current file" })
 
--- git signs
+-- git-signs
 local gitsigns = require("gitsigns")
 
 map("n", "]c", function()
