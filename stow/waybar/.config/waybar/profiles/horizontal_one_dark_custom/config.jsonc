@@ -8,7 +8,12 @@
    "spacing": 0,
    "height": "auto",
 
-   "modules-center": ["custom/clock_icon", "clock"],
+   "modules-center": [
+      "custom/calendar_icon",
+      "clock#calendar",
+      "custom/clock_icon",
+      "clock",
+   ],
 
    "modules-left": [
       "custom/launcher",
@@ -79,6 +84,15 @@
 
       "format": "{:%H:%M}",
       "tooltip-format": "<tt><small>{calendar}</small></tt>",
+   },
+
+   "custom/calendar_icon": {
+      "format": "",
+      "tooltip": false,
+   },
+
+   "clock#calendar": {
+      "format": "{:%d/%m/%y}",
    },
 
    "custom/cpu_icon": {

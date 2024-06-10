@@ -126,6 +126,7 @@
  * Default Style
  * ----------------------------------------------------- */
 
+#tray,
 #window,
 #custom-launcher,
 #workspaces,
@@ -144,6 +145,7 @@
    min-height: 29px;
 }
 
+#custom-calendar_icon,
 #custom-clock_icon,
 #pulseaudio.icon,
 #temperature.icon,
@@ -164,6 +166,7 @@
    min-height: 29px;
 }
 
+#clock.calendar,
 #language,
 #clock,
 #pulseaudio,
