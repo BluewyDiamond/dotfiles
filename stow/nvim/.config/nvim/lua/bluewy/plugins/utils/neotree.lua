@@ -8,7 +8,4 @@ return {
       "MunifTanjim/nui.nvim",
       "3rd/image.nvim",
    },
-
-   config = function()
-   end,
 }
