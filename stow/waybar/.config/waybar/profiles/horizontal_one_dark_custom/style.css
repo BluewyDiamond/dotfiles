@@ -1,0 +1,367 @@
+/* -----------------------------------------------------
+ * Color Scheme
+ * ----------------------------------------------------- */
+
+@import url("../css/one_dark_pro.css");
+
+@define-color bg @black3;
+@define-color fg @darker;
+
+/* -----------------------------------------------------
+ * Global Style
+ * ----------------------------------------------------- */
+
+* {
+   font-size: 16px;
+   font-family: "Symbols Nerd Font Mono, Iosevka Nerd Font";
+   font-weight: 500;
+}
+
+/* -----------------------------------------------------
+ * Left
+ * ----------------------------------------------------- */
+
+/*#custom-launcher,*/
+/*#privacy,*/
+/*#workspaces,*/
+/*#template_c_c {*/
+/*   padding: 4.5px 5px 4.5px 5px;*/
+/*   margin: 8.5px 8px 8.5px 0px;*/
+/*   color: @text;*/
+/*   border-radius: 4px;*/
+/*   background-color: @fg;*/
+/*}*/
+/**/
+/*#custom-clock_icon,*/
+/*#template_fusion_l_l {*/
+/*   padding: 4.5px 5px 4.5px 5px;*/
+/*   margin: 8.5px 0px 8.5px 2px;*/
+/*   color: @text;*/
+/*   border-top-left-radius: 4px;*/
+/*   border-bottom-left-radius: 4px;*/
+/*   background-color: @fg;*/
+/*   border-right: 1px solid @border;*/
+/*}*/
+/**/
+/*#clock,*/
+/*#template_fusion_l_r {*/
+/*   padding: 4.5px 5px 4.5px 5px;*/
+/*   margin: 8.5px 8px 8.5px 0px;*/
+/*   color: @text;*/
+/*   border-top-right-radius: 4px;*/
+/*   border-bottom-right-radius: 4px;*/
+/*   background-color: @fg;*/
+/*}*/
+
+/* -----------------------------------------------------
+ * Center
+ * ----------------------------------------------------- */
+
+/*#custom-clock_icon,*/
+/*#template_fusion_c_l {*/
+/*   padding: 4.5px 5px 4.5px 5px;*/
+/*   margin: 8.5px 0px 8.5px 2px;*/
+/*   color: @text;*/
+/*   border-top-left-radius: 4px;*/
+/*   border-bottom-left-radius: 4px;*/
+/*   background-color: @fg;*/
+/*   border-right: 1px solid @border;*/
+/*}*/
+/**/
+/*#clock,*/
+/*#template_fusion_c_r {*/
+/*   padding: 4.5px 5px 4.5px 5px;*/
+/*   margin: 8.5px 8px 8.5px 0px;*/
+/*   color: @text;*/
+/*   border-top-right-radius: 4px;*/
+/*   border-bottom-right-radius: 4px;*/
+/*   background-color: @fg;*/
+/*}*/
+
+/* -----------------------------------------------------
+ * Right
+ * ----------------------------------------------------- */
+
+/*#custom-wlogout,*/
+/*#custom-notifications,*/
+/*#idle_inhibitor,*/
+/*#network,*/
+/*#template_r_c {*/
+/*   padding: 4.5px 5px 4.5px 5px;*/
+/*   margin: 8.5px 8px 8.5px 0px;*/
+/*   color: @text;*/
+/*   border-radius: 4px;*/
+/*   background-color: @fg;*/
+/*}*/
+/**/
+/**/
+/*#pulseaudio.icon,*/
+/*#temperature.icon,*/
+/*#custom-cpu_icon,*/
+/*#custom-memory_icon,*/
+/*#template_fusion_r_l {*/
+/*   padding: 4.5px 5px 4.5px 5px;*/
+/*   margin: 8.5px 0px 8.5px 2px;*/
+/*   color: @text;*/
+/*   border-top-left-radius: 4px;*/
+/*   border-bottom-left-radius: 4px;*/
+/*   background-color: @fg;*/
+/*   border-right: 1px solid @border;*/
+/*}*/
+/**/
+/*#pulseaudio,*/
+/*#cpu,*/
+/*#temperature,*/
+/*#memory,*/
+/*#template_fusion_r_r {*/
+/*   padding: 4.5px 5px 4.5px 5px;*/
+/*   margin: 8.5px 8px 8.5px 0px;*/
+/*   color: @text;*/
+/*   border-top-right-radius: 4px;*/
+/*   border-bottom-right-radius: 4px;*/
+/*   background-color: @fg;*/
+/*}*/
+
+/* -----------------------------------------------------
+ * Default Style
+ * ----------------------------------------------------- */
+
+#custom-launcher,
+#workspaces,
+#privacy,
+#custom-wlogout,
+#custom-notifications,
+#idle_inhibitor,
+#network,
+#template_g_c {
+   padding: 2px 5px 2px 5px;
+   margin: 8.5px 8px 8.5px 0px;
+   color: @text;
+   border-radius: 4px;
+   background-color: @fg;
+  min-width: 29px;
+  min-height: 29px;
+}
+
+
+#custom-clock_icon,
+#pulseaudio.icon,
+#temperature.icon,
+#custom-cpu_icon,
+#custom-memory_icon,
+#template_fusion_g_l {
+   padding: 2px 5px 2px 5px;
+   margin: 8.5px 0px 8.5px 2px;
+   color: @text;
+   border-top-left-radius: 4px;
+   border-bottom-left-radius: 4px;
+   border-top-right-radius: 0px;
+   border-bottom-right-radius: 0px;
+   background-color: @fg;
+   border-right: 1px solid @border;
+}
+
+#clock,
+#pulseaudio,
+#cpu,
+#temperature,
+#memory,
+#template_fusion_g_r {
+   padding: 2px 5px 2px 5px;
+   margin: 8.5px 8px 8.5px 0px;
+   color: @text;
+   border-top-right-radius: 4px;
+   border-bottom-right-radius: 4px;
+   border-top-left-radius: 0px;
+   border-bottom-left-radius: 0px;
+   background-color: @fg;
+}
+
+/* -----------------------------------------------------
+ * Bar
+ * ----------------------------------------------------- */
+
+window#waybar {
+   background-color: @bg;
+   color: @text;
+   border-radius: 4px;
+   border: 3px solid @border;
+}
+
+/* -----------------------------------------------------
+ * Hyprland
+ * ----------------------------------------------------- */
+
+/*#workspaces {*/
+/*   margin: 8.5px 2px 8.5px 2px;*/
+/*   border-radius: 4px;*/
+/*   background-color: @fg;*/
+/*}*/
+
+#workspaces button {
+   padding: 2px 2px 2px 2px;
+   margin: 0px 3px 0px 3px;
+   background-color: transparent;
+   color: alpha(@text, 0.5);
+}
+
+#workspaces button.empty {
+   color: alpha(@text, 0.1);
+}
+
+#workspaces button.visible {
+   color: @green;
+}
+
+#workspaces button.active {
+   color: @red;
+}
+
+#workspaces button.urgent {
+   color: @purple;
+}
+
+#workspaces button:first-child {
+   margin: 0px 0px 0px 0px;
+}
+
+#workspaces button:last-child {
+   margin: 0px 0px 0px 0px;
+}
+
+#workspaces button:hover {
+   background: rgba(0, 0, 0, 0.2);
+}
+
+/* -----------------------------------------------------
+ * CPU
+ * ----------------------------------------------------- */
+
+#custom-cpu_icon {
+   color: @orange;
+}
+
+#cpu {
+   color: @orange;
+}
+
+/* -----------------------------------------------------
+ * Audio
+ * ----------------------------------------------------- */
+
+#pulseaudio.icon {
+   color: @blue;
+}
+
+#pulseaudio {
+   color: @blue;
+}
+
+/* -----------------------------------------------------
+ * IDLE
+ * ----------------------------------------------------- */
+
+#idle_inhibitor {
+   color: @purple;
+}
+
+/* -----------------------------------------------------
+ * Memory
+ * ----------------------------------------------------- */
+
+#custom-memory_icon {
+   color: @yellow
+}
+
+#memory {
+   color: @yellow;
+}
+
+/* -----------------------------------------------------
+ * Network
+ * ----------------------------------------------------- */
+
+#network {
+   color: @blue;
+}
+
+/* -----------------------------------------------------
+ * Taskbar
+ * ----------------------------------------------------- */
+
+#taskbar button:first-child {
+   margin: 0px 0px 0px 0px;
+   padding-top: 0px;
+}
+
+#taskbar button:last-child {
+   margin: 0px 0px 0px 0px;
+   padding-bottom: 0px;
+}
+
+#taskbar button {
+   padding-top: 0px;
+   padding-right: 2px;
+   padding-bottom: 0px;
+   padding-left: 2px;
+}
+
+/* -----------------------------------------------------
+ * Temperature
+ * ----------------------------------------------------- */
+
+#temperature.icon {
+   color: @red;
+}
+
+#temperature {
+   color: @red;
+}
+
+#temperature.critical {
+   border: 1px solid @purple;
+}
+
+/* -----------------------------------------------------
+ * Tooltip
+ * ----------------------------------------------------- */
+
+tooltip label {
+   color: @text;
+}
+
+tooltip {
+   background: alpha(@black2, 0.9);
+   border: 2px solid @border;
+   border-radius: 10px;
+}
+
+/* -----------------------------------------------------
+ * APP Launcher
+ * ----------------------------------------------------- */
+
+#custom-launcher {
+   color: @blue;
+   margin-left: 10px;
+}
+
+/* -----------------------------------------------------
+ * Notification Center
+ * ----------------------------------------------------- */
+
+#custom-notifications {
+   color: @text;
+}
+
+#custom-notifications.notification {
+   color: @red;
+}
+
+/* -----------------------------------------------------
+ * wlogout
+ * ----------------------------------------------------- */
+
+#custom-wlogout {
+   color: @blue;
+   margin-right: 10px;
+}
