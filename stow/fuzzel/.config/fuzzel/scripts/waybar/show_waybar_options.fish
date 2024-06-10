@@ -5,8 +5,8 @@ set -g CURRENT_NAME (basename (status --current-filename))
 function main
     set options \
         "  Init Waybar" \
-        "󰑤  Reload Waybar"
-
+        "󰑤  Reload Waybar" \
+        "󰑤  Cycle Profile"
     # Format entries for fuzzel dmenu.
     set dmenu_in
     for option in $options
@@ -25,6 +25,8 @@ function main
             waybar
         case "*Reload Waybar"
             killall -SIGUSR2 waybar
+            case"*Cycle Profile"
+            ./cycle_waybar_profiles.fish
     end
 end
 
