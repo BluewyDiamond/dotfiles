@@ -138,8 +138,8 @@
    color: @text;
    border-radius: 4px;
    background-color: @fg;
-   min-width: 29px;
-   min-height: 29px;
+   min-width: 25px;
+   min-height: 25px;
 }
 
 #custom-calendar_icon,
@@ -161,8 +161,8 @@
    border-bottom-right-radius: 0px;
    background-color: @fg;
    border-right: 1px solid @border;
-   min-width: 29px;
-   min-height: 29px;
+   min-width: 25px;
+   min-height: 25px;
 }
 
 #network,
@@ -182,8 +182,8 @@
    border-top-left-radius: 0px;
    border-bottom-left-radius: 0px;
    background-color: @fg;
-   min-width: 29px;
-   min-height: 29px;
+   min-width: 25px;
+   min-height: 25px;
 }
 
 /* -----------------------------------------------------
