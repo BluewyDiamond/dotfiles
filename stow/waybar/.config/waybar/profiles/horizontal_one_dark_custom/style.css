@@ -371,7 +371,7 @@ tooltip {
  * ----------------------------------------------------- */
 
 #custom-wlogout {
-   color: @blue;
+   color: @red;
    margin-right: 10px;
 }
 
