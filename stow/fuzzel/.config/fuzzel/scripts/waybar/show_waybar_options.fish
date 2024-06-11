@@ -27,7 +27,7 @@ function main
         case "*Reload Waybar"
             killall -SIGUSR2 waybar
         case "*Cycle Profile"
-            ./cycle_waybar_profiles.fish
+            $HOME/.config/fuzzel/scripts/waybar/cycle_waybar_profiles.fish
             killall waybar
             waybar
         case '*'
