@@ -133,7 +133,7 @@
 #privacy,
 #custom-wlogout,
 #template_g_c {
-   padding: 2px 5px 2px 5px;
+   padding: 0px 5px 0px 5px;
    margin: 8.5px 8px 8.5px 0px;
    color: @text;
    border-radius: 4px;
@@ -152,7 +152,7 @@
 #custom-notifications,
 #idle_inhibitor,
 #template_fusion_g_l {
-   padding: 2px 5px 2px 5px;
+   padding: 0px 5px 0px 5px;
    margin: 8.5px 0px 8.5px 0px;
    color: @text;
    border-top-left-radius: 4px;
@@ -174,7 +174,7 @@
 #temperature,
 #memory,
 #template_fusion_g_r {
-   padding: 2px 5px 2px 5px;
+   padding: 0px 5px 0px 5px;
    margin: 8.5px 8px 8.5px 0px;
    color: @text;
    border-top-right-radius: 4px;
