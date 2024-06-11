@@ -7,6 +7,7 @@ function main
         "  Init Waybar" \
         "󰑤  Reload Waybar" \
         "󰑤  Cycle Profile"
+
     # Format entries for fuzzel dmenu.
     set dmenu_in
     for option in $options
@@ -25,8 +26,12 @@ function main
             waybar
         case "*Reload Waybar"
             killall -SIGUSR2 waybar
-            case"*Cycle Profile"
+        case "*Cycle Profile"
             ./cycle_waybar_profiles.fish
+            killall waybar
+            waybar
+        case '*'
+            echo "script: not a valid choice..."
     end
 end
 
