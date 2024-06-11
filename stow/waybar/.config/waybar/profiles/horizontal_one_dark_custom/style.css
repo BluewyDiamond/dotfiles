@@ -380,17 +380,17 @@ tooltip {
  * ----------------------------------------------------- */
 
 #custom-clock_icon {
-   color: @blue
+   color: @blue;
 }
 
 #clock {
-   color: @blue
+   color: @blue;
 }
 
 #custom-calendar_icon {
-   color: @orange
+   color: @orange;
 }
 
 #clock.calendar {
-   color: @orange
+   color: @orange;
 }
