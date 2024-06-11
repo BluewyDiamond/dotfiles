@@ -374,3 +374,23 @@ tooltip {
    color: @blue;
    margin-right: 10px;
 }
+
+/* -----------------------------------------------------
+ * Clock
+ * ----------------------------------------------------- */
+
+#custom-clock_icon {
+   color: @blue
+}
+
+#clock {
+   color: @blue
+}
+
+#custom-calendar_icon {
+   color: @orange
+}
+
+#clock.calendar {
+   color: @orange
+}
