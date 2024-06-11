@@ -200,7 +200,7 @@
 
    "custom/memory_icon": {
       "format": "󰆼",
-      "tooltip-format": false,
+      "tooltip": false,
    },
 
    "memory": {
@@ -305,6 +305,7 @@
       },
 
       "format-muted": "",
+      "tooltip": false
    },
 
    "pulseaudio": {
