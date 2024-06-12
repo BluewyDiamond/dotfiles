@@ -19,8 +19,8 @@ config.color_scheme = "One Dark (Gogh)"
 
 config.font_size = 12
 config.font = wezterm.font_with_fallback({
-   { family = "Iosevka Nerd Font", scale = 1.4, weight = "Medium" },
-   { family = "FantasqueSansM Nerd Font", scale = 1.3 },
+   { family = "Iosevka Nerd Font", scale = 1.1, weight = "Medium" },
+   { family = "FantasqueSansM Nerd Font", scale = 1.2 },
 })
 
 config.window_background_opacity = 0.9
