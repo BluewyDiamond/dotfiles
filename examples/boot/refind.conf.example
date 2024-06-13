@@ -1,0 +1,36 @@
+# don't scan cachyos
+dont_scan_volumes cachyos
+
+# custom menu entries
+menuentry "CachyOS LTO" {
+    icon /EFI/refind/themes/rEFInd-minimal-gruvbox/icons_gruvbox/os_manjaro.png
+    volume "cachyos"
+    loader @/boot/vmlinuz-linux-cachyos-lto
+    initrd @/boot/initramfs-linux-cachyos-lto.img
+    options "quiet rw rootflags=subvol=/@ root=UUID=2fbe92b8-916c-4a7e-8729-3e70988a9833 amdgpu.ppfeaturemask=0xffffffff video=DP-2:1920x1080@240"
+
+
+    submenuentry "Use fallback initramfs" {
+        initrd @/boot/initramfs-linux-cachyos-lto-fallback.img
+    }
+
+    submenuentry "CachyOS Vanilla" {
+        loader @/boot/vmlinuz-linux-cachyos
+        initrd @/boot/initramfs-linux-cachyos.img
+        options "quiet rw rootflags=subvol=/@ root=UUID=2fbe92b8-916c-4a7e-8729-3e70988a9833 amdgpu.ppfeaturemask=0xffffffff"
+    }
+
+    submenuentry "CachyOS Vanilla fallback" {
+        initrd @/boot/initramfs-linux-cachyos-fallback.img
+    }
+
+    submenuentry "CachyOS LTS" {
+        loader @/boot/vmlinuz-linux-cachyos-lts
+        initrd @/boot/initramfs-linux-cachyos-lts.img
+        options "quiet rw rootflags=subvol=/@ root=UUID=2fbe92b8-916c-4a7e-8729-3e70988a9833 amdgpu.ppfeaturemask=0xffffffff"
+    }
+
+    submenuentry "CachyOS LTS fallback" {
+        initrd @/boot/initramfs-linux-cachyos-lts-fallback.img
+    }
+}

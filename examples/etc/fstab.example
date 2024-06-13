@@ -1,0 +1,19 @@
+# /etc/fstab: static file system information.
+#
+# Use 'blkid' to print the universally unique identifier for a device; this may
+# be used with UUID= as a more robust way to name devices that works even if
+# disks are added and removed. See fstab(5).
+#
+# <file system>             <mount point>  <type>  <options>  <dump>  <pass>
+UUID=33CE-7C3D                            /boot/efi      vfat    defaults,noatime 0 2
+UUID=ea72d469-5f9e-4c5d-918d-34a19d756674 /              btrfs   subvol=/@,defaults,noatime,compress=zstd,space_cache=v2,commit=120 0 0
+UUID=ea72d469-5f9e-4c5d-918d-34a19d756674 /root          btrfs   subvol=/@root,defaults,noatime,compress=zstd,space_cache=v2,commit=120 0 0
+UUID=ea72d469-5f9e-4c5d-918d-34a19d756674 /srv           btrfs   subvol=/@srv,defaults,noatime,compress=zstd,space_cache=v2,commit=120 0 0
+UUID=ea72d469-5f9e-4c5d-918d-34a19d756674 /var/cache     btrfs   subvol=/@cache,defaults,noatime,compress=zstd,space_cache=v2,commit=120 0 0
+UUID=ea72d469-5f9e-4c5d-918d-34a19d756674 /var/tmp       btrfs   subvol=/@tmp,defaults,noatime,compress=zstd,space_cache=v2,commit=120 0 0
+UUID=ea72d469-5f9e-4c5d-918d-34a19d756674 /var/log       btrfs   subvol=/@log,defaults,noatime,compress=zstd,space_cache=v2,commit=120 0 0
+tmpfs                                     /tmp           tmpfs   defaults,noatime,mode=1777 0 0
+
+UUID=c29bb107-8dc8-4ede-af4c-fa28213d1e41 /home          btrfs   defaults,noatime,compress=zstd,space_cache=v2,commit=120 0 0
+UUID=074b04c6-4d0d-4ef7-8ae5-ba7707b6d38f /mnt/hdd.1.0   btrfs   defaults,noatime,compress=zstd,space_cache=v2,commit=120 0 0
+UUID=e58f8698-dfc5-4118-9c18-3303110b0d3f /mnt/ssd.3.0   btrfs   defaults,noatime,compress=zstd,space_cache=v2,commit=120 0 0
