@@ -21,6 +21,7 @@
  * Default Style
  * ----------------------------------------------------- */
 
+#privacy,
 #tray,
 #window,
 #custom-launcher,
@@ -80,7 +81,7 @@
    min-height: 25px;
 }
 
-#privacy,
+#idle_inhibitor,
 #custom-updater,
 #template_fusion_g2_c {
    padding: 0px 5px 0px 5px;
