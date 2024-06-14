@@ -43,9 +43,9 @@
 #custom-clock_icon,
 #pulseaudio.icon,
 #temperature.icon,
-#custom-cpu_icon,
-#custom-memory_icon,
-#custom-lang_icon,
+#cpu.icon,
+#memory.icon,
+#custom-language_icon,
 #custom-notifications,
 #idle_inhibitor,
 #template_fusion_g_l {
@@ -156,7 +156,7 @@ window#waybar {
  * CPU
  * ----------------------------------------------------- */
 
-#custom-cpu_icon {
+#cpu.icon {
    color: @orange;
 }
 
@@ -188,7 +188,7 @@ window#waybar {
  * Memory
  * ----------------------------------------------------- */
 
-#custom-memory_icon {
+#memory.icon {
    color: @yellow;
 }
 

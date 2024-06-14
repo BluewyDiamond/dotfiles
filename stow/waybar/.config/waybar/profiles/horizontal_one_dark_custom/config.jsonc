@@ -19,7 +19,7 @@
 
    "modules-left": [
       "custom/launcher",
-      "custom/lang_icon",
+      "custom/language_icon",
       "hyprland/language",
       "hyprland/workspaces",
       "hyprland/window",
@@ -34,9 +34,9 @@
       "network",
       "temperature#icon",
       "temperature",
-      "custom/cpu_icon",
+      "cpu#icon",
       "cpu",
-      "custom/memory_icon",
+      "memory#icon",
       "memory",
       "pulseaudio#icon",
       "pulseaudio",
@@ -99,7 +99,7 @@
       "tooltip-format": "<tt><small>{calendar}</small></tt>",
    },
 
-   "custom/cpu_icon": {
+   "cpu#icon": {
       "format": "",
       "tooltip": false,
    },
@@ -155,7 +155,7 @@
       "return-type": "json",
    },
 
-   "custom/lang_icon": {
+   "custom/language_icon": {
       "format": "",
       "tooltip": false,
    },
@@ -226,7 +226,7 @@
       "tooltip": false,
    },
 
-   "custom/memory_icon": {
+   "memory#icon": {
       "format": "󰆼",
       "tooltip": false,
    },
