@@ -151,6 +151,7 @@
       "tooltip": true,
       "interval": 3600,
       "exec": "wttrbar --custom-indicator \"{temp_C}\"",
+      "on-click": "xdg-open \"https://wttr.in/\"",
       "return-type": "json",
    },
 
