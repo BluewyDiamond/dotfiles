@@ -204,7 +204,6 @@
       "exec": "$HOME/.config/waybar/scripts/check_for_updates.sh",
       "exec-if": "[[ $(checkupdates | wc -l) ]]",
       "interval": 15,
-      "on-click": "wezterm start -- paru -Wyu && notify-send 'The system has been updated'",
    },
 
    "custom/memory_icon": {
