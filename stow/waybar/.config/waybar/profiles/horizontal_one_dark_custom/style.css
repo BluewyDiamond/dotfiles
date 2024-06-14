@@ -21,6 +21,7 @@
  * Default Style
  * ----------------------------------------------------- */
 
+#custom-weather,
 #privacy,
 #tray,
 #window,
@@ -37,6 +38,7 @@
    min-height: 25px;
 }
 
+#custom-weather_icon,
 #custom-calendar_icon,
 #custom-clock_icon,
 #pulseaudio.icon,

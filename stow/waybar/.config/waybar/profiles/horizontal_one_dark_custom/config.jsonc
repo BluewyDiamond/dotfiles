@@ -13,6 +13,8 @@
       "clock#calendar",
       "custom/clock_icon",
       "clock",
+      "custom/weather_icon",
+      "custom/weather",
    ],
 
    "modules-left": [
@@ -136,6 +138,22 @@
       "tooltip": false,
    },
 
+   "custom/weather_icon": {
+      "format": "{}",
+      "tooltip": false,
+      "interval": 3600,
+      "exec": "wttrbar --custom-indicator \"{ICON}\"",
+      "return-type": "json",
+   },
+
+   "custom/weather": {
+      "format": "{}°",
+      "tooltip": true,
+      "interval": 3600,
+      "exec": "wttrbar --custom-indicator \"{temp_C}\"",
+      "return-type": "json",
+   },
+
    "custom/lang_icon": {
       "format": "",
       "tooltip": false,
@@ -204,6 +222,7 @@
       "exec": "$HOME/.config/waybar/scripts/check_for_updates.sh",
       "exec-if": "[[ $(checkupdates | wc -l) ]]",
       "interval": 15,
+      "tooltip": false,
    },
 
    "custom/memory_icon": {
