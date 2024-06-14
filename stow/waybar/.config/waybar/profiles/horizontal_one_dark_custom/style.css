@@ -130,7 +130,6 @@
 #window,
 #custom-launcher,
 #workspaces,
-#privacy,
 #custom-wlogout,
 #template_g_c {
    padding: 0px 5px 0px 5px;
@@ -182,6 +181,19 @@
    border-top-left-radius: 0px;
    border-bottom-left-radius: 0px;
    background-color: @fg;
+   min-width: 25px;
+   min-height: 25px;
+}
+
+#privacy,
+#custom-updater,
+#template_fusion_g2_c {
+   padding: 0px 5px 0px 5px;
+   margin: 8.5px 0px 8.5px 0px;
+   color: @text;
+   border-radius: 0px;
+   background-color: @fg;
+   border-right: 1px solid @border;
    min-width: 25px;
    min-height: 25px;
 }

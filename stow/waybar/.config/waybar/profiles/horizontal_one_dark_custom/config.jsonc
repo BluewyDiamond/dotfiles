@@ -27,6 +27,7 @@
 
    "modules-right": [
       "custom/notifications",
+      "custom/updater",
       "idle_inhibitor",
       "network",
       "temperature#icon",
@@ -198,6 +199,14 @@
       "tooltip-format": "App Launcher",
    },
 
+   "custom/updater": {
+      "format": "{}",
+      "exec": "$HOME/.config/waybar/scripts/check_for_updates.sh",
+      "exec-if": "[[ $(checkupdates | wc -l) ]]",
+      "interval": 15,
+      "on-click": "wezterm start -- paru -Wyu && notify-send 'The system has been updated'",
+   },
+
    "custom/memory_icon": {
       "format": "󰆼",
       "tooltip": false,
@@ -305,7 +314,7 @@
       },
 
       "format-muted": "",
-      "tooltip": false
+      "tooltip": false,
    },
 
    "pulseaudio": {
