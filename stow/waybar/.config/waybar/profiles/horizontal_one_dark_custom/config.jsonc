@@ -30,8 +30,8 @@
    "modules-right": [
       "custom/notifications",
       "custom/updater",
-      "idle_inhibitor",
       "network",
+      "idle_inhibitor",
       "temperature#icon",
       "temperature",
       "cpu#icon",

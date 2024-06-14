@@ -62,7 +62,7 @@
    min-height: 25px;
 }
 
-#network,
+#idle_inhibitor,
 #clock.calendar,
 #language,
 #clock,
@@ -83,7 +83,7 @@
    min-height: 25px;
 }
 
-#idle_inhibitor,
+#network,
 #custom-updater,
 #template_fusion_g2_c {
    padding: 0px 5px 0px 5px;
