@@ -54,7 +54,8 @@
                "nwg-dock-hyprland-bin",
                "swaync",
                "hyprpicker",
-               "wayland-pipewire-idle-inhibit"
+               "wayland-pipewire-idle-inhibit",
+               "waybar-cava-git"
             ]
          },
 
