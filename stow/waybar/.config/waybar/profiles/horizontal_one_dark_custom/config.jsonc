@@ -25,6 +25,7 @@
       "hyprland/window",
       "tray",
       "privacy",
+      "cava",
    ],
 
    "modules-right": [
@@ -53,6 +54,29 @@
 
       "format": "{icon}",
       "format-icons": ["", "", "", "", ""],
+   },
+
+   "cava": {
+      "cava_config": "$HOME/.config/cava/cava.conf",
+      "framerate": 240,
+      "autosens": 0,
+      "sensitivity": 50,
+      "bars": 14,
+      "lower_cutoff_freq": 50,
+      "higher_cutoff_freq": 10000,
+      "method": "pipewire",
+      "source": "auto",
+      "stereo": true,
+      "reverse": false,
+      "bar_delimiter": 0,
+      "monstercat": false,
+      "waves": false,
+      "noise_reduction": 0.77,
+      "input_delay": 2,
+      "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"],
+      "actions": {
+         "on-click-right": "mode",
+      },
    },
 
    "custom/clock_icon": {
@@ -176,7 +200,7 @@
          "nvim": "Neovim",
       },
       "separate-outputs": true,
-      "max-length": 16,
+      "max-length": 10,
    },
 
    "hyprland/workspaces": {
@@ -253,12 +277,6 @@
       "icon-size": 18,
 
       "modules": [
-         {
-            "tooltip": true,
-            "tooltip-icon-size": 24,
-            "type": "audio-out",
-         },
-
          {
             "tooltip": true,
             "tooltip-icon-size": 24,
