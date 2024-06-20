@@ -274,6 +274,7 @@
    },
 
    "privacy": {
+      "icon-spacing": 4,
       "icon-size": 18,
 
       "modules": [
