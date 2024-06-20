@@ -16,6 +16,11 @@ return {
             javascript = { "prettier" },
             typescript = { "prettier" },
             python = { "black" },
+
+            -- other
+            json = { "prettier" },
+            jsonc = { "prettier" },
+            toml = { "taplo" },
          },
       })
    end,
