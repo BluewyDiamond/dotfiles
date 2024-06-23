@@ -17,7 +17,7 @@
  │ ╭─ UI
  │ │ ├─ GTK3             -> Sweet
  │ │ ├─ GTK4             -> Sweet
- │ │ ├─ QT5              -> Fusion (Dark Theme)
+ │ │ ├─ QT5              -> KvAdaptaDark
  │ │ ├─ QT6 (Kvantum)    -> KvAdaptaDark
  │ │ ├─ Icons            -> Sweet Rainbow + Candy Icons
  │ │ ├─ Pointer          -> Bibata-Modern-Classic
@@ -31,12 +31,22 @@
  ╰─ Linux System
 
  ╭─ Preferred Software
- │ ├─ Planning     -> Plain Text
- │ ├─ Email Client -> ThunderBird
- │ ├─ Comms        -> Any Good Open Source Alternatives
- │ ├─ Social Media -> Any Good Open Source Alternatives
- │ ├─ Web Browser  -> Librewolf + Sidebery
- │ ╰─ Code Editor  -> Neovim || Vscodium
+ │ ╭─ Basic Creation Tools
+ │ │ ├─ Text/Code    -> Neovim | Kate | Cosmic Edit
+ │ │ ╰─ Image        -> None
+ │ ╰─ Basic Creation Tools
+││
+ │ ╭─ Advanced Creation Tools
+ │ │ ├─ Text/Code    -> Neovim | Vscodium
+ │ │ ├─ Video        -> Kdenlive
+ │ │ ╰─ Image        -> Krita | Gimp
+ │ ╰─ Advanced Creation Tools
+ │
+ │ ╭─ Other
+ │ │ ├─ Planning     -> Plain Text
+ │ │ ├─ Email Client -> ThunderBird
+ │ │ ╰─ Web Browser  -> Librewolf + Sidebery
+ │ ╰─ Other
  ╰─ Prefered Software
 
  ╭─ Hardware
