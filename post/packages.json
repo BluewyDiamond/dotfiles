@@ -1,7 +1,7 @@
 {
    "common": {
       "arch_base_system": {
-         "std": ["base", "base-devel", "refind"]
+         "std": [ "refind" ]
       },
 
       "my_tty_session": {
@@ -9,7 +9,6 @@
             "std": [
                "fish",
                "iwd",
-               "firewalld",
                "trash-cli",
                "neovim",
                "lazygit",
@@ -73,7 +72,8 @@
 
             "aur": ["bibata-cursor-theme-bin"]
          },
-         "compatibility_stuff": {
+
+         "workarounds": {
             "std": ["xwaylandvideobridge"]
          },
 
@@ -97,7 +97,7 @@
             "aur": ["webapp-manager"]
          },
 
-         "sound_filters": {
+         "tools": {
             "std": ["easyeffects"]
          },
 
