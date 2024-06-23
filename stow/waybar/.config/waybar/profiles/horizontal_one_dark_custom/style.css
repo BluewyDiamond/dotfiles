@@ -47,7 +47,6 @@
 #cpu.icon,
 #memory.icon,
 #custom-language_icon,
-#custom-notifications,
 #template_fusion_g_l {
    padding: 0px 5px 0px 5px;
    margin: 8.5px 0px 8.5px 0px;
@@ -58,7 +57,7 @@
    border-bottom-right-radius: 0px;
    background-color: @fg;
    border-right: 1px solid @border;
-   min-width: 25px;
+   min-width: 18px;
    min-height: 25px;
 }
 
@@ -90,6 +89,22 @@
    margin: 8.5px 0px 8.5px 0px;
    color: @text;
    border-radius: 0px;
+   background-color: @fg;
+   border-right: 1px solid @border;
+   min-width: 25px;
+   min-height: 25px;
+}
+
+
+#custom-notifications,
+#template_fusion_g2_l {
+   padding: 0px 5px 0px 5px;
+   margin: 8.5px 0px 8.5px 0px;
+   color: @text;
+   border-top-left-radius: 4px;
+   border-bottom-left-radius: 4px;
+   border-top-right-radius: 0px;
+   border-bottom-right-radius: 0px;
    background-color: @fg;
    border-right: 1px solid @border;
    min-width: 25px;
