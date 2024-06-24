@@ -25,9 +25,9 @@ function main
         case "*Init swww"
             swww init
         case "*Cycle Wallpaper"
-            $HOME/.config/swww/scripts/cycle_wallpaper.fish --wallpapers-path $HOME/pictures
+            $HOME/.config/swww/scripts/cycle_wallpaper.fish --wallpapers-path $HOME/media/wallpapers
         case "*Select Wallpaper"
-            $HOME/.config/fuzzel/scripts/swww/show_wallpapers.fish --wallpapers-path $HOME/pictures/wallpapers
+            $HOME/.config/fuzzel/scripts/swww/show_wallpapers.fish --wallpapers-path $HOME/media/wallpapers
     end
 end
 
