@@ -9,26 +9,42 @@ function main
     echo
 
     switch $choice
-       case 1
-          not_in_json
-       case 2
-          in_json
-       case '*'
-          echo "script: not an option..."
+        case 1
+            not_in_json
+        case 2
+            in_json
+        case '*'
+            echo "script: not an option..."
     end
 end
 
 function not_in_json
-    set packages (jq -r '[.common | .. | .std? // empty | .[]] + [.common | .. | .aur? // empty | .[]] | unique | .[]' packages.json | sort -u)
+    set listed_packages (jq -r '[.common | .. | .std? // empty | .[]] + [.common | .. | .aur? // empty | .[]] | unique | .[]' packages.json | sort -u)
 
-    set installed (pacman -Qqe | sort -u)
+    set installed_packages (pacman -Qqe | sort -u)
 
+    set exclude_patterns 'alsa-*'
 
-    for pkg in $installed
-        if not contains $pkg $packages
-            echo $pkg
+    for installed_package in $installed_packages
+        if not contains $installed_package $listed_packages
+            if not has_pattern $exclude_patterns $installed_package
+                echo $installed_package
+            end
         end
     end
+end
+
+function has_pattern
+    set exclude_patterns $argv[1..-2]
+    set installed_package $argv[-1]
+
+    for exclude_pattern in $exclude_patterns
+        if string match -q -g $exclude_pattern $installed_package
+            return 0
+        end
+    end
+
+    return 1
 end
 
 function in_json
