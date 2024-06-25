@@ -1,24 +1,23 @@
 {
    "common": {
-      "arch_base_system": {
-         "std": [ "refind" ]
-      },
-
       "my_tty_session": {
-         "main": {
-            "std": [
-               "fish",
-               "iwd",
-               "trash-cli",
-               "neovim",
-               "lazygit",
-               "paru",
-               "stow",
-               "less"
-            ]
+         "system_related": {
+            "std": ["fish", "paru", "btop"]
          },
 
-         "replacements": {
+         "hardware_frontends": {
+            "std": ["iwd"]
+         },
+
+         "tools": {
+            "std": ["stow", "trash-cli", "less"]
+         },
+
+         "production": {
+            "std": ["neovim", "stylua", "lazygit"]
+         },
+
+         "substitute": {
             "std": ["eza"]
          },
 
@@ -28,7 +27,7 @@
       },
 
       "my_graphical_session": {
-         "compositor_and_complements": {
+         "base": {
             "std": [
                "pipewire",
                "wireplumber",
@@ -78,28 +77,34 @@
             "std": ["xwaylandvideobridge"]
          },
 
-         "hardware_controllers": {
+         "hardware_frontends": {
             "std": ["pavucontrol", "gparted", "gnome-disk-utility"]
          },
 
-         "gui_apps": {
-            "std": [
-               "baobab",
-               "librewolf-bin",
-               "dolphin",
-               "ark",
-               "vlc",
-               "loupe",
-               "evince",
-               "kate",
-               "thunderbird",
-               "armcord-git"
-            ],
-            "aur": ["webapp-manager"]
+         "apps": {
+            "media": {
+               "std": ["vlc", "loupe", "evince"]
+            },
+
+            "production": {
+               "std": ["kate"]
+            },
+
+            "other": {
+               "std": [
+                  "baobab",
+                  "librewolf-bin",
+                  "dolphin",
+                  "thunderbird",
+                  "armcord-git"
+               ],
+
+               "aur": ["webapp-manager"]
+            }
          },
 
          "tools": {
-            "std": ["easyeffects"]
+            "std": ["easyeffects", "ark"]
          },
 
          "virtualization": {
@@ -134,13 +139,6 @@
 
       "amd_gpu": {
          "aur": ["lact"]
-      },
-
-      "intel_cpu": {
-         "std": ["intel-ucode"]
-      },
-
-      "intel_gpu": {},
-      "nvidia_gpu": {}
+      }
    }
 }
