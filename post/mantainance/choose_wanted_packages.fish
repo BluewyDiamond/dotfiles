@@ -1,7 +1,9 @@
 #!/usr/bin/env fish
 
+set -g SCRIPT ./list_installed_packages_but_not_in_list.fish
+
 function main
-    set script_output (./list_installed_packages_but_not_in_list.fish)
+    set script_output ($SCRIPT)
     set packages_to_choose_from (string split \n $script_output)
 
     set wanted_packages

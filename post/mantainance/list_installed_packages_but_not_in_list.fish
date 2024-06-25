@@ -1,7 +1,9 @@
 #!/usr/bin/env fish
 
+set -g GET_FROM_API ../packages/get_common_packages.fish
+
 function main
-    set listed_packages (jq -r '[.common | .. | .std? // empty | .[]] + [.common | .. | .aur? // empty | .[]] | unique | .[]' ../packages.json | sort -u)
+    set listed_packages ($GET_FROM_API)
 
     set installed_packages (pacman -Qqe | sort -u)
 
