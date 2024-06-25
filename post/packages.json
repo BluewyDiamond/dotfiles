@@ -13,7 +13,8 @@
                "neovim",
                "lazygit",
                "paru",
-               "stow"
+               "stow",
+               "less"
             ]
          },
 
