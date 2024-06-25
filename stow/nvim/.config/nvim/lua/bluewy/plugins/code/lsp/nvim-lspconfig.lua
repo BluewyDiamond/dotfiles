@@ -24,13 +24,5 @@ return {
             },
          },
       })
-
-      local servers = { "clangd" }
-
-      for _, lsp in ipairs(servers) do
-         lspconfig[lsp].setup({
-            capabilities = capabilities,
-         })
-      end
    end,
 }
