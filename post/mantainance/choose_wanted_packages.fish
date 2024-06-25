@@ -1,6 +1,6 @@
 #!/usr/bin/env fish
 
-set -g SCRIPT ./list_installed_packages_but_not_in_list.fish
+set -g SCRIPT (dirname (status -f))'/./list_installed_packages_but_not_in_list.fish'
 
 function main
     set script_output ($SCRIPT)
