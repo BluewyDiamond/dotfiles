@@ -13,7 +13,6 @@ return {
          "regex",
 
          "lua",
-         "fish",
       },
 
       auto_install = true,
