@@ -21,7 +21,9 @@ function main
         end
     end
 
-    echo $unwanted_packages
+    echo "unwanted packages: $unwanted_packages"
+    echo
+    echo "wanted packages: $wanted_packages"
 end
 
 ###################
