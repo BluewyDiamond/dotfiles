@@ -62,6 +62,10 @@ end
 
 function aura
     switch $argv[1]
+        case -Syy
+            paru -Syy --repo $argv[2..-1]
+        case -Syyu
+            paru -Syyu --repo $argv[2..-1]
         case -Syu
             paru -Syu --repo $argv[2..-1]
         case -Ss
@@ -70,14 +74,18 @@ function aura
             paru -S --repo --asdeps $argv[2..-1]
         case -S
             paru -S --repo $argv[2..-1]
-        case -Ayu
-            paru -Syu --aur $argv[2..-1]
+        case -Au
+            paru -Su --aur $argv[2..-1]
         case -As
             paru -Ss --aur $argv[2]
         case -Ag
             paru -S --aur --asdeps $argv[2..-1]
         case -A
             paru -S --aur $argv[2..-1]
+        case -Wyy
+            paru -Syy $argv[2..-1]
+        case -Wyyu
+            paru -Syyu $argv[2..-1]
         case -Wyu
             paru -Syu $argv[2..-1]
         case -Ws
