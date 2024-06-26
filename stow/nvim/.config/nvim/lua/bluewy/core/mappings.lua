@@ -77,3 +77,22 @@ map("n", "<leader>fu", ":Git blame <CR>", {})
 -- neo-tree
 map("n", "<C-n>", ":Neotree source=filesystem reveal=true position=right toggle<CR>", { noremap = true, silent = true })
 map("n", "<leader>bf", ":Neotree buffers reveal float<CR>", { noremap = true, silent = true })
+
+-- rainbow delimiters
+local rainbow_delimiters = require("rainbow-delimiters")
+
+local function toggle_rainbow_delimiters()
+   local bufnr = vim.api.nvim_get_current_buf()
+
+   if rainbow_delimiters.is_enabled(bufnr) then
+      rainbow_delimiters.disable(bufnr)
+      print("Rainbow delimiters disabled")
+   else
+      rainbow_delimiters.enable(bufnr)
+      print("Rainbow delimiters enabled")
+   end
+end
+
+map("n", "<leader>trd", function()
+   toggle_rainbow_delimiters()
+end, { noremap = true, silent = true })

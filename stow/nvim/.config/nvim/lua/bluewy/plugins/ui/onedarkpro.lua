@@ -58,13 +58,7 @@ return {
             rustStorage = { fg = "${purple}" },
 
             -- not working, maybe something else is conflicting with it?
-            rustFoldBraces = { fg = "${orange}" },
             rustBoxPlacementBalance = { fg = "${purple}" },
-
-            -- c specific
-            -- not working idk why
-            cBlock = { fg = "${blue}" },
-            cParen = { fg = "${blue}" },
          },
       })
 
