@@ -32,8 +32,15 @@ return {
          },
 
          highlights = {
+            -- general
+            ["@parameter"] = { fg = "${red}" },
+            ["@namespace"] = { fg = "${yellow}" },
+            ["Type"] = { fg = "${purple}" },
+            ["@function.builtin"] = {}, -- blank because yellow is definetly not right
+            ["@operator"] = { fg = "${purple}" },
+
+            -- rust specific
             ["@lsp.type.struct.rust"] = { fg = "${yellow}" },
-            ["@lsp.type.namespace.rust"] = { fg = "${yellow}" },
             ["@lsp.type.method.rust"] = { fg = "${blue}" },
             ["@lsp.type.function.rust"] = { fg = "${blue}" },
             ["@lsp.typemod.method.defaultLibrary.rust"] = { fg = "${blue}" },
@@ -49,6 +56,11 @@ return {
             -- not working, maybe something else is conflicting with it?
             rustFoldBraces = { fg = "${orange}" },
             rustBoxPlacementBalance = { fg = "${purple}" },
+
+            -- c specific
+            -- not working idk why
+            ["cBlock"] = { fg = "${blue}" },
+            ["cParen"] = { fg = "${blue}" },
          },
       })
 
