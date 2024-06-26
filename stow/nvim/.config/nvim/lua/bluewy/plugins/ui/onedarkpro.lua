@@ -5,8 +5,8 @@ return {
    config = function()
       require("onedarkpro").setup({
          colors = {
-            bg = "#1E2127",
-            fg = "#5C6370",
+            bg = "#23272E",
+            fg = "#ABB2BF",
             cyan = "#56B497",
             cursorline = "#2C313C",
          },
@@ -40,6 +40,8 @@ return {
             ["@operator"] = { fg = "${purple}" },
 
             -- rust specific
+            ["@lsp.type.static.rust"] = { fg = "${red}" },
+            ["@lsp.type.typeAlias.rust"] = { fg = "${yellow}" },
             ["@lsp.type.struct.rust"] = { fg = "${yellow}" },
             ["@lsp.type.method.rust"] = { fg = "${blue}" },
             ["@lsp.type.function.rust"] = { fg = "${blue}" },
@@ -52,6 +54,7 @@ return {
             rustArrowCharacter = { fg = "${white}" },
             rustStorage = { fg = "${purple}" },
             rustSelf = { fg = "${purple}" },
+            rustSigil = { fg = "${white}" },
 
             -- not working, maybe something else is conflicting with it?
             rustFoldBraces = { fg = "${orange}" },
@@ -59,8 +62,8 @@ return {
 
             -- c specific
             -- not working idk why
-            ["cBlock"] = { fg = "${blue}" },
-            ["cParen"] = { fg = "${blue}" },
+            cBlock = { fg = "${blue}" },
+            cParen = { fg = "${blue}" },
          },
       })
 
