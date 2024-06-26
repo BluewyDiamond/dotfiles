@@ -33,28 +33,29 @@ return {
 
          highlights = {
             -- general
-            ["@parameter"] = { fg = "${red}" },
-            ["@namespace"] = { fg = "${yellow}" },
-            ["Type"] = { fg = "${purple}" },
             ["@function.builtin"] = {}, -- blank because yellow is definetly not right
+            ["@namespace"] = { fg = "${yellow}" },
             ["@operator"] = { fg = "${purple}" },
+            ["@parameter"] = { fg = "${red}" },
+
+            Type = { fg = "${purple}" },
 
             -- rust specific
-            ["@lsp.type.static.rust"] = { fg = "${red}" },
-            ["@lsp.type.typeAlias.rust"] = { fg = "${yellow}" },
-            ["@lsp.type.struct.rust"] = { fg = "${yellow}" },
-            ["@lsp.type.method.rust"] = { fg = "${blue}" },
-            ["@lsp.type.function.rust"] = { fg = "${blue}" },
-            ["@lsp.typemod.method.defaultLibrary.rust"] = { fg = "${blue}" },
-            ["@lsp.typemod.function.defaultLibrary.rust"] = { fg = "${cyan}" },
-            ["@lsp.type.macro.rust"] = { fg = "${orange}" },
             ["@lsp.type.formatSpecifier.rust"] = { fg = "${purple}" },
+            ["@lsp.type.function.rust"] = { fg = "${blue}" },
+            ["@lsp.type.macro.rust"] = { fg = "${orange}" },
+            ["@lsp.type.method.rust"] = { fg = "${blue}" },
+            ["@lsp.type.static.rust"] = { fg = "${red}" },
+            ["@lsp.type.struct.rust"] = { fg = "${yellow}" },
+            ["@lsp.type.typeAlias.rust"] = { fg = "${yellow}" },
+            ["@lsp.typemod.function.defaultLibrary.rust"] = { fg = "${cyan}" },
+            ["@lsp.typemod.method.defaultLibrary.rust"] = { fg = "${blue}" },
 
-            rustOperator = { fg = "${white}" },
             rustArrowCharacter = { fg = "${white}" },
-            rustStorage = { fg = "${purple}" },
+            rustOperator = { fg = "${white}" },
             rustSelf = { fg = "${purple}" },
             rustSigil = { fg = "${white}" },
+            rustStorage = { fg = "${purple}" },
 
             -- not working, maybe something else is conflicting with it?
             rustFoldBraces = { fg = "${orange}" },
