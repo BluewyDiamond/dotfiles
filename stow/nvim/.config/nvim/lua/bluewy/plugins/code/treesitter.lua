@@ -14,7 +14,5 @@ return {
 
          "lua",
       },
-
-      auto_install = true,
    },
 }
