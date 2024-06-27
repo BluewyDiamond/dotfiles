@@ -5,7 +5,6 @@ return {
    dependencies = {
       { "neovim/nvim-lspconfig", lazy = false },
       { "williamboman/mason-lspconfig.nvim", lazy = false },
-      { "hrsh7th/cmp-nvim-lsp" },
    },
 
    config = function()
@@ -19,7 +18,14 @@ return {
          },
       })
 
-      local capabilities = require("cmp_nvim_lsp").default_capabilities()
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      local ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+
+      if ok then
+         capabilities = cmp_nvim_lsp.default_capabilities()
+      else
+         print('No "cmp-nvim-lsp" capabilities')
+      end
 
       require("mason-lspconfig").setup_handlers({
          -- The first entry (without a key) will be the default handler
@@ -60,7 +66,7 @@ return {
          end,
 
          ["rust_analyzer"] = function()
-            -- We leave it blank so it does not conflict with rustace.
+            -- We leave it blank because we setup it up with rustacevim.
          end,
       })
    end,
