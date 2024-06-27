@@ -24,7 +24,11 @@ return {
       if ok then
          capabilities = cmp_nvim_lsp.default_capabilities()
       else
-         print('No "cmp-nvim-lsp" capabilities')
+         vim.notify(
+            "Unable to load 'cmp-nvim-lsp' defaulting to none.",
+            vim.log.levels.ERROR,
+            { title = "BLUEWY DIAMOND NOTIFICATION" }
+         )
       end
 
       require("mason-lspconfig").setup_handlers({
