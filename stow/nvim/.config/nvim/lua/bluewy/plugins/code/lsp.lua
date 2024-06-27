@@ -1,13 +1,18 @@
 return {
-   "williamboman/mason-lspconfig.nvim",
+   "williamboman/mason.nvim",
    lazy = false,
 
    dependencies = {
-      "neovim/nvim-lspconfig",
-      lazy = false,
+      { "neovim/nvim-lspconfig", lazy = false },
+      { "williamboman/mason-lspconfig.nvim", lazy = false },
+      { "hrsh7th/cmp-nvim-lsp" },
    },
 
    config = function()
+      require("mason").setup({
+         PATH = "append",
+      })
+
       require("mason-lspconfig").setup({
          ensure_installed = {
             "lua_ls",
