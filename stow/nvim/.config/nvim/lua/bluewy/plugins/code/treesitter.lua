@@ -7,12 +7,16 @@ return {
       })()
    end,
 
-   opts = {
-      ensure_installed = {
-         "vim",
-         "regex",
+   config = function()
+      require("nvim-treesitter.configs").setup({
+         auto_install = true,
 
-         "lua",
-      },
-   },
+         ensure_installed = {
+            "vim",
+            "regex",
+
+            "lua",
+         },
+      })
+   end,
 }
