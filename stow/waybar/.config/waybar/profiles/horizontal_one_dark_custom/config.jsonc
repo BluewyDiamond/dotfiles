@@ -165,7 +165,7 @@
    "custom/weather_icon": {
       "format": "{}",
       "tooltip": false,
-      "interval": 3600,
+      "interval": 1800,
       "exec": "wttrbar --custom-indicator \"{ICON}\"",
       "return-type": "json",
    },
@@ -173,7 +173,7 @@
    "custom/weather": {
       "format": "{}°",
       "tooltip": true,
-      "interval": 3600,
+      "interval": 1800,
       "exec": "wttrbar --custom-indicator \"{temp_C}\"",
       "on-click": "xdg-open \"https://wttr.in/\"",
       "return-type": "json",
@@ -246,7 +246,7 @@
       "format": "{}",
       "exec": "$HOME/.config/waybar/scripts/check_for_updates.sh",
       "exec-if": "[[ $(checkupdates | wc -l) ]]",
-      "interval": 15,
+      "interval": 1800,
       "tooltip": false,
    },
 
