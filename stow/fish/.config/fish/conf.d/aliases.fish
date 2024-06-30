@@ -1,5 +1,5 @@
 abbr dotfiles "cd $HOME/repositories/private/dotfiles"
-abbr plan "cd $HOME/repositories/private/plans"
+abbr plan "cd $HOME/repositories/local/plans"
 
 abbr s sudo
 abbr snv "EDITOR=nvim sudoedit"
