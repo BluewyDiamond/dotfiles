@@ -2,7 +2,7 @@
  * Color Scheme
  * ----------------------------------------------------- */
 
-@import url("../css/one_dark_pro.css");
+@import url("../css/one_dark_collection.css");
 
 @define-color bg @black3;
 @define-color fg @darker;
