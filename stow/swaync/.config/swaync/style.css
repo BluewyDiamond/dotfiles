@@ -4,22 +4,29 @@
 
 @import url("../css/one_dark_collection.css");
 
-@define-color cc-bg @black3;
+@define-color hover @black3;
+@define-color opaque @darker;
+@define-color hover-opaque @darker;
+@define-color focus @darker;
+
+@define-color cc-bg @bg-base;
 
 @define-color noti-border-color @border;
-@define-color noti-bg @black;
-@define-color noti-bg-opaque rgb(48, 48, 48);
-@define-color noti-bg-darker @darker;
-@define-color noti-bg-hover @black3;
-@define-color noti-bg-hover-opaque rgb(56, 56, 56);
-@define-color noti-bg-focus @darker;
-@define-color noti-close-bg @darker;
-@define-color noti-close-bg-hover @black3;
+
+@define-color noti-bg @bg-base;
+@define-color noti-bg-opaque @opaque;
+@define-color noti-bg-darker @bg-darker;
+@define-color noti-bg-hover @hover;
+@define-color noti-bg-hover-opaque @hover-opaque;
+@define-color noti-bg-focus @focus;
+
+@define-color noti-close-bg @bg-darker;
+@define-color noti-close-bg-hover @hover;
 
 @define-color text-color @text;
-@define-color text-color-disabled rgb(150, 150, 150);
+@define-color text-color-disabled @red;
 
-@define-color bg-selected rgb(0, 128, 255);
+@define-color bg-selected @blue;
 
 /* -----------------------------------------------------
  * Main
@@ -70,7 +77,7 @@
 .close-button:hover {
    box-shadow: none;
    /* need to change this color */
-   background: @white;
+   background: @noti-close-bg-hover;
    transition: all .15s ease-in-out;
    border: none
 }
