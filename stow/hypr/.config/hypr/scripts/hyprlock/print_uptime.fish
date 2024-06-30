@@ -4,7 +4,7 @@ set uptime_output (uptime | sed -E 's/^[^,]*up *//; s/, *[[:digit:]]* users?.*//
 
 if test -z $uptime_output
    echo "failed to fetch uptime..."
-   return
+   exit 1
 end
 
 echo -n "󱎫 "
