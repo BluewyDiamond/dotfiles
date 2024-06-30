@@ -53,12 +53,12 @@
    background: @cc-bg;
    padding: 7px;
    border-radius: 0px;
-   border: 2px solid #85796f;
+   border: 3px solid @noti-border-color;
    margin: 0;
 }
 
 .close-button {
-   background: #d79921;
+   background: @red;
    color: @cc-bg;
    text-shadow: none;
    padding: 0;
@@ -69,45 +69,48 @@
 
 .close-button:hover {
    box-shadow: none;
-   background: #fabd2f;
+   /* need to change this color */
+   background: @white;
    transition: all .15s ease-in-out;
    border: none
 }
 
 .notification-action {
-   color: #ebdbb2;
-   border: 2px solid #85796f;
+   /* no idea of what this applies to */
+   color: @green;
+   border: 3px solid @noti-border-color;
    border-top: none;
    border-radius: 4px;
-   background: #32302F;
+   background: @noti-bg-darker;
 }
 
 .notification-default-action:hover,
 .notification-action:hover {
-   color: #ebdbb2;
-   background: #32302F;
+   /* need to change this */
+   color: @green;
+   background: @blue;
 }
 
 .summary {
    padding-top: 7px;
    font-size: 13px;
-   color: #ebdbb2;
+   color: @text-color;
 }
 
 .time {
    font-size: 11px;
-   color: #d79921;
+   color: @text-color;
    margin-right: 50px
 }
 
 .body {
    font-size: 12px;
-   color: #ebdbb2;
+   color: @text-color;
 }
 
 .control-center {
    background: @cc-bg;
-   border: 3px solid #85796f;
+   border: 3px solid @noti-border-color;
    border-radius: 4px;
 }
 
@@ -140,7 +143,7 @@
 }
 
 .widget-title {
-   color: #f9f5d7;
+   color: @green;
    background: @noti-bg-darker;
    padding: 5px 10px;
    margin: 10px 10px 5px 10px;
@@ -158,7 +161,7 @@
 }
 
 .widget-title>button:hover {
-   background: #d79921;
+   background: @blue;
    color: @cc-bg;
 }
 
@@ -168,17 +171,17 @@
    margin: 5px 10px 10px 10px;
    border-radius: 4px;
    font-size: large;
-   color: #f2e5bc;
+   color: @green;
 }
 
 .widget-dnd>switch {
    border-radius: 4px;
-   background: #665c54;
+   background: @blue;
 }
 
 .widget-dnd>switch:checked {
-   background: #d79921;
-   border: 1px solid #d79921;
+   background: @blue;
+   border: 1px solid @noti-border-color;
 }
 
 .widget-dnd>switch slider {
@@ -242,7 +245,7 @@
 }
 
 .widget-buttons-grid>flowbox>flowboxchild>button:hover {
-   background: #d79921;
+   background: @blue;
    color: @cc-bg;
 }
 
