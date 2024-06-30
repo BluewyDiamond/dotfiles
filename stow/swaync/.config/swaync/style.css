@@ -22,7 +22,7 @@
 @define-color bg-selected rgb(0, 128, 255);
 
 /* -----------------------------------------------------
- * Other
+ * Main
  * ----------------------------------------------------- */
 
 * {
@@ -107,7 +107,7 @@
 
 .control-center {
    background: @cc-bg;
-   border: 2px solid #85796f;
+   border: 3px solid #85796f;
    border-radius: 4px;
 }
 
@@ -125,6 +125,18 @@
 
 .blank-window {
    background: alpha(black, 0.1)
+}
+
+/* -----------------------------------------------------
+ * Widgets
+ * ----------------------------------------------------- */
+
+.widget-volume {
+   color: @text-color;
+   background: @noti-bg-darker;
+   padding: 5px 10px;
+   margin: 5px 10px 5px 10px;
+   border-radius: 4px;
 }
 
 .widget-title {
@@ -207,11 +219,11 @@
 
 .widget-mpris-title {
    font-weight: 700;
-   font-size: 1.25rem
+   font-size: 1.1rem
 }
 
 .widget-mpris-subtitle {
-   font-size: 1.1rem
+   font-size: 1.05rem
 }
 
 .widget-buttons-grid {
