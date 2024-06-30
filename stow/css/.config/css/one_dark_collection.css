@@ -31,8 +31,8 @@
 
 /* to be removed */
 
-@define-color bg @darker;
-@define-color fg @black2;
+@define-color bg-darker @darker;
+@define-color bg-base @black2;
 
 @define-color text @white2;
 
