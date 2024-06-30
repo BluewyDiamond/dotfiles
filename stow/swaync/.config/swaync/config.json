@@ -72,16 +72,6 @@
                "command": "pactl set-source-mute @DEFAULT_SOURCE@ toggle",
                "type": "toggle"
             },
-
-            {
-               "label": "󰖩",
-               "command": "notify-send 'Well XD' 'Not Implemented'"
-            },
-
-            {
-               "label": "󰂯",
-               "command": "blueman-manager"
-            }
          ]
       }
    }
