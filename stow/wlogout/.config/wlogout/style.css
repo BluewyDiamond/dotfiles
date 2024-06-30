@@ -25,7 +25,7 @@ window {
 
 button {
    color: @white;
-   background-color: @bg;
+   background-color: @bg-darker;
    background-repeat: no-repeat;
    background-position: center;
    background-size: 25%;
@@ -35,7 +35,7 @@ button {
 button:focus,
 button:active,
 button:hover {
-   background-color: @fg;
+   background-color: @bg-base;
    outline-style: none;
 }
 
