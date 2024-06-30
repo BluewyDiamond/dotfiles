@@ -186,7 +186,7 @@
 .widget-dnd>switch {
    border-radius: 4px;
    /* need to change this one */
-   background: @blue;
+   background: @bg-darker;
 }
 
 .widget-dnd>switch:checked {
@@ -196,12 +196,12 @@
 }
 
 .widget-dnd>switch slider {
-   background: @bg-base;
+   background: @black4;
    border-radius: 4px
 }
 
 .widget-dnd>switch:checked slider {
-   background: @bg-base;
+   background: @bg-darker;
    border-radius: 4px
 }
 
