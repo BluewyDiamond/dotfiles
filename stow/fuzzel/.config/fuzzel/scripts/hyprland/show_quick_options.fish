@@ -7,18 +7,21 @@ set -g SORTED_ENTRIES
 function main
     set raw_options
 
+    set option_hyprpaper "󰸉  Hyprpaper (Wallpaper)"
+
     if which hyprpaper >/dev/null
-        set option_hyprpaper "󰸉  Hyprpaper (Wallpaper)"
         set raw_options $raw_options $option_hyprpaper
     end
 
+    set option_swww "󰸉  Swww (Wallpaper)"
+
     if which swww >/dev/null
-        set option_swww "󰸉  Swww (Wallpaper)"
         set raw_options $raw_options $option_swww
     end
 
+    set option_waybar "󰜬  Waybar"
+
     if which waybar >/dev/null
-        set option_waybar "󰜬  Waybar"
         set raw_options $raw_options $option_waybar
     end
 
