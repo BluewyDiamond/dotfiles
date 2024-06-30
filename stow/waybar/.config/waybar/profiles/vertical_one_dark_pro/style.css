@@ -41,7 +41,7 @@
    margin: 2px 8.5px 2px 8.5px;
    color: @text;
    border-radius: 4px;
-   background-color: @bg-base;
+   background-color: @fg;
 }
 
 /* -----------------------------------------------------
@@ -49,7 +49,7 @@
  * ----------------------------------------------------- */
 
 window#waybar {
-   background-color: @bg-darker;
+   background-color: @bg;
    color: @text;
    border-radius: 4px;
    border: 3px solid @border;
@@ -62,7 +62,7 @@ window#waybar {
 #workspaces {
    margin: 2px 8.5px 2px 8.5px;
    border-radius: 4px;
-   background-color: @bg-base;
+   background-color: @fg;
 }
 
 #workspaces button {
