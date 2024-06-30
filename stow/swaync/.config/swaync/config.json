@@ -63,12 +63,12 @@
          "actions": [
             {
                "label": "󰕾",
-               "command": "swayosd-client --output-volume mute-toggle"
+               "command": "pactl set-sink-mute @DEFAULT_SINK@ toggle"
             },
 
             {
                "label": "󰍬",
-               "command": "swayosd-client --input-volume mute-toggle"
+               "command": "pactl set-source-mute @DEFAULT_SOURCE@ toggle"
             },
 
             {
