@@ -1,1 +1,443 @@
-/home/bluewy/.config/waybar/profiles/horizontal_one_dark_custom/style.css
+/* -----------------------------------------------------
+ * Color Scheme
+ * ----------------------------------------------------- */
+
+@import url("../css/one_dark_collection.css");
+
+@define-color bg @black3;
+@define-color fg @darker;
+
+/* -----------------------------------------------------
+ * Global Style
+ * ----------------------------------------------------- */
+
+* {
+   font-size: 16px;
+   font-family: "Symbols Nerd Font Mono, Iosevka Nerd Font";
+   font-weight: 500;
+}
+
+/* -----------------------------------------------------
+ * Default Style
+ * ----------------------------------------------------- */
+
+#cava,
+#privacy,
+#tray,
+#window,
+#custom-launcher,
+#workspaces,
+#custom-wlogout,
+#template_g_c {
+   padding: 0px 5px 0px 5px;
+   margin: 8.5px 8px 8.5px 0px;
+   color: @text;
+   border-radius: 4px;
+   background-color: @bg-darker;
+   min-width: 25px;
+   min-height: 25px;
+}
+
+#template_g_c_hover {
+   color: @bg-darker;
+   background-color: @text;
+}
+
+#custom-weather_icon,
+#custom-calendar_icon,
+#custom-clock_icon,
+#pulseaudio.icon,
+#temperature.icon,
+#cpu.icon,
+#memory.icon,
+#custom-language_icon,
+#template_fusion_g_l {
+   padding: 0px 5px 0px 5px;
+   margin: 8.5px 0px 8.5px 0px;
+   color: @text;
+   border-top-left-radius: 4px;
+   border-bottom-left-radius: 4px;
+   border-top-right-radius: 0px;
+   border-bottom-right-radius: 0px;
+   background-color: @bg-darker;
+   border-right: 1px solid @border;
+   min-width: 18px;
+   min-height: 25px;
+}
+
+#custom-weather_icon:hover,
+#template_fusiong_l_hover {
+   color: @bg-darker;
+   background-color: @text;
+}
+
+#idle_inhibitor,
+#clock.calendar,
+#language,
+#clock,
+#custom-weather,
+#pulseaudio,
+#cpu,
+#temperature,
+#memory,
+#template_fusion_g_r {
+   padding: 0px 5px 0px 5px;
+   margin: 8.5px 8px 8.5px 0px;
+   color: @text;
+   border-top-right-radius: 4px;
+   border-bottom-right-radius: 4px;
+   border-top-left-radius: 0px;
+   border-bottom-left-radius: 0px;
+   background-color: @bg-darker;
+   min-width: 25px;
+   min-height: 25px;
+}
+
+#template_fusion_g_r_hover {
+   color: @bg-darker;
+   background-color: @text;
+}
+
+#network,
+#custom-updater,
+#template_fusion_g2_c {
+   padding: 0px 5px 0px 5px;
+   margin: 8.5px 0px 8.5px 0px;
+   color: @text;
+   border-radius: 0px;
+   background-color: @bg-darker;
+   border-right: 1px solid @border;
+   min-width: 25px;
+   min-height: 25px;
+}
+
+#template_fusion_g2_c_hover {
+   color: @bg-darker;
+   background-color: @text;
+}
+
+#custom-notifications,
+#template_fusion_g2_l {
+   padding: 0px 5px 0px 5px;
+   margin: 8.5px 0px 8.5px 0px;
+   color: @text;
+   border-top-left-radius: 4px;
+   border-bottom-left-radius: 4px;
+   border-top-right-radius: 0px;
+   border-bottom-right-radius: 0px;
+   background-color: @bg-darker;
+   border-right: 1px solid @border;
+   min-width: 25px;
+   min-height: 25px;
+}
+
+/* -----------------------------------------------------
+ * Bar
+ * ----------------------------------------------------- */
+
+window#waybar {
+   background-color: @bg-base;
+   color: @text;
+   border-radius: 4px;
+   border: 3px solid @border;
+}
+
+/* -----------------------------------------------------
+ * Hyprland
+ * ----------------------------------------------------- */
+
+/*#workspaces {*/
+/*   margin: 8.5px 2px 8.5px 2px;*/
+/*   border-radius: 4px;*/
+/*   background-color: @bg-base;*/
+/*}*/
+
+#workspaces button {
+   padding: 2px 2px 2px 2px;
+   margin: 0px 3px 0px 3px;
+   background-color: transparent;
+   color: alpha(@text, 0.5);
+}
+
+#workspaces button.empty {
+   color: alpha(@text, 0.1);
+}
+
+#workspaces button.visible {
+   color: @green;
+}
+
+#workspaces button.active {
+   color: @red;
+}
+
+#workspaces button.urgent {
+   color: @purple;
+}
+
+#workspaces button:first-child {
+   margin: 0px 0px 0px 0px;
+}
+
+#workspaces button:last-child {
+   margin: 0px 0px 0px 0px;
+}
+
+#workspaces button:hover {
+   color: @orange;
+}
+
+/* -----------------------------------------------------
+ * CPU
+ * ----------------------------------------------------- */
+
+#cpu.icon {
+   color: @orange;
+}
+
+#cpu {
+   color: @orange;
+}
+
+/*#cpu.icon:hover {*/
+/*   color: @bg-darker;*/
+/*   background-color: @orange;*/
+/*}*/
+/**/
+/*#cpu:hover {*/
+/*   color: @bg-darker;*/
+/*   background-color: @orange;*/
+/*}*/
+
+/* -----------------------------------------------------
+ * Audio
+ * ----------------------------------------------------- */
+
+#pulseaudio.icon {
+   color: @blue;
+}
+
+#pulseaudio {
+   color: @blue;
+}
+
+
+#pulseaudio.icon:hover {
+   color: @bg-darker;
+   background-color: @blue;
+}
+
+#pulseaudio:hover {
+   color: @bg-darker;
+   background-color: @blue;
+}
+
+/* -----------------------------------------------------
+ * IDLE
+ * ----------------------------------------------------- */
+
+#idle_inhibitor {
+   color: @purple;
+}
+
+
+#idle_inhibitor:hover {
+   color: @bg-darker;
+   background-color: @purple
+}
+
+/* -----------------------------------------------------
+ * Memory
+ * ----------------------------------------------------- */
+
+#memory.icon {
+   color: @yellow;
+}
+
+#memory {
+   color: @yellow;
+}
+
+
+/*#memory.icon:hover {*/
+/*   color: @bg-darker;*/
+/*   background-color: @yellow;*/
+/*}*/
+/**/
+/*#memory:hover {*/
+/*   color: @bg-darker;*/
+/*   background-color: @yellow;*/
+/*}*/
+
+/* -----------------------------------------------------
+ * Network
+ * ----------------------------------------------------- */
+
+#network {
+   color: @blue;
+}
+
+#network:hover {
+   color: @bg-darker;
+   background-color: @blue;
+}
+
+/* -----------------------------------------------------
+ * Taskbar
+ * ----------------------------------------------------- */
+
+#taskbar button:first-child {
+   margin: 0px 0px 0px 0px;
+   padding-top: 0px;
+}
+
+#taskbar button:last-child {
+   margin: 0px 0px 0px 0px;
+   padding-bottom: 0px;
+}
+
+#taskbar button {
+   padding-top: 0px;
+   padding-right: 2px;
+   padding-bottom: 0px;
+   padding-left: 2px;
+}
+
+/* -----------------------------------------------------
+ * Temperature
+ * ----------------------------------------------------- */
+
+#temperature.icon {
+   color: @red;
+}
+
+#temperature {
+   color: @red;
+}
+
+#temperature.critical {
+   /* Missing artistic creativity */
+}
+
+/*#temperature.icon:hover {*/
+/*   color: @bg-darker;*/
+/*   background-color: @red;*/
+/*}*/
+/**/
+/*#temperature:hover {*/
+/*   color: @bg-darker;*/
+/*   background-color: @red;*/
+/*}*/
+/**/
+/*#temperature.critical:hover {*/
+/*    Missing artistic creativity */
+/*}*/
+
+/* -----------------------------------------------------
+ * Tooltip
+ * ----------------------------------------------------- */
+
+tooltip label {
+   color: @text;
+}
+
+tooltip {
+   background: alpha(@black2, 0.9);
+   border: 2px solid @border;
+   border-radius: 10px;
+}
+
+/* -----------------------------------------------------
+ * APP Launcher
+ * ----------------------------------------------------- */
+
+#custom-launcher {
+   color: @blue;
+   margin-left: 10px;
+}
+
+
+#custom-launcher:hover {
+   color: @bg-darker;
+   background-color: @blue;
+   margin-left: 10px;
+}
+
+/* -----------------------------------------------------
+ * Notification Center
+ * ----------------------------------------------------- */
+
+#custom-notifications {
+   color: @text;
+}
+
+#custom-notifications.notification {
+   color: @red;
+}
+
+
+#custom-notifications:hover {
+   color: @bg-darker;
+   background-color: @text;
+}
+
+#custom-notifications.notification:hover {
+   color: @bg-darker;
+   background-color: @red;
+}
+
+/* -----------------------------------------------------
+ * wlogout
+ * ----------------------------------------------------- */
+
+#custom-wlogout {
+   color: @red;
+   margin-right: 10px;
+}
+
+
+#custom-wlogout:hover {
+   color: @bg-darker;
+   background-color: @red;
+   margin-right: 10px;
+}
+
+/* -----------------------------------------------------
+ * Clock
+ * ----------------------------------------------------- */
+
+#custom-clock_icon {
+   color: @blue;
+}
+
+#clock {
+   color: @blue;
+}
+
+#custom-calendar_icon {
+   color: @orange;
+}
+
+#clock.calendar {
+   color: @orange;
+}
+
+/*#custom-clock_icon:hover {*/
+/*   color: @bg-darker;*/
+/*   background-color: @blue;*/
+/*}*/
+/**/
+/*#clock:hover {*/
+/*   color: @bg-darker;*/
+/*   background-color: @blue;*/
+/*}*/
+/**/
+/*#custom-calendar_icon:hover {*/
+/*   color: @bg-darker;*/
+/*   background-color: @orange;*/
+/*}*/
+/**/
+#clock.calendar:hover {
+   color: @bg-darker;
+   background-color: @orange;
+}
