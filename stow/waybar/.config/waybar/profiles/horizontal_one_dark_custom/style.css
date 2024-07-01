@@ -22,7 +22,6 @@
  * ----------------------------------------------------- */
 
 #cava,
-#custom-weather,
 #privacy,
 #tray,
 #window,
@@ -37,6 +36,11 @@
    background-color: @bg-darker;
    min-width: 25px;
    min-height: 25px;
+}
+
+#template_g_c_hover {
+   color: @bg-darker;
+   background-color: @text;
 }
 
 #custom-weather_icon,
@@ -61,10 +65,17 @@
    min-height: 25px;
 }
 
+#custom-weather,
+#template_fusiong_l_hover {
+   color: @bg-darker;
+   background-color: @text;
+}
+
 #idle_inhibitor,
 #clock.calendar,
 #language,
 #clock,
+#custom-weather,
 #pulseaudio,
 #cpu,
 #temperature,
@@ -82,6 +93,11 @@
    min-height: 25px;
 }
 
+#template_fusion_g_r_hover {
+   color: @bg-darker;
+   background-color: @text;
+}
+
 #network,
 #custom-updater,
 #template_fusion_g2_c {
@@ -93,6 +109,12 @@
    border-right: 1px solid @border;
    min-width: 25px;
    min-height: 25px;
+}
+
+#custom-updater:hover,
+#template_fusion_g2_c_hover {
+   color: @bg-darker;
+   background-color: @text;
 }
 
 #custom-notifications,
@@ -163,7 +185,7 @@ window#waybar {
 }
 
 #workspaces button:hover {
-   background: rgba(0, 0, 0, 0.2);
+   color: @orange;
 }
 
 /* -----------------------------------------------------
@@ -178,6 +200,16 @@ window#waybar {
    color: @orange;
 }
 
+/*#cpu.icon:hover {*/
+/*   color: @bg-darker;*/
+/*   background-color: @orange;*/
+/*}*/
+/**/
+/*#cpu:hover {*/
+/*   color: @bg-darker;*/
+/*   background-color: @orange;*/
+/*}*/
+
 /* -----------------------------------------------------
  * Audio
  * ----------------------------------------------------- */
@@ -190,12 +222,29 @@ window#waybar {
    color: @blue;
 }
 
+
+#pulseaudio.icon:hover {
+   color: @bg-darker;
+   background-color: @blue;
+}
+
+#pulseaudio:hover {
+   color: @bg-darker;
+   background-color: @blue;
+}
+
 /* -----------------------------------------------------
  * IDLE
  * ----------------------------------------------------- */
 
 #idle_inhibitor {
    color: @purple;
+}
+
+
+#idle_inhibitor:hover {
+   color: @bg-darker;
+   background-color: @purple
 }
 
 /* -----------------------------------------------------
@@ -210,12 +259,28 @@ window#waybar {
    color: @yellow;
 }
 
+
+/*#memory.icon:hover {*/
+/*   color: @bg-darker;*/
+/*   background-color: @yellow;*/
+/*}*/
+/**/
+/*#memory:hover {*/
+/*   color: @bg-darker;*/
+/*   background-color: @yellow;*/
+/*}*/
+
 /* -----------------------------------------------------
  * Network
  * ----------------------------------------------------- */
 
 #network {
    color: @blue;
+}
+
+#network:hover {
+   color: @bg-darker;
+   background-color: @blue;
 }
 
 /* -----------------------------------------------------
@@ -252,8 +317,22 @@ window#waybar {
 }
 
 #temperature.critical {
-   border: 1px solid @purple;
+   /* Missing artistic creativity */
 }
+
+/*#temperature.icon:hover {*/
+/*   color: @bg-darker;*/
+/*   background-color: @red;*/
+/*}*/
+/**/
+/*#temperature:hover {*/
+/*   color: @bg-darker;*/
+/*   background-color: @red;*/
+/*}*/
+/**/
+/*#temperature.critical:hover {*/
+/*   /* Missing artistic creativity */*/
+/*}*/
 
 /* -----------------------------------------------------
  * Tooltip
@@ -278,6 +357,13 @@ tooltip {
    margin-left: 10px;
 }
 
+
+#custom-launcher:hover {
+   color: @bg-darker;
+   background-color: @blue;
+   margin-left: 10px;
+}
+
 /* -----------------------------------------------------
  * Notification Center
  * ----------------------------------------------------- */
@@ -290,12 +376,30 @@ tooltip {
    color: @red;
 }
 
+
+#custom-notifications:hover {
+   color: @bg-darker;
+   background-color: @text;
+}
+
+#custom-notifications.notification:hover {
+   color: @bg-darker;
+   background-color: @red;
+}
+
 /* -----------------------------------------------------
  * wlogout
  * ----------------------------------------------------- */
 
 #custom-wlogout {
    color: @red;
+   margin-right: 10px;
+}
+
+
+#custom-wlogout:hover {
+   color: @bg-darker;
+   background-color: @red;
    margin-right: 10px;
 }
 
@@ -318,3 +422,23 @@ tooltip {
 #clock.calendar {
    color: @orange;
 }
+
+/*#custom-clock_icon:hover {*/
+/*   color: @bg-darker;*/
+/*   background-color: @blue;*/
+/*}*/
+/**/
+/*#clock:hover {*/
+/*   color: @bg-darker;*/
+/*   background-color: @blue;*/
+/*}*/
+/**/
+/*#custom-calendar_icon:hover {*/
+/*   color: @bg-darker;*/
+/*   background-color: @orange;*/
+/*}*/
+/**/
+/*#clock.calendar:hover {*/
+/*   color: @bg-darker;*/
+/*   background-color: @orange;*/
+/*}*/

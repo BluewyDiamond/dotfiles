@@ -19,8 +19,6 @@
 
    "modules-left": [
       "custom/launcher",
-      "custom/language_icon",
-      "hyprland/language",
       "hyprland/workspaces",
       "hyprland/window",
       "tray",
@@ -169,6 +167,8 @@
       "interval": 1800,
       "exec": "wttrbar --custom-indicator \"{ICON}\"",
       "return-type": "json",
+
+      "on-click": "xdg-open \"https://wttr.in/\"",
    },
 
    "custom/weather": {
@@ -176,7 +176,6 @@
       "tooltip": true,
       "interval": 1800,
       "exec": "wttrbar --custom-indicator \"{temp_C}\"",
-      "on-click": "xdg-open \"https://wttr.in/\"",
       "return-type": "json",
    },
 
@@ -354,6 +353,10 @@
 
       "format-muted": "",
       "tooltip": false,
+
+      "scroll-step": 0.0,
+
+      "on-click": "pavucontrol || notify-send \"waybar\" \"bluewy: couldn't open pavucontrol\"",
    },
 
    "pulseaudio": {
@@ -373,7 +376,6 @@
 
       "format-muted": "{volume:3}%",
       "on-click": "~/.config/waybar/scripts/toggle_mute.fish",
-      "on-click-middle": "pavucontrol",
    },
 
    "temperature#icon": {
