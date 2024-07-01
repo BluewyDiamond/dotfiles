@@ -1,8 +1,7 @@
 #!/usr/bin/env fish
 
-set -g CURRENT_NAME (basename (status --current-filename))
-set -g HISTORY_FILE_PATH $HOME/.cache/quick_access_history.txt
-set -g SORTED_ENTRIES
+set -g CURRENT_NAME (basename (status --current-filename) | string split -r '.' | head -n 1)
+set -g HISTORY_FILE_PATH $HOME/.cache/$CURRENT_NAME
 
 function main
     set raw_options
@@ -25,14 +24,21 @@ function main
         set raw_options $raw_options $option_waybar
     end
 
+    set option_grimblast "󰹑  Grimblast (Screenshot)"
+
+    if which grimblast >/dev/null
+        set raw_options $raw_options $option_grimblast
+    end
+
     set options $raw_options
 
-    sort_menu_entries $options
+    set sorted_entries_output (sort_menu_entries_3 $options)
+    set sorted_entries (string split "\n" $sorted_entries_output)
 
     # Format entries for fuzzel dmenu.
     set dmenu_in
 
-    for option in $SORTED_ENTRIES
+    for option in $sorted_entries
         if test -z "$dmenu_in"
             set dmenu_in "$option"
         else
@@ -43,62 +49,143 @@ function main
     # Run fuzzel in dmenu mode & save its output.
     set dmenu_out (echo -e $dmenu_in | fuzzel --dmenu --prompt="  Quick Access ")
 
-    # Write saved output to file.
-    echo "$dmenu_out" >>"$HISTORY_FILE_PATH"
-
-    switch "$dmenu_out"
-        case "$option_swww"
+    switch $dmenu_out
+        case $option_swww
             $HOME/.config/fuzzel/scripts/swww/show_swww_options.fish
-        case "$option_waybar"
+        case $option_waybar
             $HOME/.config/fuzzel/scripts/waybar/show_waybar_options.fish
-        case "$option_hyprpaper"
+        case $option_hyprpaper
             $HOME/.config/fuzzel/scripts/hyprpaper/show_hyprpaper_options.fish
+        case $option_grimblast
+            $HOME/.config/fuzzel/scripts/grimblast/show_grimblast_options.fish
         case '*'
             notify-send "$CURRENT_NAME" "<span color='#E06C75'>This option has not yet been implemented.</span>"
+            exit 1
+    end
+
+    # Write saved output to file.
+    increment_key_value $dmenu_out
+end
+
+function sort_menu_entries_3
+    # Path to the file containing key-value pairs.
+    set file_path $HISTORY_FILE_PATH
+
+    # Declare lists to hold keys and values.
+    set kv_keys
+    set kv_values
+
+    # Read the file line by line.
+    for line in (cat $file_path)
+        # Split each line by ':' to get key and value.
+        set key (echo $line | cut -d':' -f1)
+        set value (echo $line | cut -d':' -f2)
+
+        # Add the key and value to the lists.
+        set kv_keys $kv_keys $key
+        set kv_values $kv_values $value
+    end
+
+    # Initialize the options you set.
+    set raw_options $argv
+
+    # Create a list to store the options with their counts.
+    set option_counts
+
+    # Check if each option exists in the key-value pairs; if not, set to 0.
+    for option in $raw_options
+        set found 0
+        for i in (seq (count $kv_keys))
+            if test $kv_keys[$i] = $option
+                set option_counts $option_counts "$kv_values[$i]:$option"
+                set found 1
+                break
+            end
+        end
+        if test $found -eq 0
+            set option_counts $option_counts "0:$option"
+        end
+    end
+
+    # Sort the options based on their counts in descending order.
+    set sorted_options (for count_option in $option_counts
+        echo $count_option
+    end | sort -t':' -k1,1nr | cut -d':' -f2)
+
+    # Print the sorted options (for debugging purposes).
+    for index in $sorted_options
+        echo $index
     end
 end
 
-function sort_menu_entries
-    # In the case of no history file
-    # it will default to raw entries order.
-    if not test -e $HISTORY_FILE_PATH
-        set SORTED_ENTRIES $argv
+function update_or_add_option
+    # Arguments: key to update or add.
+    set key $argv[1]
 
-        return
-    end
+    # Path to the file containing key-value pairs.
+    set file_path $HISTORY_FILE_PATH
 
-    # Read history file & order saved entries & store it in an array.
-    set simplified_history
-    cat $HISTORY_FILE_PATH | sort | uniq -c | sort -rn | awk -F' ' '{print $2 "  " $3}' | while read -l line
-        set simplified_history $simplified_history $line
-    end
+    # Initialize flag and key-value pair lists.
+    set found 0
+    set kv_pairs ""
 
-    set options $argv
+    # Read the file line by line.
+    for line in (cat $file_path)
+        set current_key (echo $line | cut -d':' -f1)
+        set current_value (echo $line | cut -d':' -f2)
 
-    # Verify validity & reuse values in said array.
-    set tmp
-    for simp in $simplified_history
-        for option in $options
-            echo "Debug: $simp ?= $option"
-            if string match -q -- "$simp" "$option"
-                set tmp $tmp $option
-            end
+        # Check if the current key matches the input key.
+        if test $current_key = $key
+            set current_value (math $current_value + 1)
+            set found 1
         end
+
+        # Add the key-value pair to the list.
+        set kv_pairs $kv_pairs "$current_key:$current_value"
     end
 
-    # Save possible missing entries in an array.
-    set tmp2
-    for option in $options
-        if not contains $option $tmp
-            set tmp2 $tmp2 $option
+    # If the key was not found, add it with a count of 1.
+    if test $found -eq 0
+        set kv_pairs $kv_pairs "$key:1"
+    end
+
+    # Write the updated key-value pairs back to the file.
+    for pair in $kv_pairs
+        echo $kv_pair | string join \n >$file_path
+    end
+end
+
+function increment_key_value
+    set key_to_find $argv[1]
+    set file_path $HISTORY_FILE_PATH
+
+    # Check if the file exists
+    if test -f $file_path
+        # Use grep to find the line containing the key
+        set line (grep $key_to_find $file_path)
+
+        # Check if grep found a matching line
+        if test -n "$line"
+            # Extract the current value associated with the key
+            set current_value (echo $line | awk -F ':' '{print $2}')
+            set new_value (math $current_value + 1)
+
+            # Replace the old value with the new value in the file
+            sed -i "s/^$key_to_find:$current_value\$/$key_to_find:$new_value/" $file_path
+
+            echo "Updated $key_to_find to $new_value"
+        else
+            # Key not found, append it to the file
+            set new_value 1  # Start with 1 if key is new
+            echo "$key_to_find:$new_value" >> $file_path
+            echo "Added new key $key_to_find with value $new_value"
         end
+    else
+        # File does not exist, create it and add the key-value pair
+        set new_value 1  # Start with 1 if file is new
+        echo "$key_to_find:$new_value" > $file_path
+        echo "Created new file $file_path with key $key_to_find and value $new_value"
     end
-
-    # Fuse reused values in an array & possible missing entries in an array.
-    set tmp3 $tmp
-    set tmp3 $tmp3 $tmp2
-
-    set SORTED_ENTRIES $tmp3
 end
 
 # --------------------
