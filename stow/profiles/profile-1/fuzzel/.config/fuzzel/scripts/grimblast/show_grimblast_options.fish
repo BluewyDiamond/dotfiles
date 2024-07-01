@@ -38,6 +38,8 @@ function main
             grimblast --notify copysave active
         case $option_screenshot_area
             grimblast --notify copysave area
+        case ""
+
         case "*"
             echo "script: not an option"
             notify-send "$CURRENT_NAME" "not an option..."

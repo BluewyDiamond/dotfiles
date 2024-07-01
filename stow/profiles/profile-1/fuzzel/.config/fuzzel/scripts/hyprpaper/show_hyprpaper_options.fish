@@ -23,6 +23,12 @@ function main
     switch "$dmenu_out"
         case "$option1"
             hyprpaper
+        case ""
+
+        case "*"
+            echo "script: not an option..."
+            notify-send "$CURRENT_NAME" "<span color='#E06C75'>not an option....</span>"
+            exit 1
     end
 end
 

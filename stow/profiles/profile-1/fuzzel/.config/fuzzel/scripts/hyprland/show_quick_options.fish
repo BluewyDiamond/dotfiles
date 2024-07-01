@@ -59,6 +59,8 @@ function main
             $HOME/.config/fuzzel/scripts/hyprpaper/show_hyprpaper_options.fish
         case $option_grimblast
             $HOME/.config/fuzzel/scripts/grimblast/show_grimblast_options.fish
+        case ""
+
         case '*'
             echo "script: not an option..."
             notify-send "$CURRENT_NAME" "<span color='#E06C75'>This option has not yet been implemented.</span>"

@@ -3,10 +3,16 @@
 set -g CURRENT_NAME (basename (status --current-filename))
 
 function main
-    set options \
-        "  Init swww" \
-        "󰑤  Cycle Wallpaper" \
-        "󰋹  Select Wallpaper"
+    set options
+
+    set option_init"  Init swww"
+    set options $options $option_init
+
+    set option_cycle "󰑤  Cycle Wallpaper"
+    set options $options $option_cycle
+
+    set option_select_wallpaper "󰋹  Select Wallpaper"
+    set options $options $option_select_wallpaper
 
     # Format entries for fuzzel dmenu.
     set dmenu_in
@@ -22,12 +28,18 @@ function main
     set dmenu_out (echo -e "$dmenu_in" | fuzzel --dmenu --prompt="󰇘  Swww dmenu ")
 
     switch "$dmenu_out"
-        case "*Init swww"
+        case $option_init
             swww init
-        case "*Cycle Wallpaper"
+        case $option_cycle
             $HOME/.config/swww/scripts/cycle_wallpaper.fish --wallpapers-path $HOME/media/wallpapers
-        case "*Select Wallpaper"
+        case $option_select_wallpaper
             $HOME/.config/fuzzel/scripts/swww/show_wallpapers.fish --wallpapers-path $HOME/media/wallpapers
+        case ""
+
+        case "*"
+            echo "script: not an option..."
+            notify-send "$CURRENT_NAME" "<span color='#E06C75'>not an option...</span>"
+            exit 1
     end
 end
 
