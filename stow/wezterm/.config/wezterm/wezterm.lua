@@ -223,4 +223,10 @@ config.window_padding = {
    bottom = "0cell",
 }
 
+--------------------
+-- Misc
+--------------------
+
+config.warn_about_missing_glyphs = false
+
 return config
