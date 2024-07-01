@@ -65,7 +65,7 @@
    min-height: 25px;
 }
 
-#custom-weather,
+#custom-weather_icon:hover,
 #template_fusiong_l_hover {
    color: @bg-darker;
    background-color: @text;
