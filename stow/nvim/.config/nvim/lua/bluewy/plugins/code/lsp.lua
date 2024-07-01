@@ -27,7 +27,7 @@ return {
          vim.notify(
             "Unable to load 'cmp-nvim-lsp' defaulting to none.",
             vim.log.levels.ERROR,
-            { title = "BLUEWY DIAMOND NOTIFICATION" }
+            { title = "BLUEWY'S MESSAGE" }
          )
       end
 
