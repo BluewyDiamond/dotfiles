@@ -438,7 +438,7 @@ tooltip {
 /*   background-color: @orange;*/
 /*}*/
 /**/
-/*#clock.calendar:hover {*/
-/*   color: @bg-darker;*/
-/*   background-color: @orange;*/
-/*}*/
+#clock.calendar:hover {
+   color: @bg-darker;
+   background-color: @orange;
+}
