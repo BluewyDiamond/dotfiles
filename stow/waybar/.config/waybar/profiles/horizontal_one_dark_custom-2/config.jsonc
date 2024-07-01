@@ -8,11 +8,7 @@
    "spacing": 0,
    "height": "auto",
 
-   "modules-center": [
-      "clock#calendar",
-      "clock",
-      "custom/weather",
-   ],
+   "modules-center": ["clock#calendar", "clock", "custom/weather"],
 
    "modules-left": [
       "custom/launcher",
@@ -298,8 +294,9 @@
 
    "pulseaudio": {
       "format": "{icon} {volume:3}%",
-      "format-bluetooth": "{volume:3}%",
-      "format-bluetooth-muted": "",
+      "format-muted": " {volume:3}%",
+      "format-bluetooth": " {volume:3}%",
+      "format-bluetooth-muted": " ",
 
       "format-icons": {
          "car": "",
@@ -311,7 +308,6 @@
          "portable": "",
       },
 
-      "format-muted": "{volume:3}%",
       "on-click": "~/.config/waybar/scripts/toggle_mute.fish",
       "on-click-middle": "pavucontrol",
    },
