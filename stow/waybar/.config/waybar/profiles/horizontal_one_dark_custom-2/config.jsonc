@@ -41,7 +41,7 @@
       },
 
       "format": "{icon}",
-      "format-icons": ["", "", "", "", ""],
+      "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
    },
 
    "cava": {
@@ -103,7 +103,7 @@
    },
 
    "cpu": {
-      "format": " {usage:3}%",
+      "format": "  {usage:03}%",
       "interval": 5,
    },
 
@@ -146,7 +146,7 @@
    },
 
    "hyprland/language": {
-      "format": "  {}",
+      "format": "   {}",
       "format-en": "EN",
    },
 
@@ -212,7 +212,7 @@
    },
 
    "memory": {
-      "format": "󰆼 {percentage:3}%",
+      "format": "󰆼  {percentage:03}%",
       "interval": 5,
    },
 
@@ -293,10 +293,10 @@
    },
 
    "pulseaudio": {
-      "format": "{icon} {volume:3}%",
-      "format-muted": " {volume:3}%",
-      "format-bluetooth": " {volume:3}%",
-      "format-bluetooth-muted": " ",
+      "format": "{icon}  {volume:03}%",
+      "format-muted": "  {volume:03}%",
+      "format-bluetooth": "  {volume:03}%",
+      "format-bluetooth-muted": "󰗿  {volume:03%}",
 
       "format-icons": {
          "car": "",
@@ -316,7 +316,7 @@
       "hwmon-path-abs": "/sys/devices/pci0000:00/0000:00:18.3/hwmon",
       "input-filename": "temp1_input",
       "critical-threshold": 90,
-      "format": "{icon} {temperatureC:3}",
+      "format": "{icon}  {temperatureC:03}",
       "format-icons": ["", "", "", "", ""],
       "interval": 5,
       "tooltip": false,
