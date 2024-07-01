@@ -150,7 +150,7 @@
 }
 
 .widget-title {
-   color: @green;
+   color: @text;
    background: @bg-darker;
    padding: 5px 10px;
    margin: 10px 10px 5px 10px;
@@ -168,9 +168,8 @@
 }
 
 .widget-title > button:hover {
-   background: @blue;
-   /* need to change this one */
-   color: @green;
+   color: black;
+   background: @red;
 }
 
 .widget-dnd {
@@ -179,19 +178,16 @@
    margin: 5px 10px 10px 10px;
    border-radius: 4px;
    font-size: large;
-   /* to be changed */
-   color: @green;
+   color: @text;
 }
 
 .widget-dnd > switch {
    border-radius: 4px;
-   /* need to change this one */
    background: @bg-darker;
 }
 
 .widget-dnd > switch:checked {
-   /* to be changed */
-   background: @blue;
+   background: @orange;
    border: 1px solid @border;
 }
 
@@ -256,13 +252,12 @@
 }
 
 .widget-buttons-grid > flowbox > flowboxchild > button:checked {
-  background: @blue;
+  background: @red;
   color: @bg-base;
 }
 
 .widget-buttons-grid > flowbox > flowboxchild > button:hover {
-   /* to be changed*/
-   background: @blue;
+   background: @orange;
    color: @bg-base;
 }
 
