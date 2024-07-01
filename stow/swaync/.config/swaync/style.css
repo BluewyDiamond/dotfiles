@@ -58,7 +58,7 @@
 }
 
 .notification-content {
-   background: @bg-base;
+   background: @bg-darker;
    padding: 7px;
    border-radius: 0px;
    border: 3px solid @border;
