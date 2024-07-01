@@ -19,7 +19,7 @@ function main
     end
 
     # Run fuzzel in dmenu mode & save its output.
-    set dmenu_out (echo -e "$dmenu_in" | fuzzel --dmenu --prompt="󰇘 Waybar dmenu ")
+    set dmenu_out (echo -e "$dmenu_in" | fuzzel --dmenu --prompt="󰇘  Waybar dmenu ")
 
     switch "$dmenu_out"
         case "*Init Waybar"
