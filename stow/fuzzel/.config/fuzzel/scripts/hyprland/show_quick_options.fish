@@ -1,6 +1,7 @@
 #!/usr/bin/env fish
 
 set -g CURRENT_NAME (basename (status --current-filename) | string split -r '.' | head -n 1)
+set -g CURRENT_FULL_NAME (basename (status --current-filename))
 set -g HISTORY_FILE_PATH $HOME/.cache/$CURRENT_NAME
 
 function main
@@ -59,6 +60,7 @@ function main
         case $option_grimblast
             $HOME/.config/fuzzel/scripts/grimblast/show_grimblast_options.fish
         case '*'
+            echo "script: not an option..."
             notify-send "$CURRENT_NAME" "<span color='#E06C75'>This option has not yet been implemented.</span>"
             exit 1
     end
@@ -118,43 +120,6 @@ function sort_menu_entries_3
     end
 end
 
-function update_or_add_option
-    # Arguments: key to update or add.
-    set key $argv[1]
-
-    # Path to the file containing key-value pairs.
-    set file_path $HISTORY_FILE_PATH
-
-    # Initialize flag and key-value pair lists.
-    set found 0
-    set kv_pairs ""
-
-    # Read the file line by line.
-    for line in (cat $file_path)
-        set current_key (echo $line | cut -d':' -f1)
-        set current_value (echo $line | cut -d':' -f2)
-
-        # Check if the current key matches the input key.
-        if test $current_key = $key
-            set current_value (math $current_value + 1)
-            set found 1
-        end
-
-        # Add the key-value pair to the list.
-        set kv_pairs $kv_pairs "$current_key:$current_value"
-    end
-
-    # If the key was not found, add it with a count of 1.
-    if test $found -eq 0
-        set kv_pairs $kv_pairs "$key:1"
-    end
-
-    # Write the updated key-value pairs back to the file.
-    for pair in $kv_pairs
-        echo $kv_pair | string join \n >$file_path
-    end
-end
-
 function increment_key_value
     set key_to_find $argv[1]
     set file_path $HISTORY_FILE_PATH
@@ -176,14 +141,14 @@ function increment_key_value
             echo "Updated $key_to_find to $new_value"
         else
             # Key not found, append it to the file
-            set new_value 1  # Start with 1 if key is new
-            echo "$key_to_find:$new_value" >> $file_path
+            set new_value 1 # Start with 1 if key is new
+            echo "$key_to_find:$new_value" >>$file_path
             echo "Added new key $key_to_find with value $new_value"
         end
     else
         # File does not exist, create it and add the key-value pair
-        set new_value 1  # Start with 1 if file is new
-        echo "$key_to_find:$new_value" > $file_path
+        set new_value 1 # Start with 1 if file is new
+        echo "$key_to_find:$new_value" >$file_path
         echo "Created new file $file_path with key $key_to_find and value $new_value"
     end
 end
