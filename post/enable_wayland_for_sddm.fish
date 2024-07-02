@@ -1,14 +1,7 @@
 #!/usr/bin/env fish
 
-if not test -e $HOME/.old
-    mkdir $HOME/.old
-end
-
-cp /etc/sddm.conf $HOME/.old
-cp /etc/sddm.conf.d $HOME/.old
-
-sudo rm /etc/sddm.conf
-sudo rm -r /etc/sddm.conf.d
+sudo mv /etc/sddm.conf /etc/sddm.conf.old
+sudo mv /etc/sddm.conf.d /etc/sddm.conf.d.old
 
 sudo touch /etc/sddm.conf
 sudo mkdir /etc/sddm.conf.d
