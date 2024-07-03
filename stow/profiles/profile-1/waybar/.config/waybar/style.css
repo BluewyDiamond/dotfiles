@@ -143,16 +143,9 @@ window#waybar {
  * Hyprland
  * ----------------------------------------------------- */
 
-/*#workspaces {*/
-/*   margin: 8.5px 2px 8.5px 2px;*/
-/*   border-radius: 4px;*/
-/*   background-color: @bg-base;*/
-/*}*/
-
 #workspaces button {
    padding: 2px 2px 2px 2px;
-   margin: 0px 3px 0px 3px;
-   background-color: transparent;
+   margin: 0px 4px 0px 4px;
    color: alpha(@text, 0.5);
 }
 
