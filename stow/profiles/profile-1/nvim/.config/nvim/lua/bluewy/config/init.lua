@@ -1,5 +1,5 @@
-require("bluewy.core.options")
-require("bluewy.core.lazy")
+require("bluewy.config.options")
+require("bluewy.lazy")
 
 local map = vim.keymap.set
 
@@ -16,6 +16,5 @@ local function process_mappings(mapping_table)
    end
 end
 
-local mappings = require("bluewy.core.mappings")
-
+local mappings = require("bluewy.config.mappings")
 process_mappings(mappings)
