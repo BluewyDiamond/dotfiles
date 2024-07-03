@@ -53,20 +53,20 @@ return {
             require("lspconfig")["lua_ls"].setup({
                capabilities = capabilities,
 
-               settings = {
-                  Lua = {
-                     diagnostics = {
-                        globals = { "vim" },
-                     },
-
-                     workspace = {
-                        library = {
-                           [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-                           [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
-                        },
-                     },
-                  },
-               },
+               -- settings = {
+               --    Lua = {
+               --       diagnostics = {
+               --          globals = { "vim" },
+               --       },
+               --
+               --       workspace = {
+               --          library = {
+               --             [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+               --             [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+               --          },
+               --       },
+               --    },
+               -- },
             })
          end,
 
