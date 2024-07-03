@@ -126,7 +126,11 @@ mappings.rainbow_delimiters = {
 }
 
 mappings.bufferline = {
-   { "n", "<leader>bn", "<cmd>BufferLineCycleNext<cr>", { noremap = true, silent = true } },
+   { "n", "<C-S-i>", "<cmd>BufferLineCycleNext<cr>", { noremap = true, silent = true } },
+   { "n", "<C-S-n>", "<cmd>BufferLineCyclePrev<cr>", { noremap = true, silent = true } },
+   { "n", "<C-S-A-i>", "<cmd>BufferLineMoveNext<cr>", { noremap = true, silent = true } },
+   { "n", "<C-S-A-n>", "<cmd>BufferLineMovePrev<cr>", { noremap = true, silent = true } },
+   { "n", "<leader>x", "<cmd>bd<cr>", { noremap = true, silent = true } },
 }
 
 return mappings
