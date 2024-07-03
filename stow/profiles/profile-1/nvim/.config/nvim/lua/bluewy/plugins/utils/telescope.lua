@@ -7,6 +7,7 @@ return {
 
    {
       "nvim-telescope/telescope-ui-select.nvim",
+      commit = "*",
 
       config = function()
          require("telescope").setup({
