@@ -252,8 +252,8 @@
 }
 
 .widget-buttons-grid > flowbox > flowboxchild > button:checked {
-  background: @red;
-  color: @bg-base;
+   background: @red;
+   color: @bg-base;
 }
 
 .widget-buttons-grid > flowbox > flowboxchild > button:hover {
