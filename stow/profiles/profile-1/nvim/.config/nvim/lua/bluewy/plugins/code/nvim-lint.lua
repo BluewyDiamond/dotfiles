@@ -1,5 +1,6 @@
 return {
    "mfussenegger/nvim-lint",
+   commit = "*",
    event = { "BufReadPre", "BufNewFile" },
 
    config = function()

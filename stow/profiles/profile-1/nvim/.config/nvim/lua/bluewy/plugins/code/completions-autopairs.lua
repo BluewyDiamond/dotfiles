@@ -1,18 +1,19 @@
 return {
    {
       "hrsh7th/nvim-cmp",
+      commit = "*",
       event = { "BufReadPost", "BufNewFile" },
 
       dependencies = {
-         "hrsh7th/cmp-nvim-lsp",
-         "hrsh7th/cmp-buffer",
-         "hrsh7th/cmp-path",
-         "L3MON4D3/LuaSnip",
-         "saadparwaiz1/cmp_luasnip",
-         "rafamadriz/friendly-snippets",
-         "onsails/lspkind.nvim",
-         "windwp/nvim-ts-autotag",
-         "windwp/nvim-autopairs",
+         { "hrsh7th/cmp-nvim-lsp", commit = "*" },
+         { "hrsh7th/cmp-buffer", commit = "*" },
+         { "hrsh7th/cmp-path", commit = "*" },
+         { "L3MON4D3/LuaSnip", version = "2.*" },
+         { "saadparwaiz1/cmp_luasnip", commit = "*" },
+         { "rafamadriz/friendly-snippets", commit = "*" },
+         { "onsails/lspkind.nvim", commit = "*" },
+         { "windwp/nvim-ts-autotag", commit = "*" },
+         { "windwp/nvim-autopairs", commit = "*" },
       },
 
       config = function()
