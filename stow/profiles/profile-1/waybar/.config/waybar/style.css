@@ -66,7 +66,7 @@
 }
 
 #custom-weather_icon:hover,
-#template_fusiong_l_hover {
+#template_fusion_l_hover {
    color: @bg-darker;
    background-color: @text;
 }
