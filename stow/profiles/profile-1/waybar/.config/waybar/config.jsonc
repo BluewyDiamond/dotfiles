@@ -186,7 +186,6 @@
 
       "modules": [
          "custom/notifications",
-         "custom/updater",
          "network",
          "idle_inhibitor",
       ],
@@ -248,14 +247,6 @@
       "on-click": "sleep 0.1 && fuzzel",
       "tooltip": false,
       "tooltip-format": "App Launcher",
-   },
-
-   "custom/updater": {
-      "format": "{}",
-      "exec": "$HOME/.config/waybar/scripts/check_for_updates.sh",
-      "exec-if": "[[ $(checkupdates | wc -l) ]]",
-      "interval": 1800,
-      "tooltip": false,
    },
 
    "memory#icon": {
