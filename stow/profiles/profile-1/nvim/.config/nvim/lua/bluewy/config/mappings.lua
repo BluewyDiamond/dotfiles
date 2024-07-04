@@ -2,74 +2,100 @@ local mappings = {}
 
 mappings.vim = {
    -- because i use the colemak dh wide mod keyboard layout
-   { "n", "<C-A-u>", "<C-w>k", { noremap = true, silent = true } }, -- up
-   { "n", "<C-A-i>", "<C-w>l", { noremap = true, silent = true } }, -- right
-   { "n", "<C-A-e>", "<C-w>j", { noremap = true, silent = true } }, -- bottom
-   { "n", "<C-A-n>", "<C-w>h", { noremap = true, silent = true } }, -- left
+   { "n", "<C-A-u>", "<C-w>k", { noremap = true, silent = true, desc = "focus upper pane" } }, -- up
+   { "n", "<C-A-i>", "<C-w>l", { noremap = true, silent = true, desc = "focus right pane" } }, -- right
+   { "n", "<C-A-e>", "<C-w>j", { noremap = true, silent = true, desc = "focus bottom pane" } }, -- bottom
+   { "n", "<C-A-n>", "<C-w>h", { noremap = true, silent = true, desc = "focus left pane" } }, -- left
 }
 
-mappings.telescope = {
-   { "n", "<leader>ff", "<cmd>Telescope find_files<CR>", { noremap = true, silent = true } },
-   { "n", "<leader>fw", "<cmd>Telescope live_grep<CR>", { noremap = true, silent = true } },
-   { "n", "<leader>fb", "<cmd>Telescope buffers<CR>", { noremap = true, silent = true } },
-   { "n", "<leader>cm", "<cmd>Telescope git_commits<CR>", { noremap = true, silent = true } },
-   { "n", "<leader>gt", "<cmd>Telescope git_status<CR>", { noremap = true, silent = true } },
+mappings.bufferline = {
+   { "n", "<C-S-i>", "<cmd>BufferLineCycleNext<cr>", { noremap = true, silent = true, desc = "next buffer" } },
+   { "n", "<C-S-n>", "<cmd>BufferLineCyclePrev<cr>", { noremap = true, silent = true, desc = "previous buffer" } },
 
    {
       "n",
-      "<leader>fa",
-      "<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>",
-      { noremap = true, silent = true },
+      "<C-S-A-i>",
+      "<cmd>BufferLineMoveNext<cr>",
+      { noremap = true, silent = true, desc = "move buffer to the right" },
    },
 
-   { "n", "<leader>fz", "<cmd>Telescope current_buffer_fuzzy_find<CR>", { noremap = true, silent = true } },
+   {
+      "n",
+      "<C-S-A-n>",
+      "<cmd>BufferLineMovePrev<cr>",
+      { noremap = true, silent = true, desc = "move buffer to the left" },
+   },
+
+   { "n", "<leader>x", "<cmd>bd<cr>", { noremap = true, silent = true, desc = "close buffer" } },
 }
 
 mappings.comment = {
-   { "n", "<leader>/", "gcc", { desc = "comment toggle", remap = true } },
-   { "v", "<leader>/", "gc", { desc = "comment toggle", remap = true } },
+   { "n", "<leader>/", "gcc", { desc = "toggle comment", remap = true } },
+   { "v", "<leader>/", "gc", { desc = "toggle comment", remap = true } },
 }
-
-mappings.lsp = {
-   { "n", "<leader>of", vim.diagnostic.open_float, {} },
-   { "n", "gD", vim.lsp.buf.declaration, {} },
-   { "n", "gd", vim.lsp.buf.definition, {} },
-   { "n", "K", vim.lsp.buf.hover, {} },
-   { "n", "gi", vim.lsp.buf.implementation, {} },
-   { "n", "<leader>ls", vim.lsp.buf.signature_help, {} },
-   { "n", "<leader>D", vim.lsp.buf.type_definition, {} },
-   { "n", "<leader>ra", vim.lsp.buf.rename },
-   { "n", "<leader>ca", vim.lsp.buf.code_action, {} },
-   { "n", "gr", vim.lsp.buf.references, {} },
-}
-
-local conform = require("conform")
 
 mappings.conform = {
    {
       "n",
       "<leader>fm",
       function()
-         conform.format({ lsp_fallback = true })
+         require("conform").format({ lsp_fallback = true })
       end,
-      { desc = "format files" },
+      { desc = "format code" },
    },
 }
 
-local lint = require("lint")
+mappings.telescope = {
+   { "n", "<leader>ff", "<cmd>Telescope find_files<CR>", { noremap = true, silent = true, desc = "find files" } },
+   { "n", "<leader>fw", "<cmd>Telescope live_grep<CR>", { noremap = true, silent = true, desc = "find text" } },
+   { "n", "<leader>fb", "<cmd>Telescope buffers<CR>", { noremap = true, silent = true, desc = "show buffers" } },
+   {
+      "n",
+      "<leader>cm",
+      "<cmd>Telescope git_commits<CR>",
+      { noremap = true, silent = true, desc = "show git commits" },
+   },
+   { "n", "<leader>gt", "<cmd>Telescope git_status<CR>", { noremap = true, silent = true, desc = "show git status" } },
+
+   {
+      "n",
+      "<leader>fa",
+      "<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>",
+      { noremap = true, silent = true, desc = "find all files" },
+   },
+
+   {
+      "n",
+      "<leader>fz",
+      "<cmd>Telescope current_buffer_fuzzy_find<CR>",
+      { noremap = true, silent = true, desc = "find text in current buffer" },
+   },
+}
+
+mappings.lsp = {
+   { "n", "<leader>of", vim.diagnostic.open_float, { noremap = true, silent = true, desc = "open float diagnostics" } },
+   { "n", "gD", vim.lsp.buf.declaration, { noremap = true, silent = true, desc = "go to declaration" } },
+   { "n", "gd", vim.lsp.buf.definition, { noremap = true, silent = true, desc = "go to definition" } },
+   { "n", "K", vim.lsp.buf.hover, { noremap = true, silent = true, desc = "hover" } },
+   { "n", "gi", vim.lsp.buf.implementation, { noremap = true, silent = true, desc = "go to implementation" } },
+   { "n", "<leader>ls", vim.lsp.buf.signature_help, { noremap = true, silent = true, desc = "show signature help" } },
+   { "n", "<leader>D", vim.lsp.buf.type_definition, { noremap = true, silent = true, desc = "go to type definition" } },
+   { "n", "<leader>ra", vim.lsp.buf.rename, { noremap = true, silent = true, desc = "refactor rename" } },
+   { "n", "<leader>ca", vim.lsp.buf.code_action, { noremap = true, silent = true, desc = "show code actions" } },
+   { "n", "gr", vim.lsp.buf.references, { noremap = true, silent = true, desc = "go to references" } },
+}
 
 mappings.nvim_lint = {
    {
       "n",
       "<leader>lt",
       function()
-         lint.try_lint()
+         require("lint").try_lint()
       end,
-      { desc = "Trigger linting for current file" },
+      { desc = "trigger lint" },
    },
 }
 
--- git-signs
 local gitsigns = require("gitsigns")
 
 mappings.gitsigns = {
@@ -92,8 +118,8 @@ mappings.gitsigns = {
    { "n", "<leader>td", gitsigns.toggle_deleted, { noremap = true, silent = true } },
 }
 
-mappings.vim_fugitive = {
-   { "n", "<leader>fu", ":Git blame <CR>", {} },
+mappings.blame = {
+   { "n", "<leader>fu", ":BlameToggle<CR>", { noremap = true, silent = true, desc = "toggle git blame" } },
 }
 
 mappings.neo_tree = {
@@ -104,40 +130,27 @@ mappings.neo_tree = {
       { noremap = true, silent = true },
    },
 
-   { "n", "<leader>bf", ":Neotree buffers reveal float<CR>", { noremap = true, silent = true } },
+   { "n", "<leader>bf", ":Neotree buffers reveal float<CR>", { noremap = true, silent = true, desc = "toggle neo-tree" } },
 }
-
-local rainbow_delimiters = require("rainbow-delimiters")
-
-local function toggle_rainbow_delimiters()
-   local bufnr = vim.api.nvim_get_current_buf()
-
-   if rainbow_delimiters.is_enabled(bufnr) then
-      rainbow_delimiters.disable(bufnr)
-      print("Rainbow delimiters disabled")
-   else
-      rainbow_delimiters.enable(bufnr)
-      print("Rainbow delimiters enabled")
-   end
-end
 
 mappings.rainbow_delimiters = {
    {
       "n",
       "<leader>trd",
       function()
-         toggle_rainbow_delimiters()
-      end,
-      { noremap = true, silent = true },
-   },
-}
+         local rainbow_delimiters = require("rainbow-delimiters")
+         local bufnr = vim.api.nvim_get_current_buf()
 
-mappings.bufferline = {
-   { "n", "<C-S-i>", "<cmd>BufferLineCycleNext<cr>", { noremap = true, silent = true } },
-   { "n", "<C-S-n>", "<cmd>BufferLineCyclePrev<cr>", { noremap = true, silent = true } },
-   { "n", "<C-S-A-i>", "<cmd>BufferLineMoveNext<cr>", { noremap = true, silent = true } },
-   { "n", "<C-S-A-n>", "<cmd>BufferLineMovePrev<cr>", { noremap = true, silent = true } },
-   { "n", "<leader>x", "<cmd>bd<cr>", { noremap = true, silent = true } },
+         if rainbow_delimiters.is_enabled(bufnr) then
+            rainbow_delimiters.disable(bufnr)
+            print("Rainbow delimiters disabled")
+         else
+            rainbow_delimiters.enable(bufnr)
+            print("Rainbow delimiters enabled")
+         end
+      end,
+      { noremap = true, silent = true, desc = "toggle rainbow delimiters" },
+   },
 }
 
 return mappings
