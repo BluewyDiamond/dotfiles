@@ -27,10 +27,7 @@
    ],
 
    "modules-right": [
-      "custom/notifications",
-      "custom/updater",
-      "network",
-      "idle_inhibitor",
+      "group/misc",
       "temperature#icon",
       "temperature",
       "cpu#icon",
@@ -182,6 +179,17 @@
    "custom/language_icon": {
       "format": "",
       "tooltip": false,
+   },
+
+   "group/misc": {
+      "orientation": "horizontal",
+
+      "modules": [
+         "custom/notifications",
+         "custom/updater",
+         "network",
+         "idle_inhibitor",
+      ],
    },
 
    "hyprland/language": {

@@ -68,7 +68,6 @@
    background-color: @text;
 }
 
-#idle_inhibitor,
 #clock.calendar,
 #language,
 #clock,
@@ -93,39 +92,6 @@
 #template_fusion_g_r_hover {
    color: @bg-darker;
    background-color: @text;
-}
-
-#network,
-#custom-updater,
-#template_fusion_g2_c {
-   padding: 0px 5px 0px 5px;
-   margin: 8.5px 0px 8.5px 0px;
-   color: @text;
-   border-radius: 0px;
-   background-color: @bg-darker;
-   border-right: 1px solid @border;
-   min-width: 25px;
-   min-height: 25px;
-}
-
-#template_fusion_g2_c_hover {
-   color: @bg-darker;
-   background-color: @text;
-}
-
-#custom-notifications,
-#template_fusion_g2_l {
-   padding: 0px 5px 0px 5px;
-   margin: 8.5px 0px 8.5px 0px;
-   color: @text;
-   border-top-left-radius: 4px;
-   border-bottom-left-radius: 4px;
-   border-top-right-radius: 0px;
-   border-bottom-right-radius: 0px;
-   background-color: @bg-darker;
-   border-right: 1px solid @border;
-   min-width: 25px;
-   min-height: 25px;
 }
 
 /* -----------------------------------------------------
@@ -427,4 +393,28 @@ tooltip {
 #clock.calendar:hover {
    color: @bg-darker;
    background-color: @orange;
+}
+
+/* -----------------------------------------------------
+ * Misc Group
+ * ----------------------------------------------------- */
+
+#misc {
+   margin: 8.5px 8px 8.5px 0px;
+   color: @text;
+   border-radius: 4px;
+   background-color: @bg-darker;
+   min-width: 25px;
+   min-height: 25px;
+}
+
+#custom-notifications,
+#custom-updater,
+#network,
+#idle_inhibitor,
+#template_brrr {
+   padding: 0px 5px 0px 5px;
+   border-radius: 4px;
+   min-width: 25px;
+   min-height: 25px;
 }
