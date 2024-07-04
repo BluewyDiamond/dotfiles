@@ -1,6 +1,13 @@
 local mappings = {}
 
--- telescope
+mappings.vim = {
+   -- because i use the colemak dh wide mod keyboard layout
+   { "n", "<C-A-u>", "<C-w>k", { noremap = true, silent = true } }, -- up
+   { "n", "<C-A-i>", "<C-w>l", { noremap = true, silent = true } }, -- right
+   { "n", "<C-A-e>", "<C-w>j", { noremap = true, silent = true } }, -- bottom
+   { "n", "<C-A-n>", "<C-w>h", { noremap = true, silent = true } }, -- left
+}
+
 mappings.telescope = {
    { "n", "<leader>ff", "<cmd>Telescope find_files<CR>", { noremap = true, silent = true } },
    { "n", "<leader>fw", "<cmd>Telescope live_grep<CR>", { noremap = true, silent = true } },
