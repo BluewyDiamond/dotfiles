@@ -6,22 +6,27 @@ mappings.vim = {
    { "n", "<C-A-i>", "<C-w>l", { noremap = true, silent = true, desc = "focus right pane" } }, -- right
    { "n", "<C-A-e>", "<C-w>j", { noremap = true, silent = true, desc = "focus bottom pane" } }, -- bottom
    { "n", "<C-A-n>", "<C-w>h", { noremap = true, silent = true, desc = "focus left pane" } }, -- left
+
+   { "n", "<C-A-S-u>", "<cmd>resize -1<CR>", { noremap = true, silent = true, desc = "focus upper pane" } }, -- up
+   { "n", "<C-A-S-i>", "<cmd>vertical resize -1<CR>", { noremap = true, silent = true, desc = "focus right pane" } }, -- right
+   { "n", "<C-A-S-e>", "<cmd>resize +1 <CR>", { noremap = true, silent = true, desc = "focus bottom pane" } }, -- down
+   { "n", "<C-A-S-n>", "<cmd>vertical resize +1<CR>", { noremap = true, silent = true, desc = "focus left pane" } }, -- left
 }
 
 mappings.bufferline = {
-   { "n", "<C-S-i>", "<cmd>BufferLineCycleNext<cr>", { noremap = true, silent = true, desc = "next buffer" } },
-   { "n", "<C-S-n>", "<cmd>BufferLineCyclePrev<cr>", { noremap = true, silent = true, desc = "previous buffer" } },
+   { "n", "<C-S-t>", "<cmd>BufferLineCycleNext<cr>", { noremap = true, silent = true, desc = "next buffer" } },
+   { "n", "<C-S-r>", "<cmd>BufferLineCyclePrev<cr>", { noremap = true, silent = true, desc = "previous buffer" } },
 
    {
       "n",
-      "<C-S-A-i>",
+      "<C-S-A-t>",
       "<cmd>BufferLineMoveNext<cr>",
       { noremap = true, silent = true, desc = "move buffer to the right" },
    },
 
    {
       "n",
-      "<C-S-A-n>",
+      "<C-S-A-r>",
       "<cmd>BufferLineMovePrev<cr>",
       { noremap = true, silent = true, desc = "move buffer to the left" },
    },
