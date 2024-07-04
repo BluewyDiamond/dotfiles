@@ -20,10 +20,10 @@
    "modules-left": [
       "custom/launcher",
       "hyprland/workspaces",
-      "hyprland/window",
-      "tray",
-      "privacy",
       "cava",
+      "hyprland/window",
+      "privacy",
+      "tray",
    ],
 
    "modules-right": [
