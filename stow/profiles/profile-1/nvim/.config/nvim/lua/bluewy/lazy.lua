@@ -18,6 +18,6 @@ require("lazy").setup({
    { import = "bluewy.plugins.code.rust" },
    { import = "bluewy.plugins.code.lua" },
    { import = "bluewy.plugins.git" },
-   { import = "bluewy.plugins.ui" },
-   { import = "bluewy.plugins.utils" },
+   { import = "bluewy.plugins.reskin" },
+   { import = "bluewy.plugins.extra" },
 })
