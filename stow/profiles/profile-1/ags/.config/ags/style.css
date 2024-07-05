@@ -1,0 +1,21 @@
+.workspaces {
+   color: green;
+   background-color: pink;
+}
+
+.workspaces button {
+   color: #646972;
+}
+
+.workspaces button.active {
+   color: red;
+}
+
+.workspaces button.occupied {
+   color: orange;
+}
+
+
+.workspaces button.active {
+   color: red;
+}
