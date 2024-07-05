@@ -16,7 +16,7 @@ export default (monitor: number) =>
       name: `ags-bar-${monitor}`,
       anchor: ["top", "left", "right"],
       exclusivity: "exclusive",
-      margins: [8, 8, 8, 8],
+      margins: [8, 8, 0, 8],
 
       child: Widget.CenterBox({
          className: "superBar",
