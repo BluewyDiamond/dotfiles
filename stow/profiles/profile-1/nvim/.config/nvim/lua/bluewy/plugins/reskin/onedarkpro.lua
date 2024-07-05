@@ -60,6 +60,9 @@ return {
 
             -- not working, maybe something else is conflicting with it?
             rustBoxPlacementBalance = { fg = "${purple}" },
+
+            -- typescript
+            typescriptIdentifierName = { fg = "${red}" },
          },
       })
 
