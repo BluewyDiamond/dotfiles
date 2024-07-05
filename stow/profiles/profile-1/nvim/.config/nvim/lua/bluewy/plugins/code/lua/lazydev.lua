@@ -13,11 +13,10 @@ return {
       },
    },
 
-   { "Bilal2453/luvit-meta", commit = "*", lazy = true }, -- optional `vim.uv` typings
+   { "Bilal2453/luvit-meta", lazy = true }, --> latest commit -- optional `vim.uv` typings
 
    { -- optional completion source for require statements and module annotations
-      "hrsh7th/nvim-cmp",
-      commit = "*",
+      "hrsh7th/nvim-cmp", --> latest commit
 
       opts = function(_, opts)
          opts.sources = opts.sources or {}

@@ -6,8 +6,7 @@ return {
    },
 
    {
-      "nvim-telescope/telescope-ui-select.nvim",
-      commit = "*",
+      "nvim-telescope/telescope-ui-select.nvim", --> latest commit
 
       config = function()
          require("telescope").setup({
