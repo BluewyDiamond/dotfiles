@@ -33,45 +33,26 @@ return {
       end
 
       require("mason-lspconfig").setup_handlers({
-         -- The first entry (without a key) will be the default handler
-         -- and will be called for each installed server that doesn't have
-         -- a dedicated handler.
-
          function(server_name) -- default handler (optional)
             require("lspconfig")[server_name].setup({
                capabilities = capabilities,
             })
          end,
 
-         -- Next, you can provide a dedicated handler for specific servers.
-         -- For example, a handler override for the `rust_analyzer`:
-         -- ["rust_analyzer"] = function()
-         --    require("rust-tools").setup({})
-         -- end,
-
          ["lua_ls"] = function()
             require("lspconfig")["lua_ls"].setup({
                capabilities = capabilities,
 
-               -- settings = {
-               --    Lua = {
-               --       diagnostics = {
-               --          globals = { "vim" },
-               --       },
-               --
-               --       workspace = {
-               --          library = {
-               --             [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-               --             [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
-               --          },
-               --       },
-               --    },
-               -- },
+               -- We use lazydev to expand functionality.
             })
          end,
 
          ["rust_analyzer"] = function()
             -- We leave it blank because we setup it up with rustacevim.
+         end,
+
+         ["tsserver"] = function()
+            -- We leave it blank because we setup it up with typescript tools.
          end,
       })
    end,
