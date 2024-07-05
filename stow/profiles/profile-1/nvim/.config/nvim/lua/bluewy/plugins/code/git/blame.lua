@@ -1,6 +1,6 @@
 return {
    "FabijanZulj/blame.nvim",
-   commit = "x",
+   commit = "*",
 
    config = function()
       require("blame").setup()

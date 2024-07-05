@@ -1,6 +1,6 @@
 return {
    "goolord/alpha-nvim",
-   commit = "x",
+   commit = "*",
    dependencies = {
       {"nvim-tree/nvim-web-devicons", version = "0.x"},
    },
