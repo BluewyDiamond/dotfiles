@@ -1,4 +1,4 @@
-import Workspaces from "./modules/Workspaces";
+import HyprlandWorkspaces from "./modules/HyprlandWorkspaces";
 
 const time = Variable("", {
    poll: [
@@ -10,26 +10,19 @@ const time = Variable("", {
    ],
 });
 
-export default (monitor: number) => 
+export default (monitor: number) =>
    Widget.Window({
       monitor,
       name: `ags-bar-${monitor}`,
       anchor: ["top", "left", "right"],
       exclusivity: "exclusive",
+      margins: [8, 8, 8, 8],
 
       child: Widget.CenterBox({
-         start_widget: Widget.Label({
-            hpack: "center",
-            label: "Welcome to AGS!",
-         }),
+         className: "superBar",
 
-         center_widget: Widget.Box({
-            children: [Workspaces()],
-         }),
-
-         end_widget: Widget.Label({
-            hpack: "center",
-            label: time.bind(),
+         start_widget: Widget.Box({
+            children: [HyprlandWorkspaces()],
          }),
       }),
    });

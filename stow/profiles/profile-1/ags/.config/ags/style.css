@@ -1,21 +1,51 @@
-.workspaces {
-   color: green;
-   background-color: pink;
+@import url("../css/one_dark_collection.css");
+
+* {
+   all: unset; /* user gtk theme should not affect this style */
+}
+
+* {
+   font-size: 16px;
+   font-family: "Symbols Nerd Font Mono, Iosevka Nerd Font"; 
+   font-weight: 500;
+}
+
+.superBar {
+   padding: 4px;
+   border-radius: 4px;
+   border: solid 3px @border;
+   color: @text;
+   background-color: @bg-base;
+}
+
+.workspaces,
+#template_g_c {
+   padding: 4px;
+   color: @text;
+   border-radius: 4px;
+   background-color: @bg-darker;
 }
 
 .workspaces button {
-   color: #646972;
-}
-
-.workspaces button.active {
-   color: red;
+   color: alpha(@text, 0.1);
+   margin: 0px 12px 0px 0px;
 }
 
 .workspaces button.occupied {
-   color: orange;
+   color: alpha(@text, 0.5);
 }
 
-
 .workspaces button.active {
-   color: red;
+   color: @red;
+}
+
+.workspaces button:last-child {
+   margin: 0px 0px 0px 0px;
+}
+
+.workspaces button:hover {
+   /* disable default effects */
+   background-color: transparent;
+
+   color: @orange;
 }

@@ -13,11 +13,11 @@ export default () =>
 
          children: ["", "󱎓", "󰋎", "", "", "", "", "󰨞"].map(
             (value, index) => {
-               print("i -> " + index);
+               // because i start counting from the edges of the number row,
+               // so the final accessible workspace would be 10 and not 8.
                if (index > 4) {
                   index = index + 2;
                }
-               print("after i -> " + index);
 
                let workspace_id = index + 1;
 
@@ -28,12 +28,6 @@ export default () =>
 
                   setup: (self) =>
                      self.hook(hyprland, () => {
-                        print(
-                           hyprland.active.workspace.id + " ?= " + workspace_id
-                        );
-
-                        print(hyprland.active.workspace.id === workspace_id);
-
                         self.toggleClassName(
                            "active",
                            hyprland.active.workspace.id === workspace_id
