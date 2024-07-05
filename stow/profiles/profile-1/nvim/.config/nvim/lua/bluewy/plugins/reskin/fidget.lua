@@ -1,6 +1,6 @@
 return {
    "j-hui/fidget.nvim",
-   version = "1.*",
+   version = "1.x",
    event = { "BufEnter" },
 
    config = function()

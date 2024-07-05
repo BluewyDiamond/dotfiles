@@ -1,11 +1,11 @@
 return {
    "williamboman/mason.nvim",
-   version = "1.*",
+   version = "1.x",
    lazy = false,
 
    dependencies = {
-      { "neovim/nvim-lspconfig", version = "0.*", lazy = false },
-      { "williamboman/mason-lspconfig.nvim", version = "1.*", lazy = false },
+      { "neovim/nvim-lspconfig", version = "0.x", lazy = false },
+      { "williamboman/mason-lspconfig.nvim", version = "1.x", lazy = false },
    },
 
    config = function()

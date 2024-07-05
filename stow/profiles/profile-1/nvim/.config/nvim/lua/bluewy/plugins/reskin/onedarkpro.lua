@@ -1,6 +1,6 @@
 return {
    "olimorris/onedarkpro.nvim",
-   version = "0.*",
+   version = "0.x",
    priority = 1000,
 
    config = function()

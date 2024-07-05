@@ -1,13 +1,13 @@
 return {
    {
       "nvim-telescope/telescope.nvim",
-      version = "0.1.*",
-      dependencies = { "nvim-lua/plenary.nvim", version = "*" },
+      version = "0.1.x",
+      dependencies = { "nvim-lua/plenary.nvim", version = "x" },
    },
 
    {
       "nvim-telescope/telescope-ui-select.nvim",
-      commit = "*",
+      commit = "x",
 
       config = function()
          require("telescope").setup({

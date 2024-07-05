@@ -1,6 +1,6 @@
 return {
    "HiPhish/rainbow-delimiters.nvim",
-   version  = "0.*",
+   version  = "0.x",
 
    config = function()
       local rainbow_delimiters = require("rainbow-delimiters")
