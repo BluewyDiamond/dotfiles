@@ -1,5 +1,6 @@
 return {
    "olimorris/onedarkpro.nvim",
+   --> latest commit
    priority = 1000,
 
    config = function()
