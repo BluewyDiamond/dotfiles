@@ -18,6 +18,7 @@
    background-color: @bg-base;
 }
 
+.tray,
 .workspaces,
 .taskbar,
 #template_g_c {
