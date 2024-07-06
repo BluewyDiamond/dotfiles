@@ -19,7 +19,9 @@
 }
 
 .workspaces,
+.taskbar,
 #template_g_c {
+   margin-right: 4px;
    padding: 4px;
    color: @text;
    border-radius: 4px;
@@ -49,3 +51,31 @@
 
    color: @orange;
 }
+
+.taskbar button {
+   margin: 0px 12px 0px 0px;
+}
+
+.taskbar button:last-child {
+   margin: 0px 0px 0px 0px;
+}
+
+.taskbar button:active {
+   background-color: @red;
+   color: @red;
+}
+
+
+.taskbar button:hover {
+   /* disable default effects */
+   background-color: @orange;
+
+   /*color: @orange;*/
+}
+
+.taskbar .indicator.active {
+        background-color: @red;
+        min-height: 4pt;
+        min-width: 6pt;
+        margin: 2pt;
+    }

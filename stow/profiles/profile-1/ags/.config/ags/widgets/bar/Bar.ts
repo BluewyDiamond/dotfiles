@@ -1,3 +1,4 @@
+import HyprlandTaskbar from "./modules/HyprlandTaskbar";
 import HyprlandWorkspaces from "./modules/HyprlandWorkspaces";
 
 const time = Variable("", {
@@ -22,7 +23,7 @@ export default (monitor: number) =>
          className: "superBar",
 
          start_widget: Widget.Box({
-            children: [HyprlandWorkspaces()],
+            children: [HyprlandWorkspaces(), HyprlandTaskbar()],
          }),
       }),
    });
