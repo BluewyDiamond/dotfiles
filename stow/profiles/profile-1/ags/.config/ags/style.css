@@ -53,26 +53,14 @@
    color: @orange;
 }
 
-.taskbar button {
+.taskbar box {
    margin: 0px 12px 0px 0px;
 }
 
-.taskbar button:last-child {
+.taskbar box:last-child {
    margin: 0px 0px 0px 0px;
 }
 
-.taskbar button:active {
-   background-color: @red;
-   color: @red;
-}
-
-
-.taskbar button:hover {
-   /* disable default effects */
-   background-color: @orange;
-
-   /*color: @orange;*/
-}
 
 .taskbar .indicator.active {
         background-color: @red;
