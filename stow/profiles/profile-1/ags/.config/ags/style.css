@@ -22,11 +22,19 @@
  * Default
  * ----------------------------------------------------- */
 
-.tray,
 .workspaces,
 .taskbar,
-#template_g_c {
+#template_left {
    margin-right: 4px;
+   padding: 4px;
+   color: @text;
+   border-radius: 4px;
+   background-color: @bg-darker;
+}
+
+.tray,
+#template_right {
+   margin-left: 4px;
    padding: 4px;
    color: @text;
    border-radius: 4px;
@@ -78,11 +86,11 @@
  * ----------------------------------------------------- */
 
 .taskbar box {
-   margin: 0px 12px 0px 0px;
+   margin-right: 12px;
 }
 
 .taskbar box:last-child {
-   margin: 0px 0px 0px 0px;
+   margin-right: 0px;
 }
 
 .taskbar .indicator.active {
@@ -90,6 +98,18 @@
    min-height: 4pt;
    min-width: 6pt;
    margin: 2pt;
+}
+
+/* -----------------------------------------------------
+ * Tray
+ * ----------------------------------------------------- */
+
+.tray button {
+   margin-right: 12px;
+}
+
+.tray button:last-child {
+   margin-right: 0px;
 }
 
 /* -----------------------------------------------------
