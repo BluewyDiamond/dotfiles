@@ -21,6 +21,7 @@ const AppItem = (address: string) => {
    const app = apps.list.find((app) => app.match(client.class));
 
    const button = Widget.Button({
+      className: "someName",
       attribute: address,
 
       child: Widget.Icon({
@@ -32,6 +33,14 @@ const AppItem = (address: string) => {
       }),
 
       onClicked: () => focusClient(client.pid),
+
+            setup: (w) =>
+               w.hook(hyprland, () => {
+                  w.toggleClassName(
+                     "active",
+                     hyprland.active.client.address === address
+                  );
+               }),
    });
 
    return Widget.Box(

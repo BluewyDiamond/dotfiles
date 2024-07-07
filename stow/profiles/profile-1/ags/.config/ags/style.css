@@ -22,6 +22,7 @@
  * Default
  * ----------------------------------------------------- */
 
+.clock,
 .workspaces,
 .taskbar,
 #template_left {
@@ -32,6 +33,7 @@
    background-color: @bg-darker;
 }
 
+.volume,
 .tray,
 #template_right {
    margin-left: 4px;
@@ -93,12 +95,26 @@
    margin-right: 0px;
 }
 
-.taskbar .indicator.active {
-   background-color: @red;
-   min-height: 4pt;
-   min-width: 6pt;
-   margin: 2pt;
+.taskbar button:hover {
+   border-bottom: 1px solid @orange;
 }
+
+.taskbar .someName.active {
+   border-bottom: solid 1px @red;
+}
+
+
+.taskbar .someName.active:hover {
+   border-bottom: solid 1px @orange;
+}
+
+/*.taskbar .indicator.active {*/
+   /*color: @red;*/
+   /*background-color: @red;*/
+   /*min-height: 20px;*/
+   /*min-width: 20px;*/
+   /*margin: 2pt;*/
+/*}*/
 
 /* -----------------------------------------------------
  * Tray
@@ -110,6 +126,14 @@
 
 .tray button:last-child {
    margin-right: 0px;
+}
+
+/* -----------------------------------------------------
+ * Tray
+ * ----------------------------------------------------- */
+
+.volume {
+   color: @blue;
 }
 
 /* -----------------------------------------------------

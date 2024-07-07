@@ -1,6 +1,8 @@
+import Clock from "./modules/Clock";
 import HyprlandTaskbar from "./modules/HyprlandTaskbar";
 import HyprlandWorkspaces from "./modules/HyprlandWorkspaces";
 import Tray from "./modules/Tray";
+import Volume from "./modules/Volume";
 
 const time = Variable("", {
    poll: [
@@ -23,14 +25,19 @@ export default (monitor: number) =>
       child: Widget.CenterBox({
          className: "superBar",
 
-         start_widget: Widget.Box({
+         startWidget: Widget.Box({
             hpack: "start",
-            children: [HyprlandWorkspaces(), HyprlandTaskbar()],
+            children: [HyprlandWorkspaces(), HyprlandTaskbar(), Tray()],
          }),
 
-         end_widget: Widget.Box({
+         centerWidget: Widget.Box({
+            hpack: "center",
+            children: [Clock()],
+         }),
+
+         endWidget: Widget.Box({
             hpack: "end",
-            children: [Tray()],
+            children: [Volume()],
          }),
       }),
    });
