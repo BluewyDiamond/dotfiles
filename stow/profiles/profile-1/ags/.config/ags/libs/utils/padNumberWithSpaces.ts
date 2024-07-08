@@ -1,4 +1,8 @@
-export default (num: number, maxDigits: number, fillCharacter: string): string => {
+export default (
+   num: number,
+   maxDigits: number,
+   fillCharacter: string
+): string => {
    const numAsString = num.toString();
    const numAsStringLength = numAsString.length;
 

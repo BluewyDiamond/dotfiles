@@ -30,7 +30,7 @@ export default () => {
       24: "󱑊",
    };
 
-    function getIcon(): string {
+   function getIcon(): string {
       const currentHour = parseInt(date.value.split(":")[0]);
 
       return icons[currentHour] || "󱡦";

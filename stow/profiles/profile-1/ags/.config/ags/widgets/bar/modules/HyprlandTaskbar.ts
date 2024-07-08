@@ -92,14 +92,16 @@ const AppItem = (address: string) => {
 //    });
 // }
 
-function sortItems<T extends { attribute: { address: string } }>(arr: T[]): Box<Widget, { address: string }>[] {
+function sortItems<T extends { attribute: { address: string } }>(
+   arr: T[]
+): Box<Widget, { address: string }>[] {
    if (arr.length === 0) {
       const placeholder = Widget.Label({
-         label: "taskbar"
+         label: "taskbar",
       });
 
       const box = Widget.Box({
-         children: [placeholder]
+         children: [placeholder],
       });
 
       return [box];

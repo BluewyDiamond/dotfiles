@@ -22,7 +22,8 @@ export default () => {
    }
 
    const icon = Widget.Label({
-      label: Utils.watch(getIcon(), audio.speaker, getIcon)});
+      label: Utils.watch(getIcon(), audio.speaker, getIcon),
+   });
 
    const label = Widget.Label({
       label: Utils.watch(

@@ -11,20 +11,20 @@ const SysTrayItem = (item: TrayItem) => {
    });
 
    return Widget.Box({
-      child: button
-   })
-}
+      child: button,
+   });
+};
 
 function process(arr) {
    if (arr.length !== 0) {
-      return arr
+      return arr;
    } else {
       const placeholder = Widget.Label({
-         label: "tray"
+         label: "tray",
       });
 
       const box = Widget.Box({
-         children: [placeholder]
+         children: [placeholder],
       });
 
       return [box];
@@ -38,21 +38,27 @@ export default () => {
 
       setup: (self) =>
          self
-            .hook(systemtray,
+            .hook(
+               systemtray,
                (w, _) => {
-                  const xxx = process(systemtray.items.map((item) => SysTrayItem(item)))
+                  const xxx = process(
+                     systemtray.items.map((item) => SysTrayItem(item))
+                  );
 
-                  w.children = xxx
+                  w.children = xxx;
                },
                "added"
             )
-            .hook(systemtray,
+            .hook(
+               systemtray,
                (w, _) => {
-                  const xxx = process(systemtray.items.map((item) => SysTrayItem(item)))
+                  const xxx = process(
+                     systemtray.items.map((item) => SysTrayItem(item))
+                  );
 
-                  w.children = xxx
+                  w.children = xxx;
                },
                "removed"
-            )
+            ),
    });
-}
+};
