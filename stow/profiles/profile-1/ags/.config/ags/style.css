@@ -170,7 +170,7 @@
 }
 
 .notification:hover {
-   border: 3px solid @orange
+   border: 3px solid @orange;
 }
 
 .notification.critical {
@@ -199,7 +199,6 @@
 .actions .action-button:last-child {
    margin-right: 0;
 }
-
 
 /* -----------------------------------------------------
  * Overview

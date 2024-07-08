@@ -74,11 +74,11 @@ function NotificationPopup(notification: Notification) {
 
    const group1 = Widget.Box({
       vertical: true,
-      children: [title, body]
+      children: [title, body],
    });
 
    const content = Widget.Box({
-      children: [icon, group1]
+      children: [icon, group1],
    });
 
    return Widget.Button({
@@ -88,8 +88,8 @@ function NotificationPopup(notification: Notification) {
 
       child: Widget.Box({
          vertical: true,
-         children: [content, actions]
-      })
+         children: [content, actions],
+      }),
    });
 }
 
@@ -108,13 +108,27 @@ export default (monitor: number = 0) => {
 
          setup: (self) =>
             self
-               .hook(notifications, (_, id: number) => {
-                  const n = notifications.getNotification(id);
-                  if (n) self.children = [NotificationPopup(n), ...self.children];
-               }, "notified")
-               .hook(notifications, (_, id: number) => {
-                  self.children.find((n) => n.attribute.id === id)?.destroy();
-               }, "dismissed")
+               .hook(
+                  notifications,
+                  (_, id: number) => {
+                     const n = notifications.getNotification(id);
+                     if (n)
+                        self.children = [
+                           NotificationPopup(n),
+                           ...self.children,
+                        ];
+                  },
+                  "notified"
+               )
+               .hook(
+                  notifications,
+                  (_, id: number) => {
+                     self.children
+                        .find((n) => n.attribute.id === id)
+                        ?.destroy();
+                  },
+                  "dismissed"
+               ),
       }),
    });
 };
