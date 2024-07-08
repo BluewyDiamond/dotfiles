@@ -97,12 +97,15 @@ export default () => {
 
    const notificationsContainer = Widget.Box({
       className: "notifications-container",
+      hexpand: true,
+      vexpand: true,
 
       child: Widget.Box({
          name: "overview",
          className: "notifications-area",
          /* need this otherwise it won't bother rendering*/
          css: "min-width: 2px; min-height: 2px;",
+         hexpand: true,
          vertical: true,
          children: notificationsList,
 

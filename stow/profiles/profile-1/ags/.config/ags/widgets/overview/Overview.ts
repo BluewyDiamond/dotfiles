@@ -1,16 +1,26 @@
 import NotificationList from "./modules/NotificationList";
+import QuickSettings from "./modules/QuickSettings";
 
 export default (monitor: number = 0) => {
+   const test = Widget.Box({
+      hexpand: true,
+      vexpand: true,
+      child: Widget.Label({
+         label: "senoatrenioatneioarntreion",
+      }),
+   });
+
    return Widget.Window({
       monitor,
       name: `ags-overview`,
-      anchor: ["right"],
+      anchor: ["top", "right"],
       margins: [8, 8, 8, 8],
       visible: false,
 
       child: Widget.Box({
-         className: "overview",
-         children: [NotificationList()],
+         className: "overview-panel",
+         vertical: true,
+         children: [QuickSettings(), NotificationList()],
       }),
    });
 };

@@ -27,7 +27,7 @@ export default () => {
       21: "󱑇",
       22: "󱑈",
       23: "󱑉",
-      24: "󱑊",
+      0: "󱑊",
    };
 
    function getIcon(): string {

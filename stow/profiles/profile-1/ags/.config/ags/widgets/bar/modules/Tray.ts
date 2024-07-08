@@ -12,6 +12,7 @@ const SysTrayItem = (item: TrayItem) => {
    });
 
    return Widget.Box({
+      className: "tray-item",
       child: button,
    });
 };

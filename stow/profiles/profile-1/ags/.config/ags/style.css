@@ -33,7 +33,7 @@
    background-color: @bg-darker;
 }
 
-.notification-indicator,
+.overview,
 .volume,
 .tray,
 #template_right {
@@ -120,11 +120,11 @@
  * Tray
  * ----------------------------------------------------- */
 
-.tray button {
+.tray-item {
    margin-right: 12px;
 }
 
-.tray button:last-child {
+.tray-item:last-child{
    margin-right: 0px;
 }
 
@@ -137,7 +137,7 @@
 }
 
 /* -----------------------------------------------------
- * Notifications Stuff
+ * Notification Popups
  * ----------------------------------------------------- */
 
 .notification {
@@ -204,7 +204,7 @@
  * Overview
  * ----------------------------------------------------- */
 
-.overview {
+.overview-panel {
    color: @text;
    background-color: @bg-base;
    border: 3px solid @border;
@@ -218,10 +218,29 @@
    background-color: black;
 }
 
-.notifications-area {
+.quick-settings-container {
+   padding: 50px;
+   background-color: grey;
 }
 
-/* notification indicator */
-.notification-indicator .non-empty {
+.setting {
+   color: @text;
+   background-color: @bg-base;
+   border: 1px solid @border;
+   min-width: 100px;
+   min-height: 30px;
+}
+
+.setting label {
    color: @red;
+}
+
+.setting:hover {
+   background-color: @orange;
+}
+
+/**/
+
+tooltip {
+   background-color: @bg-darker;
 }
