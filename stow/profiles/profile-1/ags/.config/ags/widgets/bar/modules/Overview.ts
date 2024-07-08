@@ -1,41 +1,16 @@
-const notificationService = await Service.import("notifications");
-
 export default () => {
    const label = Widget.Label({
-      label: "+",
+      label: "",
    });
 
    return Widget.Button({
-      className: "notification-indicator",
+      className: "overview",
+
       onClicked: () => {
          App.toggleWindow("ags-overview");
+         // TODO: change label if overview is visible or not
       },
+
       child: label,
-
-      setup: (self) =>
-         self
-            .hook(
-               notificationService,
-               () => {
-                  print("debug: " + notificationService.notifications.length);
-                  self.child.toggleClassName(
-                     "non-empty",
-                     notificationService.notifications.length !== 0
-                  );
-               },
-               "notified"
-            )
-
-            .hook(
-               notificationService,
-               () => {
-                  print("debug2: " + notificationService.notifications.length);
-                  self.child.toggleClassName(
-                     "non-empty",
-                     notificationService.notifications.length !== 0
-                  );
-               },
-               "closed"
-            ),
    });
 };
