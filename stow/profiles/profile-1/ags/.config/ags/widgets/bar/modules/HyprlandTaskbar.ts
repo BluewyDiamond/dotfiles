@@ -39,9 +39,7 @@ const AppItem = (address: string) => {
    }
 
    const button = Widget.Button({
-      className: "someName",
       attribute: address,
-
       child: iconOrLabel,
 
       onClicked: () => focusClient(client.pid),
@@ -72,6 +70,7 @@ const AppItem = (address: string) => {
             className: "indicator",
             hpack: "center",
             vpack: "start",
+
             setup: (w) =>
                w.hook(hyprland, () => {
                   w.toggleClassName(

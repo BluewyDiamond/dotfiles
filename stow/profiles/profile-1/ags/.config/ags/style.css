@@ -99,11 +99,11 @@
    border-bottom: 1px solid @orange;
 }
 
-.taskbar .someName.active {
+.taskbar button.active {
    border-bottom: solid 1px @red;
 }
 
-.taskbar .someName.active:hover {
+.taskbar button.active:hover {
    border-bottom: solid 1px @orange;
 }
 
@@ -143,10 +143,6 @@
    font-size: 18px;
 }
 
-window.notification-popups box.notifications {
-   /*padding: 0.5em;*/
-}
-
 .icon {
    min-width: 48px;
    min-height: 48px;
@@ -172,8 +168,8 @@ window.notification-popups box.notifications {
    min-width: 350px;
 }
 
-.notificaton .eventBox:hover {
-   border: 3px solid @orange;
+.notification:hover {
+   border: 3px solid @orange
 }
 
 .notification.critical {

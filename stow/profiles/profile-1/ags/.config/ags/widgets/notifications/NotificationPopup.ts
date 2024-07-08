@@ -25,7 +25,7 @@ function NotificationIcon({ app_entry, app_icon, image }) {
 }
 
 /** @param {import('resource:///com/github/Aylur/ags/service/notifications.js').Notification} notification */
-function Notification2(notification: Notification) {
+function NotificationPopup(notification: Notification) {
    const icon = Widget.Box({
       vpack: "start",
       className: "icon",
@@ -75,19 +75,18 @@ function Notification2(notification: Notification) {
    const group1 = Widget.Box({
       vertical: true,
       children: [title, body]
-   })
+   });
 
    const content = Widget.Box({
       children: [icon, group1]
-   })
+   });
 
-   return Widget.EventBox({
-      className: "eventBox",
+   return Widget.Button({
+      className: `notification ${notification.urgency}`,
       attribute: { id: notification.id },
       onPrimaryClick: notification.dismiss,
 
       child: Widget.Box({
-         className: `notification ${notification.urgency}`,
          vertical: true,
          children: [content, actions]
       })
@@ -95,33 +94,27 @@ function Notification2(notification: Notification) {
 }
 
 export default (monitor: number = 0) => {
-   const list = Widget.Box({
-      vertical: true,
-      children: notifications.popups.map(Notification2),
-
-      setup: (self) =>
-         self
-            .hook(notifications, (_, id: number) => {
-               const n = notifications.getNotification(id);
-               if (n) list.children = [Notification2(n), ...list.children];
-            }, "notified")
-            .hook(notifications, (_, id: number) => {
-               list.children.find((n) => n.attribute.id === id)?.destroy();
-            }, "dismissed")
-   });
-
    return Widget.Window({
       monitor,
       name: `ags-notifications-${monitor}`,
-      className: "notification-popups",
       anchor: ["top", "right"],
       margins: [8, 8, 8, 8],
 
       child: Widget.Box({
-         css: "min-width: 2px; min-height: 2px;",
-         className: "notifications",
          vertical: true,
-         child: list,
+         children: notifications.popups.map(NotificationPopup),
+         /* need this otherwise it won't bother rendering*/
+         css: "min-width: 2px; min-height: 2px;",
+
+         setup: (self) =>
+            self
+               .hook(notifications, (_, id: number) => {
+                  const n = notifications.getNotification(id);
+                  if (n) self.children = [NotificationPopup(n), ...self.children];
+               }, "notified")
+               .hook(notifications, (_, id: number) => {
+                  self.children.find((n) => n.attribute.id === id)?.destroy();
+               }, "dismissed")
       }),
    });
 };
