@@ -13,7 +13,7 @@ export default (monitor: number = 0) => {
    return Widget.Window({
       monitor,
       name: `ags-overview`,
-      anchor: ["top", "right"],
+      anchor: ["top", "right", "bottom"],
       margins: [8, 8, 8, 8],
       visible: false,
 
