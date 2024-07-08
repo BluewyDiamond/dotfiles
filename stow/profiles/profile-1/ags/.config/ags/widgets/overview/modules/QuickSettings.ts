@@ -1,29 +1,34 @@
-function row() {
+import Gtk from "types/@girs/gtk-3.0/gtk-3.0";
+
+function button(text: string) {
    return Widget.Button({
+      hexpand: true,
       className: "setting",
-      css: "min-width: 2px; min-height: 2px;",
+      css: "min-height: 50px",
+
       child: Widget.Label({
-         label: "placeholder",
+         label: text,
       }),
    });
 };
 
 export default () => {
-   const column1 = Widget.Box({
-      vertical: true,
-      hexpand: true,
-      children: [row(), row(), row()]
-   })
-
- const column2 = Widget.Box({
-      vertical: true,
-      hexpand: true,
-      children: [row(), row(), row()]
-   })
-
    return Widget.Box({
       className: "quick-settings-container",
       hexpand: true,
-      children: [column1, column2]
-   });
+      vertical: true,
+      spacing: 8,
+      children: [
+         Widget.Box({
+            spacing: 8,
+            children: [button("first"), button("second")]
+         }),
+
+         Widget.Box({
+            spacing: 8,
+            children: [button("third"), button("fourth")]
+         })
+      ]
+
+   })
 };

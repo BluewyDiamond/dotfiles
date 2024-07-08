@@ -210,25 +210,27 @@
    border: 3px solid @border;
    min-height: 800px;
    min-width: 500px;
-   padding: 4px;
+   padding: 12px;
 }
 
 .notifications-container {
-   padding: 4px;
+   padding: 8px;
    background-color: black;
 }
 
 .quick-settings-container {
-   padding: 50px;
-   background-color: grey;
+   padding: 8px;
+   background-color: black;
+   margin-bottom: 8px;
 }
 
 .setting {
    color: @text;
    background-color: @bg-base;
    border: 1px solid @border;
-   min-width: 100px;
-   min-height: 30px;
+   min-width: 200px;
+   min-height: 100px;
+    border-radius: 25px;
 }
 
 .setting label {
