@@ -33,6 +33,7 @@
    background-color: @bg-darker;
 }
 
+.notification-indicator,
 .volume,
 .tray,
 #template_right {
@@ -197,4 +198,20 @@
 
 .actions .action-button:last-child {
    margin-right: 0;
+}
+
+
+/* -----------------------------------------------------
+ * Overview
+ * ----------------------------------------------------- */
+
+.overview {
+   color: @text;
+   background-color: @bg-base;
+   border: 3px solid @border;
+   min-height: 500px;
+   min-width: 300px;
+}
+
+.notifications-area {
 }

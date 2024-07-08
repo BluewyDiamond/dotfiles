@@ -1,4 +1,5 @@
 import findIcon from "libs/utils/findIcon";
+import { Box } from "types/@girs/gtk-3.0/gtk-3.0.cjs";
 
 const hyprland = await Service.import("hyprland");
 const apps = await Service.import("applications");
@@ -83,9 +84,7 @@ const AppItem = (address: string) => {
    );
 };
 
-function sortItemsOrShowTextWhenEmpty<
-   T extends { attribute: { address: string } },
->(arr: T[]) {
+function sortItemsOrShowTextWhenEmpty(arr) {
    if (arr.length === 0) {
       const placeholder = Widget.Label({
          label: "taskbar",
