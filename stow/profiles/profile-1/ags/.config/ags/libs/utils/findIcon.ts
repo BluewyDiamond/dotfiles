@@ -1,9 +1,6 @@
 import icons, { substitutes } from "libs/icons";
 import GLib from "gi://GLib?version=2.0";
 
-/**
- * @returns substitute icon || name || fallback icon
- */
 export default (name: string | null, fallback = icons.missing): string => {
    if (!name) return fallback || "";
 

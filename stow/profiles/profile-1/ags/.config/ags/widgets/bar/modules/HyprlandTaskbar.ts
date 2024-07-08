@@ -1,4 +1,4 @@
-import icon from "libs/utils/icon";
+import findIcon from "libs/utils/findIcon";
 
 const hyprland = await Service.import("hyprland");
 const apps = await Service.import("applications");
@@ -20,17 +20,29 @@ const AppItem = (address: string) => {
 
    const app = apps.list.find((app) => app.match(client.class));
 
+   const iconUrl = findIcon(
+      app?.icon_name || client.class + "-symbolic",
+      "application-x-executable" + "-symbolic"
+   );
+
+   var iconOrLabel;
+
+   if (iconUrl.length !== 0) {
+      iconOrLabel = Widget.Icon({
+         size: 16,
+         icon: iconUrl,
+      });
+   } else {
+      iconOrLabel = Widget.Label({
+         label: "x",
+      });
+   }
+
    const button = Widget.Button({
       className: "someName",
       attribute: address,
 
-      child: Widget.Icon({
-         size: 16,
-         icon: icon(
-            app?.icon_name || client.class + "-symbolic",
-            "application-x-executable" + "-symbolic"
-         ),
-      }),
+      child: iconOrLabel,
 
       onClicked: () => focusClient(client.pid),
 
@@ -72,9 +84,9 @@ const AppItem = (address: string) => {
    );
 };
 
-function sortItemsOrShowTextWhenEmpty<T extends { attribute: { address: string } }>(
-   arr: T[]
-) {
+function sortItemsOrShowTextWhenEmpty<
+   T extends { attribute: { address: string } },
+>(arr: T[]) {
    if (arr.length === 0) {
       const placeholder = Widget.Label({
          label: "taskbar",
@@ -97,7 +109,9 @@ function sortItemsOrShowTextWhenEmpty<T extends { attribute: { address: string }
 export default () => {
    return Widget.Box({
       className: "taskbar",
-      children: sortItemsOrShowTextWhenEmpty(hyprland.clients.map((c) => AppItem(c.address))),
+      children: sortItemsOrShowTextWhenEmpty(
+         hyprland.clients.map((c) => AppItem(c.address))
+      ),
 
       setup: (self) =>
          self
@@ -115,7 +129,10 @@ export default () => {
                hyprland,
                (w, address?: string) => {
                   if (typeof address === "string")
-                     w.children = sortItemsOrShowTextWhenEmpty([...w.children, AppItem(address)]);
+                     w.children = sortItemsOrShowTextWhenEmpty([
+                        ...w.children,
+                        AppItem(address),
+                     ]);
                },
                "client-added"
             )
