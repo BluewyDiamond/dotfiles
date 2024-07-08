@@ -34,13 +34,13 @@ const AppItem = (address: string) => {
 
       onClicked: () => focusClient(client.pid),
 
-            setup: (w) =>
-               w.hook(hyprland, () => {
-                  w.toggleClassName(
-                     "active",
-                     hyprland.active.client.address === address
-                  );
-               }),
+      setup: (w) =>
+         w.hook(hyprland, () => {
+            w.toggleClassName(
+               "active",
+               hyprland.active.client.address === address
+            );
+         }),
    });
 
    return Widget.Box(
@@ -72,7 +72,39 @@ const AppItem = (address: string) => {
    );
 };
 
-function sortItems<T extends { attribute: { address: string } }>(arr: T[]) {
+// function sortItems<T extends { attribute: { address: string } }>(arr: T[]) {
+//    if (arr.length === 0) {
+//       const placeholder = Widget.Label({
+//          label: "taskbar"
+//       })
+
+//       const box = Widget.Box({
+//          children: [placeholder]
+//       })
+
+//       return [box]
+//    }
+
+//    return arr.sort(({ attribute: a }, { attribute: b }) => {
+//       const aclient = hyprland.getClient(a.address)!;
+//       const bclient = hyprland.getClient(b.address)!;
+//       return aclient.workspace.id - bclient.workspace.id;
+//    });
+// }
+
+function sortItems<T extends { attribute: { address: string } }>(arr: T[]): Box<Widget, { address: string }>[] {
+   if (arr.length === 0) {
+      const placeholder = Widget.Label({
+         label: "taskbar"
+      });
+
+      const box = Widget.Box({
+         children: [placeholder]
+      });
+
+      return [box];
+   }
+
    return arr.sort(({ attribute: a }, { attribute: b }) => {
       const aclient = hyprland.getClient(a.address)!;
       const bclient = hyprland.getClient(b.address)!;
@@ -82,7 +114,7 @@ function sortItems<T extends { attribute: { address: string } }>(arr: T[]) {
 
 export default () => {
    return Widget.Box({
-      class_name: "taskbar",
+      className: "taskbar",
       children: sortItems(hyprland.clients.map((c) => AppItem(c.address))),
 
       setup: (self) =>
