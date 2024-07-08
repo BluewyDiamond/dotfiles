@@ -14,7 +14,7 @@ export default (monitor: number) =>
       margins: [8, 8, 0, 8],
 
       child: Widget.CenterBox({
-         className: "superBar",
+         className: "bar",
 
          startWidget: Widget.Box({
             hpack: "start",

@@ -106,7 +106,7 @@ function sortItemsOrShowTextWhenEmpty(arr) {
 
 export default () => {
    return Widget.Box({
-      className: "taskbar",
+      className: "taskbar-bar-module",
       children: sortItemsOrShowTextWhenEmpty(
          hyprland.clients.map((c) => AppItem(c.address))
       ),

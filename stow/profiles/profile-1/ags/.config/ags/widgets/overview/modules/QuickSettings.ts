@@ -3,7 +3,7 @@ import Gtk from "types/@girs/gtk-3.0/gtk-3.0";
 function button(text: string) {
    return Widget.Button({
       hexpand: true,
-      className: "setting",
+      className: "overview-setting",
       css: "min-height: 50px",
 
       child: Widget.Label({
@@ -14,7 +14,7 @@ function button(text: string) {
 
 export default () => {
    return Widget.Box({
-      className: "quick-settings-container",
+      className: "overview-quick-settings-container",
       hexpand: true,
       vertical: true,
       spacing: 8,

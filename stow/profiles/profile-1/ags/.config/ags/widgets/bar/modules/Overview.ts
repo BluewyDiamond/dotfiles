@@ -4,7 +4,7 @@ export default () => {
    });
 
    return Widget.Button({
-      className: "overview",
+      className: "overview-bar-module",
 
       onClicked: () => {
          App.toggleWindow("ags-overview");

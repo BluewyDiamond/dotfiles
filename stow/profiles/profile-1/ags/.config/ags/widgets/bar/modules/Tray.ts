@@ -12,7 +12,7 @@ const SysTrayItem = (item: TrayItem) => {
    });
 
    return Widget.Box({
-      className: "tray-item",
+      className: "bar-module-tray-item",
       child: button,
    });
 };
@@ -35,7 +35,7 @@ function showTextWhenEmpty(sysTrayItemList: Box[]): Box[] {
 
 export default () => {
    return Widget.Box({
-      className: "tray",
+      className: "tray-bar-module",
       children: showTextWhenEmpty(
          systemtray.items.map((item) => SysTrayItem(item))
       ),

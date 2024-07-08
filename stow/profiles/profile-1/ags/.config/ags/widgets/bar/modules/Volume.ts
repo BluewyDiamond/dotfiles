@@ -46,7 +46,7 @@ export default () => {
       },
 
       child: Widget.Box({
-         class_name: "volume",
+         className: "volume-bar-module",
          children: [icon, volume],
       }),
    });

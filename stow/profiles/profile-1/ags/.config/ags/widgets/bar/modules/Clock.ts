@@ -44,7 +44,7 @@ export default () => {
    });
 
    return Widget.Box({
-      className: "clock",
+      className: "clock-bar-module",
       children: [icon, clock],
    });
 };

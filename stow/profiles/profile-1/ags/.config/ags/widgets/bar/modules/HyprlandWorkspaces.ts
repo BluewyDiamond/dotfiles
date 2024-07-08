@@ -9,7 +9,7 @@ export default () =>
       onScrollDown: () => focusWorkspace("-1"),
 
       child: Widget.Box({
-         className: "workspaces",
+         className: "workspaces-bar-module",
 
          children: ["", "󱎓", "󰋎", "", "", "", "󰨞"].map((value, index) => {
             // because i start counting from the edges of the number row,

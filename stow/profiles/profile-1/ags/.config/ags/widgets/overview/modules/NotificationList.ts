@@ -26,12 +26,12 @@ const NotificationIcon = ({ app_entry, app_icon, image }) => {
 const NotificationRow = (notification: Notification) => {
    const icon = Widget.Box({
       vpack: "start",
-      className: "icon",
+      className: "notification-popup-icon",
       child: NotificationIcon(notification),
    });
 
    const title = Widget.Label({
-      className: "title",
+      className: "notification-popup-title",
       xalign: 0,
       justification: "left",
       hexpand: true,
@@ -43,7 +43,7 @@ const NotificationRow = (notification: Notification) => {
    });
 
    const body = Widget.Label({
-      className: "body",
+      className: "notification-popup-body",
       hexpand: true,
       use_markup: true,
       xalign: 0,
@@ -53,11 +53,11 @@ const NotificationRow = (notification: Notification) => {
    });
 
    const actions = Widget.Box({
-      className: "actions",
+      className: "notification-popup-actions",
 
       children: notification.actions.map(({ id, label }) =>
          Widget.Button({
-            className: "action-button",
+            className: "notification-popup-action-button",
 
             onClicked: () => {
                notification.invoke(id);
@@ -80,7 +80,7 @@ const NotificationRow = (notification: Notification) => {
    });
 
    return Widget.Button({
-      className: `notification ${notification.urgency}`,
+      className: `notification-popup ${notification.urgency}`,
       attribute: { id: notification.id },
       onPrimaryClick: notification.close,
 
@@ -96,7 +96,7 @@ export default () => {
       notificationsService.notifications.map(NotificationRow);
 
    const notificationsContainer = Widget.Box({
-      className: "notifications-container",
+      className: "overview-notifications-container",
       hexpand: true,
       vexpand: true,
 

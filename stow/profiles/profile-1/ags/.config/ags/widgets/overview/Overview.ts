@@ -18,7 +18,7 @@ export default (monitor: number = 0) => {
       visible: false,
 
       child: Widget.Box({
-         className: "overview-panel",
+         className: "overview",
          vertical: true,
          children: [QuickSettings(), NotificationList()],
       }),
