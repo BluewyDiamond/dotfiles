@@ -94,27 +94,33 @@ const NotificationRow = (notification: Notification) => {
 export default () => {
     let notificationsList = notificationsService.notifications.map(NotificationRow)
 
-    return Widget.Box({
-        name: "overview",
-        className: "notifications-area",
-        /* need this otherwise it won't bother rendering*/
-        css: "min-width: 2px; min-height: 2px;",
-        vertical: true,
-        children: notificationsList,
+    const notificationsContainer = Widget.Box({
+        className: "notifications-container",
 
-        setup: (self) =>
-            self
-                .hook(notificationsService,
-                    () => {
-                        self.children = notificationsService.notifications.map(NotificationRow)
-                    },
-                    "notified"
-                )
-                .hook(notificationsService,
-                    () => {
-                        self.children = notificationsService.notifications.map(NotificationRow)
-                    },
-                    "closed"
-                )
+        child: Widget.Box({
+            name: "overview",
+            className: "notifications-area",
+            /* need this otherwise it won't bother rendering*/
+            css: "min-width: 2px; min-height: 2px;",
+            vertical: true,
+            children: notificationsList,
+
+            setup: (self) =>
+                self
+                    .hook(notificationsService,
+                        () => {
+                            self.children = notificationsService.notifications.map(NotificationRow)
+                        },
+                        "notified"
+                    )
+                    .hook(notificationsService,
+                        () => {
+                            self.children = notificationsService.notifications.map(NotificationRow)
+                        },
+                        "closed"
+                    )
+        })
     })
+
+    return notificationsContainer
 }

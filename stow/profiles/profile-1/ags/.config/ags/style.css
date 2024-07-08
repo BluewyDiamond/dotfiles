@@ -209,9 +209,20 @@
    color: @text;
    background-color: @bg-base;
    border: 3px solid @border;
-   min-height: 500px;
-   min-width: 300px;
+   min-height: 800px;
+   min-width: 500px;
+   padding: 4px;
+}
+
+.notifications-container {
+   padding: 4px;
+   background-color: black;
 }
 
 .notifications-area {
+}
+
+/* notification indicator */
+.notification-indicator .non-empty {
+   color: @red;
 }

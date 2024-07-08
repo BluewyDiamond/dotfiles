@@ -1,7 +1,7 @@
 import Clock from "./modules/Clock";
 import HyprlandTaskbar from "./modules/HyprlandTaskbar";
 import HyprlandWorkspaces from "./modules/HyprlandWorkspaces";
-import NotificationIndicator from "./modules/NotificationIndicator";
+import NotificationIndicator from "./modules/Overview";
 import Tray from "./modules/Tray";
 import Volume from "./modules/Volume";
 
