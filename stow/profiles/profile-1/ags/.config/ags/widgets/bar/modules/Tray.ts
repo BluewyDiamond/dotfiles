@@ -15,7 +15,7 @@ const SysTrayItem = (item: TrayItem) => {
    });
 };
 
-function process(arr) {
+function showTextWhenEmpty(arr) {
    if (arr.length !== 0) {
       return arr;
    } else {
@@ -34,29 +34,27 @@ function process(arr) {
 export default () => {
    return Widget.Box({
       className: "tray",
-      children: process(systemtray.items.map((item) => SysTrayItem(item))),
+      children: showTextWhenEmpty(
+         systemtray.items.map((item) => SysTrayItem(item))
+      ),
 
       setup: (self) =>
          self
             .hook(
                systemtray,
                (w, _) => {
-                  const xxx = process(
+                  w.children = showTextWhenEmpty(
                      systemtray.items.map((item) => SysTrayItem(item))
                   );
-
-                  w.children = xxx;
                },
                "added"
             )
             .hook(
                systemtray,
                (w, _) => {
-                  const xxx = process(
+                  w.children = showTextWhenEmpty(
                      systemtray.items.map((item) => SysTrayItem(item))
                   );
-
-                  w.children = xxx;
                },
                "removed"
             ),
