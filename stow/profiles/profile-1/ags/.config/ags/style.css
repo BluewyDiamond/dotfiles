@@ -172,6 +172,10 @@ window.notification-popups box.notifications {
    min-width: 350px;
 }
 
+.notificaton .eventBox:hover {
+   border: 3px solid @orange;
+}
+
 .notification.critical {
    border: 3px solid @red;
 }

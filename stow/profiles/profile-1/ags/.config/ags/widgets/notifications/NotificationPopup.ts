@@ -24,12 +24,12 @@ function NotificationIcon({ app_entry, app_icon, image }) {
    });
 }
 
-/** @param {import('resource:///com/github/Aylur/ags/service/notifications.js').Notification} n */
-function Notification2(n: Notification) {
+/** @param {import('resource:///com/github/Aylur/ags/service/notifications.js').Notification} notification */
+function Notification2(notification: Notification) {
    const icon = Widget.Box({
       vpack: "start",
       className: "icon",
-      child: NotificationIcon(n),
+      child: NotificationIcon(notification),
    });
 
    const title = Widget.Label({
@@ -40,7 +40,7 @@ function Notification2(n: Notification) {
       max_width_chars: 24,
       truncate: "end",
       wrap: true,
-      label: n.summary,
+      label: notification.summary,
       use_markup: true,
    });
 
@@ -50,20 +50,20 @@ function Notification2(n: Notification) {
       use_markup: true,
       xalign: 0,
       justification: "left",
-      label: n.body,
+      label: notification.body,
       wrap: true,
    });
 
    const actions = Widget.Box({
       className: "actions",
 
-      children: n.actions.map(({ id, label }) =>
+      children: notification.actions.map(({ id, label }) =>
          Widget.Button({
             className: "action-button",
 
             onClicked: () => {
-               n.invoke(id);
-               n.dismiss();
+               notification.invoke(id);
+               notification.dismiss();
             },
 
             hexpand: true,
@@ -72,46 +72,47 @@ function Notification2(n: Notification) {
       ),
    });
 
-   return Widget.EventBox(
-      {
-         attribute: { id: n.id },
-         onPrimaryClick: n.dismiss,
-      },
+   const group1 = Widget.Box({
+      vertical: true,
+      children: [title, body]
+   })
 
-      Widget.Box(
-         {
-            className: `notification ${n.urgency}`,
-            vertical: true,
-         },
+   const content = Widget.Box({
+      children: [icon, group1]
+   })
 
-         Widget.Box([icon, Widget.Box({ vertical: true }, title, body)]),
-         actions
-      )
-   );
+   return Widget.EventBox({
+      className: "eventBox",
+      attribute: { id: notification.id },
+      onPrimaryClick: notification.dismiss,
+
+      child: Widget.Box({
+         className: `notification ${notification.urgency}`,
+         vertical: true,
+         children: [content, actions]
+      })
+   });
 }
 
 export default (monitor: number = 0) => {
    const list = Widget.Box({
       vertical: true,
       children: notifications.popups.map(Notification2),
+
+      setup: (self) =>
+         self
+            .hook(notifications, (_, id: number) => {
+               const n = notifications.getNotification(id);
+               if (n) list.children = [Notification2(n), ...list.children];
+            }, "notified")
+            .hook(notifications, (_, id: number) => {
+               list.children.find((n) => n.attribute.id === id)?.destroy();
+            }, "dismissed")
    });
-
-   function onNotified(_: any, id: number) {
-      const n = notifications.getNotification(id);
-      if (n) list.children = [Notification2(n), ...list.children];
-   }
-
-   function onDismissed(_: any, id: number) {
-      list.children.find((n) => n.attribute.id === id)?.destroy();
-   }
-
-   list
-      .hook(notifications, onNotified, "notified")
-      .hook(notifications, onDismissed, "dismissed");
 
    return Widget.Window({
       monitor,
-      name: `notifications${monitor}`,
+      name: `ags-notifications-${monitor}`,
       className: "notification-popups",
       anchor: ["top", "right"],
       margins: [8, 8, 8, 8],
