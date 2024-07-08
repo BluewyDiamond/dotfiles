@@ -1,4 +1,4 @@
-const date = Variable("", {
+const time = Variable("", {
    poll: [1000, 'date "+%H:%M"'],
 });
 
@@ -31,21 +31,20 @@ export default () => {
    };
 
    function getIcon(): string {
-      const currentHour = parseInt(date.value.split(":")[0]);
-
-      return icons[currentHour] || "󱡦";
+      const hour = parseInt(time.value.split(":")[0]);
+      return icons[hour] || "󱡦";
    }
 
    const icon = Widget.Label({
-      label: Utils.watch(getIcon(), date, getIcon),
+      label: Utils.watch(getIcon(), time, getIcon),
    });
 
-   const time = Widget.Label({
-      label: date.bind(),
+   const clock = Widget.Label({
+      label: time.bind(),
    });
 
    return Widget.Box({
       className: "clock",
-      children: [icon, time],
+      children: [icon, clock],
    });
 };

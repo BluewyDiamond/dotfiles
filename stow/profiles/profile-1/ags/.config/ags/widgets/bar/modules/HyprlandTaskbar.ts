@@ -72,29 +72,9 @@ const AppItem = (address: string) => {
    );
 };
 
-// function sortItems<T extends { attribute: { address: string } }>(arr: T[]) {
-//    if (arr.length === 0) {
-//       const placeholder = Widget.Label({
-//          label: "taskbar"
-//       })
-
-//       const box = Widget.Box({
-//          children: [placeholder]
-//       })
-
-//       return [box]
-//    }
-
-//    return arr.sort(({ attribute: a }, { attribute: b }) => {
-//       const aclient = hyprland.getClient(a.address)!;
-//       const bclient = hyprland.getClient(b.address)!;
-//       return aclient.workspace.id - bclient.workspace.id;
-//    });
-// }
-
-function sortItems<T extends { attribute: { address: string } }>(
+function sortItemsOrShowTextWhenEmpty<T extends { attribute: { address: string } }>(
    arr: T[]
-): Box<Widget, { address: string }>[] {
+) {
    if (arr.length === 0) {
       const placeholder = Widget.Label({
          label: "taskbar",
@@ -117,7 +97,7 @@ function sortItems<T extends { attribute: { address: string } }>(
 export default () => {
    return Widget.Box({
       className: "taskbar",
-      children: sortItems(hyprland.clients.map((c) => AppItem(c.address))),
+      children: sortItemsOrShowTextWhenEmpty(hyprland.clients.map((c) => AppItem(c.address))),
 
       setup: (self) =>
          self
@@ -135,7 +115,7 @@ export default () => {
                hyprland,
                (w, address?: string) => {
                   if (typeof address === "string")
-                     w.children = sortItems([...w.children, AppItem(address)]);
+                     w.children = sortItemsOrShowTextWhenEmpty([...w.children, AppItem(address)]);
                },
                "client-added"
             )
@@ -143,7 +123,7 @@ export default () => {
                hyprland,
                (w, event?: string) => {
                   if (event === "movewindow")
-                     w.children = sortItems(w.children);
+                     w.children = sortItemsOrShowTextWhenEmpty(w.children);
                },
                "event"
             ),

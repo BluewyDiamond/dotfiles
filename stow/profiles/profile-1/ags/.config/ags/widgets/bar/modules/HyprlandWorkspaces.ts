@@ -1,12 +1,12 @@
 const hyprland = await Service.import("hyprland");
 
-const dispatch = (ws: string | number) =>
+const focusWorkspace = (ws: string | number) =>
    hyprland.messageAsync(`dispatch workspace ${ws}`);
 
 export default () =>
    Widget.EventBox({
-      onScrollUp: () => dispatch("+1"),
-      onScrollDown: () => dispatch("-1"),
+      onScrollUp: () => focusWorkspace("+1"),
+      onScrollDown: () => focusWorkspace("-1"),
 
       child: Widget.Box({
          className: "workspaces",
@@ -23,7 +23,7 @@ export default () =>
             return Widget.Button({
                attribute: workspace_id,
                label: `${value}`,
-               onClicked: () => dispatch(workspace_id),
+               onClicked: () => focusWorkspace(workspace_id),
 
                setup: (self) =>
                   self.hook(hyprland, () => {

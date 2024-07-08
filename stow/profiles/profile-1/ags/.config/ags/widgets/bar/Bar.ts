@@ -4,16 +4,6 @@ import HyprlandWorkspaces from "./modules/HyprlandWorkspaces";
 import Tray from "./modules/Tray";
 import Volume from "./modules/Volume";
 
-const time = Variable("", {
-   poll: [
-      1000,
-
-      function () {
-         return Date().toString();
-      },
-   ],
-});
-
 export default (monitor: number) =>
    Widget.Window({
       monitor,

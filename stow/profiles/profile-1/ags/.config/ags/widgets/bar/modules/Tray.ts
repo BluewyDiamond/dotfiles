@@ -1,3 +1,4 @@
+import { Box } from "types/@girs/gtk-3.0/gtk-3.0.cjs";
 import { TrayItem } from "types/service/systemtray";
 
 const systemtray = await Service.import("systemtray");
@@ -15,16 +16,16 @@ const SysTrayItem = (item: TrayItem) => {
    });
 };
 
-function showTextWhenEmpty(arr) {
-   if (arr.length !== 0) {
-      return arr;
+function showTextWhenEmpty(sysTrayItemList: Box[]): Box[] {
+   if (sysTrayItemList.length !== 0) {
+      return sysTrayItemList;
    } else {
-      const placeholder = Widget.Label({
+      const text = Widget.Label({
          label: "tray",
       });
 
       const box = Widget.Box({
-         children: [placeholder],
+         children: [text],
       });
 
       return [box];
