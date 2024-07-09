@@ -25,31 +25,31 @@ const NotificationIcon = ({ app_entry, app_icon, image }) => {
 
 const NotificationRow = (notification: Notification) => {
    const icon = Widget.Box({
-      vpack: "start",
       className: "notification-popup-icon",
+      vpack: "start",
       child: NotificationIcon(notification),
    });
 
    const title = Widget.Label({
       className: "notification-popup-title",
+      hexpand: true,
       xalign: 0,
       justification: "left",
-      hexpand: true,
-      max_width_chars: 24,
       truncate: "end",
       wrap: true,
+      useMarkup: true,
       label: notification.summary,
-      use_markup: true,
    });
 
    const body = Widget.Label({
       className: "notification-popup-body",
       hexpand: true,
-      use_markup: true,
       xalign: 0,
       justification: "left",
-      label: notification.body,
       wrap: true,
+      useMarkup: true,
+      truncate: "end",
+      label: notification.body,
    });
 
    const actions = Widget.Box({
@@ -92,43 +92,71 @@ const NotificationRow = (notification: Notification) => {
 };
 
 export default () => {
-   let notificationsList =
-      notificationsService.notifications.map(NotificationRow);
-
-   const notificationsContainer = Widget.Box({
-      className: "overview-notifications-container",
+   const notificationListArea = Widget.Box({
+      className: "overview-notification-list-area",
       hexpand: true,
-      vexpand: true,
+      vertical: true,
+      spacing: 8,
+      /* need this otherwise it won't bother rendering*/
+      css: "min-width: 2px; min-height: 2px;",
+      children: notificationsService.notifications.map(NotificationRow),
 
-      child: Widget.Box({
-         name: "overview",
-         className: "notifications-area",
-         /* need this otherwise it won't bother rendering*/
-         css: "min-width: 2px; min-height: 2px;",
-         hexpand: true,
-         vertical: true,
-         children: notificationsList,
-
-         setup: (self) =>
-            self
-               .hook(
-                  notificationsService,
-                  () => {
-                     self.children =
-                        notificationsService.notifications.map(NotificationRow);
-                  },
-                  "notified"
-               )
-               .hook(
-                  notificationsService,
-                  () => {
-                     self.children =
-                        notificationsService.notifications.map(NotificationRow);
-                  },
-                  "closed"
-               ),
-      }),
+      setup: (self) =>
+         self
+            .hook(
+               notificationsService,
+               () => {
+                  self.children =
+                     notificationsService.notifications.map(NotificationRow);
+               },
+               "notified"
+            )
+            .hook(
+               notificationsService,
+               () => {
+                  self.children =
+                     notificationsService.notifications.map(NotificationRow);
+               },
+               "closed"
+            ),
    });
 
-   return notificationsContainer;
+   const scroll = Widget.Scrollable({
+      hscroll: "never",
+      vscroll: "always",
+
+      child: notificationListArea
+   });
+
+   const actionsContainer = Widget.Box({
+      className: "overview-notification-list-actions-container",
+      hexpand: true,
+      css: "min-height: 2px; min-width: 2px;",
+
+      children: [
+         Widget.Button({
+            hexpand: true,
+            child: Widget.Label({
+               label: "Clear All",
+            }),
+
+            onClicked: () => {
+               notificationsService.clear();
+            },
+         }),
+      ],
+   });
+
+   const scrollContainer = Widget.Box({
+      hexpand: true,
+      vexpand: true,
+      child: scroll,
+   });
+
+   return Widget.Box({
+      className: "overview-notification-list-container",
+      vertical: true,
+
+      children: [scrollContainer, actionsContainer],
+   });
 };

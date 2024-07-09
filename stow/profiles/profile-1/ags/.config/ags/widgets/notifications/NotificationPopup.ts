@@ -28,12 +28,12 @@ function NotificationIcon({ app_entry, app_icon, image }) {
 function NotificationPopup(notification: Notification) {
    const icon = Widget.Box({
       vpack: "start",
-      className: "icon",
+      className: "notification-popup-icon",
       child: NotificationIcon(notification),
    });
 
    const title = Widget.Label({
-      className: "title",
+      className: "notification-popup-title",
       xalign: 0,
       justification: "left",
       hexpand: true,
@@ -45,7 +45,7 @@ function NotificationPopup(notification: Notification) {
    });
 
    const body = Widget.Label({
-      className: "body",
+      className: "notification-popup-body",
       hexpand: true,
       use_markup: true,
       xalign: 0,
@@ -55,12 +55,10 @@ function NotificationPopup(notification: Notification) {
    });
 
    const actions = Widget.Box({
-      className: "actions",
+      className: "notification-popup-actions",
 
       children: notification.actions.map(({ id, label }) =>
          Widget.Button({
-            className: "action-button",
-
             onClicked: () => {
                notification.invoke(id);
                notification.dismiss();
@@ -82,7 +80,7 @@ function NotificationPopup(notification: Notification) {
    });
 
    return Widget.Button({
-      className: `notification ${notification.urgency}`,
+      className: `notification-popup ${notification.urgency}`,
       attribute: { id: notification.id },
       onPrimaryClick: notification.dismiss,
 
@@ -96,7 +94,7 @@ function NotificationPopup(notification: Notification) {
 export default (monitor: number = 0) => {
    return Widget.Window({
       monitor,
-      name: `ags-notifications-${monitor}`,
+      name: `ags-notification-popups-${monitor}`,
       anchor: ["top", "right"],
       margins: [8, 8, 8, 8],
 

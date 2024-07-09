@@ -116,7 +116,7 @@
    margin-right: 12px;
 }
 
-.bar-module-tray-item:last-child{
+.bar-module-tray-item:last-child {
    margin-right: 0px;
 }
 
@@ -179,16 +179,16 @@
    font-size: 14px;
 }
 
-.notification-popup-actions .notification-popup-action-button {
+.notification-popup-actions button {
    margin: 0 0.4em;
    margin-top: 0.8em;
 }
 
-.notification-popup-actions .notification-popup-action-button {
+.notification-popup-actions button {
    margin-left: 0;
 }
 
-.notification-popup-actions .notification-popup-action-button {
+.notification-popup-actions button {
    margin-right: 0;
 }
 
@@ -200,35 +200,63 @@
    color: @text;
    background-color: @bg-base;
    border: 3px solid @border;
+   border-radius: 4px;
    min-height: 800px;
    min-width: 500px;
    padding: 12px;
-}
-
-.overview-notifications-container {
-   padding: 8px;
-   background-color: black;
 }
 
 .overview-quick-settings-container {
    padding: 8px;
    background-color: black;
    margin-bottom: 8px;
+   border-radius: 4px;
 }
 
-.overview-setting {
+.overview-quick-settings-container button {
    color: @text;
    background-color: @bg-base;
    border: 1px solid @border;
    min-width: 200px;
    min-height: 100px;
-    border-radius: 25px;
+   border-radius: 25px;
 }
 
-.overview-setting label {
+.overview-quick-settings-container button label {
    color: @red;
 }
 
-.overview-setting:hover {
+.overview-quick-settings-container button:hover {
+   background-color: @orange;
+}
+
+.overview-notification-list-container {
+   padding: 8px;
+   background-color: black;
+   border-radius: 4px;
+}
+
+.overview-notification-list-area {
+   background-color: white;
+   border-radius: 4px;
+}
+
+.overview-notification-list-actions-container {
+   margin-top: 8px;
+   background-color: grey;
+   padding: 8px;
+   border-radius: 4px;
+}
+
+.overview-notification-list-actions-container button {
+   color: @text;
+   background-color: @bg-base;
+   border: 1px solid @border;
+   min-width: 20px;
+   min-height: 30px;
+   border-radius: 25px;
+}
+
+.overview-notification-list-actions-container button:hover {
    background-color: @orange;
 }
