@@ -207,7 +207,7 @@
 }
 
 .overview-quick-settings-container {
-   background-color: black;
+   background-color: @bg-darker;
    margin-bottom: 8px;
    border-radius: 4px;
 }
@@ -217,9 +217,8 @@
 }
 
 .overview-quick-settings-area button {
-   color: @text;
    background-color: @bg-base;
-   border: 1px solid @border;
+   border: 3px solid @border;
    min-width: 200px;
    min-height: 100px;
    border-radius: 25px;
@@ -230,23 +229,23 @@
 }
 
 .overview-quick-settings-area button:hover {
-   background-color: @orange;
+   border:3px solid @orange;
 }
 
 .overview-notification-list-container {
    padding: 8px;
-   background-color: black;
+   background-color: @bg-darker;
    border-radius: 4px;
 }
 
 .overview-notification-list-area {
-   background-color: white;
+   background-color: transparent;
    border-radius: 4px;
 }
 
 .overview-notification-list-actions-container {
    margin-top: 8px;
-   background-color: grey;
+   background-color: transparent;
    padding: 8px;
    border-radius: 4px;
 }
@@ -261,7 +260,7 @@
 }
 
 .overview-notification-list-actions-container button:hover {
-   background-color: @orange;
+   border: 3px solid @orange;
 }
 
 .overview-quick-settings-dotbutton label {
