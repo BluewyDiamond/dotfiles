@@ -35,7 +35,7 @@ function page1() {
 
 const createDotButton = (index: number) => {
    return Widget.Button({
-      className: currentPage.bind().as((v) => (v == index ? "dotbutton active" : "dotbutton")),
+      className: currentPage.bind().as((v) => (v == index ? "overview-quick-settings-dotbutton active" : "overview-quick-settings-dotbutton")),
       hexpand: false,
       label: "●",
       onClicked: () => currentPage.setValue(index),

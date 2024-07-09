@@ -264,11 +264,11 @@
    background-color: @orange;
 }
 
-.dotbutton label {
+.overview-quick-settings-dotbutton label {
    color: alpha(@white, 0.3)
 }
 
-.dotbutton.active label {
+.overview-quick-settings-dotbutton.active label {
    color: @white
 }
 
