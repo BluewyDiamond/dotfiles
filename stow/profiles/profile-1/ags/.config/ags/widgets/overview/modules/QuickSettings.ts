@@ -12,7 +12,7 @@ function button(text: string) {
    });
 }
 
-const currentPage = Variable(0)
+const currentPage = Variable(0);
 
 function page1() {
    return Widget.Box({
@@ -35,21 +35,30 @@ function page1() {
 
 const createDotButton = (index: number) => {
    return Widget.Button({
-      className: currentPage.bind().as((v) => (v == index ? "overview-quick-settings-dotbutton active" : "overview-quick-settings-dotbutton")),
+      className: currentPage
+         .bind()
+         .as((v) =>
+            v == index
+               ? "overview-quick-settings-dotbutton active"
+               : "overview-quick-settings-dotbutton"
+         ),
       hexpand: false,
       label: "●",
       onClicked: () => currentPage.setValue(index),
    });
-}
+};
 
 export default () => {
    let pages = {
       page1: page1(),
-      page2: page1()
-   }
+      page2: page1(),
+   };
 
    const numberOfPages = Object.keys(pages).length;
-   const pageNames = Array.from({ length: numberOfPages }, (_, i) => `page${i + 1}`);
+   const pageNames = Array.from(
+      { length: numberOfPages },
+      (_, i) => `page${i + 1}`
+   );
 
    const stack = Widget.Stack({
       className: "overview-quick-settings-area",
@@ -64,8 +73,12 @@ export default () => {
    const dotButtons = pageNames.map((_, index) => createDotButton(index));
 
    const eventBox = Widget.EventBox({
-      onScrollUp: () => currentPage.setValue(Math.min(currentPage.value + 1, numberOfPages - 1)),
-      onScrollDown: () => currentPage.setValue(Math.max(currentPage.value - 1, 0)),
+      onScrollUp: () =>
+         currentPage.setValue(
+            Math.min(currentPage.value + 1, numberOfPages - 1)
+         ),
+      onScrollDown: () =>
+         currentPage.setValue(Math.max(currentPage.value - 1, 0)),
 
       child: Widget.Box({
          orientation: Gtk.Orientation.VERTICAL,
@@ -75,7 +88,7 @@ export default () => {
                className: "overview-quick-settings-dots-container",
                hpack: "center",
                children: dotButtons,
-            })
+            }),
          ],
 
          setup: (self) => {
@@ -85,12 +98,12 @@ export default () => {
                   currentPage.setValue(Number(page.replace("page", "")));
                });
             }
-         }
-      })
+         },
+      }),
    });
 
    return Widget.Box({
       className: "overview-quick-settings-container",
-      child: eventBox
-   })
+      child: eventBox,
+   });
 };

@@ -265,11 +265,11 @@
 }
 
 .overview-quick-settings-dotbutton label {
-   color: alpha(@white, 0.3)
+   color: alpha(@white, 0.3);
 }
 
 .overview-quick-settings-dotbutton.active label {
-   color: @white
+   color: @white;
 }
 
 .overview-quick-settings-dots-container {

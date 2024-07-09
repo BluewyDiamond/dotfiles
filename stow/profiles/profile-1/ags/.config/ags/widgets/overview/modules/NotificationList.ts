@@ -125,7 +125,7 @@ export default () => {
       hscroll: "never",
       vscroll: "always",
 
-      child: notificationListArea
+      child: notificationListArea,
    });
 
    const actionsContainer = Widget.Box({
