@@ -207,13 +207,16 @@
 }
 
 .overview-quick-settings-container {
-   padding: 8px;
    background-color: black;
    margin-bottom: 8px;
    border-radius: 4px;
 }
 
-.overview-quick-settings-container button {
+.overview-quick-settings-area {
+   padding: 8px;
+}
+
+.overview-quick-settings-area button {
    color: @text;
    background-color: @bg-base;
    border: 1px solid @border;
@@ -222,11 +225,11 @@
    border-radius: 25px;
 }
 
-.overview-quick-settings-container button label {
+.overview-quick-settings-area button label {
    color: @red;
 }
 
-.overview-quick-settings-container button:hover {
+.overview-quick-settings-area button:hover {
    background-color: @orange;
 }
 
@@ -259,4 +262,16 @@
 
 .overview-notification-list-actions-container button:hover {
    background-color: @orange;
+}
+
+.dotbutton label {
+   color: alpha(@white, 0.3)
+}
+
+.dotbutton.active label {
+   color: @white
+}
+
+.overview-quick-settings-dots-container {
+   padding: 8px;
 }
