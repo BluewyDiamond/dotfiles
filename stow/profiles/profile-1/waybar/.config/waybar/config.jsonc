@@ -184,11 +184,7 @@
    "group/misc": {
       "orientation": "horizontal",
 
-      "modules": [
-         "custom/notifications",
-         "network",
-         "idle_inhibitor",
-      ],
+      "modules": ["custom/notifications", "network", "idle_inhibitor"],
    },
 
    "hyprland/language": {
