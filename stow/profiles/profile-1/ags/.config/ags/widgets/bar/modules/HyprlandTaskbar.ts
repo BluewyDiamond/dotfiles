@@ -1,3 +1,4 @@
+import icons from "libs/icons";
 import findIcon from "libs/utils/findIcon";
 
 const hyprland = await Service.import("hyprland");
@@ -23,9 +24,8 @@ const AppItem = (address: string) => {
    const app = apps.list.find((app) => app.match(client.class));
 
    const iconUrl = findIcon(
-      app?.icon_name || client.class + "-symbolic",
-      "application-x-executable" + "-symbolic"
-   );
+      (app?.icon_name || client.class) + ("-symbolic"),
+      icons.fallback.executable + ("-symbolic"));
 
    var iconOrLabel;
 
@@ -123,5 +123,5 @@ export default () => {
             })
    })
 
-    return taskbar
+   return taskbar
 };
