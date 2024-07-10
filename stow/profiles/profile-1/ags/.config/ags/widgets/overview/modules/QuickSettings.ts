@@ -63,7 +63,6 @@ const NetworkButton = () => {
       });
    };
 
-
    return Widget.Button({
       hexpand: true,
 
@@ -82,7 +81,7 @@ const NetworkButton = () => {
 const BluetoothButton = () => {
    return Widget.Button({
       hexpand: true,
-      onClicked: () => bluetooth.enabled = true,
+      onClicked: () => (bluetooth.enabled = true),
 
       child: Widget.Label({
          label: "  Bluetooth",

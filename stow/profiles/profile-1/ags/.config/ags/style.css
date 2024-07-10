@@ -74,7 +74,6 @@
    color: @red;
 }
 
-
 .workspaces-bar-module button.urgent {
    color: @purple;
 }
@@ -259,7 +258,6 @@
    border-radius: 4px;
    margin-bottom: 8px;
 }
-
 
 .overview-sliders-container button label {
 }
