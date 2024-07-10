@@ -116,9 +116,9 @@ export default () => {
                hyprland,
                (w, address?: string) => {
                   if (typeof address === "string")
-                     w.children = w.children.filter(
+                     w.children = sortItemsOrShowTextWhenEmpty(w.children.filter(
                         (ch) => ch.attribute.address !== address
-                     );
+                     ));
                },
                "client-removed"
             )
