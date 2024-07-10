@@ -29,7 +29,7 @@ export default (monitor: number) =>
 
          endWidget: Widget.Box({
             hpack: "end",
-            children: [NotificationIndicator(), Indicators(),Volume()],
+            children: [NotificationIndicator(), Indicators(), Volume()],
          }),
       }),
    });

@@ -1,8 +1,8 @@
 import Gtk from "types/@girs/gtk-3.0/gtk-3.0";
 
-const notifications = await Service.import("notifications")
-const network = await Service.import("network")
-const bluetooth = await Service.import("bluetooth")
+const notifications = await Service.import("notifications");
+const network = await Service.import("network");
+const bluetooth = await Service.import("bluetooth");
 
 const DummyButton = (text: string) => {
    return Widget.Button({
@@ -12,25 +12,24 @@ const DummyButton = (text: string) => {
          label: text,
       }),
    });
-}
+};
 
 const DNDButton = () => {
    return Widget.Button({
       hexpand: true,
-      onClicked: () => notifications.dnd = !notifications.dnd,
+      onClicked: () => (notifications.dnd = !notifications.dnd),
 
       child: Widget.Label({
          truncate: "end",
-         label: "  Do Not Disturb"
+         label: "  Do Not Disturb",
       }),
 
       setup: (self) =>
-         self
-            .hook(notifications, (self) => {
-               self.toggleClassName("active", notifications.dnd)
-            })
-   })
-}
+         self.hook(notifications, (self) => {
+            self.toggleClassName("active", notifications.dnd);
+         }),
+   });
+};
 
 const WifiIndicator = () => {
    return Widget.Box({
@@ -42,35 +41,37 @@ const WifiIndicator = () => {
             children: [
                Widget.Box([
                   Widget.Label({
-                     label: "Internet"
-                  })
+                     label: "Internet",
+                  }),
                ]),
                Widget.Label({
-                  label: network.wifi.bind("ssid").as((ssid) => ssid || "Unknown"),
+                  label: network.wifi
+                     .bind("ssid")
+                     .as((ssid) => ssid || "Unknown"),
                   class_name: "ssid",
                   xalign: 0,
                   vpack: "center",
-                  truncate: "end"
-               })
-            ]
+                  truncate: "end",
+               }),
+            ],
          }),
          Widget.Label({
             visible: network.wifi.bind("enabled").as((enabled) => !enabled),
-            label: "Internet"
+            label: "Internet",
          }),
-      ]
+      ],
    });
-}
+};
 
 const WiredIndicator = () => {
    return Widget.Box({
       children: [
          Widget.Label({
-            label: "Internet"
-         })
-      ]
+            label: "Internet",
+         }),
+      ],
    });
-}
+};
 
 const NetworkErrorIndicator = () => {
    return Widget.Box({
@@ -78,10 +79,10 @@ const NetworkErrorIndicator = () => {
 
       child: Widget.Label({
          truncate: "end",
-         label: "󰛵  No Information..."
-      })
-   })
-}
+         label: "󰛵  No Information...",
+      }),
+   });
+};
 
 const NetworkButton = () => {
    return Widget.Button({
@@ -91,13 +92,13 @@ const NetworkButton = () => {
          children: {
             wifi: WifiIndicator(),
             wired: WiredIndicator(),
-            error: NetworkErrorIndicator()
+            error: NetworkErrorIndicator(),
          },
 
-         shown: network.bind("primary").as((p) => p || "error")
-      })
-   })
-}
+         shown: network.bind("primary").as((p) => p || "error"),
+      }),
+   });
+};
 
 const BluetoothButton = () => {
    return Widget.Button({
@@ -105,16 +106,15 @@ const BluetoothButton = () => {
       onClicked: () => {},
 
       child: Widget.Label({
-         label: "  Bluetooth"
+         label: "  Bluetooth",
       }),
 
       setup: (self) =>
-         self
-            .hook(bluetooth, (self) => {
-               self.toggleClassName("active", bluetooth.enabled)
-            })
-   })
-}
+         self.hook(bluetooth, (self) => {
+            self.toggleClassName("active", bluetooth.enabled);
+         }),
+   });
+};
 
 const currentPage = Variable(0);
 

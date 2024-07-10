@@ -134,7 +134,6 @@
  * ----------------------------------------------------- */
 
 .indicators-bar-module {
-
 }
 
 /* -----------------------------------------------------
@@ -238,14 +237,12 @@
 }
 
 .overview-quick-settings-area button:hover {
-   border:3px solid @orange;
+   border: 3px solid @orange;
 }
-
 
 .overview-quick-settings-area button.active {
    background-color: @red;
 }
-
 
 .overview-quick-settings-area button.active label {
    color: black;
@@ -257,7 +254,6 @@
    border-radius: 4px;
    margin-bottom: 8px;
 }
-
 
 .overview-sliders-container button:hover label {
    color: @orange;
@@ -272,21 +268,19 @@
 .overview-sliders-container scale contents trough {
 }
 
-.overview-sliders-container scale contents trough slider{
+.overview-sliders-container scale contents trough slider {
 }
 
-.overview-sliders-container scale contents trough highlight{
+.overview-sliders-container scale contents trough highlight {
    background-color: @text;
    border-radius: 4px;
 }
 
-
-.overview-sliders-container scale contents trough highlight:hover{
+.overview-sliders-container scale contents trough highlight:hover {
    background-color: @orange;
 }
 
-
-.overview-sliders-container scale contents trough fill{
+.overview-sliders-container scale contents trough fill {
    color: @purple;
    background-color: @purple;
    min-height: 20px;
