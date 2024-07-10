@@ -16,7 +16,9 @@ const DummyItem = (address: string) =>
 const AppItem = (address: string) => {
    const client = hyprland.getClient(address);
 
-   if (!client || client.class === "") return DummyItem(address);
+   if (!client || client.class === "") {
+      return DummyItem(address)
+   };
 
    const app = apps.list.find((app) => app.match(client.class));
 
@@ -27,7 +29,7 @@ const AppItem = (address: string) => {
 
    var iconOrLabel;
 
-   if (iconUrl.length !== 0) {
+   if (iconUrl !== "") {
       iconOrLabel = Widget.Icon({
          size: 16,
          icon: iconUrl,
@@ -39,63 +41,22 @@ const AppItem = (address: string) => {
    }
 
    const button = Widget.Button({
-      attribute: address,
+      attribute: { address },
       child: iconOrLabel,
 
       onClicked: () => focusClient(client.pid),
 
-      setup: (w) =>
-         w.hook(hyprland, () => {
-            w.toggleClassName(
-               "active",
-               hyprland.active.client.address === address
-            );
-         }),
+      setup: (self) =>
+         self
+            .hook(hyprland, (self) => {
+               self.toggleClassName("active", hyprland.active.client.address === address)
+            })
    });
 
-   return Widget.Box(
-      {
-         attribute: { address },
-         visible: Utils.watch(true, [hyprland], () => {
-            return exclusive
-               ? hyprland.active.workspace.id === client.workspace.id
-               : true;
-         }),
-      },
-
-      Widget.Overlay({
-         child: button,
-         pass_through: true,
-         overlay: Widget.Box({
-            className: "indicator",
-            hpack: "center",
-            vpack: "start",
-
-            setup: (w) =>
-               w.hook(hyprland, () => {
-                  w.toggleClassName(
-                     "active",
-                     hyprland.active.client.address === address
-                  );
-               }),
-         }),
-      })
-   );
+   return button
 };
 
-function sortItemsOrShowTextWhenEmpty(arr) {
-   if (arr.length === 0) {
-      const placeholder = Widget.Label({
-         label: "taskbar",
-      });
-
-      const box = Widget.Box({
-         children: [placeholder],
-      });
-
-      return [box];
-   }
-
+function sortItems<T extends { attribute: { address: string } }>(arr: T[]) {
    return arr.sort(({ attribute: a }, { attribute: b }) => {
       const aclient = hyprland.getClient(a.address)!;
       const bclient = hyprland.getClient(b.address)!;
@@ -104,42 +65,59 @@ function sortItemsOrShowTextWhenEmpty(arr) {
 }
 
 export default () => {
-   return Widget.Box({
-      className: "taskbar-bar-module",
-      children: sortItemsOrShowTextWhenEmpty(
-         hyprland.clients.map((c) => AppItem(c.address))
-      ),
+   const taskbar = Widget.Box({
+      spacing: 8,
+      children: sortItems(hyprland.clients.map(client => AppItem(client.address))),
 
       setup: (self) =>
          self
-            .hook(
-               hyprland,
-               (w, address?: string) => {
-                  if (typeof address === "string")
-                     w.children = sortItemsOrShowTextWhenEmpty(w.children.filter(
-                        (ch) => ch.attribute.address !== address
-                     ));
-               },
-               "client-removed"
-            )
-            .hook(
-               hyprland,
-               (w, address?: string) => {
-                  if (typeof address === "string")
-                     w.children = sortItemsOrShowTextWhenEmpty([
-                        ...w.children,
-                        AppItem(address),
-                     ]);
-               },
-               "client-added"
-            )
-            .hook(
-               hyprland,
-               (w, event?: string) => {
-                  if (event === "movewindow")
-                     w.children = sortItemsOrShowTextWhenEmpty(w.children);
-               },
-               "event"
-            ),
-   });
+            .hook(hyprland, (self, address?: string) => {
+               if (typeof address !== "string") {
+                  return
+               }
+
+               self.children = sortItems([...self.children, AppItem(address)])
+            }, "client-added")
+            .hook(hyprland, (self, address?: string) => {
+               if (typeof address !== "string") {
+                  return
+               }
+
+               self.children = self.children.filter(child => child.attribute.address !== address)
+            }, "client-removed")
+            .hook(hyprland, (self, event: string) => {
+               if (event !== "movewindow") {
+                  return
+               }
+
+               self.children = sortItems(self.children)
+            })
+   })
+
+   const empty = Widget.Label({
+      label: "taskbar"
+   })
+
+   const stack = Widget.Stack({
+      children: {
+         taskbar: taskbar,
+         empty: empty
+      },
+
+      shown: hyprland.bind("clients").as((clients) => {
+         if (clients.length > 0) {
+            return "taskbar"
+         } else {
+            return "empty"
+         }
+      })
+   })
+
+   const wrapper = Widget.Box({
+      className: "taskbar-bar-module",
+
+      child: stack
+   })
+
+   return wrapper
 };

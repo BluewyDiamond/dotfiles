@@ -1,4 +1,13 @@
 /* -----------------------------------------------------
+ * Information
+ * ----------------------------------------------------- */
+
+/*
+ * Some spacings are defined within the widget itself,
+ * edit the widget directly if u want to change the spacing.
+ */
+
+/* -----------------------------------------------------
  * Color Scheme
  * ----------------------------------------------------- */
 
@@ -13,7 +22,7 @@
 }
 
 * {
-   font-size: 16px;
+   font-size: 18px;
    font-family: "Symbols Nerd Font Mono, Iosevka Nerd Font";
    font-weight: 500;
 }
@@ -37,6 +46,7 @@
 .clock-bar-module,
 .workspaces-bar-module,
 .taskbar-bar-module,
+.tray-bar-module,
 #template_left {
    margin-right: 4px;
    padding: 4px;
@@ -48,7 +58,6 @@
 .indicators-bar-module,
 .overview-bar-module,
 .volume-bar-module,
-.tray-bar-module,
 #template_right {
    margin-left: 4px;
    padding: 4px;
@@ -93,36 +102,16 @@
  * Taskbar
  * ----------------------------------------------------- */
 
-.taskbar-bar-module box {
-   margin-right: 12px;
-}
-
-.taskbar-bar-module box:last-child {
-   margin-right: 0px;
-}
-
 .taskbar-bar-module button:hover {
-   border-bottom: 1px solid @orange;
+   border-top: 2px solid @orange;
 }
 
 .taskbar-bar-module button.active {
-   border-bottom: solid 1px @red;
+   border-top: solid 2px @red;
 }
 
 .taskbar-bar-module button.active:hover {
-   border-bottom: solid 1px @orange;
-}
-
-/* -----------------------------------------------------
- * Tray
- * ----------------------------------------------------- */
-
-.bar-module-tray-item {
-   margin-right: 12px;
-}
-
-.bar-module-tray-item:last-child {
-   margin-right: 0px;
+   border-top: solid 2px @orange;
 }
 
 /* -----------------------------------------------------
