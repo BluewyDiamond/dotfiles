@@ -1,11 +1,10 @@
-import padNumberWithSpaces from "libs/utils/padNumberWithSomething";
+import padNumberWithSomething from "libs/utils/padNumberWithSomething";
 
 const audio = await Service.import("audio");
 
 const VolumeSlider = () =>
    Widget.Slider({
       hexpand: true,
-      css: "min-height: 4px",
       drawValue: false,
       min: 0,
       max: 1,
@@ -19,7 +18,6 @@ export const Volume = () =>
       spacing: 8,
       children: [
          Widget.Button({
-            vpack: "center",
             on_clicked: () =>
                (audio.speaker.is_muted = !audio.speaker.is_muted),
 
@@ -42,7 +40,7 @@ export const Volume = () =>
 
             setup: (self) =>
                self.hook(audio, (self) => {
-                  self.label = `${padNumberWithSpaces(Math.round(audio.speaker.volume * 100), 3, " ")}`;
+                  self.label = `${padNumberWithSomething(Math.round(audio.speaker.volume * 100), 3, " ")}`;
                }),
          }),
       ],

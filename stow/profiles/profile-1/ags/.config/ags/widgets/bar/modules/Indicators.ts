@@ -5,6 +5,7 @@ const bluetooth = await Service.import("bluetooth");
 
 const MicrophoneIndicator = () => {
    return Widget.Label({
+      visible: false,
       label: "",
 
       setup: (self) =>
@@ -18,6 +19,7 @@ const MicrophoneIndicator = () => {
 
 const NetworkIndicator = () => {
    return Widget.Label({
+      visible: false,
       label: "󰛵",
 
       setup: (self) =>
@@ -47,6 +49,7 @@ const NetworkIndicator = () => {
 
 const DNDIndicator = () =>
    Widget.Label({
+      visible: false,
       label: "",
 
       setup: (self) =>
@@ -58,6 +61,7 @@ const DNDIndicator = () =>
 
 const BluetoothIndicator = () =>
    Widget.Label({
+      visible: false,
       label: "",
 
       setup: (self) =>
@@ -69,6 +73,7 @@ const BluetoothIndicator = () =>
 
 const AudioIndicator = () =>
    Widget.Label({
+      visible: false,
       label: "",
 
       setup: (self) =>

@@ -260,6 +260,10 @@
    margin-bottom: 8px;
 }
 
+
+.overview-sliders-container button label {
+}
+
 .overview-sliders-container button:hover label {
    color: @orange;
 }
@@ -274,6 +278,10 @@
 }
 
 .overview-sliders-container scale contents trough slider {
+   border-radius: 50%;
+   background-color: @green;
+   min-height: 10px;
+   min-width: 10px;
 }
 
 .overview-sliders-container scale contents trough highlight {
@@ -288,8 +296,6 @@
 .overview-sliders-container scale contents trough fill {
    color: @purple;
    background-color: @purple;
-   min-height: 20px;
-   min-width: 20px;
 }
 
 .overview-notification-list-container {

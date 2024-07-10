@@ -31,60 +31,39 @@ const DNDButton = () => {
    });
 };
 
-const WifiIndicator = () => {
-   return Widget.Box({
-      css: "padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px;",
-      children: [
-         Widget.Box({
-            visible: network.wifi.bind("enabled"),
-            orientation: Gtk.Orientation.VERTICAL,
-            children: [
-               Widget.Box([
-                  Widget.Label({
-                     label: "Internet",
-                  }),
-               ]),
-               Widget.Label({
-                  label: network.wifi
-                     .bind("ssid")
-                     .as((ssid) => ssid || "Unknown"),
-                  class_name: "ssid",
-                  xalign: 0,
-                  vpack: "center",
-                  truncate: "end",
-               }),
-            ],
-         }),
-         Widget.Label({
-            visible: network.wifi.bind("enabled").as((enabled) => !enabled),
-            label: "Internet",
-         }),
-      ],
-   });
-};
-
-const WiredIndicator = () => {
-   return Widget.Box({
-      children: [
-         Widget.Label({
-            label: "Internet",
-         }),
-      ],
-   });
-};
-
-const NetworkErrorIndicator = () => {
-   return Widget.Box({
-      hpack: "center",
-
-      child: Widget.Label({
-         truncate: "end",
-         label: "󰛵  No Information...",
-      }),
-   });
-};
-
 const NetworkButton = () => {
+   const WifiIndicator = () => {
+      return Widget.Box({
+         children: [
+            Widget.Label({
+               label: "󰤨  WiFi",
+            }),
+         ],
+      });
+   };
+
+   const WiredIndicator = () => {
+      return Widget.Box({
+         children: [
+            Widget.Label({
+               label: "󰈀  Ethernet",
+            }),
+         ],
+      });
+   };
+
+   const NetworkErrorIndicator = () => {
+      return Widget.Box({
+         hpack: "center",
+
+         child: Widget.Label({
+            truncate: "end",
+            label: "󰛵  No Information...",
+         }),
+      });
+   };
+
+
    return Widget.Button({
       hexpand: true,
 
@@ -103,7 +82,7 @@ const NetworkButton = () => {
 const BluetoothButton = () => {
    return Widget.Button({
       hexpand: true,
-      onClicked: () => {},
+      onClicked: () => bluetooth.enabled = true,
 
       child: Widget.Label({
          label: "  Bluetooth",

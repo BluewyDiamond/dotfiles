@@ -9,7 +9,7 @@ export default (monitor: number = 0) => {
       anchor: ["top", "right", "bottom"],
       margins: [8, 8, 8, 8],
       visible: false,
-      keymode: "on-demand",
+      keymode: "exclusive",
 
       child: Widget.Box({
          className: "overview",
