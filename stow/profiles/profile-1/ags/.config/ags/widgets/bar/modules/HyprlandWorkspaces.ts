@@ -26,17 +26,36 @@ export default () =>
                onClicked: () => focusWorkspace(workspace_id),
 
                setup: (self) =>
-                  self.hook(hyprland, () => {
-                     self.toggleClassName(
-                        "active",
-                        hyprland.active.workspace.id === workspace_id
-                     );
+                  self
+                     .hook(hyprland, () => {
+                        self.toggleClassName(
+                           "active",
+                           hyprland.active.workspace.id === workspace_id
+                        );
 
-                     self.toggleClassName(
-                        "occupied",
-                        (hyprland.getWorkspace(workspace_id)?.windows || 0) > 0
-                     );
-                  }),
+                        self.toggleClassName(
+                           "occupied",
+                           (hyprland.getWorkspace(workspace_id)?.windows || 0) > 0
+                        );
+                     })
+                     .hook(hyprland, (self, address: string) => {
+                        const client = hyprland.getClient(address)
+
+                        self.toggleClassName(
+                           "urgent",
+                           client?.workspace.id === workspace_id
+                        )
+                     }, "urgent-window")
+                     .hook(hyprland.active.workspace, (self) => {
+                        if (hyprland.active.workspace.id !== workspace_id) {
+                           return
+                        }
+
+                        self.toggleClassName(
+                           "urgent",
+                           false
+                        )
+                     })
             });
          }),
       }),

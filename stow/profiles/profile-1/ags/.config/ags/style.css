@@ -74,6 +74,11 @@
    color: @red;
 }
 
+
+.workspaces-bar-module button.urgent {
+   color: @purple;
+}
+
 .workspaces-bar-module button:last-child {
    margin: 0px 0px 0px 0px;
 }
