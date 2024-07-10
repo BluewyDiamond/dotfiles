@@ -5,7 +5,6 @@ const systemtray = await Service.import("systemtray");
 
 const SysTrayItem = (item: TrayItem) => {
    const button = Widget.Button({
-      attribute: { item },
       child: Widget.Icon().bind("icon", item, "icon"),
       tooltipMarkup: item.bind("tooltip_markup"),
       onPrimaryClick: (_, event) => item.activate(event),
@@ -16,36 +15,27 @@ const SysTrayItem = (item: TrayItem) => {
 };
 
 export default () => {
+   const label = Widget.Label({
+      label: "tray"
+   })
+
+   // TODO: solve the same problem as hyprland taskbar...
    const tray = Widget.Box({
+      className: "tray-bar-module",
       hpack: "center",
       spacing: 8,
-      children: systemtray.bind("items").as(items => items.map(SysTrayItem))
+      children: systemtray.bind("items").as(items => items.map(SysTrayItem)),
+
+      setup: (self) =>
+         self
+            .hook(systemtray, (self) => {
+               if (self.children.length > 0) {
+                  return
+               }
+
+               self.children = [label]
+            })
    });
 
-   const empty = Widget.Label({
-      label: "tray",
-   });
-
-   const stack = Widget.Stack({
-      children: {
-         tray: tray,
-         empty: empty
-      },
-
-      shown: systemtray.bind("items").as((items) => {
-         if (items.length > 0) {
-            return "tray"
-         } else {
-            return "empty"
-         }
-      })
-   })
-
-   // nest it inside box otherwise border radius do wonky stuff
-   const wrapper = Widget.Box({
-      className: "tray-bar-module",
-      child: stack
-   })
-
-   return wrapper;
+   return tray;
 };

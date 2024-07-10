@@ -65,10 +65,18 @@ function sortItems<T extends { attribute: { address: string } }>(arr: T[]) {
 }
 
 export default () => {
+   const label = Widget.Label({
+      label: "taskbar"
+   })
+
+   // TODO: somehow satisfy typescript typechecking...
+   // cant use stack because idk why it does not round borders
+   // and cant wrap it in a box because it does not shrink back
    const taskbar = Widget.Box({
+      className: "taskbar-bar-module",
       hpack: "center",
       spacing: 8,
-      children: sortItems(hyprland.clients.map(client => AppItem(client.address))),
+      children: sortItems(hyprland.clients.map(client => AppItem(client.address))) || [Widget.Label("hi")],
 
       setup: (self) =>
          self
@@ -78,6 +86,13 @@ export default () => {
                }
 
                self.children = sortItems([...self.children, AppItem(address)])
+
+               if (self.children.length > 0) {
+                  return
+               }
+
+               self.children = [label]
+
             }, "client-added")
             .hook(hyprland, (self, address?: string) => {
                if (typeof address !== "string") {
@@ -85,6 +100,13 @@ export default () => {
                }
 
                self.children = self.children.filter(child => child.attribute.address !== address)
+
+
+               if (self.children.length > 0) {
+                  return
+               }
+
+               self.children = [label]
             }, "client-removed")
             .hook(hyprland, (self, event: string) => {
                if (event !== "movewindow") {
@@ -92,33 +114,14 @@ export default () => {
                }
 
                self.children = sortItems(self.children)
+
+               if (self.children.length > 0) {
+                  return
+               }
+
+               self.children = [label]
             })
    })
 
-   const empty = Widget.Label({
-      label: "taskbar"
-   })
-
-   const stack = Widget.Stack({
-      children: {
-         taskbar: taskbar,
-         empty: empty
-      },
-
-      shown: hyprland.bind("clients").as((clients) => {
-         if (clients.length > 0) {
-            return "taskbar"
-         } else {
-            return "empty"
-         }
-      })
-   })
-
-   const wrapper = Widget.Box({
-      className: "taskbar-bar-module",
-
-      child: stack
-   })
-
-   return wrapper
+    return taskbar
 };
