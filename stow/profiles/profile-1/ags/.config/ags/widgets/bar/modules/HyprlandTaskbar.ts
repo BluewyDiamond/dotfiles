@@ -18,20 +18,21 @@ const AppItem = (address: string) => {
    const client = hyprland.getClient(address);
 
    if (!client || client.class === "") {
-      return DummyItem(address)
-   };
+      return DummyItem(address);
+   }
 
    const app = apps.list.find((app) => app.match(client.class));
 
    const iconUrl = findIcon(
-      (app?.icon_name || client.class) + ("-symbolic"),
-      icons.fallback.executable + ("-symbolic"));
+      app?.icon_name || client.class,
+      icons.fallback.executable + "-symbolic"
+   );
 
    var iconOrLabel;
 
    if (iconUrl !== "") {
       iconOrLabel = Widget.Icon({
-         size: 16,
+         size: 20,
          icon: iconUrl,
       });
    } else {
@@ -47,13 +48,15 @@ const AppItem = (address: string) => {
       onClicked: () => focusClient(client.pid),
 
       setup: (self) =>
-         self
-            .hook(hyprland, (self) => {
-               self.toggleClassName("active", hyprland.active.client.address === address)
-            })
+         self.hook(hyprland, (self) => {
+            self.toggleClassName(
+               "active",
+               hyprland.active.client.address === address
+            );
+         }),
    });
 
-   return button
+   return button;
 };
 
 function sortItems<T extends { attribute: { address: string } }>(arr: T[]) {
@@ -66,8 +69,8 @@ function sortItems<T extends { attribute: { address: string } }>(arr: T[]) {
 
 export default () => {
    const label = Widget.Label({
-      label: "taskbar"
-   })
+      label: "taskbar",
+   });
 
    // TODO: somehow satisfy typescript typechecking...
    // cant use stack because idk why it does not round borders
@@ -76,52 +79,65 @@ export default () => {
       className: "taskbar-bar-module",
       hpack: "center",
       spacing: 8,
-      children: sortItems(hyprland.clients.map(client => AppItem(client.address))) || [Widget.Label("hi")],
+      children: sortItems(
+         hyprland.clients.map((client) => AppItem(client.address))
+      ) || [Widget.Label("hi")],
 
       setup: (self) =>
          self
-            .hook(hyprland, (self, address?: string) => {
-               if (typeof address !== "string") {
-                  return
-               }
+            .hook(
+               hyprland,
+               (self, address?: string) => {
+                  if (typeof address !== "string") {
+                     return;
+                  }
 
-               self.children = sortItems([...self.children, AppItem(address)])
+                  self.children = sortItems([
+                     ...self.children,
+                     AppItem(address),
+                  ]);
 
-               if (self.children.length > 0) {
-                  return
-               }
+                  if (self.children.length > 0) {
+                     return;
+                  }
 
-               self.children = [label]
+                  self.children = [label];
+               },
+               "client-added"
+            )
+            .hook(
+               hyprland,
+               (self, address?: string) => {
+                  if (typeof address !== "string") {
+                     return;
+                  }
 
-            }, "client-added")
-            .hook(hyprland, (self, address?: string) => {
-               if (typeof address !== "string") {
-                  return
-               }
+                  self.children = self.children.filter(
+                     (child) => child.attribute.address !== address
+                  );
 
-               self.children = self.children.filter(child => child.attribute.address !== address)
+                  if (self.children.length > 0) {
+                     return;
+                  }
 
-
-               if (self.children.length > 0) {
-                  return
-               }
-
-               self.children = [label]
-            }, "client-removed")
+                  self.children = [label];
+               },
+               "client-removed"
+            )
             .hook(hyprland, (self, event: string) => {
                if (event !== "movewindow") {
-                  return
+                  return;
                }
 
-               self.children = sortItems(self.children)
+               self.children = sortItems(self.children);
 
                if (self.children.length > 0) {
-                  return
+                  return;
                }
 
-               self.children = [label]
-            })
-   })
+               self.children = [label];
+            }),
+   });
 
-   return taskbar
+   return taskbar;
 };

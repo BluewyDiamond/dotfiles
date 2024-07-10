@@ -11,30 +11,29 @@ const SysTrayItem = (item: TrayItem) => {
       onSecondaryClick: (_, event) => item.openMenu(event),
    });
 
-   return button
+   return button;
 };
 
 export default () => {
    const label = Widget.Label({
-      label: "tray"
-   })
+      label: "tray",
+   });
 
    // TODO: solve the same problem as hyprland taskbar...
    const tray = Widget.Box({
       className: "tray-bar-module",
       hpack: "center",
       spacing: 8,
-      children: systemtray.bind("items").as(items => items.map(SysTrayItem)),
+      children: systemtray.bind("items").as((items) => items.map(SysTrayItem)),
 
       setup: (self) =>
-         self
-            .hook(systemtray, (self) => {
-               if (self.children.length > 0) {
-                  return
-               }
+         self.hook(systemtray, (self) => {
+            if (self.children.length > 0) {
+               return;
+            }
 
-               self.children = [label]
-            })
+            self.children = [label];
+         }),
    });
 
    return tray;

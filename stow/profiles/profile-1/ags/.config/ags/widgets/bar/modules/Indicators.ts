@@ -11,7 +11,7 @@ const MicrophoneIndicator = () => {
       setup: (self) =>
          self.hook(audio, (self) => {
             self.visible =
-               audio.recorders.length > 0 || audio.microphone.is_muted || false;
+               audio.recorders.length > 0 && !audio.microphone.is_muted && audio.microphone.volume > 0;
             updateParentVisibility();
          }),
    });
@@ -83,11 +83,30 @@ const AudioIndicator = () =>
                !audio.speaker.is_muted &&
                audio.speaker.volume > 0;
             updateParentVisibility();
-         }),
+         }, "speaker-changed"),
    });
+
+const NotificationsIndicator = () => {
+   return Widget.Label({
+      visible: false,
+      label: "󱅫",
+
+      setup: (self) => 
+         self
+         .hook(notifications, (self) => {
+            self.visible = notifications.notifications.length > 0;
+            updateParentVisibility();
+         }, "notified")
+         .hook(notifications, (self) => {
+            self.visible = notifications.notifications.length > 0;
+            updateParentVisibility();
+         }, "closed")
+   });
+};
 
 const indicatorsBarModule = Widget.Box({
    className: "indicators-bar-module",
+   visible: false,
    spacing: 8,
    children: [
       MicrophoneIndicator(),
@@ -95,6 +114,7 @@ const indicatorsBarModule = Widget.Box({
       BluetoothIndicator(),
       DNDIndicator(),
       NetworkIndicator(),
+      NotificationsIndicator(),
    ],
 });
 
@@ -103,6 +123,7 @@ function updateParentVisibility() {
       const allChildrenInvisible = indicatorsBarModule.children.every(
          (child: any) => !child.visible
       );
+
       indicatorsBarModule.visible = !allChildrenInvisible;
    }
 }

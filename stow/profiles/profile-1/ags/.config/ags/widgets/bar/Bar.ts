@@ -1,3 +1,4 @@
+import CalendarX from "./modules/CalendarX";
 import Clock from "./modules/Clock";
 import HyprlandTaskbar from "./modules/HyprlandTaskbar";
 import HyprlandWorkspaces from "./modules/HyprlandWorkspaces";
@@ -24,7 +25,7 @@ export default (monitor: number) =>
 
          centerWidget: Widget.Box({
             hpack: "center",
-            children: [Clock()],
+            children: [CalendarX(), Clock()],
          }),
 
          endWidget: Widget.Box({
