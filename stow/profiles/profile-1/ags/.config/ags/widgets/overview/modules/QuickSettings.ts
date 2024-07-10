@@ -1,10 +1,12 @@
 import Gtk from "types/@girs/gtk-3.0/gtk-3.0";
 
-function button(text: string) {
+const notifications = await Service.import("notifications")
+const network = await Service.import("network")
+const bluetooth = await Service.import("bluetooth")
+
+const DummyButton = (text: string) => {
    return Widget.Button({
       hexpand: true,
-      // className: "overview-setting",
-      css: "min-height: 50px",
 
       child: Widget.Label({
          label: text,
@@ -12,9 +14,111 @@ function button(text: string) {
    });
 }
 
+const DNDButton = () => {
+   return Widget.Button({
+      hexpand: true,
+      onClicked: () => notifications.dnd = !notifications.dnd,
+
+      child: Widget.Label({
+         truncate: "end",
+         label: "  Do Not Disturb"
+      }),
+
+      setup: (self) =>
+         self
+            .hook(notifications, (self) => {
+               self.toggleClassName("active", notifications.dnd)
+            })
+   })
+}
+
+const WifiIndicator = () => {
+   return Widget.Box({
+      css: "padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px;",
+      children: [
+         Widget.Box({
+            visible: network.wifi.bind("enabled"),
+            orientation: Gtk.Orientation.VERTICAL,
+            children: [
+               Widget.Box([
+                  Widget.Label({
+                     label: "Internet"
+                  })
+               ]),
+               Widget.Label({
+                  label: network.wifi.bind("ssid").as((ssid) => ssid || "Unknown"),
+                  class_name: "ssid",
+                  xalign: 0,
+                  vpack: "center",
+                  truncate: "end"
+               })
+            ]
+         }),
+         Widget.Label({
+            visible: network.wifi.bind("enabled").as((enabled) => !enabled),
+            label: "Internet"
+         }),
+      ]
+   });
+}
+
+const WiredIndicator = () => {
+   return Widget.Box({
+      children: [
+         Widget.Label({
+            label: "Internet"
+         })
+      ]
+   });
+}
+
+const NetworkErrorIndicator = () => {
+   return Widget.Box({
+      hpack: "center",
+
+      child: Widget.Label({
+         truncate: "end",
+         label: "󰛵  No Information..."
+      })
+   })
+}
+
+const NetworkButton = () => {
+   return Widget.Button({
+      hexpand: true,
+
+      child: Widget.Stack({
+         children: {
+            wifi: WifiIndicator(),
+            wired: WiredIndicator(),
+            error: NetworkErrorIndicator()
+         },
+
+         shown: network.bind("primary").as((p) => p || "error")
+      })
+   })
+}
+
+const BluetoothButton = () => {
+   return Widget.Button({
+      hexpand: true,
+      onClicked: () => {},
+
+      child: Widget.Label({
+         label: "  Bluetooth"
+      }),
+
+      setup: (self) =>
+         self
+            .hook(bluetooth, (self) => {
+               self.toggleClassName("active", bluetooth.enabled)
+            })
+   })
+}
+
 const currentPage = Variable(0);
 
-function page1() {
+function Page1() {
    return Widget.Box({
       hexpand: true,
       vertical: true,
@@ -22,12 +126,12 @@ function page1() {
       children: [
          Widget.Box({
             spacing: 8,
-            children: [button("first"), button("second")],
+            children: [NetworkButton(), BluetoothButton()],
          }),
 
          Widget.Box({
             spacing: 8,
-            children: [button("third"), button("fourth")],
+            children: [DNDButton(), DummyButton("fourth")],
          }),
       ],
    });
@@ -50,8 +154,8 @@ const createDotButton = (index: number) => {
 
 export default () => {
    let pages = {
-      page1: page1(),
-      page2: page1(),
+      page1: Page1(),
+      page2: Page1(),
    };
 
    const numberOfPages = Object.keys(pages).length;

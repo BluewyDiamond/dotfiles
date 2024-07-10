@@ -1,6 +1,7 @@
 import Clock from "./modules/Clock";
 import HyprlandTaskbar from "./modules/HyprlandTaskbar";
 import HyprlandWorkspaces from "./modules/HyprlandWorkspaces";
+import Indicators from "./modules/Indicators";
 import NotificationIndicator from "./modules/Overview";
 import Tray from "./modules/Tray";
 import Volume from "./modules/Volume";
@@ -28,7 +29,7 @@ export default (monitor: number) =>
 
          endWidget: Widget.Box({
             hpack: "end",
-            children: [NotificationIndicator(), Volume()],
+            children: [NotificationIndicator(), Indicators(),Volume()],
          }),
       }),
    });

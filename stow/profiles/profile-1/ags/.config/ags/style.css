@@ -9,7 +9,7 @@
  * ----------------------------------------------------- */
 
 * {
-   all: unset; /* user gtk theme should not affect this style */
+   all: unset;
 }
 
 * {
@@ -45,6 +45,7 @@
    background-color: @bg-darker;
 }
 
+.indicators-bar-module,
 .overview-bar-module,
 .volume-bar-module,
 .tray-bar-module,
@@ -126,6 +127,14 @@
 
 .volume-bar-module {
    color: @blue;
+}
+
+/* -----------------------------------------------------
+ * Indicators
+ * ----------------------------------------------------- */
+
+.indicators-bar-module {
+
 }
 
 /* -----------------------------------------------------
@@ -220,16 +229,68 @@
    background-color: @bg-base;
    border: 3px solid @border;
    min-width: 200px;
-   min-height: 100px;
+   min-height: 50px;
    border-radius: 25px;
 }
 
 .overview-quick-settings-area button label {
-   color: @red;
+   color: @text;
 }
 
 .overview-quick-settings-area button:hover {
    border:3px solid @orange;
+}
+
+
+.overview-quick-settings-area button.active {
+   background-color: @red;
+}
+
+
+.overview-quick-settings-area button.active label {
+   color: black;
+}
+
+.overview-sliders-container {
+   padding: 8px;
+   background-color: @bg-darker;
+   border-radius: 4px;
+   margin-bottom: 8px;
+}
+
+
+.overview-sliders-container button:hover label {
+   color: @orange;
+}
+
+.overview-sliders-container scale {
+}
+
+.overview-sliders-container scale contents {
+}
+
+.overview-sliders-container scale contents trough {
+}
+
+.overview-sliders-container scale contents trough slider{
+}
+
+.overview-sliders-container scale contents trough highlight{
+   background-color: @text;
+   border-radius: 4px;
+}
+
+
+.overview-sliders-container scale contents trough highlight:hover{
+   background-color: @orange;
+}
+
+
+.overview-sliders-container scale contents trough fill{
+   color: @purple;
+   background-color: @purple;
+   min-height: 20px;
+   min-width: 20px;
 }
 
 .overview-notification-list-container {
@@ -253,7 +314,7 @@
 .overview-notification-list-actions-container button {
    color: @text;
    background-color: @bg-base;
-   border: 1px solid @border;
+   border: 3px solid @border;
    min-width: 20px;
    min-height: 30px;
    border-radius: 25px;

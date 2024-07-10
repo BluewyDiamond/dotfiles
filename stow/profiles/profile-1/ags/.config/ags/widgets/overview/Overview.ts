@@ -1,26 +1,23 @@
 import NotificationList from "./modules/NotificationList";
 import QuickSettings from "./modules/QuickSettings";
+import Sliders from "./modules/Sliders";
 
 export default (monitor: number = 0) => {
-   const test = Widget.Box({
-      hexpand: true,
-      vexpand: true,
-      child: Widget.Label({
-         label: "senoatrenioatneioarntreion",
-      }),
-   });
-
    return Widget.Window({
       monitor,
       name: `ags-overview`,
       anchor: ["top", "right", "bottom"],
       margins: [8, 8, 8, 8],
       visible: false,
+      keymode: "on-demand",
 
       child: Widget.Box({
          className: "overview",
          vertical: true,
-         children: [QuickSettings(), NotificationList()],
+         children: [QuickSettings(), Sliders(), NotificationList()],
+
+         setup: (self) =>
+            self.keybind("Escape", () => App.closeWindow("ags-overview")),
       }),
    });
 };
