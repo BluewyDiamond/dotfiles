@@ -50,12 +50,21 @@
             ],
 
             "aur": [
-               "nwg-dock-hyprland-bin",
-               "swaync",
                "hyprpicker",
                "wayland-pipewire-idle-inhibit",
                "waybar-cava-git",
-               "satty"
+               "satty",
+               "aylurs-gtk-shell"
+            ]
+         },
+
+         "ags-deps": {
+            "std": [
+               "pipewire-pulse",
+               "upower",
+               "gnome-bluetooth-3.0",
+               "gvfs",
+               "libdbusmenu-gtk3"
             ]
          },
 
