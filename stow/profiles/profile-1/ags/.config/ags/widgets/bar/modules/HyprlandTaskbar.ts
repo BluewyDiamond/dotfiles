@@ -66,6 +66,7 @@ function sortItems<T extends { attribute: { address: string } }>(arr: T[]) {
 
 export default () => {
    const taskbar = Widget.Box({
+      hpack: "center",
       spacing: 8,
       children: sortItems(hyprland.clients.map(client => AppItem(client.address))),
 

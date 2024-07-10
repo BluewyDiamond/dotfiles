@@ -17,6 +17,7 @@ const SysTrayItem = (item: TrayItem) => {
 
 export default () => {
    const tray = Widget.Box({
+      hpack: "center",
       spacing: 8,
       children: systemtray.bind("items").as(items => items.map(SysTrayItem))
    });
