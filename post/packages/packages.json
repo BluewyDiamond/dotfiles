@@ -64,7 +64,8 @@
                "upower",
                "gnome-bluetooth-3.0",
                "gvfs",
-               "libdbusmenu-gtk3"
+               "libdbusmenu-gtk3",
+               "sass"
             ]
          },
 
