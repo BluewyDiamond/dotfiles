@@ -15,6 +15,7 @@ return {
             -- high level
             javascript = { "prettier" },
             typescript = { "prettier" },
+            css = { "prettier" },
             python = { "black" },
 
             -- other

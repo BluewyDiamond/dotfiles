@@ -242,6 +242,18 @@
    color: black;
 }
 
+.overview-quick-settings-dotbutton label {
+   color: alpha(@white, 0.3);
+}
+
+.overview-quick-settings-dotbutton.active label {
+   color: @text;
+}
+
+.overview-quick-settings-dots-container {
+   padding: 8px;
+}
+
 .overview-sliders-container {
    padding: 8px;
    background-color: @bg-darker;
@@ -317,14 +329,20 @@
    border: 3px solid @orange;
 }
 
-.overview-quick-settings-dotbutton label {
-   color: alpha(@white, 0.3);
+.overview-stack-container {
+   background-color: @bg-darker;
 }
 
-.overview-quick-settings-dotbutton.active label {
-   color: @white;
+.overview-stack-area {
 }
 
-.overview-quick-settings-dots-container {
-   padding: 8px;
+.overview-stack-dotbutton label {
+   color: alpha(@text, 0.3);
+}
+
+.overview-stack-dotbutton.active label {
+   color: @text;
+}
+
+.overview-dots-container {
 }
