@@ -65,7 +65,8 @@
                "gnome-bluetooth-3.0",
                "gvfs",
                "libdbusmenu-gtk3",
-               "sass"
+               "sass",
+               "power-profiles-daemon"
             ]
          },
 
