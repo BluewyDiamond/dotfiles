@@ -103,7 +103,8 @@
          "libdbusmenu-gtk3",
          "power-profiles-daemon",
          "brightnessctl",
-         "dart-sass"
+         "dart-sass",
+         "wayshot"
       ],
 
       "aur": ["aylurs-gtk-shell", "bun-bin"]
