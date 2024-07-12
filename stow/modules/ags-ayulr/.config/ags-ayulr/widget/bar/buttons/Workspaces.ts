@@ -10,7 +10,7 @@ const dispatch = (arg: string | number) => {
 }
 
 const Workspaces = (ws: number) => Widget.Box({
-    children: range(ws || 20).map(i => Widget.Label({
+    children: range(ws || 20).filter(i => ![5, 6, 7].includes(i)).map(i => Widget.Label({
         attribute: i,
         vpack: "center",
         label: `${i}`,

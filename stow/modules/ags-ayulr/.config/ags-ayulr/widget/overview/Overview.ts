@@ -8,7 +8,7 @@ const hyprland = await Service.import("hyprland")
 const Overview = (ws: number) => Widget.Box({
     class_name: "overview horizontal",
     children: ws > 0
-        ? range(ws).map(Workspace)
+        ? range(ws).filter(i => ![5, 6, 7].includes(i)).map(Workspace)
         : hyprland.workspaces
             .map(({ id }) => Workspace(id))
             .sort((a, b) => a.attribute.id - b.attribute.id),
