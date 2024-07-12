@@ -103,11 +103,10 @@
          "libdbusmenu-gtk3",
          "power-profiles-daemon",
          "brightnessctl",
-         "dart-sass",
-         "wayshot"
+         "dart-sass"
       ],
 
-      "aur": ["aylurs-gtk-shell", "bun-bin"]
+      "aur": ["aylurs-gtk-shell", "bun-bin", "wayshot"]
    },
 
    "non_ags": {
@@ -140,5 +139,13 @@
       ],
 
       "aur": ["webapp-manager"]
+   },
+
+   "amd_cpu": {
+      "std": ["amd-ucode"]
+   },
+
+   "amd_gpu": {
+      "aur": ["lact"]
    }
 }
