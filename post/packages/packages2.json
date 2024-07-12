@@ -5,10 +5,6 @@
             "std": ["fish", "paru", "btop"]
          },
 
-         "hardware_frontends": {
-            "std": ["iwd"]
-         },
-
          "tools": {
             "std": ["stow", "trash-cli"]
          },
@@ -38,35 +34,7 @@
                "xdg-desktop-portal-hyprland",
                "xdg-desktop-portal-gtk",
                "wezterm",
-               "fuzzel",
-               "polkit-kde-agent",
-               "waybar",
-               "wlogout",
-               "cliphist",
-               "grimblast-git",
-               "hyprpaper",
-               "hypridle",
-               "hyprlock"
-            ],
-
-            "aur": [
-               "hyprpicker",
-               "wayland-pipewire-idle-inhibit",
-               "waybar-cava-git",
-               "satty",
-               "aylurs-gtk-shell"
-            ]
-         },
-
-         "ags-deps": {
-            "std": [
-               "pipewire-pulse",
-               "upower",
-               "gnome-bluetooth-3.0",
-               "gvfs",
-               "libdbusmenu-gtk3",
-               "power-profiles-daemon",
-               "bun-bin"
+               "polkit-kde-agent"
             ]
          },
 
@@ -94,32 +62,6 @@
             "std": ["pavucontrol", "gparted", "gnome-disk-utility"]
          },
 
-         "apps": {
-            "media": {
-               "std": ["vlc", "loupe", "evince"]
-            },
-
-            "production": {
-               "std": ["kate"]
-            },
-
-            "other": {
-               "std": [
-                  "baobab",
-                  "librewolf-bin",
-                  "dolphin",
-                  "thunderbird",
-                  "armcord-git"
-               ],
-
-               "aur": ["webapp-manager"]
-            }
-         },
-
-         "tools": {
-            "std": ["easyeffects", "ark"]
-         },
-
          "virtualization": {
             "std": [
                "qemu-base",
@@ -141,25 +83,61 @@
       }
    },
 
-   "ags_extras": {
-      "std": ["brightnessctl", "dart-sass"]
+   "screen": {
+      "std": "brightnessctl"
    },
 
-   "great_tools_but_not_required": {
-      "std": ["localsend"]
+   "wireless": {
+      "std": ["iwd"]
    },
 
-   "laptop_specific": {
-      "std": ["brightnessctl"]
+   "battery": {},
+   "ags_bluewy": {},
+
+   "ags_ayulr": {
+      "std": [
+         "pipewire-pulse",
+         "upower",
+         "gnome-bluetooth-3.0",
+         "gvfs",
+         "libdbusmenu-gtk3",
+         "power-profiles-daemon",
+         "brightnessctl",
+         "dart-sass"
+      ],
+
+      "aur": ["aylurs-gtk-shell", "bun-bin"]
    },
 
-   "hardware_specific": {
-      "amd_cpu": {
-         "std": ["amd-ucode"]
-      },
+   "non_ags": {
+      "std": [
+         "fuzzel",
+         "wlogout",
+         "cliphist",
+         "grimblast-git",
+         "hyprpaper",
+         "hypridle",
+         "hyprlock",
+         "hyprpicker"
+      ],
 
-      "amd_gpu": {
-         "aur": ["lact"]
-      }
+      "aur": ["waybar-cava-git", "wayland-pipewire-idle-inhibit", "satty"]
+   },
+
+   "extras": {
+      "std": [
+         "baobab",
+         "librewolf-bin",
+         "dolphin",
+         "thunderbird",
+         "armcord-git",
+         "easyeffects",
+         "ark",
+         "vlc",
+         "loupe",
+         "evince"
+      ],
+
+      "aur": ["webapp-manager"]
    }
 }
