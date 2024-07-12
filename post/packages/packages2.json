@@ -84,7 +84,7 @@
    },
 
    "screen": {
-      "std": "brightnessctl"
+      "std": ["brightnessctl"]
    },
 
    "wireless": {
