@@ -35,6 +35,8 @@ const Overview = (ws: number) => Widget.Box({
 })
 
 export default () => PopupWindow({
+    layer: "overlay",
+    keymode: "exclusive",
     name: "overview",
     layout: "center",
     child: options.overview.workspaces.bind().as(Overview),

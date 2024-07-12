@@ -133,6 +133,8 @@ function Launcher() {
 }
 
 export default () => PopupWindow({
+    layer: "overlay",
+    keymode: "exclusive",
     name: "launcher",
     layout: "top",
     child: Launcher(),
