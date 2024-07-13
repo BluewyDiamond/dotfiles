@@ -83,9 +83,7 @@ const AudioIndicator = () => Widget.Icon()
     })
 
 const ScreencastIndicator = () =>
-    Widget.Icon({
-        visible: false,
-    })
+    Widget.Icon()
         .hook(hyprland, (self, eventName?: string, eventData?: string) => {
             if (typeof eventName !== "string") {
                 return
@@ -103,14 +101,17 @@ const ScreencastIndicator = () =>
             const firstDigit = eventData.split(",")[0]
             const firstNumber = Number(firstDigit);
 
-            if (firstNumber !== 0) {
-                self.icon = ""
-                self.visible = false
-                return
+
+            let icon = ""
+
+            if (firstNumber === 1) {
+                icon = "com.github.artemanufrij.screencast"
+            } else {
+                icon = ""
             }
 
-            self.icon = "com.github.artemanufrij.screencast"
-            self.visible = true
+            self.icon = icon
+            self.visible = !!icon
         }, "event")
 
 export default () => PanelButton({
