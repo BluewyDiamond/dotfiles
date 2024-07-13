@@ -107,6 +107,7 @@ export default {
     },
     recorder: {
         recording: "media-record-symbolic",
+        screencast: "com.github.artemanufrij.screencast",
     },
     notifications: {
         noisy: "org.gnome.Settings-notifications-symbolic",

@@ -105,7 +105,7 @@ const ScreencastIndicator = () =>
             let icon = ""
 
             if (firstNumber === 1) {
-                icon = "com.github.artemanufrij.screencast"
+                icon = icons.recorder.screencast
             } else {
                 icon = ""
             }
