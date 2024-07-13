@@ -7,6 +7,7 @@ const bluetooth = await Service.import("bluetooth")
 const audio = await Service.import("audio")
 const network = await Service.import("network")
 const powerprof = await Service.import("powerprofiles")
+const hyprland = await Service.import("hyprland")
 
 const ProfileIndicator = () => {
     const visible = asusctl.available
@@ -81,11 +82,42 @@ const AudioIndicator = () => Widget.Icon()
         self.icon = cons.find(([n]) => n <= vol * 100)?.[1] || ""
     })
 
+const ScreencastIndicator = () =>
+    Widget.Icon({
+        visible: false,
+    })
+        .hook(hyprland, (self, eventName?: string, eventData?: string) => {
+            if (typeof eventName !== "string") {
+                return
+            }
+
+            if (typeof eventData !== "string") {
+                return
+            }
+
+            if (eventName !== "screencast") {
+                self.visible = false
+                return
+            }
+
+            const firstDigit = eventData.split(",")[0]
+            const firstNumber = Number(firstDigit);
+
+            if (firstNumber !== 0) {
+                self.icon = ""
+                self.visible = false
+                return
+            }
+
+            self.icon = "com.github.artemanufrij.screencast"
+            self.visible = true
+        }, "event")
+
 export default () => PanelButton({
     window: "quicksettings",
     on_clicked: () => App.toggleWindow("quicksettings"),
-    on_scroll_up: () => audio.speaker.volume += 0.02,
-    on_scroll_down: () => audio.speaker.volume -= 0.02,
+    on_scroll_up: () => audio.speaker.volume += 0.01,
+    on_scroll_down: () => audio.speaker.volume -= 0.01,
     child: Widget.Box([
         ProfileIndicator(),
         ModeIndicator(),
@@ -94,5 +126,6 @@ export default () => PanelButton({
         NetworkIndicator(),
         AudioIndicator(),
         MicrophoneIndicator(),
+        ScreencastIndicator()
     ]),
 })
