@@ -194,16 +194,18 @@
       ]
    },
 
-   "lib32_stuff": {
-      "std": [
-         "lib32-libva-mesa-driver",
-         "lib32-mesa-vdpau",
-         "lib32-opencl-clover-mesa",
-         "lib32-opencl-rusticl-mesa"
-      ]
-   },
+   "ignore_stuff": {
+      "lib32_stuff": {
+         "std": [
+            "lib32-libva-mesa-driver",
+            "lib32-mesa-vdpau",
+            "lib32-opencl-clover-mesa",
+            "lib32-opencl-rusticl-mesa"
+         ]
+      },
 
-   "btrfs": {
-      "std": ["snapper", "refind-btrfs", "btrfs-assistant-git"]
+      "btrfs": {
+         "std": ["snapper", "refind-btrfs", "btrfs-assistant-git"]
+      }
    }
 }
