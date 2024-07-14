@@ -117,7 +117,7 @@ const options = mkOptions(OPTIONS, {
         },
         taskbar: {
             iconSize: opt(0),
-            monochrome: opt(true),
+            monochrome: opt(false),
             exclusive: opt(false),
         },
         messages: {
@@ -130,7 +130,7 @@ const options = mkOptions(OPTIONS, {
             ]),
         },
         media: {
-            monochrome: opt(true),
+            monochrome: opt(false),
             preferred: opt("spotify"),
             direction: opt<"left" | "right">("right"),
             format: opt("{artists} - {title}"),
@@ -170,7 +170,7 @@ const options = mkOptions(OPTIONS, {
     overview: {
         scale: opt(9),
         workspaces: opt(7),
-        monochromeIcon: opt(true),
+        monochromeIcon: opt(false),
     },
 
     powermenu: {
@@ -191,7 +191,7 @@ const options = mkOptions(OPTIONS, {
         position: opt<"left" | "center" | "right">("right"),
         networkSettings: opt("gtk-launch gnome-control-center"),
         media: {
-            monochromeIcon: opt(true),
+            monochromeIcon: opt(false),
             coverSize: opt(100),
         },
     },
