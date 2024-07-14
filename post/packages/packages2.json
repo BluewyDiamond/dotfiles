@@ -1,20 +1,24 @@
 {
+   "dotfiles": {
+      "std": ["stow"]
+   },
+
    "common": {
       "my_tty_session": {
          "system_related": {
-            "std": ["fish", "paru", "btop"]
-         },
-
-         "tools": {
-            "std": ["stow", "trash-cli"]
+            "std": ["fish", "paru"]
          },
 
          "production": {
             "std": ["neovim", "stylua", "lazygit"]
          },
 
-         "substitute": {
+         "replacements": {
             "std": ["eza"]
+         },
+
+         "security": {
+            "std": ["ufw"]
          },
 
          "rice": {
@@ -27,8 +31,6 @@
             "std": [
                "pipewire",
                "wireplumber",
-               "sddm",
-               "kwin",
                "hyprland",
                "xdg-desktop-portal",
                "xdg-desktop-portal-hyprland",
@@ -48,7 +50,8 @@
                "qt5ct",
                "kvantum",
                "kvantum-qt5",
-               "nwg-look"
+               "nwg-look",
+               "font-manager"
             ],
 
             "aur": ["bibata-cursor-theme-bin"]
@@ -58,7 +61,7 @@
             "std": ["xwaylandvideobridge"]
          },
 
-         "hardware_frontends": {
+         "hardware_gui_managers": {
             "std": ["pavucontrol", "gparted", "gnome-disk-utility"]
          },
 
@@ -91,9 +94,6 @@
       "std": ["iwd"]
    },
 
-   "battery": {},
-   "ags_bluewy": {},
-
    "ags_ayulr": {
       "std": [
          "pipewire-pulse",
@@ -109,22 +109,7 @@
       "aur": ["aylurs-gtk-shell", "bun-bin", "wayshot", "swww"]
    },
 
-   "non_ags": {
-      "std": [
-         "fuzzel",
-         "wlogout",
-         "cliphist",
-         "grimblast-git",
-         "hyprpaper",
-         "hypridle",
-         "hyprlock",
-         "hyprpicker"
-      ],
-
-      "aur": ["waybar-cava-git", "wayland-pipewire-idle-inhibit", "satty"]
-   },
-
-   "extras": {
+   "apps_for_daily_stuff": {
       "std": [
          "baobab",
          "librewolf-bin",
@@ -141,11 +126,84 @@
       "aur": ["webapp-manager"]
    },
 
+   "pacman_extras": {
+      "std": ["downgrade"]
+   },
+
    "amd_cpu": {
       "std": ["amd-ucode"]
    },
 
    "amd_gpu": {
       "aur": ["lact"]
+   },
+
+   "amd_stuff": {
+      "std": ["rocm-opencl-runtime"]
+   },
+
+   "optional_login_manager": {
+      "std": ["sddm", "kwin"]
+   },
+
+   "non_ags": {
+      "std": [
+         "fuzzel",
+         "wlogout",
+         "cliphist",
+         "grimblast-git",
+         "hyprpaper",
+         "hypridle",
+         "hyprlock",
+         "hyprpicker"
+      ],
+
+      "aur": ["waybar-cava-git", "wayland-pipewire-idle-inhibit", "satty-bin"]
+   },
+
+   "cachyos_base_system": {
+      "std": [
+         "linux-cachyos-lto",
+         "linux-firmware",
+         "base",
+         "base-devel",
+         "cachyos-hooks",
+         "cachyos-keyring",
+         "cachyos-mirrorlist",
+         "cachyos-rate-mirrors",
+         "cachyos-settings",
+         "cachyos-v3-mirrorlist",
+         "cachyos-v4-mirrorlist",
+         "chwd",
+         "efitools",
+         "exfatprogs",
+         "haveged",
+         "hdparm",
+         "hwdetect",
+         "logrotate",
+         "lsscsi",
+         "lvm2",
+         "man-db",
+         "man",
+         "mtools",
+         "nfs-utils",
+         "nilfs-utils",
+         "ntfs-3g",
+         "sg3_utils",
+         "wget"
+      ]
+   },
+
+   "lib32_stuff": {
+      "std": [
+         "lib32-libva-mesa-driver",
+         "lib32-mesa-vdpau",
+         "lib32-opencl-clover-mesa",
+         "lib32-opencl-rusticl-mesa"
+      ]
+   },
+
+   "btrfs": {
+      "std": ["snapper", "refind-btrfs", "btrfs-assistant-git"]
    }
 }
