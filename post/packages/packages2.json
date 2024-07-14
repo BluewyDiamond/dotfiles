@@ -161,40 +161,44 @@
       "aur": ["waybar-cava-git", "wayland-pipewire-idle-inhibit", "satty-bin"]
    },
 
-   "cachyos_base_system": {
-      "std": [
-         "linux-cachyos-lto",
-         "linux-firmware",
-         "base",
-         "base-devel",
-         "cachyos-hooks",
-         "cachyos-keyring",
-         "cachyos-mirrorlist",
-         "cachyos-rate-mirrors",
-         "cachyos-settings",
-         "cachyos-v3-mirrorlist",
-         "cachyos-v4-mirrorlist",
-         "chwd",
-         "efitools",
-         "exfatprogs",
-         "haveged",
-         "hdparm",
-         "hwdetect",
-         "logrotate",
-         "lsscsi",
-         "lvm2",
-         "man-db",
-         "man",
-         "mtools",
-         "nfs-utils",
-         "nilfs-utils",
-         "ntfs-3g",
-         "sg3_utils",
-         "wget"
-      ]
+   "extra_audio_stuff": {
+      "std": ["alsa-utils", "alsa-firmware"]
    },
 
    "ignore_stuff": {
+      "cachyos_base_system": {
+         "std": [
+            "linux-cachyos-lto",
+            "linux-firmware",
+            "base",
+            "base-devel",
+            "cachyos-hooks",
+            "cachyos-keyring",
+            "cachyos-mirrorlist",
+            "cachyos-rate-mirrors",
+            "cachyos-settings",
+            "cachyos-v3-mirrorlist",
+            "cachyos-v4-mirrorlist",
+            "chwd",
+            "efitools",
+            "exfatprogs",
+            "haveged",
+            "hdparm",
+            "hwdetect",
+            "logrotate",
+            "lsscsi",
+            "lvm2",
+            "man-db",
+            "man",
+            "mtools",
+            "nfs-utils",
+            "nilfs-utils",
+            "ntfs-3g",
+            "sg3_utils",
+            "wget"
+         ]
+      },
+
       "lib32_stuff": {
          "std": [
             "lib32-libva-mesa-driver",
