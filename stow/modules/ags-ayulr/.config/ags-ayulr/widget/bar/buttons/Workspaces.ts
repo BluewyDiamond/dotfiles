@@ -14,10 +14,23 @@ const Workspaces = (ws: number) => Widget.Box({
         attribute: i,
         vpack: "center",
         label: `${i}`,
-        setup: self => self.hook(hyprland, () => {
-            self.toggleClassName("active", hyprland.active.workspace.id === i)
-            self.toggleClassName("occupied", (hyprland.getWorkspace(i)?.windows || 0) > 0)
-        }),
+        setup: self => self
+            .hook(hyprland, () => {
+                self.toggleClassName("occupied", (hyprland.getWorkspace(i)?.windows || 0) > 0)
+
+                if (hyprland.active.workspace.id === i) {
+                    self.toggleClassName("urgent", false)
+                }
+
+                self.toggleClassName("active", hyprland.active.workspace.id === i)
+            })
+            .hook(hyprland, (self, address?: string) => {
+                if (typeof address !== "string") {
+                    return
+                }
+
+                self.toggleClassName("urgent", hyprland.getClient(address)?.workspace.id === i)
+            }, "urgent-window")
     })),
     setup: box => {
         if (ws === 0) {

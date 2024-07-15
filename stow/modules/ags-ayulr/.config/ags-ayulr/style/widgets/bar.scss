@@ -72,6 +72,11 @@ $button-radius: $radius;
                 min-width: 20pt;
                 min-height: 12pt;
             }
+
+
+            &.urgent {
+                background-color: #d19a66;
+            }
         }
 
         &.active,
