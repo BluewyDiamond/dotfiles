@@ -23,8 +23,8 @@ export default (id: number) => {
     const fixed = Widget.Fixed()
 
     // TODO: early return if position is unchaged
-    async function update() {
-        const json = await hyprland.messageAsync("j/clients").catch(() => null)
+    function update() {
+        const json = hyprland.message("j/clients")
         if (!json)
             return
 
