@@ -21,8 +21,10 @@ export default ({ address, size: [w, h], class: c, title }: Client) => Widget.Bu
             min-height: ${(v / 100) * h}px;
         `),
         icon: monochrome.bind().as(m => {
+            const app = apps.list.find(app => app.match(c))
+
             return icon(
-                c + (m ? "-symbolic" : ""),
+                (app?.icon_name || c) + (m ? "-symbolic" : ""),
                 icons.fallback.executable + (m ? "-symbolic" : ""),
             )
         }),
