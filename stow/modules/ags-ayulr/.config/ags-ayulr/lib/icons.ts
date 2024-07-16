@@ -111,7 +111,7 @@ export default {
         screencast: "com.github.artemanufrij.screencast",
     },
     notifications: {
-        noisy: "org.gnome.Settings-notifications-symbolic",
+        noisy: "alarm-clock",
         silent: "notifications-disabled-symbolic",
         message: "chat-bubbles-symbolic",
     },
