@@ -82,37 +82,36 @@ const AudioIndicator = () => Widget.Icon()
         self.icon = cons.find(([n]) => n <= vol * 100)?.[1] || ""
     })
 
-const ScreencastIndicator = () =>
-    Widget.Icon()
-        .hook(hyprland, (self, eventName?: string, eventData?: string) => {
-            if (typeof eventName !== "string") {
-                return
-            }
+// const ScreencastIndicator = () =>
+//     Widget.Icon()
+//         .hook(hyprland, (self, eventName?: string, eventData?: string) => {
+//             if (typeof eventName !== "string") {
+//                 return
+//             }
 
-            if (typeof eventData !== "string") {
-                return
-            }
+//             if (typeof eventData !== "string") {
+//                 return
+//             }
 
-            if (eventName !== "screencast") {
-                self.visible = false
-                return
-            }
+//             if (eventName !== "screencast") {
+//                 return
+//             }
 
-            const firstDigit = eventData.split(",")[0]
-            const firstNumber = Number(firstDigit);
+//             const firstDigit = eventData.split(",")[0]
+//             const firstNumber = Number(firstDigit);
 
 
-            let icon = ""
+//             let icon = ""
 
-            if (firstNumber === 1) {
-                icon = icons.recorder.screencast
-            } else {
-                icon = ""
-            }
+//             if (firstNumber === 1) {
+//                 icon = icons.recorder.screencast
+//             } else {
+//                 icon = ""
+//             }
 
-            self.icon = icon
-            self.visible = !!icon
-        }, "event")
+//             self.icon = icon
+//             self.visible = !!icon
+//         }, "event")
 
 export default () => PanelButton({
     window: "quicksettings",
@@ -127,6 +126,6 @@ export default () => PanelButton({
         NetworkIndicator(),
         AudioIndicator(),
         MicrophoneIndicator(),
-        ScreencastIndicator()
+        // ScreencastIndicator()
     ]),
 })
