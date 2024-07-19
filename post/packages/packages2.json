@@ -1,33 +1,30 @@
 {
+   "pacman_extras": {
+      "std": ["downgrade"]
+   },
+
    "dotfiles": {
       "std": ["stow"]
    },
 
    "common": {
       "my_tty_session": {
-         "system_related": {
-            "std": ["fish", "paru"]
-         },
-
-         "production": {
-            "std": ["neovim", "stylua", "lazygit"]
-         },
-
-         "replacements": {
-            "std": ["eza"]
-         },
-
-         "security": {
-            "std": ["ufw"]
-         },
-
-         "rice": {
-            "std": ["terminus-font", "figlet", "fastfetch"]
-         }
+         "std": [
+            "fish",
+            "eza",
+            "ufw",
+            "paru",
+            "neovim",
+            "stylua",
+            "lazygit",
+            "terminus-font",
+            "figlet",
+            "fastfetch"
+         ]
       },
 
       "my_graphical_session": {
-         "base": {
+         "minimal": {
             "std": [
                "pipewire",
                "wireplumber",
@@ -40,21 +37,8 @@
             ]
          },
 
-         "rice": {
-            "std": [
-               "ttf-nerd-fonts-symbols",
-               "ttf-nerd-fonts-symbols-mono",
-               "ttf-iosevka-nerd",
-               "gsettings-desktop-schemas",
-               "qt6ct",
-               "qt5ct",
-               "kvantum",
-               "kvantum-qt5",
-               "nwg-look",
-               "font-manager"
-            ],
-
-            "aur": ["bibata-cursor-theme-bin"]
+         "security": {
+            "std": ["kwalletmanager", "kwallet", "kwallet-pam", "ksshaskpass"]
          },
 
          "workarounds": {
@@ -80,18 +64,23 @@
             ]
          },
 
-         "security": {
-            "std": ["kwalletmanager", "kwallet", "kwallet-pam", "ksshaskpass"]
+         "rice": {
+            "std": [
+               "ttf-nerd-fonts-symbols",
+               "ttf-nerd-fonts-symbols-mono",
+               "ttf-iosevka-nerd",
+               "gsettings-desktop-schemas",
+               "qt6ct",
+               "qt5ct",
+               "kvantum",
+               "kvantum-qt5",
+               "nwg-look",
+               "font-manager"
+            ],
+
+            "aur": ["bibata-cursor-theme-bin"]
          }
       }
-   },
-
-   "screen": {
-      "std": ["brightnessctl"]
-   },
-
-   "wireless": {
-      "std": ["iwd"]
    },
 
    "ags_ayulr": {
@@ -104,31 +93,25 @@
          "power-profiles-daemon",
          "brightnessctl",
          "dart-sass",
-         "swww"
+         "swww",
+         "hyprpicker"
       ],
 
       "aur": ["aylurs-gtk-shell", "bun-bin", "wayshot"]
    },
 
-   "apps_for_daily_stuff": {
-      "std": [
-         "baobab",
-         "librewolf-bin",
-         "dolphin",
-         "thunderbird",
-         "armcord-git",
-         "easyeffects",
-         "ark",
-         "vlc",
-         "loupe",
-         "evince"
-      ],
-
-      "aur": ["webapp-manager"]
+   "content_consumer": {
+      "std": ["vlc", "loupe", "evince"]
    },
 
-   "pacman_extras": {
-      "std": ["downgrade"]
+   "content_producer": {},
+
+   "screen": {
+      "std": ["brightnessctl"]
+   },
+
+   "wireless": {
+      "std": ["iwd"]
    },
 
    "amd_cpu": {
@@ -137,33 +120,6 @@
 
    "amd_gpu": {
       "aur": ["lact"]
-   },
-
-   "amd_stuff": {
-      "std": ["rocm-opencl-runtime"]
-   },
-
-   "optional_login_manager": {
-      "std": ["sddm", "kwin"]
-   },
-
-   "non_ags": {
-      "std": [
-         "fuzzel",
-         "wlogout",
-         "cliphist",
-         "grimblast-git",
-         "hyprpaper",
-         "hypridle",
-         "hyprlock",
-         "hyprpicker"
-      ],
-
-      "aur": ["waybar-cava-git", "wayland-pipewire-idle-inhibit", "satty-bin"]
-   },
-
-   "extra_audio_stuff": {
-      "std": ["alsa-utils", "alsa-firmware"]
    },
 
    "ignore_stuff": {
