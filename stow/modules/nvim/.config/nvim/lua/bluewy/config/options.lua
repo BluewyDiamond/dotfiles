@@ -5,10 +5,11 @@ vim.g.loaded_python3_provider = 0
 
 vim.g.mapleader = " "
 
--- line wrapping prefenrences
+-- line wrapping preferences
 vim.o.wrap = false
-vim.o.linebreak = true
-vim.o.breakindent = true
+-- if wrap is enabled:
+-- vim.o.linebreak = true
+-- vim.o.breakindent = true
 
 -- indentation preferences
 vim.o.tabstop = 3
@@ -19,13 +20,15 @@ vim.o.expandtab = true
 -- Use system clipboard.
 vim.o.clipboard = "unnamedplus"
 
-vim.wo.number = true
-
+-- other stuff
+vim.wo.relativenumber = true
 vim.o.cursorline = true
 
+-- search stuff
 vim.o.ignorecase = true
 vim.o.smartcase = true
 
+-- whitespaces stuff
 vim.o.list = true
 
 local space = "·"
