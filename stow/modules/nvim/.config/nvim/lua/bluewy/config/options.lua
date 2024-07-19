@@ -11,9 +11,10 @@ vim.o.linebreak = true
 vim.o.breakindent = true
 
 -- indentation preferences
+vim.o.tabstop = 3
+vim.o.softtabstop = 3
 vim.o.shiftwidth = 3
 vim.o.expandtab = true
-vim.o.softtabstop = 3
 
 -- Use system clipboard.
 vim.o.clipboard = "unnamedplus"
