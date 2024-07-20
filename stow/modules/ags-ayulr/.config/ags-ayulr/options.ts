@@ -114,6 +114,7 @@ const options = mkOptions(OPTIONS, {
         },
         workspaces: {
             workspaces: opt(7),
+            workspacesToIgnore: opt<Array<number>>([5, 6, 7]),
         },
         taskbar: {
             iconSize: opt(0),
@@ -171,6 +172,7 @@ const options = mkOptions(OPTIONS, {
         scale: opt(9),
         workspaces: opt(7),
         monochromeIcon: opt(false),
+        workspacesToIgnore: opt<Array<number>>([5, 6, 7]),
     },
 
     powermenu: {

@@ -89,6 +89,7 @@ export default [
         ),
         Group("Workspaces",
             Row({ opt: b.workspaces.workspaces, title: "Number of Workspaces", note: "0 to make it dynamic" }),
+            Row({ opt: b.workspaces.workspacesToIgnore, title: "Workspaces to ignore" }),
         ),
         Group("Taskbar",
             Row({ opt: b.taskbar.iconSize, title: "Icon Size" }),
@@ -129,6 +130,7 @@ export default [
             Row({ opt: ov.scale, title: "Scale", max: 100 }),
             Row({ opt: ov.workspaces, title: "Workspaces", max: 11, note: "set this to 0 to make it dynamic" }),
             Row({ opt: ov.monochromeIcon, title: "Monochrome Icons" }),
+            Row({ opt: ov.workspacesToIgnore, title: "Workspaces to ignore" })
         ),
         Group("Powermenu",
             Row({ opt: pm.layout, title: "Layout", type: "enum", enums: ["box", "line"] }),
