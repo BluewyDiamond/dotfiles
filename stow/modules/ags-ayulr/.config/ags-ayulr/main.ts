@@ -25,7 +25,7 @@ App.config({
         "ags-launcher": options.transition.value,
         "overview": options.transition.value,
         "quicksettings": options.transition.value,
-        "datemenu": options.transition.value,
+        "ags-datemenu": options.transition.value,
     },
     windows: () => [
         ...forMonitors(Bar),

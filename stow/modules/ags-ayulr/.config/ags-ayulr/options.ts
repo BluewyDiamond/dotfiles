@@ -102,7 +102,7 @@ const options = mkOptions(OPTIONS, {
         },
         date: {
             format: opt("%H:%M - %A %e."),
-            action: opt(() => App.toggleWindow("datemenu")),
+            action: opt(() => App.toggleWindow("ags-datemenu")),
         },
         battery: {
             bar: opt<"hidden" | "regular" | "whole">("regular"),
@@ -122,7 +122,7 @@ const options = mkOptions(OPTIONS, {
             exclusive: opt(false),
         },
         messages: {
-            action: opt(() => App.toggleWindow("datemenu")),
+            action: opt(() => App.toggleWindow("ags-datemenu")),
         },
         systray: {
             ignore: opt([

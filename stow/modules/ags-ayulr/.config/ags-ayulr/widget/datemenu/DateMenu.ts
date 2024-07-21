@@ -10,7 +10,7 @@ const layout = Utils.derive([bar.position, datemenu.position], (bar, qs) =>
 )
 
 const Settings = () => Widget.Box({
-    class_name: "datemenu horizontal",
+    class_name: "ags-datemenu horizontal",
     vexpand: false,
     children: [
         NotificationColumn(),
@@ -20,7 +20,7 @@ const Settings = () => Widget.Box({
 })
 
 const DateMenu = () => PopupWindow({
-    name: "datemenu",
+    name: "ags-datemenu",
     exclusivity: "exclusive",
     transition: pos.as(pos => pos === "top" ? "slide_down" : "slide_up"),
     layout: layout.value,
@@ -30,7 +30,7 @@ const DateMenu = () => PopupWindow({
 export function setupDateMenu() {
     App.addWindow(DateMenu())
     layout.connect("changed", () => {
-        App.removeWindow("datemenu")
+        App.removeWindow("ags-datemenu")
         App.addWindow(DateMenu())
     })
 }
