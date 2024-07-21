@@ -122,11 +122,11 @@ $button-radius: $radius;
         }
     }
 
-    .quicksettings>box>box {
+    .ags-quicksettings>box>box {
         @include spacing($spacing: if($bar-spacing==0, $padding / 2, $bar-spacing));
     }
 
-    .quicksettings:not(.active):not(:active) {
+    .ags-quicksettings:not(.active):not(:active) {
         .bluetooth {
             color: $primary-bg;
 

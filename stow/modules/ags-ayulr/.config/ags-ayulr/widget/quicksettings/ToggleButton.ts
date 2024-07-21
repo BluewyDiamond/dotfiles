@@ -6,7 +6,7 @@ import icons from "lib/icons"
 
 export const opened = Variable("")
 App.connect("window-toggled", (_, name: string, visible: boolean) => {
-    if (name === "quicksettings" && !visible)
+    if (name === "ags-quicksettings" && !visible)
         Utils.timeout(500, () => opened.value = "")
 })
 

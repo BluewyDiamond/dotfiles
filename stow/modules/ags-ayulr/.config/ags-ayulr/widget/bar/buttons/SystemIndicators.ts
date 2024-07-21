@@ -114,8 +114,8 @@ const AudioIndicator = () => Widget.Icon()
 //         }, "event")
 
 export default () => PanelButton({
-    window: "quicksettings",
-    on_clicked: () => App.toggleWindow("quicksettings"),
+    window: "ags-quicksettings",
+    on_clicked: () => App.toggleWindow("ags-quicksettings"),
     on_scroll_up: () => audio.speaker.volume += 0.01,
     on_scroll_down: () => audio.speaker.volume -= 0.01,
     child: Widget.Box([

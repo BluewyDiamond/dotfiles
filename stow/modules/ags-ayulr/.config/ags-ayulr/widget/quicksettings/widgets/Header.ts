@@ -53,7 +53,7 @@ export const Header = () => Widget.Box(
         vpack: "center",
         child: Widget.Icon(icons.ui.settings),
         on_clicked: () => {
-            App.closeWindow("quicksettings")
+            App.closeWindow("ags-quicksettings")
             App.closeWindow("settings-dialog")
             App.openWindow("settings-dialog")
         },

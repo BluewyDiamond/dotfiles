@@ -35,7 +35,7 @@ const Row = (
 
 const Settings = () => Widget.Box({
     vertical: true,
-    class_name: "quicksettings vertical",
+    class_name: "ags-quicksettings vertical",
     css: quicksettings.width.bind().as(w => `min-width: ${w}px;`),
     children: [
         Header(),
@@ -68,7 +68,7 @@ const Settings = () => Widget.Box({
 })
 
 const QuickSettings = () => PopupWindow({
-    name: "quicksettings",
+    name: "ags-quicksettings",
     exclusivity: "exclusive",
     transition: bar.position.bind().as(pos => pos === "top" ? "slide_down" : "slide_up"),
     layout: layout.value,
@@ -78,7 +78,7 @@ const QuickSettings = () => PopupWindow({
 export function setupQuickSettings() {
     App.addWindow(QuickSettings())
     layout.connect("changed", () => {
-        App.removeWindow("quicksettings")
+        App.removeWindow("ags-quicksettings")
         App.addWindow(QuickSettings())
     })
 }
