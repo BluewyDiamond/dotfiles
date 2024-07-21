@@ -29,7 +29,7 @@ class PowerMenu extends Service {
         this.notify("title")
         this.emit("changed")
         App.closeWindow("ags-powermenu")
-        App.openWindow("verification")
+        App.openWindow("ags-verification")
     }
 
     readonly shutdown = () => {
@@ -37,7 +37,7 @@ class PowerMenu extends Service {
     }
 
     readonly exec = () => {
-        App.closeWindow("verification")
+        App.closeWindow("ags-verification")
         Utils.exec(this.#cmd)
     }
 }

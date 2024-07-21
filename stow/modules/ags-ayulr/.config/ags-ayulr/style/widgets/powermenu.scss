@@ -1,10 +1,10 @@
 window#ags-powermenu,
-window#verification {
+window#ags-verification {
     // the fraction has to be more than hyprland ignorealpha
     background-color: rgba(0, 0, 0, .4);
 }
 
-window#verification .verification {
+window#ags-verification .ags-verification {
     @include floating-widget;
     padding: $popover-padding * 1.5;
     min-width: 300px;

@@ -2,10 +2,10 @@ import PopupWindow from "widget/PopupWindow"
 import powermenu from "service/powermenu"
 
 export default () => PopupWindow({
-    name: "verification",
+    name: "ags-verification",
     transition: "crossfade",
     child: Widget.Box({
-        class_name: "verification",
+        class_name: "ags-verification",
         vertical: true,
         children: [
             Widget.Box({
@@ -30,9 +30,9 @@ export default () => PopupWindow({
                 children: [
                     Widget.Button({
                         child: Widget.Label("No"),
-                        on_clicked: () => App.toggleWindow("verification"),
+                        on_clicked: () => App.toggleWindow("ags-verification"),
                         setup: self => self.hook(App, (_, name: string, visible: boolean) => {
-                            if (name === "verification" && visible)
+                            if (name === "ags-verification" && visible)
                                 self.grab_focus()
                         }),
                     }),
