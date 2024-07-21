@@ -36,7 +36,7 @@ const widget = {
 export default (monitor: number) => Widget.Window({
     monitor,
     class_name: "bar",
-    name: `bar${monitor}`,
+    name: `ags-bar${monitor}`,
     exclusivity: "exclusive",
     anchor: position.bind().as(pos => [pos, "right", "left"]),
     child: Widget.CenterBox({

@@ -86,7 +86,7 @@ function MicrophoneMute() {
 
 export default (monitor: number) => Widget.Window({
     monitor,
-    name: `indicator${monitor}`,
+    name: `ags-indicator${monitor}`,
     class_name: "indicator",
     layer: "overlay",
     click_through: true,

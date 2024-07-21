@@ -81,7 +81,7 @@ function PopupList() {
 export default (monitor: number) => Widget.Window({
     monitor,
     layer: "overlay",
-    name: `notifications${monitor}`,
+    name: `ags-notifications${monitor}`,
     anchor: position.bind(),
     class_name: "notifications",
     child: Widget.Box({
