@@ -94,19 +94,18 @@
          "brightnessctl",
          "dart-sass",
          "swww",
-         "hyprpicker"
+         "hyprpicker",
+         "slurp"
       ],
 
-      "aur": ["aylurs-gtk-shell", "bun-bin", "wayshot"]
+      "aur": ["aylurs-gtk-shell", "bun-bin", "wayshot", "satty-bin"]
    },
 
-   "full_desktop_app_suite": {},
-
-   "content_consumer": {
+   "full_desktop_app_suite": {
       "std": ["vlc", "loupe", "evince"]
    },
 
-   "content_producer": {},
+   "content_creation": {},
 
    "screen": {
       "std": ["brightnessctl"]
