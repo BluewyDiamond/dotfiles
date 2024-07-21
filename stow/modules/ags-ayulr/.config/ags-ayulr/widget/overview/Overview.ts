@@ -6,7 +6,7 @@ import { range } from "lib/utils"
 const hyprland = await Service.import("hyprland")
 
 const Overview = (ws: number) => Widget.Box({
-    class_name: "overview horizontal",
+    class_name: "ags-overview horizontal",
     children: options.overview.workspacesToIgnore.bind().as(ignoreRange => {
         if (ws > 0) {
             return range(ws).filter(i => !ignoreRange.includes(i)).map(Workspace)
@@ -42,7 +42,7 @@ const Overview = (ws: number) => Widget.Box({
 export default () => PopupWindow({
     layer: "overlay",
     keymode: "exclusive",
-    name: "overview",
+    name: "ags-overview",
     layout: "center",
     child: options.overview.workspaces.bind().as(Overview),
 })

@@ -45,10 +45,10 @@ const Workspaces = (ws: number) => Widget.Box({
 })
 
 export default () => PanelButton({
-    window: "overview",
+    window: "ags-overview",
     class_name: "workspaces",
     on_scroll_up: () => dispatch("m+1"),
     on_scroll_down: () => dispatch("m-1"),
-    on_clicked: () => App.toggleWindow("overview"),
+    on_clicked: () => App.toggleWindow("ags-overview"),
     child: workspaces.bind().as(Workspaces),
 })

@@ -60,7 +60,7 @@ export default (id: number) => {
         child: Widget.EventBox({
             expand: true,
             on_primary_click: () => {
-                App.closeWindow("overview")
+                App.closeWindow("ags-overview")
                 dispatch(`workspace ${id}`)
             },
             setup: eventbox => {

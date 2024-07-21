@@ -32,7 +32,7 @@ export default ({ address, size: [w, h], class: c, title }: Client) => Widget.Bu
     on_secondary_click: () => dispatch(`closewindow address:${address}`),
     on_clicked: () => {
         dispatch(`focuswindow address:${address}`)
-        App.closeWindow("overview")
+        App.closeWindow("ags-overview")
     },
     setup: btn => btn
         .on("drag-data-get", (_w, _c, data) => data.set_text(address, address.length))
