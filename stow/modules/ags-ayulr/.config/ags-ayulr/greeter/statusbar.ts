@@ -9,7 +9,7 @@ const { monochrome } = options.bar.powermenu
 const { format } = options.bar.date
 
 const poweroff = PanelButton({
-    class_name: "powermenu",
+    class_name: "ags-powermenu",
     child: Widget.Icon(icons.powermenu.shutdown),
     on_clicked: () => Utils.exec("shutdown now"),
     setup: self => self.hook(monochrome, () => {

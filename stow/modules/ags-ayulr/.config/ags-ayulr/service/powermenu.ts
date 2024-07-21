@@ -28,7 +28,7 @@ class PowerMenu extends Service {
         this.notify("cmd")
         this.notify("title")
         this.emit("changed")
-        App.closeWindow("powermenu")
+        App.closeWindow("ags-powermenu")
         App.openWindow("verification")
     }
 

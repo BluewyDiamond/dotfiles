@@ -139,7 +139,7 @@ const options = mkOptions(OPTIONS, {
         },
         powermenu: {
             monochrome: opt(false),
-            action: opt(() => App.toggleWindow("powermenu")),
+            action: opt(() => App.toggleWindow("ags-powermenu")),
         },
     },
 

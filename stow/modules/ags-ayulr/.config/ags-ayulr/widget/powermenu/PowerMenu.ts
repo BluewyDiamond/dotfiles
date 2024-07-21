@@ -22,10 +22,10 @@ const SysButton = (action: Action, label: string) => Widget.Button({
 })
 
 export default () => PopupWindow({
-    name: "powermenu",
+    name: "ags-powermenu",
     transition: "crossfade",
     child: Widget.Box<Gtk.Widget>({
-        class_name: "powermenu horizontal",
+        class_name: "ags-powermenu horizontal",
         setup: self => self.hook(layout, () => {
             self.toggleClassName("box", layout.value === "box")
             self.toggleClassName("line", layout.value === "line")

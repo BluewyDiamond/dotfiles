@@ -1,4 +1,4 @@
-window#powermenu,
+window#ags-powermenu,
 window#verification {
     // the fraction has to be more than hyprland ignorealpha
     background-color: rgba(0, 0, 0, .4);
@@ -35,7 +35,7 @@ window#verification .verification {
     }
 }
 
-window#powermenu .powermenu {
+window#ags-powermenu .ags-powermenu {
     @include floating-widget;
 
     &.line {
