@@ -43,7 +43,7 @@ function Item(pkg: Nixpkg) {
                 class_name: "nix-item",
                 on_clicked: () => {
                     nix.run(pkg.name)
-                    App.closeWindow("launcher")
+                    App.closeWindow("ags-launcher")
                 },
             },
             Widget.Box(

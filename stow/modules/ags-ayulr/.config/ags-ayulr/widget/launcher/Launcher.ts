@@ -68,7 +68,7 @@ function Launcher() {
             else
                 applauncher.launchFirst()
 
-            App.toggleWindow("launcher")
+            App.toggleWindow("ags-launcher")
             entry.text = ""
         },
         on_change: ({ text }) => {
@@ -101,11 +101,11 @@ function Launcher() {
 
     const layout = Widget.Box({
         css: width.bind().as(v => `min-width: ${v}pt;`),
-        class_name: "launcher",
+        class_name: "ags-launcher",
         vertical: true,
         vpack: "start",
         setup: self => self.hook(App, (_, win, visible) => {
-            if (win !== "launcher")
+            if (win !== "ags-launcher")
                 return
 
             entry.text = ""
@@ -124,7 +124,7 @@ function Launcher() {
 
     return Widget.Box(
         { vertical: true, css: "padding: 1px" },
-        Padding("launcher", {
+        Padding("ags-launcher", {
             css: margin.bind().as(v => `min-height: ${v}pt;`),
             vexpand: false,
         }),
@@ -135,7 +135,7 @@ function Launcher() {
 export default () => PopupWindow({
     layer: "overlay",
     keymode: "exclusive",
-    name: "launcher",
+    name: "ags-launcher",
     layout: "top",
     child: Launcher(),
 })

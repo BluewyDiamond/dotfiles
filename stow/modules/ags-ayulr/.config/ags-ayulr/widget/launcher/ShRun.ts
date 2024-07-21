@@ -18,7 +18,7 @@ function Item(bin: string) {
             class_name: "sh-item",
             on_clicked: () => {
                 Utils.execAsync(bin)
-                App.closeWindow("launcher")
+                App.closeWindow("ags-launcher")
             },
         }),
     )

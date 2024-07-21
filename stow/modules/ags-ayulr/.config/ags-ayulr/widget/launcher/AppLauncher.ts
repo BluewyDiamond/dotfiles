@@ -11,7 +11,7 @@ const QuickAppButton = (app: Application) => Widget.Button({
     hexpand: true,
     tooltip_text: app.name,
     on_clicked: () => {
-        App.closeWindow("launcher")
+        App.closeWindow("ags-launcher")
         launchApp(app)
     },
     child: Widget.Icon({
@@ -59,7 +59,7 @@ const AppItem = (app: Application) => {
             children: [appicon, textBox],
         }),
         on_clicked: () => {
-            App.closeWindow("launcher")
+            App.closeWindow("ags-launcher")
             launchApp(app)
         },
     })

@@ -22,7 +22,7 @@ App.config({
         init()
     },
     closeWindowDelay: {
-        "launcher": options.transition.value,
+        "ags-launcher": options.transition.value,
         "overview": options.transition.value,
         "quicksettings": options.transition.value,
         "datemenu": options.transition.value,

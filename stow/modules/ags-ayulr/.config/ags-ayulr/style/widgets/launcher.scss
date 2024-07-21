@@ -1,7 +1,7 @@
 @use "sass:math";
 @use "sass:color";
 
-window#launcher .launcher {
+window#ags-launcher .ags-launcher {
     @include floating_widget;
 
     .quicklaunch {

@@ -36,7 +36,7 @@ function Spinner() {
 }
 
 export default () => PanelButton({
-    window: "launcher",
+    window: "ags-launcher",
     on_clicked: action.bind(),
     child: Widget.Box([
         Spinner(),
