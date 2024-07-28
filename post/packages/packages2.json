@@ -171,7 +171,12 @@
       },
 
       "more_random_stuff": {
-         "std": ["alsa-firmware", "alsa-utils", "rocm-opencl-runtime"]
+         "std": [
+            "alsa-firmware",
+            "alsa-utils",
+            "pipewire-alsa",
+            "rocm-opencl-runtime"
+         ]
       }
    }
 }
