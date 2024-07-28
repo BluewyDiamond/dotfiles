@@ -63,7 +63,7 @@ const options = mkOptions(OPTIONS, {
     },
 
     bar: {
-        flatButtons: opt(true),
+        flatButtons: opt(false),
         position: opt<"top" | "bottom">("top"),
         corners: opt(100),
         transparent: opt(false),
