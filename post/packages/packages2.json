@@ -11,7 +11,7 @@
       "std": ["ufw", "fish", "eza", "paru", "lazygit", "neovim", "stylua"]
    },
 
-   "my_tty_session": {
+   "my_tty_rice": {
       "std": ["terminus-font", "figlet", "fastfetch"]
    },
 
