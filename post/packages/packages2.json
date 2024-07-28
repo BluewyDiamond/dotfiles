@@ -7,83 +7,62 @@
       "std": ["stow"]
    },
 
-   "common": {
-      "my_tty_session": {
-         "std": [
-            "fish",
-            "eza",
-            "ufw",
-            "paru",
-            "neovim",
-            "stylua",
-            "lazygit",
-            "terminus-font",
-            "figlet",
-            "fastfetch"
-         ]
-      },
-
-      "my_graphical_session": {
-         "minimal": {
-            "std": [
-               "pipewire",
-               "wireplumber",
-               "hyprland",
-               "xdg-desktop-portal",
-               "xdg-desktop-portal-hyprland",
-               "xdg-desktop-portal-gtk",
-               "wezterm",
-               "polkit-kde-agent"
-            ]
-         },
-
-         "security": {
-            "std": ["kwalletmanager", "kwallet", "kwallet-pam", "ksshaskpass"]
-         },
-
-         "workarounds": {
-            "std": ["xwaylandvideobridge"]
-         },
-
-         "hardware_gui_managers": {
-            "std": ["pavucontrol", "gparted", "gnome-disk-utility"]
-         },
-
-         "virtualization": {
-            "std": [
-               "qemu-base",
-               "virt-manager",
-               "virt-viewer",
-               "dnsmasq",
-               "vde2",
-               "bridge-utils",
-               "openbsd-netcat",
-               "spice",
-               "qemu-ui-spice-app",
-               "qemu-audio-spice"
-            ]
-         },
-
-         "rice": {
-            "std": [
-               "ttf-nerd-fonts-symbols",
-               "ttf-nerd-fonts-symbols-mono",
-               "ttf-iosevka-nerd",
-               "gsettings-desktop-schemas",
-               "qt6ct",
-               "qt5ct",
-               "kvantum",
-               "kvantum-qt5",
-               "nwg-look",
-               "font-manager"
-            ],
-
-            "aur": ["bibata-cursor-theme-bin"]
-         }
-      }
+   "my_tty_session": {
+      "std": [
+         "fish",
+         "eza",
+         "ufw",
+         "paru",
+         "neovim",
+         "stylua",
+         "lazygit",
+         "terminus-font",
+         "figlet",
+         "fastfetch"
+      ]
    },
 
-   "ags_ayulr": {
+   "my_hyprland_session": {
+      "std": [
+         "hyprland",
+
+         "pipewire",
+         "wireplumber",
+
+         "xdg-desktop-portal",
+         "xdg-desktop-portal-hyprland",
+         "xdg-desktop-portal-gtk",
+         "polkit-kde-agent",
+
+         "xwaylandvideobridge",
+
+         "wezterm",
+
+         "kwalletmanager",
+         "kwallet",
+         "kwallet-pam",
+         "ksshaskpass"
+      ]
+   },
+
+   "window_manager_rice": {
+      "std": [
+         "ttf-nerd-fonts-symbols",
+         "ttf-nerd-fonts-symbols-mono",
+         "ttf-iosevka-nerd",
+         "gsettings-desktop-schemas",
+         "qt6ct",
+         "qt5ct",
+         "kvantum",
+         "kvantum-qt5",
+         "nwg-look",
+         "font-manager"
+      ],
+
+      "aur": ["bibata-cursor-theme-bin"]
+   },
+
+   "my_ags_ayulr": {
       "std": [
          "pipewire-pulse",
          "upower",
@@ -95,17 +74,44 @@
          "dart-sass",
          "swww",
          "hyprpicker",
-         "slurp"
+         "slurp",
+
+         "fuzzel",
+         "cliphist"
       ],
 
       "aur": ["aylurs-gtk-shell", "bun-bin", "wayshot", "satty-bin"]
    },
 
    "full_desktop_app_suite": {
-      "std": ["vlc", "loupe", "evince"]
+      "std": [
+         "vlc",
+         "loupe",
+         "evince",
+         "librewolf",
+         "armcord-git",
+         "dolphin",
+         "ark",
+         "pavucontrol",
+         "gparted",
+         "gnome-disk-utility"
+      ]
    },
 
-   "content_creation": {},
+   "minimal_virtualization_setup": {
+      "std": [
+         "qemu-base",
+         "virt-manager",
+         "virt-viewer",
+         "dnsmasq",
+         "vde2",
+         "bridge-utils",
+         "openbsd-netcat",
+         "spice",
+         "qemu-ui-spice-app",
+         "qemu-audio-spice"
+      ]
+   },
 
    "screen": {
       "std": ["brightnessctl"]
@@ -168,6 +174,10 @@
 
       "btrfs": {
          "std": ["snapper", "refind-btrfs", "btrfs-assistant-git"]
+      },
+
+      "more_random_stuff": {
+         "std": ["alsa-firmware", "alsa-utils"]
       }
    }
 }
