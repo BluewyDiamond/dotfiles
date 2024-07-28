@@ -8,7 +8,16 @@
    },
 
    "my_tty_session": {
-      "std": ["ufw", "fish", "eza", "paru", "lazygit", "neovim", "stylua", "trash-cli"]
+      "std": [
+         "ufw",
+         "fish",
+         "eza",
+         "paru",
+         "lazygit",
+         "neovim",
+         "stylua",
+         "trash-cli"
+      ]
    },
 
    "my_tty_rice": {
@@ -87,7 +96,10 @@
          "ark",
          "pavucontrol",
          "gparted",
-         "gnome-disk-utility"
+         "gnome-disk-utility",
+
+         "easyeffects",
+         "lsp-plugins"
       ]
    },
 
