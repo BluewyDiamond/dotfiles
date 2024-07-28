@@ -175,7 +175,8 @@
             "alsa-firmware",
             "alsa-utils",
             "pipewire-alsa",
-            "rocm-opencl-runtime"
+            "rocm-opencl-runtime",
+            "mesa-utils"
          ]
       }
    }
