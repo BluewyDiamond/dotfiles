@@ -8,7 +8,7 @@
    },
 
    "my_tty_session": {
-      "std": ["ufw", "fish", "eza", "paru", "lazygit", "neovim", "stylua"]
+      "std": ["ufw", "fish", "eza", "paru", "lazygit", "neovim", "stylua", "trash-cli"]
    },
 
    "my_tty_rice": {
