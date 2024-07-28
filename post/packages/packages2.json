@@ -125,6 +125,7 @@
    "ignore_stuff": {
       "cachyos_base_system": {
          "std": [
+            "linux-cachyos",
             "linux-cachyos-lto",
             "linux-firmware",
             "base",
