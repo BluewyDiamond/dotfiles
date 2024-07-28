@@ -8,18 +8,11 @@
    },
 
    "my_tty_session": {
-      "std": [
-         "fish",
-         "eza",
-         "ufw",
-         "paru",
-         "neovim",
-         "stylua",
-         "lazygit",
-         "terminus-font",
-         "figlet",
-         "fastfetch"
-      ]
+      "std": ["ufw", "fish", "eza", "paru", "lazygit", "neovim", "stylua"]
+   },
+
+   "my_tty_session": {
+      "std": ["terminus-font", "figlet", "fastfetch"]
    },
 
    "my_hyprland_session": {
