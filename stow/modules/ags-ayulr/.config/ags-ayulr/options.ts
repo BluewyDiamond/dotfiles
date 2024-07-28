@@ -106,14 +106,14 @@ const options = mkOptions(OPTIONS, {
         },
         battery: {
             bar: opt<"hidden" | "regular" | "whole">("regular"),
-            charging: opt("#00D787"),
+            charging: opt("#98C379"),
             percentage: opt(true),
             blocks: opt(7),
             width: opt(50),
             low: opt(30),
         },
         workspaces: {
-            workspaces: opt(7),
+            workspaces: opt(10),
             workspacesToIgnore: opt<Array<number>>([5, 6, 7]),
         },
         taskbar: {
@@ -170,7 +170,7 @@ const options = mkOptions(OPTIONS, {
 
     overview: {
         scale: opt(9),
-        workspaces: opt(7),
+        workspaces: opt(10),
         monochromeIcon: opt(false),
         workspacesToIgnore: opt<Array<number>>([5, 6, 7]),
     },
@@ -236,7 +236,7 @@ const options = mkOptions(OPTIONS, {
 
     hyprland: {
         gaps: opt(1.0),
-        inactiveBorder: opt("#282828"),
+        inactiveBorder: opt("#5c6370"),
         gapsWhenOnly: opt(false),
     },
 })
