@@ -88,4 +88,17 @@ export default (monitor: number) => Widget.Window({
         css: "padding: 2px;",
         child: PopupList(),
     }),
+
+    setup: (self) => self
+        // because hyprland tearing only works if game is fullscreen and has nothing on top of it
+        // function PopupList uses a custom map while here i check for popups only
+        // im not sure the difference between popus and notifications
+        // technically i could use the custom map but nah
+        .hook(notifications, (self) => {
+            if (notifications.popups.length > 0) {
+                self.visible = true
+            } else {
+                self.visible = false
+            }
+        })
 })
