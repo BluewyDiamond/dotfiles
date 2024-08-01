@@ -9,103 +9,120 @@ const { progress, microphone } = options.osd
 
 const DELAY = 2500
 
-function OnScreenProgress(vertical: boolean) {
-    const indicator = Widget.Icon({
-        size: 42,
-        vpack: "start",
-    })
-    const progress = Progress({
-        vertical,
-        width: vertical ? 42 : 300,
-        height: vertical ? 300 : 42,
-        child: indicator,
-    })
-
-    const revealer = Widget.Revealer({
-        transition: "slide_left",
-        child: progress,
-    })
-
-    let count = 0
-    function show(value: number, icon: string) {
-        revealer.reveal_child = true
-        indicator.icon = icon
-        progress.setValue(value)
-        count++
-        Utils.timeout(DELAY, () => {
-            count--
-
-            if (count === 0)
-                revealer.reveal_child = false
+export default (monitor: number) => {
+    function OnScreenProgress(vertical: boolean) {
+        const indicator = Widget.Icon({
+            size: 42,
+            vpack: "start",
         })
-    }
+        const progress = Progress({
+            vertical,
+            width: vertical ? 42 : 300,
+            height: vertical ? 300 : 42,
+            child: indicator,
+        })
 
-    return revealer
-        .hook(brightness, () => show(
-            brightness.screen,
-            icons.brightness.screen,
-        ), "notify::screen")
-        .hook(brightness, () => show(
-            brightness.kbd,
-            icons.brightness.keyboard,
-        ), "notify::kbd")
-        .hook(audio.speaker, () => show(
-            audio.speaker.volume,
-            icon(audio.speaker.icon_name || "", icons.audio.type.speaker),
-        ), "notify::volume")
-}
+        const revealer = Widget.Revealer({
+            transition: "slide_left",
+            child: progress,
+        })
 
-function MicrophoneMute() {
-    const icon = Widget.Icon({
-        class_name: "microphone",
-    })
-
-    const revealer = Widget.Revealer({
-        transition: "slide_up",
-        child: icon,
-    })
-
-    let count = 0
-    let mute = audio.microphone.stream?.is_muted ?? false
-
-    return revealer.hook(audio.microphone, () => Utils.idle(() => {
-        if (mute !== audio.microphone.stream?.is_muted) {
-            mute = audio.microphone.stream!.is_muted
-            icon.icon = icons.audio.mic[mute ? "muted" : "high"]
+        let count = 0
+        function show(value: number, icon: string) {
+            makeWindowVisible()
             revealer.reveal_child = true
+            indicator.icon = icon
+            progress.setValue(value)
             count++
-
             Utils.timeout(DELAY, () => {
                 count--
-                if (count === 0)
+
+                if (count === 0) {
                     revealer.reveal_child = false
+                    makeWindowInvisible()
+                }
             })
         }
-    }))
-}
 
-export default (monitor: number) => Widget.Window({
-    monitor,
-    name: `ags-indicator${monitor}`,
-    class_name: "indicator",
-    layer: "overlay",
-    click_through: true,
-    anchor: ["right", "left", "top", "bottom"],
-    child: Widget.Box({
-        css: "padding: 2px;",
-        expand: true,
-        child: Widget.Overlay(
-            { child: Widget.Box({ expand: true }) },
-            Widget.Box({
-                hpack: progress.pack.h.bind(),
-                vpack: progress.pack.v.bind(),
-                child: progress.vertical.bind().as(OnScreenProgress),
-            }),
-            Widget.Box({
-                hpack: microphone.pack.h.bind(),
-                vpack: microphone.pack.v.bind(),
-                child: MicrophoneMute(),
-            }),
-        ),
-    }),
-})
+        return revealer
+            .hook(brightness, () => show(
+                brightness.screen,
+                icons.brightness.screen,
+            ), "notify::screen")
+            .hook(brightness, () => show(
+                brightness.kbd,
+                icons.brightness.keyboard,
+            ), "notify::kbd")
+            .hook(audio.speaker, () => show(
+                audio.speaker.volume,
+                icon(audio.speaker.icon_name || "", icons.audio.type.speaker),
+            ), "notify::volume")
+    }
+
+    function MicrophoneMute() {
+        const icon = Widget.Icon({
+            class_name: "microphone",
+        })
+
+        const revealer = Widget.Revealer({
+            transition: "slide_up",
+            child: icon,
+        })
+
+        let count = 0
+        let mute = audio.microphone.stream?.is_muted ?? false
+
+        return revealer.hook(audio.microphone, () => Utils.idle(() => {
+            if (mute !== audio.microphone.stream?.is_muted) {
+                mute = audio.microphone.stream!.is_muted
+                icon.icon = icons.audio.mic[mute ? "muted" : "high"]
+                makeWindowVisible()
+                revealer.reveal_child = true
+                count++
+
+                Utils.timeout(DELAY, () => {
+                    count--
+                    if (count === 0) {
+                        revealer.reveal_child = false
+                        makeWindowInvisible()
+                    }
+                })
+            }
+        }))
+    }
+
+    function makeWindowInvisible() {
+        window.visible = false
+    }
+
+    function makeWindowVisible() {
+        window.visible = true
+    }
+
+    const window = Widget.Window({
+        monitor,
+        name: `ags-indicator${monitor}`,
+        class_name: "indicator",
+        layer: "overlay",
+        click_through: true,
+        anchor: ["right", "left", "top", "bottom"],
+        // visible: false,
+        child: Widget.Box({
+            css: "padding: 2px;",
+            expand: true,
+            child: Widget.Overlay(
+                { child: Widget.Box({ expand: true }) },
+                Widget.Box({
+                    hpack: progress.pack.h.bind(),
+                    vpack: progress.pack.v.bind(),
+                    child: progress.vertical.bind().as(OnScreenProgress),
+                }),
+                Widget.Box({
+                    hpack: microphone.pack.h.bind(),
+                    vpack: microphone.pack.v.bind(),
+                    child: MicrophoneMute(),
+                }),
+            ),
+        }),
+    })
+}
