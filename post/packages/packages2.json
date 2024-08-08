@@ -68,7 +68,6 @@
       "std": [
          "pipewire-pulse",
          "upower",
-         "gnome-bluetooth-3.0",
          "gvfs",
          "libdbusmenu-gtk3",
          "power-profiles-daemon",
