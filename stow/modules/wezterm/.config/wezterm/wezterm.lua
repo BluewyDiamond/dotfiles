@@ -1,3 +1,5 @@
+-- yoinked from https://github.com/theopn/dotfiles
+
 local wezterm = require("wezterm")
 local act = wezterm.action
 
