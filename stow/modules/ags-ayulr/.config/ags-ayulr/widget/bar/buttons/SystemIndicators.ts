@@ -3,11 +3,11 @@ import icons from "lib/icons"
 import asusctl from "service/asusctl"
 
 const notifications = await Service.import("notifications")
-const bluetooth = await Service.import("bluetooth")
+// const bluetooth = await Service.import("bluetooth")
 const audio = await Service.import("audio")
-const network = await Service.import("network")
+// const network = await Service.import("network")
 const powerprof = await Service.import("powerprofiles")
-const hyprland = await Service.import("hyprland")
+// const hyprland = await Service.import("hyprland")
 
 const ProfileIndicator = () => {
     const visible = asusctl.available
@@ -53,26 +53,26 @@ const DNDIndicator = () => Widget.Icon({
     icon: icons.notifications.silent,
 })
 
-const BluetoothIndicator = () => Widget.Overlay({
-    class_name: "bluetooth",
-    passThrough: true,
-    visible: bluetooth.bind("enabled"),
-    child: Widget.Icon({
-        icon: icons.bluetooth.enabled,
-    }),
-    overlay: Widget.Label({
-        hpack: "end",
-        vpack: "start",
-        label: bluetooth.bind("connected_devices").as(c => `${c.length}`),
-        visible: bluetooth.bind("connected_devices").as(c => c.length > 0),
-    }),
-})
+// const BluetoothIndicator = () => Widget.Overlay({
+//     class_name: "bluetooth",
+//     passThrough: true,
+//     visible: bluetooth.bind("enabled"),
+//     child: Widget.Icon({
+//         icon: icons.bluetooth.enabled,
+//     }),
+//     overlay: Widget.Label({
+//         hpack: "end",
+//         vpack: "start",
+//         label: bluetooth.bind("connected_devices").as(c => `${c.length}`),
+//         visible: bluetooth.bind("connected_devices").as(c => c.length > 0),
+//     }),
+// })
 
-const NetworkIndicator = () => Widget.Icon().hook(network, self => {
-    const icon = network[network.primary || "wifi"]?.icon_name
-    self.icon = icon || ""
-    self.visible = !!icon
-})
+// const NetworkIndicator = () => Widget.Icon().hook(network, self => {
+//     const icon = network[network.primary || "wifi"]?.icon_name
+//     self.icon = icon || ""
+//     self.visible = !!icon
+// })
 
 const AudioIndicator = () => Widget.Icon()
     .hook(audio.speaker, self => {
@@ -122,8 +122,8 @@ export default () => PanelButton({
         ProfileIndicator(),
         ModeIndicator(),
         DNDIndicator(),
-        BluetoothIndicator(),
-        NetworkIndicator(),
+        // BluetoothIndicator(),
+        // NetworkIndicator(),
         AudioIndicator(),
         MicrophoneIndicator(),
         // ScreencastIndicator()

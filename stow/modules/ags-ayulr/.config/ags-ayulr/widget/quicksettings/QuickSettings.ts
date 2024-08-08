@@ -3,8 +3,8 @@ import { ProfileSelector, ProfileToggle } from "./widgets/PowerProfile"
 import { Header } from "./widgets/Header"
 import { Volume, Microphone, SinkSelector, AppMixer } from "./widgets/Volume"
 import { Brightness } from "./widgets/Brightness"
-import { NetworkToggle, WifiSelection } from "./widgets/Network"
-import { BluetoothToggle, BluetoothDevices } from "./widgets/Bluetooth"
+// import { NetworkToggle, WifiSelection } from "./widgets/Network"
+// import { BluetoothToggle, BluetoothDevices } from "./widgets/Bluetooth"
 import { DND } from "./widgets/DND"
 import { DarkModeToggle } from "./widgets/DarkMode"
 import { MicMute } from "./widgets/MicMute"
@@ -51,10 +51,10 @@ const Settings = () => Widget.Box({
                 Brightness(),
             ],
         }),
-        Row(
-            [NetworkToggle, BluetoothToggle],
-            [WifiSelection, BluetoothDevices],
-        ),
+        // Row(
+        //     [NetworkToggle, BluetoothToggle],
+        //     [WifiSelection, BluetoothDevices],
+        // ),
         Row(
             [ProfileToggle, DarkModeToggle],
             [ProfileSelector],
