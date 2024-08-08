@@ -1,13 +1,9 @@
 {
-   "pacman_extras": {
-      "std": ["downgrade"]
-   },
-
    "dotfiles": {
       "std": ["stow"]
    },
 
-   "my_tty_session": {
+   "tty_session": {
       "std": [
          "ufw",
 
@@ -23,11 +19,11 @@
       ]
    },
 
-   "my_tty_rice": {
+   "tty_rice": {
       "std": ["terminus-font", "figlet", "fastfetch"]
    },
 
-   "my_hyprland_session": {
+   "hyprland": {
       "std": [
          "hyprland",
 
@@ -49,7 +45,7 @@
       ]
    },
 
-   "window_manager_rice": {
+   "wayland_wm_rice": {
       "std": [
          "ttf-nerd-fonts-symbols",
          "ttf-nerd-fonts-symbols-mono",
@@ -66,7 +62,7 @@
       "aur": ["bibata-cursor-theme-bin"]
    },
 
-   "my_ags_ayulr": {
+   "widgets": {
       "std": [
          "pipewire-pulse",
          "upower",
@@ -86,7 +82,7 @@
       "aur": ["aylurs-gtk-shell", "bun-bin", "wayshot", "satty-bin"]
    },
 
-   "full_desktop_app_suite": {
+   "gui_apps": {
       "std": [
          "vlc",
          "loupe",
@@ -104,7 +100,7 @@
       ]
    },
 
-   "minimal_virtualization_setup": {
+   "minimal_virtualization": {
       "std": [
          "qemu-base",
          "virt-manager",
