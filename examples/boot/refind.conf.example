@@ -17,7 +17,7 @@ menuentry "CachyOS LTO" {
     submenuentry "CachyOS Vanilla" {
         loader @/boot/vmlinuz-linux-cachyos
         initrd @/boot/initramfs-linux-cachyos.img
-        options "quiet rw rootflags=subvol=/@ root=UUID=2fbe92b8-916c-4a7e-8729-3e70988a9833 amdgpu.ppfeaturemask=0xffffffff"
+        options "quiet rw rootflags=subvol=/@ root=UUID=2fbe92b8-916c-4a7e-8729-3e70988a9833 amdgpu.ppfeaturemask=0xffffffff video=DP-2:1920x1080@240"
     }
 
     submenuentry "CachyOS Vanilla fallback" {
@@ -27,7 +27,7 @@ menuentry "CachyOS LTO" {
     submenuentry "CachyOS LTS" {
         loader @/boot/vmlinuz-linux-cachyos-lts
         initrd @/boot/initramfs-linux-cachyos-lts.img
-        options "quiet rw rootflags=subvol=/@ root=UUID=2fbe92b8-916c-4a7e-8729-3e70988a9833 amdgpu.ppfeaturemask=0xffffffff"
+        options "quiet rw rootflags=subvol=/@ root=UUID=2fbe92b8-916c-4a7e-8729-3e70988a9833 amdgpu.ppfeaturemask=0xffffffff video=DP-2:1920x1080@240"
     }
 
     submenuentry "CachyOS LTS fallback" {
