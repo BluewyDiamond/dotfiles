@@ -17,13 +17,11 @@ return {
          },
 
          highlights = {
-            -- general
+            -- general due to rust
             ["@function.builtin"] = {}, -- blank because yellow is definetly not right
             ["@namespace"] = { fg = "${yellow}" },
             ["@operator"] = { fg = "${purple}" },
             ["@parameter"] = { fg = "${red}" },
-
-            Type = { fg = "${purple}" },
 
             -- general due to cpp
             ["@lsp.type.class"] = { fg = "${red}" },
@@ -54,6 +52,6 @@ return {
          },
       })
 
-      vim.cmd([[colorscheme onedark_vivid]])
+      vim.cmd([[colorscheme onedark]])
    end,
 }
