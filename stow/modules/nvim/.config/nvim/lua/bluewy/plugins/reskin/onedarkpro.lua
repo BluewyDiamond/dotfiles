@@ -16,22 +16,6 @@ return {
             cursorline = true,
          },
 
-         styles = {
-            types = "NONE",
-            methods = "NONE",
-            numbers = "NONE",
-            strings = "NONE",
-            comments = "italic",
-            keywords = "bold,italic",
-            constants = "NONE",
-            functions = "italic",
-            operators = "NONE",
-            variables = "NONE",
-            parameters = "NONE",
-            conditionals = "italic",
-            virtual_text = "NONE",
-         },
-
          highlights = {
             -- general
             ["@function.builtin"] = {}, -- blank because yellow is definetly not right
@@ -40,6 +24,10 @@ return {
             ["@parameter"] = { fg = "${red}" },
 
             Type = { fg = "${purple}" },
+
+            -- general due to cpp
+            ["@lsp.type.class"] = { fg = "${red}" },
+            ["@variable.builtin"] = {},
 
             -- rust specific
             ["@lsp.type.formatSpecifier.rust"] = { fg = "${purple}" },
@@ -66,6 +54,6 @@ return {
          },
       })
 
-      vim.cmd("colorscheme onedark")
+      vim.cmd([[colorscheme onedark_vivid]])
    end,
 }
