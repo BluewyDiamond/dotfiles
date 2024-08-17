@@ -24,11 +24,11 @@ window.screen-corner:not(.hidden) {
 
     box.border {
         @if $bar-position =="top" {
-            border-top: $border-width solid $bg;
+            border-top: $border-outer-width solid $bg;
         }
 
         @if $bar-position =="bottom" {
-            border-bottom: $border-width solid $bg;
+            border-bottom: $border-outer-width solid $bg;
         }
 
         margin-right: $_margin;
@@ -36,7 +36,7 @@ window.screen-corner:not(.hidden) {
     }
 
     box.corner {
-        box-shadow: 0 0 0 $border-width $border-color;
+        box-shadow: 0 0 0 $border-outer-width $border-color;
     }
 
     &.corners {

@@ -7,11 +7,11 @@
 
 separator {
     &.horizontal {
-        min-height: $border-width;
+        min-height: $border-inner-width;
     }
 
     &.vertical {
-        min-width: $border-width;
+        min-width: $border-inner-width;
     }
 }
 
@@ -25,7 +25,7 @@ window.popup {
         border-radius: $popover-radius;
         background-color: $bg;
         padding: $popover-padding;
-        border: $border-width solid $popover-border-color;
+        border: $border-inner-width solid $popover-border-color;
 
         separator {
             background-color: $border-color;
@@ -58,7 +58,7 @@ tooltip {
     >*>* {
         background-color: $bg;
         border-radius: $radius;
-        border: $border-width solid $popover-border-color;
+        border: $border-inner-width solid $popover-border-color;
         color: $fg;
         padding: 8px;
         margin: 4px;

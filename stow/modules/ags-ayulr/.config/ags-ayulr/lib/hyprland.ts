@@ -5,7 +5,6 @@ const {
     theme: {
         spacing,
         radius,
-        border: { width },
         blur,
         shadows,
         dark: {
@@ -23,7 +22,6 @@ const deps = [
     spacing.id,
     radius.id,
     blur.id,
-    width.id,
     shadows.id,
     darkActive.id,
     lightActive.id,

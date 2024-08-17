@@ -62,7 +62,8 @@ export default [
             Row({ opt: shadows, title: "Shadows" }),
             Row({ opt: widget.opacity, title: "Widget Opacity", max: 100 }),
             Row({ opt: border.opacity, title: "Border Opacity", max: 100 }),
-            Row({ opt: border.width, title: "Border Width" }),
+            Row({ opt: border.innerWidth, title: "Border Inner Width" }),
+            Row({ opt: border.outerWidth, title: "Border Outer Width" }),
             Row({ opt: blur, title: "Blur", note: "0 to disable", max: 70 }),
         ),
         Group("UI",
@@ -125,7 +126,7 @@ export default [
             Row({ opt: ov.scale, title: "Scale", max: 100 }),
             Row({ opt: ov.workspaces, title: "Workspaces", max: 11, note: "set this to 0 to make it dynamic" }),
             Row({ opt: ov.monochromeIcon, title: "Monochrome Icons" }),
-            Row({ opt: ov.workspacesToIgnore, title: "Workspaces to ignore" })
+            Row({ opt: ov.workspacesToIgnore, title: "Workspaces to ignore" }),
         ),
         Group("Powermenu",
             Row({ opt: pm.layout, title: "Layout", type: "enum", enums: ["box", "line"] }),

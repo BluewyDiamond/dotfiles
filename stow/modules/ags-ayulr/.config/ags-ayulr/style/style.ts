@@ -58,14 +58,15 @@ const variables = () => [
     $("hover-bg", `transparentize(${t(dark.widget, light.widget)}, ${(widget.opacity.value * .9) / 100})`),
     $("hover-fg", `lighten(${t(dark.fg, light.fg)}, 8%)`),
 
-    $("border-width", `${border.width}px`),
+    $("border-inner-width", `${border.innerWidth}px`),
+    $("border-outer-width", `${border.outerWidth}px`),
     $("border-color", `transparentize(${t(dark.border, light.border)}, ${border.opacity.value / 100})`),
-    $("border", "$border-width solid $border-color"),
+    $("border", "$border-inner-width solid $border-color"),
 
     $("active-gradient", `linear-gradient(to right, ${t(dark.primary.bg, light.primary.bg)}, darken(${t(dark.primary.bg, light.primary.bg)}, 4%))`),
     $("shadow-color", t("rgba(0,0,0,.6)", "rgba(0,0,0,.4)")),
     $("text-shadow", t("2pt 2pt 2pt $shadow-color", "none")),
-    $("box-shadow", t("2pt 2pt 2pt 0 $shadow-color, inset 0 0 0 $border-width $border-color", "none")),
+    $("box-shadow", t("2pt 2pt 2pt 0 $shadow-color, inset 0 0 0 $border-inner-width $border-color", "none")),
 
     $("popover-border-color", `transparentize(${t(dark.border, light.border)}, ${Math.max(((border.opacity.value - 1) / 100), 0)})`),
     $("popover-padding", `$padding * ${popoverPaddingMultiplier}`),
