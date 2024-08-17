@@ -65,7 +65,7 @@ const options = mkOptions(OPTIONS, {
     bar: {
         flatButtons: opt(false),
         position: opt<"top" | "bottom">("top"),
-        corners: opt(100),
+        cornersCurve: opt(11),
         transparent: opt(false),
         layout: {
             start: opt<Array<import("widget/bar/Bar").BarWidget>>([
@@ -232,12 +232,6 @@ const options = mkOptions(OPTIONS, {
         position: opt<Array<"top" | "bottom" | "left" | "right">>(["top", "right"]),
         blacklist: opt(["Spotify"]),
         width: opt(440),
-    },
-
-    hyprland: {
-        gaps: opt(1.0),
-        inactiveBorder: opt("#5c6370"),
-        gapsWhenOnly: opt(false),
     },
 })
 

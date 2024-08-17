@@ -78,8 +78,7 @@ const variables = () => [
     $("charging-bg", options.bar.battery.charging),
     $("bar-battery-blocks", options.bar.battery.blocks),
     $("bar-position", options.bar.position),
-    $("hyprland-gaps-multiplier", options.hyprland.gaps),
-    $("screen-corner-multiplier", `${options.bar.corners.value * 0.01}`),
+    $("screen-corner-curve", `${options.bar.cornersCurve.value}`),
 ]
 
 async function resetCss() {

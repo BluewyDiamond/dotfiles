@@ -1,5 +1,5 @@
 $_shadow-size: $padding;
-$_radius: $radius * $hyprland-gaps-multiplier * $screen-corner-multiplier;
+$_radius: $screen-corner-curve;
 $_margin: 99px;
 
 window.screen-corner:not(.hidden) {

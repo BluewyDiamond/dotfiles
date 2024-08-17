@@ -2,7 +2,6 @@ import options from "options"
 const { messageAsync } = await Service.import("hyprland")
 
 const {
-    hyprland,
     theme: {
         spacing,
         radius,
@@ -31,16 +30,6 @@ const deps = [
     scheme.id,
 ]
 
-function primary() {
-    return scheme.value === "dark"
-        ? darkActive.value
-        : lightActive.value
-}
-
-function rgba(color: string) {
-    return `rgba(${color}ff)`.replace("#", "")
-}
-
 function sendBatch(batch: string[]) {
     const cmd = batch
         .filter(x => !!x)
@@ -51,20 +40,6 @@ function sendBatch(batch: string[]) {
 }
 
 async function setupHyprland() {
-    const wm_gaps = Math.floor(hyprland.gaps.value * spacing.value)
-
-    sendBatch([
-        `general:border_size ${width}`,
-        `general:gaps_out ${wm_gaps}`,
-        `general:gaps_in ${Math.floor(wm_gaps / 2)}`,
-        `general:col.active_border ${rgba(primary())}`,
-        `general:col.inactive_border ${rgba(hyprland.inactiveBorder.value)}`,
-        `decoration:rounding ${radius}`,
-        `decoration:drop_shadow ${shadows.value ? "yes" : "no"}`,
-        `dwindle:no_gaps_when_only ${hyprland.gapsWhenOnly.value ? 0 : 1}`,
-        `master:no_gaps_when_only ${hyprland.gapsWhenOnly.value ? 0 : 1}`,
-    ])
-
     await sendBatch(App.windows.map(({ name }) => `layerrule unset, ${name}`))
 
     if (blur.value > 0) {

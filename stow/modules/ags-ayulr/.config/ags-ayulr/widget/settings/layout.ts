@@ -16,7 +16,6 @@ const {
     powermenu: pm,
     quicksettings: qs,
     osd,
-    hyprland: h,
 } = options
 
 const {
@@ -79,7 +78,7 @@ export default [
             Row({ opt: b.transparent, title: "Transparent Bar", note: "Works best on empty-ish wallpapers" }),
             Row({ opt: b.flatButtons, title: "Flat Buttons" }),
             Row({ opt: b.position, title: "Position", type: "enum", enums: ["top", "bottom"] }),
-            Row({ opt: b.corners, title: "Corners" }),
+            Row({ opt: b.cornersCurve, title: "Corners Curve" }),
         ),
         Group("Launcher",
             Row({ opt: b.launcher.icon.icon, title: "Icon" }),
@@ -117,10 +116,6 @@ export default [
         ),
     ),
     Page("General", icons.ui.settings,
-        Group("Hyprland",
-            Row({ opt: h.gapsWhenOnly, title: "Gaps When Only" }),
-            Row({ opt: h.inactiveBorder, type: "color", title: "Inactive Border Color" }),
-        ),
         Group("Launcher",
             Row({ opt: l.width, title: "Width" }),
             Row({ opt: l.apps.iconSize, title: "Icon Size" }),
