@@ -3,15 +3,18 @@
       "std": ["stow"]
    },
 
+   "system_wide": {
+      "ufw",
+   },
+
    "tty_session": {
       "std": [
-         "ufw",
-
          "fish",
          "eza",
          "paru",
 
          "lazygit",
+
          "neovim",
          "stylua",
 
