@@ -6,7 +6,8 @@ set -g CONFIG_FULL_PATH "$CONFIG_LOCATION/$CONFIG_FILE_NAME"
 
 function main
     prerequisites
-    prepare
+
+    sudo pacman -S --needed jq
 
     set top_level_keys (jq -r 'keys | .[]' $CONFIG_FULL_PATH)
 
@@ -51,11 +52,6 @@ function prerequisites
         echo "script: config file not found, exiting..."
         return 1
     end
-end
-
-
-function prepare
-   sudo pacman -S jq
 end
 
 function print_chosen_repository_from_json_file
