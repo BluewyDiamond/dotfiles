@@ -1,8 +1,4 @@
 {
-   "dotfiles": {
-      "std": ["stow"]
-   },
-
    "system_wide": {
       "std": ["ufw"]
    },
@@ -37,7 +33,7 @@
       ]
    },
 
-   "wayland_wm_rice": {
+   "hyprland_rice": {
       "std": [
          "ttf-nerd-fonts-symbols",
          "ttf-nerd-fonts-symbols-mono",
@@ -54,7 +50,7 @@
       "aur": ["bibata-cursor-theme-bin"]
    },
 
-   "widgets": {
+   "hyprland_widgets": {
       "std": [
          "pipewire-pulse",
          "upower",
@@ -111,8 +107,12 @@
       "std": ["brightnessctl"]
    },
 
-   "wireless": {
-      "std": ["iwd"]
+   "wifi": {
+      "std": ["iwd", "impala"]
+   },
+
+   "bluetooth": {
+      "aur": ["overskride"]
    },
 
    "amd_cpu": {

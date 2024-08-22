@@ -7,6 +7,8 @@ mkdir $HOME/.config/fish/conf.d
 mkdir $HOME/.config/fish/functions
 mkdir $HOME/.config/fish/themes
 
+sudo pacman -S --needed stow
+
 for module in $PWD/stow/modules/*
     stow $module -t $HOME
 end
