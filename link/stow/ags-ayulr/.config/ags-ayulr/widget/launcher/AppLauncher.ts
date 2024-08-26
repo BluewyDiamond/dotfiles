@@ -60,7 +60,10 @@ const AppItem = (app: Application) => {
         }),
         on_clicked: () => {
             App.closeWindow("ags-launcher")
-            launchApp(app)
+
+            setTimeout(() => {
+                launchApp(app)
+            }, 500)
         },
     })
 }
@@ -126,5 +129,22 @@ export function Launcher() {
         launchFirst() {
             launchApp(first)
         },
+        launchFirst2(text) {
+            var first = query(text || "")[0]
+            list.children.reduce((i, item) => {
+                if (!text || i >= max.value) {
+                    item.reveal_child = false
+                    return i
+                }
+                if (item.attribute.app.match(text)) {
+                    item.reveal_child = true
+                    return ++i
+                }
+                item.reveal_child = false
+                return i
+            }, 0)
+
+            launchApp(first)
+        }
     })
 }

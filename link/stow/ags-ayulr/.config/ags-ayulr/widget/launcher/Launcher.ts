@@ -61,15 +61,18 @@ function Launcher() {
         hexpand: true,
         primary_icon_name: icons.ui.search,
         on_accept: ({ text }) => {
-            if (text?.startsWith(":nx"))
-                nix.run(text.substring(3))
-            else if (text?.startsWith(":sh"))
-                sh.run(text.substring(3))
-            else
-                applauncher.launchFirst()
-
             App.toggleWindow("ags-launcher")
+
+            setTimeout(() => {
+                if (text?.startsWith(":nx"))
+                    nix.run(text.substring(3))
+                else if (text?.startsWith(":sh"))
+                    sh.run(text.substring(3))
+                else
+                    applauncher.launchFirst2(text)
+
             entry.text = ""
+            }, 500)
         },
         on_change: ({ text }) => {
             text ||= ""
