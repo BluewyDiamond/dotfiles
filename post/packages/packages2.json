@@ -13,18 +13,13 @@
 
    "hyprland": {
       "std": [
-         "hyprland",
-
          "pipewire",
          "wireplumber",
 
-         "xdg-desktop-portal-hyprland",
          "xdg-desktop-portal-gtk",
          "polkit-kde-agent",
 
          "xwaylandvideobridge",
-
-         "wezterm",
 
          "kwalletmanager",
          "kwallet",
