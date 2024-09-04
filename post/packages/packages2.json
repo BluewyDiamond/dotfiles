@@ -1,6 +1,6 @@
 {
    "system_wide": {
-      "std": ["ufw"]
+      "std": ["ufw", "pacman-contrib"]
    },
 
    "tty_session": {
