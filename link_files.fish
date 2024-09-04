@@ -24,7 +24,9 @@ popd
 
 # manual stuff
 
-ln -sf $PWD/link/manual/librewolf/librewolf.overrides.cfg $HOME/.librewolf
+mkdir $HOME/.librewolf
+
+ln -sf $PWD/link/manual/librewolf/librewolf.overrides.cfg $HOME/.librewolf/librewolf.overrides.cfg
 
 set target_dirs (find $HOME/.librewolf -type d -name '*default-default' 2>/dev/null)
 

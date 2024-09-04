@@ -60,14 +60,13 @@
          "brightnessctl",
          "dart-sass",
          "swww",
-         "hyprpicker",
          "slurp",
 
          "fuzzel",
          "cliphist"
       ],
 
-      "aur": ["aylurs-gtk-shell", "bun-bin", "wayshot", "satty-bin"]
+      "aur": ["aylurs-gtk-shell", "bun-bin", "wayshot", "satty-bin", "hyprpicker"]
    },
 
    "gui_apps": {

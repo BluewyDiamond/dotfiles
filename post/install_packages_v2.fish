@@ -34,6 +34,9 @@ function main
 
     print_horizontal_line
     sudo pacman -S --needed $common_standard_repository
+
+    sudo pacman -S --needed paru
+
     paru -S --aur --needed $common_arch_user_repository
 end
 
