@@ -12,7 +12,6 @@
 @define-color black #21252B;
 @define-color black2 #282C34; /* used as background color */
 @define-color black3 #323842;
-@define-color black4 #5C6370; /* from 'One Dark Gogh' */ /* used as text color */
 
 @define-color red #E06C75;
 @define-color orange #d19a66;
@@ -24,7 +23,7 @@
 
 @define-color white #F6F7F9; /* from random web page */
 @define-color white2 #abb2bf; /* used as text color */
-@define-color white3 #5c6370;
+@define-color white3 #5c6370; /* from 'One Dark Gogh' */ /* used as text color */
 
 @define-color highlight #e2be7d; /* from random web page */
 @define-color grey #7f848e; /* used as commenting color */
