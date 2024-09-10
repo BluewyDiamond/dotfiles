@@ -10,9 +10,9 @@ switch $choice
     case 1
         echo
         localectl set-keymap --no-convert colemak_dh_wide_custom_ansi
-        localectl set-x11-keymap --no-convert mod colemak_dh_wide_custom_ansi
+        localectl set-x11-keymap --no-convert bluewy colemak_dh_wide_custom_ansi
     case 2
         echo
         localectl set-keymap --no-convert colemak_dh_wide_custom_iso
-        localectl set-x11-keymap --no-convert mod colemak_dh_wide_custom_iso
+        localectl set-x11-keymap --no-convert bluewy colemak_dh_wide_custom_iso
 end
