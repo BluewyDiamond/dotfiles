@@ -111,7 +111,7 @@
    },
 
    "bluetooth": {
-      "aur": ["overskride"]
+      "aur": ["bluetui-bin"]
    },
 
    "amd_cpu": {
