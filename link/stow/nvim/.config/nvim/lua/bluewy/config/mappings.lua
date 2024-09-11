@@ -135,7 +135,12 @@ mappings.neo_tree = {
       { noremap = true, silent = true },
    },
 
-   { "n", "<leader>bf", ":Neotree buffers reveal float<CR>", { noremap = true, silent = true, desc = "toggle neo-tree" } },
+   {
+      "n",
+      "<leader>bf",
+      ":Neotree buffers reveal float<CR>",
+      { noremap = true, silent = true, desc = "toggle neo-tree" },
+   },
 }
 
 mappings.rainbow_delimiters = {
