@@ -107,11 +107,11 @@
    },
 
    "wifi": {
-      "std": ["iwd", "impala"]
+      "aur": ["iwgtk"]
    },
 
    "bluetooth": {
-      "aur": ["bluetui-bin"]
+      "aur": ["overskride"]
    },
 
    "amd_cpu": {
