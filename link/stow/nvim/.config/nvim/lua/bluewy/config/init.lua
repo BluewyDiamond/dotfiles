@@ -18,3 +18,6 @@ end
 
 local mappings = require("bluewy.config.mappings")
 process_mappings(mappings)
+
+-- local mappings_colemak_dh = require("bluewy.config.mappings_colemak_dh")
+-- process_mappings(mappings_colemak_dh)
