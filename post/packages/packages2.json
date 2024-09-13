@@ -1,6 +1,6 @@
 {
    "system_wide": {
-      "std": ["ufw", "pacman-contrib"]
+      "std": ["pacman-contrib"]
    },
 
    "tty_session": {
@@ -8,7 +8,6 @@
          "fish",
          "eza",
          "paru",
-         "lazygit",
 
          "ripgrep",
          "neovim",
@@ -100,7 +99,9 @@
          "lsp-plugins",
 
          "mangohud",
-         "librewolf-bin"
+         "librewolf-bin",
+
+         "mission-center"
       ]
    },
 
