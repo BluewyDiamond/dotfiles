@@ -2,10 +2,10 @@ local mappings = {}
 
 mappings.vim = {
    -- because i use the colemak dh wide mod keyboard layout
-   { "n", "<C-A-u>", "<C-w>k", { noremap = true, silent = true, desc = "focus upper pane" } }, -- up
-   { "n", "<C-A-i>", "<C-w>l", { noremap = true, silent = true, desc = "focus right pane" } }, -- right
-   { "n", "<C-A-e>", "<C-w>j", { noremap = true, silent = true, desc = "focus bottom pane" } }, -- bottom
-   { "n", "<C-A-n>", "<C-w>h", { noremap = true, silent = true, desc = "focus left pane" } }, -- left
+   { "n", "<leader>fup", "<C-w>k", { noremap = true, silent = true, desc = "focus upper pane" } }, -- up
+   { "n", "<leader>frp", "<C-w>l", { noremap = true, silent = true, desc = "focus right pane" } }, -- right
+   { "n", "<leader>fbp", "<C-w>j", { noremap = true, silent = true, desc = "focus bottom pane" } }, -- bottom
+   { "n", "<leader>flp", "<C-w>h", { noremap = true, silent = true, desc = "focus left pane" } }, -- left
 
    { "n", "<C-A-S-u>", "<cmd>resize -1<CR>", { noremap = true, silent = true, desc = "focus upper pane" } }, -- up
    { "n", "<C-A-S-i>", "<cmd>vertical resize -1<CR>", { noremap = true, silent = true, desc = "focus right pane" } }, -- right
@@ -14,19 +14,19 @@ mappings.vim = {
 }
 
 mappings.bufferline = {
-   { "n", "<C-S-t>", "<cmd>BufferLineCycleNext<cr>", { noremap = true, silent = true, desc = "next buffer" } },
-   { "n", "<C-S-r>", "<cmd>BufferLineCyclePrev<cr>", { noremap = true, silent = true, desc = "previous buffer" } },
+   { "n", "<leader>nb", "<cmd>BufferLineCycleNext<cr>", { noremap = true, silent = true, desc = "next buffer" } },
+   { "n", "<leader>pb", "<cmd>BufferLineCyclePrev<cr>", { noremap = true, silent = true, desc = "previous buffer" } },
 
    {
       "n",
-      "<C-S-A-t>",
+      "<leader>mnb",
       "<cmd>BufferLineMoveNext<cr>",
       { noremap = true, silent = true, desc = "move buffer to the right" },
    },
 
    {
       "n",
-      "<C-S-A-r>",
+      "<leader>mpb",
       "<cmd>BufferLineMovePrev<cr>",
       { noremap = true, silent = true, desc = "move buffer to the left" },
    },
