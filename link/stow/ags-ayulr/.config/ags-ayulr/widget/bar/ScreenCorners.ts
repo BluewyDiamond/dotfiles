@@ -8,6 +8,8 @@ export default (monitor: number) => Widget.Window({
     class_name: "screen-corner",
     anchor: ["top", "bottom", "right", "left"],
     click_through: true,
+    layer: "bottom",
+
     child: Widget.Box({
         class_name: "shadow",
         child: Widget.Box({

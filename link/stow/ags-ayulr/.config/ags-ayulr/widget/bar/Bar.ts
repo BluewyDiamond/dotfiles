@@ -39,6 +39,8 @@ export default (monitor: number) => Widget.Window({
     name: `ags-bar${monitor}`,
     exclusivity: "exclusive",
     anchor: position.bind().as(pos => [pos, "right", "left"]),
+    layer: "bottom",
+
     child: Widget.CenterBox({
         css: "min-width: 2px; min-height: 2px;",
         startWidget: Widget.Box({
