@@ -11,6 +11,14 @@ mappings.vim = {
    { "n", "<C-A-S-i>", "<cmd>vertical resize -1<CR>", { noremap = true, silent = true, desc = "focus right pane" } }, -- right
    { "n", "<C-A-S-e>", "<cmd>resize +1 <CR>", { noremap = true, silent = true, desc = "focus bottom pane" } }, -- down
    { "n", "<C-A-S-n>", "<cmd>vertical resize +1<CR>", { noremap = true, silent = true, desc = "focus left pane" } }, -- left
+
+   -- trim whitespace
+   {
+      "n",
+      "<leader>ttw",
+      "<cmd>%s/\\s\\+$//e<CR>",
+      { noremap = true, silent = true, desc = "trim trailing whitespace" },
+   },
 }
 
 mappings.bufferline = {
