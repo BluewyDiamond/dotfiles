@@ -89,7 +89,10 @@
          "vlc",
          "loupe",
          "evince",
+
+         "archlinux-xdg-menu",
          "dolphin",
+
          "ark",
          "pavucontrol",
          "gparted",
@@ -99,7 +102,7 @@
          "lsp-plugins",
 
          "mangohud",
-         "librewolf-bin",
+         "cachy-browser",
 
          "mission-center",
          "qpwgraph"
