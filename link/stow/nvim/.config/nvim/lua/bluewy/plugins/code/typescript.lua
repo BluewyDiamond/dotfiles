@@ -6,4 +6,8 @@ return {
       { "neovim/nvim-lspconfig" }, --> latest commit
    },
    opts = {},
+
+   config = function()
+      require("typescript-tools").setup({})
+   end,
 }
