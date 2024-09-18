@@ -39,14 +39,6 @@ return {
             })
          end,
 
-         ["lua_ls"] = function()
-            require("lspconfig")["lua_ls"].setup({
-               capabilities = capabilities,
-
-               -- We use lazydev to expand functionality.
-            })
-         end,
-
          ["rust_analyzer"] = function()
             -- We leave it blank because we setup it up with rustacevim.
          end,
