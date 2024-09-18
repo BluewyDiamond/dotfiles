@@ -4,17 +4,7 @@
    },
 
    "tty_session": {
-      "std": [
-         "fish",
-         "eza",
-         "paru",
-
-         "ripgrep",
-         "neovim",
-         "stylua",
-
-         "trash-cli"
-      ]
+      "std": ["fish", "eza", "paru", "ripgrep", "neovim", "stylua", "trash-cli"]
    },
 
    "tty_rice": {
@@ -72,16 +62,12 @@
          "fzf",
 
          "fuzzel",
-         "cliphist"
+         "cliphist",
+
+         "satty-bin"
       ],
 
-      "aur": [
-         "aylurs-gtk-shell",
-         "bun-bin",
-         "wayshot",
-         "satty-bin",
-         "hyprpicker"
-      ]
+      "aur": ["aylurs-gtk-shell", "bun-bin", "wayshot", "hyprpicker"]
    },
 
    "gui_apps": {
