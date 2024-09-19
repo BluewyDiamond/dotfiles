@@ -3,11 +3,8 @@ import icons from "lib/icons"
 import asusctl from "service/asusctl"
 
 const notifications = await Service.import("notifications")
-// const bluetooth = await Service.import("bluetooth")
 const audio = await Service.import("audio")
-// const network = await Service.import("network")
 const powerprof = await Service.import("powerprofiles")
-// const hyprland = await Service.import("hyprland")
 
 const ProfileIndicator = () => {
     const visible = asusctl.available
@@ -53,27 +50,6 @@ const DNDIndicator = () => Widget.Icon({
     icon: icons.notifications.silent,
 })
 
-// const BluetoothIndicator = () => Widget.Overlay({
-//     class_name: "bluetooth",
-//     passThrough: true,
-//     visible: bluetooth.bind("enabled"),
-//     child: Widget.Icon({
-//         icon: icons.bluetooth.enabled,
-//     }),
-//     overlay: Widget.Label({
-//         hpack: "end",
-//         vpack: "start",
-//         label: bluetooth.bind("connected_devices").as(c => `${c.length}`),
-//         visible: bluetooth.bind("connected_devices").as(c => c.length > 0),
-//     }),
-// })
-
-// const NetworkIndicator = () => Widget.Icon().hook(network, self => {
-//     const icon = network[network.primary || "wifi"]?.icon_name
-//     self.icon = icon || ""
-//     self.visible = !!icon
-// })
-
 const AudioIndicator = () => Widget.Icon()
     .hook(audio.speaker, self => {
         const vol = audio.speaker.is_muted ? 0 : audio.speaker.volume
@@ -81,37 +57,6 @@ const AudioIndicator = () => Widget.Icon()
         const cons = [[101, overamplified], [67, high], [34, medium], [1, low], [0, muted]] as const
         self.icon = cons.find(([n]) => n <= vol * 100)?.[1] || ""
     })
-
-// const ScreencastIndicator = () =>
-//     Widget.Icon()
-//         .hook(hyprland, (self, eventName?: string, eventData?: string) => {
-//             if (typeof eventName !== "string") {
-//                 return
-//             }
-
-//             if (typeof eventData !== "string") {
-//                 return
-//             }
-
-//             if (eventName !== "screencast") {
-//                 return
-//             }
-
-//             const firstDigit = eventData.split(",")[0]
-//             const firstNumber = Number(firstDigit);
-
-
-//             let icon = ""
-
-//             if (firstNumber === 1) {
-//                 icon = icons.recorder.screencast
-//             } else {
-//                 icon = ""
-//             }
-
-//             self.icon = icon
-//             self.visible = !!icon
-//         }, "event")
 
 export default () => PanelButton({
     window: "ags-quicksettings",
@@ -122,10 +67,7 @@ export default () => PanelButton({
         ProfileIndicator(),
         ModeIndicator(),
         DNDIndicator(),
-        // BluetoothIndicator(),
-        // NetworkIndicator(),
         AudioIndicator(),
         MicrophoneIndicator(),
-        // ScreencastIndicator()
     ]),
 })
