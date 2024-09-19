@@ -42,7 +42,8 @@
          "kvantum",
          "kvantum-qt5",
          "nwg-look",
-         "font-manager"
+         "font-manager",
+         "hyprpaper"
       ],
 
       "aur": ["bibata-cursor-theme-bin"]
