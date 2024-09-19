@@ -106,7 +106,8 @@
          "openbsd-netcat",
          "spice",
          "qemu-ui-spice-app",
-         "qemu-audio-spice"
+         "qemu-audio-spice",
+         "qemu-hw-usb-redirect"
       ]
    },
 
