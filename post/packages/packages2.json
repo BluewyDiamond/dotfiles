@@ -57,17 +57,17 @@
          "power-profiles-daemon",
          "brightnessctl",
          "dart-sass",
-         "swww",
          "slurp",
          "fzf",
-
-         "fuzzel",
-         "cliphist",
 
          "satty-bin"
       ],
 
       "aur": ["aylurs-gtk-shell", "bun-bin", "wayshot", "hyprpicker"]
+   },
+
+   "hyprland_extras": {
+      "std": ["fuzzel", "cliphist"]
    },
 
    "gui_apps": {

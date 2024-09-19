@@ -1,5 +1,4 @@
 import type Gtk from "gi://Gtk?version=3.0"
-import { PowerProfileSelector, PowerProfileToggle, ProfileSelector, ProfileToggle } from "./widgets/PowerProfile"
 import { Header } from "./widgets/Header"
 import { Volume, Microphone, SinkSelector, AppMixer } from "./widgets/Volume"
 import { Brightness } from "./widgets/Brightness"
