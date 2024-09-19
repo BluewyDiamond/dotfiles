@@ -54,8 +54,9 @@ const options = mkOptions(OPTIONS, {
     transition: opt(200),
 
     font: {
-        size: opt(13),
-        name: opt("Ubuntu Nerd Font"),
+        size: opt(14),
+        name: opt("Iosevka Nerd Font"),
+        weight: opt(500)
     },
 
     bar: {

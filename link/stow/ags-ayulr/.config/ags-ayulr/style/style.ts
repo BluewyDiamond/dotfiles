@@ -74,6 +74,7 @@ const variables = () => [
 
     $("font-size", `${options.font.size}pt`),
     $("font-name", options.font.name),
+    $("font-weight", options.font.weight),
 
     // etc
     $("charging-bg", options.bar.battery.charging),
