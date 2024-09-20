@@ -133,6 +133,7 @@ const options = mkOptions(OPTIONS, {
             direction: opt<"left" | "right">("right"),
             format: opt("{artists} - {title}"),
             length: opt(40),
+            charactersToStrip: opt("「」")
         },
         powermenu: {
             monochrome: opt(false),

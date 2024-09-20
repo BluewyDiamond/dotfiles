@@ -3,14 +3,25 @@ import PanelButton from "../PanelButton"
 import options from "options"
 import icons from "lib/icons"
 import { icon } from "lib/utils"
+import { Opt } from "lib/option"
 
 const mpris = await Service.import("mpris")
-const { length, direction, preferred, monochrome, format } = options.bar.media
+const { length, direction, preferred, monochrome, format, charactersToStrip } = options.bar.media
 
 const getPlayer = (name = preferred.value) =>
     mpris.getPlayer(name) || mpris.players[0] || null
 
 const Content = (player: MprisPlayer) => {
+    const stripCharacters = (str: string, charactersToStrip: string): string => {
+        let result = str;
+
+        for (const char of charactersToStrip) {
+            result = result.replace(new RegExp(char, 'g'), '');
+        }
+
+        return result;
+    };
+
     const revealer = Widget.Revealer({
         click_through: true,
         visible: length.bind().as(l => l > 0),
@@ -35,14 +46,23 @@ const Content = (player: MprisPlayer) => {
                 player.bind("track_title"),
                 player.bind("track_artists"),
                 format.bind(),
-            ], () => `${format}`
-                .replace("{title}", player.track_title)
-                .replace("{artists}", player.track_artists.join(", "))
-                .replace("{artist}", player.track_artists[0] || "")
-                .replace("{album}", player.track_album)
-                .replace("{name}", player.name)
-                .replace("{identity}", player.identity),
-            ),
+            ], () => {
+                let track_title = stripCharacters(player.track_title, charactersToStrip.value)
+                let track_artists = stripCharacters(player.track_artists.join(", "), charactersToStrip.value)
+                let track_artist = stripCharacters(player.track_artists[0] || "", charactersToStrip.value)
+                let track_album = stripCharacters(player.track_album, charactersToStrip.value)
+                let name = stripCharacters(player.name, charactersToStrip.value)
+                let identity = stripCharacters(player.identity, charactersToStrip.value);
+
+                return `${format}`
+                    .replace("{title}", track_title)
+                    .replace("{artists}", track_artists)
+                    .replace("{artist}", track_artist)
+                    .replace("{album}", track_album)
+                    .replace("{name}", name)
+                    .replace("{identity}", identity)
+            })
+
         }),
     })
 

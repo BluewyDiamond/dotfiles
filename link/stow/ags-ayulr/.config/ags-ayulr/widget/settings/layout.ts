@@ -104,6 +104,7 @@ export default [
             Row({ opt: b.media.direction, title: "Slide Direction", type: "enum", enums: ["left", "right"] }),
             Row({ opt: b.media.format, title: "Format of the Label" }),
             Row({ opt: b.media.length, title: "Max Length of Label" }),
+            Row({ opt: b.media.charactersToStrip, title: "Strip Problematic Characters"})
         ),
         Group("Battery",
             Row({ opt: b.battery.bar, title: "Style", type: "enum", enums: ["hidden", "regular", "whole"] }),
