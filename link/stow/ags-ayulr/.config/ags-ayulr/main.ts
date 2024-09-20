@@ -40,5 +40,5 @@ App.config({
    ],
 });
 
-print("heeereeeeeeeee")
+print("heeereeeeeeeee");
 print(`${options.font.name}`);

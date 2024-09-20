@@ -1,104 +1,108 @@
-import Notification from "./Notification"
-import options from "options"
+import Notification from "./Notification";
+import options from "options";
 
-const notifications = await Service.import("notifications")
-const { transition } = options
-const { position } = options.notifications
-const { timeout, idle } = Utils
+const notifications = await Service.import("notifications");
+const { transition } = options;
+const { position } = options.notifications;
+const { timeout, idle } = Utils;
 
 function Animated(id: number) {
-    const n = notifications.getNotification(id)!
-    const widget = Notification(n)
+   const n = notifications.getNotification(id)!;
+   const widget = Notification(n);
 
-    const inner = Widget.Revealer({
-        transition: "slide_left",
-        transition_duration: transition.value,
-        child: widget,
-    })
+   const inner = Widget.Revealer({
+      transition: "slide_left",
+      transition_duration: transition.value,
+      child: widget,
+   });
 
-    const outer = Widget.Revealer({
-        transition: "slide_down",
-        transition_duration: transition.value,
-        child: inner,
-    })
+   const outer = Widget.Revealer({
+      transition: "slide_down",
+      transition_duration: transition.value,
+      child: inner,
+   });
 
-    const box = Widget.Box({
-        hpack: "end",
-        child: outer,
-    })
+   const box = Widget.Box({
+      hpack: "end",
+      child: outer,
+   });
 
-    idle(() => {
-        outer.reveal_child = true
-        timeout(transition.value, () => {
-            inner.reveal_child = true
-        })
-    })
+   idle(() => {
+      outer.reveal_child = true;
+      timeout(transition.value, () => {
+         inner.reveal_child = true;
+      });
+   });
 
-    return Object.assign(box, {
-        dismiss() {
-            inner.reveal_child = false
+   return Object.assign(box, {
+      dismiss() {
+         inner.reveal_child = false;
+         timeout(transition.value, () => {
+            outer.reveal_child = false;
             timeout(transition.value, () => {
-                outer.reveal_child = false
-                timeout(transition.value, () => {
-                    box.destroy()
-                })
-            })
-        },
-    })
+               box.destroy();
+            });
+         });
+      },
+   });
 }
 
 function PopupList() {
-    const map: Map<number, ReturnType<typeof Animated>> = new Map
-    const box = Widget.Box({
-        hpack: "end",
-        vertical: true,
-        css: options.notifications.width.bind().as(w => `min-width: ${w}px;`),
-    })
+   const map: Map<number, ReturnType<typeof Animated>> = new Map();
+   const box = Widget.Box({
+      hpack: "end",
+      vertical: true,
+      css: options.notifications.width.bind().as((w) => `min-width: ${w}px;`),
+   });
 
-    function remove(_: unknown, id: number) {
-        map.get(id)?.dismiss()
-        map.delete(id)
-    }
+   function remove(_: unknown, id: number) {
+      map.get(id)?.dismiss();
+      map.delete(id);
+   }
 
-    return box
-        .hook(notifications, (_, id: number) => {
+   return box
+      .hook(
+         notifications,
+         (_, id: number) => {
             if (id !== undefined) {
-                if (map.has(id))
-                    remove(null, id)
+               if (map.has(id)) remove(null, id);
 
-                if (notifications.dnd)
-                    return
+               if (notifications.dnd) return;
 
-                const w = Animated(id)
-                map.set(id, w)
-                box.children = [w, ...box.children]
+               const w = Animated(id);
+               map.set(id, w);
+               box.children = [w, ...box.children];
             }
-        }, "notified")
-        .hook(notifications, remove, "dismissed")
-        .hook(notifications, remove, "closed")
+         },
+         "notified"
+      )
+      .hook(notifications, remove, "dismissed")
+      .hook(notifications, remove, "closed");
 }
 
-export default (monitor: number) => Widget.Window({
-    monitor,
-    layer: "overlay",
-    name: `ags-notifications${monitor}`,
-    anchor: position.bind(),
-    class_name: "notifications",
-    child: Widget.Box({
-        css: "padding: 2px;",
-        child: PopupList(),
-    }),
+export default (monitor: number) =>
+   Widget.Window({
+      monitor,
+      layer: "overlay",
+      name: `ags-notifications${monitor}`,
+      anchor: position.bind(),
+      class_name: "notifications",
+      child: Widget.Box({
+         css: "padding: 2px;",
+         child: PopupList(),
+      }),
 
-    setup: (self) => self
-        // because hyprland tearing only works if game is fullscreen and has nothing on top of it
-        // function PopupList uses a custom map while here i check for popups only
-        // im not sure the difference between popus and notifications
-        // technically i could use the custom map but nah
-        .hook(notifications, (self) => {
-            if (notifications.popups.length > 0) {
-                self.visible = true
-            } else {
-                self.visible = false
-            }
-        })
-})
+      setup: (self) =>
+         self
+            // because hyprland tearing only works if game is fullscreen and has nothing on top of it
+            // function PopupList uses a custom map while here i check for popups only
+            // im not sure the difference between popus and notifications
+            // technically i could use the custom map but nah
+            .hook(notifications, (self) => {
+               if (notifications.popups.length > 0) {
+                  self.visible = true;
+               } else {
+                  self.visible = false;
+               }
+            }),
+   });
