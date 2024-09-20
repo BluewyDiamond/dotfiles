@@ -39,6 +39,3 @@ App.config({
       Verification(),
    ],
 });
-
-print("heeereeeeeeeee");
-print(`${options.font.name}`);
