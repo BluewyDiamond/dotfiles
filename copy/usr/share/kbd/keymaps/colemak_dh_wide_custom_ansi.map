@@ -71,7 +71,7 @@ keycode 14 = Caps_Lock
 ! Caps Lock -> Return
 keycode 58 = Return
 
-alt keycode  28 = Meta_Control_m
+alt keycode  58 = Meta_Control_m
 
 keycode 28 =    BackSpace     BackSpace        BackSpace         BackSpace
 
