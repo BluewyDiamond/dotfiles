@@ -78,7 +78,6 @@ keycode  28 = BackSpace     BackSpace        BackSpace         BackSpace
 keycode  43  = BackSpace     BackSpace        BackSpace         BackSpace
 
 keycode   1 = Escape
-keycode  14 = Delete
 keycode  15 = Tab
 keycode  29 = Control
 keycode  42 = Shift
