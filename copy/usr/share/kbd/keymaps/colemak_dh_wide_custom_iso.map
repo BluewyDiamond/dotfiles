@@ -64,6 +64,9 @@ keycode  86  =  z             Z            ae               AE             Contr
 
 keycode  57  =  space         space        space            nobreakspace   nul
 
+! BackSpace -> Caps Lock
+keycode 14 = Caps_Lock
+
 ! Caps Lock -> Return
 keycode 58 = Return
 
