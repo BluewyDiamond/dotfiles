@@ -1,13 +1,10 @@
 abbr dotfiles "cd $HOME/repositories/private/dotfiles"
 abbr plan "cd $HOME/repositories/local/plans"
 
-abbr s sudo
 abbr snv "EDITOR=nvim sudoedit"
 
 abbr nv nvim
 abbr lg lazygit
-
-abbr g git
 
 abbr e exit
 
