@@ -15,8 +15,11 @@
       "std": [
          "hyprland",
 
-         "pipewire",
          "wireplumber",
+         "pipewire",
+         "pipewire-alsa",
+         "pipewire-pulse",
+         "pipewire-jack",
 
          "xdg-desktop-portal-hyprland",
          "xdg-desktop-portal-gtk",
