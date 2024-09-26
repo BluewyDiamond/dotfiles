@@ -17,11 +17,23 @@ return {
             typescript = { "prettier" },
             css = { "prettier" },
             python = { "black" },
+            php = { "php-cs-fixer" },
 
             -- other
             json = { "prettier" },
             jsonc = { "prettier" },
             toml = { "taplo" },
+         },
+
+         formatters = {
+            ["php-cs-fixer"] = {
+               command = "php-cs-fixer",
+               args = {
+                  "fix",
+                  "$FILENAME",
+               },
+               stdin = false,
+            },
          },
       })
    end,
