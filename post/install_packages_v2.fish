@@ -1,7 +1,7 @@
 #!/usr/bin/env fish
 
 set -g CONFIG_FILE_NAME "packages2.json"
-set -g CONFIG_LOCATION ./packages
+set -g CONFIG_LOCATION (dirname (status -f))/./packages
 set -g CONFIG_FULL_PATH "$CONFIG_LOCATION/$CONFIG_FILE_NAME"
 
 function main
