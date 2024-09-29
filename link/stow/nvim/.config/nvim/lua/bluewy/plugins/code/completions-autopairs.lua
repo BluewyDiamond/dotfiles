@@ -82,16 +82,21 @@ return {
             formatting = {
                expandable_indicator = true,
 
-               format = lspkind.cmp_format({
-                  mode = "symbol_text",
-                  maxwidth = 50,
-                  ellipsis_char = "...",
-                  symbol_map = {
-                     Copilot = "",
-                  },
-               }),
-            },
+               format = function(entry, item)
+                  item = lspkind.cmp_format({
+                     mode = "symbol_text",
+                     maxwidth = 50,
+                     ellipsis_char = "...",
+                     symbol_map = {
+                        Copilot = "",
+                     },
+                  })(entry, item)
 
+                  item = require("nvim-highlight-colors").format(entry, item)
+
+                  return item
+               end,
+            },
             experimental = {
                ghost_text = true,
             },
