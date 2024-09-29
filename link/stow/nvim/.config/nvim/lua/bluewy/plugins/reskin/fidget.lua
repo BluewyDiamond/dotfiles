@@ -1,6 +1,5 @@
 return {
-   "j-hui/fidget.nvim",
-   version = "1.x",
+   "j-hui/fidget.nvim", --> latest commit
    event = { "BufEnter" },
 
    config = function()

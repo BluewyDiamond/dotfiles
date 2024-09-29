@@ -7,7 +7,7 @@ return {
          { "hrsh7th/cmp-nvim-lsp" }, --> latest commit
          { "hrsh7th/cmp-buffer" }, --> latest commit
          { "hrsh7th/cmp-path" }, --> latest commit
-         { "L3MON4D3/LuaSnip", version = "2.x" },
+         { "L3MON4D3/LuaSnip" }, --> latest commit
          { "saadparwaiz1/cmp_luasnip" }, --> latest commit
          { "rafamadriz/friendly-snippets" }, --> latest commit
          { "onsails/lspkind.nvim" }, --> latest commit

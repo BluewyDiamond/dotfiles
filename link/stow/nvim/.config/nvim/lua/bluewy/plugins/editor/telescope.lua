@@ -1,7 +1,6 @@
 return {
    {
-      "nvim-telescope/telescope.nvim",
-      version = "0.1.x",
+      "nvim-telescope/telescope.nvim", --> latest commit
       dependencies = {
          { "nvim-lua/plenary.nvim" }, --> latest commit
       },

@@ -1,6 +1,5 @@
 return {
-   "folke/which-key.nvim",
-   version = "2.x",
+   "folke/which-key.nvim", --> latest commit
    event = "VeryLazy",
 
    init = function()

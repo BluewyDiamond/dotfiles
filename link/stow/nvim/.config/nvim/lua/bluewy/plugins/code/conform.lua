@@ -1,6 +1,5 @@
 return {
-   "stevearc/conform.nvim",
-   version = "6.x",
+   "stevearc/conform.nvim", --> latest commit
 
    config = function()
       require("conform").setup({

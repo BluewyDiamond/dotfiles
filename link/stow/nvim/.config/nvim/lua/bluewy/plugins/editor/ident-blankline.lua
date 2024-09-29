@@ -1,6 +1,5 @@
 return {
-   "lukas-reineke/indent-blankline.nvim",
-   version = "3.x",
+   "lukas-reineke/indent-blankline.nvim", --> latest commit
    event = "BufEnter",
    main = "ibl",
    opts = {},

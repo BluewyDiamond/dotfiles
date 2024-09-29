@@ -1,14 +1,15 @@
 return {
-   "folke/noice.nvim",
-   version = "4.x",
+   "folke/noice.nvim", --> latest commit
    event = "VeryLazy",
    opts = {},
 
    dependencies = {
-      { "MunifTanjim/nui.nvim", version = "0.x" },
       {
-         "rcarriga/nvim-notify",
-         version = "3.x",
+         "MunifTanjim/nui.nvim", --> latest commit
+      },
+
+      {
+         "rcarriga/nvim-notify", --> latest commit
 
          config = function()
             require("notify").setup({

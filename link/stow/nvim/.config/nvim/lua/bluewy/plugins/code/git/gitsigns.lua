@@ -1,6 +1,5 @@
 return {
-   "lewis6991/gitsigns.nvim",
-   version = "0.x",
+   "lewis6991/gitsigns.nvim", --> latest commit
    event = "VeryLazy",
 
    config = function()

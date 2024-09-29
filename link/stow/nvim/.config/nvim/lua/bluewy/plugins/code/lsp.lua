@@ -1,11 +1,10 @@
 return {
-   "williamboman/mason.nvim",
-   version = "1.x",
+   "williamboman/mason.nvim", --> latest commit
    lazy = false,
 
    dependencies = {
-      { "neovim/nvim-lspconfig", version = "0.x", lazy = false },
-      { "williamboman/mason-lspconfig.nvim", version = "1.x", lazy = false },
+      { "neovim/nvim-lspconfig", lazy = false }, --> latest commit
+      { "williamboman/mason-lspconfig.nvim",  lazy = false }, --> latest commit
    },
 
    config = function()

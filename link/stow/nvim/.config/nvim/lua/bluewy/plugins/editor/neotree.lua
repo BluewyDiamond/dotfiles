@@ -4,8 +4,8 @@ return {
 
    dependencies = {
       { "nvim-lua/plenary.nvim" }, --> latest commit
-      { "nvim-tree/nvim-web-devicons", version = "0.x" },
-      { "MunifTanjim/nui.nvim", version = "0.x" },
-      { "3rd/image.nvim", version = "1.x" },
+      { "nvim-tree/nvim-web-devicons" }, --> latest commit
+      { "MunifTanjim/nui.nvim" }, --> latest commit
+      { "3rd/image.nvim" }, --> latest commit
    },
 }

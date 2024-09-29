@@ -1,6 +1,5 @@
 return {
-   "HiPhish/rainbow-delimiters.nvim",
-   version = "0.x",
+   "HiPhish/rainbow-delimiters.nvim", --> latest commit
 
    config = function()
       local rainbow_delimiters = require("rainbow-delimiters")

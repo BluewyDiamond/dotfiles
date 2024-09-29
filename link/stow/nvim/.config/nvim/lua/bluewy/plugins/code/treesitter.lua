@@ -1,6 +1,5 @@
 return {
-   "nvim-treesitter/nvim-treesitter",
-   version = "0.x",
+   "nvim-treesitter/nvim-treesitter", --> latest commit
 
    -- Update parsers to work with the latest version of the plugin to avoid breaking anything.
    build = function()

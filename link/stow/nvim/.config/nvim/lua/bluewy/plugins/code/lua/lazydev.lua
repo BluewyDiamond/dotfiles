@@ -1,7 +1,6 @@
 return {
    {
-      "folke/lazydev.nvim",
-      version = "1.x",
+      "folke/lazydev.nvim", --> latest commit
       ft = "lua", -- only load on lua files
 
       opts = {
