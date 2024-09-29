@@ -200,6 +200,7 @@ wezterm.on("update-status", function(window, pane)
       { Foreground = { Color = status_color } },
       { Text = "  " },
       { Text = wezterm.nerdfonts.oct_table .. "  " .. status },
+      { Foreground = { Color = "#464B56" } },
       { Text = " |" },
    }))
 
