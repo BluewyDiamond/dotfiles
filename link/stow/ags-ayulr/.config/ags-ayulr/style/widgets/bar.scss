@@ -73,7 +73,7 @@ $button-radius: $radius;
          }
 
          &.urgent {
-            background-color: #d19a66;
+            background-color: $alert-bg;
          }
       }
 

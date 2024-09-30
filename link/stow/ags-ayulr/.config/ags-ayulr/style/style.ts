@@ -47,6 +47,8 @@ const variables = () => [
    $("primary-bg", t(dark.primary.bg, light.primary.bg)),
    $("primary-fg", t(dark.primary.fg, light.primary.fg)),
 
+   $("alert-bg", t(dark.alert, light.alert)),
+
    $("error-bg", t(dark.error.bg, light.error.bg)),
    $("error-fg", t(dark.error.fg, light.error.fg)),
 

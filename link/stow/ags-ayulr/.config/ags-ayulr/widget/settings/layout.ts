@@ -53,7 +53,8 @@ export default [
          Row({ opt: dark.error.bg, title: "Error", type: "color" }),
          Row({ opt: dark.error.fg, title: "On Error", type: "color" }),
          Row({ opt: dark.widget, title: "Widget", type: "color" }),
-         Row({ opt: dark.border, title: "Border", type: "color" })
+         Row({ opt: dark.border, title: "Border", type: "color" }),
+         Row({ opt: dark.alert, title: "Alert", type: "color" })
       ),
       Group(
          "Light Colors",
@@ -64,7 +65,8 @@ export default [
          Row({ opt: light.error.bg, title: "Error", type: "color" }),
          Row({ opt: light.error.fg, title: "On Error", type: "color" }),
          Row({ opt: light.widget, title: "Widget", type: "color" }),
-         Row({ opt: light.border, title: "Border", type: "color" })
+         Row({ opt: light.border, title: "Border", type: "color" }),
+         Row({ opt: light.alert, title: "Alert", type: "color" })
       ),
       Group(
          "Theme",
