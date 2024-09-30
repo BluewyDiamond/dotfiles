@@ -41,39 +41,38 @@ config.inactive_pane_hsb = {
 --------------------
 
 config.disable_default_key_bindings = true
-
 config.leader = { key = "a", mods = "CTRL", timeout_milliseconds = 1000 }
 config.keys = {
-   -- Send C-a when pressing C-a twice.
    { key = "a", mods = "LEADER|CTRL", action = act.SendKey({ key = "a", mods = "CTRL" }) },
-   { key = "c", mods = "LEADER", action = act.ActivateCopyMode },
+   { key = "c", mods = "LEADER", action = act.ActivateCopyMode }, -- something like vim
    { key = "phys:Space", mods = "LEADER", action = act.ActivateCommandPalette },
 
-   -- pane keybindings
+   -- PANE KEYBINDS
 
-   -- idk, split vertical and horizontal got mixed up
    { key = "h", mods = "LEADER", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
    { key = "v", mods = "LEADER", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
    { key = "n", mods = "LEADER", action = act.ActivatePaneDirection("Left") },
    { key = "e", mods = "LEADER", action = act.ActivatePaneDirection("Down") },
    { key = "u", mods = "LEADER", action = act.ActivatePaneDirection("Up") },
    { key = "i", mods = "LEADER", action = act.ActivatePaneDirection("Right") },
-   { key = "q", mods = "LEADER", action = act.CloseCurrentPane({ confirm = true }) },
+   { key = "x", mods = "LEADER", action = act.CloseCurrentPane({ confirm = true }) },
    { key = "z", mods = "LEADER", action = act.TogglePaneZoomState },
    { key = "o", mods = "LEADER", action = act.RotatePanes("Clockwise") },
-   -- We can make separate keybindings for resizing panes
-   -- But Wezterm offers custom "mode" in the name of "KeyTable".
+
    {
       key = "r",
       mods = "LEADER",
       action = act.ActivateKeyTable({ name = "resize_pane", one_shot = false }),
    },
 
-   -- tab keybindings
+   -- TAB KEYBINDS
+
    { key = "t", mods = "LEADER", action = act.SpawnTab("CurrentPaneDomain") },
    { key = "[", mods = "LEADER", action = act.ActivateTabRelative(-1) },
    { key = "]", mods = "LEADER", action = act.ActivateTabRelative(1) },
    { key = "s", mods = "LEADER", action = act.ShowTabNavigator },
+   { key = "m", mods = "LEADER", action = act.ActivateKeyTable({ name = "move_tab", one_shot = false }) },
+
    {
       key = "k",
       mods = "LEADER",
@@ -90,24 +89,13 @@ config.keys = {
          end),
       }),
    },
-   -- Key table for moving tabs around.
-   { key = "m", mods = "LEADER", action = act.ActivateKeyTable({ name = "move_tab", one_shot = false }) },
-   -- Or shortcuts to move tab w/o move_tab table. SHIFT is for when caps lock is on.
-   { key = "{", mods = "LEADER|SHIFT", action = act.MoveTabRelative(-1) },
-   { key = "}", mods = "LEADER|SHIFT", action = act.MoveTabRelative(1) },
 
-   -- Lastly, workspace.
+   -- WORKSPACES KEYBINDS
+
    { key = "w", mods = "LEADER", action = act.ShowLauncherArgs({ flags = "FUZZY|WORKSPACES" }) },
 }
--- I can use the tab navigator (LDR t), but I also want to quickly navigate tabs with index.
-for i = 1, 9 do
-   table.insert(config.keys, {
-      key = tostring(i),
-      mods = "LEADER",
-      action = act.ActivateTab(i - 1),
-   })
-end
 
+-- complements with the above
 config.key_tables = {
    resize_pane = {
       { key = "n", action = act.AdjustPaneSize({ "Left", 1 }) },
@@ -126,6 +114,15 @@ config.key_tables = {
       { key = "Enter", action = "PopKeyTable" },
    },
 }
+
+-- use leader + number to focus tab
+for i = 1, 9 do
+   table.insert(config.keys, {
+      key = tostring(i),
+      mods = "LEADER",
+      action = act.ActivateTab(i - 1),
+   })
+end
 
 --------------------
 -- Tab Stuff
@@ -155,18 +152,18 @@ config.colors = {
 wezterm.on("update-status", function(window, pane)
    -- workspace name
    local status = window:active_workspace()
-   local status_color = "#E06C75" -- red
+   local status_color = "#E06C75"
 
    -- Constantly displaying the workspace name seems unnecessary.
    -- This space could be better used to showcase LDR or the current key table name.
    if window:active_key_table() then
       status = window:active_key_table()
-      status_color = "#61AFEF" -- blue
+      status_color = "#61AFEF"
    end
 
    if window:leader_is_active() then
       status = "LDR"
-      status_color = "#C678DD" -- purple
+      status_color = "#C678DD"
    end
 
    local basename = function(s)
