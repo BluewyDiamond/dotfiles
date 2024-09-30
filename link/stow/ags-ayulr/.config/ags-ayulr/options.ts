@@ -20,7 +20,7 @@ const options = mkOptions(OPTIONS, {
          fg: opt("#abb2bf"),
          widget: opt("#F6F7F9"),
          border: opt("#5c6370"),
-         alert: opt("#d19a66")
+         alert: opt("#d19a66"),
       },
       light: {
          primary: {
@@ -35,7 +35,7 @@ const options = mkOptions(OPTIONS, {
          fg: opt("#080808"),
          widget: opt("#080808"),
          border: opt("#080808"),
-         alert: opt("#FF9F00")
+         alert: opt("#FF9F00"),
       },
 
       blur: opt(0),
