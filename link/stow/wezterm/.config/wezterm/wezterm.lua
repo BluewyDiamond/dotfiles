@@ -216,16 +216,16 @@ wezterm.on("update-status", function(window, pane)
    }))
 end)
 
+--------------------
+-- Misc
+--------------------
+
 config.window_padding = {
    left = "0cell",
    right = "0cell",
    top = "0cell",
    bottom = "0cell",
 }
-
---------------------
--- Misc
---------------------
 
 config.warn_about_missing_glyphs = false
 
