@@ -1,43 +1,33 @@
-# don't scan cachyos
-dont_scan_volumes cachyos
+# this is to avoid showing the main entry twice
+dont_scan_volumes system
 
 # custom menu entries
-menuentry "CachyOS LTO AMD" {
-    icon /EFI/refind/themes/rEFInd-minimal-gruvbox/icons_gruvbox/os_manjaro.png
-    volume "cachyos"
+menuentry "CachyOS LTO" {
+    icon /EFI/refind/themes/rEFInd-minimal-gruvbox/icons_gruvbox/os_arch.png
+    volume "system"
     loader @/boot/vmlinuz-linux-cachyos-lto
     initrd @/boot/initramfs-linux-cachyos-lto.img
-    options "quiet rw rootflags=subvol=/@ root=UUID=2fbe92b8-916c-4a7e-8729-3e70988a9833 amdgpu.ppfeaturemask=0xffffffff video=DP-2:1920x1080@240"
+    options "quiet rw rootflags=subvol=/@ root=UUID=ab06c198-6674-4f72-89ef-b1bec6ecb995 amdgpu.ppfeaturemask=0xffffffff video=DP-2:1920x1080@240"
 
 
     submenuentry "Use fallback initramfs" {
         initrd @/boot/initramfs-linux-cachyos-lto-fallback.img
     }
 
-    submenuentry "CachyOS AMD" {
+    submenuentry "CachyOS Vanilla" {
         loader @/boot/vmlinuz-linux-cachyos
         initrd @/boot/initramfs-linux-cachyos.img
-        options "quiet rw rootflags=subvol=/@ root=UUID=2fbe92b8-916c-4a7e-8729-3e70988a9833 amdgpu.ppfeaturemask=0xffffffff"
+        options "quiet rw rootflags=subvol=/@ root=UUID=ab06c198-6674-4f72-89ef-b1bec6ecb995 amdgpu.ppfeaturemask=0xffffffff video=DP-2:1920x1080@240"
     }
 
-    submenuentry "CachyOS AMD fallback" {
-        initrd @/boot/initramfs-linux-cachyos-fallback.img
-    }
-
-    submenuentry "CachyOS NVIDIA" {
-        loader @/boot/vmlinuz-linux-cachyos
-        initrd @/boot/initramfs-linux-cachyos.img
-        options "quiet rw rootflags=subvol=/@ root=UUID=2fbe92b8-916c-4a7e-8729-3e70988a9833"
-    }
-
-    submenuentry "CachyOS NVIDIA fallback" {
+    submenuentry "CachyOS Vanilla fallback" {
         initrd @/boot/initramfs-linux-cachyos-fallback.img
     }
 
     submenuentry "CachyOS LTS" {
         loader @/boot/vmlinuz-linux-cachyos-lts
         initrd @/boot/initramfs-linux-cachyos-lts.img
-        options "quiet rw rootflags=subvol=/@ root=UUID=2fbe92b8-916c-4a7e-8729-3e70988a9833"
+        options "quiet rw rootflags=subvol=/@ root=UUID=ab06c198-6674-4f72-89ef-b1bec6ecb995 amdgpu.ppfeaturemask=0xffffffff video=DP-2:1920x1080@240"
     }
 
     submenuentry "CachyOS LTS fallback" {
