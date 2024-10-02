@@ -71,7 +71,14 @@
    },
 
    "hyprland_extras": {
-      "std": ["fuzzel", "cliphist"]
+      "std": [
+         "fuzzel",
+         "cliphist",
+
+         "hyprlock",
+         "hypridle",
+         "wayland-pipewire-idle-inhibit"
+      ]
    },
 
    "gui_apps": {
