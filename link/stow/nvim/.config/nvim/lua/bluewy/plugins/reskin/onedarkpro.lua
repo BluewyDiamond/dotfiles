@@ -19,15 +19,10 @@ return {
          highlights = {
             -- general due to rust
             ["@function.builtin"] = {}, -- blank because yellow is definetly not right
-            ["@namespace"] = { fg = "${yellow}" },
-            ["@operator"] = { fg = "${purple}" },
-            ["@parameter"] = { fg = "${red}" },
-
-            -- general due to cpp
-            ["@lsp.type.class"] = { fg = "${red}" },
-            ["@variable.builtin"] = {},
 
             -- rust specific
+            ["@lsp.type.parameter.rust"] = { fg = "${red}" },
+            ["@lsp.type.namespace.rust"] = { fg = "${yellow}" },
             ["@lsp.type.formatSpecifier.rust"] = { fg = "${purple}" },
             ["@lsp.type.function.rust"] = { fg = "${blue}" },
             ["@lsp.type.macro.rust"] = { fg = "${orange}" },
@@ -46,9 +41,6 @@ return {
 
             -- not working, maybe something else is conflicting with it?
             rustBoxPlacementBalance = { fg = "${purple}" },
-
-            -- typescript
-            typescriptIdentifierName = { fg = "${red}" },
          },
       })
 
