@@ -64,7 +64,7 @@ const options = mkOptions(OPTIONS, {
    bar: {
       flatButtons: opt(false),
       position: opt<"top" | "bottom">("top"),
-      cornersCurve: opt(11),
+      cornersCurve: opt(0),
       transparent: opt(false),
       layout: {
          start: opt<Array<import("widget/bar/Bar").BarWidget>>([
@@ -93,7 +93,7 @@ const options = mkOptions(OPTIONS, {
          },
          label: {
             colored: opt(false),
-            label: opt(" Applications"),
+            label: opt(""),
          },
          action: opt(() => App.toggleWindow("ags-launcher")),
       },
