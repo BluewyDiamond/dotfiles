@@ -43,7 +43,7 @@ const options = mkOptions(OPTIONS, {
       widget: { opacity: opt(94) },
       border: {
          innerWidth: opt(0),
-         outerWidth: opt(0),
+         outerWidth: opt(3),
          opacity: opt(0),
       },
 
@@ -89,7 +89,7 @@ const options = mkOptions(OPTIONS, {
 
       screenCorners: {
          color: opt("#000000"),
-         width: opt(0),
+         width: opt(1),
          opacity: opt(0)
       },
 
