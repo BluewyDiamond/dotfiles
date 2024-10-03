@@ -6,9 +6,9 @@ return {
    config = function()
       require("onedarkpro").setup({
          colors = {
-            bg = "#23272E",
+            bg = "#282C34",
             fg = "#ABB2BF",
-            cyan = "#56B497",
+            cyan = "#56b6c2",
             cursorline = "#2C313C",
          },
 
