@@ -19,7 +19,7 @@ const options = mkOptions(OPTIONS, {
          bg: opt("#1E2127"),
          fg: opt("#abb2bf"),
          widget: opt("#F6F7F9"),
-         border: opt("#5c6370"),
+         border: opt("#1E2229"),
          alert: opt("#d19a66"),
       },
       light: {
@@ -42,12 +42,12 @@ const options = mkOptions(OPTIONS, {
       scheme: opt<"dark" | "light">("dark"),
       widget: { opacity: opt(94) },
       border: {
-         innerWidth: opt(1),
-         outerWidth: opt(3),
+         innerWidth: opt(0),
+         outerWidth: opt(0),
          opacity: opt(0),
       },
 
-      shadows: opt(false),
+      shadows: opt(true),
       padding: opt(7),
       spacing: opt(12),
       radius: opt(11),
