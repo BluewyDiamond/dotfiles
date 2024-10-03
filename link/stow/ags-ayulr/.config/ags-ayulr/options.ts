@@ -40,7 +40,7 @@ const options = mkOptions(OPTIONS, {
 
       blur: opt(0),
       scheme: opt<"dark" | "light">("dark"),
-      widget: { opacity: opt(94) },
+      widget: { opacity: opt(0) },
       border: {
          innerWidth: opt(0),
          outerWidth: opt(3),
