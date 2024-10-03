@@ -107,6 +107,12 @@ export default [
          Row({ opt: b.cornersCurve, title: "Corners Curve" })
       ),
       Group(
+         "Screen Corners",
+         Row({ opt: b.screenCorners.color, title: "Color", type: "color" }),
+         Row({ opt: b.screenCorners.width, title: "Width" }),
+         Row({ opt: b.screenCorners.opacity, title: "Opacity", max: 100 }),
+      ),
+      Group(
          "Launcher",
          Row({ opt: b.launcher.icon.icon, title: "Icon" }),
          Row({ opt: b.launcher.icon.colored, title: "Colored Icon" }),

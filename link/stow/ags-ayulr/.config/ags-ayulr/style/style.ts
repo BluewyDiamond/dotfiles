@@ -104,7 +104,7 @@ const variables = () => [
    $("font-name", options.font.name),
    $("font-weight", options.font.weight),
 
-   $("screen-corners-width", options.bar.screenCorners.width),
+   $("screen-corners-width", `${options.bar.screenCorners.width}px`),
    // maybe add toggle theme logic for the below
    $(
       "screen-corners-color",
@@ -114,7 +114,7 @@ const variables = () => [
    ),
    $(
       "screen-corners-opacity", // not sure if this is the right name // maybe it is
-      `transparentize(${options.bar.screenCorners.color}, ${options.bar.screenCorners.opactiy.value / 100})`
+      `transparentize(${options.bar.screenCorners.color}, ${options.bar.screenCorners.opacity.value / 100})`
    ),
 
    // etc

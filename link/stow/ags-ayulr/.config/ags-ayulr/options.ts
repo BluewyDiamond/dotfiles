@@ -90,7 +90,7 @@ const options = mkOptions(OPTIONS, {
       screenCorners: {
          color: opt("#000000"),
          width: opt(0),
-         opactiy: opt(0)
+         opacity: opt(0)
       },
 
       launcher: {
