@@ -72,7 +72,7 @@ const variables = () => [
    $("hover-fg", `lighten(${t(dark.fg, light.fg)}, 8%)`),
 
    $("border-inner-width", `${border.innerWidth}px`),
-   $("border-outer-width", `${border.outerWidth}px`),
+   $("border-outer-width", `${border.outerWidth}px`), // i can keep this as its own thing
    $(
       "border-color",
       `transparentize(${t(dark.border, light.border)}, ${border.opacity.value / 100})`
@@ -105,7 +105,17 @@ const variables = () => [
    $("font-weight", options.font.weight),
 
    $("screen-corners-width", options.bar.screenCorners.width),
-   $("screen-corners-color", options.bar.screenCorners.color),
+   // maybe add toggle theme logic for the below
+   $(
+      "screen-corners-color",
+      blur.value ?
+         `transparentize(${options.bar.screenCorners.color}, ${blur.value / 100})`
+      :  options.bar.screenCorners.color
+   ),
+   $(
+      "screen-corners-opacity", // not sure if this is the right name // maybe it is
+      `transparentize(${options.bar.screenCorners.color}, ${options.bar.screenCorners.opactiy.value / 100})`
+   ),
 
    // etc
    $("charging-bg", options.bar.battery.charging),

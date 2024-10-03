@@ -36,7 +36,7 @@ window.screen-corner:not(.hidden) {
    }
 
    box.corner {
-      box-shadow: 0 0 0 $screen-corners-width $screen-corners-color;
+      box-shadow: 0 0 0 $screen-corners-width $screen-corners-opacity;
    }
 
    &.corners {
