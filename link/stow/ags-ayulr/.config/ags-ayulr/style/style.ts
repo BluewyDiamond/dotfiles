@@ -104,6 +104,9 @@ const variables = () => [
    $("font-name", options.font.name),
    $("font-weight", options.font.weight),
 
+   $("screen-corners-width", options.bar.screenCorners.width),
+   $("screen-corners-color", options.bar.screenCorners.color),
+
    // etc
    $("charging-bg", options.bar.battery.charging),
    $("bar-battery-blocks", options.bar.battery.blocks),

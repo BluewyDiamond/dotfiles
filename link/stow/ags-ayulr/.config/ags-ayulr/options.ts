@@ -86,6 +86,13 @@ const options = mkOptions(OPTIONS, {
             "powermenu",
          ]),
       },
+
+      screenCorners: {
+         color: opt("#000000"),
+         width: opt(0),
+         opactiy: opt(0)
+      },
+
       launcher: {
          icon: {
             colored: opt(true),
