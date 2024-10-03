@@ -42,10 +42,6 @@ return {
          ["rust_analyzer"] = function()
             -- We leave it blank because we setup it up with rustacevim.
          end,
-
-         ["ts_ls"] = function()
-            -- We leave it blank because we setup it up with typescript tools.
-         end,
       })
    end,
 }
