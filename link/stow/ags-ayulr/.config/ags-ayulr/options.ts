@@ -18,8 +18,8 @@ const options = mkOptions(OPTIONS, {
          },
          bg: opt("#1E2127"),
          fg: opt("#abb2bf"),
-         widget: opt("#F6F7F9"),
-         border: opt("#1E2229"),
+         widget: opt("#282C34"),
+         border: opt("#5B626F"),
          alert: opt("#d19a66"),
       },
       light: {
@@ -88,9 +88,9 @@ const options = mkOptions(OPTIONS, {
       },
 
       screenCorners: {
-         color: opt("#000000"),
+         color: opt("#5B626F"),
          width: opt(1),
-         opacity: opt(0)
+         opacity: opt(100)
       },
 
       launcher: {
