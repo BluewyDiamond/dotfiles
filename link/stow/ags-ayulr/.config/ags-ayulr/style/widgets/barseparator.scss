@@ -21,7 +21,7 @@ window.bar-separator {
 window.bar-separator-shadow {
    transition: $transition;
 
-   box.shadow {
+   box.bar-separator-shadow {
       margin-right: $_margin * -1;
       margin-left: $_margin * -1;
 

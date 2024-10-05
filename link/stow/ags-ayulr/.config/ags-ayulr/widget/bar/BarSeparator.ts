@@ -25,10 +25,11 @@ export function BarSeparatorShadow(monitor: number) {
       class_name: "bar-separator-shadow",
       name: `ags-bar-separator-shadow${monitor}`,
       anchor: ["top", "bottom", "left", "right"],
-      layer: "bottom",
+      click_through: true,
+      layer: "top",
 
       child: Widget.Box({
-         class_name: "bar-border-shadow",
+         class_name: "bar-separator-shadow",
          expand: true,
       }),
    });
