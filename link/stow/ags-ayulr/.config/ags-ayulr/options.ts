@@ -13,7 +13,7 @@ const options = mkOptions(OPTIONS, {
             fg: opt("#000000"),
          },
          error: {
-            bg: opt("#E06C75"),
+            bg: opt("#f44747"),
             fg: opt("#000000"),
          },
          bg: opt("#1E2127"),
@@ -24,18 +24,18 @@ const options = mkOptions(OPTIONS, {
       },
       light: {
          primary: {
-            bg: opt("#426ede"),
-            fg: opt("#eeeeee"),
+            bg: opt("#315EEE"),
+            fg: opt("#8E8F96"),
          },
          error: {
-            bg: opt("#b13558"),
-            fg: opt("#eeeeee"),
+            bg: opt("#DA3E39"),
+            fg: opt("#8E8F96"),
          },
-         bg: opt("#fffffa"),
-         fg: opt("#080808"),
-         widget: opt("#080808"),
+         bg: opt("#F8F8F8"),
+         fg: opt("#2A2B32"),
+         widget: opt("#FFFEFE"),
          border: opt("#080808"),
-         alert: opt("#FF9F00"),
+         alert: opt("#855504"),
       },
 
       blur: opt(0),
