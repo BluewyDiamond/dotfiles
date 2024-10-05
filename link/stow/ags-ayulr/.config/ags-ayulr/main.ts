@@ -14,6 +14,7 @@ import Verification from "widget/powermenu/Verification";
 import { forMonitors } from "lib/utils";
 import { setupQuickSettings } from "widget/quicksettings/QuickSettings";
 import { setupDateMenu } from "widget/datemenu/DateMenu";
+import { BarSeparator, BarSeparatorShadow } from "widget/bar/BarSeparator";
 
 App.config({
    onConfigParsed: () => {
@@ -30,7 +31,8 @@ App.config({
    windows: () => [
       ...forMonitors(Bar),
       ...forMonitors(NotificationPopups),
-      ...forMonitors(ScreenCorners),
+      BarSeparator,
+      BarSeparatorShadow,
       ...forMonitors(OSD),
       Launcher(),
       Overview(),
