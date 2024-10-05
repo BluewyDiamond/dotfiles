@@ -57,7 +57,7 @@ const options = mkOptions(OPTIONS, {
 
    font: {
       size: opt(14),
-      name: opt("Iosevka Nerd Font"),
+      name: opt("Iosevka Nerd Font Mono"),
       weight: opt(500),
    },
 
