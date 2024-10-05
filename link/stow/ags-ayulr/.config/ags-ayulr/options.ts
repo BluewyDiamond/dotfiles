@@ -64,7 +64,7 @@ const options = mkOptions(OPTIONS, {
    bar: {
       flatButtons: opt(false),
       position: opt<"top" | "bottom">("top"),
-      cornersCurve: opt(0),
+      cornersCurve: opt(11),
       transparent: opt(false),
       layout: {
          start: opt<Array<import("widget/bar/Bar").BarWidget>>([
@@ -90,7 +90,8 @@ const options = mkOptions(OPTIONS, {
       screenCorners: {
          color: opt("#5B626F"),
          width: opt(1),
-         opacity: opt(100)
+         opacity: opt(100),
+         enabled: opt(false),
       },
 
       launcher: {

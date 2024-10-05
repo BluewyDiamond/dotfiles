@@ -108,6 +108,7 @@ export default [
       ),
       Group(
          "Screen Corners",
+         Row({ opt: b.screenCorners.enabled, title: "Enabled"}),
          Row({ opt: b.screenCorners.color, title: "Color", type: "color" }),
          Row({ opt: b.screenCorners.width, title: "Width" }),
          Row({ opt: b.screenCorners.opacity, title: "Opacity", max: 100 }),

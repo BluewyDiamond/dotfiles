@@ -16,6 +16,17 @@ import { setupQuickSettings } from "widget/quicksettings/QuickSettings";
 import { setupDateMenu } from "widget/datemenu/DateMenu";
 import { BarSeparator, BarSeparatorShadow } from "widget/bar/BarSeparator";
 
+let x;
+
+if (!options.bar.screenCorners.enabled) {
+   x = [
+      ...forMonitors(BarSeparator),
+      ...forMonitors(BarSeparatorShadow),
+   ]
+} else {
+   x = forMonitors(ScreenCorners)
+}
+
 App.config({
    onConfigParsed: () => {
       setupQuickSettings();
@@ -31,8 +42,7 @@ App.config({
    windows: () => [
       ...forMonitors(Bar),
       ...forMonitors(NotificationPopups),
-      ...forMonitors(BarSeparator),
-      ...forMonitors(BarSeparatorShadow),
+      ...x,
       ...forMonitors(OSD),
       Launcher(),
       Overview(),
