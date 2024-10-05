@@ -38,9 +38,9 @@ const $ = (name: string, value: string | Opt<any>) => `$${name}: ${value};`;
 const variables = () => [
    $(
       "bg",
-      blur.value ?
-         `transparentize(${t(dark.bg, light.bg)}, ${blur.value / 100})`
-      :  t(dark.bg, light.bg)
+      blur.value
+         ? `transparentize(${t(dark.bg, light.bg)}, ${blur.value / 100})`
+         : t(dark.bg, light.bg)
    ),
    $("fg", t(dark.fg, light.fg)),
 
@@ -62,12 +62,16 @@ const variables = () => [
 
    $(
       "widget-bg",
-      `transparentize(${t(dark.widget, light.widget)}, ${widget.opacity.value / 100})`
+      `transparentize(${t(dark.widget, light.widget)}, ${
+         widget.opacity.value / 100
+      })`
    ),
 
    $(
       "hover-bg",
-      `transparentize(${t(dark.widget, light.widget)}, ${(widget.opacity.value * 0.9) / 100})`
+      `transparentize(${t(dark.widget, light.widget)}, ${
+         (widget.opacity.value * 0.9) / 100
+      })`
    ),
    $("hover-fg", `lighten(${t(dark.fg, light.fg)}, 8%)`),
 
@@ -75,13 +79,18 @@ const variables = () => [
    $("border-outer-width", `${border.outerWidth}px`), // i can keep this as its own thing
    $(
       "border-color",
-      `transparentize(${t(dark.border, light.border)}, ${border.opacity.value / 100})`
+      `transparentize(${t(dark.border, light.border)}, ${
+         border.opacity.value / 100
+      })`
    ),
    $("border", "$border-inner-width solid $border-color"),
 
    $(
       "active-gradient",
-      `linear-gradient(to right, ${t(dark.primary.bg, light.primary.bg)}, darken(${t(dark.primary.bg, light.primary.bg)}, 4%))`
+      `linear-gradient(to right, ${t(
+         dark.primary.bg,
+         light.primary.bg
+      )}, darken(${t(dark.primary.bg, light.primary.bg)}, 4%))`
    ),
    $("shadow-color", t("rgba(0,0,0,.6)", "rgba(0,0,0,.4)")),
    $("text-shadow", t("2pt 2pt 2pt $shadow-color", "none")),
@@ -95,7 +104,10 @@ const variables = () => [
 
    $(
       "popover-border-color",
-      `transparentize(${t(dark.border, light.border)}, ${Math.max((border.opacity.value - 1) / 100, 0)})`
+      `transparentize(${t(dark.border, light.border)}, ${Math.max(
+         (border.opacity.value - 1) / 100,
+         0
+      )})`
    ),
    $("popover-padding", `$padding * ${popoverPaddingMultiplier}`),
    $("popover-radius", radius.value === 0 ? "0" : "$radius + $popover-padding"),
@@ -108,13 +120,17 @@ const variables = () => [
    // maybe add toggle theme logic for the below
    $(
       "screen-corners-color",
-      blur.value ?
-         `transparentize(${options.bar.screenCorners.color}, ${blur.value / 100})`
-      :  options.bar.screenCorners.color
+      blur.value
+         ? `transparentize(${options.bar.screenCorners.color}, ${
+              blur.value / 100
+           })`
+         : options.bar.screenCorners.color
    ),
    $(
       "screen-corners-opacity", // not sure if this is the right name // maybe it is
-      `transparentize(${options.bar.screenCorners.color}, ${options.bar.screenCorners.opacity.value / 100})`
+      `transparentize(${options.bar.screenCorners.color}, ${
+         options.bar.screenCorners.opacity.value / 100
+      })`
    ),
 
    // etc

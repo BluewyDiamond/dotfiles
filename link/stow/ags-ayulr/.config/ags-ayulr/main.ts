@@ -16,17 +16,6 @@ import { setupQuickSettings } from "widget/quicksettings/QuickSettings";
 import { setupDateMenu } from "widget/datemenu/DateMenu";
 import { BarSeparator, BarSeparatorShadow } from "widget/bar/BarSeparator";
 
-let x;
-
-if (!options.bar.screenCorners.enabled) {
-   x = [
-      ...forMonitors(BarSeparator),
-      ...forMonitors(BarSeparatorShadow),
-   ]
-} else {
-   x = forMonitors(ScreenCorners)
-}
-
 App.config({
    onConfigParsed: () => {
       setupQuickSettings();
@@ -39,15 +28,28 @@ App.config({
       "ags-quicksettings": options.transition.value,
       "ags-datemenu": options.transition.value,
    },
-   windows: () => [
-      ...forMonitors(Bar),
-      ...forMonitors(NotificationPopups),
-      ...x,
-      ...forMonitors(OSD),
-      Launcher(),
-      Overview(),
-      PowerMenu(),
-      SettingsDialog(),
-      Verification(),
-   ],
+   windows: () => {
+      let cornersOrSeparator;
+
+      if (!options.bar.screenCorners.enabled.value) {
+         cornersOrSeparator = [
+            ...forMonitors(BarSeparator),
+            ...forMonitors(BarSeparatorShadow),
+         ];
+      } else {
+         cornersOrSeparator = forMonitors(ScreenCorners);
+      }
+
+      return [
+         ...forMonitors(Bar),
+         ...forMonitors(NotificationPopups),
+         ...cornersOrSeparator,
+         ...forMonitors(OSD),
+         Launcher(),
+         Overview(),
+         PowerMenu(),
+         SettingsDialog(),
+         Verification(),
+      ];
+   },
 });

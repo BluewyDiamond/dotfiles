@@ -11,7 +11,6 @@ export function BarSeparator(monitor: number) {
       anchor: ["top", "left", "right"],
       exclusivity: "exclusive",
       layer: "top",
-      css: "background: white",
 
       child: Widget.Box({
          class_name: "bar-border",
