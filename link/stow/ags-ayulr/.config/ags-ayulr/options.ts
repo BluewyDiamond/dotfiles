@@ -89,7 +89,7 @@ const options = mkOptions(OPTIONS, {
 
       screenCorners: {
          color: opt("#5B626F"),
-         width: opt(1),
+         width: opt(3),
          opacity: opt(100),
          enabled: opt(false),
       },
