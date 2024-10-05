@@ -31,8 +31,8 @@ App.config({
    windows: () => [
       ...forMonitors(Bar),
       ...forMonitors(NotificationPopups),
-      BarSeparator,
-      BarSeparatorShadow,
+      ...forMonitors(BarSeparator),
+      ...forMonitors(BarSeparatorShadow),
       ...forMonitors(OSD),
       Launcher(),
       Overview(),
