@@ -93,6 +93,10 @@ config.keys = {
    -- WORKSPACES KEYBINDS
 
    { key = "w", mods = "LEADER", action = act.ShowLauncherArgs({ flags = "FUZZY|WORKSPACES" }) },
+
+  -- OTHER
+  { key = "c", mods = "CTRL | SHIFT", action = act.CopyTo "Clipboard"},
+  { key = "v", mods = "CTRL | SHIFT", action = act.PasteFrom "Clipboard"}
 }
 
 -- complements with the above
