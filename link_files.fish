@@ -1,7 +1,22 @@
 #!/usr/bin/env fish
 
-echo "script: reset fish?"
-read -P "script => Input -- " choice
+set -g SCRIPT_NAME (basename (status -f))
+
+function prompt
+    set_color magenta
+    echo -n "$SCRIPT_NAME => "
+    set_color yellow
+    echo "$argv"
+end
+
+function input
+    set_color magenta
+    read -P (set_color magenta)"INPUT => "(set_color yellow) choice
+    set_color normal
+end
+
+prompt "Do you want to reset fish shell config? [y/N]"
+input
 
 if string match -q -i -- $choice y
     # prepare fish config directory
@@ -12,9 +27,8 @@ if string match -q -i -- $choice y
     mkdir $HOME/.config/fish/themes
 end
 
-
-echo "script: stow?"
-read -P "script => Input -- " choice
+prompt "Proceed with linking files with stow? [y/N]"
+input
 
 if string match -q -i -- $choice y
     sudo pacman -S --needed stow
@@ -29,8 +43,8 @@ if string match -q -i -- $choice y
 end
 
 
-echo "script: proceed with manual stuff to link?"
-read -P "script => Input -- " choice
+prompt "Proceed with linking files manually by the script? [y/N]"
+input
 
 if string match -q -i -- $choice y
     mkdir -p $HOME/.cachy
