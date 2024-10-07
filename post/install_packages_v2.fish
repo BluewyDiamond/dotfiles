@@ -4,25 +4,37 @@ set -g CONFIG_FILE_NAME "packages2.json"
 set -g CONFIG_LOCATION (dirname (status -f))/./packages
 set -g CONFIG_FULL_PATH "$CONFIG_LOCATION/$CONFIG_FILE_NAME"
 
+set -g SCRIPT_NAME (basename (status -f))
+
+function prompt
+    set_color magenta
+    echo -n "$SCRIPT_NAME => "
+    set_color yellow
+    echo "$argv"
+end
+
+function input
+    read -P (set_color magenta)"INPUT => "(set_color yellow) $value
+    echo $value
+end
+
 function main
     prerequisites
-
     sudo pacman -S --needed jq
-
     set top_level_keys (jq -r 'keys | .[]' $CONFIG_FULL_PATH)
+    prompt "Select configurations to install [1 2 3 ...]"
 
-    echo "script => Select the configuration(s) to use (e.g., 1 3 5):"
     for i in (seq (count $top_level_keys))
         echo "$i. $top_level_keys[$i]"
     end
 
-    read -P "script => Input -- " config_choices
+    set config_choices (input)
 
     set chosen_configs (for choice in (string split " " $config_choices)
         if test $choice -ge 1 -a $choice -le (count $top_level_keys)
             echo $top_level_keys[$choice]
         else
-            echo "script: choice $choice is out of range, ignoring..."
+            prompt "choice $choice is out of range, ignoring..."
         end
     end)
 
@@ -32,7 +44,6 @@ function main
         set common_arch_user_repository $common_arch_user_repository (string split " " (print_chosen_repository_from_json_file $config aur))
     end
 
-    print_horizontal_line
     sudo pacman -S --needed $common_standard_repository
 
     sudo pacman -S --needed paru
@@ -42,17 +53,17 @@ end
 
 function prerequisites
     if not which pacman >/dev/null
-        echo "script: pacman package manager not found, exiting..."
+        prompt "pacman package manager not found, exiting..."
         exit 1
     end
 
     if not which paru >/dev/null
-        echo "script: paru not found, exiting..."
+        prompt "paru not found, exiting..."
         exit 1
     end
 
     if not test -e $CONFIG_FULL_PATH
-        echo "script: config file not found, exiting..."
+        prompt "config file not found, exiting..."
         return 1
     end
 end
@@ -62,9 +73,9 @@ function print_chosen_repository_from_json_file
     set config $argv[1]
 
     if test -z (string trim $repository)
-        echo "script: string is empty or contains only spaces"
+        prompt "string is empty or contains only spaces"
         set function_name (status current-command)
-        echo "script: @$function_name"
+        prompt "@$function_name"
         return 1
     end
 

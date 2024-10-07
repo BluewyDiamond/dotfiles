@@ -10,13 +10,12 @@ function prompt
 end
 
 function input
-    set_color magenta
-    read -P (set_color magenta)"INPUT => "(set_color yellow) choice
-    set_color normal
+    read -P (set_color magenta)"INPUT => "(set_color yellow) $value
+    echo $value
 end
 
 prompt "Do you want to reset fish shell config? [y/N]"
-input
+set choice (input)
 
 if string match -q -i -- $choice y
     # prepare fish config directory
@@ -28,7 +27,7 @@ if string match -q -i -- $choice y
 end
 
 prompt "Proceed with linking files with stow? [y/N]"
-input
+set choice (input)
 
 if string match -q -i -- $choice y
     sudo pacman -S --needed stow
@@ -44,7 +43,7 @@ end
 
 
 prompt "Proceed with linking files manually by the script? [y/N]"
-input
+set choice (input)
 
 if string match -q -i -- $choice y
     mkdir -p $HOME/.cachy
