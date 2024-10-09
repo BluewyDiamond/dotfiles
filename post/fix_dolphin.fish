@@ -14,7 +14,7 @@ end
 # source: https://www.reddit.com/r/kde/comments/1bd313p/comment/l1jj937/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
 sudo pacman -S --needed archlinux-xdg-menu
 
-cp $DOLPHIN_DESKTOP_ENTRY (dirname $LOCAL_DOLPHIN_DESKTOP_ENTRY); or exit 1
+cp $WIDE_DOLPHIN_DESKTOP_ENTRY (dirname $LOCAL_DOLPHIN_DESKTOP_ENTRY); or exit 1
 
 set match (grep -m1 "Exec=" $LOCAL_DOLPHIN_DESKTOP_ENTRY; or exit 1)
 
