@@ -4,7 +4,17 @@
    },
 
    "tty_session": {
-      "std": ["fish", "eza", "paru", "ripgrep", "neovim", "stylua", "trash-cli"]
+      "std": [
+         "fish",
+         "eza",
+         "paru",
+         "trash-cli",
+         "zellij",
+
+         "neovim",
+         "stylua",
+         "ripgrep"
+      ]
    },
 
    "tty_rice": {
@@ -59,7 +69,7 @@
          "slurp",
          "fzf",
 
-         "satty-bin"
+         "satty"
       ],
 
       "aur": ["aylurs-gtk-shell", "bun-bin", "wayshot", "hyprpicker"]
@@ -106,6 +116,10 @@
       ]
    },
 
+   "coding": {
+      "std": ["taplo-cli", "prettier", "rustup"]
+   },
+
    "minimal_virtualization": {
       "std": [
          "qemu-base",
@@ -145,8 +159,10 @@
    "ignore_stuff": {
       "cachyos_base_system": {
          "std": [
+            "stow",
             "linux-cachyos",
-            "linux-cachyos-lto",
+            "linux-cachyos-lts",
+            "linux-cachyos-gcc",
             "linux-firmware",
             "base",
             "base-devel",
