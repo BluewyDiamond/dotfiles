@@ -9,6 +9,7 @@ function prompt
     echo -n "$SCRIPT_NAME => "
     set_color yellow
     echo "$argv"
+    set_color normal
 end
 
 # source: https://www.reddit.com/r/kde/comments/1bd313p/comment/l1jj937/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
@@ -22,10 +23,4 @@ set prefix (string match -r "Exec=" $match)
 set rest (string replace -r "Exec=" "" $match)
 set modified_line "$prefix""env XDG_MENU_PREFIX=arch- kbuildsycoca6 && ""$rest"
 
-prompt "match $match"
-prompt "prefix $prefix"
-prompt "rest $rest"
-prompt "modified_line $modified_line"
-
-# only the first instance
-sed -i "0,/$match/s//$modified_line/" $LOCAL_DOLPHIN_DESKTOP_ENTRY
+sed -i "/^$match\$/c\\$modified_line" $LOCAL_DOLPHIN_DESKTOP_ENTRY
