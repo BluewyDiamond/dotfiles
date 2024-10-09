@@ -8,6 +8,7 @@ function prompt
     echo -n "$SCRIPT_NAME => "
     set_color yellow
     echo "$argv"
+    set_color normal
 end
 
 prompt "Add 'Theme=ICON_THEME_NAME' under '[ICONS]' in ~/.config/kdeglobals."

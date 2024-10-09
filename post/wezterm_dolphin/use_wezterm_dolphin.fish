@@ -7,6 +7,7 @@ function prompt
     echo -n "$SCRIPT_NAME => "
     set_color yellow
     echo "$argv"
+    set_color normal
 end
 
 # add custom entry to open the proper path in wezterm
