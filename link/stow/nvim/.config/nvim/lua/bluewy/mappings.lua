@@ -2,10 +2,10 @@ local mappings = {}
 
 mappings.vim = {
    -- because i use the colemak dh wide mod keyboard layout
-   { "n", "<leader>fup", "<C-w>k", { noremap = true, silent = true, desc = "focus upper pane" } },
-   { "n", "<leader>frp", "<C-w>l", { noremap = true, silent = true, desc = "focus right pane" } },
-   { "n", "<leader>fbp", "<C-w>j", { noremap = true, silent = true, desc = "focus bottom pane" } },
-   { "n", "<leader>flp", "<C-w>h", { noremap = true, silent = true, desc = "focus left pane" } },
+   { "n", "<leader>u", "<C-w>k", { noremap = true, silent = true, desc = "focus upper pane" } },
+   { "n", "<leader>i", "<C-w>l", { noremap = true, silent = true, desc = "focus right pane" } },
+   { "n", "<leader>e", "<C-w>j", { noremap = true, silent = true, desc = "focus bottom pane" } },
+   { "n", "<leader>n", "<C-w>h", { noremap = true, silent = true, desc = "focus left pane" } },
 
    { "n", "<C-A-S-u>", "<cmd>resize -1<CR>", { noremap = true, silent = true, desc = "focus upper pane" } },
    { "n", "<C-A-S-i>", "<cmd>vertical resize -1<CR>", { noremap = true, silent = true, desc = "focus right pane" } },
@@ -42,19 +42,19 @@ mappings.vim = {
 }
 
 mappings.bufferline = {
-   { "n", "<leader>nb", "<cmd>BufferLineCycleNext<cr>", { noremap = true, silent = true, desc = "next buffer" } },
-   { "n", "<leader>pb", "<cmd>BufferLineCyclePrev<cr>", { noremap = true, silent = true, desc = "previous buffer" } },
+   { "n", "<leader><leader>i", "<cmd>BufferLineCycleNext<cr>", { noremap = true, silent = true, desc = "next buffer" } },
+   { "n", "<leader><leader>n", "<cmd>BufferLineCyclePrev<cr>", { noremap = true, silent = true, desc = "previous buffer" } },
 
    {
       "n",
-      "<leader>mnb",
+      "<leader><leader>u",
       "<cmd>BufferLineMoveNext<cr>",
       { noremap = true, silent = true, desc = "move buffer to the right" },
    },
 
    {
       "n",
-      "<leader>mpb",
+      "<leader><leader>e",
       "<cmd>BufferLineMovePrev<cr>",
       { noremap = true, silent = true, desc = "move buffer to the left" },
    },
