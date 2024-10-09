@@ -1,1 +1,1 @@
-require("bluewy.config")
+require("bluewy")
