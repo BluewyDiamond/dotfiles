@@ -144,11 +144,11 @@ return {
          },
 
          mapping = cmp.mapping.preset.insert({
-            ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-            ["<C-f>"] = cmp.mapping.scroll_docs(4),
-            ["<C-Space>"] = cmp.mapping.complete(),
-            ["<C-e>"] = cmp.mapping.abort(),
-            ["<CR>"] = cmp.mapping.confirm({ select = true }),
+            ["<C-f>"] = cmp.mapping.scroll_docs(4), -- scroll up preview
+            ["<C-b>"] = cmp.mapping.scroll_docs(-4), -- scroll down preview
+            ["<C-Space>"] = cmp.mapping.complete({}), -- show completion suggestions
+            ["<C-c>"] = cmp.mapping.abort(), -- close completion window
+            ["<CR>"] = cmp.mapping.confirm({ select = true }), -- select suggestion
          }),
 
          sources = cmp.config.sources({
