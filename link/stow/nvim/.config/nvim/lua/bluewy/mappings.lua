@@ -2,22 +2,42 @@ local mappings = {}
 
 mappings.vim = {
    -- because i use the colemak dh wide mod keyboard layout
-   { "n", "<leader>fup", "<C-w>k", { noremap = true, silent = true, desc = "focus upper pane" } }, -- up
-   { "n", "<leader>frp", "<C-w>l", { noremap = true, silent = true, desc = "focus right pane" } }, -- right
-   { "n", "<leader>fbp", "<C-w>j", { noremap = true, silent = true, desc = "focus bottom pane" } }, -- bottom
-   { "n", "<leader>flp", "<C-w>h", { noremap = true, silent = true, desc = "focus left pane" } }, -- left
+   { "n", "<leader>fup", "<C-w>k", { noremap = true, silent = true, desc = "focus upper pane" } },
+   { "n", "<leader>frp", "<C-w>l", { noremap = true, silent = true, desc = "focus right pane" } },
+   { "n", "<leader>fbp", "<C-w>j", { noremap = true, silent = true, desc = "focus bottom pane" } },
+   { "n", "<leader>flp", "<C-w>h", { noremap = true, silent = true, desc = "focus left pane" } },
 
-   { "n", "<C-A-S-u>", "<cmd>resize -1<CR>", { noremap = true, silent = true, desc = "focus upper pane" } }, -- up
-   { "n", "<C-A-S-i>", "<cmd>vertical resize -1<CR>", { noremap = true, silent = true, desc = "focus right pane" } }, -- right
-   { "n", "<C-A-S-e>", "<cmd>resize +1 <CR>", { noremap = true, silent = true, desc = "focus bottom pane" } }, -- down
-   { "n", "<C-A-S-n>", "<cmd>vertical resize +1<CR>", { noremap = true, silent = true, desc = "focus left pane" } }, -- left
+   { "n", "<C-A-S-u>", "<cmd>resize -1<CR>", { noremap = true, silent = true, desc = "focus upper pane" } },
+   { "n", "<C-A-S-i>", "<cmd>vertical resize -1<CR>", { noremap = true, silent = true, desc = "focus right pane" } },
+   { "n", "<C-A-S-e>", "<cmd>resize +1 <CR>", { noremap = true, silent = true, desc = "focus bottom pane" } },
+   { "n", "<C-A-S-n>", "<cmd>vertical resize +1<CR>", { noremap = true, silent = true, desc = "focus left pane" } },
 
-   -- trim whitespace
    {
       "n",
       "<leader>ttw",
       "<cmd>%s/\\s\\+$//e<CR>",
       { noremap = true, silent = true, desc = "trim trailing whitespace" },
+   },
+
+   {
+      "n",
+      "<leader>tlw",
+
+      function()
+         vim.o.wrap = not vim.o.wrap
+
+         if vim.o.wrap then
+            vim.o.linebreak = true
+            vim.o.breakindent = true
+            print("line wrapping enabled")
+         else
+            vim.o.linebreak = false
+            vim.o.breakindent = false
+            print("line wrapping disabled")
+         end
+      end,
+
+      { noremap = true, silent = true, desc = "toggle line wrapping" },
    },
 }
 
@@ -51,9 +71,11 @@ mappings.conform = {
    {
       "n",
       "<leader>fm",
+
       function()
          require("conform").format({ lsp_fallback = true })
       end,
+
       { desc = "format code" },
    },
 }
@@ -62,13 +84,6 @@ mappings.telescope = {
    { "n", "<leader>ff", "<cmd>Telescope find_files<CR>", { noremap = true, silent = true, desc = "find files" } },
    { "n", "<leader>fw", "<cmd>Telescope live_grep<CR>", { noremap = true, silent = true, desc = "find text" } },
    { "n", "<leader>fb", "<cmd>Telescope buffers<CR>", { noremap = true, silent = true, desc = "show buffers" } },
-   {
-      "n",
-      "<leader>cm",
-      "<cmd>Telescope git_commits<CR>",
-      { noremap = true, silent = true, desc = "show git commits" },
-   },
-   { "n", "<leader>gt", "<cmd>Telescope git_status<CR>", { noremap = true, silent = true, desc = "show git status" } },
 
    {
       "n",
@@ -101,10 +116,12 @@ mappings.lsp = {
 mappings.nvim_lint = {
    {
       "n",
-      "<leader>lt",
+      "<leader>tl",
+
       function()
          require("lint").try_lint()
       end,
+
       { desc = "trigger lint" },
    },
 }
@@ -115,13 +132,16 @@ mappings.gitsigns = {
    {
       "n",
       "[c",
+
       function()
          if vim.wo.diff then
             return "[c"
          end
+
          vim.schedule(gitsigns.prev_hunk)
          return "<Ignore>"
       end,
+
       { noremap = true, silent = true, expr = true },
    },
 
@@ -142,31 +162,26 @@ mappings.neo_tree = {
       ":Neotree source=filesystem reveal=true position=right toggle<CR>",
       { noremap = true, silent = true },
    },
-
-   {
-      "n",
-      "<leader>bf",
-      ":Neotree buffers reveal float<CR>",
-      { noremap = true, silent = true, desc = "toggle neo-tree" },
-   },
 }
 
 mappings.rainbow_delimiters = {
    {
       "n",
       "<leader>trd",
+
       function()
          local rainbow_delimiters = require("rainbow-delimiters")
          local bufnr = vim.api.nvim_get_current_buf()
 
          if rainbow_delimiters.is_enabled(bufnr) then
             rainbow_delimiters.disable(bufnr)
-            print("Rainbow delimiters disabled")
+            print("rainbow delimiters disabled")
          else
             rainbow_delimiters.enable(bufnr)
-            print("Rainbow delimiters enabled")
+            print("rainbow delimiters enabled")
          end
       end,
+
       { noremap = true, silent = true, desc = "toggle rainbow delimiters" },
    },
 }
