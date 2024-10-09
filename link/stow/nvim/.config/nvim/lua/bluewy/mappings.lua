@@ -2,10 +2,15 @@ local mappings = {}
 
 mappings.vim = {
    -- because i use the colemak dh wide mod keyboard layout
-   { "n", "<leader>u", "<C-w>k", { noremap = true, silent = true, desc = "focus upper pane" } },
-   { "n", "<leader>i", "<C-w>l", { noremap = true, silent = true, desc = "focus right pane" } },
-   { "n", "<leader>e", "<C-w>j", { noremap = true, silent = true, desc = "focus bottom pane" } },
-   { "n", "<leader>n", "<C-w>h", { noremap = true, silent = true, desc = "focus left pane" } },
+   { "n", "<A-u>", "<Up>", { noremap = true, silent = true, desc = "up" } },
+   { "n", "<A-i>", "<Right>", { noremap = true, silent = true, desc = "right" } },
+   { "n", "<A-e>", "<Down>", { noremap = true, silent = true, desc = "bottom" } },
+   { "n", "<A-n>", "<Left>", { noremap = true, silent = true, desc = "left" } },
+
+   { "n", "<C-A-u>", "<C-w>k", { noremap = true, silent = true, desc = "focus upper pane" } },
+   { "n", "<C-A-i>", "<C-w>l", { noremap = true, silent = true, desc = "focus right pane" } },
+   { "n", "<C-A-e>", "<C-w>j", { noremap = true, silent = true, desc = "focus bottom pane" } },
+   { "n", "<C-A-n>", "<C-w>h", { noremap = true, silent = true, desc = "focus left pane" } },
 
    { "n", "<C-A-S-u>", "<cmd>resize -1<CR>", { noremap = true, silent = true, desc = "focus upper pane" } },
    { "n", "<C-A-S-i>", "<cmd>vertical resize -1<CR>", { noremap = true, silent = true, desc = "focus right pane" } },
@@ -42,19 +47,29 @@ mappings.vim = {
 }
 
 mappings.bufferline = {
-   { "n", "<leader><leader>i", "<cmd>BufferLineCycleNext<cr>", { noremap = true, silent = true, desc = "next buffer" } },
-   { "n", "<leader><leader>n", "<cmd>BufferLineCyclePrev<cr>", { noremap = true, silent = true, desc = "previous buffer" } },
+   {
+      "n",
+      "<leader>i",
+      "<cmd>BufferLineCycleNext<cr>",
+      { noremap = true, silent = true, desc = "next buffer" },
+   },
+   {
+      "n",
+      "<leader>n",
+      "<cmd>BufferLineCyclePrev<cr>",
+      { noremap = true, silent = true, desc = "previous buffer" },
+   },
 
    {
       "n",
-      "<leader><leader>u",
+      "<leader><leader>i",
       "<cmd>BufferLineMoveNext<cr>",
       { noremap = true, silent = true, desc = "move buffer to the right" },
    },
 
    {
       "n",
-      "<leader><leader>e",
+      "<leader><leader>n",
       "<cmd>BufferLineMovePrev<cr>",
       { noremap = true, silent = true, desc = "move buffer to the left" },
    },
