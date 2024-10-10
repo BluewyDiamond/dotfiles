@@ -69,7 +69,8 @@
          "slurp",
          "fzf",
 
-         "satty"
+         "satty",
+         "fd"
       ],
 
       "aur": ["aylurs-gtk-shell", "bun-bin", "wayshot", "hyprpicker"]
@@ -117,7 +118,7 @@
    },
 
    "coding": {
-      "std": ["taplo-cli", "prettier", "rustup"]
+      "std": ["taplo-cli", "prettier", "rustup", "go", "python2", "python"]
    },
 
    "minimal_virtualization": {
