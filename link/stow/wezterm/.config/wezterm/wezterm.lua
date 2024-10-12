@@ -19,9 +19,9 @@ config.default_prog = { fish_path, "-l" }
 
 config.color_scheme = "One Dark (Gogh)"
 
-config.font_size = 12
+config.font_size = 16
 config.font = wezterm.font_with_fallback({
-   { family = "Iosevka Nerd Font Mono", scale = 1.4, weight = "Medium" },
+   { family = "Iosevka Nerd Font Mono", scale = 1.0, weight = "Medium" },
    { family = "FantasqueSansM Nerd Font", scale = 1.3 },
 })
 
