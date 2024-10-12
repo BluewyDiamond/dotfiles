@@ -29,6 +29,10 @@ return {
          ["rust_analyzer"] = function()
             -- We leave it blank because we setup it up with rustacevim.
          end,
+
+         -- this has been refactored to ts_ls but does not it has been done properly
+         ["tsserver"] = function() end,
+         ["ts_ls"] = function() end,
       })
    end,
 }

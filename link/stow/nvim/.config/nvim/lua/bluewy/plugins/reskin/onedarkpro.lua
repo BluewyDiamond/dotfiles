@@ -18,7 +18,8 @@ return {
 
          highlights = {
             -- general due to rust
-            ["@function.builtin"] = {}, -- blank because yellow is definetly not right
+            -- hmmmm, TODO: figure out why i put this in
+            -- ["@function.builtin"] = {}, -- blank because yellow is definetly not right
 
             -- rust specific
             ["@lsp.type.parameter.rust"] = { fg = "${red}" },
