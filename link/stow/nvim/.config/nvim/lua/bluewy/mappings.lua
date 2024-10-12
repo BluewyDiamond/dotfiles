@@ -157,13 +157,13 @@ mappings.gitsigns = {
          return "<Ignore>"
       end,
 
-      { noremap = true, silent = true, expr = true },
+      { noremap = true, silent = true, expr = true, desc = "diff" },
    },
 
-   { "n", "<leader>rh", gitsigns.reset_hunk, { noremap = true, silent = true } },
-   { "n", "<leader>ph", gitsigns.preview_hunk, { noremap = true, silent = true } },
-   { "n", "<leader>gb", package.loaded.gitsigns.blame_line, { noremap = true, silent = true } },
-   { "n", "<leader>td", gitsigns.toggle_deleted, { noremap = true, silent = true } },
+   { "n", "<leader>rh", gitsigns.reset_hunk, { noremap = true, silent = true, desc = "reset hunk" } },
+   { "n", "<leader>ph", gitsigns.preview_hunk, { noremap = true, silent = true, desc = "preview hunk" } },
+   { "n", "<leader>gb", package.loaded.gitsigns.blame_line, { noremap = true, silent = true, desc = "blame line" } },
+   { "n", "<leader>td", gitsigns.toggle_deleted, { noremap = true, silent = true, desc = "toggle deleted" } },
 }
 
 mappings.blame = {
@@ -198,6 +198,15 @@ mappings.rainbow_delimiters = {
       end,
 
       { noremap = true, silent = true, desc = "toggle rainbow delimiters" },
+   },
+}
+
+mappings.treesitter = {
+   {
+      "n",
+      "<leader>tsh",
+      "<cmd>TSToggle highlight<CR>",
+      { noremap = true, silent = true, desc = "toggle syntax highlighting" },
    },
 }
 
