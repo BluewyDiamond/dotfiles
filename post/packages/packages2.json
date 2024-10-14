@@ -41,7 +41,7 @@
 
    "hyprland_rice": {
       "std": [
-         "ttf-iosevka-nerd",
+         "ttf-iosevkaterm-nerd",
 
          "qt6ct",
          "qt5ct",
