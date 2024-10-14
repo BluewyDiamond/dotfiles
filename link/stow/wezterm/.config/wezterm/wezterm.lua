@@ -21,8 +21,7 @@ config.color_scheme = "One Dark (Gogh)"
 
 config.font_size = 16
 config.font = wezterm.font_with_fallback({
-   { family = "Iosevka Nerd Font Mono", scale = 1.0, weight = "Medium" },
-   { family = "FantasqueSansM Nerd Font", scale = 1.3 },
+   { family = "IosevkaTerm Nerd Font Mono", scale = 1.0, weight = "Medium" },
 })
 
 config.window_background_opacity = 0.9
@@ -94,9 +93,9 @@ config.keys = {
 
    { key = "w", mods = "LEADER", action = act.ShowLauncherArgs({ flags = "FUZZY|WORKSPACES" }) },
 
-  -- OTHER
-  { key = "c", mods = "CTRL | SHIFT", action = act.CopyTo "Clipboard"},
-  { key = "v", mods = "CTRL | SHIFT", action = act.PasteFrom "Clipboard"}
+   -- OTHER
+   { key = "c", mods = "CTRL | SHIFT", action = act.CopyTo("Clipboard") },
+   { key = "v", mods = "CTRL | SHIFT", action = act.PasteFrom("Clipboard") },
 }
 
 -- complements with the above
