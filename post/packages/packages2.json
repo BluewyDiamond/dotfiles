@@ -106,9 +106,6 @@
          "gparted",
          "gnome-disk-utility",
 
-         "easyeffects",
-         "lsp-plugins",
-
          "mangohud",
          "cachy-browser",
 
@@ -155,6 +152,10 @@
 
    "amd_gpu": {
       "aur": ["lact"]
+   },
+
+   "archived": {
+      "std": ["easyeffects", "lsp-plugins"]
    },
 
    "ignore_stuff": {
