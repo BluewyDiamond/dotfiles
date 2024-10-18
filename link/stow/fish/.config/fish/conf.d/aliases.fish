@@ -6,6 +6,7 @@ abbr snv "EDITOR=nvim sudoedit"
 abbr nv nvim
 abbr lg lazygit
 
+abbr c clear
 abbr e exit
 
 # might be useful
