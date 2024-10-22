@@ -70,10 +70,12 @@
          "fzf",
 
          "satty",
-         "fd"
+         "fd",
+
+         "hyprpicker"
       ],
 
-      "aur": ["aylurs-gtk-shell", "bun-bin", "wayshot", "hyprpicker"]
+      "aur": ["aylurs-gtk-shell", "bun-bin", "wayshot"]
    },
 
    "hyprland_extras": {
