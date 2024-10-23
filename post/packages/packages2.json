@@ -6,6 +6,8 @@
    "tty_session": {
       "std": [
          "fish",
+         "fisher",
+
          "eza",
          "paru",
          "trash-cli",
