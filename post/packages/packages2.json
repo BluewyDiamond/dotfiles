@@ -1,26 +1,10 @@
 {
-   "system_wide": {
-      "std": ["pacman-contrib"]
-   },
-
    "tty_session": {
-      "std": [
-         "fish",
-         "fisher",
-
-         "eza",
-         "paru",
-         "trash-cli",
-         "zellij",
-
-         "neovim",
-         "stylua",
-         "ripgrep"
-      ]
+      "std": ["trash-cli", "zellij", "neovim", "stylua", "ripgrep"]
    },
 
    "tty_rice": {
-      "std": ["terminus-font", "figlet", "fastfetch"]
+      "std": ["terminus-font", "figlet"]
    },
 
    "hyprland": {
@@ -142,24 +126,12 @@
       "std": ["brightnessctl"]
    },
 
-   "wifi": {
-      "aur": ["iwgtk"]
-   },
-
-   "bluetooth": {
-      "aur": ["overskride"]
-   },
-
    "amd_cpu": {
       "std": ["amd-ucode"]
    },
 
    "amd_gpu": {
       "aur": ["lact"]
-   },
-
-   "archived": {
-      "std": ["easyeffects", "lsp-plugins"]
    },
 
    "ignore_stuff": {
