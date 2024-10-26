@@ -1,4 +1,4 @@
-#!/usr/bin/env
+#!/usr/bin/env fish
 
 function prompt
     set_color magenta
@@ -30,23 +30,46 @@ function uninstall_cachyos_repos
 end
 
 function main
-    set all_installed (pacman -Qq)
+    set all_packages (pacman -Qq)
 
     set packages_to_remove
 
-    for pkg in $all_installed
-        if not contains $pkg $minimal_packages
+    for pkg in $all_packages
+        if contains $pkg $mimimal_packages
+            continue
+        end
+
+        set dependant_packages (pactree -l -r $pkg)
+        set can_remove yes
+
+        for dependant_pkg in $dependant_packages
+            if contains $dependant_pkg $minimal_packages
+                set can_remove no
+                break
+            end
+        end
+
+        if string match -i -q -- yes $can_remove
             set packages_to_remove $packages_to_remove $pkg
         end
     end
 
-    if test -n "$packages_to_remove"
-        sudo pacman -Rns $packages_to_remove
-    else
-        prompt "No packages to remove..."
-    end
+    echo "↓↓↓"
+    echo $packages_to_remove
+    echo "↑↑↑"
 
-    sudo pacman -Syu $minimal_packages
+    prompt "Proceed removal?"
+    set choice (input)
+
+    if string match -i -q -- $choice y
+        if test -n "$packages_to_remove"
+            sudo pacman -Rns $packages_to_remove
+        else
+            prompt "No packages to remove..."
+        end
+
+        sudo pacman -Syu $minimal_packages
+    end
 end
 
 ###################
