@@ -83,7 +83,7 @@ function reinstall_minimal
     prompt "Proceed removal?"
     set choice (input)
 
-    if string match -i -q -- $choice y
+    if string match -i -q -- y $choice
         if test -n "$packages_to_remove"
             sudo pacman -Rns $packages_to_remove
         else
