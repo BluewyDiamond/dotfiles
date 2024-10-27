@@ -1,5 +1,7 @@
 #!/usr/bin/env fish
 
+set -g SCRIPT_NAME (basename (status -f))
+
 function prompt
     set_color magenta
     echo -n "$SCRIPT_NAME => "
@@ -20,20 +22,36 @@ set minimal_packages \
     fisher git eza pacman-contrib paru fastfetch chwd iwd plymouth terminus-font
 
 function install_cachyos_repos
+    if test -d /tmp/$SCRIPT_NAME
+        rm -r /tmp/$SCRIPT_NAME
+    end
+
+    mkdir /tmp/$SCRIPT_NAME
+    pushd /tmp/$SCRIPT_NAME
+
     curl https://mirror.cachyos.org/cachyos-repo.tar.xz -o cachyos-repo.tar.xz
     tar xvf cachyos-repo.tar.xz && cd cachyos-repo
     sudo ./cachyos-repo.sh
+    popd
 end
 
 function uninstall_cachyos_repos
+    if test -d /tmp/$SCRIPT_NAME
+        rm -r /tmp/$SCRIPT_NAME
+    end
+
+    mkdir /tmp/$SCRIPT_NAME
+    pushd /tmp/$SCRIPT_NAME
+
     sudo pacman -S core/pacman
     wget https://build.cachyos.org/cachyos-repo.tar.xz
     tar xvf cachyos-repo.tar.xz
     cd cachyos-repo
     sudo ./cachyos-repo.sh --remove
+    popd
 end
 
-function main
+function reinstall_minimal
     set all_packages (pacman -Qq)
 
     set packages_to_remove
@@ -73,6 +91,24 @@ function main
         end
 
         sudo pacman -Syu $minimal_packages
+    end
+end
+
+function main
+    prompt "Choose on of the following options:"
+    prompt "1. Reinstall Mimimal"
+    prompt "2. Reinstall CachyOS Repositories"
+
+    set choice (input)
+
+    switch choice
+        case 1
+            reinstall_minimal
+        case 2
+            uninstall_cachyos_repos
+            install_cachyos_repos
+        case '*'
+            prompt "Not a valid choice..."
     end
 end
 
