@@ -126,6 +126,10 @@
       "std": ["brightnessctl"]
    },
 
+   "powerprofile": {
+      "std": ["python-gobject", "power-profiles-daemon"]
+   },
+
    "amd_cpu": {
       "std": ["amd-ucode"]
    },
