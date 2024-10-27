@@ -21,6 +21,7 @@ function input
 end
 
 function main
+    systemctl list-units --type=service | grep -i network
     prompt "Disable or remove anything that can conflict with systemd-networkd + systemd-resolved + iwd!"
     prompt "Proceed? [y/N]"
 
