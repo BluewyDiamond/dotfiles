@@ -38,7 +38,7 @@ function main
     set counter 20
 
     for adpater in $adapter_names
-        if string match -q -i -r 'en*'
+        if string match -q -i -r 'en*' $adapter
             set target /etc/systemd/network/$counter-wired.network
 
             sudo touch $target
@@ -57,7 +57,7 @@ function main
             echo "RouteMetric=100" | sudo tee -a $target
         end
 
-        if string match -q -i -r 'wl*'
+        if string match -q -i -r 'wl*' $adapter
             set target /etc/systemd/network/$counter-wired.network
 
             sudo touch $target
