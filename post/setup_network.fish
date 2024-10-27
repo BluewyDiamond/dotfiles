@@ -37,7 +37,7 @@ function main
 
     set counter 20
 
-    for adpater in $adapter_names
+    for adapter in $adapter_names
         if string match -q -i -r 'en*' $adapter
             set target /etc/systemd/network/$counter-wired.network
 
