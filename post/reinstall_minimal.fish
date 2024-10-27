@@ -17,7 +17,7 @@ set minimal_packages \
     base base-devel linux-cachyos linux-firmware \
     refind fish bash sudo neovim \
     cachyos-keyring cachyos-hooks cachyos-mirrorlist cachyos-v3-mirrorlist cachyos-v4-mirrorlist cachyos-rate-mirrors cachyos-settings \
-    fisher git eza pacman-contrib paru fastfetch chwd iwd
+    fisher git eza pacman-contrib paru fastfetch chwd iwd plymouth terminus-font
 
 function install_cachyos_repos
     curl https://mirror.cachyos.org/cachyos-repo.tar.xz -o cachyos-repo.tar.xz
