@@ -31,11 +31,7 @@ function main
         return
     end
 
-    sudo pacman -S --needed iwd
-
-    systemctl enable --now iwd
-    systemctl enable --now systemd-networkd
-    systemctl enable --now systemd-resolved
+    sudo rm /etc/systemd/network/*
 
     set adapter_names (command ls /sys/class/net)
 
@@ -80,6 +76,13 @@ function main
             echo "RouteMetric=600" | sudo tee -a $target
         end
     end
+
+
+    sudo pacman -S --needed iwd
+
+    systemctl enable --now iwd
+    systemctl enable --now systemd-networkd
+    systemctl enable --now systemd-resolved
 end
 
 ###################
