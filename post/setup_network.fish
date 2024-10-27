@@ -34,6 +34,7 @@ function main
     sudo pacman -S --needed iwd
 
     systemctl enable --now iwd
+    systemctl enable --now systemd-networkd
     systemctl enable --now systemd-resolved
 
     set adapter_names (command ls /sys/class/net)
