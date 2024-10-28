@@ -99,7 +99,12 @@
 
          "mission-center",
          "qpwgraph"
-      ]
+      ],
+
+      "discord": {
+         "std": "speech-dispatcher",
+         "aur": ["legcord", "piper-tts"]
+      }
    },
 
    "coding": {
