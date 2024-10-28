@@ -104,6 +104,7 @@ function main
     switch choice
         case 1
             reinstall_minimal
+            sudo chwd -a -f
         case 2
             uninstall_cachyos_repos
             install_cachyos_repos
