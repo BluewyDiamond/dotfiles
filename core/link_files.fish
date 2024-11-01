@@ -15,6 +15,10 @@ function input
     echo $value
 end
 
+set $STOWABLE_PACKAGES (dirname (status -f))/../link/stow
+set $CACHY_BROWSER_OVERRIDES (dirname (status -f))/../link/manual/cachy-browser/cachy.overrides.cfg
+set $CACHY_BROWSER_CSS (dirname (status -f))/../link/manual/cachy-browser/userChrome.css
+
 prompt "Do you want to reset fish shell config? [y/N]"
 set choice (input)
 
@@ -33,7 +37,7 @@ set choice (input)
 if string match -q -i -- $choice y
     sudo pacman -S --needed stow
 
-    pushd ./link/stow
+    pushd $STOWABLE_PACKAGES
 
     for module in *
         stow $module -t $HOME
@@ -49,7 +53,7 @@ set choice (input)
 if string match -q -i -- $choice y
     mkdir -p $HOME/.cachy
 
-    ln -sf $PWD/link/manual/cachy-browser/cachy.overrides.cfg $HOME/.cachy/cachy.overrides.cfg
+    ln -sf $CACHY_BROWSER_OVERRIDES $HOME/.cachy/cachy.overrides.cfg
 
     set target_dirs (find $HOME/.cachy -type d -name '*default-release' 2>/dev/null)
 
@@ -58,6 +62,6 @@ if string match -q -i -- $choice y
             mkdir -p "$dir/chrome"
         end
 
-        ln -sf $PWD/link/manual/cachy-browser/userChrome.css "$dir/chrome"
+        ln -sf $CACHY_BROWSER_CSS "$dir/chrome"
     end
 end

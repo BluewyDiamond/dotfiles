@@ -1,6 +1,7 @@
 #!/usr/bin/env fish
 
 set -g SCRIPT_NAME (basename (status -f))
+set WORKING_DIRECTORY /tmp/$SCRIPT_NAME
 
 function prompt
     set_color magenta
@@ -22,12 +23,12 @@ set minimal_packages \
     fisher git eza pacman-contrib paru fastfetch chwd iwd plymouth terminus-font
 
 function install_cachyos_repos
-    if test -d /tmp/$SCRIPT_NAME
-        rm -r /tmp/$SCRIPT_NAME
+    if test -d $WORKING_DIRECTORY
+        rm -r $WORKING_DIRECTORY
     end
 
-    mkdir /tmp/$SCRIPT_NAME
-    pushd /tmp/$SCRIPT_NAME
+    mkdir $WORKING_DIRECTORY
+    pushd $WORKING_DIRECTORY
 
     curl https://mirror.cachyos.org/cachyos-repo.tar.xz -o cachyos-repo.tar.xz
     tar xvf cachyos-repo.tar.xz && cd cachyos-repo
@@ -36,12 +37,12 @@ function install_cachyos_repos
 end
 
 function uninstall_cachyos_repos
-    if test -d /tmp/$SCRIPT_NAME
-        rm -r /tmp/$SCRIPT_NAME
+    if test -d $WORKING_DIRECTORY
+        rm -r $WORKING_DIRECTORY
     end
 
-    mkdir /tmp/$SCRIPT_NAME
-    pushd /tmp/$SCRIPT_NAME
+    mkdir $WORKING_DIRECTORY
+    pushd $WORKING_DIRECTORY
 
     sudo pacman -S core/pacman
     wget https://build.cachyos.org/cachyos-repo.tar.xz

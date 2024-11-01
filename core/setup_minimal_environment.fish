@@ -1,5 +1,5 @@
 # prepare files
-../../copy_files.fish
+./copy_files.fish
 
 # set keyboard layout
-../change_keyboard.fish
+./change_keyboard.fish
