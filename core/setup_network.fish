@@ -13,8 +13,8 @@ end
 function input
     read -P (set_color magenta)"INPUT => "(set_color yellow) value
 
-    if test -z $value
-        set $argv[1] # default value, allows me to early return
+    if test -z "$value"
+        set value N # default value, allows me to early return
     end
 
     echo $value

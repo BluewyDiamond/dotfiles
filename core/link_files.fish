@@ -1,6 +1,9 @@
 #!/usr/bin/env fish
 
-set -g SCRIPT_NAME (basename (status -f))
+set SCRIPT_NAME (basename (status -f))
+set STOWABLE_PACKAGES (dirname (status -f))/../link/stow
+set CACHY_BROWSER_OVERRIDES (dirname (status -f))/../link/manual/cachy-browser/cachy.overrides.cfg
+set CACHY_BROWSER_CSS (dirname (status -f))/../link/manual/cachy-browser/userChrome.css
 
 function prompt
     set_color magenta
@@ -15,9 +18,6 @@ function input
     echo $value
 end
 
-set $STOWABLE_PACKAGES (dirname (status -f))/../link/stow
-set $CACHY_BROWSER_OVERRIDES (dirname (status -f))/../link/manual/cachy-browser/cachy.overrides.cfg
-set $CACHY_BROWSER_CSS (dirname (status -f))/../link/manual/cachy-browser/userChrome.css
 
 prompt "Do you want to reset fish shell config? [y/N]"
 set choice (input)

@@ -1,9 +1,9 @@
 #!/usr/bin/env fish
 
-sudo pacman --needed terminus-font
-
 set VCONSOLE_CONF "/etc/vconsole.conf"
 set FONT "FONT=ter-132b"
+
+sudo pacman --needed terminus-font
 
 if not test -f $VCONSOLE_CONF
     sudo touch $VCONSOLE_CONF
