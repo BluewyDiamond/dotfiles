@@ -90,6 +90,7 @@ function reinstall_minimal
             prompt "No packages to remove..."
         end
 
+        chwd -a -f
         sudo pacman -Syu $minimal_packages
     end
 end
@@ -115,3 +116,7 @@ end
 
 ###################
 main
+
+# 1. Removes all non specified/minimal packages
+# 2. Force install hardware drivers/software
+# 3. Reinstall all specified/minimal packages
