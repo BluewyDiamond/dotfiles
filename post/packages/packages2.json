@@ -116,22 +116,6 @@
       "std": ["taplo-cli", "prettier", "rustup", "go", "python2", "python"]
    },
 
-   "minimal_virtualization": {
-      "std": [
-         "qemu-base",
-         "virt-manager",
-         "virt-viewer",
-         "dnsmasq",
-         "vde2",
-         "bridge-utils",
-         "openbsd-netcat",
-         "spice",
-         "qemu-ui-spice-app",
-         "qemu-audio-spice",
-         "qemu-hw-usb-redirect"
-      ]
-   },
-
    "screen": {
       "std": ["brightnessctl"]
    },
@@ -148,64 +132,19 @@
       "std": ["lact"]
    },
 
-   "ignore_stuff": {
-      "cachyos_base_system": {
-         "std": [
-            "stow",
-            "linux-cachyos",
-            "linux-cachyos-lts",
-            "linux-cachyos-gcc",
-            "linux-firmware",
-            "base",
-            "base-devel",
-            "cachyos-hooks",
-            "cachyos-keyring",
-            "cachyos-mirrorlist",
-            "cachyos-rate-mirrors",
-            "cachyos-settings",
-            "cachyos-v3-mirrorlist",
-            "cachyos-v4-mirrorlist",
-            "chwd",
-            "efitools",
-            "exfatprogs",
-            "haveged",
-            "hdparm",
-            "hwdetect",
-            "logrotate",
-            "lsscsi",
-            "lvm2",
-            "man-db",
-            "man",
-            "mtools",
-            "nfs-utils",
-            "nilfs-utils",
-            "ntfs-3g",
-            "sg3_utils",
-            "wget"
-         ]
-      },
-
-      "lib32_stuff": {
-         "std": [
-            "lib32-libva-mesa-driver",
-            "lib32-mesa-vdpau",
-            "lib32-opencl-clover-mesa",
-            "lib32-opencl-rusticl-mesa"
-         ]
-      },
-
-      "btrfs": {
-         "std": ["snapper", "refind-btrfs", "btrfs-assistant-git"]
-      },
-
-      "more_random_stuff": {
-         "std": [
-            "alsa-firmware",
-            "alsa-utils",
-            "pipewire-alsa",
-            "rocm-opencl-runtime",
-            "mesa-utils"
-         ]
-      }
+   "minimal_virtualization": {
+      "std": [
+         "qemu-base",
+         "virt-manager",
+         "virt-viewer",
+         "dnsmasq",
+         "vde2",
+         "bridge-utils",
+         "openbsd-netcat",
+         "spice",
+         "qemu-ui-spice-app",
+         "qemu-audio-spice",
+         "qemu-hw-usb-redirect"
+      ]
    }
 }
