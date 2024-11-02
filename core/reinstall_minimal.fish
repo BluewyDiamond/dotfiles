@@ -16,12 +16,6 @@ function input
     echo $value
 end
 
-set minimal_packages \
-    base base-devel linux-cachyos linux-firmware \
-    refind fish bash sudo neovim \
-    cachyos-keyring cachyos-hooks cachyos-mirrorlist cachyos-v3-mirrorlist cachyos-v4-mirrorlist cachyos-rate-mirrors cachyos-settings \
-    fisher git eza pacman-contrib paru fastfetch chwd iwd plymouth terminus-font
-
 function install_cachyos_repos
     if test -d $WORKING_DIRECTORY
         rm -r $WORKING_DIRECTORY
@@ -53,6 +47,21 @@ function uninstall_cachyos_repos
 end
 
 function reinstall_minimal
+    set minimal_packages \
+        base base-devel linux-cachyos linux-firmware \
+        refind fish bash sudo neovim \
+        cachyos-keyring cachyos-hooks cachyos-mirrorlist cachyos-v3-mirrorlist cachyos-v4-mirrorlist cachyos-rate-mirrors cachyos-settings \
+        fisher git eza pacman-contrib paru fastfetch chwd iwd plymouth terminus-font
+
+    set more_packages_raw_output (pacman -Qme)
+
+    for line in $more_packages_raw_output
+        set -l package_name (string split ' ' $line)[1]
+        set my_array $my_array $package_name
+    end
+
+    set minimal_packages $minimal_packages $my_array
+
     set all_packages (pacman -Qq)
 
     set packages_to_remove
