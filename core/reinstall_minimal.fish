@@ -53,17 +53,9 @@ function reinstall_minimal
         cachyos-keyring cachyos-hooks cachyos-mirrorlist cachyos-v3-mirrorlist cachyos-v4-mirrorlist cachyos-rate-mirrors cachyos-settings \
         fisher git eza pacman-contrib paru fastfetch chwd iwd plymouth terminus-font
 
-    set more_packages_raw_output (pacman -Qme)
-
-    for line in $more_packages_raw_output
-        set -l package_name (string split ' ' $line)[1]
-        set my_array $my_array $package_name
-    end
-
-    set minimal_packages $minimal_packages $my_array
-
+    set aur_packages (pacman -Qqme)
+    set minimal_packages $minimal_packages $aur_packages
     set all_packages (pacman -Qq)
-
     set packages_to_remove
 
     for pkg in $all_packages
@@ -127,6 +119,6 @@ end
 ###################
 main
 
-# 1. Removes all non specified/minimal packages
+# 1. Removes non specified packages except for aur packages
 # 2. Force install hardware drivers/software
 # 3. Reinstall all specified/minimal packages
