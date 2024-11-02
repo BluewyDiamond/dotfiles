@@ -104,7 +104,7 @@ function main
 
     set choice (input)
 
-    switch choice
+    switch $choice
         case 1
             reinstall_minimal
             sudo chwd -a -f
