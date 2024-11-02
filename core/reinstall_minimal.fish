@@ -51,10 +51,9 @@ function reinstall_minimal
         base base-devel linux-cachyos linux-firmware \
         refind fish bash sudo neovim \
         cachyos-keyring cachyos-hooks cachyos-mirrorlist cachyos-v3-mirrorlist cachyos-v4-mirrorlist cachyos-rate-mirrors cachyos-settings \
-        fisher git eza pacman-contrib paru fastfetch chwd iwd plymouth terminus-font
+        fisher git eza pacman-contrib paru fastfetch chwd iwd plymouth terminus-font less
 
-    set aur_packages (pacman -Qqme)
-    set minimal_packages $minimal_packages $aur_packages
+    set aur_packages (pacman -Qqm)
     set all_packages (pacman -Qq)
     set packages_to_remove
 
@@ -68,6 +67,11 @@ function reinstall_minimal
 
         for dependant_pkg in $dependant_packages
             if contains $dependant_pkg $minimal_packages
+                set can_remove no
+                break
+            end
+
+            if contains $dependant_pkg $aur_packagees
                 set can_remove no
                 break
             end
