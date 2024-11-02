@@ -105,7 +105,7 @@
       ],
 
       "discord": {
-         "std": "speech-dispatcher",
+         "std": ["speech-dispatcher"],
          "aur": ["legcord", "piper-tts"]
       }
    },
@@ -143,7 +143,7 @@
    },
 
    "amd_gpu": {
-      "aur": ["lact"]
+      "std": ["lact"]
    },
 
    "ignore_stuff": {
