@@ -82,23 +82,26 @@
 
    "gui_apps": {
       "std": [
+         "pavucontrol",
+         "gparted",
+         "gnome-disk-utility",
+
+         "cachy-browser",
+
+         "mangohud",
+         "mission-center",
+         "qpwgraph",
+
          "vlc",
          "loupe",
          "evince",
 
          "archlinux-xdg-menu",
          "dolphin",
-
          "ark",
-         "pavucontrol",
-         "gparted",
-         "gnome-disk-utility",
 
-         "mangohud",
-         "cachy-browser",
-
-         "mission-center",
-         "qpwgraph"
+         "steam-native-runtime",
+         "heroic-game-launcher-bin"
       ],
 
       "discord": {
