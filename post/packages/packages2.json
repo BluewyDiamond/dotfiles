@@ -103,7 +103,10 @@
          "obs-studio",
 
          "steam-native-runtime",
-         "heroic-game-launcher-bin"
+         "heroic-game-launcher-bin",
+
+         "btop",
+
       ],
 
       "discord": {
