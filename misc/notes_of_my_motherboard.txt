@@ -1,0 +1,14 @@
+### Main PC
+## Issues
+- buzzing noise, probably from the psu
+- slow boot times, despite having restore memory context enabled
+- hd audio, audible electrical static interference
+
+## Settings
+# BIOS
+- use factory expo ram profile
+- disabled pbo limits (makes it to use stock cpu profile)
+- set -30 to all cores (curve optimizer)
+- disabled csm
+- disabled secure boot
+- use motherboard premade fan profiles
