@@ -80,7 +80,7 @@
       ]
    },
 
-   "gui_apps": {
+   "gui_alternatives": {
       "std": [
          "pavucontrol",
          "gparted",
@@ -88,34 +88,18 @@
 
          "cachy-browser",
 
-         "mangohud",
-         "mission-center",
-         "qpwgraph",
-
-         "vlc",
-         "loupe",
-         "evince",
-
          "archlinux-xdg-menu",
          "dolphin",
          "ark",
 
+         "vlc",
+         "loupe",
+         "evince",
          "obs-studio",
 
-         "steam-native-runtime",
-         "heroic-games-launcher-bin",
-
-         "btop"
-      ],
-
-      "discord": {
-         "std": ["speech-dispatcher"],
-         "aur": ["legcord", "piper-tts"]
-      }
-   },
-
-   "coding": {
-      "std": ["taplo-cli", "prettier", "rustup", "go", "python2", "python"]
+         "mission-center",
+         "qpwgraph"
+      ]
    },
 
    "screen": {
