@@ -21,8 +21,8 @@ function input
 end
 
 function cachy_browser
-    set CACHY_BROWSER_OVERRIDES $PWD/manual_files/cachy-browser/cachy.overrides.cfg
-    set CACHY_BROWSER_CSS $PWD/manual_files/cachy-browser/userChrome.css
+    set CACHY_BROWSER_OVERRIDES $PWD/(dirname (status -f))/manual_files/cachy-browser/cachy.overrides.cfg
+    set CACHY_BROWSER_CSS $PWD/(dirname (status -f))/manual_files/cachy-browser/userChrome.css
 
     mkdir -p $HOME/.cachy
 
@@ -40,24 +40,45 @@ function cachy_browser
 end
 
 function fish_shell
-    if test -f $HOME/.config/fish-bluewy -o -d $HOME/.config/fish-bluewy -o -L $HOME/.config/fish-bluewy
-        trash $HOME/.config/fish-bluewy
+    set s_file $PWD/(dirname (status -f))/manual_files/fish_bluewy
+    set target $HOME/.config/fish-bluewy
+    set fish_dir $HOME/.config/fish
+
+    if test -f $target -o -d $target -o -L $target
+        trash $target
     end
 
-    ln -s $PWD/manual_files/fish-bluewy $HOME/.config/fish-bluewy
+    ln -s $s_file $target
 
-    if test -d $HOME/.config/fish -o -f $HOME/.config/fish -o -L $HOME/.config/fish
-        trash $HOME/.config/fish
+    if test -d $fish_dir -o -f $fish_dir -o -L $fish_dir
+        trash $fish_dir
     end
 
-    mkdir $HOME/.config/fish
-    mkdir $HOME/.config/fish/conf.d
-    mkdir $HOME/.config/fish/functions
-    mkdir $HOME/.config/fish/themes
+    mkdir $fish_dir
+    mkdir $fish_dir/conf.d
+    mkdir $fish_dir/functions
+    mkdir $fish_dir/themes
 
-    ln -s $PWD/manual_files/fish-bluewy/themes/one_dark_gogh.theme $HOME/.config/fish/themes
-    echo "source $HOME/.config/fish-bluewy/config.fish" >>$HOME/.config/fish/conf.d/init_bluewy.fish
+    ln -s $target/themes/one_dark_gogh.theme $fish_dir/themes
+    echo "source $target/config.fish" >>$fish_dir/conf.d/init_bluewy.fish
 end
 
-# cachy_browser
-# fish_shell
+prompt "1. Cachy Browser Stuff"
+prompt "2. Fish Shell"
+prompt "WARNING! It will trash conflicting files without prompting!"
+
+set choice (input N)
+
+if not string match Y $choice
+    prompt "Not a valid option..."
+    exit 1
+end
+
+switch $choice
+    case 1
+        cachy_browser
+    case 2
+        fish_shell
+    case '*'
+        prompt "Not a valid choice..."
+end
