@@ -1,4 +1,4 @@
-#/usr/bin/env fish
+#!/usr/bin/env fish
 
 set SCRIPT_NAME (basename (status -f))
 
@@ -20,4 +20,6 @@ function input
     echo $value
 end
 
-prompt "TODO!"
+sudo cp (dirname (status -f))/cp_files/xkb/bluewy /usr/share/X11/xkb/symbols
+sudo cp (dirname (status -f))/cp_files/kbd/colemak_dh_wide_custom_iso.map /usr/share/kbd/keymaps
+sudo cp (dirname (status -f))/cp_files/kbd/colemak_dh_wide_custom_ansi.map /usr/share/kbd/keymaps
