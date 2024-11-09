@@ -19,4 +19,20 @@ function cachy_browser
         end
 end
 
-cachy_browser
+function fish_shell
+	ln -sf $PWD/manual_files/fish-bluewy $HOME/.config/fish-bluewy
+
+	if test -d $HOME/.config/fish -o -f $HOME/.config/fish -o -L $HOME/.config/fish
+		trash $HOME/.config/fish
+	end
+
+    mkdir $HOME/.config/fish
+    mkdir $HOME/.config/fish/conf.d
+    mkdir $HOME/.config/fish/functions
+    mkdir $HOME/.config/fish/themes
+
+    echo "source $HOME/.config/fish-bluewy/config.fish" >> $HOME/.config/fish/conf.d/init_bluewy.fish
+end
+
+# cachy_browser
+fish_shell
