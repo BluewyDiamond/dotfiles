@@ -44,11 +44,6 @@ function clear
     end
 end
 
-function cl --wraps cd
-    cd $argv
-    ls
-end
-
 function git --wraps git
     switch $argv[1]
         case plog
@@ -60,37 +55,37 @@ end
 
 function aura
     switch $argv[1]
+        case -Sy
+            paru -Sy --repo $argv[2..-1]
         case -Syy
             paru -Syy --repo $argv[2..-1]
-        case -Syyu
-            paru -Syyu --repo $argv[2..-1]
         case -Syu
             paru -Syu --repo $argv[2..-1]
+        case -Syyu
+            paru -Syyu --repo $argv[2..-1]
         case -Ss
             paru -Ss --repo $argv[2]
-        case -Sg
-            paru -S --repo --asdeps $argv[2..-1]
         case -S
             paru -S --repo $argv[2..-1]
         case -Au
             paru -Su --aur $argv[2..-1]
         case -As
             paru -Ss --aur $argv[2]
-        case -Ag
-            paru -S --aur --asdeps $argv[2..-1]
         case -A
             paru -S --aur $argv[2..-1]
+        case -Wy
+            paru -Wy $argv[2..-1]
         case -Wyy
             paru -Syy $argv[2..-1]
-        case -Wyyu
-            paru -Syyu $argv[2..-1]
         case -Wyu
             paru -Syu $argv[2..-1]
+        case -Wyyu
+            paru -Syyu $argv[2..-1]
         case -Ws
             paru -Ss $argv[2..-1]
         case -W
             paru $argv[2..-1]
         case '*'
-           paru $argv
+            paru $argv
     end
 end
