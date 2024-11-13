@@ -40,7 +40,7 @@ function cachy_browser
 end
 
 function fish_shell
-    set s_file $PWD/(dirname (status -f))/manual_files/fish_bluewy
+    set s_file (realpath (dirname (status -f)))/manual_files/fish_bluewy
     set target $HOME/.config/fish-bluewy
     set fish_dir $HOME/.config/fish
 
@@ -67,12 +67,7 @@ prompt "1. Cachy Browser Stuff"
 prompt "2. Fish Shell"
 prompt "WARNING! It will trash conflicting files without prompting!"
 
-set choice (input N)
-
-if not string match Y $choice
-    prompt "Not a valid option..."
-    exit 1
-end
+set choice (input)
 
 switch $choice
     case 1
