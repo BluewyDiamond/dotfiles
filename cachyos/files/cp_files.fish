@@ -1,6 +1,6 @@
 #!/usr/bin/env fish
 
-set SCRIPT_NAME (basename (status -f))
+set SCRIPT_NAME (basename (status filename))
 
 function prompt
     set_color magenta
@@ -20,6 +20,6 @@ function input
     echo $value
 end
 
-sudo cp (dirname (status -f))/cp_files/xkb/bluewy /usr/share/X11/xkb/symbols
-sudo cp (dirname (status -f))/cp_files/kbd/colemak_dh_wide_custom_iso.map /usr/share/kbd/keymaps
-sudo cp (dirname (status -f))/cp_files/kbd/colemak_dh_wide_custom_ansi.map /usr/share/kbd/keymaps
+sudo cp (dirname (status filename))/cp_files/xkb/bluewy /usr/share/X11/xkb/symbols
+sudo cp (dirname (status filename))/cp_files/kbd/colemak_dh_wide_custom_iso.map /usr/share/kbd/keymaps
+sudo cp (dirname (status filename))/cp_files/kbd/colemak_dh_wide_custom_ansi.map /usr/share/kbd/keymaps

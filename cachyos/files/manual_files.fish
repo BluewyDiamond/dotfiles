@@ -1,6 +1,6 @@
 #!/usr/bin/env fish
 
-set SCRIPT_NAME (basename (status -f))
+set SCRIPT_NAME (basename (status filename))
 
 function prompt
     set_color magenta
@@ -21,8 +21,8 @@ function input
 end
 
 function cachy_browser
-    set CACHY_BROWSER_OVERRIDES $PWD/(dirname (status -f))/manual_files/cachy-browser/cachy.overrides.cfg
-    set CACHY_BROWSER_CSS $PWD/(dirname (status -f))/manual_files/cachy-browser/userChrome.css
+    set CACHY_BROWSER_OVERRIDES $PWD/(dirname (status filename))/manual_files/cachy-browser/cachy.overrides.cfg
+    set CACHY_BROWSER_CSS $PWD/(dirname (status filename))/manual_files/cachy-browser/userChrome.css
 
     mkdir -p $HOME/.cachy
 
@@ -40,7 +40,7 @@ function cachy_browser
 end
 
 function fish_shell
-    set s_file (realpath (dirname (status -f)))/manual_files/fish_bluewy
+    set s_file (realpath (dirname (status filename)))/manual_files/fish_bluewy
     set target $HOME/.config/fish-bluewy
     set fish_dir $HOME/.config/fish
 

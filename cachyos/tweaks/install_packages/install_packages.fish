@@ -1,10 +1,10 @@
 #!/usr/bin/env fish
 
 set -g CONFIG_FILE_NAME "packages.json"
-set -g CONFIG_LOCATION (dirname (status -f))/./
+set -g CONFIG_LOCATION (dirname (status filename))/./
 set -g CONFIG_FULL_PATH "$CONFIG_LOCATION/$CONFIG_FILE_NAME"
 
-set -g SCRIPT_NAME (basename (status -f))
+set -g SCRIPT_NAME (basename (status filename))
 
 function prompt
     set_color magenta

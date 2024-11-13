@@ -1,6 +1,6 @@
 #!/usr/bin/env fish
 
-set -g SCRIPT_NAME (basename (status -f))
+set -g SCRIPT_NAME (basename (status filename))
 
 function prompt
     set_color magenta

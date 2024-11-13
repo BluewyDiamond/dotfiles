@@ -1,6 +1,6 @@
 #!/usr/bin/env fish
 
-set SCRIPT_NAME (basename (status -f))
+set SCRIPT_NAME (basename (status filename))
 
 function prompt
     set_color magenta
@@ -45,7 +45,7 @@ end
 
 sudo pacman -S --needed trash-cli
 
-set container $PWD/(dirname (status -f))/link_files
+set container $PWD/(dirname (status filename))/link_files
 set files (command ls $container)
 
 for file in $files

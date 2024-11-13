@@ -1,6 +1,6 @@
 #!/usr/bin/env fish
 
-set -g GET_FROM_API (dirname (status -f))'/./get_all_packages.fish'
+set -g GET_FROM_API (dirname (status filename))'/./get_all_packages.fish'
 
 function main
     set listed_packages ($GET_FROM_API)

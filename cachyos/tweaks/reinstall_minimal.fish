@@ -1,6 +1,6 @@
 #!/usr/bin/env fish
 
-set -g SCRIPT_NAME (basename (status -f))
+set -g SCRIPT_NAME (basename (status filename))
 set WORKING_DIRECTORY /tmp/$SCRIPT_NAME
 
 function prompt
