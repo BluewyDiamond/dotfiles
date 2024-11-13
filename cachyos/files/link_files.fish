@@ -25,7 +25,6 @@ function link_files # $PWD/link_files/config $HOME/.config
     set files (command ls $container)
     set target_container $argv[2]
 
-
     for file in $files
         if test -f $target_container/$file -o -d $target_container/$file -o -L $target_container/$file
             prompt "The following conflicts, $target_container/$file, trash it? [y/N]"
@@ -45,7 +44,7 @@ end
 
 sudo pacman -S --needed trash-cli
 
-set container $PWD/(dirname (status filename))/link_files
+set container (realpath (dirname (status filename)))/link_files
 set files (command ls $container)
 
 for file in $files
