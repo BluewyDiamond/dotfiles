@@ -21,8 +21,8 @@ function input
 end
 
 function cachy_browser
-    set CACHY_BROWSER_OVERRIDES $PWD/(dirname (status filename))/manual_files/cachy-browser/cachy.overrides.cfg
-    set CACHY_BROWSER_CSS $PWD/(dirname (status filename))/manual_files/cachy-browser/userChrome.css
+    set CACHY_BROWSER_OVERRIDES (realpath (dirname (status filename)))/manual_files/cachy-browser/cachy.overrides.cfg
+    set CACHY_BROWSER_CSS (realpath (dirname (status filename)))/manual_files/cachy-browser/userChrome.css
 
     mkdir -p $HOME/.cachy
 
