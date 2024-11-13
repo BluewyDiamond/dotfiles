@@ -33,15 +33,24 @@ return {
             ["@lsp.type.typeAlias.rust"] = { fg = "${yellow}" },
             ["@lsp.typemod.function.defaultLibrary.rust"] = { fg = "${cyan}" },
             ["@lsp.typemod.method.defaultLibrary.rust"] = { fg = "${blue}" },
+            ["@lsp.type.const.rust"] = { fg = "${orange}" },
 
+            -- for example: ->
             rustArrowCharacter = { fg = "${white}" },
+            -- for example: =>, +, !=, &&
             rustOperator = { fg = "${white}" },
+            -- for example: self
             rustSelf = { fg = "${purple}" },
+            -- for example: &, *, @, !, ?
             rustSigil = { fg = "${white}" },
+            -- for example: static, const
             rustStorage = { fg = "${purple}" },
 
             -- not working, maybe something else is conflicting with it?
             rustBoxPlacementBalance = { fg = "${purple}" },
+
+            -- html
+            htmlArg = { fg = "${orange}" },
          },
       })
 
