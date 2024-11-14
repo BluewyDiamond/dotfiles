@@ -51,6 +51,11 @@ return {
 
             -- html
             htmlArg = { fg = "${orange}" },
+
+            -- css
+            cssUnitDecorators = { fg = "${red}" },
+            cssAtRuleLogical = { fg = "${cyan}" },
+            cssBraces = { fg = "${orange}" },
          },
       })
 
