@@ -19,12 +19,8 @@ function MicIndicator(): Widget.Box {
       setup: (self) => {
          const audio = Wp.get_default()?.get_audio()!;
 
-         self.hook(audio, "notify", () => {
-            const recorders = audio.get_recorders();
-
-            if (!recorders) {
-               return;
-            }
+         self.hook(audio, "notify::recorders", () => {
+            print("in");
 
             const micDefault = audio.get_default_microphone()!;
 
@@ -32,10 +28,13 @@ function MicIndicator(): Widget.Box {
                return;
             }
 
-            // from what i think this requires volume to change to run said code
-            // so i have now idea how initial will work
-            // it still somehow works though
-            micDefault.connect("notify::volume", () => {
+            function logic() {
+               const recorders = audio.get_recorders();
+
+               if (!recorders) {
+                  return;
+               }
+
                let curatedIcon = "";
                let curatedLabel = "";
 
@@ -67,7 +66,15 @@ function MicIndicator(): Widget.Box {
                         }),
                      ];
                   }
+               } else {
+                  self.children = [];
                }
+            }
+
+            logic();
+
+            micDefault.connect("notify::volume", () => {
+               logic();
             });
          });
       },
