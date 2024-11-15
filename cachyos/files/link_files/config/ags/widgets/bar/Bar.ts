@@ -1,4 +1,5 @@
 import { Gdk, Widget, Astal } from "astal/gtk3";
+import Indicators from "./items/Indicators";
 
 export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
    return new Widget.Window({
@@ -17,6 +18,8 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
                new Widget.Button({
                   label: "This is a button.",
                }),
+
+               Indicators(),
             ],
          }),
       }),

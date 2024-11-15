@@ -13,46 +13,63 @@ export default function (): Widget.Button {
 }
 
 function MicIndicator(): Widget.Box {
-   const wp = Wp.get_default()!;
-   const audio = wp.audio;
-
    return new Widget.Box({
       children: [],
 
       setup: (self) => {
-         // this does not work, idk what is the proper equivalent
-         self.hook(Wp.get_default()?.audio!, "", () => {
-            let curatedIcon = "";
+         const audio = Wp.get_default()?.get_audio()!;
 
-            if (
-               audio.recorders.length > 0 ||
-               audio.default_microphone.get_mute() ||
-               false
-            ) {
-               if (audio.default_microphone.get_volume() > 50) {
-                  curatedIcon = curateIcon(icons.audio.mic.high);
-               } else if (audio.default_microphone.get_volume() > 25) {
-                  curatedIcon = curateIcon(icons.audio.mic.medium);
-               } else if (audio.default_microphone.get_volume() > 0) {
-                  curatedIcon = curateIcon(icons.audio.mic.low);
-               } else {
-                  curatedIcon = curateIcon(icons.audio.mic.muted);
+         self.hook(audio, "notify", () => {
+            print("captured signal notify");
+            const recorders = audio.get_recorders();
+
+            if (!recorders) {
+               return;
+            }
+
+            const micDefault = audio.get_default_microphone()!;
+
+            if (!micDefault) {
+               return;
+            }
+
+            // from what i think this requires volume to change to run said code
+            // so i have now idea how initial will work
+            // it still somehow works though
+            micDefault.connect("notify::volume", () => {
+               let curatedIcon = "";
+               let curatedLabel = "";
+
+               if (recorders.length > 0 || micDefault.get_mute() || false) {
+                  if (micDefault.volume >= 0.5) {
+                     curatedIcon = curateIcon(icons.audio.mic.high);
+                     curatedLabel = "mic high";
+                  } else if (micDefault.volume >= 0.25) {
+                     curatedIcon = curateIcon(icons.audio.mic.medium);
+                     curatedLabel = "mic mid";
+                  } else if (micDefault.volume > 0) {
+                     curatedIcon = curateIcon(icons.audio.mic.low);
+                     curatedLabel = "mic low";
+                  } else {
+                     curatedIcon = curateIcon(icons.audio.mic.muted);
+                     curatedLabel = "mic muted";
+                  }
+
+                  if (curatedIcon) {
+                     self.children = [
+                        new Widget.Icon({
+                           icon: curatedIcon,
+                        }),
+                     ];
+                  } else {
+                     self.children = [
+                        new Widget.Label({
+                           label: curatedLabel,
+                        }),
+                     ];
+                  }
                }
-            }
-
-            if (curatedIcon) {
-               self.children = [
-                  new Widget.Icon({
-                     icon: curatedIcon,
-                  }),
-               ];
-            } else {
-               self.children = [
-                  new Widget.Label({
-                     label: "mic",
-                  }),
-               ];
-            }
+            });
          });
       },
    });
