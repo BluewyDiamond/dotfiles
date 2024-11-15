@@ -1,6 +1,10 @@
 {
    "tty_session": {
-      "std": ["trash-cli", "zellij", "neovim", "stylua", "ripgrep"]
+      "std": ["trash-cli", "zellij"],
+
+      "neovim": {
+         "std": ["neovim", "stylua", "ripgrep", "prettier", "eslint"]
+      }
    },
 
    "tty_rice": {
