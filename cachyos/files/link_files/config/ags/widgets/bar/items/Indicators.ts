@@ -4,9 +4,6 @@ import Wp from "gi://AstalWp";
 import { bind, Variable } from "astal";
 import { curateIcon } from "../../../libs/utils";
 
-const wp = Wp.get_default()!;
-const audio = wp.audio;
-
 export default function (): Widget.Button {
    return new Widget.Button({
       child: new Widget.Box({
@@ -16,11 +13,15 @@ export default function (): Widget.Button {
 }
 
 function MicIndicator(): Widget.Box {
+   const wp = Wp.get_default()!;
+   const audio = wp.audio;
+
    return new Widget.Box({
       children: [],
 
       setup: (self) => {
-         bind(wp, "audio").as((audio) => {
+         // this does not work, idk what is the proper equivalent
+         self.hook(Wp.get_default()?.audio!, "", () => {
             let curatedIcon = "";
 
             if (

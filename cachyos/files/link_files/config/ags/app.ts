@@ -1,11 +1,11 @@
 import { App } from "astal/gtk3";
 import style from "./style.scss";
 import Bar from "./widgets/bar/Bar";
-import Test from "./widgets/Test";
 
 App.start({
    css: style,
+   instanceName: "some_name",
    main() {
-      App.get_monitors().map(Test);
+      App.get_monitors().map(Bar);
    },
 });
