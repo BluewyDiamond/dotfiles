@@ -20,7 +20,6 @@ function MicIndicator(): Widget.Box {
          const audio = Wp.get_default()?.get_audio()!;
 
          self.hook(audio, "notify", () => {
-            print("captured signal notify");
             const recorders = audio.get_recorders();
 
             if (!recorders) {
