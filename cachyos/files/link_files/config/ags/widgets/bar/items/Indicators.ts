@@ -18,65 +18,74 @@ function MicIndicator(): Widget.Box {
 
       setup: (self) => {
          const audio = Wp.get_default()?.get_audio()!;
+         const micDefault = audio.get_default_microphone()!;
 
-         self.hook(audio, "notify::recorders", () => {
-            print("in");
+         let curatedIcon = Variable("");
+         let curatedLabel = Variable("");
+         let visible = Variable(false);
 
-            const micDefault = audio.get_default_microphone()!;
-
-            if (!micDefault) {
-               return;
+         function updateVolume() {
+            if (micDefault.volume >= 0.5) {
+               curatedIcon.set(curateIcon(icons.audio.mic.high));
+               curatedLabel.set("mic high");
+            } else if (micDefault.volume >= 0.25) {
+               curatedIcon.set(curateIcon(icons.audio.mic.medium));
+               curatedLabel.set("mic mid");
+            } else if (micDefault.volume > 0) {
+               curatedIcon.set(curateIcon(icons.audio.mic.low));
+               curatedLabel.set("mic low");
+            } else {
+               curatedIcon.set(curateIcon(icons.audio.mic.muted));
+               curatedLabel.set("mic muted");
             }
+         }
 
-            function logic() {
-               const recorders = audio.get_recorders();
+         // setup initiallly
+         updateVolume();
 
-               if (!recorders) {
-                  return;
-               }
-
-               let curatedIcon = "";
-               let curatedLabel = "";
-
-               if (recorders.length > 0 || micDefault.get_mute() || false) {
-                  if (micDefault.volume >= 0.5) {
-                     curatedIcon = curateIcon(icons.audio.mic.high);
-                     curatedLabel = "mic high";
-                  } else if (micDefault.volume >= 0.25) {
-                     curatedIcon = curateIcon(icons.audio.mic.medium);
-                     curatedLabel = "mic mid";
-                  } else if (micDefault.volume > 0) {
-                     curatedIcon = curateIcon(icons.audio.mic.low);
-                     curatedLabel = "mic low";
-                  } else {
-                     curatedIcon = curateIcon(icons.audio.mic.muted);
-                     curatedLabel = "mic muted";
-                  }
-
-                  if (curatedIcon) {
-                     self.children = [
-                        new Widget.Icon({
-                           icon: curatedIcon,
-                        }),
-                     ];
-                  } else {
-                     self.children = [
-                        new Widget.Label({
-                           label: curatedLabel,
-                        }),
-                     ];
-                  }
-               } else {
-                  self.children = [];
-               }
-            }
-
-            logic();
-
-            micDefault.connect("notify::volume", () => {
-               logic();
-            });
+         micDefault.connect("notify::volume", () => {
+            updateVolume();
          });
+
+         function updateRecorders() {
+            const recorders = audio.get_recorders()!;
+            print(`recorders: ${recorders.length}`);
+
+            if (recorders.length > 1 || micDefault.get_mute() || false) {
+               visible.set(true);
+            } else {
+               visible.set(false);
+            }
+         }
+
+         // setup initially
+         updateRecorders();
+
+         audio.connect("notify::recorders", () => {
+            updateRecorders();
+         });
+
+         self.children = [
+            new Widget.Icon({
+               icon: bind(curatedIcon).as((cI) => cI),
+
+               visible: bind(visible).as((v) => {
+                  if (v && curatedIcon.get()) {
+                     return true;
+                  }
+               }),
+            }),
+
+            new Widget.Label({
+               label: bind(curatedLabel).as((cL) => cL),
+
+               visible: bind(visible).as((v) => {
+                  if (v && !curatedIcon.get()) {
+                     return true;
+                  }
+               }),
+            }),
+         ];
       },
    });
 }
