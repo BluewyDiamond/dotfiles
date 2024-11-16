@@ -20,9 +20,9 @@ function MicIndicator(): Widget.Box {
          const audio = Wp.get_default()?.get_audio()!;
          const micDefault = audio.get_default_microphone()!;
 
-         let curatedIcon = Variable("");
-         let curatedLabel = Variable("");
-         let visible = Variable(false);
+         const curatedIcon = Variable("");
+         const curatedLabel = Variable("");
+         const show = Variable(false);
 
          function updateVolume() {
             if (micDefault.volume >= 0.5) {
@@ -49,11 +49,15 @@ function MicIndicator(): Widget.Box {
 
          function updateRecorders() {
             const recorders = audio.get_recorders()!;
+            const isMuted = micDefault.get_mute();
 
-            if (recorders.length > 0 || micDefault.get_mute() || false) {
-               visible.set(true);
+            print("TODO: fix isMuted is true despite false");
+            print(`isMuted: ${isMuted}`);
+
+            if (recorders.length > 0) {
+               show.set(true);
             } else {
-               visible.set(false);
+               show.set(false);
             }
          }
 
@@ -64,27 +68,21 @@ function MicIndicator(): Widget.Box {
             updateRecorders();
          });
 
-         self.children = [
-            new Widget.Icon({
-               icon: bind(curatedIcon).as((cI) => cI),
-
-               visible: bind(visible).as((v) => {
-                  if (v && curatedIcon.get()) {
-                     return true;
-                  }
-               }),
-            }),
-
-            new Widget.Label({
-               label: bind(curatedLabel).as((cL) => cL),
-
-               visible: bind(visible).as((v) => {
-                  if (v && !curatedIcon.get()) {
-                     return true;
-                  }
-               }),
-            }),
-         ];
+         Variable.derive([curatedIcon, show], (cI, s) => {
+            if (s === true) {
+               if (cI !== "") {
+                  self.children = [
+                     new Widget.Icon({ icon: bind(curatedIcon) }),
+                  ];
+               } else {
+                  self.children = [
+                     new Widget.Label({ label: bind(curatedLabel) }),
+                  ];
+               }
+            } else {
+               self.children = [];
+            }
+         });
       },
    });
 }
