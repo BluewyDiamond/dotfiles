@@ -51,7 +51,7 @@ function MicIndicator(): Widget.Box {
             const recorders = audio.get_recorders()!;
             print(`recorders: ${recorders.length}`);
 
-            if (recorders.length > 1 || micDefault.get_mute() || false) {
+            if (recorders.length > 0 || micDefault.get_mute() || false) {
                visible.set(true);
             } else {
                visible.set(false);
