@@ -12,3 +12,5 @@
 - disabled csm
 - disabled secure boot
 - use motherboard premade fan profiles
+- lower cpu soc voltage ~ 1.2v
+- turn on smart gpu memory, i don't remember the exact name
