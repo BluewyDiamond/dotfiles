@@ -14,19 +14,19 @@ alias fixpacman="sudo rm /var/lib/pacman/db.lck"
 alias cleanup='sudo pacman -Rns (pacman -Qtdq)'
 
 # List all files and directories including hidden files.
-alias la="eza -la --color=always --icons --group-directories-first --sort=type"
+alias la="eza -la --color=always --icons"
 
 # List only hidden files.
-alias lh "eza -ld .* --color=always --icons --group-directories-first --sort=type"
+alias lh "eza -ld .* --color=always --icons"
 
 # List only non hidden files.
-alias ls "eza -l --color=always --icons --group-directories-first --sort=type"
+alias ls "eza -l --color=always --icons"
 
 # List in tree view non hidden files and directories.
-alias lt "eza -T --color=always --icons --group-directories-first --sort=type"
+alias lt "eza -T --color=always --icons"
 
 # List in tree view all files and directories including hidden files.
-alias lta "eza -aT --color=always --icons --group-directories-first --sort=type"
+alias lta "eza -aT --color=always --icons"
 
 function clear
     switch $TERM
