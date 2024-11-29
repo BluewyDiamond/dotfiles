@@ -47,26 +47,26 @@ function uninstall_cachyos_repos
 end
 
 function reinstall_minimal
-    set minimal_packages \
+    set packages_minimal \
         base base-devel linux-cachyos linux-firmware \
         refind fish bash sudo neovim \
         cachyos-keyring cachyos-hooks cachyos-mirrorlist cachyos-v3-mirrorlist cachyos-v4-mirrorlist cachyos-rate-mirrors cachyos-settings \
         fisher git eza pacman-contrib paru fastfetch chwd iwd plymouth terminus-font less
 
-    set aur_packages (pacman -Qqm)
-    set all_packages (pacman -Qq)
+    set packages_aur (pacman -Qqm)
+    set packages_standard (pacman -Qq)
     set packages_to_remove
 
-    for pkg in $all_packages
-        if contains $pkg $mimimal_packages
+    for package_standard in $packages_standard
+        if contains $package_standard $mimimal_packages
             continue
         end
 
-        set dependant_packages (pactree -l -r $pkg)
+        set dependant_packages (pactree -l -r $package_standard)
         set can_remove yes
 
         for dependant_pkg in $dependant_packages
-            if contains $dependant_pkg $minimal_packages
+            if contains $dependant_pkg $packages_minimal
                 set can_remove no
                 break
             end
@@ -78,7 +78,7 @@ function reinstall_minimal
         end
 
         if string match -i -q -- yes $can_remove
-            set packages_to_remove $packages_to_remove $pkg
+            set packages_to_remove $packages_to_remove $package_standard
         end
     end
 
@@ -97,7 +97,7 @@ function reinstall_minimal
         end
 
         chwd -a -f
-        sudo pacman -Syu $minimal_packages
+        sudo pacman -Syu $packages_minimal
     end
 end
 
