@@ -56,6 +56,12 @@ return {
             cssUnitDecorators = { fg = "${red}" },
             cssAtRuleLogical = { fg = "${cyan}" },
             cssBraces = { fg = "${orange}" },
+
+            -- fish
+            fishForVariable = { fg = "${orange}" },
+            fishOption = { fg = "${yellow}" },
+            fishEscapedNl = { fg = "${purple}" },
+            fishVariable = { fg = "${red}" },
          },
       })
 
