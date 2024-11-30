@@ -9,7 +9,7 @@ export default function (): Widget.Box {
   const video = Wp.get_default()?.get_video();
 
   if (!video) {
-    printError(`${errorTitle} => Failed to get audio...`);
+    printError(`${errorTitle} => Failed to get video...`);
 
     return new Widget.Box({
       children: [new Widget.Label({ label: "󱪗" })],
