@@ -18,7 +18,14 @@ export default function (): Widget.Box {
 
   return new Widget.Box({
     setup: (self) => {
+      // init
+      onVideoRecordersChange(video);
+
       self.hook(video, "notify::recorders", () => {
+        onVideoRecordersChange(video);
+      });
+
+      function onVideoRecordersChange(video: Wp.Video) {
         const recorders = video.get_recorders();
 
         if (!recorders) {
@@ -44,9 +51,9 @@ export default function (): Widget.Box {
           printError(`${errorTitle} => there is nothing to show...`);
           self.children = [new Widget.Label({ label: "󱪗" })];
         }
-        
+
         self.visible = true;
-      });
+      }
     },
   });
 }

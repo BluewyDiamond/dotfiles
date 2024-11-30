@@ -28,7 +28,14 @@ export default function (): Widget.Box {
 
   return new Widget.Box({
     setup: (self) => {
+      // init
+      onSpeakerVolumeChange(speaker);
+
       self.hook(speaker, "notify::volume", () => {
+        onSpeakerVolumeChange(speaker);
+      });
+
+      function onSpeakerVolumeChange(speaker: Wp.Endpoint) {
         const speakerVolume = speaker.get_volume();
         const { muted, low, medium, high, overamplified } = icons.audio.volume;
 
@@ -65,7 +72,7 @@ export default function (): Widget.Box {
         }
 
         self.visible = true;
-      });
+      }
     },
   });
 }
