@@ -1,6 +1,6 @@
 import { App } from "astal/gtk3";
 import style from "./style.scss";
-import Bar from "./widgets/bar/Bar";
+import Bar from "./widgets/bar";
 
 App.start({
    css: style,

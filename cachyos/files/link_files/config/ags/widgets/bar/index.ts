@@ -1,5 +1,5 @@
 import { Gdk, Widget, Astal, Gtk } from "astal/gtk3";
-import Indicators from "./items/Indicators";
+import Indicators from "./items/indicators";
 
 export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
    return new Widget.Window({
@@ -16,7 +16,11 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
          startWidget: new Widget.Box({
             hexpand: true,
             halign: Gtk.Align.START,
-            children: [],
+            children: [
+               new Widget.Box({
+                  children: []
+               })
+            ],
          }),
 
          centerWidget: new Widget.Box({

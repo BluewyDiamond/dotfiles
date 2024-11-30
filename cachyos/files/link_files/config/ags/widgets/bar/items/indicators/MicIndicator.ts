@@ -1,18 +1,10 @@
 import { astalify, Gtk, Widget } from "astal/gtk3";
-import icons from "../../../libs/icons";
+import icons from "../../../../libs/icons";
 import Wp from "gi://AstalWp";
 import { bind, Variable } from "astal";
-import { curateIcon } from "../../../libs/utils";
+import { curateIcon } from "../../../../libs/utils";
 
-export default function (): Widget.Button {
-   return new Widget.Button({
-      child: new Widget.Box({
-         children: [MicIndicator()],
-      }),
-   });
-}
-
-function MicIndicator(): Widget.Box {
+export default function (): Widget.Box {
    return new Widget.Box({
       children: [],
 
