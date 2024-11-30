@@ -38,11 +38,14 @@ export default function (): Widget.Box {
 
         if (curatedIcon !== "") {
           self.children = [new Widget.Icon({ icon: curatedIcon })];
-          self.visible = true;
         } else if (curatedLabel !== "") {
           self.children = [new Widget.Label({ label: curatedLabel })];
-          self.visible = true;
+        } else {
+          printError(`${errorTitle} => there is nothing to show...`);
+          self.children = [new Widget.Label({ label: "󱪗" })];
         }
+        
+        self.visible = true;
       });
     },
   });
