@@ -87,8 +87,6 @@ export default function (): Widget.Box {
           printError(`${errorTitle} => there is nothing to show...`);
           self.children = [new Widget.Label({ label: "󱪗" })];
         }
-
-        self.visible = true;
       }
     },
   });
