@@ -3,6 +3,7 @@ import Wp from "gi://AstalWp";
 import { Variable } from "astal";
 import { curateIcon, printError } from "../../../../libs/utils";
 import icons from "../../../../libs/icons";
+import CustomIcon from "../../../../libs/wrappers/CustomIcon";
 
 const errorTitle = "MicIndicator2";
 
@@ -62,31 +63,20 @@ export default function (): Widget.Box {
 
       function onMicVolumeChange(mic: Wp.Endpoint) {
         const micVolume = mic.get_volume();
-        let curatedIcon = "";
-        let curatedLabel = "";
 
-        if (micVolume >= 0.5) {
-          curatedIcon = curateIcon(icons.audio.mic.high);
-          curatedLabel = "mic high";
-        } else if (micVolume >= 0.25) {
-          curatedIcon = curateIcon(icons.audio.mic.medium);
-          curatedLabel = "mic mid";
-        } else if (micVolume > 0) {
-          curatedIcon = curateIcon(icons.audio.mic.low);
-          curatedLabel = "mic low";
-        } else {
-          curatedIcon = curateIcon(icons.audio.mic.muted);
-          curatedLabel = "mic muted";
-        }
+        const { muted, low, medium, high } = icons.audio.mic;
 
-        if (curatedIcon !== "") {
-          self.children = [new Widget.Icon({ icon: curatedIcon })];
-        } else if (curatedLabel !== "") {
-          self.children = [new Widget.Label({ label: curatedLabel })];
-        } else {
-          printError(`${errorTitle} => there is nothing to show...`);
-          self.children = [new Widget.Label({ label: "󱪗" })];
-        }
+        const states = [
+          [67, high],
+          [34, medium],
+          [1, low],
+          [0, muted],
+        ] as const;
+
+        const icon =
+          states.find(([state]) => state <= micVolume * 100)?.[1] || "";
+
+        self.children = [CustomIcon({ icon2: icon })];
       }
     },
   });

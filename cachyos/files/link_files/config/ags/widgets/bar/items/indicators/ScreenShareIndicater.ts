@@ -2,6 +2,7 @@ import { Widget } from "astal/gtk3";
 import Wp from "gi://AstalWp";
 import { curateIcon, printError } from "../../../../libs/utils";
 import icons from "../../../../libs/icons";
+import CustomIcon from "../../../../libs/wrappers/CustomIcon";
 
 const errorTitle = "ScreenShareIndicator";
 
@@ -40,18 +41,7 @@ export default function (): Widget.Box {
           return;
         }
 
-        const curatedIcon = curateIcon(icons.recorder.screencast);
-        const curatedLabel: string = "recording screen";
-
-        if (curatedIcon !== "") {
-          self.children = [new Widget.Icon({ icon: curatedIcon })];
-        } else if (curatedLabel !== "") {
-          self.children = [new Widget.Label({ label: curatedLabel })];
-        } else {
-          printError(`${errorTitle} => there is nothing to show...`);
-          self.children = [new Widget.Label({ label: "󱪗" })];
-        }
-
+        self.children = [CustomIcon({ icon2: icons.recorder.screencast })];
         self.visible = true;
       }
     },

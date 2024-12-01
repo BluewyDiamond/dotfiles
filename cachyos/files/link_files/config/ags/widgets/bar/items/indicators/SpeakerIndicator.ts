@@ -2,6 +2,8 @@ import { Widget } from "astal/gtk3";
 import { curateIcon, printError } from "../../../../libs/utils";
 import Wp from "gi://AstalWp";
 import icons from "../../../../libs/icons";
+import labels from "../../../../libs/labels";
+import CustomIcon from "../../../../libs/wrappers/CustomIcon";
 
 const errorTitle = "SpeakerIndicator";
 
@@ -47,30 +49,10 @@ export default function (): Widget.Box {
           [0, muted],
         ] as const;
 
-        const textStates = [
-          [101, "speaker overamplified"],
-          [67, "speaker high"],
-          [34, "speaker medium"],
-          [1, "speaker low"],
-          [0, "speaker muted"],
-        ] as const;
+        const curatedIcon =
+          iconStates.find(([state]) => state <= speakerVolume * 100)?.[1] || "";
 
-        const curatedIcon = curateIcon(
-          iconStates.find(([state]) => state <= speakerVolume * 100)?.[1] || ""
-        );
-
-        const curatedText =
-          textStates.find(([state]) => state <= speakerVolume * 100)?.[1] || "";
-
-        if (curatedIcon !== "") {
-          self.children = [new Widget.Icon({ icon: curatedIcon })];
-        } else if (curatedText !== "") {
-          self.children = [new Widget.Label({ label: curatedText })];
-        } else {
-          printError(`${errorTitle} => there is nothing to show...`);
-          self.children = [new Widget.Label({ label: "󱪗" })];
-        }
-
+        self.children = [CustomIcon({ icon2: curatedIcon })];
         self.visible = true;
       }
     },

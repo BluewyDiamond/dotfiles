@@ -7,7 +7,6 @@ export function curateIcon(
 ): string {
   if (!name) {
     if (GLib.file_test(fallback, GLib.FileTest.EXISTS)) {
-      print(fallback);
       return fallback;
     }
 
@@ -17,7 +16,6 @@ export function curateIcon(
   const substitue = substitutes[name] || name;
 
   if (GLib.file_test(substitue, GLib.FileTest.EXISTS)) {
-    print("substitue");
     return substitue;
   }
 
