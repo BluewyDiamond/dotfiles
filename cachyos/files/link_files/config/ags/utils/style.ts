@@ -11,6 +11,7 @@ export function getCss(): string {
   const files = fd.split(/\s+/);
   const imports = [vars, ...files].map((f) => `@import '${f}';`);
 
+  exec(`mkdir -p ${constants.tmp}`);
   writeFile(vars, variables().join("\n"));
   writeFile(scss, imports.join("\n"));
   exec(`sass ${scss} ${css}`);
