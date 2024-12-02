@@ -1,8 +1,8 @@
 import { Widget } from "astal/gtk3";
 import Wp from "gi://AstalWp";
-import icons from "../../../../libs/icons";
-import CustomIcon from "../../../wrappers/CustomIcon";
-import { printError } from "../../../../utils";
+import icons from "../../../libs/icons";
+import CustomIcon from "../../wrappers/CustomIcon";
+import { printError } from "../../../utils";
 
 const errorTitle = "ScreenShareIndicator";
 

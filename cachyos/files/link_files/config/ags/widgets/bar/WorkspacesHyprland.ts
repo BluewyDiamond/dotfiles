@@ -1,5 +1,5 @@
 import { Widget } from "astal/gtk3";
-import options from "../../../libs/options";
+import options from "../../libs/options";
 import AstalHyprland from "gi://AstalHyprland";
 
 export default function (): Widget.Box {
@@ -14,7 +14,14 @@ export default function (): Widget.Box {
         label: `${index}`,
 
         setup: (self) => {
+          // init
+          onWorkspaceFocusedChange();
+
           self.hook(hyprland, "notify::focused-workspace", () => {
+            onWorkspaceFocusedChange();
+          });
+
+          function onWorkspaceFocusedChange() {
             const workspace = hyprland.get_focused_workspace();
 
             if (!workspace) {
@@ -22,7 +29,7 @@ export default function (): Widget.Box {
             }
 
             self.toggleClassName("active", index === workspace.get_id());
-          });
+          }
         },
       });
     }),

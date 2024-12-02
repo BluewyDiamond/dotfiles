@@ -4,7 +4,7 @@ import MicIndicator2 from "./MicIndicator2";
 import SpeakerIndicator from "./SpeakerIndicator";
 import ScreenShareIndicater from "./ScreenShareIndicater";
 import PowerProfileIndicator from "./PowerProfileIndicator";
-import options from "../../../../libs/options";
+import options from "../../../libs/options";
 
 export default function (): Widget.Button {
   return new Widget.Button({
