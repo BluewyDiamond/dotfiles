@@ -1,9 +1,8 @@
 import { Widget } from "astal/gtk3";
-import { curateIcon, printError } from "../../../../libs/utils";
 import Wp from "gi://AstalWp";
 import icons from "../../../../libs/icons";
-import labels from "../../../../libs/labels";
-import CustomIcon from "../../../../libs/wrappers/CustomIcon";
+import CustomIcon from "../../../wrappers/CustomIcon";
+import { printError } from "../../../../utils";
 
 const errorTitle = "SpeakerIndicator";
 

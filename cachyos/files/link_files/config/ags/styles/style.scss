@@ -1,0 +1,42 @@
+$color_primary: #e06c75;
+$color_on_primary: #000000;
+$color_error: #ff0000;
+$color_on_error: #000000;
+$color_background: #1e2127;
+$color_foreground: #abb2bf;
+$color_surface: #282c34;
+$color_border: #7f848e;
+$color_alert: #d19a66;
+
+* {
+  all: unset;
+  font-family: "IosevkaTerm Nerd Font Mono";
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.bar {
+  background: $color_background;
+}
+
+.workspaces {
+  background: $color_surface;
+  padding: $workspaces_spacing;
+
+  label {
+    color: $color_foreground;
+
+    &.active {
+      color: $color_primary;
+    }
+  }
+}
+
+.indicators {
+  background: $color_surface;
+
+  > box {
+    background-color: transparent;
+    padding: $indicators_spacing;
+  }
+}

@@ -1,4 +1,4 @@
-import icons, { substitutes } from "./icons";
+import icons, { substitutes } from "../libs/icons";
 import GLib from "gi://GLib";
 
 export function curateIcon(

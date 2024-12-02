@@ -1,9 +1,7 @@
 import { Widget } from "astal/gtk3";
 import PowerProfiles from "gi://AstalPowerProfiles";
-import { curateIcon, printError } from "../../../../libs/utils";
 import icons from "../../../../libs/icons";
-import AstalPowerProfiles from "gi://AstalPowerProfiles?version=0.1";
-import CustomIcon from "../../../../libs/wrappers/CustomIcon";
+import CustomIcon from "../../../wrappers/CustomIcon";
 
 const errorTitle = "PowerProfileIndicator";
 

@@ -1,9 +1,8 @@
 import { Widget } from "astal/gtk3";
 import Wp from "gi://AstalWp";
-import { Variable } from "astal";
-import { curateIcon, printError } from "../../../../libs/utils";
 import icons from "../../../../libs/icons";
-import CustomIcon from "../../../../libs/wrappers/CustomIcon";
+import CustomIcon from "../../../wrappers/CustomIcon";
+import { printError } from "../../../../utils";
 
 const errorTitle = "MicIndicator2";
 

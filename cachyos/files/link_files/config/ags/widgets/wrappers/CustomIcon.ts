@@ -1,7 +1,7 @@
 import { IconProps } from "astal/gtk3/widget";
-import { curateIcon } from "../utils";
 import { Widget } from "astal/gtk3";
 import icons from "../../libs/icons";
+import { curateIcon } from "../../utils";
 
 export default ({ icon2, ...props }: CustomIcon) => {
   if (icon2 === undefined) {
