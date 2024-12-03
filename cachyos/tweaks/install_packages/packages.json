@@ -67,7 +67,7 @@
          "hyprpicker"
       ],
 
-      "aur": ["aylurs-gtk-shell", "bun-bin", "wayshot"]
+      "aur": ["aylurs-gtk-shell", "wayshot"]
    },
 
    "hyprland_extras": {

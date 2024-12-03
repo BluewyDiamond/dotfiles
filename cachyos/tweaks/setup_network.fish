@@ -32,9 +32,7 @@ function main
     end
 
     sudo rm /etc/systemd/network/*
-
     set adapter_names (command ls /sys/class/net)
-
     set counter 20
 
     for adapter in $adapter_names
@@ -77,6 +75,9 @@ function main
         end
     end
 
+    sudo mkdir -p /etc/iwd
+    echo "[General]" | sudo tee /etc/iwd/main.conf
+    echo "EnableNetworkConfiguration=true" | sudo tee -a /etc/iwd/main.conf
 
     sudo pacman -S --needed iwd
 
