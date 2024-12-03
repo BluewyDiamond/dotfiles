@@ -40,7 +40,7 @@ function cachy_browser
 end
 
 function fish_shell
-    set s_file (realpath (dirname (status filename)))/manual_files/fish_bluewy
+    set s_file (realpath (dirname (status filename)))/manual_files/fish-bluewy
     set target $HOME/.config/fish-bluewy
     set fish_dir $HOME/.config/fish
 
