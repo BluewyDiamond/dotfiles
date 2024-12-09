@@ -42,6 +42,8 @@ function link_files # $PWD/link_files/config $HOME/.config
     end
 end
 
+# main
+
 sudo pacman -S --needed trash-cli
 
 set container (realpath (dirname (status filename)))/link_files
