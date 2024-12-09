@@ -6,11 +6,13 @@
 
 ## Settings
 # BIOS
-- use factory expo ram profile
-- disabled pbo limits (makes it to use stock cpu profile)
-- set -30 to all cores (curve optimizer)
-- disabled csm
-- disabled secure boot
-- use motherboard premade fan profiles
-- lower cpu soc voltage ~ 1.2v
-- turn on smart gpu memory, i don't remember the exact name
+- pbo limits => disabled (don't allow to draw more power)
+- curve optimizer => -30
+- cpu platform temperature limit => 85
+- ram expo => expo tweaked
+- csm => disabled
+- secure boot => disabled
+- cpu core voltage (soc) => 1.0v
+- smart resizable bar => on
+- fan profiles => tweak
+- global c states => depends, disable only if cpu stutters
