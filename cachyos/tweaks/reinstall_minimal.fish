@@ -12,7 +12,12 @@ function prompt
 end
 
 function input
-    read -P (set_color magenta)"INPUT => "(set_color yellow) $value
+    read -P (set_color magenta)"INPUT => "(set_color yellow) value
+
+    if test -z $value
+        set value $argv[1]
+    end
+
     echo $value
 end
 
@@ -47,11 +52,37 @@ function uninstall_cachyos_repos
 end
 
 function reinstall_minimal
+    #set packages_minimal \
+    #    base base-devel linux-cachyos linux-firmware \
+    #    refind fish bash sudo neovim \
+    #    cachyos-keyring cachyos-hooks cachyos-mirrorlist cachyos-v3-mirrorlist cachyos-v4-mirrorlist cachyos-rate-mirrors cachyos-settings \
+    #    fisher git eza pacman-contrib paru fastfetch chwd iwd plymouth terminus-font less
+
     set packages_minimal \
-        base base-devel linux-cachyos linux-firmware \
+        base base-devel linux-firmware \
         refind fish bash sudo neovim \
         cachyos-keyring cachyos-hooks cachyos-mirrorlist cachyos-v3-mirrorlist cachyos-v4-mirrorlist cachyos-rate-mirrors cachyos-settings \
         fisher git eza pacman-contrib paru fastfetch chwd iwd plymouth terminus-font less
+
+    prompt "Choose one of the following:"
+    prompt "1. AMD GPU"
+    prompt "2. NVIDIA GPU (OPEN)"
+    prompt "3. NVIDIA GPU (CLOSED)"
+
+    prompt "Example: 1"
+    set choice (input)
+
+    switch $choice
+        case 1
+            set packages_minimal $packages_minimal linux-cachyos
+        case 2
+            set packages_minimal $packages_minimal linux-cachyos-nvidia-open
+        case 3
+            set packages_minimal $packages_minimal linux-cachyos-nvidia
+        case '*'
+            prompt "Not a valid option..."
+            return
+    end
 
     set packages_aur (pacman -Qqm)
     set packages_standard (pacman -Qq)
@@ -87,18 +118,19 @@ function reinstall_minimal
     echo "↑↑↑"
 
     prompt "Proceed removal?"
-    set choice (input)
+    set choice (input N)
 
-    if string match -i -q -- y $choice
-        if test -n "$packages_to_remove"
-            sudo pacman -Rns $packages_to_remove
-        else
-            prompt "No packages to remove..."
-        end
-
-        chwd -a -f
-        sudo pacman -Syu $packages_minimal
+    if not string match -i -q -- Y $choice
+        return
     end
+
+    if test -n "$packages_to_remove"
+        sudo pacman -Rns $packages_to_remove
+    else
+        prompt "No packages to remove..."
+    end
+
+    sudo chwd -a -f
 end
 
 function main
@@ -111,7 +143,6 @@ function main
     switch $choice
         case 1
             reinstall_minimal
-            sudo chwd -a -f
         case 2
             uninstall_cachyos_repos
             install_cachyos_repos
