@@ -14,7 +14,7 @@ function input
     read -P (set_color magenta)"INPUT => "(set_color yellow) value
 
     if test -z "$value"
-        set value N # default value, allows me to early return
+        set value $argv[1]
     end
 
     echo $value
@@ -22,14 +22,19 @@ end
 
 function main
     systemctl list-units --type=service | grep -i network
-    prompt "Disable or remove anything that can conflict with systemd-networkd + systemd-resolved + iwd!"
-    prompt "Proceed? [y/N]"
+    prompt "Remember to disable/uninstall manually anything that can conflict with the following:"
+    prompt "1. systemd-networkd"
+    prompt "2. sysetmd-resolved"
+    prompt "3. iwd"
 
+    prompt "Continue? [y/N]"
     set choice (input N)
 
-    if string match -q -i -- N "$choice"
+    if not string match -q -i -- Y "$choice"
         return
     end
+
+    # systemd setup
 
     sudo rm /etc/systemd/network/*
     set adapter_names (command ls /sys/class/net)
@@ -75,11 +80,24 @@ function main
         end
     end
 
-    sudo mkdir -p /etc/iwd
-    echo "[General]" | sudo tee /etc/iwd/main.conf
-    echo "EnableNetworkConfiguration=true" | sudo tee -a /etc/iwd/main.conf
-
+    # iwd setup
     sudo pacman -S --needed iwd
+
+    set path_iwd /etc/iwd
+    set path_iwd_conf "$path_iwd/main.conf"
+
+    if test -f $path_iwd_conf
+        sudo mv $path_iwd_conf "$path_iwd_conf.old"
+    end
+
+    if test -d $path_iwd
+        sudo mkdir -p $path_iwd
+    end
+
+    echo "[General]" | sudo tee -a $path_iwd_conf
+    echo "EnableNetworkConfiguration=true" | sudo tee -a $path_iwd_conf
+
+    # the rest
 
     systemctl enable --now iwd
     systemctl enable --now systemd-networkd
