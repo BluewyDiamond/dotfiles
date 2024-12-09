@@ -15,7 +15,12 @@ function prompt
 end
 
 function input
-    read -P (set_color magenta)"INPUT => "(set_color yellow) $value
+    read -P (set_color magenta)"INPUT => "(set_color yellow) value
+
+    if test -z $value
+        input $argv[1]
+    end
+
     echo $value
 end
 
