@@ -59,7 +59,7 @@ xkb_symbols "eurkey-cmk-dh-iso-wide-custom"  {
 
         key <LSGT> { [              z,                 Z,               yacute,               Yacute ] };
 
-        key <AB05>	{[    backslash,             bar,              notsign,            brokenbar  ]};
+        key <AB05> {[    backslash,             bar,              notsign,            brokenbar  ]};
 
         key <AB06> { [     numbersign,        dead_tilde,              section,                tilde ] }; //change AB05 to LSGT
 
