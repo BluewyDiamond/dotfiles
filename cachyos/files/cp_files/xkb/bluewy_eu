@@ -53,7 +53,7 @@ xkb_symbols "eurkey-cmk-dh-ansi-wide-custom"  {
 
 partial alphanumeric_keys modifier_keys 
 xkb_symbols "eurkey-cmk-dh-iso-wide-custom"  {
-        include "eu(eurkey-cmk-dh-ansi)"
+        include "eu(eurkey-cmk-dh-ansi-wide-custom)"
         name[Group1] = "EurKEY (Colemak-DH, ISO, Custom)";
 
         key <LSGT> { [              z,                 Z,               yacute,               Yacute ] };
