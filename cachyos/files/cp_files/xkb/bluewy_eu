@@ -1,7 +1,7 @@
 partial alphanumeric_keys modifier_keys 
 xkb_symbols "eurkey-cmk-dh-ansi-wide-custom"  {
         include "eu(basic)"
-        name[Group1] = "EurKEY (Colemak-DH, ANSI)";
+        name[Group1] = "EurKEY (Colemak-DH, ANSI, Custom)";
 
         key <AE06>	{[        equal,            plus,             multiply,             division  ]};
         key <AE07>	{[            6,     asciicircum,      dead_circumflex,           dead_caron  ]};
@@ -29,7 +29,7 @@ xkb_symbols "eurkey-cmk-dh-ansi-wide-custom"  {
         key <AC03> { [              s,                 S,               ssharp,                U1E9E ] };
         key <AC04> { [              t,                 T,                thorn,                Thorn ] };
         key <AC05> { [              g,                 G,               egrave,               Egrave ] };
-        key <AD06> {[ bracketright,      braceright,       guillemotright,                U203A  ]}; // ›
+        key <AC06> {[ bracketright,      braceright,       guillemotright,                U203A  ]}; // ›
         key <AC07> { [              m,                 M,               eacute,               Eacute ] };
         key <AC08> { [              n,                 N,               ntilde,               Ntilde ] };
         key <AC09> { [              e,                 E,           ediaeresis,           Ediaeresis ] };
@@ -46,7 +46,6 @@ xkb_symbols "eurkey-cmk-dh-ansi-wide-custom"  {
         key <AB08> { [              h,                 H,               oslash,               Oslash ] };
         key <AB09>	{[        comma,            less,               ograve,               Ograve  ]};
         key <AB10>	{[       period,         greater,               oacute,               Oacute  ]};
-        key <AB11>	{[        slash,        question,         questiondown,                U2026  ]}; // …
 
         key <CAPS> { [    BackSpace,       Delete,       BackSpace,           Delete ] };
         key <BKSP> { [   Caps_Lock,     Caps_Lock,       Caps_Lock,        Caps_Lock ] };
@@ -55,7 +54,7 @@ xkb_symbols "eurkey-cmk-dh-ansi-wide-custom"  {
 partial alphanumeric_keys modifier_keys 
 xkb_symbols "eurkey-cmk-dh-iso-wide-custom"  {
         include "eu(eurkey-cmk-dh-ansi)"
-        name[Group1] = "EurKEY (Colemak-DH, ISO)";
+        name[Group1] = "EurKEY (Colemak-DH, ISO, Custom)";
 
         key <LSGT> { [              z,                 Z,               yacute,               Yacute ] };
 
