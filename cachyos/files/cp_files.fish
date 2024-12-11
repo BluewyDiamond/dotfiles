@@ -20,6 +20,5 @@ function input
     echo $value
 end
 
-sudo cp (dirname (status filename))/cp_files/xkb/bluewy /usr/share/X11/xkb/symbols
-sudo cp (dirname (status filename))/cp_files/kbd/colemak_dh_wide_custom_iso.map /usr/share/kbd/keymaps
-sudo cp (dirname (status filename))/cp_files/kbd/colemak_dh_wide_custom_ansi.map /usr/share/kbd/keymaps
+sudo cp (dirname (status filename))/cp_files/xkb/* /usr/share/X11/xkb/symbols
+sudo cp (dirname (status filename))/cp_files/kbd/* /usr/share/kbd/keymaps
