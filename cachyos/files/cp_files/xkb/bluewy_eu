@@ -61,4 +61,6 @@ xkb_symbols "eurkey-cmk-dh-iso-wide-custom"  {
         key <AB05> {[    backslash,             bar,              notsign,            brokenbar  ]};
 
         key <BKSL> { [      Return,        Return,          Return,           Return ] };
+
+        key <RTRN> { [     numbersign,        dead_tilde,              section,                tilde ] }; //change AB05 to LSGT
 };
