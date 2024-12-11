@@ -53,14 +53,12 @@ xkb_symbols "eurkey-cmk-dh-ansi-wide-custom"  {
 
 partial alphanumeric_keys modifier_keys 
 xkb_symbols "eurkey-cmk-dh-iso-wide-custom"  {
-        include "eu(eurkey-cmk-dh-ansi-wide-custom)"
+        include "bluewy_eu(eurkey-cmk-dh-ansi-wide-custom)"
         name[Group1] = "EurKEY (Colemak-DH, ISO, Custom)";
 
         key <LSGT> { [              z,                 Z,               yacute,               Yacute ] };
 
         key <AB05> {[    backslash,             bar,              notsign,            brokenbar  ]};
-
-        key <AB06> { [     numbersign,        dead_tilde,              section,                tilde ] }; //change AB05 to LSGT
 
         key <BKSL> { [      Return,        Return,          Return,           Return ] };
 };
