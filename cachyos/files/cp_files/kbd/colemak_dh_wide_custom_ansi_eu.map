@@ -71,6 +71,7 @@ alt keycode  58 =  Meta_Control_m
 
 keycode   1  =  Escape
 keycode  15  =  Tab
+keycode  28  =  Return Return Return Return
 keycode  29  =  Control
 keycode  42  =  Shift
 keycode  54  =  Shift
