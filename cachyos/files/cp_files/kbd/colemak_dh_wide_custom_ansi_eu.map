@@ -14,17 +14,17 @@ keycode  6   =  five          percent      euro             cent           Contr
 keycode  7   =  equal         plus         multiply         division
 keycode  8   =  six           asciicircum  dead_circumflex  dead_caron     Control_asciicircum
 keycode  9   =  seven         ampersand    dead_abovering   dead_macron    Control_underscore
-keycode  10  =  eight         asterisk     doublelowquotemark singlelowquotemark Delete
-keycode  11  =  nine          parenleft    leftdoublequotemark leftsinglequotemark
-keycode  12  =  zero          parenright   rightdoublequotemark rightsinglequotemark
+keycode  10  =  eight         asterisk     U+201E U+201A Delete
+keycode  11  =  nine          parenleft    U+201C U+2018
+keycode  12  =  zero          parenright   U+201D U+2019
 keycode  13  =  minus         underscore   endash           emdash     Control_underscore
 
 keycode  16  =  q             Q            agrave           Agrave     Control_q
 keycode  17  =  w             W            aacute           Aacute          Control_w
-keycode  18  =  f             F            U0133            U0132         Control_f
+keycode  18  =  f             F            U+0133            U+0132         Control_f
 keycode  19  =  p             P            igrave           Igrave       Control_p
 keycode  20  =  b             B            iacute           Iacute     Control_b
-keycode  21  =  bracketleft   braceleft    guillemotleft    U2039  Escape
+keycode  21  =  bracketleft   braceleft    guillemotleft    U+2039  Escape
 keycode  22  =  j             J            ugrave           Ugrave     Control_j
 keycode  23  =  l             L            uacute           Uacute     Control_l
 keycode  24  =  u             U            udiaeresis       Udiaeresis         Control_u
@@ -35,10 +35,10 @@ keycode  43  =  backslash     bar          asciitilde       asciitilde     Contr
 
 keycode  30  =  a             A            adiaeresis           Adiaeresis         Control_a
 keycode  31  =  r             R            aring       Aring     Control_r
-keycode  32  =  s             S            ssharp           U1E9E     Control_s
-keycode  33  =  t             T            thorn       Thorn     Control_t
+keycode  32  =  s             S            ssharp           U+1E9E     Control_s
+keycode  33  =  t             T            thorn       THORN     Control_t
 keycode  34  =  g             G            egrave       Egrave     Control_g
-keycode  35  =  bracketright  braceright   guillemotright       U203A Control_bracketright
+keycode  35  =  bracketright  braceright   guillemotright       U+203A Control_bracketright
 keycode  36  =  m             M            eacute       Eacute     Control_m
 keycode  37  =  n             N            ntilde           Ntilde         Control_n
 keycode  38  =  e             E            ediaeresis           Ediaeresis         Control_e
@@ -51,8 +51,8 @@ keycode  45  =  c             C            ccedilla         Ccedilla       Contr
 keycode  46  =  d             D            dstroke   Dstroke     Control_d
 keycode  47  =  v             V            oe               OE             Control_v
 keycode  48  =  z             Z            yacute               Yacute             Control_z
-keycode  49  =  slash         question     questiondown     U2026     Delete
-keycode  50  =  k             K            dead_greek       squareroot     Control_k
+keycode  49  =  slash         question     questiondown     U+2026     Delete
+keycode  50  =  k             K            dead_greek       U+221A     Control_k
 keycode  51  =  h             H            oslash       Oslash     Control_h
 keycode  52  =  comma         less         ograve     Ograve
 keycode  53  =  period        greater      oacute       Oacute
@@ -61,17 +61,13 @@ keycode  53  =  period        greater      oacute       Oacute
 
 keycode  57  =  space         space        space            nobreakspace   nul
 
-! BackSpace/Delete -> Caps Lock
+! BackSpace/Delete
 keycode  14  =  Caps_Lock
 
-! Caps Lock -> Return
-! keycode  58  =  Return
+! Caps Lock
+
 keycode  58  =  Delete        Delete       Delete           Delete
-
 alt keycode  58 =  Meta_Control_m
-
-! Return -> BackSpace/Delete
-! keycode  28  =  Delete        Delete       Delete           Delete
 
 keycode   1  =  Escape
 keycode  15  =  Tab
