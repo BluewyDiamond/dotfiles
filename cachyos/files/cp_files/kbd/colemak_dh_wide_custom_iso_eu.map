@@ -31,7 +31,6 @@ keycode  24  =  u             U            udiaeresis       Udiaeresis         C
 keycode  25  =  y             Y            ydiaeresis       Ydiaeresis     Control_y
 keycode  26  =  semicolon     colon        degree           periodcentered
 keycode  27  =  apostrophe    quotedbl     dead_acute       dead_diaeresis
-keycode  43  =  backslash     bar          asciitilde       asciitilde     Control_backslash
 
 keycode  30  =  a             A            adiaeresis           Adiaeresis         Control_a
 keycode  31  =  r             R            aring       Aring     Control_r
@@ -45,12 +44,13 @@ keycode  38  =  e             E            ediaeresis           Ediaeresis      
 keycode  39  =  i             I            idiaeresis           Idiaeresis         Control_i
 keycode  40  =  o             O            odiaeresis          Odiaeresis         Control_o
 
-keycode  86  =  minus         underscore   asciitilde       asciitilde     Control_underscore
+keycode  86  =   z         Z   yacute       Yacute     Control_z
+keycode  43  =  Delete     Delete          Delete       Delete
 keycode  44  =  x             X            ae  AE     Control_x
 keycode  45  =  c             C            ccedilla         Ccedilla       Control_c
 keycode  46  =  d             D            dstroke   Dstroke     Control_d
 keycode  47  =  v             V            oe               OE             Control_v
-keycode  48  =  z             Z            yacute               Yacute             Control_z
+keycode  48  =  backslash             barZ            notsign               brokenbar             Control_z
 keycode  49  =  slash         question     questiondown     U2026     Delete
 keycode  50  =  k             K            dead_greek       squareroot     Control_k
 keycode  51  =  h             H            oslash       Oslash     Control_h
@@ -61,17 +61,15 @@ keycode  53  =  period        greater      oacute       Oacute
 
 keycode  57  =  space         space        space            nobreakspace   nul
 
-! BackSpace/Delete -> Caps Lock
+! BackSpace/Delete
 keycode  14  =  Caps_Lock
 
-! Caps Lock -> Return
-! keycode  58  =  Return
+! Caps Lock
 keycode  58  =  Delete        Delete       Delete           Delete
-
 alt keycode  58 =  Meta_Control_m
 
-! Return -> BackSpace/Delete
-! keycode  28  =  Delete        Delete       Delete           Delete
+! Return
+keycode  28  =  numbersign        dead_tilde       section           tilde
 
 keycode   1  =  Escape
 keycode  15  =  Tab
