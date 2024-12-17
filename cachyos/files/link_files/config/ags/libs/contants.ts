@@ -1,3 +1,3 @@
 export default {
-   tmp: "/tmp/ags_bluewy"
-}
+   tmp: "/tmp/ags_bluewy",
+};

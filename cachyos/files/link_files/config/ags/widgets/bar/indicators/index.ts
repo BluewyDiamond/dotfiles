@@ -7,18 +7,18 @@ import PowerProfileIndicator from "./PowerProfileIndicator";
 import options from "../../../libs/options";
 
 export default function (): Widget.Button {
-  return new Widget.Button({
-    className: "indicators",
+   return new Widget.Button({
+      className: "indicators",
 
-    child: new Widget.Box({
-      spacing: options.bar.indicators.spacing,
+      child: new Widget.Box({
+         spacing: options.bar.indicators.spacing,
 
-      children: [
-        SpeakerIndicator(),
-        MicIndicator2(),
-        ScreenShareIndicater(),
-        PowerProfileIndicator(),
-      ],
-    }),
-  });
+         children: [
+            SpeakerIndicator(),
+            MicIndicator2(),
+            ScreenShareIndicater(),
+            PowerProfileIndicator(),
+         ],
+      }),
+   });
 }

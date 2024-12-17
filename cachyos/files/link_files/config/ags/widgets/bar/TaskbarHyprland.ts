@@ -4,32 +4,32 @@ import CustomIcon from "../wrappers/CustomIcon";
 import { curateIcon } from "../../utils";
 
 export default function (): Widget.Box {
-  const hyprland = AstalHyprland.get_default();
+   const hyprland = AstalHyprland.get_default();
 
-  return new Widget.Box({
-    setup: (self) => {
-      // init
-      onClientsChange();
+   return new Widget.Box({
+      setup: (self) => {
+         // init
+         onClientsChange();
 
-      self.hook(hyprland, "notify::clients", () => {
-        onClientsChange();
-      });
+         self.hook(hyprland, "notify::clients", () => {
+            onClientsChange();
+         });
 
-      function onClientsChange() {
-        const clients = hyprland.get_clients();
+         function onClientsChange() {
+            const clients = hyprland.get_clients();
 
-        const i = clients.map((client) => {
-          let iconCurated = curateIcon(client.class);
+            const i = clients.map((client) => {
+               let iconCurated = curateIcon(client.class);
 
-          if (iconCurated === "") {
-            iconCurated = curateIcon(client.class + "-symbolic");
-          }
+               if (iconCurated === "") {
+                  iconCurated = curateIcon(client.class + "-symbolic");
+               }
 
-          return CustomIcon({ icon2: iconCurated });
-        });
+               return CustomIcon({ icon2: iconCurated });
+            });
 
-        self.children = [...i];
-      }
-    },
-  });
+            self.children = [...i];
+         }
+      },
+   });
 }

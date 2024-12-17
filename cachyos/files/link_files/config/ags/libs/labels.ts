@@ -5,7 +5,7 @@ export default {
          low: "",
          medium: "󰖀",
          high: "󰕾",
-         overamplified: "󰀰"
-      }
-   }
-}
+         overamplified: "󰀰",
+      },
+   },
+};

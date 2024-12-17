@@ -20,8 +20,8 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
             halign: Gtk.Align.START,
             children: [
                new Widget.Box({
-                  children: [WorkspacesHyprland(), TaskbarHyprland()]
-               })
+                  children: [WorkspacesHyprland(), TaskbarHyprland()],
+               }),
             ],
          }),
 

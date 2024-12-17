@@ -3,35 +3,35 @@ import options from "../../libs/options";
 import AstalHyprland from "gi://AstalHyprland";
 
 export default function (): Widget.Box {
-  const hyprland = AstalHyprland.get_default();
+   const hyprland = AstalHyprland.get_default();
 
-  return new Widget.Box({
-    className: "workspaces",
-    spacing: options.bar.workspaces.spacing,
+   return new Widget.Box({
+      className: "workspaces",
+      spacing: options.bar.workspaces.spacing,
 
-    children: options.bar.workspaces.values.map((index) => {
-      return new Widget.Label({
-        label: `${index}`,
+      children: options.bar.workspaces.values.map((index) => {
+         return new Widget.Label({
+            label: `${index}`,
 
-        setup: (self) => {
-          // init
-          onWorkspaceFocusedChange();
+            setup: (self) => {
+               // init
+               onWorkspaceFocusedChange();
 
-          self.hook(hyprland, "notify::focused-workspace", () => {
-            onWorkspaceFocusedChange();
-          });
+               self.hook(hyprland, "notify::focused-workspace", () => {
+                  onWorkspaceFocusedChange();
+               });
 
-          function onWorkspaceFocusedChange() {
-            const workspace = hyprland.get_focused_workspace();
+               function onWorkspaceFocusedChange() {
+                  const workspace = hyprland.get_focused_workspace();
 
-            if (!workspace) {
-              return;
-            }
+                  if (!workspace) {
+                     return;
+                  }
 
-            self.toggleClassName("active", index === workspace.get_id());
-          }
-        },
-      });
-    }),
-  });
+                  self.toggleClassName("active", index === workspace.get_id());
+               }
+            },
+         });
+      }),
+   });
 }

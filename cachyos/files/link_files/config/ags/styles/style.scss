@@ -9,34 +9,34 @@ $color_border: #7f848e;
 $color_alert: #d19a66;
 
 * {
-  all: unset;
-  font-family: "IosevkaTerm Nerd Font Mono";
-  font-size: 18px;
-  font-weight: 500;
+   all: unset;
+   font-family: "IosevkaTerm Nerd Font Mono";
+   font-size: 18px;
+   font-weight: 500;
 }
 
 .bar {
-  background: $color_background;
+   background: $color_background;
 }
 
 .workspaces {
-  background: $color_surface;
-  padding: $workspaces_spacing;
+   background: $color_surface;
+   padding: $workspaces_spacing;
 
-  label {
-    color: $color_foreground;
+   label {
+      color: $color_foreground;
 
-    &.active {
-      color: $color_primary;
-    }
-  }
+      &.active {
+         color: $color_primary;
+      }
+   }
 }
 
 .indicators {
-  background: $color_surface;
+   background: $color_surface;
 
-  > box {
-    background-color: transparent;
-    padding: $indicators_spacing;
-  }
+   > box {
+      background-color: transparent;
+      padding: $indicators_spacing;
+   }
 }
