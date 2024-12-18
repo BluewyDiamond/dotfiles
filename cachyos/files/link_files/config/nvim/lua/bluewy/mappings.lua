@@ -95,23 +95,14 @@ mappings.conform = {
    },
 }
 
-mappings.telescope = {
-   { "n", "<leader>ff", "<cmd>Telescope find_files<CR>", { noremap = true, silent = true, desc = "find files" } },
-   { "n", "<leader>fw", "<cmd>Telescope live_grep<CR>", { noremap = true, silent = true, desc = "find text" } },
-   { "n", "<leader>fb", "<cmd>Telescope buffers<CR>", { noremap = true, silent = true, desc = "show buffers" } },
+mappings.fzf_lua = {
+   { "n", "<leader>ff", ":lua require('fzf-lua').files()<CR>", { noremap = true, silent = true, desc = "find files" } },
 
    {
       "n",
-      "<leader>fa",
-      "<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>",
-      { noremap = true, silent = true, desc = "find all files" },
-   },
-
-   {
-      "n",
-      "<leader>fz",
-      "<cmd>Telescope current_buffer_fuzzy_find<CR>",
-      { noremap = true, silent = true, desc = "find text in current buffer" },
+      "<leader>fw",
+      ":lua require('fzf-lua').live_grep()<CR>",
+      { noremap = true, silent = true, desc = "find files" },
    },
 }
 
