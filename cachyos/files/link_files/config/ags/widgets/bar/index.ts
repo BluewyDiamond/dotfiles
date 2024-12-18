@@ -2,6 +2,8 @@ import { Gdk, Widget, Astal, Gtk } from "astal/gtk3";
 import WorkspacesHyprland from "./WorkspacesHyprland";
 import Indicators from "./indicators";
 import TaskbarHyprland from "./TaskbarHyprland";
+import options from "../../libs/options";
+import Tray from "./Tray";
 
 export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
    return new Widget.Window({
@@ -18,8 +20,10 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
          startWidget: new Widget.Box({
             hexpand: true,
             halign: Gtk.Align.START,
+
             children: [
                new Widget.Box({
+                  spacing: options.bar.indicators.spacing,
                   children: [WorkspacesHyprland(), TaskbarHyprland()],
                }),
             ],
@@ -32,7 +36,9 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
          endWidget: new Widget.Box({
             hexpand: true,
             halign: Gtk.Align.END,
-            children: [Indicators()],
+            spacing: options.bar.indicators.spacing,
+
+            children: [Tray(), Indicators()],
          }),
       }),
    });

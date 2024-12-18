@@ -16,12 +16,18 @@ $color_alert: #d19a66;
 }
 
 .bar {
-   background: $color_background;
+   background: black;
+
+   >centerbox {
+      padding: 8px;
+   }
 }
 
 .workspaces {
    background: $color_surface;
-   padding: $workspaces_spacing;
+   // padding: $workspaces_spacing;
+   border-radius: 8px;
+   padding: 0 4px 0 4px;
 
    label {
       color: $color_foreground;
@@ -34,9 +40,29 @@ $color_alert: #d19a66;
 
 .indicators {
    background: $color_surface;
+   border-radius: 8px;
 
-   > box {
+   >box {
       background-color: transparent;
-      padding: $indicators_spacing;
+      // padding: $indicators_spacing;
+
+      &:first-child {
+         padding-left: 4px;
+      }
+
+      &:last-child {
+         padding-right: 4px;
+      }
+   }
+}
+
+.hyprland-taskbar {
+   background: transparent;
+
+   >icon,
+   label {
+      background: $color_surface;
+      border-radius: 8px;
+      padding: 4px;
    }
 }
