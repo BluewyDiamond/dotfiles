@@ -30,7 +30,7 @@ xkb_symbols "colemak_dh_wide_custom_iso" {
 //
 
 default partial alphanumeric_keys modifier_keys 
-xkb_symbols "colemak-dh-wide-custom-ansi-eu"  {
+xkb_symbols "colemak_dh_wide_custom_ansi_eu"  {
         include "eu(basic)"
         name[Group1] = "EurKEY (Colemak-DH, ANSI, Custom)";
 
