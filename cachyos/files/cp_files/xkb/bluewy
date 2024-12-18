@@ -1,4 +1,3 @@
-default
 xkb_symbols "colemak_dh_wide_custom_ansi" {
     include "us(colemak_dh_wide)"
     name[Group1] = "English (Colemak-DH Wide Custom ANSI)";
@@ -11,8 +10,6 @@ xkb_symbols "colemak_dh_wide_custom_ansi" {
     key <AE07> { [            6,  asciicircum,         hstroke,          Hstroke ] };
 };
 
-
-default
 xkb_symbols "colemak_dh_wide_custom_iso" {
     include "us(colemak_dh_wide_iso)"
     name[Group1] = "English (Colemak-DH Wide Custom ISO)";
@@ -81,7 +78,8 @@ xkb_symbols "colemak-dh-wide-custom-ansi-eu"  {
         key <AB09>	{[        comma,            less,               ograve,               Ograve  ]};
         key <AB10>	{[       period,         greater,               oacute,               Oacute  ]};
 
-        key <CAPS> { [    BackSpace,       Delete,       BackSpace,           Delete ] };
+        key <CAPS> { [      Return,        Return,          Return,           Return ] };
+        key <RTRN> { [    BackSpace,       Delete,       BackSpace,           Delete ] };
         key <BKSP> { [   Caps_Lock,     Caps_Lock,       Caps_Lock,        Caps_Lock ] };
 };
 
@@ -91,10 +89,9 @@ xkb_symbols "colemak_dh_wide_custom_ansi_iso"  {
         name[Group1] = "EurKEY (Colemak-DH, ISO, Custom)";
 
         key <LSGT> { [              z,                 Z,               yacute,               Yacute ] };
-
         key <AB05> {[    backslash,             bar,              notsign,            brokenbar  ]};
 
-        key <BKSL> { [      Return,        Return,          Return,           Return ] };
-
+        key <BKSL> { [        BackSpace,       Delete,       BackSpace,           Delete     ] };
+        key <CAPS> { [  Return,        Return,          Return,           Return] };
         key <RTRN> { [     numbersign,        dead_tilde,              section,                tilde ] }; //change AB05 to LSGT
 };
