@@ -61,13 +61,13 @@ keycode  53  =  period        greater      oacute       Oacute
 keycode  57  =  space         space        space            nobreakspace   nul
 
 ! Apostrophe
-keycode  43  =  Return Return Return Return
+keycode  43  =  Delete Delete Delete Delete
 
 ! BackSpace/Delete
 keycode  14  =  Caps_Lock
 
 ! Caps Lock
-keycode  58  =  Delete        Delete       Delete           Delete
+keycode  58  =  Return Return Return Return
 alt keycode  58 =  Meta_Control_m
 
 ! Return

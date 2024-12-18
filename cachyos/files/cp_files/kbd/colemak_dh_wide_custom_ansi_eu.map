@@ -65,13 +65,12 @@ keycode  57  =  space         space        space            nobreakspace   nul
 keycode  14  =  Caps_Lock
 
 ! Caps Lock
-
-keycode  58  =  Delete        Delete       Delete           Delete
+keycode  58  =  Return        Return       Return           Return
 alt keycode  58 =  Meta_Control_m
 
 keycode   1  =  Escape
 keycode  15  =  Tab
-keycode  28  =  Return Return Return Return
+keycode  28  =  Delete Delete Delete Delete
 keycode  29  =  Control
 keycode  42  =  Shift
 keycode  54  =  Shift
