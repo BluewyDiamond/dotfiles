@@ -66,3 +66,20 @@ $color_alert: #d19a66;
       padding: 4px;
    }
 }
+
+.tray {
+   background: pink;
+   >button {
+      background: $color_surface;
+      border-radius: 8px;
+      padding: 4px;
+
+      &>.active {
+         background: blue;
+      }
+   }
+
+   .active {
+      background: green;
+   }
+}
