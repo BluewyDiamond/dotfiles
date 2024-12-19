@@ -20,5 +20,5 @@ function input
     echo $value
 end
 
-sudo cp (dirname (status filename))/cp_files/xkb/* /usr/share/X11/xkb/symbols
-sudo cp (dirname (status filename))/cp_files/kbd/* /usr/share/kbd/keymaps
+sudo cp (dirname (status filename))/files_for_cp/xkb/* /usr/share/X11/xkb/symbols
+sudo cp (dirname (status filename))/files_for_cp/kbd/* /usr/share/kbd/keymaps

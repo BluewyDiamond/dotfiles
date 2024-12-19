@@ -46,7 +46,7 @@ end
 
 sudo pacman -S --needed trash-cli
 
-set container (realpath (dirname (status filename)))/link_files
+set container (realpath (dirname (status filename)))/files_for_link
 set files (command ls $container)
 
 for file in $files
