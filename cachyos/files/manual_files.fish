@@ -45,12 +45,28 @@ function fish_shell
     set fish_dir $HOME/.config/fish
 
     if test -f $target -o -d $target -o -L $target
+        prompt "The following already exists, trash it? [y/N] | $target"
+        set choice (input N)
+
+        if not string match -i -q -- Y $choice
+            prompt "Skipping..."
+            return
+        end
+
         trash $target
     end
 
     ln -s $s_file $target
 
     if test -d $fish_dir -o -f $fish_dir -o -L $fish_dir
+        prompt "The following already exists, trash it? [y/N] | $fish_dir"
+        set choice (input N)
+
+        if not string match -i -q -- Y $choice
+            prompt "Skipping..."
+            return
+        end
+
         trash $fish_dir
     end
 
@@ -65,7 +81,7 @@ end
 
 prompt "1. Cachy Browser Stuff"
 prompt "2. Fish Shell"
-prompt "WARNING! It will trash conflicting files without prompting!"
+prompt "3. All the Above"
 
 set choice (input)
 
@@ -73,6 +89,9 @@ switch $choice
     case 1
         cachy_browser
     case 2
+        fish_shell
+    case 3
+        cachy_browser
         fish_shell
     case '*'
         prompt "Not a valid choice..."
