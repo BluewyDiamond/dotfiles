@@ -1,7 +1,7 @@
 import { Gdk, Widget, Astal, Gtk } from "astal/gtk3";
-import WorkspacesHyprland from "./WorkspacesHyprland";
+import WorkspacesHyprland from "./HyprlandWorkspaces";
 import Indicators from "./indicators";
-import TaskbarHyprland from "./TaskbarHyprland";
+import TaskbarHyprland from "./HyprlandTaskbar";
 import options from "../../libs/options";
 import Tray from "./Tray";
 

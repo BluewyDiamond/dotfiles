@@ -1,8 +1,7 @@
 import { astalify, Gtk, Widget } from "astal/gtk3";
-import MicIndicator from "./MicIndicator";
 import MicIndicator2 from "./MicIndicator2";
 import SpeakerIndicator from "./SpeakerIndicator";
-import ScreenShareIndicater from "./ScreenShareIndicater";
+import ScreenShareIndicater from "./ScreenShareIndicator";
 import PowerProfileIndicator from "./PowerProfileIndicator";
 import options from "../../../libs/options";
 
