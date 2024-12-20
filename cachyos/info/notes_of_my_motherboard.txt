@@ -6,13 +6,18 @@
 
 ## Settings
 # BIOS
+- ram expo => expo tweaked
+- memory context restore => enabled
+- power down => enabled
+
 - pbo limits => disabled (don't allow to draw more power)
 - curve optimizer => -30
 - cpu platform temperature limit => 85
-- ram expo => expo tweaked
+
+- cpu core voltage (soc) => 1.0v
+
+- smart resizable bar => on
 - csm => disabled
 - secure boot => disabled
-- cpu core voltage (soc) => 1.0v
-- smart resizable bar => on
 - fan profiles => tweak
 - global c states => depends, disable only if cpu stutters
