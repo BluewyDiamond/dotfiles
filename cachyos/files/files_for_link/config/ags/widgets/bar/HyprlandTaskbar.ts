@@ -3,6 +3,7 @@ import AstalHyprland from "gi://AstalHyprland";
 import CustomIcon from "../wrappers/CustomIcon";
 import { curateIcon } from "../../utils";
 import options from "../../libs/options";
+import Apps from "gi://AstalApps";
 
 export default function (): Widget.Box {
    const hyprland = AstalHyprland.get_default();
@@ -21,7 +22,43 @@ export default function (): Widget.Box {
             const clients = sortClients(hyprland.get_clients());
 
             const children = clients.map((client) => {
-               let iconCurated = curateIcon(client.class);
+               const apps = new Apps.Apps();
+
+               const foundedApp = apps.list.find((app) => {
+                  const entry = app.get_entry();
+                  const executable = app.get_executable();
+                  const description = app.get_description();
+
+                  if (!entry) {
+                     return false;
+                  }
+
+                  if (!executable) {
+                     return false;
+                  }
+
+                  if (!description) {
+                     return false;
+                  }
+
+                  if(app.get_name().toLowerCase().includes(client.class.toLowerCase())) {
+                     return true;
+                  } else if (app.get_entry().toLowerCase().includes(client.class.toLowerCase())) {
+                     return true;
+                  } else if (app.get_executable().toLowerCase().includes(client.class.toLowerCase())) {
+                     return true;
+                  } else if (app.get_description().toLowerCase().includes(client.class.toLowerCase())) {
+                     return true;
+                  } else {
+                     return false;
+                  }
+               })
+
+               let iconCurated = curateIcon(foundedApp?.get_icon_name());
+
+               if (iconCurated === "") {
+                  iconCurated = curateIcon(client.class);
+               }
 
                if (iconCurated === "") {
                   iconCurated = curateIcon(client.class + "-symbolic");

@@ -2,7 +2,6 @@ import { Widget, Gdk } from "astal/gtk3";
 import Tray from "gi://AstalTray";
 import CustomIcon from "../wrappers/CustomIcon";
 import { curateIcon } from "../../utils";
-import { bind } from "astal";
 import options from "../../libs/options";
 
 export default function (): Widget.Box {

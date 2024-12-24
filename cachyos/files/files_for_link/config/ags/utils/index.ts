@@ -2,7 +2,7 @@ import icons, { substitutes } from "../libs/icons";
 import GLib from "gi://GLib";
 
 export function curateIcon(
-   name: string | null,
+   name: string | null | undefined,
    fallback = icons.missing
 ): string {
    if (!name) {
