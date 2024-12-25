@@ -10,8 +10,6 @@ export default function (): Widget.Button {
       className: "indicators",
 
       child: new Widget.Box({
-         spacing: options.bar.indicators.spacing,
-
          children: [
             SpeakerIndicator(),
             MicIndicator2(),

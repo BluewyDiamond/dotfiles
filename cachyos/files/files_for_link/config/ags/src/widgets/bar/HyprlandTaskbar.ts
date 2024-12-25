@@ -10,7 +10,6 @@ export default function (): Widget.Box {
 
    return new Widget.Box({
       className: "hyprland-taskbar",
-      spacing: options.bar.indicators.spacing,
 
       setup: (self) => {
          // init

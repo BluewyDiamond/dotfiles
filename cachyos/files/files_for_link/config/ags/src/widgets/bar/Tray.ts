@@ -1,42 +1,49 @@
-import { Widget, Gdk } from "astal/gtk3";
+import { Widget } from "astal/gtk3";
 import Tray from "gi://AstalTray";
-import CustomIcon from "../wrappers/CustomIcon";
-import { curateIcon } from "../../utils";
 import options from "../../libs/options";
 
 export default function (): Widget.Box {
    const tray = Tray.get_default();
 
-   const ItemForShow = (item: Tray.TrayItem): Widget.Button => {
-      return new Widget.Button({
-         child: CustomIcon({
-            icon2: curateIcon(item.get_icon_name()),
-         }),
+   const ItemForShow = (item: Tray.TrayItem): Widget.MenuButton => {
+      return new Widget.MenuButton({
+         setup: (self) => {
+            onItemChanged();
 
-         onClick: (self) => {},
-         setup: (self) => {},
+            self.hook(item, "notify::changed", () => {
+               onItemChanged();
+            });
+
+            function onItemChanged() {
+               self.child = new Widget.Icon({ gIcon: item.gicon });
+               self.tooltipMarkup = item.tooltipMarkup;
+               self.usePopover = false;
+               // @ts-ignore
+               self.actionGroup = ["dbusmenu", item.actionGroup];
+               self.menuModel = item.menuModel;
+            }
+         },
       });
    };
 
    return new Widget.Box({
       className: "tray",
-      spacing: options.bar.indicators.spacing,
 
       setup: (self) => {
-         // init
-         onItemsChange();
+         onItemsChanged();
 
-         self.hook(tray, "notify::items", () => onItemsChange());
+         self.hook(tray, "notify::items", () => onItemsChanged());
 
-         function onItemsChange() {
-            const items = tray.get_items();
-            const x = items.map((item) => ItemForShow(item));
+         function onItemsChanged() {
+            const itemsForShow = tray
+               .get_items()
+               .map((item) => ItemForShow(item));
 
-            if (x.length === 0) {
+            if (itemsForShow.length === 0) {
                self.visible = false;
                self.children = [];
             } else {
-               self.children = [...x];
+               self.children = [...itemsForShow];
                self.visible = true;
             }
          }

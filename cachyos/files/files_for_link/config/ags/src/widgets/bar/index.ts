@@ -24,7 +24,6 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
 
             children: [
                new Widget.Box({
-                  spacing: options.bar.indicators.spacing,
                   children: [WorkspacesHyprland(), TaskbarHyprland()],
                }),
             ],
@@ -37,8 +36,6 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
          endWidget: new Widget.Box({
             hexpand: true,
             halign: Gtk.Align.END,
-            spacing: options.bar.indicators.spacing,
-
             children: [Tray(), Indicators()],
          }),
       }),

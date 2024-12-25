@@ -7,7 +7,6 @@ export default function (): Widget.Box {
 
    return new Widget.Box({
       className: "workspaces",
-      spacing: options.bar.workspaces.spacing,
 
       children: options.bar.workspaces.values.map((index) => {
          return new Widget.Label({
