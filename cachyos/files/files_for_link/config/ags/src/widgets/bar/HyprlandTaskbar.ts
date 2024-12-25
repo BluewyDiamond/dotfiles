@@ -1,8 +1,6 @@
 import { Widget } from "astal/gtk3";
 import AstalHyprland from "gi://AstalHyprland";
-import { curateIcon, searchIcon } from "../../utils";
-import options from "../../libs/options";
-import Apps from "gi://AstalApps";
+import { curateIcon } from "../../utils";
 
 export default function (): Widget.Box {
    const hyprland = AstalHyprland.get_default();
@@ -13,7 +11,25 @@ export default function (): Widget.Box {
       setup: (self) => {
          onClientsChange();
 
-         self.hook(hyprland, "notify::clients", () => onClientsChange());
+         self.hook(
+            hyprland,
+            "client-added",
+            (_, client: AstalHyprland.Client) => {
+               onClientsChange();
+            }
+         );
+
+         self.hook(
+            hyprland,
+            "client-removed",
+            (_, client: AstalHyprland.Client) => {
+               onClientsChange();
+            }
+         );
+
+         self.hook(hyprland, "client-moved", () => {
+            onClientsChange();
+         });
 
          function onClientsChange() {
             const clients = sortClients(hyprland.get_clients());
@@ -23,14 +39,18 @@ export default function (): Widget.Box {
                   let curatedIcon = curateIcon(client.class);
 
                   if (curatedIcon === "") {
-                     return new Widget.Label({ label: "?" });
+                     return new Widget.Label({
+                        label: "?",
+                     });
                   } else {
-                     return new Widget.Icon({ icon: curatedIcon });
+                     return new Widget.Icon({
+                        icon: curatedIcon,
+                     });
                   }
                }
             );
 
-            self.children = [...children];
+            self.children = children;
          }
       },
    });
