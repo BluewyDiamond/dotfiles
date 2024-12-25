@@ -2,6 +2,8 @@ import { Widget } from "astal/gtk3";
 import AstalHyprland from "gi://AstalHyprland";
 import { curateIcon } from "../../utils";
 
+// TODO: Assign custom property in Widget.Icon... for sorting, removing clients.
+
 export default function (): Widget.Box {
    const hyprland = AstalHyprland.get_default();
 
