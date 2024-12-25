@@ -3,10 +3,12 @@ $color_on_primary: #000000;
 $color_error: #ff0000;
 $color_on_error: #000000;
 $color_background: #1e2127;
-$color_foreground: #abb2bf;
+$color_on_background: #abb2bf;
 $color_surface: #282c34;
-$color_border: #7f848e;
+$color_on_surface: #abb2bf;
 $color_alert: #d19a66;
+$color_on_alert: #000000;
+$color_border: #7f848e;
 
 * {
    all: unset;
@@ -30,7 +32,7 @@ $color_alert: #d19a66;
    padding: 0 4px 0 4px;
 
    label {
-      color: $color_foreground;
+      color: $color_on_surface;
 
       &.active {
          color: $color_primary;
@@ -68,7 +70,6 @@ $color_alert: #d19a66;
 }
 
 .tray {
-   background: pink;
    >button {
       background: $color_surface;
       border-radius: 8px;
@@ -82,4 +83,12 @@ $color_alert: #d19a66;
    .active {
       background: green;
    }
+}
+
+.datetime {
+   background: $color_surface;
+   color: $color_on_surface;
+   border-radius: 8px;
+   padding-left: 4px;
+   padding-right: 4px;
 }

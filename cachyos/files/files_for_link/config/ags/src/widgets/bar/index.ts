@@ -4,6 +4,7 @@ import Indicators from "./indicators";
 import TaskbarHyprland from "./HyprlandTaskbar";
 import options from "../../libs/options";
 import Tray from "./Tray";
+import Datetime from "./Datetime";
 
 export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
    return new Widget.Window({
@@ -30,7 +31,7 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
          }),
 
          centerWidget: new Widget.Box({
-            children: [],
+            children: [Datetime()],
          }),
 
          endWidget: new Widget.Box({
