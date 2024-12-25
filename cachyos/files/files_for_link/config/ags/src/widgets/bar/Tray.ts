@@ -1,6 +1,5 @@
 import { Widget } from "astal/gtk3";
 import Tray from "gi://AstalTray";
-import options from "../../libs/options";
 
 export default function (): Widget.Box {
    const tray = Tray.get_default();
