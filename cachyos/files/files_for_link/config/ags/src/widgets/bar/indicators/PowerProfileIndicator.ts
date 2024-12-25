@@ -1,16 +1,13 @@
 import { Widget } from "astal/gtk3";
 import PowerProfiles from "gi://AstalPowerProfiles";
 import icons from "../../../libs/icons";
-import CustomIcon from "../../wrappers/CustomIcon";
-
-const errorTitle = "PowerProfileIndicator";
+import { curateIcon } from "../../../utils";
 
 export default function (): Widget.Box {
    const powerProfiles = PowerProfiles.get_default();
 
    return new Widget.Box({
       setup: (self) => {
-         // init
          onPowerProfileChange(powerProfiles);
 
          self.hook(powerProfiles, "notify", () => {
@@ -35,7 +32,14 @@ export default function (): Widget.Box {
                   ([state]) => state === powerProfile
                )?.[1] || "";
 
-            self.children = [CustomIcon({ icon2: icon })];
+            let curatedIcon = curateIcon(icon);
+
+            if (curatedIcon === "") {
+               self.children = [new Widget.Label({ label: "?" })];
+            } else {
+               self.children = [new Widget.Icon({ icon: curatedIcon })];
+            }
+
             self.visible = true;
          }
       },

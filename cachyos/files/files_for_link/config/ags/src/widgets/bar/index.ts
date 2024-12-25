@@ -2,7 +2,6 @@ import { Gdk, Widget, Astal, Gtk } from "astal/gtk3";
 import WorkspacesHyprland from "./HyprlandWorkspaces";
 import Indicators from "./indicators";
 import TaskbarHyprland from "./HyprlandTaskbar";
-import options from "../../libs/options";
 import Tray from "./Tray";
 import Datetime from "./Datetime";
 

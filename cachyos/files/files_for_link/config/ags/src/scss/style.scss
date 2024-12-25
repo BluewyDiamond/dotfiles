@@ -27,15 +27,20 @@ $color_border: #7f848e;
 
 .workspaces {
    background: $color_surface;
-   // padding: $workspaces_spacing;
    border-radius: 8px;
    padding: 0 4px 0 4px;
+   margin-right: 7.2px;
 
    label {
       color: $color_on_surface;
+      margin-right: 4px;
 
       &.active {
          color: $color_primary;
+      }
+
+      &:last-child {
+         margin-right: 0;
       }
    }
 }
@@ -43,17 +48,14 @@ $color_border: #7f848e;
 .indicators {
    background: $color_surface;
    border-radius: 8px;
+   margin-left: 7.2px;
 
    >box {
       background-color: transparent;
-      // padding: $indicators_spacing;
+      padding-left: 4px;
 
       &:first-child {
-         padding-left: 4px;
-      }
-
-      &:last-child {
-         padding-right: 4px;
+         padding-left: 0px;
       }
    }
 }
@@ -66,10 +68,13 @@ $color_border: #7f848e;
       background: $color_surface;
       border-radius: 8px;
       padding: 4px;
+      margin-right: 7.2px;
    }
 }
 
 .tray {
+   margin-left: 7.2px;
+
    >button {
       background: $color_surface;
       border-radius: 8px;

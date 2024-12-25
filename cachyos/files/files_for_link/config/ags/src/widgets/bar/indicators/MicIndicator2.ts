@@ -1,8 +1,7 @@
 import { Widget } from "astal/gtk3";
 import Wp from "gi://AstalWp";
 import icons from "../../../libs/icons";
-import CustomIcon from "../../wrappers/CustomIcon";
-import { printError } from "../../../utils";
+import { curateIcon, printError } from "../../../utils";
 
 const errorTitle = "MicIndicator2";
 
@@ -75,7 +74,13 @@ export default function (): Widget.Box {
             const icon =
                states.find(([state]) => state <= micVolume * 100)?.[1] || "";
 
-            self.children = [CustomIcon({ icon2: icon })];
+            const curatedIcon = curateIcon(icon);
+
+            if (curatedIcon === "") {
+               self.children = [new Widget.Label({label: "?"})]
+            } else {
+               self.children = [new Widget.Icon({icon: curatedIcon})]
+            }
          }
       },
    });

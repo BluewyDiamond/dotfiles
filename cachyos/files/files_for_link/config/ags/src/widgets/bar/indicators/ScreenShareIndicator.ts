@@ -1,8 +1,7 @@
 import { Widget } from "astal/gtk3";
 import Wp from "gi://AstalWp";
 import icons from "../../../libs/icons";
-import CustomIcon from "../../wrappers/CustomIcon";
-import { printError } from "../../../utils";
+import { curateIcon, printError } from "../../../utils";
 
 const errorTitle = "ScreenShareIndicator";
 
@@ -41,7 +40,14 @@ export default function (): Widget.Box {
                return;
             }
 
-            self.children = [CustomIcon({ icon2: icons.recorder.screencast })];
+            const curatedIcon = curateIcon(icons.recorder.screencast);
+
+            if (curatedIcon === "") {
+               self.children = [new Widget.Label({ label: "?" })];
+            } else {
+               self.children = [new Widget.Icon({ icon: curatedIcon })];
+            }
+
             self.visible = true;
          }
       },
