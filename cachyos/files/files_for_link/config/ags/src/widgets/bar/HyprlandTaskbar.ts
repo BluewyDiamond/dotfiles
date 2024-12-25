@@ -22,8 +22,6 @@ export default function (): Widget.Box {
                (client) => {
                   let curatedIcon = curateIcon(client.class);
 
-                  console.log(curatedIcon);
-
                   if (curatedIcon === "") {
                      return new Widget.Label({ label: "?" });
                   } else {

@@ -11,7 +11,6 @@ export function searchIcon(name: string | null | undefined): string {
    const icon = substitutes[name] || name;
 
    if (GLib.file_test(icon, GLib.FileTest.EXISTS)) {
-      console.log("exists");
       return icon;
    } else {
       if (
@@ -28,80 +27,50 @@ export function searchIcon(name: string | null | undefined): string {
    }
 }
 
-export function printError(msg: string) {
-   console.log(msg);
-}
-
 export function curateIcon(icon: string): string {
    const apps = new Apps.Apps();
+   const iconInLowerCase = icon.toLowerCase();
 
-   const foundedApp = apps.list.find((app) => {
-      // this fields can be null despite lsp saying otherwise
-      const name = app.get_name();
-      const entry = app.get_entry();
-      const executable = app.get_executable();
-      const description = app.get_description();
+   function matchesIcon(app: Apps.Application): boolean {
+      const name = app.get_name()?.toLowerCase();
+      const entry = app.get_entry()?.toLowerCase();
+      const executable = app.get_executable()?.toLowerCase();
+      const description = app.get_description()?.toLowerCase();
 
-      if (!name) {
-         return false;
-      }
-
-      if (name.toLowerCase().includes(icon.toLowerCase())) {
+      if (
+         name &&
+         (name.includes(iconInLowerCase) || iconInLowerCase.includes(name))
+      )
          return true;
-      }
 
-      if (icon.toLowerCase().includes(name.toLowerCase())) {
+      if (
+         entry &&
+         (entry.includes(iconInLowerCase) || iconInLowerCase.includes(entry))
+      )
          return true;
-      }
 
-      if (!entry) {
-         return false;
-      }
-
-      if (entry.toLowerCase().includes(icon)) {
+      if (
+         executable &&
+         (executable.includes(iconInLowerCase) ||
+            iconInLowerCase.includes(executable))
+      )
          return true;
-      }
 
-      if (icon.toLowerCase().includes(entry.toLowerCase())) {
+      if (
+         description &&
+         (description.includes(iconInLowerCase) ||
+            iconInLowerCase.includes(description))
+      )
          return true;
-      }
-
-      if (!executable) {
-         return false;
-      }
-
-      if (executable.toLowerCase().includes(icon)) {
-         return true;
-      }
-
-      if (icon.toLowerCase().includes(executable)) {
-         return true;
-      }
-
-      if (!description) {
-         return false;
-      }
-
-      if (description.toLowerCase().includes(icon)) {
-         return true;
-      }
-
-      if (icon.toLowerCase().includes(description.toLowerCase())) {
-         return true;
-      }
 
       return false;
-   });
-
-   let iconCurated = searchIcon(foundedApp?.get_icon_name());
-
-   if (iconCurated === "") {
-      iconCurated = searchIcon(icon);
    }
 
-   if (iconCurated === "") {
-      iconCurated = searchIcon(icon + "-symbolic");
-   }
+   const foundedApp = apps.list.find(matchesIcon);
+
+   let iconCurated = searchIcon(foundedApp?.get_icon_name() || "");
+   if (!iconCurated) iconCurated = searchIcon(icon);
+   if (!iconCurated) iconCurated = searchIcon(icon + "-symbolic");
 
    return iconCurated;
 }

@@ -1,7 +1,7 @@
 import { Widget } from "astal/gtk3";
 import Wp from "gi://AstalWp";
 import icons from "../../../libs/icons";
-import { curateIcon, printError } from "../../../utils";
+import { curateIcon,  } from "../../../utils";
 
 const errorTitle = "MicIndicator2";
 
@@ -9,7 +9,6 @@ export default function (): Widget.Box {
    const audio = Wp.get_default()?.get_audio();
 
    if (!audio) {
-      printError(`${errorTitle} => Failed to get audio...`);
 
       return new Widget.Box({
          children: [new Widget.Label({ label: "󱪗" })],
@@ -19,7 +18,6 @@ export default function (): Widget.Box {
    const mic = audio.get_default_microphone();
 
    if (!mic) {
-      printError(`${errorTitle} => Failed to get default mic...`);
 
       return new Widget.Box({
          children: [new Widget.Label({ label: "󱪗" })],
@@ -45,7 +43,6 @@ export default function (): Widget.Box {
             const recorders = audio.get_recorders();
 
             if (!recorders) {
-               printError(`${errorTitle} => Failed to get recorders...`);
                self.children = [new Widget.Label({ label: "󱪗" })];
                return;
             }

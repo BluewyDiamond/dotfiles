@@ -1,7 +1,7 @@
 import { Widget } from "astal/gtk3";
 import Wp from "gi://AstalWp";
 import icons from "../../../libs/icons";
-import { curateIcon, printError } from "../../../utils";
+import { curateIcon } from "../../../utils";
 
 const errorTitle = "ScreenShareIndicator";
 
@@ -9,8 +9,6 @@ export default function (): Widget.Box {
    const video = Wp.get_default()?.get_video();
 
    if (!video) {
-      printError(`${errorTitle} => Failed to get video...`);
-
       return new Widget.Box({
          children: [new Widget.Label({ label: "󱪗" })],
       });
@@ -29,7 +27,6 @@ export default function (): Widget.Box {
             const recorders = video.get_recorders();
 
             if (!recorders) {
-               printError(`${errorTitle} => Failed to get recorders...`);
                self.children = [new Widget.Label({ label: "󱪗" })];
                return;
             }
