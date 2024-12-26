@@ -20,14 +20,6 @@ export default function (): Widget.Box {
    });
 }
 
-function sortClients(clients: AstalHyprland.Client[]): AstalHyprland.Client[] {
-   const sortedClients = clients.sort((i, j) => {
-      return i.workspace.get_id() - j.workspace.get_id();
-   });
-
-   return sortedClients;
-}
-
 class ClientsWidget implements Subscribable {
    private map: Map<string, Gtk.Widget> = new Map();
    private var: Variable<Array<Gtk.Widget>> = Variable([]);
@@ -58,6 +50,8 @@ class ClientsWidget implements Subscribable {
       const hyprland = AstalHyprland.get_default();
 
       const arr = Array.from(this.map);
+
+      // TODO: handle the null case
       arr.sort((a, b) => {
          const clientA = hyprland.get_client(a[0])!;
          const clientB = hyprland.get_client(b[0])!;
