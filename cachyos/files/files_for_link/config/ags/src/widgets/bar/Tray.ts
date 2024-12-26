@@ -3,7 +3,7 @@ import { Subscribable } from "astal/binding";
 import { Gtk, Widget } from "astal/gtk3";
 import Tray from "gi://AstalTray";
 
-// TODO: gicon fallback
+// TODO: maybe fallback gicon?
 
 export default function (): Widget.Box {
    const trayItemWidgets = new TrayItemWidgets();
@@ -29,22 +29,16 @@ class TrayItemWidgets implements Subscribable {
       const tray = Tray.get_default();
 
       tray.get_items()?.forEach((item) => {
-         this.set(item.get_item_id(), TrayButton(item));
-         console.log(`init: ${item.get_item_id()}`);
+         this.set(item.get_item_id(), TrayButton(item, tray));
       });
 
       tray.connect("item-added", (_, item_id) => {
          const item = tray.get_item(item_id);
-         const indexOfSlash = item_id.indexOf("/");
-         const curatedItemId =
-            indexOfSlash !== -1 ? item_id.substring(0, indexOfSlash) : item_id;
-
-         this.set(curatedItemId, TrayButton(item));
+         this.set(item_id, TrayButton(item, tray));
       });
 
       tray.connect("item-removed", (_, item_id) => {
          this.delete(item_id);
-         console.log(`removed: ${item_id}`);
       });
    }
 
@@ -60,11 +54,7 @@ class TrayItemWidgets implements Subscribable {
 
    private delete(key: string) {
       this.map.get(key)?.destroy();
-      const r = this.map.delete(key);
-      for (const [key, value] of this.map) {
-         console.log(`content => ${key} | ${value}`);
-      }
-      console.log(`delete result: ${r}`);
+      this.map.delete(key);
       this.notify();
    }
 
