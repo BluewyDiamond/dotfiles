@@ -18,7 +18,8 @@ $color_border: #7f848e;
 }
 
 .bar {
-   background: black;
+   background: $color_background;
+   border-bottom: 2px solid $color_border;
 
    >centerbox {
       padding: 8px;
@@ -32,9 +33,14 @@ $color_border: #7f848e;
    margin-right: 7.2px;
 
    label {
-      color: $color_on_surface;
+      color: $color_background;
       margin-right: 4px;
 
+      &.occupied {
+         color: $color_on_surface;
+      }
+
+      // order of this is important since multiple classes can be triggered
       &.active {
          color: $color_primary;
       }

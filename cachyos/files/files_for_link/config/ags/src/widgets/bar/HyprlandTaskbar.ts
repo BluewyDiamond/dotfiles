@@ -1,8 +1,7 @@
 import { Gtk, Widget } from "astal/gtk3";
 import AstalHyprland from "gi://AstalHyprland";
-import { curateIcon } from "../../utils";
 import { Subscribable } from "astal/binding";
-import { Variable, bind, timeout } from "astal";
+import { Variable } from "astal";
 import { IconWithLabelFallback } from "../wrappers";
 
 export default function (): Widget.Box {

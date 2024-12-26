@@ -27,6 +27,13 @@ export default function (): Widget.Box {
                      return;
                   }
 
+                  self.toggleClassName(
+                     "occupied",
+                     // get_workspace can return null despite what return type idicates
+                     (hyprland.get_workspace(index)?.get_clients().length ||
+                        0) > 0
+                  );
+
                   self.toggleClassName("active", index === workspace.get_id());
                }
             },

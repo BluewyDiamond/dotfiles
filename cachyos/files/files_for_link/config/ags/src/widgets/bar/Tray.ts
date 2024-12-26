@@ -77,23 +77,36 @@ class TrayItemWidgets implements Subscribable {
    }
 }
 
-function TrayButton(item: Tray.TrayItem): Widget.MenuButton {
-   return new Widget.MenuButton({
-      setup: (self) => {
-         setProperties(item);
-
-         self.hook(item, "changed", () => {
+function TrayButton(item: Tray.TrayItem, tray: Tray.Tray): Widget.MenuButton {
+   return new Widget.MenuButton(
+      {
+         setup: (self) => {
             setProperties(item);
-         });
 
-         function setProperties(item: Tray.TrayItem) {
-            self.child = new Widget.Icon({ gIcon: item.gicon });
-            self.tooltipMarkup = item.tooltipMarkup;
-            self.usePopover = false;
-            // @ts-ignore
-            self.actionGroup = ["dbusmenu", item.actionGroup];
-            self.menuModel = item.menuModel;
-         }
+            self.hook(item, "changed", () => {
+               const changedItem = tray.get_item(item.get_item_id());
+               setProperties(changedItem);
+            });
+
+            function setProperties(item: Tray.TrayItem) {
+               self.tooltipMarkup = item.tooltipMarkup;
+               self.usePopover = false;
+               // @ts-ignore
+               self.actionGroup = ["dbusmenu", item.actionGroup];
+               self.menuModel = item.menuModel;
+            }
+         },
       },
-   });
+
+      new Widget.Icon({
+         gicon: item.gicon,
+
+         setup: (self) => {
+            self.hook(item, "changed", () => {
+               const changedItem = tray.get_item(item.get_item_id());
+               self.gicon = changedItem.gicon;
+            });
+         },
+      })
+   );
 }
