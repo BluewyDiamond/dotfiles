@@ -13,12 +13,23 @@ export default function (): Widget.Box {
             label: `${index}`,
 
             setup: (self) => {
-               // init
                onWorkspaceFocusedChange();
 
                self.hook(hyprland, "notify::focused-workspace", () => {
                   onWorkspaceFocusedChange();
                });
+
+               self.hook(
+                  hyprland,
+                  "urgent",
+
+                  (_, client: AstalHyprland.Client) => {
+                     self.toggleClassName(
+                        "urgent",
+                        index === client.get_workspace().get_id()
+                     );
+                  }
+               );
 
                function onWorkspaceFocusedChange() {
                   const workspace = hyprland.get_focused_workspace();
@@ -26,6 +37,8 @@ export default function (): Widget.Box {
                   if (!workspace) {
                      return;
                   }
+
+                  self.toggleClassName("urgent", false);
 
                   self.toggleClassName(
                      "occupied",
