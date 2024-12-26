@@ -9,13 +9,14 @@ export default function (): Widget.Box {
 
    return new Widget.Box({
       className: "hyprland-taskbar",
-      //children: bind(clientsWidget),
 
       setup: (self) => {
+         self.children = clientsWidget.get();
+
          clientsWidget.subscribe((list) => {
-            self.children = list
-         })
-      }
+            self.children = list;
+         });
+      },
    });
 }
 
@@ -53,8 +54,23 @@ class ClientsWidget implements Subscribable {
       });
    }
 
+   private sort() {
+      const hyprland = AstalHyprland.get_default();
+
+      const arr = Array.from(this.map);
+      arr.sort((a, b) => {
+         const clientA = hyprland.get_client(a[0])!;
+         const clientB = hyprland.get_client(b[0])!;
+
+         return clientA.workspace.id - clientB.workspace.id;
+      });
+
+      this.map = new Map(arr);
+   }
+
    private notify() {
-      this.var.set([...this.map.values()].reverse());
+      this.sort();
+      this.var.set([...this.map.values()]);
    }
 
    private set(key: string, value: Gtk.Widget) {
