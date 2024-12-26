@@ -9,7 +9,13 @@ export default function (): Widget.Box {
 
    return new Widget.Box({
       className: "hyprland-taskbar",
-      children: bind(clientsWidget),
+      //children: bind(clientsWidget),
+
+      setup: (self) => {
+         clientsWidget.subscribe((list) => {
+            self.children = list
+         })
+      }
    });
 }
 
@@ -24,6 +30,28 @@ function sortClients(clients: AstalHyprland.Client[]): AstalHyprland.Client[] {
 class ClientsWidget implements Subscribable {
    private map: Map<string, Gtk.Widget> = new Map();
    private var: Variable<Array<Gtk.Widget>> = Variable([]);
+
+   constructor() {
+      const hyprland = AstalHyprland.get_default();
+
+      hyprland.clients.forEach((client) => {
+         this.set(
+            client.get_address(),
+            IconWithLabelFallback(client.get_class())
+         );
+      });
+
+      hyprland.connect("client-added", (_, client) => {
+         this.set(
+            client.get_address(),
+            IconWithLabelFallback(client.get_class())
+         );
+      });
+
+      hyprland.connect("client-removed", (_, address) => {
+         this.delete(address);
+      });
+   }
 
    private notify() {
       this.var.set([...this.map.values()].reverse());
@@ -47,35 +75,6 @@ class ClientsWidget implements Subscribable {
 
    subscribe(callback: (list: Array<Gtk.Widget>) => void): () => void {
       return this.var.subscribe(callback);
-   }
-
-   constructor() {
-      const hyprland = AstalHyprland.get_default();
-
-      hyprland.clients.forEach((client) => {
-         this.set(
-            client.get_address(),
-            IconWithLabelFallback(client.get_class())
-         );
-      });
-
-      //timeout(5000, () => {
-      //   console.log("dropping 0");
-      //   this.map.get(hyprland.clients[0].get_address())?.destroy();
-      //   this.map.delete(hyprland.clients[0].get_address());
-      //   //this.notify()
-      //});
-
-      hyprland.connect("client-added", (_, client) => {
-         this.set(
-            client.get_address(),
-            IconWithLabelFallback(client.get_class())
-         );
-      });
-
-      hyprland.connect("client-removed", (_, address) => {
-         this.delete(address);
-      });
    }
 }
 
