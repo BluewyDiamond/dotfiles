@@ -3,6 +3,7 @@ import AstalHyprland from "gi://AstalHyprland";
 import { curateIcon } from "../../utils";
 import { Subscribable } from "astal/binding";
 import { Variable, bind, timeout } from "astal";
+import { IconWithLabelFallback } from "../wrappers";
 
 export default function (): Widget.Box {
    const clientsWidget = new ClientsWidget();
@@ -85,19 +86,5 @@ class ClientsWidget implements Subscribable {
 
    subscribe(callback: (list: Array<Gtk.Widget>) => void): () => void {
       return this.var.subscribe(callback);
-   }
-}
-
-function IconWithLabelFallback(value: string): Widget.Icon | Widget.Label {
-   let curatedIcon = curateIcon(value);
-
-   if (curatedIcon === "") {
-      return new Widget.Label({
-         label: "?",
-      });
-   } else {
-      return new Widget.Icon({
-         icon: curatedIcon,
-      });
    }
 }
