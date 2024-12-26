@@ -12,11 +12,21 @@ export default function (): Widget.Box {
       className: "tray",
 
       setup: (self) => {
-         self.children = trayItemWidgets.get();
+         updateItems(trayItemWidgets.get());
 
          trayItemWidgets.subscribe((list) => {
-            self.children = list;
+            updateItems(list);
          });
+
+         function updateItems(items: Gtk.Widget[]) {
+            if (items.length > 0) {
+               self.children = items;
+               self.visible = true;
+            } else {
+               self.children = [];
+               self.visible = false;
+            }
+         }
       },
    });
 }

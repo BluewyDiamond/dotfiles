@@ -62,16 +62,17 @@ $color_border: #7f848e;
 }
 
 .indicators {
+   color: $color_on_surface;
    background: $color_surface;
    border-radius: 8px;
    margin-left: 7.2px;
 
    >box {
       background-color: transparent;
-      padding-left: 4px;
+      margin-left: 4px;
 
       &:first-child {
-         padding-left: 0px;
+         margin-left: 0px;
       }
    }
 }
@@ -91,7 +92,9 @@ $color_border: #7f848e;
 .tray {
    margin-left: 7.2px;
 
-   >button {
+   // can't select menubutton, idk why
+   icon {
+      color: $color_on_surface;
       background: $color_surface;
       border-radius: 8px;
       padding: 4px;
