@@ -1,7 +1,7 @@
 import { Astal, Gtk, Widget } from "astal/gtk3";
 import { EventBox } from "astal/gtk3/widget";
 import Notifd from "gi://AstalNotifd";
-import { curateIcon, searchIcon } from "../../utils";
+import { curateIcon } from "../../utils";
 import { IconWithLabelFallback } from "../wrappers";
 import { GLib } from "astal";
 
@@ -42,6 +42,7 @@ export default function (props: Props): Widget.EventBox {
 
       child: new Widget.Box({
          vertical: true,
+
          children: [
             new Widget.Box({
                className: "notification-header",
@@ -54,14 +55,21 @@ export default function (props: Props): Widget.EventBox {
                   }
 
                   self.children = [
-                     IconWithLabelFallback(curatedIcon),
+                     IconWithLabelFallback(curatedIcon, {
+                        setup: (self) => {
+                           self.className = "notification-app-icon"
+                        }
+                     }),
+
                      new Widget.Label({
+                        className: "notification-app-name",
                         label: notification.appName || "undefined",
                      }),
 
-                     new Widget.Label({ label: time(notification.time) }),
+                     new Widget.Label({ className: "notification-time",label: time(notification.time) }),
 
                      new Widget.Button({
+                        className: "notification-close",
                         child: new Widget.Label({ label: "x" }),
                         onClick: () => notification.dismiss(),
                      }),
@@ -78,6 +86,7 @@ export default function (props: Props): Widget.EventBox {
                   if (notification.image && fileExists(notification.image)) {
                      self.children.push(
                         new Widget.Box({
+                           className: "notification-image",
                            css: `background-image: url('${notification.image}')`,
                         })
                      );
@@ -86,6 +95,7 @@ export default function (props: Props): Widget.EventBox {
                   if (notification.image && isIcon(notification.image)) {
                      self.children.push(
                         new Widget.Icon({
+                           className: "notification-icon",
                            icon: notification.image,
                         })
                      );
@@ -95,10 +105,12 @@ export default function (props: Props): Widget.EventBox {
                      ...self.children,
 
                      new Widget.Label({
+                        className: "notification-summary",
                         label: notification.summary,
                      }),
 
                      new Widget.Label({
+                        className: "notification-body",
                         label: notification.body,
                      }),
                   ];

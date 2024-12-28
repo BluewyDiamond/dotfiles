@@ -126,3 +126,21 @@ $color_border: #7f848e;
    padding: 4px;
    margin-right: 4px;
 }
+
+.notifications-overview {
+   background: $color_background;
+   min-width: 500px;
+   min-height: 500px;
+   margin: 500px;
+   border: 2px solid $color_border;
+
+   .notification-header {
+      background: $color_surface;
+      color: $color_on_surface;
+   }
+
+   .notification-content {
+      background: $color_surface;
+      color: $color_on_surface;
+   }
+}

@@ -4,7 +4,7 @@ import Indicators from "./indicators";
 import TaskbarHyprland from "./HyprlandTaskbar";
 import Tray from "./Tray";
 import Datetime from "./Datetime";
-import Notification from "./Notification";
+import Notification from "./Notifications";
 
 export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
    return new Widget.Window({

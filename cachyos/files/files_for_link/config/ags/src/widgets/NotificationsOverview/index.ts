@@ -8,23 +8,21 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
    return new Widget.Window({
       gdkmonitor: gdkmonitor,
       className: "notifications-overview",
-      exclusivity: Astal.Exclusivity.EXCLUSIVE,
+      exclusivity: Astal.Exclusivity.NORMAL,
       name: "astal-notifications-overview",
+      layer: Astal.Layer.OVERLAY,
+      anchor: Astal.WindowAnchor.TOP,
 
-      anchor:
-         Astal.WindowAnchor.TOP |
-         Astal.WindowAnchor.LEFT |
-         Astal.WindowAnchor.RIGHT |
-         Astal.WindowAnchor.BOTTOM,
-
-      child: NotificatonsTray(),
+      child: Notificatons(),
    });
 }
 
-function NotificatonsTray(): Widget.Box {
+function Notificatons(): Widget.Box {
    const notificationWidgets = new NotificationWidgets();
 
    return new Widget.Box({
+      className: "notifications-overview-content",
+
       setup: (self) => {
          self.children = notificationWidgets.get();
 
@@ -41,6 +39,18 @@ class NotificationWidgets implements Subscribable {
 
    constructor() {
       const notifd = Notifd.get_default();
+
+      notifd.notifications.forEach((notification) => {
+         this.set(
+            notification.id,
+
+            Notification({
+               notification: notifd.get_notification(notification.id),
+               onHoverLost: () => {},
+               setup: () => {},
+            })
+         );
+      });
 
       notifd.connect("notified", (_, id) => {
          this.set(

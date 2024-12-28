@@ -30,14 +30,14 @@ class ClientsWidget implements Subscribable {
       hyprland.clients.forEach((client) => {
          this.set(
             client.get_address(),
-            IconWithLabelFallback(client.get_class())
+            IconWithLabelFallback(client.get_class(), {})
          );
       });
 
       hyprland.connect("client-added", (_, client) => {
          this.set(
             client.get_address(),
-            IconWithLabelFallback(client.get_class())
+            IconWithLabelFallback(client.get_class(), {})
          );
       });
 
