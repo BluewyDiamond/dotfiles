@@ -1,7 +1,7 @@
 import { Widget } from "astal/gtk3";
 import PowerProfiles from "gi://AstalPowerProfiles";
 import icons from "../../../libs/icons";
-import { curateIcon } from "../../../utils";
+import { findIcon } from "../../../utils";
 
 export default function (): Widget.Box {
    const powerProfiles = PowerProfiles.get_default();
@@ -32,7 +32,7 @@ export default function (): Widget.Box {
                   ([state]) => state === powerProfile
                )?.[1] || "";
 
-            let curatedIcon = curateIcon(icon);
+            let curatedIcon = findIcon(icon);
 
             if (curatedIcon === "") {
                self.children = [new Widget.Label({ label: "?" })];

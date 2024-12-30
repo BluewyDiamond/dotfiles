@@ -21,7 +21,7 @@ class NotifiationMap implements Subscribable {
 
    // notify subscribers to rerender when state changes
    private notifiy() {
-      this.var.set([...this.map.values()].reverse())
+      this.var.set([...this.map.values()].reverse());
    }
 
    constructor() {

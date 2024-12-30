@@ -1,7 +1,7 @@
 import { Widget } from "astal/gtk3";
 import Wp from "gi://AstalWp";
 import icons from "../../../libs/icons";
-import { curateIcon } from "../../../utils";
+import { findIcon } from "../../../utils";
 
 const errorTitle = "ScreenShareIndicator";
 
@@ -37,7 +37,7 @@ export default function (): Widget.Box {
                return;
             }
 
-            const curatedIcon = curateIcon(icons.recorder.screencast);
+            const curatedIcon = findIcon(icons.recorder.screencast);
 
             if (curatedIcon === "") {
                self.children = [new Widget.Label({ label: "?" })];

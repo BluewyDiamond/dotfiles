@@ -129,18 +129,41 @@ $color_border: #7f848e;
 
 .notifications-overview {
    background: $color_background;
-   min-width: 500px;
-   min-height: 500px;
-   margin: 500px;
    border: 2px solid $color_border;
+   padding: 10px;
+   margin: 100px;
 
-   .notification-header {
-      background: $color_surface;
-      color: $color_on_surface;
-   }
+   .notifications-overview-content {
+      min-width: 500px;
+      min-height: 500px;
+      margin: .5rem 1rem .5rem 1rem;
 
-   .notification-content {
-      background: $color_surface;
-      color: $color_on_surface;
+      .notification {
+         background: $color_surface;
+         color: $color_on_surface;
+         margin-bottom: 8px;
+         border-radius: 4px;
+
+         .notification-header {
+            .notification-app-icon {}
+
+            .notification-app-name {}
+
+            .notification-time {}
+
+            .notification-close {}
+         }
+
+         separator {
+            margin: 0 .4rem;
+            background-color: $color_on_surface;
+         }
+
+         .notification-content {
+            .notification-summary {}
+
+            .notification-body {}
+         }
+      }
    }
 }

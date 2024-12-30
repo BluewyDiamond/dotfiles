@@ -3,7 +3,7 @@ import { Astal, Gtk } from "astal/gtk3";
 import GLib from "gi://GLib";
 import Apps from "gi://AstalApps";
 
-function checkIconExists(icon: string): boolean {
+export function isValidIcon(icon: string): boolean {
    return (
          GLib.file_test(icon, GLib.FileTest.EXISTS) ||
             Astal.Icon.lookup_icon(icon)
@@ -12,11 +12,7 @@ function checkIconExists(icon: string): boolean {
       :  false;
 }
 
-export function searchIcon(icon: string): string {
-   return icon && checkIconExists(icon) ? icon : "";
-}
-
-export function matchWithApps(app: Apps.Application, icon: string): boolean {
+export function hasIconInApps(icon: string, app: Apps.Application): boolean {
    const iconInLowerCase = icon.toLowerCase();
    const name = app.get_name()?.toLowerCase();
    const entry = app.get_entry()?.toLowerCase();
@@ -56,31 +52,31 @@ export function matchWithApps(app: Apps.Application, icon: string): boolean {
    return false;
 }
 
-export function curateIcon(icon: string): string {
-   let curatedIcon = searchIcon(icon);
-
-   if (curatedIcon) {
-      return curatedIcon;
+export function findIcon(icon: string): string {
+   if (isValidIcon(icon)) {
+      return icon;
    }
 
    const apps = new Apps.Apps();
-   const foundedApp = apps.list.find((app) => matchWithApps(app, icon));
+   const foundedApp = apps.list.find((app) => hasIconInApps(icon, app));
 
-   curatedIcon =
-      searchIcon(foundedApp?.get_icon_name() || "") ||
-      searchIcon(icon) ||
-      searchIcon(icon + "-symbolic");
-
-   while (!curatedIcon) {
-      const substitute = substitutes[icon];
-
-      if (!substitute) {
-         break;
-      }
-
-      icon = substitute;
-      curatedIcon = searchIcon(icon);
+   if (foundedApp && isValidIcon(foundedApp?.iconName)) {
+      return foundedApp.iconName;
    }
 
-   return curatedIcon || "";
+   if (isValidIcon(icon + "-symbolic")) {
+      return icon + "-symbolic";
+   }
+
+   const substitute = substitutes[icon];
+
+   if (!substitute) {
+      return "";
+   }
+
+   if (isValidIcon(substitute)) {
+      return substitute;
+   }
+
+   return "";
 }

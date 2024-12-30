@@ -1,9 +1,10 @@
 import { Astal, Gtk, Widget } from "astal/gtk3";
 import { EventBox } from "astal/gtk3/widget";
 import Notifd from "gi://AstalNotifd";
-import { curateIcon } from "../../utils";
+import { findIcon } from "../../utils";
 import { IconWithLabelFallback } from "../wrappers";
 import { GLib } from "astal";
+import icons from "../../libs/icons";
 
 const urgency = (n: Notifd.Notification) => {
    const { LOW, NORMAL, CRITICAL } = Notifd.Urgency;
@@ -25,22 +26,10 @@ const time = (time: number, format = "%H:%M") =>
 
 const fileExists = (path: string) => GLib.file_test(path, GLib.FileTest.EXISTS);
 
-export type Props = {
-   setup(self: EventBox): void;
-   onHoverLost(self: EventBox): void;
-   notification: Notifd.Notification;
-};
-
-export default function (props: Props): Widget.EventBox {
-   const { notification, onHoverLost, setup } = props;
-
+export default function (notification: Notifd.Notification): Widget.EventBox {
    return new Widget.EventBox({
-      className: `notification-urgency-${urgency(notification)}`,
-
-      onHoverLost: onHoverLost,
-      setup: setup,
-
       child: new Widget.Box({
+         className: "notification",
          vertical: true,
 
          children: [
@@ -48,31 +37,39 @@ export default function (props: Props): Widget.EventBox {
                className: "notification-header",
 
                setup: (self) => {
-                  let curatedIcon = curateIcon(notification.app_icon);
+                  let curatedIcon = findIcon(notification.app_icon);
 
                   if (curatedIcon === "") {
-                     curatedIcon = curateIcon(notification.desktop_entry);
+                     curatedIcon = findIcon(notification.desktop_entry);
                   }
 
                   self.children = [
                      IconWithLabelFallback(curatedIcon, {
                         setup: (self) => {
-                           self.className = "notification-app-icon"
-                        }
+                           self.className = "notification-app-icon";
+                        },
                      }),
 
                      new Widget.Label({
+                        halign: Gtk.Align.START,
                         className: "notification-app-name",
                         label: notification.appName || "undefined",
                      }),
 
-                     new Widget.Label({ className: "notification-time",label: time(notification.time) }),
-
-                     new Widget.Button({
-                        className: "notification-close",
-                        child: new Widget.Label({ label: "x" }),
-                        onClick: () => notification.dismiss(),
+                     new Widget.Label({
+                        halign: Gtk.Align.END,
+                        className: "notification-time",
+                        label: time(notification.time),
                      }),
+
+                     new Widget.Button(
+                        {
+                           className: "notification-close",
+                           onClick: () => notification.dismiss(),
+                        },
+
+                        IconWithLabelFallback(icons.ui.close, {})
+                     ),
                   ];
                },
             }),
@@ -81,6 +78,7 @@ export default function (props: Props): Widget.EventBox {
 
             new Widget.Box({
                className: "notification-content",
+               vertical: true,
 
                setup: (self) => {
                   if (notification.image && fileExists(notification.image)) {
@@ -101,9 +99,7 @@ export default function (props: Props): Widget.EventBox {
                      );
                   }
 
-                  self.children = [
-                     ...self.children,
-
+                  self.children.push(
                      new Widget.Label({
                         className: "notification-summary",
                         label: notification.summary,
@@ -112,8 +108,8 @@ export default function (props: Props): Widget.EventBox {
                      new Widget.Label({
                         className: "notification-body",
                         label: notification.body,
-                     }),
-                  ];
+                     })
+                  );
                },
             }),
          ],

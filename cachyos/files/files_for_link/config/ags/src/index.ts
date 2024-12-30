@@ -10,7 +10,6 @@ App.start({
 
    main() {
       App.get_monitors().map(Bar);
-      App.get_monitors().map(NotificationPopups);
 
       for (const monitor of App.get_monitors()) {
          const w = notificationsTray(monitor);

@@ -1,5 +1,5 @@
 import { Widget } from "astal/gtk3";
-import { curateIcon } from "../utils";
+import { findIcon } from "../utils";
 import icons from "../libs/icons";
 
 type Props = {
@@ -10,10 +10,10 @@ export function IconWithLabelFallback(
    value: string,
    props: Props
 ): Widget.Icon | Widget.Label {
-   let curatedIcon = curateIcon(value);
+   let curatedIcon = findIcon(value);
 
    if (curatedIcon === "") {
-      curatedIcon = curateIcon(icons.fallback.executable);
+      curatedIcon = findIcon(icons.fallback.executable);
    }
 
    if (curatedIcon === "") {

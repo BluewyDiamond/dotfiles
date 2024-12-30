@@ -7,33 +7,33 @@ import Notification from "./Notification";
 export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
    return new Widget.Window({
       gdkmonitor: gdkmonitor,
+      name: "astal-notifications-overview",
       className: "notifications-overview",
       exclusivity: Astal.Exclusivity.NORMAL,
-      name: "astal-notifications-overview",
-      layer: Astal.Layer.OVERLAY,
+      layer: Astal.Layer.TOP,
       anchor: Astal.WindowAnchor.TOP,
-
-      child: Notificatons(),
+      child: Notifications(),
    });
 }
 
-function Notificatons(): Widget.Box {
-   const notificationWidgets = new NotificationWidgets();
+function Notifications(): Widget.Box {
+   const notificationMap = new NotificationMap();
 
    return new Widget.Box({
       className: "notifications-overview-content",
+      vertical: true,
 
       setup: (self) => {
-         self.children = notificationWidgets.get();
+         self.children = notificationMap.get();
 
-         notificationWidgets.subscribe((list) => {
+         notificationMap.subscribe((list) => {
             self.children = list;
          });
       },
    });
 }
 
-class NotificationWidgets implements Subscribable {
+class NotificationMap implements Subscribable {
    private map: Map<number, Gtk.Widget> = new Map();
    private var: Variable<Array<Gtk.Widget>> = Variable([]);
 
@@ -43,24 +43,12 @@ class NotificationWidgets implements Subscribable {
       notifd.notifications.forEach((notification) => {
          this.set(
             notification.id,
-
-            Notification({
-               notification: notifd.get_notification(notification.id),
-               onHoverLost: () => {},
-               setup: () => {},
-            })
+            Notification(notifd.get_notification(notification.id))
          );
       });
 
       notifd.connect("notified", (_, id) => {
-         this.set(
-            id,
-            Notification({
-               notification: notifd.get_notification(id),
-               onHoverLost: () => {},
-               setup: () => {},
-            })
-         );
+         this.set(id, Notification(notifd.get_notification(id)));
       });
 
       notifd.connect("resolved", (_, id) => {

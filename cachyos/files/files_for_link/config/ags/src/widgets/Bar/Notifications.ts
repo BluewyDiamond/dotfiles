@@ -6,29 +6,33 @@ import { bind, Variable } from "astal";
 import { Subscribable } from "astal/binding";
 import Notifd from "gi://AstalNotifd";
 
-export default function (): Widget.Button {
+export default function (): Widget.Box {
    const notifd = Notifd.get_default();
 
-   return new Widget.Button({
+   return new Widget.Box({
       className: "notifications",
-
-      onClick: () => {
-         App.toggle_window("astal-notifications-overview");
-      },
 
       setup: (self) => {
          update();
 
-         self.hook(notifd, "notify::notifications", () => {
-            update();
-         });
+         self.hook(notifd, "notify::notifications", () => update());
 
          function update() {
             if (notifd.notifications.length > 0) {
-               self.child = IconWithLabelFallback(icons.notifications.message, {});
+               self.children = [
+                  new Widget.Button(
+                     {
+                        onClick: () =>
+                           App.toggle_window("astal-notifications-overview"),
+                     },
+
+                     IconWithLabelFallback(icons.notifications.message, {})
+                  ),
+               ];
+
                self.visible = true;
             } else {
-               self.child?.destroy();
+               self.children = [];
                self.visible = false;
             }
          }
