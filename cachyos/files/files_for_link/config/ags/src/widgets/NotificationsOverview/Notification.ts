@@ -1,7 +1,7 @@
 import { Astal, Gtk, Widget } from "astal/gtk3";
 import { EventBox } from "astal/gtk3/widget";
 import Notifd from "gi://AstalNotifd";
-import { findIcon } from "../../utils";
+import { findIcon, isValidIcon } from "../../utils";
 import { IconWithLabelFallback } from "../wrappers";
 import { GLib } from "astal";
 import icons from "../../libs/icons";
@@ -18,8 +18,6 @@ const urgency = (n: Notifd.Notification) => {
          return "normal";
    }
 };
-
-const isIcon = (icon: string) => !!Astal.Icon.lookup_icon(icon);
 
 const time = (time: number, format = "%H:%M") =>
    GLib.DateTime.new_from_unix_local(time).format(format)!;
@@ -82,24 +80,30 @@ export default function (notification: Notifd.Notification): Widget.EventBox {
 
                setup: (self) => {
                   if (notification.image && fileExists(notification.image)) {
-                     self.children.push(
+                     self.children = [
+                        ...self.children,
+
                         new Widget.Box({
                            className: "notification-image",
                            css: `background-image: url('${notification.image}')`,
-                        })
-                     );
+                        }),
+                     ];
                   }
 
-                  if (notification.image && isIcon(notification.image)) {
-                     self.children.push(
+                  if (notification.image && isValidIcon(notification.image)) {
+                     self.children = [
+                        ...self.children,
+
                         new Widget.Icon({
                            className: "notification-icon",
                            icon: notification.image,
-                        })
-                     );
+                        }),
+                     ];
                   }
 
-                  self.children.push(
+                  self.children = [
+                     ...self.children,
+
                      new Widget.Label({
                         className: "notification-summary",
                         label: notification.summary,
@@ -108,8 +112,8 @@ export default function (notification: Notifd.Notification): Widget.EventBox {
                      new Widget.Label({
                         className: "notification-body",
                         label: notification.body,
-                     })
-                  );
+                     }),
+                  ];
                },
             }),
          ],

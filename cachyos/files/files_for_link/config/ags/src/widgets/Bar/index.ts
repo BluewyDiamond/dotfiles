@@ -9,6 +9,8 @@ import Notification from "./Notifications";
 export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
    return new Widget.Window({
       gdkmonitor: gdkmonitor,
+      name: "astal-bar",
+      namespace: "astal-bar",
       className: "bar",
       exclusivity: Astal.Exclusivity.EXCLUSIVE,
 
