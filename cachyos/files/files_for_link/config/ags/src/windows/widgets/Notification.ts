@@ -50,12 +50,14 @@ export default function (notification: Notifd.Notification): Widget.EventBox {
                      new Widget.Label({
                         halign: Gtk.Align.START,
                         className: "notification-app-name",
+                        truncate: true,
                         label: notification.appName || "undefined",
                      }),
 
                      new Widget.Label({
                         halign: Gtk.Align.END,
                         className: "notification-time",
+                        hexpand: true,
                         label: time(notification.time),
                      }),
 
@@ -103,14 +105,24 @@ export default function (notification: Notifd.Notification): Widget.EventBox {
                   self.children = [
                      ...self.children,
 
-                     new Widget.Label({
-                        className: "notification-summary",
-                        label: notification.summary,
-                     }),
+                     new Widget.Box({
+                        vertical: true,
 
-                     new Widget.Label({
-                        className: "notification-body",
-                        label: notification.body,
+                        children: [
+                           new Widget.Label({
+                              className: "notification-summary",
+                              halign: Gtk.Align.START,
+                              xalign: 0,
+                              label: notification.summary,
+                           }),
+
+                           new Widget.Label({
+                              className: "notification-body",
+                              halign: Gtk.Align.START,
+                              xalign: 0,
+                              label: notification.body,
+                           }),
+                        ],
                      }),
                   ];
                },

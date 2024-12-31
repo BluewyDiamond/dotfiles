@@ -68,7 +68,8 @@ $color_border: #7f848e;
    margin-left: 7.2px;
 
    // cant select it with > for some reason?
-   box {
+   icon,
+   label {
       background-color: transparent;
       margin-left: 4px;
 
@@ -133,15 +134,27 @@ $color_border: #7f848e;
 }
 
 .notifications-overview {
-   background: $color_background;
-   border: 2px solid $color_border;
-   padding: 10px;
-   margin: 100px;
+   // background: pink;
 
    .notifications-overview-content {
       min-width: 500px;
       min-height: 500px;
+      background: $color_background;
+
+      border: 2px solid $color_border;
+
+      padding: 10px;
       margin: .5rem 1rem .5rem 1rem;
+
+   }
+}
+
+.notifications-popup {
+   // background: pink;
+
+   .notifications-popup-content {
+      padding: 10px;
+      margin: 10px;
 
    }
 }
@@ -151,6 +164,8 @@ $color_border: #7f848e;
    color: $color_on_surface;
    margin-bottom: 8px;
    border-radius: 4px;
+   min-width: 500px;
+   min-height: 100px;
 
    .notification-header {
       .notification-app-icon {}

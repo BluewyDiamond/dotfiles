@@ -1,10 +1,12 @@
 import { Astal, Gdk, Gtk, Widget } from "astal/gtk3";
-import { bind, Subscribable } from "astal/binding";
+import { Subscribable } from "astal/binding";
 import { Variable } from "astal";
 import Notifd from "gi://AstalNotifd";
 import Notification from "../widgets/Notification";
 
 export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
+   const notifd = Notifd.get_default();
+
    return new Widget.Window({
       gdkmonitor: gdkmonitor,
       name: "astal-notifications-popup",
@@ -15,15 +17,19 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
       child: Notifications(),
 
       setup: (self) => {
-         const notifd = Notifd.get_default();
+         onNotificationsChanged();
 
-         self.hook(notifd, "notify::notifications", () => {
+         self.hook(notifd, "notify::notifications", () =>
+            onNotificationsChanged()
+         );
+
+         function onNotificationsChanged() {
             if (notifd.notifications.length > 0) {
                self.visible = true;
             } else {
                self.visible = false;
             }
-         });
+         }
       },
    });
 }
@@ -33,6 +39,7 @@ function Notifications(): Widget.Box {
 
    return new Widget.Box({
       className: "notifications-popup-content",
+      vertical: true,
 
       setup: (self) => {
          self.children = notificationMap.get();
