@@ -1,7 +1,8 @@
-import { Gdk, Gtk, Widget } from "astal/gtk3";
+import { Astal, Gdk, Gtk, Widget } from "astal/gtk3";
 import { bind, Subscribable } from "astal/binding";
 import { Variable } from "astal";
 import Notifd from "gi://AstalNotifd";
+import Notification from "../widgets/Notification";
 
 export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
    return new Widget.Window({
@@ -9,6 +10,8 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
       name: "astal-notifications-popup",
       namespace: "astal-notifications-popup",
       className: "notifications-popup",
+      layer: Astal.Layer.OVERLAY,
+      anchor: Astal.WindowAnchor.TOP | Astal.WindowAnchor.RIGHT,
       child: Notifications(),
 
       setup: (self) => {
@@ -32,12 +35,12 @@ function Notifications(): Widget.Box {
       className: "notifications-popup-content",
 
       setup: (self) => {
-         self.children = notificationMap.get()
+         self.children = notificationMap.get();
 
          notificationMap.subscribe((list) => {
-            self.children = list
-         })
-      }
+            self.children = list;
+         });
+      },
    });
 }
 
@@ -57,17 +60,11 @@ class NotificationMap implements Subscribable {
       const notifd = Notifd.get_default();
 
       notifd.notifications.forEach((notification) => {
-         this.set(
-            notification.id,
-            new Widget.Label({ label: `${notification.id}` })
-         );
+         this.set(notification.id, Notification(notification));
       });
 
       notifd.connect("notified", (_, id) => {
-         this.set(
-            id,
-            new Widget.Label({ label: `${notifd.get_notification(id)}` })
-         );
+         this.set(id, Notification(notifd.get_notification(id)));
       });
 
       notifd.connect("resolved", (_, id) => {

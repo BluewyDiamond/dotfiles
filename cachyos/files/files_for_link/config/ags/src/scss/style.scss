@@ -138,32 +138,33 @@ $color_border: #7f848e;
       min-height: 500px;
       margin: .5rem 1rem .5rem 1rem;
 
-      .notification {
-         background: $color_surface;
-         color: $color_on_surface;
-         margin-bottom: 8px;
-         border-radius: 4px;
+   }
+}
 
-         .notification-header {
-            .notification-app-icon {}
+.notification {
+   background: $color_surface;
+   color: $color_on_surface;
+   margin-bottom: 8px;
+   border-radius: 4px;
 
-            .notification-app-name {}
+   .notification-header {
+      .notification-app-icon {}
 
-            .notification-time {}
+      .notification-app-name {}
 
-            .notification-close {}
-         }
+      .notification-time {}
 
-         separator {
-            margin: 0 .4rem;
-            background-color: $color_on_surface;
-         }
+      .notification-close {}
+   }
 
-         .notification-content {
-            .notification-summary {}
+   separator {
+      margin: 0 .4rem;
+      background-color: $color_on_surface;
+   }
 
-            .notification-body {}
-         }
-      }
+   .notification-content {
+      .notification-summary {}
+
+      .notification-body {}
    }
 }
