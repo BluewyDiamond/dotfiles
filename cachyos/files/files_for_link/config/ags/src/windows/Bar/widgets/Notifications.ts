@@ -1,9 +1,7 @@
-import { Gtk, Widget } from "astal/gtk3";
-import { IconWithLabelFallback } from "../wrappers";
-import icons from "../../libs/icons";
+import { Widget } from "astal/gtk3";
+import { IconWithLabelFallback } from "../../wrappers";
+import icons from "../../../libs/icons";
 import { App } from "astal/gtk3";
-import { bind, Variable } from "astal";
-import { Subscribable } from "astal/binding";
 import Notifd from "gi://AstalNotifd";
 
 export default function (): Widget.Box {

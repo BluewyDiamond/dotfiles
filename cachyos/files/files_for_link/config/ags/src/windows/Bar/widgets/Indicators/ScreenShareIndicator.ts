@@ -1,9 +1,7 @@
 import { Widget } from "astal/gtk3";
 import Wp from "gi://AstalWp";
-import icons from "../../../libs/icons";
-import { findIcon } from "../../../utils";
-
-const errorTitle = "ScreenShareIndicator";
+import icons from "../../../../libs/icons";
+import { findIcon } from "../../../../utils";
 
 export default function (): Widget.Box {
    const video = Wp.get_default()?.get_video();

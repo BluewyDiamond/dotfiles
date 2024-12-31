@@ -1,7 +1,7 @@
 import { Widget } from "astal/gtk3";
 import PowerProfiles from "gi://AstalPowerProfiles";
-import icons from "../../../libs/icons";
-import { findIcon } from "../../../utils";
+import icons from "../../../../libs/icons";
+import { findIcon } from "../../../../utils";
 
 export default function (): Widget.Box {
    const powerProfiles = PowerProfiles.get_default();

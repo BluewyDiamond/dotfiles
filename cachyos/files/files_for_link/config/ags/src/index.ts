@@ -1,9 +1,9 @@
 import { App, Gdk } from "astal/gtk3";
-import Bar from "./widgets/Bar";
+import Bar from "./windows/Bar";
 import { getCss } from "./style";
-import NotificationsOverview from "./widgets/NotificationsOverview";
+import NotificationsOverview from "./windows/NotificationsOverview";
 import { bind } from "astal";
-import NotificationsPopup from "./widgets/NotificationsPopup";
+import NotificationsPopup from "./windows/NotificationsPopup";
 
 App.start({
    css: getCss(),

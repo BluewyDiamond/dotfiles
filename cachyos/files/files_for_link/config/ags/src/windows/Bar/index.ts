@@ -1,10 +1,10 @@
 import { Gdk, Widget, Astal, Gtk } from "astal/gtk3";
-import WorkspacesHyprland from "./HyprlandWorkspaces";
-import Indicators from "./indicators";
-import TaskbarHyprland from "./HyprlandTaskbar";
-import Tray from "./Tray";
-import Datetime from "./Datetime";
-import Notification from "./Notifications";
+import HyprlandWorkspaces from "./widgets/HyprlandWorkspaces";
+import Indicators from "./widgets/Indicators";
+import HyprlandTaskbar from "./widgets/HyprlandTaskbar";
+import SystemTray from "./widgets/SystemTray";
+import Datetime from "./widgets/Datetime";
+import Notifications from "./widgets/Notifications";
 
 export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
    return new Widget.Window({
@@ -26,20 +26,20 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
 
             children: [
                new Widget.Box({
-                  children: [WorkspacesHyprland(), TaskbarHyprland()],
+                  children: [HyprlandWorkspaces(), HyprlandTaskbar()],
                }),
             ],
          }),
 
          centerWidget: new Widget.Box({
             halign: Gtk.Align.CENTER,
-            children: [Notification(), Datetime()],
+            children: [Notifications(), Datetime()],
          }),
 
          endWidget: new Widget.Box({
             hexpand: true,
             halign: Gtk.Align.END,
-            children: [Tray(), Indicators()],
+            children: [SystemTray(), Indicators()],
          }),
       }),
    });

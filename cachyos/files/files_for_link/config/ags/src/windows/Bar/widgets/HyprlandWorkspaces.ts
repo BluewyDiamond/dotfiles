@@ -1,5 +1,5 @@
 import { Widget } from "astal/gtk3";
-import options from "../../libs/options";
+import options from "../../../libs/options";
 import AstalHyprland from "gi://AstalHyprland";
 
 export default function (): Widget.Box {
