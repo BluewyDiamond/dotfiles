@@ -1,20 +1,27 @@
-import { App } from "astal/gtk3";
+import { App, Gdk } from "astal/gtk3";
 import Bar from "./widgets/Bar";
 import { getCss } from "./style";
-import NotificationPopups from "./widgets/NotificationPopup";
-import notificationsTray from "./widgets/NotificationsOverview";
+import NotificationsOverview from "./widgets/NotificationsOverview";
+import { bind } from "astal";
+import NotificationsPopup from "./widgets/NotificationsPopup";
 
 App.start({
    css: getCss(),
-   instanceName: "some_name",
+   instanceName: "main",
 
    main() {
-      App.get_monitors().map(Bar);
+      onMonitorsChanged();
 
-      for (const monitor of App.get_monitors()) {
-         const w = notificationsTray(monitor);
-         w.hide();
-         App.add_window(w);
+      App.connect("notify::monitors", () => {
+         onMonitorsChanged();
+      });
+
+      function onMonitorsChanged() {
+         App.get_monitors().forEach((monitor) => {
+            Bar(monitor);
+            App.add_window(NotificationsOverview(monitor));
+            App.add_window(NotificationsPopup(monitor));
+         });
       }
    },
 });

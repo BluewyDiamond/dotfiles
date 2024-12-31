@@ -1,19 +1,27 @@
+import { Gdk, Gtk, Widget } from "astal/gtk3";
+import { bind, Subscribable } from "astal/binding";
 import { Variable } from "astal";
-import { Subscribable } from "astal/binding";
-import { Astal, Gdk, Gtk, Widget } from "astal/gtk3";
 import Notifd from "gi://AstalNotifd";
-import Notification from "./Notification";
 
 export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
    return new Widget.Window({
       gdkmonitor: gdkmonitor,
-      name: "astal-notifications-overview",
-      className: "notifications-overview",
-      exclusivity: Astal.Exclusivity.NORMAL,
-      layer: Astal.Layer.TOP,
-      anchor: Astal.WindowAnchor.TOP,
-      visible: false,
+      name: "astal-notifications-popup",
+      namespace: "astal-notifications-popup",
+      className: "notifications-popup",
       child: Notifications(),
+
+      setup: (self) => {
+         const notifd = Notifd.get_default();
+
+         self.hook(notifd, "notify::notifications", () => {
+            if (notifd.notifications.length > 0) {
+               self.visible = true;
+            } else {
+               self.visible = false;
+            }
+         });
+      },
    });
 }
 
@@ -21,41 +29,21 @@ function Notifications(): Widget.Box {
    const notificationMap = new NotificationMap();
 
    return new Widget.Box({
-      className: "notifications-overview-content",
-      vertical: true,
+      className: "notifications-popup-content",
 
       setup: (self) => {
-         self.children = notificationMap.get();
+         self.children = notificationMap.get()
 
          notificationMap.subscribe((list) => {
-            self.children = list;
-         });
-      },
+            self.children = list
+         })
+      }
    });
 }
 
 class NotificationMap implements Subscribable {
    private map: Map<number, Gtk.Widget> = new Map();
-   private var: Variable<Array<Gtk.Widget>> = Variable([]);
-
-   constructor() {
-      const notifd = Notifd.get_default();
-
-      notifd.notifications.forEach((notification) => {
-         this.set(
-            notification.id,
-            Notification(notifd.get_notification(notification.id))
-         );
-      });
-
-      notifd.connect("notified", (_, id) => {
-         this.set(id, Notification(notifd.get_notification(id)));
-      });
-
-      notifd.connect("resolved", (_, id) => {
-         this.delete(id);
-      });
-   }
+   private var: Variable<Gtk.Widget[]> = Variable([]);
 
    get() {
       return this.var.get();
@@ -63,6 +51,28 @@ class NotificationMap implements Subscribable {
 
    subscribe(callback: (list: Array<Gtk.Widget>) => void) {
       return this.var.subscribe(callback);
+   }
+
+   constructor() {
+      const notifd = Notifd.get_default();
+
+      notifd.notifications.forEach((notification) => {
+         this.set(
+            notification.id,
+            new Widget.Label({ label: `${notification.id}` })
+         );
+      });
+
+      notifd.connect("notified", (_, id) => {
+         this.set(
+            id,
+            new Widget.Label({ label: `${notifd.get_notification(id)}` })
+         );
+      });
+
+      notifd.connect("resolved", (_, id) => {
+         this.delete(id);
+      });
    }
 
    private notify() {
