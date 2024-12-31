@@ -90,7 +90,7 @@ $color_border: #7f848e;
    }
 }
 
-.tray {
+.system-tray {
    margin-left: 7.2px;
 
    // can't select menubutton, idk why
@@ -103,6 +103,11 @@ $color_border: #7f848e;
       &>.active {
          background: blue;
       }
+   }
+
+   // unable to select without class, idk why
+   .tray-item {
+      margin-left: 7.2px;
    }
 
    .active {

@@ -76,7 +76,6 @@ class ClientMap implements Subscribable {
    private delete(key: string) {
       this.map.get(key)?.destroy();
       this.map.delete(key);
-      this.sort();
       this.notify();
    }
 

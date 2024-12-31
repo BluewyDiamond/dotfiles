@@ -6,19 +6,19 @@ import Tray from "gi://AstalTray";
 // TODO: maybe fallback gicon?
 
 export default function (): Widget.Box {
-   const trayItemWidgets = new TrayItemWidgets();
+   const trayItemMap = new TrayItemMap();
 
    return new Widget.Box({
-      className: "tray",
+      className: "system-tray",
 
       setup: (self) => {
-         updateItems(trayItemWidgets.get());
+         onTrayItemsChanged(trayItemMap.get());
 
-         trayItemWidgets.subscribe((list) => {
-            updateItems(list);
+         trayItemMap.subscribe((list) => {
+            onTrayItemsChanged(list);
          });
 
-         function updateItems(items: Gtk.Widget[]) {
+         function onTrayItemsChanged(items: Gtk.Widget[]) {
             if (items.length > 0) {
                self.children = items;
                self.visible = true;
@@ -31,7 +31,7 @@ export default function (): Widget.Box {
    });
 }
 
-class TrayItemWidgets implements Subscribable {
+class TrayItemMap implements Subscribable {
    private map: Map<string, Gtk.Widget> = new Map();
    private var: Variable<Array<Gtk.Widget>> = new Variable([]);
 
@@ -80,6 +80,8 @@ class TrayItemWidgets implements Subscribable {
 function TrayButton(item: Tray.TrayItem, tray: Tray.Tray): Widget.MenuButton {
    return new Widget.MenuButton(
       {
+         className: "tray-item",
+
          setup: (self) => {
             setProperties(item);
 
