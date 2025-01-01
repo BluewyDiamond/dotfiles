@@ -3,6 +3,7 @@ import { IconWithLabelFallback } from "../../wrappers";
 import icons from "../../../libs/icons";
 import { App } from "astal/gtk3";
 import Notifd from "gi://AstalNotifd";
+import { panelButton as setupAsPanelButton } from "../../c";
 
 export default function (): Widget.Box {
    const notifd = Notifd.get_default();
@@ -20,8 +21,16 @@ export default function (): Widget.Box {
                self.children = [
                   new Widget.Button(
                      {
-                        onClick: () =>
-                           App.toggle_window("astal-notifications-overview"),
+                        onClick: () => {
+                           App.toggle_window("astal-notifications-overview");
+                        },
+
+                        setup: (self) => {
+                           setupAsPanelButton(
+                              self,
+                              "astal-notifications-overview"
+                           );
+                        },
                      },
 
                      IconWithLabelFallback(icons.notifications.message, {})

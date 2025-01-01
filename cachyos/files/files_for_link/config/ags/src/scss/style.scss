@@ -32,8 +32,18 @@ icon {
    background: $color_background;
    // border-bottom: 2px solid $color_border;
 
-   > centerbox {
+   >centerbox {
       padding: 8px;
+   }
+}
+
+@keyframes ripple {
+   0% {
+      opacity: 0;
+   }
+
+   100% {
+      opacity: 1;
    }
 }
 
@@ -43,10 +53,6 @@ icon {
 
    button {
       margin-right: 4px;
-
-      &.clicked {
-         background: lightblue;
-      }
    }
 
    label {
@@ -58,21 +64,20 @@ icon {
       border-radius: 10%;
       padding: 5px;
 
-      &.clicked {
-         background: lightblue;
-      }
-
       &.occupied {
          background: $color_on_surface;
       }
 
       &.active {
          background: $color_primary;
+         animation: ripple 1s linear;
       }
 
       &.urgent {
          background: $color_alert;
       }
+
+      &.clicked {}
 
       &:last-child {
          margin-right: 0;
@@ -97,7 +102,8 @@ icon {
 }
 
 .hyprland-taskbar {
-   > icon,
+
+   >icon,
    label {
       @include bar-module();
       margin-right: 7.2px;
@@ -137,8 +143,15 @@ icon {
 }
 
 .notifications {
-   @include bar-module();
    margin-right: 4px;
+
+   button {
+      @include bar-module();
+
+      &.active {
+         background: pink;
+      }
+   }
 }
 
 .notifications-overview {
@@ -174,17 +187,13 @@ icon {
    min-height: 100px;
 
    .notification-header {
-      .notification-app-icon {
-      }
+      .notification-app-icon {}
 
-      .notification-app-name {
-      }
+      .notification-app-name {}
 
-      .notification-time {
-      }
+      .notification-time {}
 
-      .notification-close {
-      }
+      .notification-close {}
    }
 
    separator {
@@ -193,10 +202,8 @@ icon {
    }
 
    .notification-content {
-      .notification-summary {
-      }
+      .notification-summary {}
 
-      .notification-body {
-      }
+      .notification-body {}
    }
 }
