@@ -1,0 +1,154 @@
+$color_primary: #e06c75;
+$color_on_primary: #000000;
+$color_error: #ff0000;
+$color_on_error: #000000;
+$color_background: #15171c;
+$color_on_background: #abb2bf;
+$color_surface: #282c34;
+$color_on_surface: #abb2bf;
+$color_alert: #d19a66;
+$color_on_alert: #000000;
+$color_border: #7f848e;
+
+@mixin bar-module {
+   background: $color_surface;
+   color: $color_on_surface;
+   border-radius: 4px;
+   padding: 4px;
+}
+
+* {
+   all: unset;
+   font-family: "IosevkaTerm Nerd Font Mono";
+   font-size: 18px;
+   font-weight: 500;
+}
+
+icon {
+   font-size: 22px;
+}
+
+.bar {
+   background: $color_background;
+   // border-bottom: 2px solid $color_border;
+
+   >centerbox {
+      padding: 8px;
+   }
+}
+
+@keyframes ripple {
+   0% {
+      opacity: 0;
+   }
+
+   100% {
+      opacity: 1;
+   }
+}
+
+.workspaces {
+   @include bar-module();
+   margin-right: 7.2px;
+
+   >button {
+      margin-right: 4px;
+
+      >label {
+         background: $color_background;
+
+         font-size: 0;
+         min-width: 3pt;
+         min-height: 3pt;
+         border-radius: 10%;
+         padding: 5px;
+
+         &.occupied {
+            background: $color_on_surface;
+         }
+
+         &.active {
+            background: $color_primary;
+            animation: ripple 1s linear;
+         }
+
+         &.urgent {
+            background: $color_alert;
+         }
+
+         &.clicked {}
+
+         &:last-child {
+            margin-right: 0;
+         }
+      }
+   }
+}
+
+.hyprland-taskbar {
+
+   &>icon,
+   &>label {
+      @include bar-module();
+      margin-right: 7.2px;
+   }
+}
+
+.notifications {
+   margin-right: 4px;
+
+   &>button {
+      @include bar-module();
+
+      &.active {
+         background: pink;
+      }
+   }
+}
+
+.datetime {
+   @include bar-module();
+   margin-right: 4px;
+}
+
+.system-tray {
+   margin-left: 7.2px;
+
+   .tray-item {
+      @include bar-module();
+      margin-left: 7.2px;
+   }
+
+   menu {
+      background: $color_background;
+      border: 2px solid $color_border;
+      border-radius: 4px;
+      padding: 10px;
+
+      menuitem {
+         margin-bottom: 7.2px;
+         background: $color_surface;
+         border-radius: 4px;
+         padding: 4px;
+
+         &:last-child {
+            margin-bottom: 0;
+         }
+      }
+   }
+}
+
+.indicators {
+   @include bar-module();
+   margin-left: 7.2px;
+
+   &>icon,
+   &>label {
+      background-color: transparent;
+      margin-left: 4px;
+
+      &:first-child {
+         margin-left: 0px;
+      }
+   }
+}
