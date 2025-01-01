@@ -2,7 +2,7 @@ import { Astal, Gdk, Gtk, Widget } from "astal/gtk3";
 import { Subscribable } from "astal/binding";
 import { Variable } from "astal";
 import Notifd from "gi://AstalNotifd";
-import Notification from "../widgets/Notification";
+import Notification from "../common/Notification";
 
 export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
    const notifd = Notifd.get_default();
