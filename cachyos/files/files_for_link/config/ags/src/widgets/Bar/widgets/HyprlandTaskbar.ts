@@ -37,11 +37,11 @@ class ClientMap implements Subscribable {
       const hyprland = AstalHyprland.get_default();
 
       hyprland.clients.forEach((client) => {
-         this.set(client.get_address(), wrapper(client));
+         this.set(client.get_address(), wrapper(client, hyprland));
       });
 
       hyprland.connect("client-added", (_, client) => {
-         this.set(client.get_address(), wrapper(client));
+         this.set(client.get_address(), wrapper(client, hyprland));
       });
 
       hyprland.connect("client-removed", (_, address) => {
@@ -91,7 +91,10 @@ class ClientMap implements Subscribable {
    }
 }
 
-function wrapper(client: AstalHyprland.Client): Widget.Icon | Widget.Label {
+function wrapper(
+   client: AstalHyprland.Client,
+   hyprland: AstalHyprland.Hyprland
+): Widget.Icon | Widget.Label {
    return IconWithLabelFallback(client.get_class(), {
       setup: (self) => {
          self.hook(hyprland, "notify::focused-client", () => {
