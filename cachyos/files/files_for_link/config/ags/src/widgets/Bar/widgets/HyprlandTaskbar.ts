@@ -100,7 +100,8 @@ function wrapper(
          self.hook(hyprland, "notify::focused-client", () => {
             self.toggleClassName(
                "active",
-               client.pid === hyprland.focusedClient.pid
+               hyprland.focusedClient &&
+                  hyprland.focusedClient.pid === client.pid
             );
          });
       },
