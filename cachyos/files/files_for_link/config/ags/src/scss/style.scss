@@ -41,9 +41,16 @@ icon {
    @include bar-module();
    margin-right: 7.2px;
 
-   label {
-      color: $color_background;
+   button {
       margin-right: 4px;
+
+      &.clicked {
+         background: lightblue;
+      }
+   }
+
+   label {
+      background: $color_background;
 
       font-size: 0;
       min-width: 3pt;
@@ -51,11 +58,14 @@ icon {
       border-radius: 10%;
       padding: 5px;
 
+      &.clicked {
+         background: lightblue;
+      }
+
       &.occupied {
          background: $color_on_surface;
       }
 
-      // order of this is important since multiple classes can be triggered
       &.active {
          background: $color_primary;
       }
