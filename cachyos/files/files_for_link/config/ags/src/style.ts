@@ -1,6 +1,6 @@
 import { exec, writeFile } from "astal";
 import constants from "./libs/contants";
-import options from "./libs/options";
+import options from "./options";
 
 export function getCss(): string {
    const vars = `${constants.tmp}/variables.scss`;

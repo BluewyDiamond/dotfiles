@@ -3,7 +3,7 @@ import { findIcon } from "../utils";
 import icons from "../libs/icons";
 
 type Props = {
-   setup?(self: Widget.Icon | Widget.Label): void ;
+   setup?(self: Widget.Icon | Widget.Label): void;
 };
 
 export function IconWithLabelFallback(

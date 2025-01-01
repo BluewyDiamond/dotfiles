@@ -1,11 +1,7 @@
 import { Widget } from "astal/gtk3";
-import options from "../../../libs/options";
+import options from "../../../options";
 import AstalHyprland from "gi://AstalHyprland";
 import { timeout } from "astal";
-
-async function x() {
-   console.log("hi");
-}
 
 export default function (): Widget.Box {
    const hyprland = AstalHyprland.get_default();

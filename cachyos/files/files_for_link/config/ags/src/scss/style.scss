@@ -2,7 +2,7 @@ $color_primary: #e06c75;
 $color_on_primary: #000000;
 $color_error: #ff0000;
 $color_on_error: #000000;
-$color_background: #15171C;
+$color_background: #15171c;
 $color_on_background: #abb2bf;
 $color_surface: #282c34;
 $color_on_surface: #abb2bf;
@@ -32,7 +32,7 @@ icon {
    background: $color_background;
    // border-bottom: 2px solid $color_border;
 
-   >centerbox {
+   > centerbox {
       padding: 8px;
    }
 }
@@ -97,8 +97,7 @@ icon {
 }
 
 .hyprland-taskbar {
-
-   >icon,
+   > icon,
    label {
       @include bar-module();
       margin-right: 7.2px;
@@ -119,7 +118,6 @@ icon {
       border-radius: 4px;
       padding: 10px;
 
-
       menuitem {
          margin-bottom: 7.2px;
          background: $color_surface;
@@ -132,8 +130,6 @@ icon {
       }
    }
 }
-
-
 
 .datetime {
    @include bar-module();
@@ -156,8 +152,7 @@ icon {
       border: 2px solid $color_border;
 
       padding: 10px;
-      margin: .5rem 1rem .5rem 1rem;
-
+      margin: 0.5rem 1rem 0.5rem 1rem;
    }
 }
 
@@ -167,7 +162,6 @@ icon {
    .notifications-popup-content {
       padding: 10px;
       margin: 10px;
-
    }
 }
 
@@ -180,23 +174,29 @@ icon {
    min-height: 100px;
 
    .notification-header {
-      .notification-app-icon {}
+      .notification-app-icon {
+      }
 
-      .notification-app-name {}
+      .notification-app-name {
+      }
 
-      .notification-time {}
+      .notification-time {
+      }
 
-      .notification-close {}
+      .notification-close {
+      }
    }
 
    separator {
-      margin: 0 .4rem;
+      margin: 0 0.4rem;
       background-color: $color_on_surface;
    }
 
    .notification-content {
-      .notification-summary {}
+      .notification-summary {
+      }
 
-      .notification-body {}
+      .notification-body {
+      }
    }
 }
