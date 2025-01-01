@@ -87,13 +87,16 @@ icon {
 
 .hyprland-taskbar {
 
-   &>icon,
-   &>label {
-      @include bar-module();
+   &>button {
       margin-right: 7.2px;
 
-      &.active {
-         background: $color_primary;
+      &>icon,
+      &>label {
+         @include bar-module();
+
+         &.active {
+            background: $color_primary;
+         }
       }
    }
 }

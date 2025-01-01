@@ -94,16 +94,26 @@ class ClientMap implements Subscribable {
 function wrapper(
    client: AstalHyprland.Client,
    hyprland: AstalHyprland.Hyprland
-): Widget.Icon | Widget.Label {
-   return IconWithLabelFallback(client.get_class(), {
+): Widget.Button {
+   const widget = IconWithLabelFallback(client.get_class(), {
       setup: (self) => {
          self.hook(hyprland, "notify::focused-client", () => {
             self.toggleClassName(
                "active",
                hyprland.focusedClient &&
-                  hyprland.focusedClient.pid === client.pid
+                  hyprland.focusedClient.address === client.address
             );
          });
       },
    });
+
+   return new Widget.Button(
+      {
+         onClick: () => {
+            hyprland.dispatch("focuswindow", `address:0x${client.address}`);
+         },
+      },
+
+      widget
+   );
 }
