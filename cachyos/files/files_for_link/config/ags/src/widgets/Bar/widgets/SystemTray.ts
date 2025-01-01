@@ -39,12 +39,12 @@ class TrayItemMap implements Subscribable {
       const tray = Tray.get_default();
 
       tray.get_items()?.forEach((item) => {
-         this.set(item.get_item_id(), TrayButton(item, tray));
+         this.set(item.get_item_id(), TrayItemButton(item, tray));
       });
 
       tray.connect("item-added", (_, item_id) => {
          const item = tray.get_item(item_id);
-         this.set(item_id, TrayButton(item, tray));
+         this.set(item_id, TrayItemButton(item, tray));
       });
 
       tray.connect("item-removed", (_, item_id) => {
@@ -77,20 +77,30 @@ class TrayItemMap implements Subscribable {
    }
 }
 
-function TrayButton(item: Tray.TrayItem, tray: Tray.Tray): Widget.MenuButton {
+function TrayItemButton(
+   item: Tray.TrayItem,
+   tray: Tray.Tray
+): Widget.MenuButton {
    return new Widget.MenuButton(
       {
          className: "tray-item",
 
          setup: (self) => {
-            setProperties(item);
+            onItemChanged(item);
 
             self.hook(item, "changed", () => {
-               const changedItem = tray.get_item(item.get_item_id());
-               setProperties(changedItem);
+               onItemChanged(tray.get_item(item.get_item_id()));
             });
 
-            function setProperties(item: Tray.TrayItem) {
+            self.connect("toggled", () => {
+               if (self.active) {
+                  self.toggleClassName("active", true);
+               } else {
+                  self.toggleClassName("active", false);
+               }
+            });
+
+            function onItemChanged(item: Tray.TrayItem) {
                self.tooltipMarkup = item.tooltipMarkup;
                self.usePopover = false;
                // @ts-ignore
