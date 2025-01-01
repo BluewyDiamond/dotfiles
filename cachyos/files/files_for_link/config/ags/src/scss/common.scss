@@ -1,29 +1,35 @@
 .notification {
-  background: $color_surface;
-  color: $color_on_surface;
-  margin-bottom: 8px;
-  border-radius: 4px;
-  min-width: 500px;
-  min-height: 100px;
+   background: $color_surface;
+   color: $color_on_surface;
+   margin-bottom: 8px;
+   border-radius: 4px;
+   min-width: 500px;
+   min-height: 100px;
 
-  .notification-header {
-    .notification-app-icon {}
+   .notification-header {
+      .notification-app-icon {
+      }
 
-    .notification-app-name {}
+      .notification-app-name {
+      }
 
-    .notification-time {}
+      .notification-time {
+      }
 
-    .notification-close {}
-  }
+      .notification-close {
+      }
+   }
 
-  separator {
-    margin: 0 0.4rem;
-    background-color: $color_on_surface;
-  }
+   separator {
+      margin: 0 0.4rem;
+      background-color: $color_on_surface;
+   }
 
-  .notification-content {
-    .notification-summary {}
+   .notification-content {
+      .notification-summary {
+      }
 
-    .notification-body {}
-  }
+      .notification-body {
+      }
+   }
 }
