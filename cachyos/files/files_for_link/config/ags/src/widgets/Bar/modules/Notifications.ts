@@ -2,7 +2,7 @@ import { Widget } from "astal/gtk3";
 import icons from "../../../libs/icons";
 import { App } from "astal/gtk3";
 import Notifd from "gi://AstalNotifd";
-import { panelButton as setupAsPanelButton } from "../../c";
+import { panelButton as setupAsPanelButton } from "../../functions";
 import { IconWithLabelFallback } from "../../wrappers/IconWithLabelFallback";
 
 export default function (): Widget.Box {
