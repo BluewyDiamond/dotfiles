@@ -97,13 +97,19 @@ function wrapper(
 ): Widget.Button {
    const widget = IconWithLabelFallback(client.get_class(), {
       setup: (self) => {
+         onFocusedClientChanged();
+
          self.hook(hyprland, "notify::focused-client", () => {
+            onFocusedClientChanged();
+         });
+
+         function onFocusedClientChanged() {
             self.toggleClassName(
                "active",
                hyprland.focusedClient &&
                   hyprland.focusedClient.address === client.address
             );
-         });
+         }
       },
    });
 

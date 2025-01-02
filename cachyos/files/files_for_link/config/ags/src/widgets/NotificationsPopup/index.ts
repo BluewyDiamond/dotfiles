@@ -1,6 +1,6 @@
 import { Astal, Gdk, Gtk, Widget } from "astal/gtk3";
 import { Subscribable } from "astal/binding";
-import { Variable } from "astal";
+import { timeout, Variable } from "astal";
 import Notifd from "gi://AstalNotifd";
 import Notification from "../common/Notification";
 
@@ -67,11 +67,31 @@ class NotificationMap implements Subscribable {
       const notifd = Notifd.get_default();
 
       notifd.notifications.forEach((notification) => {
-         this.set(notification.id, Notification(notification));
+         this.set(
+            notification.id,
+
+            Notification(notification, {
+               setup: () => {
+                  timeout(5000, () => {
+                     this.delete(notification.id);
+                  });
+               },
+            })
+         );
       });
 
       notifd.connect("notified", (_, id) => {
-         this.set(id, Notification(notifd.get_notification(id)));
+         this.set(
+            id,
+
+            Notification(notifd.get_notification(id), {
+               setup: () => {
+                  timeout(5000, () => {
+                     this.delete(id);
+                  });
+               },
+            })
+         );
       });
 
       notifd.connect("resolved", (_, id) => {

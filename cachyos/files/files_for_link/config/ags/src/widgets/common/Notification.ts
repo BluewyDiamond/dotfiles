@@ -4,6 +4,7 @@ import { findIcon, isValidIcon } from "../../utils";
 import { IconWithLabelFallback } from "../wrappers";
 import { GLib } from "astal";
 import icons from "../../libs/icons";
+import { EventBoxProps } from "astal/gtk3/widget";
 
 const urgency = (n: Notifd.Notification) => {
    const { LOW, NORMAL, CRITICAL } = Notifd.Urgency;
@@ -23,7 +24,14 @@ const time = (time: number, format = "%H:%M") =>
 
 const fileExists = (path: string) => GLib.file_test(path, GLib.FileTest.EXISTS);
 
-export default function (notification: Notifd.Notification): Widget.EventBox {
+type Props = {
+   setup?(): void;
+};
+
+export default function (
+   notification: Notifd.Notification,
+   props: Props
+): Widget.EventBox {
    return new Widget.EventBox({
       child: new Widget.Box({
          className: "notification",
@@ -34,14 +42,14 @@ export default function (notification: Notifd.Notification): Widget.EventBox {
                className: "notification-header",
 
                setup: (self) => {
-                  let curatedIcon = findIcon(notification.app_icon);
+                  let foundedIcon = findIcon(notification.app_icon);
 
-                  if (curatedIcon === "") {
-                     curatedIcon = findIcon(notification.desktop_entry);
+                  if (foundedIcon === "") {
+                     foundedIcon = findIcon(notification.desktop_entry);
                   }
 
                   self.children = [
-                     IconWithLabelFallback(curatedIcon, {
+                     IconWithLabelFallback(foundedIcon, {
                         setup: (self) => {
                            self.className = "notification-app-icon";
                         },
@@ -77,7 +85,6 @@ export default function (notification: Notifd.Notification): Widget.EventBox {
 
             new Widget.Box({
                className: "notification-content",
-               vertical: true,
 
                setup: (self) => {
                   if (notification.image && fileExists(notification.image)) {
@@ -128,6 +135,12 @@ export default function (notification: Notifd.Notification): Widget.EventBox {
                },
             }),
          ],
+
+         setup: () => {
+            if (props.setup) {
+               props.setup();
+            }
+         },
       }),
    });
 }

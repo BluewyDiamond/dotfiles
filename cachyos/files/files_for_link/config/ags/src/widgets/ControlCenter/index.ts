@@ -5,32 +5,17 @@ import Notifd from "gi://AstalNotifd";
 import Notification from "../common/Notification";
 
 export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
+   const notificationMap = new NotificationMap();
+
    return new Widget.Window({
       gdkmonitor: gdkmonitor,
-      name: "astal-notifications-overview",
-      className: "notifications-overview",
+      name: "astal-control-center",
+      className: "control-center",
       exclusivity: Astal.Exclusivity.NORMAL,
       layer: Astal.Layer.TOP,
       anchor: Astal.WindowAnchor.TOP,
       visible: false,
-      child: Notifications(),
-   });
-}
-
-function Notifications(): Widget.Box {
-   const notificationMap = new NotificationMap();
-
-   return new Widget.Box({
-      className: "notifications-overview-content",
-      vertical: true,
-
-      setup: (self) => {
-         self.children = notificationMap.get();
-
-         notificationMap.subscribe((list) => {
-            self.children = list;
-         });
-      },
+      child: new Widget.Box({}),
    });
 }
 
@@ -44,20 +29,12 @@ class NotificationMap implements Subscribable {
       notifd.notifications.forEach((notification) => {
          this.set(
             notification.id,
-            Notification(notifd.get_notification(notification.id), {
-               setup: () => {
-
-               }
-            })
+            Notification(notifd.get_notification(notification.id))
          );
       });
 
       notifd.connect("notified", (_, id) => {
-         this.set(id, Notification(notifd.get_notification(id), {
-            setup: () => {
-
-            }
-         }));
+         this.set(id, Notification(notifd.get_notification(id)));
       });
 
       notifd.connect("resolved", (_, id) => {

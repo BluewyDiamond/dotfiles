@@ -108,7 +108,7 @@ icon {
       @include bar-module();
 
       &.active {
-         background: pink;
+         background: $color_primary;
       }
    }
 }
