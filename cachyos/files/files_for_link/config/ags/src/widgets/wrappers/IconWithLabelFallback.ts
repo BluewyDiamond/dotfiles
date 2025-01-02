@@ -1,6 +1,6 @@
 import { Widget } from "astal/gtk3";
-import { findIcon } from "../utils";
-import icons from "../libs/icons";
+import { findIcon } from "../../utils";
+import icons from "../../libs/icons";
 
 type Props = {
    setup?(self: Widget.Icon | Widget.Label): void;
@@ -28,3 +28,4 @@ export function IconWithLabelFallback(
       });
    }
 }
+

@@ -1,31 +1,12 @@
-import { Variable } from "astal";
-import { Subscribable } from "astal/binding";
 import { Astal, Gdk, Gtk, Widget } from "astal/gtk3";
+import { Subscribable } from "astal/binding";
+import { timeout, Variable } from "astal";
 import Notifd from "gi://AstalNotifd";
 import Notification from "../wrappers/Notification";
 
 export class NotificationMap implements Subscribable {
    private map: Map<number, Gtk.Widget> = new Map();
-   private var: Variable<Array<Gtk.Widget>> = Variable([]);
-
-   constructor() {
-      const notifd = Notifd.get_default();
-
-      notifd.notifications.forEach((notification) => {
-         this.set(
-            notification.id,
-            Notification(notifd.get_notification(notification.id), {})
-         );
-      });
-
-      notifd.connect("notified", (_, id) => {
-         this.set(id, Notification(notifd.get_notification(id), {}));
-      });
-
-      notifd.connect("resolved", (_, id) => {
-         this.delete(id);
-      });
-   }
+   private var: Variable<Gtk.Widget[]> = Variable([]);
 
    get() {
       return this.var.get();
@@ -33,6 +14,42 @@ export class NotificationMap implements Subscribable {
 
    subscribe(callback: (list: Array<Gtk.Widget>) => void) {
       return this.var.subscribe(callback);
+   }
+
+   constructor() {
+      const notifd = Notifd.get_default();
+
+      notifd.notifications.forEach((notification) => {
+         this.set(
+            notification.id,
+
+            Notification(notification, {
+               setup: () => {
+                  timeout(5000, () => {
+                     this.delete(notification.id);
+                  });
+               },
+            })
+         );
+      });
+
+      notifd.connect("notified", (_, id) => {
+         this.set(
+            id,
+
+            Notification(notifd.get_notification(id), {
+               setup: () => {
+                  timeout(5000, () => {
+                     this.delete(id);
+                  });
+               },
+            })
+         );
+      });
+
+      notifd.connect("resolved", (_, id) => {
+         this.delete(id);
+      });
    }
 
    private notify() {

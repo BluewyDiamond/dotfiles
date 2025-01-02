@@ -1,10 +1,10 @@
 import { Gdk, Widget, Astal, Gtk } from "astal/gtk3";
-import HyprlandWorkspaces from "./widgets/HyprlandWorkspaces";
-import Indicators from "./widgets/Indicators";
-import HyprlandTaskbar from "./widgets/HyprlandTaskbar";
-import SystemTray from "./widgets/SystemTray";
-import Datetime from "./widgets/Datetime";
-import Notifications from "./widgets/Notifications";
+import HyprlandWorkspaces from "./modules/HyprlandWorkspaces";
+import Indicators from "./modules/Indicators";
+import HyprlandTaskbar from "./modules/HyprlandTaskbar";
+import SystemTray from "./modules/SystemTray";
+import Datetime from "./modules/Datetime";
+import Notifications from "./modules/Notifications";
 
 export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
    return new Widget.Window({

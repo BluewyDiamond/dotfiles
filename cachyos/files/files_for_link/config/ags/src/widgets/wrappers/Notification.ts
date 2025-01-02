@@ -1,10 +1,10 @@
 import { Gtk, Widget } from "astal/gtk3";
 import Notifd from "gi://AstalNotifd";
 import { findIcon, isValidIcon } from "../../utils";
-import { IconWithLabelFallback } from "../wrappers";
 import { GLib } from "astal";
 import icons from "../../libs/icons";
 import { EventBoxProps } from "astal/gtk3/widget";
+import { IconWithLabelFallback } from "./IconWithLabelFallback";
 
 const urgency = (n: Notifd.Notification) => {
    const { LOW, NORMAL, CRITICAL } = Notifd.Urgency;

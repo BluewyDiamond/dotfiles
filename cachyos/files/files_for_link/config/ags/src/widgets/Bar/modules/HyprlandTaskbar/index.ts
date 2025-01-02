@@ -2,7 +2,7 @@ import { Gtk, Widget } from "astal/gtk3";
 import AstalHyprland from "gi://AstalHyprland";
 import { Subscribable } from "astal/binding";
 import { Variable } from "astal";
-import { IconWithLabelFallback } from "../../wrappers";
+import { IconWithLabelFallback } from "../../../wrappers/IconWithLabelFallback";
 
 export default function (): Widget.Box {
    const clientMap = new ClientMap();

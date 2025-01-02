@@ -1,9 +1,9 @@
 import { Widget } from "astal/gtk3";
-import { IconWithLabelFallback } from "../../wrappers";
 import icons from "../../../libs/icons";
 import { App } from "astal/gtk3";
 import Notifd from "gi://AstalNotifd";
 import { panelButton as setupAsPanelButton } from "../../c";
+import { IconWithLabelFallback } from "../../wrappers/IconWithLabelFallback";
 
 export default function (): Widget.Box {
    const notifd = Notifd.get_default();
