@@ -15,6 +15,8 @@ if string match -i -q -- $argv[1] partial
     end
 
     wayshot -f $file -s (slurp)
+    wl-copy $file
 else
     wayshot -f $file
+    wl-copy $file
 end
