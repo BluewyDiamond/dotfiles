@@ -52,7 +52,7 @@ export default function (): Widget.Box {
 
          return new Widget.Button(
             {
-               onClick: async (self) => {
+               onClick: async () => {
                   (async () => {
                      hyprland.dispatch("workspace", `${index}`);
                   })();

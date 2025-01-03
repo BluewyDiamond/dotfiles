@@ -33,14 +33,30 @@ export default function (): Widget.Box {
                         },
                      },
 
-                     IconWithLabelFallback(icons.notifications.message, {})
+                     IconWithLabelFallback("notification-active", {})
                   ),
                ];
 
                self.visible = true;
             } else {
-               self.children = [];
-               self.visible = false;
+               self.children = [
+                  new Widget.Button(
+                     {
+                        onClick: () => {
+                           App.toggle_window("astal-notifications-overview");
+                        },
+
+                        setup: (self) => {
+                           setupAsPanelButton(
+                              self,
+                              "astal-notifications-overview"
+                           );
+                        },
+                     },
+
+                     IconWithLabelFallback("notifications", {})
+                  ),
+               ];
             }
          }
       },
