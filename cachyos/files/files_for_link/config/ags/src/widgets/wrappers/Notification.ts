@@ -131,6 +131,37 @@ export default function (
                            }),
                         ],
                      }),
+
+                     new Widget.Box({
+                        className: "notification-actions",
+
+                        setup: (self) => {
+                           if (notification.get_actions().length > 0) {
+                              notification
+                                 .get_actions()
+                                 .map(({ label, id }) => {
+                                    self.children = [
+                                       ...self.children,
+
+                                       new Widget.Button(
+                                          {
+                                             hexpand: true,
+
+                                             onClicked: () =>
+                                                notification.invoke(id),
+                                          },
+
+                                          new Widget.Label({
+                                             label: label,
+                                             halign: Gtk.Align.CENTER,
+                                             hexpand: true,
+                                          })
+                                       ),
+                                    ];
+                                 });
+                           }
+                        },
+                     }),
                   ];
                },
             }),

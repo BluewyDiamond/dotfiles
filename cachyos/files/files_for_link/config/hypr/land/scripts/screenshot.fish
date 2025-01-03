@@ -30,7 +30,7 @@ if string match -i -q -- $argv[1] partial
     wl-copy $file
 else
     if wayshot -f $file
-        set result (notify-send -i $file Screenshot $file --action="show_in_files=Show In Files")
+        set result (notify-send -i $file Screenshot $file --action="show_in_files=Show In Files" --action="open=Open" --action="edit=Edit")
 
         switch $result
             case "*show_in_files*"
