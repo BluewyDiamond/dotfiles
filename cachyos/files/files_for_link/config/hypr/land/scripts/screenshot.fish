@@ -14,9 +14,33 @@ if string match -i -q -- $argv[1] partial
         return
     end
 
-    wayshot -f $file -s (slurp)
+    if wayshot -f $file -s (slurp)
+        set result (notify-send -i $file Screenshot $file --action="show_in_files=Show In Files")
+
+        switch $result
+            case "*show_in_files*"
+                xdg-open dirname $file
+            case "*open*"
+                xdg-open $file
+            case "*edit*"
+                satty -f $file
+        end
+    end
+
     wl-copy $file
 else
-    wayshot -f $file
+    if wayshot -f $file
+        set result (notify-send -i $file Screenshot $file --action="show_in_files=Show In Files")
+
+        switch $result
+            case "*show_in_files*"
+                xdg-open dirname $file
+            case "*open*"
+                xdg-open $file
+            case "*edit*"
+                satty -f $file
+        end
+    end
+
     wl-copy $file
 end
