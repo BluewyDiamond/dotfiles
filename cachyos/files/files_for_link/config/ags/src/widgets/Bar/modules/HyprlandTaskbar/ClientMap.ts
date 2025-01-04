@@ -2,7 +2,7 @@ import { Gtk, Widget } from "astal/gtk3";
 import AstalHyprland from "gi://AstalHyprland";
 import { Subscribable } from "astal/binding";
 import { Variable } from "astal";
-import { IconWithLabelFallback } from "../../../wrappers";
+import { IconWithLabelFallback } from "../../../wrappers/IconWithLabelFallback";
 
 export class ClientMap implements Subscribable {
    private map: Map<string, Gtk.Widget> = new Map();
@@ -70,23 +70,32 @@ function wrapper(
    client: AstalHyprland.Client,
    hyprland: AstalHyprland.Hyprland
 ): Widget.Button {
-   const widget = IconWithLabelFallback(client.get_class(), {
-      setup: (self) => {
-         onFocusedClientChanged();
+   const widget = IconWithLabelFallback({
+      icon: client.class,
+      iconProps: {
+         setup: (self) => x(self),
+      },
 
-         self.hook(hyprland, "notify::focused-client", () => {
-            onFocusedClientChanged();
-         });
-
-         function onFocusedClientChanged() {
-            self.toggleClassName(
-               "active",
-               hyprland.focusedClient &&
-                  hyprland.focusedClient.address === client.address
-            );
-         }
+      labelProps: {
+         setup: (self) => x(self),
       },
    });
+
+   function x(self: Widget.Icon | Widget.Label) {
+      onFocusedClientChanged();
+
+      self.hook(hyprland, "notify::focused-client", () => {
+         onFocusedClientChanged();
+      });
+
+      function onFocusedClientChanged() {
+         self.toggleClassName(
+            "active",
+            hyprland.focusedClient &&
+               hyprland.focusedClient.address === client.address
+         );
+      }
+   }
 
    return new Widget.Button(
       {

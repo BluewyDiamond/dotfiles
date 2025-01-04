@@ -32,7 +32,10 @@ export class IndicatorMap implements Subscribable {
 
             let foundedIcon = findIcon(icon);
 
-            this.set("powerprofiles", IconWithLabelFallback(foundedIcon, {}));
+            this.set(
+               "powerprofiles",
+               IconWithLabelFallback({ icon: foundedIcon })
+            );
          };
 
          onPowerProfileChanged();
@@ -73,8 +76,10 @@ export class IndicatorMap implements Subscribable {
                      icon = icons.audio.mic.muted;
                   }
 
-                  const foundedIcon = findIcon(icon);
-                  this.set("recorders", IconWithLabelFallback(foundedIcon, {}));
+                  this.set(
+                     "recorders",
+                     IconWithLabelFallback({ icon: findIcon(icon) })
+                  );
                } else {
                   this.delete("recorders");
                }
@@ -101,7 +106,10 @@ export class IndicatorMap implements Subscribable {
                icon = icons.audio.volume.muted;
             }
 
-            this.set("speaker", IconWithLabelFallback(findIcon(icon), {}));
+            this.set(
+               "speaker",
+               IconWithLabelFallback({ icon: findIcon(icon) })
+            );
          });
       }
 
@@ -116,10 +124,10 @@ export class IndicatorMap implements Subscribable {
                if (recorders.length > 0) {
                   this.set(
                      "screen-recorders",
-                     IconWithLabelFallback(
-                        findIcon(icons.recorder.screencast),
-                        {}
-                     )
+
+                     IconWithLabelFallback({
+                        icon: findIcon(icons.recorder.screencast),
+                     })
                   );
                } else {
                   this.delete("screen-recorders");

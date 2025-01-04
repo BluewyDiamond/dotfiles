@@ -33,7 +33,7 @@ export default function (): Widget.Box {
                         },
                      },
 
-                     IconWithLabelFallback("notification-active", {})
+                     IconWithLabelFallback({ icon: "notification-active" })
                   ),
                ];
 
@@ -54,7 +54,7 @@ export default function (): Widget.Box {
                         },
                      },
 
-                     IconWithLabelFallback("notifications", {})
+                     IconWithLabelFallback({ icon: "notifications" })
                   ),
                ];
             }

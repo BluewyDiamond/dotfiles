@@ -5,6 +5,7 @@ import HyprlandTaskbar from "./modules/HyprlandTaskbar";
 import SystemTray from "./modules/SystemTray";
 import Datetime from "./modules/Datetime";
 import Notifications from "./modules/Notifications";
+import AppLauncher from "./modules/AppLauncher";
 
 export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
    return new Widget.Window({
@@ -26,7 +27,11 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
 
             children: [
                new Widget.Box({
-                  children: [HyprlandWorkspaces(), HyprlandTaskbar()],
+                  children: [
+                     AppLauncher(),
+                     HyprlandWorkspaces(),
+                     HyprlandTaskbar(),
+                  ],
                }),
             ],
          }),

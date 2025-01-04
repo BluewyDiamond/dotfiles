@@ -1,30 +1,36 @@
 import { Widget } from "astal/gtk3";
 import { findIcon } from "../../utils";
 import icons from "../../libs/icons";
+import { IconProps, LabelProps } from "astal/gtk3/widget";
 
-type Props = {
-   setup?(self: Widget.Icon | Widget.Label): void;
+type IconWithLabelFallbackProps = {
+   icon: string;
+   fallbackIcon?: string;
+   fallbackLabel?: string;
+   iconProps?: IconProps;
+   labelProps?: LabelProps;
 };
 
 export function IconWithLabelFallback(
-   value: string,
-   props: Props
+   props: IconWithLabelFallbackProps
 ): Widget.Icon | Widget.Label {
-   let curatedIcon = findIcon(value);
+   const { icon, fallbackIcon, fallbackLabel, iconProps, labelProps } = props;
 
-   if (curatedIcon === "") {
-      curatedIcon = findIcon(icons.fallback.executable);
+   let foundedIcon = findIcon(icon);
+
+   if (foundedIcon === "") {
+      foundedIcon = findIcon(fallbackIcon || "");
    }
 
-   if (curatedIcon === "") {
+   if (foundedIcon === "") {
       return new Widget.Label({
-         label: "?",
-         setup: props.setup,
+         label: fallbackLabel || "?",
+         ...labelProps,
       });
    } else {
       return new Widget.Icon({
-         icon: curatedIcon,
-         setup: props.setup,
+         icon: foundedIcon,
+         ...iconProps,
       });
    }
 }

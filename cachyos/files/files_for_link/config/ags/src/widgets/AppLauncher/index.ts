@@ -5,6 +5,8 @@ import Notifd from "gi://AstalNotifd";
 import Notification from "../wrappers/Notification";
 import Apps from "gi://AstalApps";
 import { IconWithLabelFallback } from "../wrappers/IconWithLabelFallback";
+import { findIcon } from "../../utils";
+import icons from "../../libs/icons";
 
 export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
    return new Widget.Window({
@@ -84,7 +86,9 @@ function AppWidget(app: Apps.Application): Widget.Box {
       className: "app-launcher-app",
 
       children: [
-         IconWithLabelFallback(app.iconName, {}),
+         IconWithLabelFallback({
+            icon: app.iconName,
+         }),
 
          new Widget.Box({
             vertical: true,

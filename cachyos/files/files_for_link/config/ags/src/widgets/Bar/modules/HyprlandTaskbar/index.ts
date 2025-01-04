@@ -95,23 +95,37 @@ function wrapper(
    client: AstalHyprland.Client,
    hyprland: AstalHyprland.Hyprland
 ): Widget.Button {
-   const widget = IconWithLabelFallback(client.get_class(), {
-      setup: (self) => {
-         onFocusedClientChanged();
+   const widget = IconWithLabelFallback({
+      icon: client.class,
 
-         self.hook(hyprland, "notify::focused-client", () => {
-            onFocusedClientChanged();
-         });
+      iconProps: {
+         setup: (self) => {
+            setup(self);
+         },
+      },
 
-         function onFocusedClientChanged() {
-            self.toggleClassName(
-               "active",
-               hyprland.focusedClient &&
-                  hyprland.focusedClient.address === client.address
-            );
-         }
+      labelProps: {
+         setup: (self) => {
+            setup(self);
+         },
       },
    });
+
+   function setup(self: Widget.Icon | Widget.Label) {
+      onFocusedClientChanged();
+
+      self.hook(hyprland, "notify::focused-client", () => {
+         onFocusedClientChanged();
+      });
+
+      function onFocusedClientChanged() {
+         self.toggleClassName(
+            "active",
+            hyprland.focusedClient &&
+               hyprland.focusedClient.address === client.address
+         );
+      }
+   }
 
    return new Widget.Button(
       {

@@ -48,12 +48,19 @@ export default function (
                      foundedIcon = findIcon(notification.desktop_entry);
                   }
 
+                  if (foundedIcon) {
+                     self.children = [
+                        ...self.children,
+
+                        new Widget.Icon({
+                           className: "notification-app-icon",
+                           icon: foundedIcon,
+                        }),
+                     ];
+                  }
+
                   self.children = [
-                     IconWithLabelFallback(foundedIcon, {
-                        setup: (self) => {
-                           self.className = "notification-app-icon";
-                        },
-                     }),
+                     ...self.children,
 
                      new Widget.Label({
                         halign: Gtk.Align.START,
@@ -75,7 +82,7 @@ export default function (
                            onClick: () => notification.dismiss(),
                         },
 
-                        IconWithLabelFallback(icons.ui.close, {})
+                        IconWithLabelFallback({ icon: icons.ui.close })
                      ),
                   ];
                },
