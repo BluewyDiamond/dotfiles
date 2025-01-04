@@ -3,6 +3,7 @@ import Bar from "./widgets/Bar";
 import { getCss } from "./style";
 import NotificationsOverview from "./widgets/NotificationsOverview";
 import NotificationsPopup from "./widgets/NotificationsPopup";
+import AppLauncher from "./widgets/AppLauncher";
 
 App.start({
    css: getCss(),
@@ -20,6 +21,7 @@ App.start({
             Bar(monitor);
             App.add_window(NotificationsOverview(monitor));
             App.add_window(NotificationsPopup(monitor));
+            App.add_window(AppLauncher(monitor));
          });
       }
    },
