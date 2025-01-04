@@ -3,7 +3,7 @@ import HyprlandWorkspaces from "./modules/HyprlandWorkspaces";
 import Indicators from "./modules/Indicators";
 import HyprlandTaskbar from "./modules/HyprlandTaskbar";
 import SystemTray from "./modules/SystemTray";
-import Datetime from "./modules/Datetime";
+import Datetime from "./modules/Time";
 import Notifications from "./modules/Notifications";
 import AppLauncher from "./modules/AppLauncher";
 
