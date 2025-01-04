@@ -73,7 +73,7 @@ function wrapper(
 ): Widget.Button {
    const widget = IconWithLabelFallback({
       icon: client.class,
-      //fallbackIcon: icons.fallback.executable,
+      fallbackIcon: icons.fallback.executable,
 
       iconProps: {
          setup: (self) => x(self),
