@@ -3,17 +3,33 @@ import options from "../../../options";
 import AstalHyprland from "gi://AstalHyprland";
 import { timeout } from "astal";
 
-export default function (): Widget.Box {
-   const hyprland = AstalHyprland.get_default();
+const hyprland = AstalHyprland.get_default();
 
+export default function (): Widget.Box {
    return new Widget.Box({
-      className: "workspaces",
+      className: "hyprland-workspaces",
 
       children: options.bar.workspaces.values.map((index) => {
          const label = new Widget.Label({
             label: `${index}`,
 
             setup: (self) => {
+               function onWorkspaceFocusedChange() {
+                  const workspace = hyprland.get_focused_workspace();
+                  if (!workspace) return;
+
+                  self.toggleClassName("urgent", false);
+
+                  self.toggleClassName(
+                     "occupied",
+                     // get_workspace can return null despite what return type idicates
+                     (hyprland.get_workspace(index)?.get_clients().length ||
+                        0) > 0
+                  );
+
+                  self.toggleClassName("active", index === workspace.get_id());
+               }
+
                onWorkspaceFocusedChange();
 
                self.hook(hyprland, "notify::focused-workspace", () => {
@@ -31,22 +47,6 @@ export default function (): Widget.Box {
                      );
                   }
                );
-
-               function onWorkspaceFocusedChange() {
-                  const workspace = hyprland.get_focused_workspace();
-                  if (!workspace) return;
-
-                  self.toggleClassName("urgent", false);
-
-                  self.toggleClassName(
-                     "occupied",
-                     // get_workspace can return null despite what return type idicates
-                     (hyprland.get_workspace(index)?.get_clients().length ||
-                        0) > 0
-                  );
-
-                  self.toggleClassName("active", index === workspace.get_id());
-               }
             },
          });
 

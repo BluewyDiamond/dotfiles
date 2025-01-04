@@ -8,26 +8,36 @@
       margin-top: 100px;
       padding: 8px;
 
-      & > entry {
+      &>entry {
          background: $color_surface;
          margin-bottom: 8px;
       }
 
-      & > box {
-         & > box {
+      &>box {
+         &>box {
             background: $color_surface;
          }
       }
 
       .app-launcher-app {
-         & > icon {
+         &>icon {
             font-size: 55px;
             margin-right: 8px;
+         }
+
+         button:hover {
+            background: $color_primary;
          }
 
          border-radius: 4px;
          padding: 8px;
          margin-bottom: 8px;
+      }
+
+      .rrr {
+         &:hover {
+            background: $color_primary;
+         }
       }
    }
 }

@@ -1,13 +1,9 @@
 import { Gtk, Widget } from "astal/gtk3";
-import AstalHyprland from "gi://AstalHyprland";
-import { Subscribable } from "astal/binding";
-import { Variable } from "astal";
-import { IconWithLabelFallback } from "../../../wrappers/IconWithLabelFallback";
 import { ClientMap } from "./ClientMap";
 
-export default function (): Widget.Box {
-   const clientMap = new ClientMap();
+const clientMap = new ClientMap();
 
+export default function (): Widget.Box {
    return new Widget.Box({
       className: "hyprland-taskbar",
 

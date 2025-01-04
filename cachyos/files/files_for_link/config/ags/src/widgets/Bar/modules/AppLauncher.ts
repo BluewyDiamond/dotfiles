@@ -1,7 +1,6 @@
 import { App, Widget } from "astal/gtk3";
 import { setupAsPanelButton } from "../../functions";
 import { IconWithLabelFallback } from "../../wrappers/IconWithLabelFallback";
-import icons from "../../../libs/icons";
 import { GLib } from "astal";
 
 export default function (): Widget.Button {

@@ -1,22 +1,17 @@
 import { Widget } from "astal/gtk3";
-import icons from "../../../libs/icons";
 import { App } from "astal/gtk3";
 import Notifd from "gi://AstalNotifd";
 import { setupAsPanelButton as setupAsPanelButton } from "../../functions";
 import { IconWithLabelFallback } from "../../wrappers/IconWithLabelFallback";
 
-export default function (): Widget.Box {
-   const notifd = Notifd.get_default();
+const notifd = Notifd.get_default();
 
+export default function (): Widget.Box {
    return new Widget.Box({
       className: "notifications",
 
       setup: (self) => {
-         update();
-
-         self.hook(notifd, "notify::notifications", () => update());
-
-         function update() {
+         function onNotificationsChanged() {
             if (notifd.notifications.length > 0) {
                self.children = [
                   new Widget.Button(
@@ -59,6 +54,12 @@ export default function (): Widget.Box {
                ];
             }
          }
+
+         onNotificationsChanged();
+
+         self.hook(notifd, "notify::notifications", () =>
+            onNotificationsChanged()
+         );
       },
    });
 }

@@ -1,9 +1,23 @@
-import { Astal, Gdk, Gtk, Widget } from "astal/gtk3";
-import { Subscribable } from "astal/binding";
-import { timeout, Variable } from "astal";
+import { Astal, Gdk, Widget } from "astal/gtk3";
 import Notifd from "gi://AstalNotifd";
-import Notification from "../wrappers/Notification";
-import { NotificationMap } from "./NotificationMap";
+import { NotificationMap } from "../common/NotificationMap";
+
+const notificationMap = new NotificationMap();
+
+function Notifications(): Widget.Box {
+   return new Widget.Box({
+      className: "notifications-popup-content",
+      vertical: true,
+
+      setup: (self) => {
+         self.children = notificationMap.get();
+
+         notificationMap.subscribe((list) => {
+            self.children = list;
+         });
+      },
+   });
+}
 
 export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
    const notifd = Notifd.get_default();
@@ -18,12 +32,6 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
       child: Notifications(),
 
       setup: (self) => {
-         onNotificationsChanged();
-
-         self.hook(notifd, "notify::notifications", () =>
-            onNotificationsChanged()
-         );
-
          function onNotificationsChanged() {
             if (notifd.notifications.length > 0) {
                self.visible = true;
@@ -31,23 +39,12 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
                self.visible = false;
             }
          }
-      },
-   });
-}
 
-function Notifications(): Widget.Box {
-   const notificationMap = new NotificationMap();
+         onNotificationsChanged();
 
-   return new Widget.Box({
-      className: "notifications-popup-content",
-      vertical: true,
-
-      setup: (self) => {
-         self.children = notificationMap.get();
-
-         notificationMap.subscribe((list) => {
-            self.children = list;
-         });
+         self.hook(notifd, "notify::notifications", () =>
+            onNotificationsChanged()
+         );
       },
    });
 }

@@ -44,7 +44,7 @@ icon {
    }
 }
 
-.workspaces {
+.hyprland-workspaces {
    @include bar-module();
    margin-right: 7.2px;
 
@@ -109,7 +109,7 @@ icon {
    }
 }
 
-.datetime {
+.time {
    @include bar-module();
    margin-right: 4px;
 }

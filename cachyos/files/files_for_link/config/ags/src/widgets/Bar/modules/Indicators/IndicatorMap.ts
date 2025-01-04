@@ -7,14 +7,15 @@ import { findIcon } from "../../../../utils";
 import Wp from "gi://AstalWp";
 import { IconWithLabelFallback } from "../../../wrappers/IconWithLabelFallback";
 
+const powerProfiles = PowerProfiles.get_default();
+const wp = Wp.get_default();
+
 export class IndicatorMap implements Subscribable {
    private map: Map<string, Gtk.Widget> = new Map();
    private var: Variable<Array<Gtk.Widget>> = Variable([]);
 
    constructor() {
       {
-         const powerProfiles = PowerProfiles.get_default();
-
          const onPowerProfileChanged = () => {
             const activeProfile = powerProfiles.get_active_profile();
             const { balanced, powerSaver, performance } = icons.powerprofile;
@@ -43,27 +44,17 @@ export class IndicatorMap implements Subscribable {
       }
 
       {
-         const audio = Wp.get_default()?.get_audio();
-
-         if (!audio) {
-            return;
-         }
-
+         const audio = wp?.get_audio();
+         if (!audio) return;
          const mic = audio.get_default_microphone();
-
-         if (!mic) {
-            return;
-         }
+         if (!mic) return;
 
          Variable.derive(
             [bind(audio, "recorders"), bind(mic, "volume")],
 
             (recorders, micVolume) => {
                if (recorders.length > 0) {
-                  if (!mic) {
-                     return;
-                  }
-
+                  if (!mic) return;
                   let icon = "";
 
                   if (micVolume > 0.67) {
@@ -88,7 +79,7 @@ export class IndicatorMap implements Subscribable {
       }
 
       {
-         const audio = Wp.get_default()?.get_audio();
+         const audio = wp?.get_audio();
          if (!audio) return;
          const speaker = audio.get_default_speaker();
          if (!speaker) return;
@@ -114,7 +105,7 @@ export class IndicatorMap implements Subscribable {
       }
 
       {
-         const video = Wp.get_default()?.get_video();
+         const video = wp?.get_video();
          if (!video) return;
 
          Variable.derive(
@@ -145,10 +136,6 @@ export class IndicatorMap implements Subscribable {
       return this.var.subscribe(callback);
    }
 
-   private notify() {
-      this.var.set([...this.map.values()].reverse());
-   }
-
    private set(key: string, value: Gtk.Widget) {
       this.map.get(key)?.destroy();
       this.map.set(key, value);
@@ -159,5 +146,9 @@ export class IndicatorMap implements Subscribable {
       this.map.get(key)?.destroy();
       this.map.delete(key);
       this.notify();
+   }
+
+   private notify() {
+      this.var.set([...this.map.values()].reverse());
    }
 }

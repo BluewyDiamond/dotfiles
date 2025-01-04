@@ -1,6 +1,6 @@
 import { Variable } from "astal";
 import { Subscribable } from "astal/binding";
-import { Astal, Gdk, Gtk, Widget } from "astal/gtk3";
+import { Gtk } from "astal/gtk3";
 import Notifd from "gi://AstalNotifd";
 import Notification from "../wrappers/Notification";
 
@@ -35,10 +35,6 @@ export class NotificationMap implements Subscribable {
       return this.var.subscribe(callback);
    }
 
-   private notify() {
-      this.var.set([...this.map.values()].reverse());
-   }
-
    private set(key: number, value: Gtk.Widget) {
       this.map.get(key)?.destroy();
       this.map.set(key, value);
@@ -49,5 +45,9 @@ export class NotificationMap implements Subscribable {
       this.map.get(key)?.destroy();
       this.map.delete(key);
       this.notify();
+   }
+
+   private notify() {
+      this.var.set([...this.map.values()].reverse());
    }
 }
