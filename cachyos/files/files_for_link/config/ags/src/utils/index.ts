@@ -53,6 +53,10 @@ export function hasIconInApps(icon: string, app: Apps.Application): boolean {
 }
 
 export function findIcon(icon: string): string {
+   if (!icon) {
+      return "";
+   }
+
    if (isValidIcon(icon)) {
       return icon;
    }

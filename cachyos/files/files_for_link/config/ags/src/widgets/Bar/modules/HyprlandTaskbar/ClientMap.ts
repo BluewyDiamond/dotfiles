@@ -3,6 +3,7 @@ import AstalHyprland from "gi://AstalHyprland";
 import { Subscribable } from "astal/binding";
 import { Variable } from "astal";
 import { IconWithLabelFallback } from "../../../wrappers/IconWithLabelFallback";
+import icons from "../../../../libs/icons";
 
 export class ClientMap implements Subscribable {
    private map: Map<string, Gtk.Widget> = new Map();
@@ -72,6 +73,8 @@ function wrapper(
 ): Widget.Button {
    const widget = IconWithLabelFallback({
       icon: client.class,
+      //fallbackIcon: icons.fallback.executable,
+
       iconProps: {
          setup: (self) => x(self),
       },
