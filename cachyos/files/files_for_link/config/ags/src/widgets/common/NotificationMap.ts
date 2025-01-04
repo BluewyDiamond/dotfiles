@@ -14,12 +14,17 @@ export class NotificationMap implements Subscribable {
       notifd.notifications.forEach((notification) => {
          this.set(
             notification.id,
-            Notification(notifd.get_notification(notification.id), {})
+            Notification({
+               notification: notifd.get_notification(notification.id),
+            })
          );
       });
 
       notifd.connect("notified", (_, id) => {
-         this.set(id, Notification(notifd.get_notification(id), {}));
+         this.set(
+            id,
+            Notification({ notification: notifd.get_notification(id) })
+         );
       });
 
       notifd.connect("resolved", (_, id) => {

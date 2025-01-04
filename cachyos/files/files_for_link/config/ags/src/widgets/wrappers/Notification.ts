@@ -3,7 +3,6 @@ import Notifd from "gi://AstalNotifd";
 import { findIcon, isValidIcon } from "../../utils";
 import { GLib } from "astal";
 import icons from "../../libs/icons";
-import { EventBoxProps } from "astal/gtk3/widget";
 import { IconWithLabelFallback } from "./IconWithLabelFallback";
 
 const urgency = (n: Notifd.Notification) => {
@@ -24,14 +23,14 @@ const time = (time: number, format = "%H:%M") =>
 
 const fileExists = (path: string) => GLib.file_test(path, GLib.FileTest.EXISTS);
 
-type Props = {
+type NotificationProps = {
+   notification: Notifd.Notification;
    setup?(): void;
 };
 
-export default function (
-   notification: Notifd.Notification,
-   props: Props
-): Widget.EventBox {
+export default function (props: NotificationProps): Widget.EventBox {
+   const { notification, setup } = props;
+
    return new Widget.EventBox({
       child: new Widget.Box({
          className: "notification",
@@ -136,49 +135,45 @@ export default function (
                               xalign: 0,
                               label: notification.body,
                            }),
+
+                           new Widget.Box({
+                              className: "notification-actions",
+
+                              setup: (self) => {
+                                 if (notification.get_actions().length > 0) {
+                                    notification
+                                       .get_actions()
+                                       .map(({ label, id }) => {
+                                          self.children = [
+                                             ...self.children,
+
+                                             new Widget.Button(
+                                                {
+                                                   hexpand: true,
+
+                                                   onClicked: () =>
+                                                      notification.invoke(id),
+                                                },
+
+                                                new Widget.Label({
+                                                   label: label,
+                                                   halign: Gtk.Align.CENTER,
+                                                   hexpand: true,
+                                                })
+                                             ),
+                                          ];
+                                       });
+                                 }
+                              },
+                           }),
                         ],
-                     }),
-
-                     new Widget.Box({
-                        className: "notification-actions",
-
-                        setup: (self) => {
-                           if (notification.get_actions().length > 0) {
-                              notification
-                                 .get_actions()
-                                 .map(({ label, id }) => {
-                                    self.children = [
-                                       ...self.children,
-
-                                       new Widget.Button(
-                                          {
-                                             hexpand: true,
-
-                                             onClicked: () =>
-                                                notification.invoke(id),
-                                          },
-
-                                          new Widget.Label({
-                                             label: label,
-                                             halign: Gtk.Align.CENTER,
-                                             hexpand: true,
-                                          })
-                                       ),
-                                    ];
-                                 });
-                           }
-                        },
                      }),
                   ];
                },
             }),
          ],
 
-         setup: () => {
-            if (props.setup) {
-               props.setup();
-            }
-         },
+         setup: setup,
       }),
    });
 }
