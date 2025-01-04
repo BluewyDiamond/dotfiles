@@ -1,33 +1,33 @@
 .app-launcher {
-  .app-launcher-content {
-    background: $color_background;
-    color: $color_on_background;
-    border-radius: 4px;
-    min-width: 500px;
-    min-height: 500px;
-    margin-top: 100px;
-    padding: 8px;
-
-    &>entry {
-      background: $color_surface;
-      margin-bottom: 8px;
-    }
-
-    &>box {
-      &>box {
-        background: $color_surface;
-      }
-    }
-
-    .app-launcher-app {
-      &>icon {
-        font-size: 55px;
-        margin-right: 8px;
-      }
-
+   .app-launcher-content {
+      background: $color_background;
+      color: $color_on_background;
       border-radius: 4px;
+      min-width: 500px;
+      min-height: 500px;
+      margin-top: 100px;
       padding: 8px;
-      margin-bottom: 8px;
-    }
-  }
+
+      & > entry {
+         background: $color_surface;
+         margin-bottom: 8px;
+      }
+
+      & > box {
+         & > box {
+            background: $color_surface;
+         }
+      }
+
+      .app-launcher-app {
+         & > icon {
+            font-size: 55px;
+            margin-right: 8px;
+         }
+
+         border-radius: 4px;
+         padding: 8px;
+         margin-bottom: 8px;
+      }
+   }
 }

@@ -7,7 +7,6 @@ import { findIcon } from "../../../../utils";
 import Wp from "gi://AstalWp";
 import { IconWithLabelFallback } from "../../../wrappers/IconWithLabelFallback";
 
-
 export class IndicatorMap implements Subscribable {
    private map: Map<string, Gtk.Widget> = new Map();
    private var: Variable<Array<Gtk.Widget>> = Variable([]);
