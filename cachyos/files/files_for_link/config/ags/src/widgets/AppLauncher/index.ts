@@ -1,4 +1,4 @@
-import { exec, execAsync, subprocess, Variable } from "astal";
+import { execAsync, Variable } from "astal";
 import { bind } from "astal/binding";
 import { App, Astal, Gdk, Gtk, Widget } from "astal/gtk3";
 import Apps from "gi://AstalApps";
@@ -11,7 +11,7 @@ function hide() {
    App.get_window("astal-app-launcher")?.hide();
 }
 
-function Content() {
+export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
    const searchQuery = Variable("");
 
    const queriedApps = searchQuery((searchQuery) => {
@@ -75,13 +75,26 @@ function Content() {
       );
    };
 
-   return new Widget.EventBox({
+   return new Widget.Window({
+      gdkmonitor: gdkmonitor,
+      name: "astal-app-launcher",
+      className: "app-launcher",
+      exclusivity: Astal.Exclusivity.IGNORE,
+      keymode: Astal.Keymode.ON_DEMAND,
+      anchor: Astal.WindowAnchor.TOP | Astal.WindowAnchor.BOTTOM,
+      visible: false,
+
+      onKeyPressEvent: function (self, event: Gdk.Event) {
+         if (event.get_keyval()[1] === Gdk.KEY_Escape) self.hide();
+      },
+
       child: new Widget.Box({
          className: "app-launcher-content",
          vertical: true,
 
          children: [
             new Widget.Entry({
+               className: "app-launcher-content-entry",
                placeholderText: "Search",
                text: bind(searchQuery),
                onChanged: (self) => searchQuery.set(self.text),
@@ -106,6 +119,7 @@ function Content() {
             }),
 
             new Widget.Box({
+               className: "app-launcher-content-apps",
                vertical: true,
 
                setup: (self) => {
@@ -124,23 +138,5 @@ function Content() {
             }),
          ],
       }),
-   });
-}
-
-export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
-   return new Widget.Window({
-      gdkmonitor: gdkmonitor,
-      name: "astal-app-launcher",
-      className: "app-launcher",
-      exclusivity: Astal.Exclusivity.IGNORE,
-      keymode: Astal.Keymode.ON_DEMAND,
-      anchor: Astal.WindowAnchor.TOP,
-      visible: false,
-
-      onKeyPressEvent: function (self, event: Gdk.Event) {
-         if (event.get_keyval()[1] === Gdk.KEY_Escape) self.hide();
-      },
-
-      child: Content(),
    });
 }
