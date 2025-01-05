@@ -21,6 +21,19 @@
       }
 
       .app-launcher-app {
+         border-radius: 4px;
+         padding: 8px;
+         margin-bottom: 8px;
+         background: $color_surface;
+
+         .app-launcher-app-name {
+            font-size: 22px;
+         }
+
+         .app-launcher-app-description {
+            font-size: 18px;
+         }
+
          &>icon {
             font-size: 55px;
             margin-right: 8px;
@@ -29,10 +42,6 @@
          button:hover {
             background: $color_primary;
          }
-
-         border-radius: 4px;
-         padding: 8px;
-         margin-bottom: 8px;
       }
 
       .rrr {

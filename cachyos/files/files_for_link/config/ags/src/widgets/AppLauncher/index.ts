@@ -41,13 +41,16 @@ function Content() {
                }),
 
                new Widget.Box({
+                  valign: Gtk.Align.CENTER,
                   vertical: true,
 
                   setup: (self) => {
                      self.children = [
                         new Widget.Label({
+                           className: "app-launcher-app-name",
                            halign: Gtk.Align.START,
                            xalign: 0,
+                           truncate: true,
                            label: app.name,
                         }),
                      ];
@@ -57,9 +60,10 @@ function Content() {
                            ...self.children,
 
                            new Widget.Label({
+                              className: "app-launcher-app-description",
                               halign: Gtk.Align.START,
                               xalign: 0,
-                              truncate: true,
+                              wrap: true,
                               label: app.description,
                            }),
                         ];
