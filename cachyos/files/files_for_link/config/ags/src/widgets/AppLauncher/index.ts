@@ -1,4 +1,4 @@
-import { Variable } from "astal";
+import { exec, execAsync, subprocess, Variable } from "astal";
 import { bind } from "astal/binding";
 import { App, Astal, Gdk, Gtk, Widget } from "astal/gtk3";
 import Apps from "gi://AstalApps";
@@ -80,7 +80,17 @@ function Content() {
                onChanged: (self) => searchQuery.set(self.text),
 
                onActivate: () => {
-                  if (!queriedApps.get()[0].launch()) {
+                  const currentSearchQuery = searchQuery.get();
+
+                  if (currentSearchQuery.startsWith(":sh")) {
+                     execAsync([
+                        "fish",
+                        "-c",
+                        `${currentSearchQuery.slice(3)}`.trim(),
+                     ]);
+                  } else {
+                     if (!queriedApps.get()[0].launch()) {
+                     }
                   }
 
                   hide();
@@ -93,12 +103,12 @@ function Content() {
 
                setup: (self) => {
                   function onAppsChanged() {
-                     queriedApps.subscribe((list) => {
-                        const aw = list.map((app) => {
-                           return AppWidget(app);
-                        });
+                     queriedApps.subscribe((apps) => {
+                        self.children = [];
 
-                        self.children = aw;
+                        apps.map((app) => {
+                           self.children = [...self.children, AppWidget(app)];
+                        });
                      });
                   }
 

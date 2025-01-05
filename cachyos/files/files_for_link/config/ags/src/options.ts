@@ -6,4 +6,8 @@ export default {
 
       indicators: {},
    },
+
+   notificationsPopup: {
+      timeout: 5000 || undefined,
+   },
 };

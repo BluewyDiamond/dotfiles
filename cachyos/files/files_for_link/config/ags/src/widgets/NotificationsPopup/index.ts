@@ -1,6 +1,6 @@
 import { Astal, Gdk, Widget } from "astal/gtk3";
 import Notifd from "gi://AstalNotifd";
-import { NotificationMap } from "../common/NotificationMap";
+import { NotificationMap } from "./NotificationMap";
 
 const notificationMap = new NotificationMap();
 
