@@ -10,4 +10,8 @@ export default {
    notificationsPopup: {
       timeout: 5000 || undefined,
    },
+
+   appLauncher: {
+      maxItems: 5,
+   },
 };

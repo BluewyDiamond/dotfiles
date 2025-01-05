@@ -3,6 +3,7 @@ import { bind } from "astal/binding";
 import { App, Astal, Gdk, Gtk, Widget } from "astal/gtk3";
 import Apps from "gi://AstalApps";
 import { IconWithLabelFallback } from "../wrappers/IconWithLabelFallback";
+import options from "../../options";
 
 const apps = new Apps.Apps();
 
@@ -14,7 +15,9 @@ function Content() {
    const searchQuery = Variable("");
 
    const queriedApps = searchQuery((searchQuery) => {
-      return apps.fuzzy_query(searchQuery).slice(0, 5);
+      return apps
+         .fuzzy_query(searchQuery)
+         .slice(0, options.appLauncher.maxItems);
    });
 
    const AppWidget = (app: Apps.Application): Widget.Button => {
