@@ -11,71 +11,101 @@ function hide() {
    App.get_window("astal-app-launcher")?.hide();
 }
 
-export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
-   const searchQuery = Variable("");
+const AppWidget = (app: Apps.Application): Widget.Button => {
+   return new Widget.Button(
+      {
+         className: "rrr",
 
-   const queriedApps = searchQuery((searchQuery) => {
-      return apps
-         .fuzzy_query(searchQuery)
-         .slice(0, options.appLauncher.maxItems);
-   });
-
-   const AppWidget = (app: Apps.Application): Widget.Button => {
-      return new Widget.Button(
-         {
-            className: "rrr",
-
-            onClick: () => {
-               app.launch();
-               hide();
-               searchQuery.set("");
-            },
+         onClick: () => {
+            app.launch();
+            hide();
          },
+      },
 
-         new Widget.Box({
-            className: "app-launcher-app",
+      new Widget.Box({
+         className: "app-launcher-app",
 
-            children: [
-               IconWithLabelFallback({
-                  icon: app.iconName,
-               }),
+         children: [
+            IconWithLabelFallback({
+               icon: app.iconName,
+            }),
 
-               new Widget.Box({
-                  valign: Gtk.Align.CENTER,
-                  vertical: true,
+            new Widget.Box({
+               valign: Gtk.Align.CENTER,
+               vertical: true,
 
-                  setup: (self) => {
+               setup: (self) => {
+                  self.children = [
+                     new Widget.Label({
+                        className: "app-launcher-app-name",
+                        halign: Gtk.Align.START,
+                        xalign: 0,
+                        truncate: true,
+                        label: app.name,
+                     }),
+                  ];
+
+                  if (app.description) {
                      self.children = [
+                        ...self.children,
+
                         new Widget.Label({
-                           className: "app-launcher-app-name",
+                           className: "app-launcher-app-description",
                            halign: Gtk.Align.START,
                            xalign: 0,
-                           truncate: true,
-                           label: app.name,
+                           wrap: true,
+                           label: app.description,
                         }),
                      ];
+                  }
+               },
+            }),
+         ],
+      })
+   );
+};
 
-                     if (app.description) {
-                        self.children = [
-                           ...self.children,
+export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
+   const searchQuery = Variable("");
+   const appsM = Variable<Apps.Application[]>([]);
 
-                           new Widget.Label({
-                              className: "app-launcher-app-description",
-                              halign: Gtk.Align.START,
-                              xalign: 0,
-                              wrap: true,
-                              label: app.description,
-                           }),
-                        ];
-                     }
-                  },
-               }),
-            ],
-         })
-      );
-   };
+   const entry = new Widget.Entry({
+      className: "app-launcher-content-entry",
+      placeholderText: "Search",
+      text: bind(searchQuery),
+      onChanged: (self) => searchQuery.set(self.text),
 
-   return new Widget.Window({
+      onActivate: () => {
+         const currentSearchQuery = searchQuery.get();
+
+         if (currentSearchQuery.startsWith(":sh")) {
+            execAsync(["fish", "-c", `${currentSearchQuery.slice(3)}`.trim()]);
+         } else {
+            appsM.get()[0]?.launch();
+         }
+
+         hide();
+         searchQuery.set("");
+      },
+   });
+
+   const appsBox = new Widget.Box({
+      className: "app-launcher-content-apps",
+      vertical: true,
+   });
+
+   const shBox = new Widget.Box({
+      children: [new Widget.Label({ label: "shbox mode! :3" })],
+   });
+
+   const contentBox = new Widget.Box({
+      className: "app-launcher-content",
+      vertical: true,
+
+      children: [entry, appsBox, shBox],
+   });
+
+   const window = new Widget.Window({
       gdkmonitor: gdkmonitor,
       name: "astal-app-launcher",
       className: "app-launcher",
@@ -85,58 +115,39 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
       visible: false,
 
       onKeyPressEvent: function (self, event: Gdk.Event) {
-         if (event.get_keyval()[1] === Gdk.KEY_Escape) self.hide();
+         if (event.get_keyval()[1] === Gdk.KEY_Escape) {
+            self.hide();
+            searchQuery.set("");
+         }
       },
 
-      child: new Widget.Box({
-         className: "app-launcher-content",
-         vertical: true,
-
-         children: [
-            new Widget.Entry({
-               className: "app-launcher-content-entry",
-               placeholderText: "Search",
-               text: bind(searchQuery),
-               onChanged: (self) => searchQuery.set(self.text),
-
-               onActivate: () => {
-                  const currentSearchQuery = searchQuery.get();
-
-                  if (currentSearchQuery.startsWith(":sh")) {
-                     execAsync([
-                        "fish",
-                        "-c",
-                        `${currentSearchQuery.slice(3)}`.trim(),
-                     ]);
-                  } else {
-                     if (!queriedApps.get()[0].launch()) {
-                     }
-                  }
-
-                  hide();
-                  searchQuery.set("");
-               },
-            }),
-
-            new Widget.Box({
-               className: "app-launcher-content-apps",
-               vertical: true,
-
-               setup: (self) => {
-                  function onAppsChanged() {
-                     queriedApps.subscribe((apps) => {
-                        self.children = [];
-
-                        apps.map((app) => {
-                           self.children = [...self.children, AppWidget(app)];
-                        });
-                     });
-                  }
-
-                  onAppsChanged();
-               },
-            }),
-         ],
-      }),
+      child: contentBox,
    });
+
+   function onSearchQueryChanged(searchQuery: string) {
+      if (searchQuery === "") {
+         appsBox.visible = false;
+         shBox.visible = true;
+      } else if (searchQuery.startsWith(":sh")) {
+         appsBox.visible = false;
+         shBox.visible = true;
+      } else {
+         const queriedApps = apps
+            .fuzzy_query(searchQuery)
+            .slice(0, options.appLauncher.maxItems);
+
+         appsM.set(queriedApps);
+         const appWidgets = queriedApps.map((app) => AppWidget(app));
+         appsBox.children = appWidgets;
+
+         shBox.visible = false;
+         appsBox.visible = true;
+      }
+   }
+
+   searchQuery.subscribe((searchQuery) => {
+      onSearchQueryChanged(searchQuery);
+   });
+
+   return window;
 }

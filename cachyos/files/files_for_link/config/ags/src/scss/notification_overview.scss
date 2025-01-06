@@ -1,7 +1,7 @@
 .notifications-overview {
    // background: pink;
 
-   .notifications-overview-content {
+   &-content {
       min-width: 500px;
       min-height: 500px;
       background: $color_background;
