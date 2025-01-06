@@ -11,63 +11,64 @@ function hide() {
    App.get_window("astal-app-launcher")?.hide();
 }
 
-const AppWidget = (app: Apps.Application): Widget.Button => {
-   return new Widget.Button(
-      {
-         className: "rrr",
-
-         onClick: () => {
-            app.launch();
-            hide();
-         },
-      },
-
-      new Widget.Box({
-         className: "app-launcher-app",
-
-         children: [
-            IconWithLabelFallback({
-               icon: app.iconName,
-            }),
-
-            new Widget.Box({
-               valign: Gtk.Align.CENTER,
-               vertical: true,
-
-               setup: (self) => {
-                  self.children = [
-                     new Widget.Label({
-                        className: "app-launcher-app-name",
-                        halign: Gtk.Align.START,
-                        xalign: 0,
-                        truncate: true,
-                        label: app.name,
-                     }),
-                  ];
-
-                  if (app.description) {
-                     self.children = [
-                        ...self.children,
-
-                        new Widget.Label({
-                           className: "app-launcher-app-description",
-                           halign: Gtk.Align.START,
-                           xalign: 0,
-                           wrap: true,
-                           label: app.description,
-                        }),
-                     ];
-                  }
-               },
-            }),
-         ],
-      })
-   );
-};
-
 export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
    const searchQuery = Variable("");
    const appsM = Variable<Apps.Application[]>([]);
+
+   const AppWidget = (app: Apps.Application): Widget.Button => {
+      return new Widget.Button(
+         {
+            className: "rrr",
+
+            onClick: () => {
+               app.launch();
+               hide();
+               searchQuery.set("");
+            },
+         },
+
+         new Widget.Box({
+            className: "app-launcher-app",
+
+            children: [
+               IconWithLabelFallback({
+                  icon: app.iconName,
+               }),
+
+               new Widget.Box({
+                  valign: Gtk.Align.CENTER,
+                  vertical: true,
+
+                  setup: (self) => {
+                     self.children = [
+                        new Widget.Label({
+                           className: "app-launcher-app-name",
+                           halign: Gtk.Align.START,
+                           xalign: 0,
+                           truncate: true,
+                           label: app.name,
+                        }),
+                     ];
+
+                     if (app.description) {
+                        self.children = [
+                           ...self.children,
+
+                           new Widget.Label({
+                              className: "app-launcher-app-description",
+                              halign: Gtk.Align.START,
+                              xalign: 0,
+                              wrap: true,
+                              label: app.description,
+                           }),
+                        ];
+                     }
+                  },
+               }),
+            ],
+         })
+      );
+   };
 
    const entry = new Widget.Entry({
       className: "app-launcher-content-entry",
