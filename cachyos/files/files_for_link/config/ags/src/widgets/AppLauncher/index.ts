@@ -104,11 +104,15 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
       children: [new Widget.Label({ label: "shbox mode! :3" })],
    });
 
+   const emptyBox = new Widget.Box({
+      children: [new Widget.Label({ label: "empty..." })],
+   });
+
    const contentBox = new Widget.Box({
       className: "app-launcher-content",
       vertical: true,
 
-      children: [entry, appsBox, shBox],
+      children: [entry, appsBox, shBox, emptyBox],
    });
 
    const window = new Widget.Window({
@@ -133,9 +137,11 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
    function onSearchQueryChanged(searchQuery: string) {
       if (searchQuery === "") {
          appsBox.visible = false;
-         shBox.visible = true;
+         shBox.visible = false;
+         emptyBox.visible = true;
       } else if (searchQuery.startsWith(":sh")) {
          appsBox.visible = false;
+         emptyBox.visible = false;
          shBox.visible = true;
       } else {
          const queriedApps = apps
@@ -147,6 +153,7 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
          appsBox.children = appWidgets;
 
          shBox.visible = false;
+         emptyBox.visible = false;
          appsBox.visible = true;
       }
    }
