@@ -120,7 +120,7 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
       anchor: Astal.WindowAnchor.TOP | Astal.WindowAnchor.BOTTOM,
       visible: false,
 
-      onKeyPressEvent: function (self, event: Gdk.Event) {
+      onKeyReleaseEvent: (self, event) => {
          if (event.get_keyval()[1] === Gdk.KEY_Escape) {
             self.hide();
             searchQuery.set("");
