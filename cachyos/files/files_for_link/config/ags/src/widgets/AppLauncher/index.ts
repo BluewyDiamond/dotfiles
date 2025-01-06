@@ -25,6 +25,11 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
                hide();
                searchQuery.set("");
             },
+
+            // prevents from stealing keyboard focus from entry
+            // works because button does not need keyboard focus for now
+            // alternatives: refactor AppWidget to where entry.grab_focus() can be called
+            canFocus: false,
          },
 
          new Widget.Box({
