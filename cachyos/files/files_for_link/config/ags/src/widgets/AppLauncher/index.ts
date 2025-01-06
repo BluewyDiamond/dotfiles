@@ -108,11 +108,15 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
       children: [new Widget.Label({ label: "empty..." })],
    });
 
+   const hotswapBox = new Widget.Box({
+      className: "app-launcher-content-hotswap",
+   });
+
    const contentBox = new Widget.Box({
       className: "app-launcher-content",
       vertical: true,
 
-      children: [entry, appsBox, shBox, emptyBox],
+      children: [entry, hotswapBox],
    });
 
    const window = new Widget.Window({
@@ -136,13 +140,9 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
 
    function onSearchQueryChanged(searchQuery: string) {
       if (searchQuery === "") {
-         appsBox.visible = false;
-         shBox.visible = false;
-         emptyBox.visible = true;
+         hotswapBox.children = [emptyBox];
       } else if (searchQuery.startsWith(":sh")) {
-         appsBox.visible = false;
-         emptyBox.visible = false;
-         shBox.visible = true;
+         hotswapBox.children = [shBox];
       } else {
          const queriedApps = apps
             .fuzzy_query(searchQuery)
@@ -152,9 +152,7 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
          const appWidgets = queriedApps.map((app) => AppWidget(app));
          appsBox.children = appWidgets;
 
-         shBox.visible = false;
-         emptyBox.visible = false;
-         appsBox.visible = true;
+         hotswapBox.children = [appsBox];
       }
    }
 
