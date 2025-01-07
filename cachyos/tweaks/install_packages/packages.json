@@ -3,7 +3,7 @@
       "std": ["trash-cli", "zellij"],
 
       "neovim": {
-         "std": ["neovim", "stylua", "ripgrep", "prettier", "eslint"]
+         "std": ["neovim", "stylua", "ripgrep", "fzf", "prettier", "eslint"]
       }
    },
 
