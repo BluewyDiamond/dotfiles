@@ -130,6 +130,7 @@ function reinstall_minimal
         prompt "No packages to remove..."
     end
 
+    sudo pacman -S $packages_minimal
     sudo chwd -a -f
 end
 
