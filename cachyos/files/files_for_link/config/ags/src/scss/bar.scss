@@ -30,7 +30,7 @@ icon {
    background: $color_background;
    // border-bottom: 2px solid $color_border;
 
-   >centerbox {
+   > centerbox {
       padding: 8px;
    }
 }
@@ -48,10 +48,10 @@ icon {
    @include bar-module();
    margin-right: 7.2px;
 
-   >button {
+   > button {
       margin-right: 4px;
 
-      >label {
+      > label {
          background: $color_background;
 
          font-size: 0;
@@ -73,7 +73,8 @@ icon {
             background: $color_alert;
          }
 
-         &.clicked {}
+         &.clicked {
+         }
 
          &:last-child {
             margin-right: 0;
@@ -83,11 +84,11 @@ icon {
 }
 
 .hyprland-taskbar {
-   &>button {
+   & > button {
       margin-right: 7.2px;
 
-      &>icon,
-      &>label {
+      & > icon,
+      & > label {
          @include bar-module();
 
          &.active {
@@ -100,7 +101,7 @@ icon {
 .notifications {
    margin-right: 4px;
 
-   &>button {
+   & > button {
       @include bar-module();
 
       &.active {
@@ -149,8 +150,8 @@ icon {
    @include bar-module();
    margin-left: 7.2px;
 
-   &>icon,
-   &>label {
+   & > icon,
+   & > label {
       background-color: transparent;
       margin-left: 4px;
 
@@ -158,4 +159,9 @@ icon {
          margin-left: 0px;
       }
    }
+}
+
+.power {
+   @include bar-module();
+   margin-left: 7.2px;
 }

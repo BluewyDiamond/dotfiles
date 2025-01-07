@@ -1,0 +1,35 @@
+.power-menu {
+   &-content {
+      background: $color_background;
+      color: $color_on_background;
+      padding: 10px;
+
+      button {
+         background: $color_surface;
+         padding: 10px;
+
+         &:hover {
+            color: $color_primary;
+         }
+
+         &.one {
+            color: black;
+            background: linear-gradient(to top, $color_primary 33.33%, $color_surface 66.67%);
+         }
+
+         &.two {
+            color: black;
+            background: linear-gradient(to top, $color_primary 66.66%, $color_surface 33.34%);
+         }
+
+         &.three {
+            color: black;
+            background: $color_primary;
+         }
+
+         &>icon {
+            font-size: 55px;
+         }
+      }
+   }
+}
