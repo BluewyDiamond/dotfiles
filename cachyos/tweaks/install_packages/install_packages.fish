@@ -50,10 +50,8 @@ function main
         set common_arch_user_repository $common_arch_user_repository (string split " " (print_chosen_repository_from_json_file $config aur))
     end
 
-    sudo pacman -S --needed $common_standard_repository
-
+    sudo pacman -Syy --needed $common_standard_repository
     sudo pacman -S --needed paru
-
     paru -S --aur --needed $common_arch_user_repository
 end
 
