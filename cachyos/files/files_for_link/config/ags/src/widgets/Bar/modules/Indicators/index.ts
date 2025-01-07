@@ -1,9 +1,9 @@
 import { Gtk, Widget } from "astal/gtk3";
 import { IndicatorMap } from "./IndicatorMap";
 
-const indicatorsMap = new IndicatorMap();
-
 export default function (): Widget.Button {
+   const indicatorsMap = new IndicatorMap();
+
    return new Widget.Button({
       className: "indicators",
 

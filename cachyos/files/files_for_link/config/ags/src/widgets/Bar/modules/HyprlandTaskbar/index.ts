@@ -1,9 +1,12 @@
 import { Gtk, Widget } from "astal/gtk3";
 import { ClientMap } from "./ClientMap";
 
-const clientMap = new ClientMap();
-
 export default function (): Widget.Box {
+   // looks like the same widget can't be shared
+   // in different boxes or other widgets
+   // so each new instance needs their own instance of clientMap
+   const clientMap = new ClientMap();
+
    return new Widget.Box({
       className: "hyprland-taskbar",
 
