@@ -21,7 +21,7 @@ export class NotificationMap implements Subscribable {
                setup: () => {
                   if (options.notificationsPopup.timeout) {
                      timeout(options.notificationsPopup.timeout, () =>
-                        notification.dismiss()
+                        this.delete(notification.id)
                      );
                   }
                },
@@ -40,7 +40,7 @@ export class NotificationMap implements Subscribable {
                setup: () => {
                   if (options.notificationsPopup.timeout) {
                      timeout(options.notificationsPopup.timeout, () =>
-                        notification.dismiss()
+                        this.delete(notification.id)
                      );
                   }
                },
