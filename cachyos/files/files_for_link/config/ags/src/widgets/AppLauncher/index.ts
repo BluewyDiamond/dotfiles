@@ -19,6 +19,7 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
       return new Widget.Button(
          {
             className: "rrr",
+            hexpand: true,
 
             onClick: () => {
                app.launch();
