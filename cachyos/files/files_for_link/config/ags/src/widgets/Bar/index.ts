@@ -7,6 +7,7 @@ import Datetime from "./modules/Time";
 import Notifications from "./modules/Notifications";
 import AppLauncher from "./modules/AppLauncher";
 import Power from "./modules/Power";
+import Battery from "./modules/Battery";
 
 export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
    return new Widget.Window({
@@ -45,7 +46,7 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
          endWidget: new Widget.Box({
             hexpand: true,
             halign: Gtk.Align.END,
-            children: [SystemTray(), Indicators(), Power()],
+            children: [SystemTray(), Battery(), Indicators(), Power()],
          }),
       }),
    });

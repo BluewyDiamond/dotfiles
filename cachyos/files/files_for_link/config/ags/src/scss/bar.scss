@@ -150,6 +150,11 @@ icon {
    }
 }
 
+.battery {
+   @include bar-module();
+   margin-left: 7.2px;
+}
+
 .indicators {
    @include bar-module();
    margin-left: 7.2px;

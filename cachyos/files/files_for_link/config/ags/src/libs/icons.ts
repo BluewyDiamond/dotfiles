@@ -69,7 +69,34 @@ export default {
    },
 
    battery: {
-      charging: "battery-flash-symbolic",
+      default: "",
+      at000: "battery-000-symbolic",
+      at010: "battery-010-symbolic",
+      at020: "battery-020-symbolic",
+      at030: "battery-030-symbolic",
+      at040: "battery-040-symbolic",
+      at050: "battery-050-symbolic",
+      at060: "battery-060-symbolic",
+      at070: "battery-070-symbolic",
+      at080: "battery-080-symbolic",
+      at090: "battery-090-symbolic",
+      at100: "battery-100-symbolic",
+
+      charging: {
+         default: "battery-symbolic",
+         at000: "battery-000-charging-symbolic",
+         at010: "battery-010-charging-symbolic",
+         at020: "battery-020-charging-symbolic",
+         at030: "battery-030-charging-symbolic",
+         at040: "battery-040-charging-symbolic",
+         at050: "battery-050-charging-symbolic",
+         at060: "battery-060-charging-symbolic",
+         at070: "battery-070-charging-symbolic",
+         at080: "battery-080-charging-symbolic",
+         at090: "battery-090-charging-symbolic",
+         at100: "battery-100-charging-symbolic",
+      },
+
       warning: "battery-empty-symbolic",
    },
 
