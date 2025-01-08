@@ -3,7 +3,6 @@ import { IconWithLabelFallback } from "../../wrappers/IconWithLabelFallback";
 import icons from "../../../libs/icons";
 import { bind } from "astal/binding";
 import Battery from "gi://AstalBattery";
-import { timeout } from "astal";
 
 const battery = Battery.get_default();
 
@@ -15,7 +14,7 @@ export default function (): Widget.Box {
       children: [
          new Widget.Box({
             setup: (self) => {
-               self.hook(battery, "notify::is-charging", () => {
+               function onChargingChanged() {
                   if (battery.charging) {
                      self.children = [
                         IconWithLabelFallback({
@@ -27,7 +26,11 @@ export default function (): Widget.Box {
                         IconWithLabelFallback({ icon: icons.battery.default }),
                      ];
                   }
-               });
+               }
+
+               self.hook(battery, "notify::is-charging", () =>
+                  onChargingChanged()
+               );
             },
          }),
 
