@@ -69,7 +69,7 @@ export default {
    },
 
    battery: {
-      default: "battery-000-symbolic",
+      default: "battery-symbolic",
       at000: "battery-000-symbolic",
       at010: "battery-010-symbolic",
       at020: "battery-020-symbolic",
@@ -83,7 +83,7 @@ export default {
       at100: "battery-100-symbolic",
 
       charging: {
-         default: "battery-symbolic",
+         default: "battery-good-charging-symbolic",
          at000: "battery-000-charging-symbolic",
          at010: "battery-010-charging-symbolic",
          at020: "battery-020-charging-symbolic",
