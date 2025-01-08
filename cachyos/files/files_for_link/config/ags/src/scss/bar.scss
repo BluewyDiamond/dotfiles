@@ -1,14 +1,4 @@
-@mixin bar-module {
-   background: $color_surface;
-   color: $color_on_surface;
-   border-radius: 4px;
-   padding: 4px;
-
-
-   &.active {
-      background: $color_primary;
-   }
-}
+$space_between_bar_modules: 7.2px;
 
 @keyframes ripple {
    0% {
@@ -20,20 +10,12 @@
    }
 }
 
-* {
-   all: unset;
-   font-family: "IosevkaTerm Nerd Font Mono";
-   font-size: 18px;
-   font-weight: 500;
-}
-
 icon {
    font-size: 22px;
 }
 
 .bar {
    background: $color_background;
-   // border-bottom: 2px solid $color_border;
 
    >centerbox {
       padding: 8px;
@@ -42,16 +24,12 @@ icon {
 
 .app-launcher-b {
    @include bar-module();
-   margin-right: 7.2px;
-
-   &.active {
-      background: $color_primary;
-   }
+   margin-right: $space_between_bar_modules;
 }
 
 .hyprland-workspaces {
    @include bar-module();
-   margin-right: 7.2px;
+   margin-right: $space_between_bar_modules;
 
    >button {
       margin-right: 4px;
@@ -78,8 +56,6 @@ icon {
             background: $color_alert;
          }
 
-         &.clicked {}
-
          &:last-child {
             margin-right: 0;
          }
@@ -89,34 +65,26 @@ icon {
 
 .hyprland-taskbar {
    &>button {
-      margin-right: 7.2px;
+      margin-right: $space_between_bar_modules;
 
       &>icon,
       &>label {
          @include bar-module();
-
-         &.active {
-            background: $color_primary;
-         }
       }
    }
 }
 
 .notifications {
-   margin-right: 4px;
+   margin-right: $space_between_bar_modules;
 
    &>button {
       @include bar-module();
-
-      &.active {
-         background: $color_primary;
-      }
    }
 }
 
 .time {
    @include bar-module();
-   margin-right: 4px;
+   margin-right: $space_between_bar_modules;
 }
 
 .system-tray {
@@ -124,11 +92,7 @@ icon {
 
    .tray-item {
       @include bar-module();
-      margin-left: 7.2px;
-
-      &.active {
-         background: $color_primary;
-      }
+      margin-left: $space_between_bar_modules;
    }
 
    menu {
@@ -152,25 +116,27 @@ icon {
 
 .battery {
    @include bar-module();
-   margin-left: 7.2px;
+   margin-left: $space_between_bar_modules;
 }
 
 .indicators {
    @include bar-module();
-   margin-left: 7.2px;
+   margin-left: $space_between_bar_modules;
 
-   &>icon,
-   &>label {
-      background-color: transparent;
-      margin-left: 4px;
+   &>box {
 
-      &:first-child {
-         margin-left: 0px;
+      &>icon,
+      &>label {
+         margin-left: 4px;
+
+         &:first-child {
+            margin-left: 0px;
+         }
       }
    }
 }
 
 .power {
    @include bar-module();
-   margin-left: 7.2px;
+   margin-left: $space_between_bar_modules;
 }

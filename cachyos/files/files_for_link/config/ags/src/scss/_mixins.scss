@@ -1,0 +1,11 @@
+@mixin bar-module {
+   background: $color_surface;
+   color: $color_on_surface;
+   border-radius: 4px;
+   padding: 4px;
+
+
+   &.active {
+      background: $color_primary;
+   }
+}
