@@ -30,7 +30,7 @@ export default function (): Widget.Box {
 
                onChargingChanged();
 
-               self.hook(battery, "notify::is-charging", () =>
+               self.hook(battery, "notify::charging", () =>
                   onChargingChanged()
                );
             },
