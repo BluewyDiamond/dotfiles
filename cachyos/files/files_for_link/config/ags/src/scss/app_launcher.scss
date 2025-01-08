@@ -1,5 +1,5 @@
 .app-launcher {
-   &-content {
+   &>box {
       background: $color_background;
       color: $color_on_background;
       border-radius: 4px;
@@ -7,42 +7,42 @@
       margin: 100px;
       padding: 8px;
 
-      &-entry {
+      &>entry {
          background: $color_surface;
          margin-bottom: 8px;
          font-size: 28px;
          border-radius: 4px;
       }
 
-      &-hotswap {
-      }
+      &>box {
+         & .apps-container {
+            &>button {
+               padding: 8px;
+               background: $color_surface;
+               border-radius: 4px;
+               margin-bottom: 8px;
 
-      &-apps {
-         & .app-launcher-app {
-            & .app-launcher-app-name {
-               font-size: 22px;
-            }
+               &:hover {
+                  background: $color_primary;
+               }
 
-            & .app-launcher-app-description {
-               font-size: 18px;
-            }
+               &>box {
+                  &>icon {
+                     font-size: 55px;
+                     margin-right: 8px;
+                  }
 
-            & > icon {
-               font-size: 55px;
-               margin-right: 8px;
+                  &.name {
+                     font-size: 22px;
+                  }
+
+                  &.description {
+
+                     font-size: 18px;
+                  }
+               }
             }
          }
-      }
-   }
-
-   .rrr {
-      padding: 8px;
-      background: $color_surface;
-      border-radius: 4px;
-      margin-bottom: 8px;
-
-      &:hover {
-         background: $color_primary;
       }
    }
 }

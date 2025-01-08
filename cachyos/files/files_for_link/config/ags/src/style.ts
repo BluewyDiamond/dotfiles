@@ -20,6 +20,6 @@ export function getCss(): string {
 }
 
 const variables = () => [
-   `$indicators_spacing: ${options.bar.indicators.spacing}px;`,
-   `$workspaces_spacing: ${options.bar.workspaces.spacing}px;`,
+   //`$indicators_spacing: ${options.bar.indicators.spacing}px;`,
+   //`$workspaces_spacing: ${options.bar.workspaces.spacing}px;`,
 ];

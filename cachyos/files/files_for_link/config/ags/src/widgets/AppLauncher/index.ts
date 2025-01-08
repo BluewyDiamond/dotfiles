@@ -18,7 +18,6 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
    const AppWidget = (app: Apps.Application): Widget.Button => {
       return new Widget.Button(
          {
-            className: "rrr",
             hexpand: true,
 
             onClick: () => {
@@ -34,8 +33,6 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
          },
 
          new Widget.Box({
-            className: "app-launcher-app",
-
             children: [
                IconWithLabelFallback({
                   icon: app.iconName,
@@ -48,7 +45,7 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
                   setup: (self) => {
                      self.children = [
                         new Widget.Label({
-                           className: "app-launcher-app-name",
+                           className: "name",
                            halign: Gtk.Align.START,
                            xalign: 0,
                            truncate: true,
@@ -61,7 +58,7 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
                            ...self.children,
 
                            new Widget.Label({
-                              className: "app-launcher-app-description",
+                              className: "description",
                               halign: Gtk.Align.START,
                               xalign: 0,
                               wrap: true,
@@ -77,7 +74,6 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
    };
 
    const entry = new Widget.Entry({
-      className: "app-launcher-content-entry",
       placeholderText: "Search",
       text: bind(searchQuery),
       onChanged: (self) => searchQuery.set(self.text),
@@ -97,7 +93,7 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
    });
 
    const appsBox = new Widget.Box({
-      className: "app-launcher-content-apps",
+      className: "apps-container",
       vertical: true,
    });
 
@@ -109,14 +105,10 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
       children: [new Widget.Label({ label: "empty..." })],
    });
 
-   const hotswapBox = new Widget.Box({
-      className: "app-launcher-content-hotswap",
-   });
+   const hotswapBox = new Widget.Box({});
 
    const contentBox = new Widget.Box({
-      className: "app-launcher-content",
       vertical: true,
-
       children: [entry, hotswapBox],
    });
 
