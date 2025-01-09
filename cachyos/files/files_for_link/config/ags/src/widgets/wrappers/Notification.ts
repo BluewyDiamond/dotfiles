@@ -93,24 +93,16 @@ export default function (props: NotificationProps): Widget.EventBox {
                className: "notification-content",
 
                setup: (self) => {
-                  if (notification.image && fileExists(notification.image)) {
-                     self.children = [
-                        ...self.children,
-
-                        new Widget.Box({
-                           className: "notification-image",
-                           css: `background-image: url('${notification.image}')`,
-                        }),
-                     ];
-                  }
-
                   if (notification.image && isValidIcon(notification.image)) {
                      self.children = [
                         ...self.children,
 
-                        new Widget.Icon({
-                           className: "notification-icon",
+                        IconWithLabelFallback({
                            icon: notification.image,
+
+                           iconProps: {
+                              className: "notification-icon",
+                           },
                         }),
                      ];
                   }
