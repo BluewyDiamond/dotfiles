@@ -16,6 +16,10 @@ function Notifications(): Widget.Box {
             self.children = list;
          });
       },
+
+      onDestroy: () => {
+         notificationMap.destroy();
+      },
    });
 }
 

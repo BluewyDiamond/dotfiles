@@ -4,6 +4,7 @@ import { Subscribable } from "astal/binding";
 import { Variable } from "astal";
 import { IconWithLabelFallback } from "../../../wrappers/IconWithLabelFallback";
 import icons from "../../../../libs/icons";
+import Hookable from "../../../../libs/Hookable";
 
 const hyprland = AstalHyprland.get_default();
 
@@ -41,20 +42,22 @@ function ClientWidget(
    );
 }
 
-export class ClientMap implements Subscribable {
+export class ClientMap extends Hookable implements Subscribable {
    private map: Map<string, Gtk.Widget> = new Map();
    private var: Variable<Array<Gtk.Widget>> = Variable([]);
 
    constructor() {
+      super();
+
       hyprland.clients.forEach((client) => {
          this.set(client.get_address(), ClientWidget(client, hyprland));
       });
 
-      hyprland.connect("client-added", (_, client) => {
+      this.hook(hyprland, "client-added", (_, client) => {
          this.set(client.get_address(), ClientWidget(client, hyprland));
       });
 
-      hyprland.connect("client-removed", (_, address) => {
+      this.hook(hyprland, "client-removed", (_, address) => {
          this.delete(address);
       });
    }
@@ -65,6 +68,11 @@ export class ClientMap implements Subscribable {
 
    subscribe(callback: (list: Array<Gtk.Widget>) => void): () => void {
       return this.var.subscribe(callback);
+   }
+
+   destroy() {
+      super.destroy();
+      this.var.drop();
    }
 
    private set(key: string, value: Gtk.Widget) {

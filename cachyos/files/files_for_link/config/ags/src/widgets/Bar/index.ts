@@ -46,7 +46,12 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
          endWidget: new Widget.Box({
             hexpand: true,
             halign: Gtk.Align.END,
-            children: [SystemTray(), Battery(), Indicators(), Power()],
+            children: [
+               SystemTray(),
+               Battery(),
+               Indicators(),
+               Power(),
+            ],
          }),
       }),
    });

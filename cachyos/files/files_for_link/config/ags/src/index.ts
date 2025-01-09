@@ -11,20 +11,24 @@ App.start({
    instanceName: "main",
 
    main() {
-      let bar: Widget.Window;
-      let notificationsOverview: Widget.Window;
-      let notificationsPopup: Widget.Window;
-      let appLauncher: Widget.Window;
-      let powerMenu: Widget.Window;
+      let bar: Widget.Window | undefined;
+      let notificationsOverview: Widget.Window | undefined;
+      let notificationsPopup: Widget.Window | undefined;
+      let appLauncher: Widget.Window | undefined;
+      let powerMenu: Widget.Window | undefined;
 
       function onMonitorsChanged() {
-         // possibly this is done automatically by gc?
-         // idk
          bar?.destroy();
          notificationsOverview?.destroy();
          notificationsPopup?.destroy();
          appLauncher?.destroy();
          powerMenu?.destroy();
+
+         bar = undefined;
+         notificationsOverview = undefined;
+         notificationsPopup = undefined;
+         appLauncher = undefined;
+         powerMenu = undefined;
 
          const monitors = App.get_monitors();
 
@@ -34,7 +38,7 @@ App.start({
 
          for (const monitor of monitors) {
             if (!monitor) {
-               return;
+               continue;
             }
 
             bar = Bar(monitor);

@@ -3,14 +3,17 @@ import { Subscribable } from "astal/binding";
 import { Gtk } from "astal/gtk3";
 import Notifd from "gi://AstalNotifd";
 import Notification from "../wrappers/Notification";
+import Hookable from "../../libs/Hookable";
 
 const notifd = Notifd.get_default();
 
-export class NotificationMap implements Subscribable {
+export class NotificationMap extends Hookable implements Subscribable {
    private map: Map<number, Gtk.Widget> = new Map();
    private var: Variable<Array<Gtk.Widget>> = Variable([]);
 
    constructor() {
+      super();
+
       notifd.notifications.forEach((notification) => {
          this.set(
             notification.id,
@@ -18,12 +21,12 @@ export class NotificationMap implements Subscribable {
          );
       });
 
-      notifd.connect("notified", (_, id) => {
+      this.hook(notifd, "notified", (_, id) => {
          const notification = notifd.get_notification(id);
          this.set(id, Notification({ notification: notification }));
       });
 
-      notifd.connect("resolved", (_, id) => {
+      this.hook(notifd, "resolved", (_, id) => {
          this.delete(id);
       });
    }
@@ -34,6 +37,11 @@ export class NotificationMap implements Subscribable {
 
    subscribe(callback: (list: Array<Gtk.Widget>) => void) {
       return this.var.subscribe(callback);
+   }
+
+   destroy() {
+      super.destroy();
+      this.var.drop();
    }
 
    private set(key: number, value: Gtk.Widget) {

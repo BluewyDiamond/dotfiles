@@ -1,3 +1,4 @@
+import Hookable from "../../../../libs/Hookable";
 import { Variable } from "astal";
 import { Subscribable } from "astal/binding";
 import { Gtk, Widget } from "astal/gtk3";
@@ -48,28 +49,25 @@ function TrayItemButton(item: Tray.TrayItem): Widget.MenuButton {
    );
 }
 
-export class TrayItemMap implements Subscribable {
+export class TrayItemMap2 extends Hookable implements Subscribable {
    private map: Map<string, Gtk.Widget> = new Map();
    private var: Variable<Array<Gtk.Widget>> = new Variable([]);
-   private traySignalsId: number[] = [];
 
    constructor() {
+      super();
+
       tray.get_items()?.forEach((item) => {
          this.set(item.get_item_id(), TrayItemButton(item));
       });
 
-      this.traySignalsId.push(
-         tray.connect("item-added", (_, item_id) => {
-            const item = tray.get_item(item_id);
-            this.set(item_id, TrayItemButton(item));
-         })
-      );
+      this.hook(tray, "item-added", (_, item_id) => {
+         const item = tray.get_item(item_id);
+         this.set(item_id, TrayItemButton(item));
+      });
 
-      this.traySignalsId.push(
-         tray.connect("item-removed", (_, item_id) => {
-            this.delete(item_id);
-         })
-      );
+      this.hook(tray, "item-removed", (_, item_id) => {
+         this.delete(item_id);
+      });
    }
 
    get(): Gtk.Widget[] {
@@ -81,7 +79,7 @@ export class TrayItemMap implements Subscribable {
    }
 
    destroy() {
-      this.traySignalsId.forEach((id) => tray.disconnect(id));
+      super.destroy();
       this.var.drop();
    }
 

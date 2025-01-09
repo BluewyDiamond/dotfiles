@@ -26,5 +26,9 @@ export default function (): Widget.Box {
             }
          }
       },
+
+      onDestroy: () => {
+         clientMap.destroy();
+      },
    });
 }

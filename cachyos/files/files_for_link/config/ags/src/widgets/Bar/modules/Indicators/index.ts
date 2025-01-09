@@ -25,6 +25,10 @@ export default function (): Widget.Button {
                onIndicatorsChanged(list);
             });
          },
+
+         onDestroy: () => {
+            indicatorsMap.destroy();
+         },
       }),
    });
 }

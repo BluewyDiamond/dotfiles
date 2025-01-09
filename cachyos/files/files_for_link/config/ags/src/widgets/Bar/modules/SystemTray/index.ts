@@ -1,10 +1,10 @@
 import { Gtk, Widget } from "astal/gtk3";
-import { TrayItemMap } from "./TrayItemMap";
+import { TrayItemMap2 } from "./TrayItemMap2";
 
 // TODO: maybe fallback gicon?
 
 export default function (): Widget.Box {
-   const trayItemMap = new TrayItemMap();
+   const trayItemMap = new TrayItemMap2();
 
    return new Widget.Box({
       className: "system-tray",
@@ -25,6 +25,10 @@ export default function (): Widget.Box {
                self.visible = false;
             }
          }
+      },
+
+      onDestroy: () => {
+         trayItemMap.destroy();
       },
    });
 }
