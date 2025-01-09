@@ -1,9 +1,9 @@
 import { Astal, Gdk, Widget } from "astal/gtk3";
 import { NotificationMap } from "./NotificationMap";
 
-const notificationMap = new NotificationMap();
-
 function Notifications(): Widget.Box {
+   const notificationMap = new NotificationMap();
+
    return new Widget.Box({
       className: "notifications-overview-content",
       vertical: true,
