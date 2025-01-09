@@ -17,7 +17,7 @@ icon {
 .bar {
    background: $color_background;
 
-   >centerbox {
+   > centerbox {
       padding: 8px;
    }
 }
@@ -31,7 +31,7 @@ icon {
    @include bar-module();
    margin-right: $space_between_bar_modules;
 
-   >button {
+   > button {
       margin-right: 4px;
       background: $color_background;
       min-width: 3pt;
@@ -56,14 +56,14 @@ icon {
          margin-right: 0;
       }
 
-      >label {
+      > label {
          font-size: 0;
       }
    }
 }
 
 .hyprland-taskbar {
-   &>button {
+   & > button {
       @include bar-module();
       margin-right: $space_between_bar_modules;
 
@@ -76,7 +76,7 @@ icon {
 .notifications {
    margin-right: $space_between_bar_modules;
 
-   &>button {
+   & > button {
       @include bar-module();
    }
 }
@@ -122,10 +122,9 @@ icon {
    @include bar-module();
    margin-left: $space_between_bar_modules;
 
-   &>box {
-
-      &>icon,
-      &>label {
+   & > box {
+      & > icon,
+      & > label {
          margin-left: 4px;
 
          &:first-child {

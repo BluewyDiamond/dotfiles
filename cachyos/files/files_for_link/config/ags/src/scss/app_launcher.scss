@@ -1,5 +1,5 @@
 .app-launcher {
-   &>box {
+   & > box {
       background: $color_background;
       color: $color_on_background;
       border-radius: 4px;
@@ -7,16 +7,16 @@
       margin: 100px;
       padding: 8px;
 
-      &>entry {
+      & > entry {
          background: $color_surface;
          margin-bottom: 8px;
          font-size: 28px;
          border-radius: 4px;
       }
 
-      &>box {
+      & > box {
          & .apps-container {
-            &>button {
+            & > button {
                padding: 8px;
                background: $color_surface;
                border-radius: 4px;
@@ -26,8 +26,8 @@
                   background: $color_primary;
                }
 
-               &>box {
-                  &>icon {
+               & > box {
+                  & > icon {
                      font-size: 55px;
                      margin-right: 8px;
                   }
@@ -37,7 +37,6 @@
                   }
 
                   &.description {
-
                      font-size: 18px;
                   }
                }
