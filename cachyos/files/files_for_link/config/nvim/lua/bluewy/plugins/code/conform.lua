@@ -6,23 +6,24 @@ return {
       require("conform").setup({
          formatters_by_ft = {
             -- common
-            lua = { "stylua" },
             fish = { "fish_indent" },
+            lua = { "stylua" },
 
-            -- low level
-            rust = { "rustfmt" },
-
-            -- high level
+            -- programming langauges
             javascript = { "prettier" },
-            typescript = { "prettier" },
-            css = { "prettier" },
             python = { "black" },
             php = { "pretty-php" },
+            rust = { "rustfmt" },
+            typescript = { "prettier" },
 
-            -- other
+            -- data formats
             json = { "prettier" },
             jsonc = { "prettier" },
             toml = { "taplo" },
+
+            -- other
+            css = { "prettier" },
+            scss = { "prettier" },
          },
       })
    end,
