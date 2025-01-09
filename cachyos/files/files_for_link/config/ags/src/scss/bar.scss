@@ -33,43 +33,42 @@ icon {
 
    >button {
       margin-right: 4px;
+      background: $color_background;
+      min-width: 3pt;
+      min-height: 3pt;
+      border-radius: 10%;
+      padding: 5px;
+      transition: background 0.1s linear;
+
+      &.occupied {
+         background: $color_on_surface;
+      }
+
+      &.active {
+         background: $color_primary;
+      }
+
+      &.urgent {
+         background: $color_alert;
+      }
+
+      &:last-child {
+         margin-right: 0;
+      }
 
       >label {
-         background: $color_background;
-
          font-size: 0;
-         min-width: 3pt;
-         min-height: 3pt;
-         border-radius: 10%;
-         padding: 5px;
-
-         &.occupied {
-            background: $color_on_surface;
-         }
-
-         &.active {
-            background: $color_primary;
-            animation: ripple 1s linear;
-         }
-
-         &.urgent {
-            background: $color_alert;
-         }
-
-         &:last-child {
-            margin-right: 0;
-         }
       }
    }
 }
 
 .hyprland-taskbar {
    &>button {
+      @include bar-module();
       margin-right: $space_between_bar_modules;
 
-      &>icon,
-      &>label {
-         @include bar-module();
+      &:hover {
+         background: $color_primary;
       }
    }
 }

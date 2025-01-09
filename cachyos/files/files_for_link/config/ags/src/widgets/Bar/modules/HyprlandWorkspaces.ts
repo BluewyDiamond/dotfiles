@@ -10,64 +10,54 @@ export default function (): Widget.Box {
       className: "hyprland-workspaces",
 
       children: options.bar.workspaces.values.map((index) => {
-         const label = new Widget.Label({
-            label: `${index}`,
-
-            setup: (self) => {
-               function onWorkspaceFocusedChange() {
-                  const workspace = hyprland.get_focused_workspace();
-                  if (!workspace) return;
-
-                  self.toggleClassName("urgent", false);
-
-                  self.toggleClassName(
-                     "occupied",
-                     // get_workspace can return null despite what return type idicates
-                     (hyprland.get_workspace(index)?.get_clients().length ||
-                        0) > 0
-                  );
-
-                  self.toggleClassName("active", index === workspace.get_id());
-               }
-
-               onWorkspaceFocusedChange();
-
-               self.hook(hyprland, "notify::focused-workspace", () => {
-                  onWorkspaceFocusedChange();
-               });
-
-               self.hook(
-                  hyprland,
-                  "urgent",
-
-                  (_, client: AstalHyprland.Client) => {
-                     self.toggleClassName(
-                        "urgent",
-                        index === client.get_workspace().get_id()
-                     );
-                  }
-               );
-            },
-         });
-
          return new Widget.Button(
             {
                onClick: async () => {
                   (async () => {
                      hyprland.dispatch("workspace", `${index}`);
                   })();
+               },
 
-                  (async () => {
-                     label.toggleClassName("clicked", true);
+               setup: (self) => {
+                  function onWorkspaceFocusedChange() {
+                     const workspace = hyprland.focusedWorkspace;
+                     if (!workspace) return;
 
-                     timeout(1000, () => {
-                        label.toggleClassName("clicked", false);
-                     });
-                  })();
+                     self.toggleClassName("urgent", false);
+
+                     self.toggleClassName(
+                        "occupied",
+                        // get_workspace can return null despite what return type idicates
+                        (hyprland.get_workspace(index)?.get_clients().length ||
+                           0) > 0
+                     );
+
+                     self.toggleClassName("active", index === workspace.id);
+                  }
+
+                  onWorkspaceFocusedChange();
+
+                  self.hook(hyprland, "notify::focused-workspace", () => {
+                     onWorkspaceFocusedChange();
+                  });
+
+                  self.hook(
+                     hyprland,
+                     "urgent",
+
+                     (_, client: AstalHyprland.Client) => {
+                        self.toggleClassName(
+                           "urgent",
+                           index === client.get_workspace().get_id()
+                        );
+                     }
+                  );
                },
             },
 
-            label
+            new Widget.Label({
+               label: `${index}`,
+            })
          );
       }),
    });
