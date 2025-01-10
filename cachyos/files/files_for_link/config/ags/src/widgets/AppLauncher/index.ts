@@ -4,6 +4,7 @@ import { App, Astal, Gdk, Gtk, Widget } from "astal/gtk3";
 import Apps from "gi://AstalApps";
 import { IconWithLabelFallback } from "../wrappers/IconWithLabelFallback";
 import options from "../../options";
+import Pango from "gi://Pango?version=1.0";
 
 const apps = new Apps.Apps();
 
@@ -18,6 +19,8 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
    const AppWidget = (app: Apps.Application): Widget.Button => {
       return new Widget.Button(
          {
+            hexpand: true,
+
             onClick: () => {
                app.launch();
                hide();
@@ -60,6 +63,7 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
                               halign: Gtk.Align.START,
                               xalign: 0,
                               wrap: true,
+                              wrapMode: Pango.WrapMode.WORD_CHAR,
                               label: app.description,
                            }),
                         ];
@@ -119,7 +123,7 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
       name: "astal-app-launcher",
       className: "app-launcher",
       exclusivity: Astal.Exclusivity.IGNORE,
-      keymode: Astal.Keymode.ON_DEMAND,
+      keymode: Astal.Keymode.EXCLUSIVE,
       layer: Astal.Layer.OVERLAY,
       anchor: Astal.WindowAnchor.TOP | Astal.WindowAnchor.BOTTOM,
       visible: false,
