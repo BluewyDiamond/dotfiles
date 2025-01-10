@@ -1,14 +1,37 @@
 .notifications-overview {
-   // background: pink;
-
-   &-content {
+   & .main-box {
       min-width: 500px;
       min-height: 500px;
-      background: $color_surface;
+      background: $color_background;
 
       border: 2px solid $color_border;
 
       padding: 10px;
       margin: 0.5rem 1rem 0.5rem 1rem;
+
+      & > box {
+         padding: 8px;
+         margin-bottom: 8px;
+
+         &:last-child {
+            margin-bottom: 0;
+         }
+      }
+
+      & .actions-box {
+         & > button {
+            background: $color_surface;
+            color: $color_on_surface;
+            padding: 4px;
+            border-radius: 4px;
+         }
+      }
+
+      & .notifications-box {
+         & .notification {
+            background: $color_surface;
+            color: $color_on_surface;
+         }
+      }
    }
 }

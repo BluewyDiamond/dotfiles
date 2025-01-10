@@ -33,7 +33,6 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
       className: "notifications-popup",
       layer: Astal.Layer.OVERLAY,
       anchor: Astal.WindowAnchor.TOP | Astal.WindowAnchor.RIGHT,
-      exclusivity: Astal.Exclusivity.IGNORE,
       child: Notifications(),
 
       setup: (self) => {

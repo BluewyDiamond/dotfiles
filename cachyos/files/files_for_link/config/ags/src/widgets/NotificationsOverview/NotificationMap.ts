@@ -44,6 +44,14 @@ export class NotificationMap extends Hookable implements Subscribable {
       this.var.drop();
    }
 
+   clear() {
+      this.map.forEach((_, id) => {
+         notifd.get_notification(id)?.dismiss()
+      })
+
+      this.notify()
+   }
+
    private set(key: number, value: Gtk.Widget) {
       this.map.get(key)?.destroy();
       this.map.set(key, value);

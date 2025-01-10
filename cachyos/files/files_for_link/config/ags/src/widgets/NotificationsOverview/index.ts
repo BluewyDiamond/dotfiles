@@ -14,16 +14,37 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
       visible: false,
 
       child: new Widget.Box({
-         className: "notifications-overview-content",
+         className: "main-box",
          vertical: true,
 
-         setup: (self) => {
-            self.children = notificationMap.get();
+         children: [
+            new Widget.Box({
+               className: "actions-box",
 
-            notificationMap.subscribe((list) => {
-               self.children = list;
-            });
-         },
+               children: [
+                  new Widget.Button({
+                     child: new Widget.Label({ label: "Clear All" }),
+
+                     onClick: () => {
+                        notificationMap.clear();
+                     },
+                  }),
+               ],
+            }),
+
+            new Widget.Box({
+               className: "notifications-box",
+               vertical: true,
+
+               setup: (self) => {
+                  self.children = notificationMap.get();
+
+                  notificationMap.subscribe((list) => {
+                     self.children = list;
+                  });
+               },
+            }),
+         ],
       }),
 
       onDestroy: () => {

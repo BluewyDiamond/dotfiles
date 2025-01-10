@@ -4,6 +4,7 @@ import { findIcon, isValidIcon } from "../../utils";
 import { GLib } from "astal";
 import icons from "../../libs/icons";
 import { IconWithLabelFallback } from "./IconWithLabelFallback";
+import Pango from "gi://Pango?version=1.0";
 
 const urgency = (n: Notifd.Notification) => {
    const { LOW, NORMAL, CRITICAL } = Notifd.Urgency;
@@ -20,8 +21,6 @@ const urgency = (n: Notifd.Notification) => {
 
 const time = (time: number, format = "%H:%M") =>
    GLib.DateTime.new_from_unix_local(time).format(format)!;
-
-const fileExists = (path: string) => GLib.file_test(path, GLib.FileTest.EXISTS);
 
 type NotificationProps = {
    notification: Notifd.Notification;
@@ -113,59 +112,77 @@ export default function (props: NotificationProps): Widget.EventBox {
                      new Widget.Box({
                         vertical: true,
 
-                        children: [
-                           new Widget.Label({
-                              className: "notification-summary",
-                              halign: Gtk.Align.START,
-                              xalign: 0,
-                              label: notification.summary,
-                           }),
+                        setup: (self) => {
+                           if (notification.summary) {
+                              self.children = [
+                                 ...self.children,
+                                 new Widget.Label({
+                                    className: "notification-summary",
+                                    halign: Gtk.Align.START,
+                                    xalign: 0,
+                                    truncate: true,
+                                    label: notification.summary,
+                                 }),
+                              ];
+                           }
 
-                           new Widget.Label({
-                              className: "notification-body",
-                              halign: Gtk.Align.START,
-                              xalign: 0,
-                              label: notification.body,
-                           }),
-
-                           new Widget.Box({
-                              className: "notification-actions",
-
-                              setup: (self) => {
-                                 if (notification.get_actions().length > 0) {
-                                    notification
-                                       .get_actions()
-                                       .map(({ label, id }) => {
-                                          self.children = [
-                                             ...self.children,
-
-                                             new Widget.Button(
-                                                {
-                                                   hexpand: true,
-
-                                                   onClicked: () =>
-                                                      notification.invoke(id),
-                                                },
-
-                                                new Widget.Label({
-                                                   label: label,
-                                                   halign: Gtk.Align.CENTER,
-                                                   hexpand: true,
-                                                })
-                                             ),
-                                          ];
-                                       });
-                                 }
-                              },
-                           }),
-                        ],
+                           if (notification.body) {
+                              self.children = [
+                                 ...self.children,
+                                 new Widget.Label({
+                                    className: "notification-body",
+                                    halign: Gtk.Align.START,
+                                    xalign: 0,
+                                    wrap: true,
+                                    wrapMode: Pango.WrapMode.WORD_CHAR,
+                                    label: notification.body,
+                                 }),
+                              ];
+                           }
+                        },
                      }),
                   ];
                },
             }),
          ],
 
-         setup: setup,
+         setup: (self) => {
+            setup && setup();
+
+            if (notification.actions.length > 0) {
+               self.children = [
+                  ...self.children,
+
+                  new Widget.Box({
+                     className: "notification-actions",
+                     hexpand: true,
+
+                     setup: (self) => {
+                        if (notification.get_actions().length > 0) {
+                           notification.get_actions().map(({ label, id }) => {
+                              self.children = [
+                                 ...self.children,
+
+                                 new Widget.Button(
+                                    {
+                                       hexpand: true,
+                                       onClicked: () => notification.invoke(id),
+                                    },
+
+                                    new Widget.Label({
+                                       label: label,
+                                       halign: Gtk.Align.CENTER,
+                                       hexpand: true,
+                                    })
+                                 ),
+                              ];
+                           });
+                        }
+                     },
+                  }),
+               ];
+            }
+         },
       }),
    });
 }
