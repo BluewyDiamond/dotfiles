@@ -18,8 +18,6 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
    const AppWidget = (app: Apps.Application): Widget.Button => {
       return new Widget.Button(
          {
-            hexpand: true,
-
             onClick: () => {
                app.launch();
                hide();
@@ -105,10 +103,14 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
       children: [new Widget.Label({ label: "empty..." })],
    });
 
-   const hotswapBox = new Widget.Box({});
+   const hotswapBox = new Widget.Box({
+      className: "hotswap-box",
+   });
 
-   const contentBox = new Widget.Box({
+   const mainBox = new Widget.Box({
+      className: "main-box",
       vertical: true,
+      vexpand: true,
       children: [entry, hotswapBox],
    });
 
@@ -118,6 +120,7 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
       className: "app-launcher",
       exclusivity: Astal.Exclusivity.IGNORE,
       keymode: Astal.Keymode.ON_DEMAND,
+      layer: Astal.Layer.OVERLAY,
       anchor: Astal.WindowAnchor.TOP | Astal.WindowAnchor.BOTTOM,
       visible: false,
 
@@ -128,7 +131,47 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
          }
       },
 
-      child: contentBox,
+      child: new Widget.Box({
+         className: "horizontal-filler-box",
+
+         children: [
+            new Widget.EventBox({
+               expand: true,
+               // needs to be implemented this way
+               // using an absurdly huge number allows
+               // the main content to be coherent
+               // so horizontally it's a fixed size
+               widthRequest: 4000,
+               onClick: () => hide(),
+            }),
+
+            new Widget.Box({
+               className: "vertical-filler-box",
+               vertical: true,
+
+               children: [
+                  new Widget.EventBox({
+                     hexpand: true,
+                     onClick: () => hide(),
+                  }),
+
+                  mainBox,
+
+                  new Widget.EventBox({
+                     heightRequest: 4000,
+                     expand: true,
+                     onClick: () => hide(),
+                  }),
+               ],
+            }),
+
+            new Widget.EventBox({
+               expand: true,
+               widthRequest: 4000,
+               onClick: () => hide(),
+            }),
+         ],
+      }),
    });
 
    function onSearchQueryChanged(searchQuery: string) {
