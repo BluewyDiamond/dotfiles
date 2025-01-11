@@ -1,4 +1,4 @@
-import { execAsync, Variable } from "astal";
+import { execAsync, timeout, Variable } from "astal";
 import { bind } from "astal/binding";
 import { App, Astal, Gdk, Gtk, Widget } from "astal/gtk3";
 import Apps from "gi://AstalApps";
@@ -102,8 +102,6 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
    const appsBox = new Widget.Box({
       className: "apps-container",
       vertical: true,
-
-      children: bind(appsM).as((apps) => apps.map((app) => AppWidget(app))),
    });
 
    const shBox = new Widget.Box({
@@ -193,7 +191,31 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
       } else if (searchQuery.startsWith(":sh")) {
          hotswapBox.children = [shBox];
       } else {
-         hotswapBox.children = [appsBox];
+         const appsQueried = apps
+            .fuzzy_query(searchQuery)
+            .slice(0, options.appLauncher.maxItems);
+
+         // since container size does not update
+         // correctly initially make it redraw itself
+         // ideally i would call a redraw()
+         // but idk if there is such thing
+         if (hotswapBox.children[0] !== appsBox) {
+            hotswapBox.children = [appsBox];
+            const partial = appsQueried.slice(0, -1);
+            appsBox.children = partial.map((app) => AppWidget(app));
+
+            timeout(1, () => {
+               appsBox.children = appsQueried.map((app) => AppWidget(app));
+            });
+
+            return;
+         }
+
+         appsBox.children = [];
+
+         appsQueried.forEach((app) => {
+            appsBox.children = [...appsBox.children, AppWidget(app)];
+         });
       }
    }
 
