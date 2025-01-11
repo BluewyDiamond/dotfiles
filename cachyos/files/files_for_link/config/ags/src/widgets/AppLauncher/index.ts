@@ -14,7 +14,12 @@ function hide() {
 
 export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
    const searchQuery = Variable("");
-   const appsM = Variable<Apps.Application[]>([]);
+
+   const appsM = searchQuery((searchQuery) => {
+      return apps
+         .fuzzy_query(searchQuery)
+         .slice(0, options.appLauncher.maxItems);
+   });
 
    const AppWidget = (app: Apps.Application): Widget.Button => {
       return new Widget.Button(
@@ -97,6 +102,8 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
    const appsBox = new Widget.Box({
       className: "apps-container",
       vertical: true,
+
+      children: bind(appsM).as((apps) => apps.map((app) => AppWidget(app))),
    });
 
    const shBox = new Widget.Box({
@@ -107,6 +114,7 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
       children: [new Widget.Label({ label: "empty..." })],
    });
 
+   // to avoid problems with entry
    const hotswapBox = new Widget.Box({
       className: "hotswap-box",
    });
@@ -114,7 +122,7 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
    const mainBox = new Widget.Box({
       className: "main-box",
       vertical: true,
-      vexpand: true,
+      hexpand: false,
       children: [entry, hotswapBox],
    });
 
@@ -154,15 +162,16 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
                vertical: true,
 
                children: [
+                  // so min-height does not work
+                  // with eventbox
                   new Widget.EventBox({
-                     hexpand: true,
+                     heightRequest: 200,
                      onClick: () => hide(),
                   }),
 
                   mainBox,
 
                   new Widget.EventBox({
-                     heightRequest: 4000,
                      expand: true,
                      onClick: () => hide(),
                   }),
@@ -184,17 +193,11 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
       } else if (searchQuery.startsWith(":sh")) {
          hotswapBox.children = [shBox];
       } else {
-         const queriedApps = apps
-            .fuzzy_query(searchQuery)
-            .slice(0, options.appLauncher.maxItems);
-
-         appsM.set(queriedApps);
-         const appWidgets = queriedApps.map((app) => AppWidget(app));
-         appsBox.children = appWidgets;
-
          hotswapBox.children = [appsBox];
       }
    }
+
+   onSearchQueryChanged(searchQuery.get());
 
    searchQuery.subscribe((searchQuery) => {
       onSearchQueryChanged(searchQuery);

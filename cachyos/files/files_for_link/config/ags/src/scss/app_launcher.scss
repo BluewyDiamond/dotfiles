@@ -1,12 +1,11 @@
 .app-launcher {
    & > .horizontal-filler-box {
       & > .vertical-filler-box {
-         eventbox {
-            // background: pink;
+         > eventbox:first-child {
+            min-height: 200px;
          }
 
          & > .main-box {
-            margin-top: 100px;
             min-width: 500px;
             background: $color_background;
             color: $color_on_background;
