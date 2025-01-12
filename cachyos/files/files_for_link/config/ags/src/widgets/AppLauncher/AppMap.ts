@@ -71,45 +71,11 @@ function AppWidget(
 
 export default class AppMapp extends Hookable implements Subscribable {
    searchQuery = Variable("");
-   workaround = true;
    private map: Map<Apps.Application, Gtk.Widget> = new Map();
    private var: Variable<Gtk.Widget[]> = new Variable([]);
 
-   constructor(onClick: (app: Apps.Application) => void) {
+   constructor() {
       super();
-
-      this.searchQuery.subscribe((searchQuery) => {
-         if (searchQuery.startsWith(":sh")) {
-            this.map.forEach((_, app) => this.delete(app));
-         } else {
-            const queriedApps = new Set(
-               apps
-                  .fuzzy_query(searchQuery)
-                  .slice(0, options.appLauncher.maxItems)
-            );
-
-            this.map.forEach((_, app) => {
-               if (!queriedApps.has(app)) {
-                  this.delete(app);
-               }
-            });
-
-            queriedApps.forEach((app) => {
-               if (this.map.has(app)) return;
-
-               this.set(
-                  app,
-                  AppWidget(app, () => onClick(app))
-               );
-            });
-
-            if (this.workaround) {
-               timeout(1, () => {
-                  this.notify();
-               });
-            }
-         }
-      });
    }
 
    get() {
@@ -125,36 +91,40 @@ export default class AppMapp extends Hookable implements Subscribable {
       this.var.drop();
    }
 
-   update() {
+   update(onClick: (app: Apps.Application) => void, workaround: boolean) {
       const searchQuery = this.searchQuery.get();
 
       if (searchQuery.startsWith(":sh")) {
          this.map.forEach((_, app) => this.delete(app));
       } else {
-         const queriedApps = new Set(
-            apps.fuzzy_query(searchQuery).slice(0, options.appLauncher.maxItems)
-         );
+         const queriedApps = apps
+            .fuzzy_query(searchQuery)
+            .slice(0, options.appLauncher.maxItems);
+
+         const queriedAppsSet = new Set(queriedApps);
 
          this.map.forEach((_, app) => {
-            if (!queriedApps.has(app)) {
+            if (!queriedAppsSet.has(app)) {
                this.delete(app);
             }
          });
 
-         queriedApps.forEach((app) => {
+         queriedApps.forEach((app, index) => {
             if (this.map.has(app)) return;
 
-            this.set(
-               app,
-               AppWidget(app, () => onClick(app))
-            );
-         });
+            const update = () => {
+               this.set(
+                  app,
+                  AppWidget(app, () => onClick(app))
+               );
+            };
 
-         if (this.workaround) {
-            timeout(1, () => {
-               this.notify();
-            });
-         }
+            if (index === queriedApps.length - 1 && workaround) {
+               timeout(1, () => update());
+            } else {
+               update();
+            }
+         });
       }
    }
 

@@ -14,78 +14,7 @@ function hide() {
 }
 
 export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
-   //const searchQuery = Variable("");
-   //
-   //const appsM = searchQuery((searchQuery) => {
-   //   return apps
-   //      .fuzzy_query(searchQuery)
-   //      .slice(0, options.appLauncher.maxItems);
-   //});
-
-   const appMap = new AppMap((app) => {
-      app.launch();
-      hide();
-      appMap.searchQuery.set("");
-   });
-
-   //const AppWidget = (app: Apps.Application): Widget.Button => {
-   //   return new Widget.Button(
-   //      {
-   //         hexpand: true,
-   //
-   //         onClick: () => {
-   //            app.launch();
-   //            hide();
-   //            searchQuery.set("");
-   //         },
-   //
-   //         // prevents from stealing keyboard focus from entry
-   //         // works because button does not need keyboard focus for now
-   //         // alternatives: refactor AppWidget to where entry.grab_focus() can be called
-   //         canFocus: false,
-   //      },
-   //
-   //      new Widget.Box({
-   //         children: [
-   //            IconWithLabelFallback({
-   //               icon: app.iconName,
-   //            }),
-   //
-   //            new Widget.Box({
-   //               valign: Gtk.Align.CENTER,
-   //               vertical: true,
-   //
-   //               setup: (self) => {
-   //                  self.children = [
-   //                     new Widget.Label({
-   //                        className: "name",
-   //                        halign: Gtk.Align.START,
-   //                        xalign: 0,
-   //                        truncate: true,
-   //                        label: app.name,
-   //                     }),
-   //                  ];
-   //
-   //                  if (app.description) {
-   //                     self.children = [
-   //                        ...self.children,
-   //
-   //                        new Widget.Label({
-   //                           className: "description",
-   //                           halign: Gtk.Align.START,
-   //                           xalign: 0,
-   //                           wrap: true,
-   //                           wrapMode: Pango.WrapMode.WORD_CHAR,
-   //                           label: app.description,
-   //                        }),
-   //                     ];
-   //                  }
-   //               },
-   //            }),
-   //         ],
-   //      })
-   //   );
-   //};
+   const appMap = new AppMap();
 
    const entry = new Widget.Entry({
       placeholderText: "Search",
@@ -210,32 +139,18 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
       } else if (searchQuery.startsWith(":sh")) {
          hotswapBox.children = [shBox];
       } else {
-         //const appsQueried = apps
-         //   .fuzzy_query(searchQuery)
-         //   .slice(0, options.appLauncher.maxItems);
+         function onClick() {
+            appMap.launchApp();
+            hide();
+            appMap.searchQuery.set("");
+         }
 
-         // since container size does not update
-         // correctly initially make it redraw itself
-         // ideally i would call a redraw()
-         // but idk if there is such thing
-         //if (hotswapBox.children[0] !== appsBox) {
-         //   hotswapBox.children = [appsBox];
-         //   const partial = appsQueried.slice(0, -1);
-         //   appsBox.children = partial.map((app) => AppWidget(app));
-         //
-         //   timeout(1, () => {
-         //      appsBox.children = appsQueried.map((app) => AppWidget(app));
-         //   });
-         //
-         //   return;
-         //}
-         //
-         //appsBox.children = [];
-         //
-         //appsQueried.forEach((app) => {
-         //   appsBox.children = [...appsBox.children, AppWidget(app)];
-         //});
-         //
+         if (hotswapBox.children[0] !== appsBox) {
+            appMap.update(() => onClick(), true);
+         } else {
+            appMap.update(() => onClick(), false);
+         }
+
          hotswapBox.children = [appsBox];
       }
    }
@@ -245,12 +160,6 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
    appMap.searchQuery.subscribe((searchQuery) => {
       onSearchQueryChanged(searchQuery);
    });
-
-   //onSearchQueryChanged(searchQuery.get());
-   //
-   //searchQuery.subscribe((searchQuery) => {
-   //   onSearchQueryChanged(searchQuery);
-   //});
 
    return window;
 }
