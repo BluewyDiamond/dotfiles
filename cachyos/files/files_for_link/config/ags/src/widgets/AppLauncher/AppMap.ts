@@ -132,7 +132,6 @@ export default class AppMapp extends Hookable implements Subscribable {
             };
 
             if (index === queriedApps.length - 1 && workaround) {
-               console.log("here");
                timeout(1, () => update());
             } else {
                update();
