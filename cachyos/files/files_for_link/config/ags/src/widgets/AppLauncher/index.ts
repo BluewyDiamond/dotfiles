@@ -134,24 +134,27 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
    });
 
    function onSearchQueryChanged(searchQuery: string) {
+      function onClick() {
+         appMap.launchApp();
+         hide();
+         appMap.searchQuery.set("");
+      }
+
       if (searchQuery === "") {
          hotswapBox.children = [emptyBox];
+         appMap.clear();
       } else if (searchQuery.startsWith(":sh")) {
          hotswapBox.children = [shBox];
+         appMap.clear();
       } else {
-         function onClick() {
-            appMap.launchApp();
-            hide();
-            appMap.searchQuery.set("");
-         }
-
          if (hotswapBox.children[0] !== appsBox) {
-            hotswapBox.children = [appsBox];
+            console.log("=> workaround");
             appMap.update(() => onClick(), true);
          } else {
-            hotswapBox.children = [appsBox];
             appMap.update(() => onClick(), false);
          }
+
+         hotswapBox.children = [appsBox];
       }
    }
 

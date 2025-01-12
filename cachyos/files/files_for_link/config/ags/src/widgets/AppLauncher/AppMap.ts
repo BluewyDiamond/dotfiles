@@ -94,54 +94,60 @@ export default class AppMapp extends Hookable implements Subscribable {
    update(onClick: (app: Apps.Application) => void, workaround: boolean) {
       const searchQuery = this.searchQuery.get();
 
-      if (!searchQuery || searchQuery.startsWith(":sh")) {
-         this.map.forEach((_, app) => this.delete(app));
-      } else {
-         const queriedApps = apps
-            .fuzzy_query(searchQuery)
-            .slice(0, options.appLauncher.maxItems);
+      const queriedApps = new Set(
+         apps.fuzzy_query(searchQuery).slice(0, options.appLauncher.maxItems)
+      );
 
-         const queriedAppsSet = new Set(queriedApps);
-         const mapEntries = Array.from(this.map.entries());
+      let workarounded = false;
+      let mapIndex = 0;
 
-         mapEntries.forEach(([app, _], index) => {
-            if (index === mapEntries.length - 1 && workaround) {
-               const widget = this.map.get(app);
-               if (!widget) return;
+      this.map.forEach((_, app) => {
+         if (mapIndex === this.map.size - 1 && workaround) {
+            const widget = this.map.get(app);
+            if (!widget) return;
 
-               this.map.delete(app);
+            this.map.delete(app);
+            this.notify();
+
+            timeout(1, () => {
+               this.map.set(app, widget);
                this.notify();
+            });
+         } else if (!queriedApps.has(app)) {
+            this.delete(app);
+         }
 
-               timeout(1, () => {
-                  this.set(app, widget);
-                  this.notify();
-               });
-            } else if (!queriedAppsSet.has(app)) {
-               this.delete(app);
-            }
-         });
+         mapIndex++;
+      });
 
-         queriedApps.forEach((app, index) => {
-            if (this.map.has(app)) return;
+      let setIndex = 0;
 
-            const update = () => {
-               this.set(
-                  app,
-                  AppWidget(app, () => onClick(app))
-               );
-            };
+      queriedApps.forEach((app) => {
+         if (this.map.has(app)) return;
 
-            if (index === queriedApps.length - 1 && workaround) {
-               timeout(1, () => update());
-            } else {
-               update();
-            }
-         });
-      }
+         const update = () => {
+            this.set(
+               app,
+               AppWidget(app, () => onClick(app))
+            );
+         };
+
+         if (setIndex === queriedApps.size - 1 && workaround && !workarounded) {
+            timeout(1, () => update());
+         } else {
+            update();
+         }
+
+         setIndex++;
+      });
    }
 
    launchApp() {
       this.map.entries().next().value?.[0].launch();
+   }
+
+   clear() {
+      this.map.forEach((_, app) => this.delete(app));
    }
 
    private set(key: Apps.Application, value: Gtk.Widget) {
