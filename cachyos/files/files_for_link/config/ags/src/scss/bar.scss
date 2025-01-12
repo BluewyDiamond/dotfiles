@@ -92,6 +92,10 @@ icon {
    .tray-item {
       @include bar-module();
       margin-left: $space_between_bar_modules;
+
+      &:hover {
+         background: $color_primary;
+      }
    }
 
    menu {

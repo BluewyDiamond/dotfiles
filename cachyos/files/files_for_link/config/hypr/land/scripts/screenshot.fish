@@ -15,6 +15,7 @@ if string match -i -q -- $argv[1] partial
     end
 
     if wayshot -f $file -s (slurp)
+        wl-copy <$file
         set result (notify-send -i $file Screenshot $file --action="show_in_files=Show In Files")
 
         switch $result
@@ -30,6 +31,7 @@ if string match -i -q -- $argv[1] partial
     wl-copy <$file
 else
     if wayshot -f $file
+        wl-copy <$file
         set result (notify-send Screenshot "$file" -h STRING:"image-path":"$file" --action="show_in_files=Show In Files" --action="open=Open" --action="edit=Edit")
 
         switch $result
@@ -41,6 +43,4 @@ else
                 satty -f $file
         end
     end
-
-    wl-copy <$file
 end
