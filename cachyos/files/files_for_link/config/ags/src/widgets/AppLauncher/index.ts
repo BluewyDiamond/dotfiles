@@ -5,6 +5,7 @@ import Apps from "gi://AstalApps";
 import { IconWithLabelFallback } from "../wrappers/IconWithLabelFallback";
 import options from "../../options";
 import Pango from "gi://Pango?version=1.0";
+import AppMap from "./AppMap";
 
 const apps = new Apps.Apps();
 
@@ -13,95 +14,113 @@ function hide() {
 }
 
 export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
-   const searchQuery = Variable("");
+   //const searchQuery = Variable("");
+   //
+   //const appsM = searchQuery((searchQuery) => {
+   //   return apps
+   //      .fuzzy_query(searchQuery)
+   //      .slice(0, options.appLauncher.maxItems);
+   //});
 
-   const appsM = searchQuery((searchQuery) => {
-      return apps
-         .fuzzy_query(searchQuery)
-         .slice(0, options.appLauncher.maxItems);
+   const appMap = new AppMap((app) => {
+      app.launch();
+      hide();
+      appMap.searchQuery.set("");
    });
 
-   const AppWidget = (app: Apps.Application): Widget.Button => {
-      return new Widget.Button(
-         {
-            hexpand: true,
-
-            onClick: () => {
-               app.launch();
-               hide();
-               searchQuery.set("");
-            },
-
-            // prevents from stealing keyboard focus from entry
-            // works because button does not need keyboard focus for now
-            // alternatives: refactor AppWidget to where entry.grab_focus() can be called
-            canFocus: false,
-         },
-
-         new Widget.Box({
-            children: [
-               IconWithLabelFallback({
-                  icon: app.iconName,
-               }),
-
-               new Widget.Box({
-                  valign: Gtk.Align.CENTER,
-                  vertical: true,
-
-                  setup: (self) => {
-                     self.children = [
-                        new Widget.Label({
-                           className: "name",
-                           halign: Gtk.Align.START,
-                           xalign: 0,
-                           truncate: true,
-                           label: app.name,
-                        }),
-                     ];
-
-                     if (app.description) {
-                        self.children = [
-                           ...self.children,
-
-                           new Widget.Label({
-                              className: "description",
-                              halign: Gtk.Align.START,
-                              xalign: 0,
-                              wrap: true,
-                              wrapMode: Pango.WrapMode.WORD_CHAR,
-                              label: app.description,
-                           }),
-                        ];
-                     }
-                  },
-               }),
-            ],
-         })
-      );
-   };
+   //const AppWidget = (app: Apps.Application): Widget.Button => {
+   //   return new Widget.Button(
+   //      {
+   //         hexpand: true,
+   //
+   //         onClick: () => {
+   //            app.launch();
+   //            hide();
+   //            searchQuery.set("");
+   //         },
+   //
+   //         // prevents from stealing keyboard focus from entry
+   //         // works because button does not need keyboard focus for now
+   //         // alternatives: refactor AppWidget to where entry.grab_focus() can be called
+   //         canFocus: false,
+   //      },
+   //
+   //      new Widget.Box({
+   //         children: [
+   //            IconWithLabelFallback({
+   //               icon: app.iconName,
+   //            }),
+   //
+   //            new Widget.Box({
+   //               valign: Gtk.Align.CENTER,
+   //               vertical: true,
+   //
+   //               setup: (self) => {
+   //                  self.children = [
+   //                     new Widget.Label({
+   //                        className: "name",
+   //                        halign: Gtk.Align.START,
+   //                        xalign: 0,
+   //                        truncate: true,
+   //                        label: app.name,
+   //                     }),
+   //                  ];
+   //
+   //                  if (app.description) {
+   //                     self.children = [
+   //                        ...self.children,
+   //
+   //                        new Widget.Label({
+   //                           className: "description",
+   //                           halign: Gtk.Align.START,
+   //                           xalign: 0,
+   //                           wrap: true,
+   //                           wrapMode: Pango.WrapMode.WORD_CHAR,
+   //                           label: app.description,
+   //                        }),
+   //                     ];
+   //                  }
+   //               },
+   //            }),
+   //         ],
+   //      })
+   //   );
+   //};
 
    const entry = new Widget.Entry({
       placeholderText: "Search",
-      text: bind(searchQuery),
-      onChanged: (self) => searchQuery.set(self.text),
+      text: bind(appMap.searchQuery),
+      onChanged: (self) => appMap.searchQuery.set(self.text),
 
       onActivate: () => {
-         const currentSearchQuery = searchQuery.get();
+         const currentSearchQuery = appMap.searchQuery.get();
 
          if (currentSearchQuery.startsWith(":sh")) {
             execAsync(["fish", "-c", `${currentSearchQuery.slice(3)}`.trim()]);
          } else {
-            appsM.get()[0]?.launch();
+            appMap.launchApp();
          }
 
          hide();
-         searchQuery.set("");
+         appMap.searchQuery.set("");
       },
    });
 
    const appsBox = new Widget.Box({
       className: "apps-container",
       vertical: true,
+
+      setup: (self) => {
+         self.children = appMap.get();
+
+         appMap.subscribe((list) => {
+            self.children = list;
+         });
+      },
+
+      onDestroy: () => {
+         appMap.destroy();
+      },
    });
 
    const shBox = new Widget.Box({
@@ -137,7 +156,7 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
       onKeyReleaseEvent: (self, event) => {
          if (event.get_keyval()[1] === Gdk.KEY_Escape) {
             self.hide();
-            searchQuery.set("");
+            appMap.searchQuery.set("");
          }
       },
 
@@ -191,39 +210,47 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
       } else if (searchQuery.startsWith(":sh")) {
          hotswapBox.children = [shBox];
       } else {
-         const appsQueried = apps
-            .fuzzy_query(searchQuery)
-            .slice(0, options.appLauncher.maxItems);
+         //const appsQueried = apps
+         //   .fuzzy_query(searchQuery)
+         //   .slice(0, options.appLauncher.maxItems);
 
          // since container size does not update
          // correctly initially make it redraw itself
          // ideally i would call a redraw()
          // but idk if there is such thing
-         if (hotswapBox.children[0] !== appsBox) {
-            hotswapBox.children = [appsBox];
-            const partial = appsQueried.slice(0, -1);
-            appsBox.children = partial.map((app) => AppWidget(app));
-
-            timeout(1, () => {
-               appsBox.children = appsQueried.map((app) => AppWidget(app));
-            });
-
-            return;
-         }
-
-         appsBox.children = [];
-
-         appsQueried.forEach((app) => {
-            appsBox.children = [...appsBox.children, AppWidget(app)];
-         });
+         //if (hotswapBox.children[0] !== appsBox) {
+         //   hotswapBox.children = [appsBox];
+         //   const partial = appsQueried.slice(0, -1);
+         //   appsBox.children = partial.map((app) => AppWidget(app));
+         //
+         //   timeout(1, () => {
+         //      appsBox.children = appsQueried.map((app) => AppWidget(app));
+         //   });
+         //
+         //   return;
+         //}
+         //
+         //appsBox.children = [];
+         //
+         //appsQueried.forEach((app) => {
+         //   appsBox.children = [...appsBox.children, AppWidget(app)];
+         //});
+         //
+         hotswapBox.children = [appsBox];
       }
    }
 
-   onSearchQueryChanged(searchQuery.get());
+   onSearchQueryChanged(appMap.searchQuery.get());
 
-   searchQuery.subscribe((searchQuery) => {
+   appMap.searchQuery.subscribe((searchQuery) => {
       onSearchQueryChanged(searchQuery);
    });
+
+   //onSearchQueryChanged(searchQuery.get());
+   //
+   //searchQuery.subscribe((searchQuery) => {
+   //   onSearchQueryChanged(searchQuery);
+   //});
 
    return window;
 }
