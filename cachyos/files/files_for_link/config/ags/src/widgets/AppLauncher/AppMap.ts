@@ -94,7 +94,7 @@ export default class AppMapp extends Hookable implements Subscribable {
    update(onClick: (app: Apps.Application) => void, workaround: boolean) {
       const searchQuery = this.searchQuery.get();
 
-      if (searchQuery.startsWith(":sh")) {
+      if (!searchQuery || searchQuery.startsWith(":sh")) {
          this.map.forEach((_, app) => this.delete(app));
       } else {
          const queriedApps = apps
@@ -102,9 +102,21 @@ export default class AppMapp extends Hookable implements Subscribable {
             .slice(0, options.appLauncher.maxItems);
 
          const queriedAppsSet = new Set(queriedApps);
+         const mapEntries = Array.from(this.map.entries());
 
-         this.map.forEach((_, app) => {
-            if (!queriedAppsSet.has(app)) {
+         mapEntries.forEach(([app, _], index) => {
+            if (index === mapEntries.length - 1 && workaround) {
+               const widget = this.map.get(app);
+               if (!widget) return;
+
+               this.map.delete(app);
+               this.notify();
+
+               timeout(1, () => {
+                  this.set(app, widget);
+                  this.notify();
+               });
+            } else if (!queriedAppsSet.has(app)) {
                this.delete(app);
             }
          });
@@ -120,6 +132,7 @@ export default class AppMapp extends Hookable implements Subscribable {
             };
 
             if (index === queriedApps.length - 1 && workaround) {
+               console.log("here");
                timeout(1, () => update());
             } else {
                update();

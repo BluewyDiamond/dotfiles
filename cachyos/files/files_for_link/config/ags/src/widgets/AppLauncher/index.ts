@@ -146,12 +146,14 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
          }
 
          if (hotswapBox.children[0] !== appsBox) {
+            hotswapBox.children = [appsBox];
+            console.log("initial");
             appMap.update(() => onClick(), true);
          } else {
+            hotswapBox.children = [appsBox];
+            console.log("not initial");
             appMap.update(() => onClick(), false);
          }
-
-         hotswapBox.children = [appsBox];
       }
    }
 
