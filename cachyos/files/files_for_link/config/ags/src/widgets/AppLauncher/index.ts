@@ -148,10 +148,13 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
          appMap.clear();
       } else {
          if (hotswapBox.children[0] !== appsBox) {
-            console.log("=> workaround");
-            appMap.update(() => onClick(), true);
+            appMap.update(() => onClick());
+
+            timeout(1, () => {
+               appsBox.queue_resize();
+            });
          } else {
-            appMap.update(() => onClick(), false);
+            appMap.update(() => onClick());
          }
 
          hotswapBox.children = [appsBox];

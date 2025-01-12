@@ -69,13 +69,13 @@ function AppWidget(
    );
 }
 
-export default class AppMapp extends Hookable implements Subscribable {
+export default class AppMapp implements Subscribable {
    searchQuery = Variable("");
    private map: Map<Apps.Application, Gtk.Widget> = new Map();
    private var: Variable<Gtk.Widget[]> = new Variable([]);
 
    constructor() {
-      super();
+      // updates are called manually
    }
 
    get() {
@@ -87,58 +87,29 @@ export default class AppMapp extends Hookable implements Subscribable {
    }
 
    destroy() {
-      super.destroy();
       this.var.drop();
    }
 
-   update(onClick: (app: Apps.Application) => void, workaround: boolean) {
+   update(onClick: (app: Apps.Application) => void) {
       const searchQuery = this.searchQuery.get();
 
       const queriedApps = new Set(
          apps.fuzzy_query(searchQuery).slice(0, options.appLauncher.maxItems)
       );
 
-      let workarounded = false;
-      let mapIndex = 0;
-
       this.map.forEach((_, app) => {
-         if (mapIndex === this.map.size - 1 && workaround) {
-            const widget = this.map.get(app);
-            if (!widget) return;
-
-            this.map.delete(app);
-            this.notify();
-
-            timeout(1, () => {
-               this.map.set(app, widget);
-               this.notify();
-            });
-         } else if (!queriedApps.has(app)) {
+         if (!queriedApps.has(app)) {
             this.delete(app);
          }
-
-         mapIndex++;
       });
-
-      let setIndex = 0;
 
       queriedApps.forEach((app) => {
          if (this.map.has(app)) return;
 
-         const update = () => {
-            this.set(
-               app,
-               AppWidget(app, () => onClick(app))
-            );
-         };
-
-         if (setIndex === queriedApps.size - 1 && workaround && !workarounded) {
-            timeout(1, () => update());
-         } else {
-            update();
-         }
-
-         setIndex++;
+         this.set(
+            app,
+            AppWidget(app, () => onClick(app))
+         );
       });
    }
 
