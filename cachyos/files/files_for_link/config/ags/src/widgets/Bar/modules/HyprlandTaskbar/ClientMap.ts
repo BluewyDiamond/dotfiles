@@ -93,8 +93,6 @@ export class ClientMap extends Hookable implements Subscribable {
    }
 
    private sort() {
-      const hyprland = AstalHyprland.get_default();
-
       const arr = Array.from(this.map);
 
       // TODO: handle the null case
