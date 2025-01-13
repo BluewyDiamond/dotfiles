@@ -2,7 +2,6 @@ import { execAsync, timeout, Variable } from "astal";
 import { bind } from "astal/binding";
 import { App, Astal, Gdk, Widget } from "astal/gtk3";
 import AppMap from "./AppMap";
-import options from "../../options";
 
 function hide() {
    App.get_window("astal-app-launcher")?.hide();
@@ -99,14 +98,19 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
 
             if (selectedIndexValue > 0) {
                selectedIndex.set(selectedIndexValue - 1);
+            } else {
+               selectedIndex.set(0);
             }
          }
 
          if (event.get_keyval()[1] === Gdk.KEY_Down) {
             const selectedIndexValue = selectedIndex.get();
+            const maxLength = appMap.length();
 
-            if (selectedIndexValue < options.appLauncher.maxItems - 1) {
+            if (selectedIndexValue < maxLength - 1) {
                selectedIndex.set(selectedIndexValue + 1);
+            } else {
+               selectedIndex.set(maxLength - 1);
             }
          }
       },

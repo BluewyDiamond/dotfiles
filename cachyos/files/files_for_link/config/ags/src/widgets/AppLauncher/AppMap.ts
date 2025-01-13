@@ -126,6 +126,10 @@ export default class AppMap implements Subscribable {
       this.var.drop();
    }
 
+   length(): number {
+      return this.map.size;
+   }
+
    update(
       selectedIndex: Variable<number>,
       onClick: (app: Apps.Application) => void
@@ -158,6 +162,7 @@ export default class AppMap implements Subscribable {
          index++;
       }
 
+      selectedIndex.set(0);
       this.var.set(orderedList);
    }
 
