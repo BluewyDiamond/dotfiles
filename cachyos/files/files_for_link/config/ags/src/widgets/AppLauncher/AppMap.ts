@@ -1,6 +1,5 @@
 import { Subscribable } from "astal/binding";
-import Hookable from "../../libs/Hookable";
-import { timeout, Variable } from "astal";
+import { Variable } from "astal";
 import Apps from "gi://AstalApps";
 import { Gtk, Widget } from "astal/gtk3";
 import options from "../../options";
@@ -69,7 +68,7 @@ function AppWidget(
    );
 }
 
-export default class AppMapp implements Subscribable {
+export default class AppMap implements Subscribable {
    searchQuery = Variable("");
    private map: Map<Apps.Application, Gtk.Widget> = new Map();
    private var: Variable<Gtk.Widget[]> = new Variable([]);
@@ -93,17 +92,17 @@ export default class AppMapp implements Subscribable {
    update(onClick: (app: Apps.Application) => void) {
       const searchQuery = this.searchQuery.get();
 
-      const queriedApps = new Set(
+      const queriedAppsSet = new Set(
          apps.fuzzy_query(searchQuery).slice(0, options.appLauncher.maxItems)
       );
 
       this.map.forEach((_, app) => {
-         if (!queriedApps.has(app)) {
+         if (!queriedAppsSet.has(app)) {
             this.delete(app);
          }
       });
 
-      queriedApps.forEach((app) => {
+      queriedAppsSet.forEach((app) => {
          if (this.map.has(app)) return;
 
          this.set(
@@ -111,6 +110,16 @@ export default class AppMapp implements Subscribable {
             AppWidget(app, () => onClick(app))
          );
       });
+
+      let orderedList: Gtk.Widget[] = [];
+
+      for (const app of queriedAppsSet) {
+         const widget = this.map.get(app);
+         if (!widget) return;
+         orderedList.push(widget);
+      }
+
+      this.var.set(orderedList);
    }
 
    launchApp() {
@@ -124,16 +133,14 @@ export default class AppMapp implements Subscribable {
    private set(key: Apps.Application, value: Gtk.Widget) {
       this.map.get(key)?.destroy();
       this.map.set(key, value);
-      this.notify();
    }
 
    private delete(key: Apps.Application) {
       this.map.get(key)?.destroy();
       this.map.delete(key);
-      this.notify();
    }
 
-   private notify() {
-      this.var.set([...this.map.values()]);
-   }
+   //private notify() {
+   //   this.var.set([...this.map.values()]);
+   //}
 }

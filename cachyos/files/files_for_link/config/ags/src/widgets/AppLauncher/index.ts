@@ -1,13 +1,7 @@
-import { execAsync, timeout, Variable } from "astal";
+import { execAsync, timeout } from "astal";
 import { bind } from "astal/binding";
-import { App, Astal, Gdk, Gtk, Widget } from "astal/gtk3";
-import Apps from "gi://AstalApps";
-import { IconWithLabelFallback } from "../wrappers/IconWithLabelFallback";
-import options from "../../options";
-import Pango from "gi://Pango?version=1.0";
+import { App, Astal, Gdk, Widget } from "astal/gtk3";
 import AppMap from "./AppMap";
-
-const apps = new Apps.Apps();
 
 function hide() {
    App.get_window("astal-app-launcher")?.hide();
