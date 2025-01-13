@@ -53,12 +53,23 @@ export class ClientMap extends Hookable implements Subscribable {
          this.set(client.get_address(), ClientWidget(client, hyprland));
       });
 
+      this.sort();
+      this.notify();
+
       this.hook(hyprland, "client-added", (_, client) => {
          this.set(client.get_address(), ClientWidget(client, hyprland));
+         this.sort();
+         this.notify();
       });
 
       this.hook(hyprland, "client-removed", (_, address) => {
          this.delete(address);
+         this.notify();
+      });
+
+      this.hook(hyprland, "client-moved", () => {
+         this.sort();
+         this.notify();
       });
    }
 
@@ -78,14 +89,11 @@ export class ClientMap extends Hookable implements Subscribable {
    private set(key: string, value: Gtk.Widget) {
       this.map.get(key)?.destroy();
       this.map.set(key, value);
-      this.sort();
-      this.notify();
    }
 
    private delete(key: string) {
       this.map.get(key)?.destroy();
       this.map.delete(key);
-      this.notify();
    }
 
    private notify() {
@@ -93,16 +101,21 @@ export class ClientMap extends Hookable implements Subscribable {
    }
 
    private sort() {
-      const arr = Array.from(this.map);
+      const sortedEntries = [...this.map.entries()].sort((a, b) => {
+         const clientA = hyprland.get_client(a[0]);
+         const clientB = hyprland.get_client(b[0]);
 
-      // TODO: handle the null case
-      arr.sort((a, b) => {
-         const clientA = hyprland.get_client(a[0])!;
-         const clientB = hyprland.get_client(b[0])!;
+         if (!clientA || !clientB) {
+            return 0;
+         }
 
          return clientA.workspace.id - clientB.workspace.id;
       });
 
-      this.map = new Map(arr);
+      this.map.clear();
+
+      sortedEntries.forEach(([key, value]) => {
+         this.map.set(key, value);
+      });
    }
 }
