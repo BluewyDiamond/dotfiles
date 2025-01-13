@@ -33,12 +33,6 @@ function AppWidget(
             variable = Variable.derive(
                [selectedIndex, indexInList],
                (selectedIndex, indexInList) => {
-                  console.log(`s: ${selectedIndex} -- iil: ${indexInList}`);
-
-                  if (selectedIndex === indexInList) {
-                     console.log(`${app.name} is selected`);
-                  }
-
                   self.toggleClassName(
                      "selected",
                      selectedIndex === indexInList
