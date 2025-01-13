@@ -15,6 +15,7 @@
       "std": [
          "hyprland",
          "hyprland-qtutils",
+         "hyprpolkitagent",
 
          "wireplumber",
          "pipewire",
@@ -24,7 +25,6 @@
 
          "xdg-desktop-portal-hyprland",
          "xdg-desktop-portal-gtk",
-         "polkit-kde-agent",
 
          "xwaylandvideobridge"
       ],
@@ -107,15 +107,7 @@
          "qpwgraph"
       ]
    },
-
-   "screen": {
-      "std": ["brightnessctl"]
-   },
-
-   "powerprofile": {
-      "std": ["python-gobject", "power-profiles-daemon"]
-   },
-
+   
    "amd_cpu": {
       "std": ["amd-ucode"]
    },
