@@ -68,7 +68,7 @@ icon {
       margin-right: $space_between_bar_modules;
 
       &:hover {
-         background: $color_primary;
+         background: transparentize($color_primary, 0.5);
       }
    }
 }
@@ -94,7 +94,7 @@ icon {
       margin-left: $space_between_bar_modules;
 
       &:hover {
-         background: $color_primary;
+         background: transparentize($color_primary, 0.5);
       }
    }
 
@@ -112,6 +112,10 @@ icon {
 
          &:last-child {
             margin-bottom: 0;
+         }
+
+         &:hover {
+            background: transparentize($color_primary, 0.5);
          }
       }
    }

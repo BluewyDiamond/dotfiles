@@ -32,11 +32,11 @@
                      }
 
                      &:hover {
-                        background: $color_primary;
+                        background: transparentize($color_primary, 0.5);
                      }
 
                      &.selected {
-                        background: $color_primary;
+                        background: transparentize($color_primary, 0.5);
                      }
 
                      & > box {

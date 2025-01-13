@@ -5,6 +5,6 @@
    padding: 4px;
 
    &.active {
-      background: $color_primary;
+      background: transparentize($color_primary, 0.5);
    }
 }
