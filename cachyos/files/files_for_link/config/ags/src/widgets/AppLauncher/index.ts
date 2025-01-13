@@ -1,7 +1,8 @@
-import { execAsync, timeout } from "astal";
+import { execAsync, timeout, Variable } from "astal";
 import { bind } from "astal/binding";
 import { App, Astal, Gdk, Widget } from "astal/gtk3";
 import AppMap from "./AppMap";
+import options from "../../options";
 
 function hide() {
    App.get_window("astal-app-launcher")?.hide();
@@ -9,6 +10,7 @@ function hide() {
 
 export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
    const appMap = new AppMap();
+   const selectedIndex = Variable(0);
 
    const entry = new Widget.Entry({
       placeholderText: "Search",
@@ -21,7 +23,7 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
          if (currentSearchQuery.startsWith(":sh")) {
             execAsync(["fish", "-c", `${currentSearchQuery.slice(3)}`.trim()]);
          } else {
-            appMap.launchApp();
+            appMap.launchApp(selectedIndex.get());
          }
 
          hide();
@@ -42,10 +44,10 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
             // fixes hover state never being cleared
             // when dynamically moving widgets around
             //timeout(1, () => {
-               list.forEach((widget) => {
-                  if (widget instanceof Widget.Button) {
-                     widget.vfunc_leave();
-                  }
+            list.forEach((widget) => {
+               if (widget instanceof Widget.Button) {
+                  widget.vfunc_leave();
+               }
                //});
             });
          });
@@ -90,6 +92,22 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
          if (event.get_keyval()[1] === Gdk.KEY_Escape) {
             self.hide();
             appMap.searchQuery.set("");
+         }
+
+         if (event.get_keyval()[1] === Gdk.KEY_Up) {
+            const selectedIndexValue = selectedIndex.get();
+
+            if (selectedIndexValue > 0) {
+               selectedIndex.set(selectedIndexValue - 1);
+            }
+         }
+
+         if (event.get_keyval()[1] === Gdk.KEY_Down) {
+            const selectedIndexValue = selectedIndex.get();
+
+            if (selectedIndexValue < options.appLauncher.maxItems - 1) {
+               selectedIndex.set(selectedIndexValue + 1);
+            }
          }
       },
 
@@ -152,13 +170,13 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
          appMap.clear();
       } else {
          if (hotswapBox.children[0] !== appsBox) {
-            appMap.update(() => onClick());
+            appMap.update(selectedIndex, () => onClick());
 
             timeout(1, () => {
                appsBox.queue_resize();
             });
          } else {
-            appMap.update(() => onClick());
+            appMap.update(selectedIndex, () => onClick());
          }
 
          hotswapBox.children = [appsBox];

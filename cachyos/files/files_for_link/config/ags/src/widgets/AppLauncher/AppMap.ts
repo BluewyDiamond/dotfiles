@@ -10,20 +10,46 @@ const apps = new Apps.Apps();
 
 function AppWidget(
    app: Apps.Application,
-   onClick: (app: Apps.Application) => void
+   selectedIndex: Variable<number>,
+   indexInList: Variable<number>,
+   onClicked: (app: Apps.Application) => void
 ): Widget.Button {
+   let variable: Variable<void>;
+
    return new Widget.Button(
       {
          hexpand: true,
-
-         onClick: () => {
-            onClick(app);
-         },
 
          // prevents from stealing keyboard focus from entry
          // works because button does not need keyboard focus for now
          // alternatives: refactor AppWidget to where entry.grab_focus() can be called
          canFocus: false,
+
+         onClick: () => {
+            onClicked(app);
+         },
+
+         setup: (self) => {
+            variable = Variable.derive(
+               [selectedIndex, indexInList],
+               (selectedIndex, indexInList) => {
+                  console.log(`s: ${selectedIndex} -- iil: ${indexInList}`);
+
+                  if (selectedIndex === indexInList) {
+                     console.log(`${app.name} is selected`);
+                  }
+
+                  self.toggleClassName(
+                     "selected",
+                     selectedIndex === indexInList
+                  );
+               }
+            );
+         },
+
+         onDestroy: () => {
+            variable.drop();
+         },
       },
 
       new Widget.Box({
@@ -68,9 +94,26 @@ function AppWidget(
    );
 }
 
+class AppWithIndex {
+   widget: Gtk.Widget;
+   indexInlist = Variable(-1);
+
+   constructor(
+      app: Apps.Application,
+      selectedIndex: Variable<number>,
+      onClicked: (app: Apps.Application) => void
+   ) {
+      this.widget = AppWidget(app, selectedIndex, this.indexInlist, onClicked);
+   }
+
+   destroy() {
+      this.indexInlist.drop();
+   }
+}
+
 export default class AppMap implements Subscribable {
    searchQuery = Variable("");
-   private map: Map<Apps.Application, Gtk.Widget> = new Map();
+   private map: Map<Apps.Application, AppWithIndex> = new Map();
    private var: Variable<Gtk.Widget[]> = new Variable([]);
 
    constructor() {
@@ -89,7 +132,10 @@ export default class AppMap implements Subscribable {
       this.var.drop();
    }
 
-   update(onClick: (app: Apps.Application) => void) {
+   update(
+      selectedIndex: Variable<number>,
+      onClick: (app: Apps.Application) => void
+   ) {
       const searchQuery = this.searchQuery.get();
 
       const queriedAppsSet = new Set(
@@ -104,43 +150,46 @@ export default class AppMap implements Subscribable {
 
       queriedAppsSet.forEach((app) => {
          if (this.map.has(app)) return;
-
-         this.set(
-            app,
-            AppWidget(app, () => onClick(app))
-         );
+         this.set(app, new AppWithIndex(app, selectedIndex, onClick));
       });
 
       let orderedList: Gtk.Widget[] = [];
+      let index = 0;
 
       for (const app of queriedAppsSet) {
-         const widget = this.map.get(app);
-         if (!widget) return;
-         orderedList.push(widget);
+         const appWithIndex = this.map.get(app);
+         if (!appWithIndex) return;
+         appWithIndex.indexInlist.set(index);
+         orderedList.push(appWithIndex.widget);
+         index++;
       }
 
       this.var.set(orderedList);
    }
 
-   launchApp() {
-      this.map.entries().next().value?.[0].launch();
+   launchApp(indexInList: number) {
+      for (const [key, value] of this.map) {
+         if (value.indexInlist.get() === indexInList) {
+            key.launch();
+         }
+      }
    }
 
    clear() {
       this.map.forEach((_, app) => this.delete(app));
    }
 
-   private set(key: Apps.Application, value: Gtk.Widget) {
-      this.map.get(key)?.destroy();
+   private set(key: Apps.Application, value: AppWithIndex) {
+      const x = this.map.get(key);
+      x?.widget.destroy();
+      x?.destroy();
       this.map.set(key, value);
    }
 
    private delete(key: Apps.Application) {
-      this.map.get(key)?.destroy();
+      const x = this.map.get(key);
+      x?.widget.destroy();
+      x?.destroy();
       this.map.delete(key);
    }
-
-   //private notify() {
-   //   this.var.set([...this.map.values()]);
-   //}
 }

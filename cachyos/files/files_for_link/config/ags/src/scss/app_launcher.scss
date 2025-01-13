@@ -35,6 +35,10 @@
                         background: $color_primary;
                      }
 
+                     &.selected {
+                        background: $color_primary;
+                     }
+
                      & > box {
                         & > icon {
                            font-size: 55px;
