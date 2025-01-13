@@ -41,12 +41,12 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
 
             // fixes hover state never being cleared
             // when dynamically moving widgets around
-            timeout(1, () => {
+            //timeout(1, () => {
                list.forEach((widget) => {
                   if (widget instanceof Widget.Button) {
                      widget.vfunc_leave();
                   }
-               });
+               //});
             });
          });
       },
