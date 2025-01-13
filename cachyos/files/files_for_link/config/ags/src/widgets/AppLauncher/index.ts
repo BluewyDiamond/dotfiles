@@ -2,6 +2,7 @@ import { execAsync, timeout, Variable } from "astal";
 import { bind } from "astal/binding";
 import { App, Astal, Gdk, Widget } from "astal/gtk3";
 import AppMap from "./AppMap";
+import Apps from "gi://AstalApps";
 
 function hide() {
    App.get_window("astal-app-launcher")?.hide();
@@ -160,8 +161,8 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
    });
 
    function onSearchQueryChanged(searchQuery: string) {
-      function onClick() {
-         appMap.launchApp();
+      function onClicked(app: Apps.Application) {
+         app.launch();
          hide();
          appMap.searchQuery.set("");
       }
@@ -174,13 +175,13 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
          appMap.clear();
       } else {
          if (hotswapBox.children[0] !== appsBox) {
-            appMap.update(selectedIndex, () => onClick());
+            appMap.update(selectedIndex, (_, app) => onClicked(app));
 
             timeout(1, () => {
                appsBox.queue_resize();
             });
          } else {
-            appMap.update(selectedIndex, () => onClick());
+            appMap.update(selectedIndex, (_, app) => onClicked(app));
          }
 
          hotswapBox.children = [appsBox];

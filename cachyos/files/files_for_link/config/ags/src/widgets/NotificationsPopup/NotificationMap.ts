@@ -18,6 +18,7 @@ export class NotificationMap extends Hookable implements Subscribable {
       notifd.notifications.forEach((notification) => {
          this.set(
             notification.id,
+
             Notification({
                notification: notifd.get_notification(notification.id),
 

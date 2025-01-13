@@ -12,7 +12,7 @@ function AppWidget(
    app: Apps.Application,
    selectedIndex: Variable<number>,
    indexInList: Variable<number>,
-   onClicked: (app: Apps.Application) => void
+   onClicked: (self: Widget.Button) => void
 ): Widget.Button {
    let variable: Variable<void>;
 
@@ -25,9 +25,7 @@ function AppWidget(
          // alternatives: refactor AppWidget to where entry.grab_focus() can be called
          canFocus: false,
 
-         onClick: () => {
-            onClicked(app);
-         },
+         onClick: (self) => onClicked(self),
 
          setup: (self) => {
             variable = Variable.derive(
@@ -95,9 +93,11 @@ class AppWithIndex {
    constructor(
       app: Apps.Application,
       selectedIndex: Variable<number>,
-      onClicked: (app: Apps.Application) => void
+      onClicked: (self: Widget.Button, app: Apps.Application) => void
    ) {
-      this.widget = AppWidget(app, selectedIndex, this.indexInlist, onClicked);
+      this.widget = AppWidget(app, selectedIndex, this.indexInlist, (self) =>
+         onClicked(self, app)
+      );
    }
 
    destroy() {
@@ -132,7 +132,7 @@ export default class AppMap implements Subscribable {
 
    update(
       selectedIndex: Variable<number>,
-      onClick: (app: Apps.Application) => void
+      onClicked: (self: Widget.Button, app: Apps.Application) => void
    ) {
       const searchQuery = this.searchQuery.get();
 
@@ -148,7 +148,7 @@ export default class AppMap implements Subscribable {
 
       queriedAppsSet.forEach((app) => {
          if (this.map.has(app)) return;
-         this.set(app, new AppWithIndex(app, selectedIndex, onClick));
+         this.set(app, new AppWithIndex(app, selectedIndex, (self, app) => onClicked(self, app)));
       });
 
       let orderedList: Gtk.Widget[] = [];

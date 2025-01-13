@@ -45,12 +45,13 @@
                            margin-right: 8px;
                         }
 
-                        &.name {
+                        & .name {
                            font-size: 22px;
                         }
 
-                        &.description {
+                        & .description {
                            font-size: 18px;
+                           color: darken($color_on_surface, 10%);
                         }
                      }
                   }
