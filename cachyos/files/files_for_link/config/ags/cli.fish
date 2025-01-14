@@ -1,13 +1,28 @@
 #!/usr/bin/env fish
 
+set parent (realpath (dirname (status filename)))
+set build_dir $parent/build
+
+if not test -d $parent
+    set build_dir $HOME/.config/ags
+end
+
+if not test -d $parent
+    echo "Paths are not valid..."
+    exit 1
+end
+
 function run
-    GTK_VERSION=3 gjs -m build/release/index.js
+    GTK_VERSION=3 gjs -m $build_dir/release/index.js
 end
 
 function build
-    rm -r build
-    mkdir -p build/release
-    esbuild src/index.ts --outdir=build/release --bundle --external:gi://\* --external:console --external:system --tsconfig=tsconfig.json --platform=neutral
+    if test -d $build_dir
+        rm -r $build_dir
+    end
+
+    mkdir -p $build_dir
+    esbuild $parent/src/index.ts --outdir=$build_dir --bundle --external:gi://\* --external:console --external:system --tsconfig=tsconfig.json --platform=neutral
 end
 
 function types
