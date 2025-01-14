@@ -61,7 +61,9 @@
          "dart-sass",
          "fd",
 
-         "npx"
+         "npx",
+         "gjs",
+         "esbuild"
       ],
 
       "aur": [
