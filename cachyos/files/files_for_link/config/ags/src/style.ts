@@ -1,17 +1,17 @@
 import { exec, writeFile } from "astal";
-import constants from "./libs/contants";
-import options from "./options";
+
+const build = "/home/bluewy/.config/ags/build";
 
 export function getCss(): string {
-   const vars = `${constants.tmp}/variables.scss`;
-   const scss = `${constants.tmp}/main.scss`;
-   const css = `${constants.tmp}/main.css`;
+   const vars = `${build}/variables.scss`;
+   const scss = `${build}/main.scss`;
+   const css = `${build}/main.css`;
 
-   const fd = exec(`fd ".scss" ${SRC}`);
+   const fd = exec(`fd ".scss" /home/bluewy/.config/ags`);
    const files = fd.split(/\s+/);
    const imports = [vars, ...files].map((f) => `@import '${f}';`);
 
-   exec(`mkdir -p ${constants.tmp}`);
+   exec(`mkdir -p ${build}`);
    writeFile(vars, variables().join("\n"));
    writeFile(scss, imports.join("\n"));
    exec(`sass ${scss} ${css}`);
