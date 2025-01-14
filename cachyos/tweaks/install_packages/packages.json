@@ -59,7 +59,9 @@
          "brightnessctl",
 
          "dart-sass",
-         "fd"
+         "fd",
+
+         "npx"
       ],
 
       "aur": [
