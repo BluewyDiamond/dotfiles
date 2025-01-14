@@ -15,7 +15,17 @@ export class NotificationMap extends Hookable implements Subscribable {
    constructor() {
       super();
 
+      const capNotifications = () => {
+         if (this.map.size >= options.notificationsPopup.maxItems) {
+            const item = this.map.entries().next().value;
+            if (!item) return;
+            this.map.delete(item[0]);
+         }
+      };
+
       notifd.notifications.forEach((notification) => {
+         capNotifications();
+
          this.set(
             notification.id,
 
@@ -34,6 +44,7 @@ export class NotificationMap extends Hookable implements Subscribable {
       });
 
       this.hook(notifd, "notified", (_, id) => {
+         capNotifications();
          const notification = notifd.get_notification(id);
 
          this.set(

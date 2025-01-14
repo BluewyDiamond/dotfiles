@@ -1,4 +1,4 @@
-import { Astal, Gdk, Widget } from "astal/gtk3";
+import { Astal, Gdk, Gtk, Widget } from "astal/gtk3";
 import { NotificationMap } from "./NotificationMap";
 
 export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
@@ -32,17 +32,23 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
                ],
             }),
 
-            new Widget.Box({
-               className: "notifications-box",
-               vertical: true,
+            new Widget.Scrollable({
+               vscroll: Gtk.PolicyType.ALWAYS,
+               hscroll: Gtk.PolicyType.NEVER,
+               vexpand: true,
 
-               setup: (self) => {
-                  self.children = notificationMap.get();
+               child: new Widget.Box({
+                  className: "notifications-box",
+                  vertical: true,
 
-                  notificationMap.subscribe((list) => {
-                     self.children = list;
-                  });
-               },
+                  setup: (self) => {
+                     self.children = notificationMap.get();
+
+                     notificationMap.subscribe((list) => {
+                        self.children = list;
+                     });
+                  },
+               }),
             }),
          ],
       }),
