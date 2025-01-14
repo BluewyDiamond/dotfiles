@@ -4,7 +4,7 @@ set parent (realpath (dirname (status filename)))
 set build_dir $parent/build
 
 if not test -d $parent
-    set build_dir $HOME/.config/ags
+    set parent $HOME/.config/ags
 end
 
 if not test -d $parent
