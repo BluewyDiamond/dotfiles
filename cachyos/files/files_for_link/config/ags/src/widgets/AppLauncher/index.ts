@@ -137,8 +137,10 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
                children: [
                   // so min-height does not work
                   // with eventbox
-                  new Widget.EventBox({
-                     heightRequest: 200,
+                  new Widget.Button({
+                     className: "top-offset",
+                     canFocus: false,
+                     //heightRequest: 200,
                      onClick: () => hide(),
                   }),
 

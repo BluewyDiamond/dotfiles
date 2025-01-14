@@ -1,7 +1,7 @@
 .app-launcher {
    & > .horizontal-filler-box {
       & > .vertical-filler-box {
-         > eventbox:first-child {
+         > .top-offset {
             min-height: 200px;
          }
 
