@@ -62,7 +62,16 @@
          "fd"
       ],
 
-      "aur": ["aylurs-gtk-shell"]
+      "aur": [
+         "libastal-io-git",
+         "libastal-git",
+         "libastal-hyprland-git",
+         "libastal-battery-git",
+         "libastal-notifd-git",
+         "libastal-wireplumber-git",
+         "libastal-apps-git",
+         "libastal-gjs-git"
+      ]
    },
 
    "hyprland_extras": {
@@ -107,7 +116,7 @@
          "qpwgraph"
       ]
    },
-   
+
    "amd_cpu": {
       "std": ["amd-ucode"]
    },
