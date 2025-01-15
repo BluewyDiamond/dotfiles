@@ -13,7 +13,7 @@ if not test -d $parent
 end
 
 function run
-    GTK_VERSION=3 gjs -m $build_dir/index.js & disown
+    GTK_VERSION=3 gjs -m $build_dir/index.js & disown && exit
 end
 
 function build
