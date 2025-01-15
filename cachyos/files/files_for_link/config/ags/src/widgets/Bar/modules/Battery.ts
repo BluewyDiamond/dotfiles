@@ -38,7 +38,10 @@ export default function (): Widget.Box {
 
          new Widget.Label({
             label: bind(battery, "percentage").as(
-               (percentage) => `${Math.floor(percentage * 100)}%`
+               (percentage) =>
+                  `${Math.floor(percentage * 100)
+                     .toString()
+                     .padStart(3, "_")}%`
             ),
          }),
       ],
