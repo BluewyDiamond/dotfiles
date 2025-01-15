@@ -74,6 +74,8 @@
          "libastal-notifd-git",
          "libastal-wireplumber-git",
          "libastal-apps-git",
+         "libastal-powerprofiles-git",
+         "libastal-tray-git",
          "libastal-gjs-git"
       ]
    },
