@@ -27,7 +27,9 @@ export default function (): Widget.Button {
                   return "?";
                }
 
-               return `${Math.ceil(memoryStats.usage * 100)}%`;
+               return `${Math.ceil(memoryStats.usage * 100)
+                  .toString()
+                  .padStart(3, "_")}%`;
             }),
          })
       )

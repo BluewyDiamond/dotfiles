@@ -24,7 +24,9 @@ export default function (): Widget.Button {
                      return "?";
                   }
 
-                  return `${Math.ceil(cpuUsage * 100)}%`;
+                  return `${Math.ceil(cpuUsage * 100)
+                     .toString()
+                     .padStart(3, "_")}%`;
                }),
             }),
          ],
