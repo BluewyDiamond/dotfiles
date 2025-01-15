@@ -135,7 +135,12 @@ export async function getMemoryStats(): Promise<MemoryStats | null> {
    };
 }
 
-export async function getCpuUsage(): Promise<number | null> {
+export type CpuStats = {
+   total: number;
+   idle: number;
+};
+
+export async function getCpuStats(): Promise<CpuStats | null> {
    const statFile = await readFileAsync("/proc/stat");
    if (!statFile.startsWith("cpu ")) return null;
 
@@ -145,5 +150,8 @@ export async function getCpuUsage(): Promise<number | null> {
    const idle = stats[3] + stats[4];
    const total = stats.reduce((subtotal, curr) => subtotal + curr, 0);
 
-   return 1 - idle / total;
+   return {
+      total: total,
+      idle: idle,
+   };
 }
