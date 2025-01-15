@@ -8,6 +8,8 @@ import Notifications from "./modules/Notifications";
 import AppLauncher from "./modules/AppLauncher";
 import Power from "./modules/Power";
 import Battery from "./modules/Battery";
+import Ram from "./modules/Ram";
+import Cpu from "./modules/Cpu";
 
 export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
    return new Widget.Window({
@@ -48,8 +50,10 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
             halign: Gtk.Align.END,
             children: [
                SystemTray(),
-               Battery(),
                Indicators(),
+               Ram(),
+               Cpu(),
+               Battery(),
                Power(),
             ],
          }),

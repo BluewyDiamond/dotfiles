@@ -121,6 +121,16 @@ icon {
    }
 }
 
+._ram {
+   @include bar-module();
+   margin-left: $space_between_bar_modules;
+}
+
+.cpu {
+   @include bar-module();
+   margin-left: $space_between_bar_modules;
+}
+
 .battery {
    @include bar-module();
    margin-left: $space_between_bar_modules;
