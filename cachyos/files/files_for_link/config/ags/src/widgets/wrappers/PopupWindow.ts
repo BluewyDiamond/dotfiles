@@ -91,13 +91,14 @@ export default function (
             new Widget.Button({
                className: "top-offset",
                canFocus: false,
-               onClick: curatedCallback
+               onClick: curatedCallback,
             }),
 
             child,
 
             Filler({
                onClicked: curatedCallback,
+               expand: true,
             })
          ),
 
