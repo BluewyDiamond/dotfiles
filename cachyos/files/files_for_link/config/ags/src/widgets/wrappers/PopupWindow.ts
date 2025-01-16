@@ -88,9 +88,10 @@ export default function (
          new Widget.Box(
             { vertical: true },
 
-            Filler({
-               heightRequest: 200,
-               onClicked: curatedCallback,
+            new Widget.Button({
+               className: "top-offset",
+               canFocus: false,
+               onClick: curatedCallback
             }),
 
             child,
