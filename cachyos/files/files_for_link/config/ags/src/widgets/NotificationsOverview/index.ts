@@ -1,21 +1,22 @@
 import { Astal, Gdk, Gtk, Widget } from "astal/gtk3";
 import { NotificationMap } from "./NotificationMap";
+import PopupWindow, { LayoutPosition } from "../wrappers/PopupWindow";
 
 export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
    const notificationMap = new NotificationMap();
 
-   return new Widget.Window({
-      gdkmonitor: gdkmonitor,
-      name: "astal-notifications-overview",
-      className: "notifications-overview",
-      exclusivity: Astal.Exclusivity.NORMAL,
-      layer: Astal.Layer.TOP,
-      anchor: Astal.WindowAnchor.TOP,
-      visible: false,
+   return PopupWindow(
+      {
+         gdkmonitor: gdkmonitor,
+         name: "astal-notifications-overview",
+         className: "notifications-overview",
+         position: LayoutPosition.TOP_CENTER,
+      },
 
-      child: new Widget.Box({
+      new Widget.Box({
          className: "main-box",
          vertical: true,
+         expand: false,
 
          children: [
             new Widget.Box({
@@ -35,11 +36,12 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
             new Widget.Scrollable({
                vscroll: Gtk.PolicyType.ALWAYS,
                hscroll: Gtk.PolicyType.NEVER,
-               vexpand: true,
+               //vexpand: true,
 
                child: new Widget.Box({
                   className: "notifications-box",
                   vertical: true,
+               vexpand: true,
 
                   setup: (self) => {
                      self.children = notificationMap.get();
@@ -51,10 +53,6 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
                }),
             }),
          ],
-      }),
-
-      onDestroy: () => {
-         notificationMap.destroy();
-      },
-   });
+      })
+   );
 }

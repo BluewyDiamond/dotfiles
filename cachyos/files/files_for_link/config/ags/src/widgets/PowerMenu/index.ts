@@ -61,7 +61,6 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
          gdkmonitor: gdkmonitor,
          name: "astal-power-menu",
          className: "power-menu",
-         keymode: Astal.Keymode.NONE,
          position: LayoutPosition.CENTER,
       },
 

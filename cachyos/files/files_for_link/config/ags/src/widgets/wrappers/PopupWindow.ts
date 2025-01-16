@@ -36,10 +36,11 @@ type PopupWindowProps = {
    className?: string;
    exclusivity?: Astal.Exclusivity;
    layer?: Astal.Layer;
-   keymode: Astal.Keymode;
+   keymode?: Astal.Keymode;
    position: LayoutPosition;
    onFillerClicked?: () => void;
    onKeyReleasedEvent?: (self: Gtk.Widget, event: Gdk.Event) => void;
+   onDestroyed?: (self: Widget.Window) => void;
 };
 
 // This implementation fixes label wrapping.
@@ -56,7 +57,8 @@ export default function (
       keymode,
       position,
       onFillerClicked,
-      onKeyReleasedEvent: onKeyReleaseEvent,
+      onKeyReleasedEvent,
+      onDestroyed,
    } = popupWindowProps;
 
    const curatedCallback = () => {
@@ -105,9 +107,7 @@ export default function (
          })
       );
    } else if (position === LayoutPosition.CENTER) {
-      anchor =
-         Astal.WindowAnchor.TOP |
-         Astal.WindowAnchor.BOTTOM;
+      anchor = Astal.WindowAnchor.TOP | Astal.WindowAnchor.BOTTOM;
 
       widget = new Widget.Box(
          {},
@@ -143,18 +143,24 @@ export default function (
          visible: false,
 
          exclusivity: exclusivity,
-         layer: layer,
-         keymode: keymode,
+         layer: layer || Astal.Layer.TOP,
+         keymode: keymode || Astal.Keymode.EXCLUSIVE,
          anchor: anchor,
 
          onKeyReleaseEvent: (self, event) => {
-            if (onKeyReleaseEvent) {
-               onKeyReleaseEvent(self, event);
+            if (onKeyReleasedEvent) {
+               onKeyReleasedEvent(self, event);
                return;
             }
 
             if (event.get_keyval()[1] === Gdk.KEY_Escape) {
                self.hide();
+            }
+         },
+
+         onDestroy: (self) => {
+            if (onDestroyed) {
+               onDestroyed(self);
             }
          },
       },

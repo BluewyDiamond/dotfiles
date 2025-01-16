@@ -85,7 +85,6 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
          name: "astal-app-launcher",
          className: "app-launcher",
          exclusivity: Astal.Exclusivity.IGNORE,
-         keymode: Astal.Keymode.EXCLUSIVE,
          layer: Astal.Layer.OVERLAY,
          position: LayoutPosition.TOP_CENTER,
 
