@@ -3,6 +3,7 @@ import { bind } from "astal/binding";
 import { App, Astal, Gdk, Widget } from "astal/gtk3";
 import AppMap from "./AppMap";
 import Apps from "gi://AstalApps";
+import PopupWindow, { LayoutPosition } from "../wrappers/PopupWindow";
 
 function hide() {
    App.get_window("astal-app-launcher")?.hide();
@@ -78,89 +79,47 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
       children: [entry, hotswapBox],
    });
 
-   const window = new Widget.Window({
-      gdkmonitor: gdkmonitor,
-      name: "astal-app-launcher",
-      className: "app-launcher",
-      exclusivity: Astal.Exclusivity.IGNORE,
-      keymode: Astal.Keymode.EXCLUSIVE,
-      layer: Astal.Layer.OVERLAY,
-      anchor: Astal.WindowAnchor.TOP | Astal.WindowAnchor.BOTTOM,
-      visible: false,
+   const window = PopupWindow(
+      {
+         gdkmonitor: gdkmonitor,
+         name: "astal-app-launcher",
+         className: "app-launcher",
+         exclusivity: Astal.Exclusivity.IGNORE,
+         keymode: Astal.Keymode.EXCLUSIVE,
+         layer: Astal.Layer.OVERLAY,
+         position: LayoutPosition.TOP_CENTER,
 
-      onKeyReleaseEvent: (self, event) => {
-         if (event.get_keyval()[1] === Gdk.KEY_Escape) {
-            self.hide();
-            appMap.searchQuery.set("");
-         }
-
-         if (event.get_keyval()[1] === Gdk.KEY_Up) {
-            const selectedIndexValue = selectedIndex.get();
-
-            if (selectedIndexValue > 0) {
-               selectedIndex.set(selectedIndexValue - 1);
-            } else {
-               selectedIndex.set(0);
+         onKeyReleasedEvent: (self, event) => {
+            if (event.get_keyval()[1] === Gdk.KEY_Escape) {
+               self.hide();
+               appMap.searchQuery.set("");
             }
-         }
 
-         if (event.get_keyval()[1] === Gdk.KEY_Down) {
-            const selectedIndexValue = selectedIndex.get();
-            const maxLength = appMap.length();
+            if (event.get_keyval()[1] === Gdk.KEY_Up) {
+               const selectedIndexValue = selectedIndex.get();
 
-            if (selectedIndexValue < maxLength - 1) {
-               selectedIndex.set(selectedIndexValue + 1);
-            } else {
-               selectedIndex.set(maxLength - 1);
+               if (selectedIndexValue > 0) {
+                  selectedIndex.set(selectedIndexValue - 1);
+               } else {
+                  selectedIndex.set(0);
+               }
             }
-         }
+
+            if (event.get_keyval()[1] === Gdk.KEY_Down) {
+               const selectedIndexValue = selectedIndex.get();
+               const maxLength = appMap.length();
+
+               if (selectedIndexValue < maxLength - 1) {
+                  selectedIndex.set(selectedIndexValue + 1);
+               } else {
+                  selectedIndex.set(maxLength - 1);
+               }
+            }
+         },
       },
 
-      child: new Widget.Box({
-         className: "horizontal-filler-box",
-
-         children: [
-            new Widget.EventBox({
-               expand: true,
-               // needs to be implemented this way
-               // using an absurdly huge number allows
-               // the main content to be coherent
-               // so horizontally it's a fixed size
-               widthRequest: 4000,
-               onClick: () => hide(),
-            }),
-
-            new Widget.Box({
-               className: "vertical-filler-box",
-               vertical: true,
-
-               children: [
-                  // so min-height does not work
-                  // with eventbox
-                  new Widget.Button({
-                     className: "top-offset",
-                     canFocus: false,
-                     //heightRequest: 200,
-                     onClick: () => hide(),
-                  }),
-
-                  mainBox,
-
-                  new Widget.EventBox({
-                     expand: true,
-                     onClick: () => hide(),
-                  }),
-               ],
-            }),
-
-            new Widget.EventBox({
-               expand: true,
-               widthRequest: 4000,
-               onClick: () => hide(),
-            }),
-         ],
-      }),
-   });
+      mainBox
+   );
 
    function onSearchQueryChanged(searchQuery: string) {
       function onClicked(app: Apps.Application) {

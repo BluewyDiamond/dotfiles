@@ -13,4 +13,9 @@ export default {
    appLauncher: {
       maxItems: 5,
    },
+
+   filler: {
+      width: 4000,
+      height: 4000,
+   },
 };

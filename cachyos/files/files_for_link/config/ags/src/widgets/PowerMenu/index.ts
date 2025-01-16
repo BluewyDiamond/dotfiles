@@ -1,8 +1,9 @@
-import { App, Gdk, Widget } from "astal/gtk3";
+import { App, Astal, Gdk, Widget } from "astal/gtk3";
 import { IconWithLabelFallback } from "../wrappers/IconWithLabelFallback";
 import icons from "../../libs/icons";
 import Variable from "astal/variable";
 import { execAsync, interval } from "astal";
+import PopupWindow, { LayoutPosition } from "../wrappers/PopupWindow";
 
 function hide() {
    App.get_window("astal-power-menu")?.hide();
@@ -55,13 +56,16 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
    const rebootClickCount = Variable(0);
    const poweroffClickCount = Variable(0);
 
-   return new Widget.Window({
-      gdkmonitor: gdkmonitor,
-      name: "astal-power-menu",
-      className: "power-menu",
-      visible: false,
+   return PopupWindow(
+      {
+         gdkmonitor: gdkmonitor,
+         name: "astal-power-menu",
+         className: "power-menu",
+         keymode: Astal.Keymode.NONE,
+         position: LayoutPosition.CENTER,
+      },
 
-      child: new Widget.Box({
+      new Widget.Box({
          className: "power-menu-content",
 
          children: [
@@ -78,7 +82,9 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
                   },
                },
 
-               IconWithLabelFallback({ icon: icons.powermenu.sleep })
+               IconWithLabelFallback({
+                  icon: icons.powermenu.sleep,
+               })
             ),
 
             new Widget.Button(
@@ -94,7 +100,9 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
                   },
                },
 
-               IconWithLabelFallback({ icon: icons.powermenu.reboot })
+               IconWithLabelFallback({
+                  icon: icons.powermenu.reboot,
+               })
             ),
 
             new Widget.Button(
@@ -110,9 +118,11 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
                   },
                },
 
-               IconWithLabelFallback({ icon: icons.powermenu.shutdown })
+               IconWithLabelFallback({
+                  icon: icons.powermenu.shutdown,
+               })
             ),
          ],
-      }),
-   });
+      })
+   );
 }

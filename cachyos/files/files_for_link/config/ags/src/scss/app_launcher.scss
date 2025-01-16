@@ -1,59 +1,51 @@
 .app-launcher {
-   & > .horizontal-filler-box {
-      & > .vertical-filler-box {
-         > .top-offset {
-            min-height: 200px;
-         }
+   & .main-box {
+      min-width: 500px;
+      background: $color_background;
+      color: $color_on_background;
+      border-radius: 4px;
+      padding: 8px;
 
-         & > .main-box {
-            min-width: 500px;
-            background: $color_background;
-            color: $color_on_background;
-            border-radius: 4px;
-            padding: 8px;
+      & > entry {
+         background: $color_surface;
+         margin-bottom: 8px;
+         font-size: 28px;
+         border-radius: 4px;
+      }
 
-            & > entry {
+      & > .hotswap-box {
+         & .apps-container {
+            & > button {
+               padding: 8px;
                background: $color_surface;
-               margin-bottom: 8px;
-               font-size: 28px;
                border-radius: 4px;
-            }
+               margin-bottom: 8px;
 
-            & > .hotswap-box {
-               & .apps-container {
-                  & > button {
-                     padding: 8px;
-                     background: $color_surface;
-                     border-radius: 4px;
-                     margin-bottom: 8px;
+               &:last-child {
+                  margin-bottom: 0;
+               }
 
-                     &:last-child {
-                        margin-bottom: 0;
-                     }
+               &:hover {
+                  background: transparentize($color_primary, 0.5);
+               }
 
-                     &:hover {
-                        background: transparentize($color_primary, 0.5);
-                     }
+               &.selected {
+                  background: transparentize($color_primary, 0.5);
+               }
 
-                     &.selected {
-                        background: transparentize($color_primary, 0.5);
-                     }
+               & > box {
+                  & > icon {
+                     font-size: 55px;
+                     margin-right: 8px;
+                  }
 
-                     & > box {
-                        & > icon {
-                           font-size: 55px;
-                           margin-right: 8px;
-                        }
+                  & .name {
+                     font-size: 22px;
+                  }
 
-                        & .name {
-                           font-size: 22px;
-                        }
-
-                        & .description {
-                           font-size: 18px;
-                           color: darken($color_on_surface, 10%);
-                        }
-                     }
+                  & .description {
+                     font-size: 18px;
+                     color: darken($color_on_surface, 10%);
                   }
                }
             }
