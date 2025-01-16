@@ -1,6 +1,7 @@
 import { Astal, Gdk, Widget } from "astal/gtk3";
 import Notifd from "gi://AstalNotifd";
 import { NotificationMap } from "./NotificationMap";
+import { bind } from "astal";
 
 function Notifications(): Widget.Box {
    const notificationMap = new NotificationMap();
@@ -8,14 +9,8 @@ function Notifications(): Widget.Box {
    return new Widget.Box({
       className: "notifications-popup-content",
       vertical: true,
-
-      setup: (self) => {
-         self.children = notificationMap.get();
-
-         notificationMap.subscribe((list) => {
-            self.children = list;
-         });
-      },
+      noImplicitDestroy: true,
+      children: bind(notificationMap),
 
       onDestroy: () => {
          notificationMap.destroy();

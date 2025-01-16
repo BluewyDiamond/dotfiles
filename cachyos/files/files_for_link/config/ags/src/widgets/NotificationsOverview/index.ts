@@ -1,6 +1,8 @@
 import { Astal, Gdk, Gtk, Widget } from "astal/gtk3";
 import { NotificationMap } from "./NotificationMap";
 import PopupWindow, { LayoutPosition } from "../wrappers/PopupWindow";
+import { noImplicitDestroy } from "astal/_astal";
+import { bind } from "astal";
 
 export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
    const notificationMap = new NotificationMap();
@@ -36,20 +38,13 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
             new Widget.Scrollable({
                vscroll: Gtk.PolicyType.ALWAYS,
                hscroll: Gtk.PolicyType.NEVER,
-               //vexpand: true,
 
                child: new Widget.Box({
                   className: "notifications-box",
                   vertical: true,
-               vexpand: true,
-
-                  setup: (self) => {
-                     self.children = notificationMap.get();
-
-                     notificationMap.subscribe((list) => {
-                        self.children = list;
-                     });
-                  },
+                  vexpand: true,
+                  noImplicitDestroy: true,
+                  children: bind(notificationMap),
                }),
             }),
          ],

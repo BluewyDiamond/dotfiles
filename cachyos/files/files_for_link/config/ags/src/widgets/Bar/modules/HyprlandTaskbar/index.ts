@@ -11,12 +11,6 @@ export default function (): Widget.Box {
       className: "hyprland-taskbar",
 
       setup: (self) => {
-         onClientsChanged(clientMap.get());
-
-         clientMap.subscribe((list) => {
-            onClientsChanged(list);
-         });
-
          function onClientsChanged(list: Gtk.Widget[]) {
             if (list.length > 0) {
                self.visible = true;
@@ -25,6 +19,12 @@ export default function (): Widget.Box {
                self.visible = false;
             }
          }
+
+         onClientsChanged(clientMap.get());
+
+         clientMap.subscribe((list) => {
+            onClientsChanged(list);
+         });
       },
 
       onDestroy: () => {
