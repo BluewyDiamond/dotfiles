@@ -3,9 +3,17 @@ return {
    branch = "v3.x",
 
    dependencies = {
-      { "nvim-lua/plenary.nvim" }, --> latest commit
-      { "nvim-tree/nvim-web-devicons", version = "0.x" },
-      { "MunifTanjim/nui.nvim", version = "0.x" },
-      { "3rd/image.nvim", version = "1.x" },
+      { "nvim-lua/plenary.nvim" },
+      { "nvim-tree/nvim-web-devicons" },
+      { "MunifTanjim/nui.nvim" },
+      { "3rd/image.nvim" },
    },
+
+   config = function()
+      require("neo-tree").setup({
+         sort_function = function(a, b)
+            return a.path < b.path
+         end,
+      })
+   end,
 }

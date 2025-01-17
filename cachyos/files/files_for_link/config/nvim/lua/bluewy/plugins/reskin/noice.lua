@@ -1,11 +1,10 @@
 return {
    "folke/noice.nvim",
-   version = "4.x",
    event = "VeryLazy",
    opts = {},
 
    dependencies = {
-      { "MunifTanjim/nui.nvim", version = "0.x" },
+      { "MunifTanjim/nui.nvim" },
       {
          "rcarriga/nvim-notify",
          version = "3.x",
@@ -13,6 +12,7 @@ return {
          config = function()
             require("notify").setup({
                top_down = false,
+               merge_duplicates = true,
             })
          end,
       },
