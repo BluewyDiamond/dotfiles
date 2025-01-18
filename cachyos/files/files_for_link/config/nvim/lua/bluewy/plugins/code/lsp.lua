@@ -1,36 +1,67 @@
 return {
-   "williamboman/mason.nvim",
-   version = "1.x",
-   lazy = false,
+   {
+      "williamboman/mason.nvim",
+      lazy = false,
 
-   dependencies = {
-      { "neovim/nvim-lspconfig", version = "0.x", lazy = false },
-      { "williamboman/mason-lspconfig.nvim", version = "1.x", lazy = false },
+      config = function()
+         require("mason").setup({})
+      end,
    },
 
-   config = function()
-      require("mason").setup({})
+   {
+      "williamboman/mason-lspconfig.nvim",
+      lazy = false,
 
-      require("mason-lspconfig").setup({
-         ensure_installed = {
-            "lua_ls",
-         },
-      })
+      config = function()
+         require("mason-lspconfig").setup({
+            ensure_installed = {
+               "lua_ls",
+            },
 
-      local capabilities = require("cmp_nvim_lsp").default_capabilities()
+            automatic_installation = true,
+         })
+      end,
+   },
 
-      require("mason-lspconfig").setup_handlers({
-         function(server_name)
-            require("lspconfig")[server_name].setup({
-               capabilities = capabilities,
-            })
-         end,
+   {
+      "neovim/nvim-lspconfig",
+      lazy = false,
 
-         ["rust_analyzer"] = function()
-            -- We leave it blank because we setup it up with rustacevim.
-         end,
+      config = function()
+         local mason_lspconfig = require("mason-lspconfig")
+         local lspconfig = require("lspconfig")
+         local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-         ["ts_ls"] = function() end,
-      })
-   end,
+         local installed_servers = mason_lspconfig.get_installed_servers()
+         local excluded_servers = { "rust_analyzer", "ts_ls" }
+
+         local override_servers = {
+            rust_analyzer = function() end,
+            ts_ls = function() end,
+         }
+
+         local function contains(server_name)
+            for _, excluded in ipairs(excluded_servers) do
+               if excluded == server_name then
+                  return true
+               end
+            end
+            return false
+         end
+
+         for _, server_name in ipairs(installed_servers) do
+            if not contains(server_name) then
+               if override_servers[server_name] then
+                  override_servers[server_name]()
+               else
+                  lspconfig[server_name].setup({
+                     capabilities = capabilities,
+                  })
+               end
+            end
+         end
+
+         lspconfig.fish_lsp.setup({})
+      end,
+   },
 }
