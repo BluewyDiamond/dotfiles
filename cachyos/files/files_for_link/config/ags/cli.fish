@@ -41,7 +41,7 @@ function types
 
     ln -s $astal_gjs_dir node_modules/astal
 
-    npx -y $ts_for_gir generate Astal\* --ignore Gtk3 --ignore Astal3 --ignoreVersionConflicts --outdir "./@girs" \
+    npx -y $ts_for_gir generate \* --ignore Gtk4 --ignore Astal4 --ignoreVersionConflicts --outdir "./@girs" \
         -g $gir_dir
 end
 
