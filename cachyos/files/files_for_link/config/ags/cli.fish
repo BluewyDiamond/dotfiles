@@ -16,7 +16,7 @@ if not test -d $parent
 end
 
 function run
-    GTK_VERSION=3 gjs -m $build_dir/index.js & disown && exit
+    GTK_VERSION=3 gjs -m $build_dir/main.js & disown && exit
 end
 
 function build
@@ -25,7 +25,7 @@ function build
     end
 
     mkdir -p $build_dir
-    esbuild $parent/src/index.ts --outdir=$build_dir --bundle --external:gi://\* --external:console --external:system --tsconfig=tsconfig.json --platform=neutral
+    esbuild $parent/src/main.ts --outdir=$build_dir --bundle --external:gi://\* --external:console --external:system --tsconfig=tsconfig.json --platform=neutral
 end
 
 function types
