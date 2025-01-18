@@ -9,6 +9,7 @@ return {
             lua = { "stylua" },
 
             -- programming langauges
+            csharp = { "dotnet tool run dotnet-csharpier ." },
             javascript = { "prettier" },
             python = { "black" },
             php = { "pretty-php" },
