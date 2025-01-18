@@ -3,7 +3,7 @@ return {
 
    dependencies = {
       { "nvim-lua/plenary.nvim" }, --> latest commit
-      { "neovim/nvim-lspconfig", version = "0.x" },
+      { "neovim/nvim-lspconfig" },
    },
 
    opts = {},

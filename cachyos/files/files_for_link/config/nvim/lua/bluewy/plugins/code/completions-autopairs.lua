@@ -115,7 +115,6 @@ return {
          "windwp/nvim-autopairs", --> latest commit
          {
             "L3MON4D3/LuaSnip",
-            version = "2.x",
 
             dependencies = {
                "saadparwaiz1/cmp_luasnip",

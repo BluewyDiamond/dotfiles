@@ -7,7 +7,6 @@ return {
       { "MunifTanjim/nui.nvim" },
       {
          "rcarriga/nvim-notify",
-         version = "3.x",
 
          config = function()
             require("notify").setup({
