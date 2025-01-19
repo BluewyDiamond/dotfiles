@@ -1,7 +1,7 @@
 @mixin bar-module {
    background: $color_surface;
    color: $color_on_surface;
-   border-radius: 4px;
+   border-radius: $border_radius;
    padding: 4px;
 
    &.active {

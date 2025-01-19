@@ -101,13 +101,13 @@ icon {
    menu {
       background: $color_background;
       border: 2px solid $color_border;
-      border-radius: 4px;
+      border-radius: $border_radius;
       padding: 10px;
 
       menuitem {
          margin-bottom: 7.2px;
          background: $color_surface;
-         border-radius: 4px;
+         border-radius: $border_radius;
          padding: 4px;
 
          &:last-child {

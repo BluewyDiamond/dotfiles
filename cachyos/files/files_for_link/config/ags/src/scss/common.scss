@@ -2,7 +2,7 @@
    background: $color_background;
    color: $color_on_background;
    margin-bottom: 8px;
-   border-radius: 4px;
+   border-radius: $border_radius;
    min-width: 500px;
    padding: 8px;
 
@@ -38,7 +38,7 @@
       & .notification-icon {
          font-size: 75px;
          margin-right: 10px;
-         border-radius: 4px;
+         border-radius: $border_radius;
       }
 
       & > box {
@@ -58,7 +58,7 @@
    & .notification-actions {
       & > button {
          background: $color_surface;
-         border-radius: 4px;
+         border-radius: $border_radius;
          margin-right: 4px;
 
          &:last-child {
