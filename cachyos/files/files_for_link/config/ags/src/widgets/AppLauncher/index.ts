@@ -36,24 +36,6 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
       className: "apps-container",
       vertical: true,
 
-      setup: (self) => {
-         self.children = appMap.get();
-
-         appMap.subscribe((list) => {
-            self.children = list;
-
-            // fixes hover state never being cleared
-            // when dynamically moving widgets around
-            //timeout(1, () => {
-            list.forEach((widget) => {
-               if (widget instanceof Widget.Button) {
-                  widget.vfunc_leave();
-               }
-               //});
-            });
-         });
-      },
-
       onDestroy: () => {
          appMap.destroy();
       },
@@ -134,17 +116,25 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
          hotswapBox.children = [shBox];
          appMap.clear();
       } else {
+         appMap.update(selectedIndex, (_, app) => onClicked(app));
+         const appWidgets = appMap.get();
+         appsBox.children = appWidgets;
+
+         appsBox.children.forEach((widget) => {
+            if (widget instanceof Widget.Button) {
+               widget.vfunc_leave();
+            }
+         });
+
          if (hotswapBox.children[0] !== appsBox) {
-            appMap.update(selectedIndex, (_, app) => onClicked(app));
+            hotswapBox.children = [appsBox];
 
             timeout(1, () => {
                appsBox.queue_resize();
             });
          } else {
-            appMap.update(selectedIndex, (_, app) => onClicked(app));
+            hotswapBox.children = [appsBox];
          }
-
-         hotswapBox.children = [appsBox];
       }
    }
 

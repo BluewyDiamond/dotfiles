@@ -55,20 +55,23 @@ function AppWidget(
                vertical: true,
 
                setup: (self) => {
-                  self.children = [
+                  // instead notifying items one by one
+                  // do the following
+                  // it avoids weird allocation bugs
+                  const children = [];
+
+                  children.push(
                      new Widget.Label({
                         className: "name",
                         halign: Gtk.Align.START,
                         xalign: 0,
                         truncate: true,
-                        label: app.name,
-                     }),
-                  ];
+                        label: app.name || "unknown",
+                     })
+                  );
 
                   if (app.description) {
-                     self.children = [
-                        ...self.children,
-
+                     children.push(
                         new Widget.Label({
                            className: "description",
                            halign: Gtk.Align.START,
@@ -76,9 +79,11 @@ function AppWidget(
                            wrap: true,
                            wrapMode: Pango.WrapMode.WORD_CHAR,
                            label: app.description,
-                        }),
-                     ];
+                        })
+                     );
                   }
+
+                  self.children = children;
                },
             }),
          ],
@@ -148,7 +153,13 @@ export default class AppMap implements Subscribable {
 
       queriedAppsSet.forEach((app) => {
          if (this.map.has(app)) return;
-         this.set(app, new AppWithIndex(app, selectedIndex, (self, app) => onClicked(self, app)));
+         this.set(
+            app,
+
+            new AppWithIndex(app, selectedIndex, (self, app) =>
+               onClicked(self, app)
+            )
+         );
       });
 
       let orderedList: Gtk.Widget[] = [];
