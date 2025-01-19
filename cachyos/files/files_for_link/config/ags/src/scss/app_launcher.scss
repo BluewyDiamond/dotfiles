@@ -39,18 +39,22 @@
                }
 
                & > box {
-                  & > icon {
+                  & > .icon-with-label-fallback {
                      font-size: 55px;
+                     min-width: 55px;
+                     min-height: 55px;
                      margin-right: 8px;
                   }
 
-                  & .name {
-                     font-size: 22px;
-                  }
+                  & > box {
+                     & > .name {
+                        font-size: 22px;
+                     }
 
-                  & .description {
-                     font-size: 18px;
-                     color: darken($color_on_surface, 10%);
+                     & > .description {
+                        font-size: 18px;
+                        color: darken($color_on_surface, 10%);
+                     }
                   }
                }
             }

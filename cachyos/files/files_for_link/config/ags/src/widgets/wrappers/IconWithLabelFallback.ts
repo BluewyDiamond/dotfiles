@@ -1,20 +1,17 @@
 import { Widget } from "astal/gtk3";
 import { findIcon } from "../../utils";
-import icons from "../../libs/icons";
-import { IconProps, LabelProps } from "astal/gtk3/widget";
 
 type IconWithLabelFallbackProps = {
+   className?: string;
    icon: string;
    fallbackIcon?: string;
    fallbackLabel?: string;
-   iconProps?: IconProps;
-   labelProps?: LabelProps;
 };
 
 export function IconWithLabelFallback(
    props: IconWithLabelFallbackProps
 ): Widget.Icon | Widget.Label {
-   const { icon, fallbackIcon, fallbackLabel, iconProps, labelProps } = props;
+   const { className, icon, fallbackIcon, fallbackLabel } = props;
 
    let foundedIcon = findIcon(icon);
 
@@ -22,15 +19,19 @@ export function IconWithLabelFallback(
       foundedIcon = findIcon(fallbackIcon || "");
    }
 
+   function setupClassName(): string {
+      return ["icon-with-label-fallback", className].filter(Boolean).join(" ");
+   }
+
    if (foundedIcon === "") {
       return new Widget.Label({
+         className: setupClassName(),
          label: fallbackLabel || "?",
-         ...labelProps,
       });
    } else {
       return new Widget.Icon({
+         className: setupClassName(),
          icon: foundedIcon,
-         ...iconProps,
       });
    }
 }
