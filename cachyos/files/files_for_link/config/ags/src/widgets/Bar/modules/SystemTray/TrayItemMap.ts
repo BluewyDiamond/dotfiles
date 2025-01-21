@@ -1,7 +1,7 @@
 import Hookable from "../../../../libs/services/Hookable";
 import { Variable } from "astal";
 import { Subscribable } from "astal/binding";
-import { Astal, Gtk, hook, Widget } from "astal/gtk4";
+import { Gtk, hook, Widget } from "astal/gtk4";
 import Tray from "gi://AstalTray";
 
 const tray = Tray.get_default();
@@ -48,7 +48,7 @@ function TrayItemButton(item: Tray.TrayItem): Gtk.MenuButton {
    );
 }
 
-export class TrayItemMap2 extends Hookable implements Subscribable {
+export class TrayItemMap extends Hookable implements Subscribable {
    private map: Map<string, Gtk.Widget> = new Map();
    private var: Variable<Array<Gtk.Widget>> = new Variable([]);
 

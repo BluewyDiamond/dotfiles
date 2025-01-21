@@ -1,5 +1,5 @@
 import { Astal, Gtk, Widget } from "astal/gtk4";
-import { TrayItemMap2 as TrayItemMap } from "./TrayItemMap";
+import { TrayItemMap as TrayItemMap } from "./TrayItemMap";
 
 // TODO: maybe fallback gicon?
 
