@@ -98,10 +98,7 @@ export default function (props: NotificationProps): Widget.EventBox {
 
                         IconWithLabelFallback({
                            icon: notification.image,
-
-                           iconProps: {
-                              className: "notification-icon",
-                           },
+                           className: "notification-icon",
                         }),
                      ];
                   }

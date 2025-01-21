@@ -35,8 +35,11 @@
       padding: 8px;
 
       & .notification-image,
-      & .notification-icon {
-         font-size: 75px;
+      & > .icon-with-label-fallback {
+         & > icon {
+            font-size: 75px;
+         }
+
          margin-right: 10px;
          border-radius: $border_radius;
       }
