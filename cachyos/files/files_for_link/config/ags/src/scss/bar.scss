@@ -87,6 +87,10 @@ $space_between_bar_modules: 7.2px;
       @include bar-module();
       margin-left: $space_between_bar_modules;
 
+      & > icon {
+         font-size: 24px;
+      }
+
       &:hover {
          background: transparentize($color_primary, 0.5);
       }
