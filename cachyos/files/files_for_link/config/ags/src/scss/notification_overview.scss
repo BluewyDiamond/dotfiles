@@ -27,12 +27,10 @@
          }
       }
 
-      & > scrollable {
-         & .notifications-box {
-            & .notification {
-               background: $color_surface;
-               color: $color_on_surface;
-            }
+      & .notifications-box {
+         & .notification {
+            background: $color_surface;
+            color: $color_on_surface;
          }
       }
    }

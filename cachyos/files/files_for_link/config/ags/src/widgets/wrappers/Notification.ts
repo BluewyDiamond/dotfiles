@@ -1,4 +1,4 @@
-import { Gtk, Widget } from "astal/gtk3";
+import { Gtk, Widget } from "astal/gtk4";
 import Notifd from "gi://AstalNotifd";
 import { findIcon, isValidIcon } from "../../utils";
 import { GLib } from "astal";
@@ -27,17 +27,17 @@ type NotificationProps = {
    setup?(): void;
 };
 
-export default function (props: NotificationProps): Widget.EventBox {
+export default function (props: NotificationProps): Gtk.Button {
    const { notification, setup } = props;
 
-   return new Widget.EventBox({
-      child: new Widget.Box({
-         className: "notification",
+   return Widget.Button({
+      child: Widget.Box({
+         cssClasses: ["notification"],
          vertical: true,
 
          children: [
-            new Widget.Box({
-               className: "notification-header",
+            Widget.Box({
+               cssClasses: ["notification-header"],
 
                setup: (self) => {
                   let foundedIcon = findIcon(notification.app_icon);
@@ -50,9 +50,9 @@ export default function (props: NotificationProps): Widget.EventBox {
                      self.children = [
                         ...self.children,
 
-                        new Widget.Icon({
-                           className: "notification-app-icon",
-                           icon: foundedIcon,
+                        IconWithLabelFallback({
+                           cssClasses: ["notification-app-icon"],
+                           iconName: foundedIcon,
                         }),
                      ];
                   }
@@ -60,27 +60,27 @@ export default function (props: NotificationProps): Widget.EventBox {
                   self.children = [
                      ...self.children,
 
-                     new Widget.Label({
+                     Widget.Label({
                         halign: Gtk.Align.START,
-                        className: "notification-app-name",
-                        truncate: true,
+                        cssClasses: ["notification-app-name"],
+                        ellipsize: Pango.EllipsizeMode.END,
                         label: notification.appName || "undefined",
                      }),
 
-                     new Widget.Label({
+                     Widget.Label({
                         halign: Gtk.Align.END,
-                        className: "notification-time",
+                        cssClasses: ["notification-time"],
                         hexpand: true,
                         label: time(notification.time),
                      }),
 
-                     new Widget.Button(
+                     Widget.Button(
                         {
-                           className: "notification-close",
-                           onClick: () => notification.dismiss(),
+                           cssClasses: ["notification-close"],
+                           onClicked: () => notification.dismiss(),
                         },
 
-                        IconWithLabelFallback({ icon: icons.ui.close })
+                        IconWithLabelFallback({ iconName: icons.ui.close })
                      ),
                   ];
                },
@@ -88,8 +88,8 @@ export default function (props: NotificationProps): Widget.EventBox {
 
             new Gtk.Separator({ visible: true }),
 
-            new Widget.Box({
-               className: "notification-content",
+            Widget.Box({
+               cssClasses: ["notification-content"],
 
                setup: (self) => {
                   if (notification.image && isValidIcon(notification.image)) {
@@ -97,8 +97,8 @@ export default function (props: NotificationProps): Widget.EventBox {
                         ...self.children,
 
                         IconWithLabelFallback({
-                           icon: notification.image,
-                           className: "notification-icon",
+                           cssClasses: ["notification-icon"],
+                           iconName: notification.image,
                         }),
                      ];
                   }
@@ -106,18 +106,19 @@ export default function (props: NotificationProps): Widget.EventBox {
                   self.children = [
                      ...self.children,
 
-                     new Widget.Box({
+                     Widget.Box({
                         vertical: true,
 
                         setup: (self) => {
                            if (notification.summary) {
                               self.children = [
                                  ...self.children,
-                                 new Widget.Label({
-                                    className: "notification-summary",
+
+                                 Widget.Label({
+                                    cssClasses: ["notification-summary"],
                                     halign: Gtk.Align.START,
                                     xalign: 0,
-                                    truncate: true,
+                                    ellipsize: Pango.EllipsizeMode.END,
                                     label: notification.summary,
                                  }),
                               ];
@@ -126,8 +127,9 @@ export default function (props: NotificationProps): Widget.EventBox {
                            if (notification.body) {
                               self.children = [
                                  ...self.children,
-                                 new Widget.Label({
-                                    className: "notification-body",
+
+                                 Widget.Label({
+                                    cssClasses: ["notification-body"],
                                     halign: Gtk.Align.START,
                                     xalign: 0,
                                     wrap: true,
@@ -150,8 +152,8 @@ export default function (props: NotificationProps): Widget.EventBox {
                self.children = [
                   ...self.children,
 
-                  new Widget.Box({
-                     className: "notification-actions",
+                  Widget.Box({
+                     cssClasses: ["notification-actions"],
                      hexpand: true,
 
                      setup: (self) => {
@@ -160,13 +162,13 @@ export default function (props: NotificationProps): Widget.EventBox {
                               self.children = [
                                  ...self.children,
 
-                                 new Widget.Button(
+                                 Widget.Button(
                                     {
                                        hexpand: true,
                                        onClicked: () => notification.invoke(id),
                                     },
 
-                                    new Widget.Label({
+                                    Widget.Label({
                                        label: label,
                                        halign: Gtk.Align.CENTER,
                                        hexpand: true,

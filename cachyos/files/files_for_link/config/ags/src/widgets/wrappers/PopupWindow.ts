@@ -1,4 +1,4 @@
-import { App, Astal, Gdk, Gtk, Widget } from "astal/gtk3";
+import { App, Astal, Gdk, Gtk, Widget } from "astal/gtk4";
 import options from "../../options";
 
 type FillerProps = {
@@ -6,22 +6,20 @@ type FillerProps = {
    heightRequest?: number;
    hexpand?: boolean;
    vexpand?: boolean;
-   expand?: boolean;
    onClicked?: () => void;
 };
 
-function Filler(fillerProps: FillerProps): Widget.EventBox {
-   const { widthRequest, heightRequest, hexpand, vexpand, expand, onClicked } =
+function Filler(fillerProps: FillerProps): Gtk.Button {
+   const { widthRequest, heightRequest, hexpand, vexpand, onClicked } =
       fillerProps;
 
-   return new Widget.EventBox({
+   return Widget.Button({
       widthRequest,
       heightRequest,
       hexpand,
       vexpand,
-      expand,
       canFocus: false,
-      onClick: onClicked,
+      onClicked: onClicked,
    });
 }
 
@@ -33,25 +31,25 @@ export enum LayoutPosition {
 type PopupWindowProps = {
    gdkmonitor?: Gdk.Monitor;
    name: string;
-   className?: string;
+   cssClasses?: string[];
    exclusivity?: Astal.Exclusivity;
    layer?: Astal.Layer;
    keymode?: Astal.Keymode;
    position: LayoutPosition;
    onFillerClicked?: () => void;
-   onKeyReleasedEvent?: (self: Gtk.Widget, event: Gdk.Event) => void;
-   onDestroyed?: (self: Widget.Window) => void;
+   onKeyReleasedEvent?: (self: Gtk.Widget, event: number) => void;
+   onDestroyed?: (self: Gtk.Window) => void;
 };
 
 // This implementation fixes label wrapping.
 export default function (
    popupWindowProps: PopupWindowProps,
    child: Gtk.Widget
-): Widget.Window {
+): Astal.Window {
    const {
       gdkmonitor,
       name,
-      className,
+      cssClasses: cssClasses,
       exclusivity,
       layer,
       keymode,
@@ -70,78 +68,93 @@ export default function (
       App.get_window(name)?.hide();
    };
 
-   let anchor: Astal.WindowAnchor;
-   let widget: Gtk.Widget;
+   let anchor: Astal.WindowAnchor | undefined;
+   let widget: Gtk.Widget | undefined;
 
    if (position === LayoutPosition.TOP_CENTER) {
       anchor = Astal.WindowAnchor.TOP | Astal.WindowAnchor.BOTTOM;
 
-      widget = new Widget.Box(
+      widget = Widget.Box(
          {},
 
          Filler({
             widthRequest: options.filler.width,
-            expand: true,
+            hexpand: true,
+            vexpand: true,
             onClicked: curatedCallback,
          }),
 
-         new Widget.Box(
+         Widget.Box(
             { vertical: true },
 
-            new Widget.Button({
-               className: "top-offset",
+            Widget.Button({
+               cssClasses: ["top-offset"],
                canFocus: false,
-               onClick: curatedCallback,
+               onClicked: curatedCallback,
             }),
 
             child,
 
             Filler({
                onClicked: curatedCallback,
-               expand: true,
+               hexpand: true,
+               vexpand: true,
             })
          ),
 
          Filler({
             widthRequest: options.filler.width,
-            expand: true,
+            hexpand: true,
+            vexpand: true,
             onClicked: curatedCallback,
          })
       );
    } else if (position === LayoutPosition.CENTER) {
       anchor = Astal.WindowAnchor.TOP | Astal.WindowAnchor.BOTTOM;
 
-      widget = new Widget.Box(
+      widget = Widget.Box(
          {},
 
          Filler({
             widthRequest: options.filler.width,
-            expand: true,
+            hexpand: true,
+            vexpand: true,
             onClicked: curatedCallback,
          }),
 
-         new Widget.Box(
+         Widget.Box(
             { vertical: true },
 
-            Filler({ expand: true, onClicked: curatedCallback }),
+            Filler({
+               hexpand: true,
+               vexpand: true,
+               onClicked: curatedCallback,
+            }),
+
             child,
-            Filler({ expand: true, onClicked: curatedCallback })
+
+            Filler({
+               hexpand: true,
+               vexpand: true,
+               onClicked: curatedCallback,
+            })
          ),
 
          Filler({
             widthRequest: options.filler.width,
-            expand: true,
+            hexpand: true,
+            vexpand: true,
             onClicked: curatedCallback,
          })
       );
    }
 
-   return new Widget.Window(
+   return Widget.Window(
       {
          gdkmonitor: gdkmonitor,
          name: name,
          namespace: name,
-         className: className,
+         cssClasses: cssClasses,
          visible: false,
 
          exclusivity: exclusivity,
@@ -149,13 +162,13 @@ export default function (
          keymode: keymode || Astal.Keymode.EXCLUSIVE,
          anchor: anchor,
 
-         onKeyReleaseEvent: (self, event) => {
+         onKeyReleased: (self, event) => {
             if (onKeyReleasedEvent) {
                onKeyReleasedEvent(self, event);
                return;
             }
 
-            if (event.get_keyval()[1] === Gdk.KEY_Escape) {
+            if (event === Gdk.KEY_Escape) {
                self.hide();
             }
          },

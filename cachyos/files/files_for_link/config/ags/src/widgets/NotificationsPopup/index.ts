@@ -1,15 +1,12 @@
-import { Astal, Gdk, Gtk, Widget } from "astal/gtk3";
-import Notifd from "gi://AstalNotifd";
+import { Astal, Gdk, Gtk, Widget } from "astal/gtk4";
 import { NotificationMap } from "./NotificationMap";
 import { bind } from "astal";
-import { noImplicitDestroy } from "astal/_astal";
-import Notification from "../wrappers/Notification";
 
-export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
+export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
    const notificationMap = new NotificationMap();
 
-   const mainBox = new Widget.Box({
-      className: "notifications-popup-content",
+   const mainBox = Widget.Box({
+      cssClasses: ["notifications-popup-content"],
       vertical: true,
       noImplicitDestroy: true,
       children: bind(notificationMap),
@@ -19,11 +16,11 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
       },
    });
 
-   const window = new Widget.Window({
+   const window = Widget.Window({
       gdkmonitor: gdkmonitor,
       name: "astal-notifications-popup",
       namespace: "astal-notifications-popup",
-      className: "notifications-popup",
+      cssClasses: ["notifications-popup"],
       layer: Astal.Layer.OVERLAY,
       anchor: Astal.WindowAnchor.TOP | Astal.WindowAnchor.RIGHT,
       child: mainBox,

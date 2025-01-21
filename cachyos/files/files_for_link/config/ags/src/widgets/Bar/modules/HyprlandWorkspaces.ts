@@ -1,63 +1,79 @@
-import { Widget } from "astal/gtk3";
+import { Astal, hook, Widget } from "astal/gtk4";
 import options from "../../../options";
 import AstalHyprland from "gi://AstalHyprland";
-import { timeout } from "astal";
 
 const hyprland = AstalHyprland.get_default();
 
-export default function (): Widget.Box {
-   return new Widget.Box({
-      className: "hyprland-workspaces",
+export default function (): Astal.Box {
+   return Widget.Box({
+      cssClasses: ["hyprland-workspaces"],
 
       children: options.bar.workspaces.values.map((index) => {
-         return new Widget.Button(
+         return Widget.Button(
+            {
+               setup: (self) => {
+                  function onWorkspaceFocusedChange() {
+                     const workspace = hyprland.focusedWorkspace;
+                     if (!workspace) return;
+
+                     if (
+                        // get_workspace can return null despite what return type idicates
+                        (hyprland.get_workspace(index)?.get_clients().length ||
+                           0) > 0
+                     ) {
+                        self.cssClasses = [...self.cssClasses, "occupied"];
+                     } else {
+                        self.cssClasses = self.cssClasses.filter(
+                           (cssClass) => cssClass !== "occupied"
+                        );
+                     }
+
+                     if (workspace.id === index) {
+                        self.cssClasses = self.cssClasses.filter(
+                           (cssClass) => cssClass !== "urgent"
+                        );
+
+                        self.cssClasses = [...self.cssClasses, "active"];
+                     } else {
+                        self.cssClasses = self.cssClasses.filter(
+                           (cssClass) => cssClass !== "active"
+                        );
+                     }
+                  }
+
+                  onWorkspaceFocusedChange();
+
+                  hook(self, hyprland, "notify::focused-workspace", () => {
+                     onWorkspaceFocusedChange();
+                  });
+
+                  hook(
+                     self,
+                     hyprland,
+                     "urgent",
+
+                     (_, client: AstalHyprland.Client) => {
+                        if (!client) return;
+
+                        if (index === client.get_workspace().get_id()) {
+                           self.cssClasses = [...self.cssClasses, "urgent"];
+                        }
+                     }
+                  );
+               },
+            },
+
+            Widget.Label({
+               label: `${index}`,
+            }),
+
             {
                onClick: async () => {
                   (async () => {
                      hyprland.dispatch("workspace", `${index}`);
                   })();
                },
-
-               setup: (self) => {
-                  function onWorkspaceFocusedChange() {
-                     const workspace = hyprland.focusedWorkspace;
-                     if (!workspace) return;
-
-                     self.toggleClassName("urgent", false);
-
-                     self.toggleClassName(
-                        "occupied",
-                        // get_workspace can return null despite what return type idicates
-                        (hyprland.get_workspace(index)?.get_clients().length ||
-                           0) > 0
-                     );
-
-                     self.toggleClassName("active", index === workspace.id);
-                  }
-
-                  onWorkspaceFocusedChange();
-
-                  self.hook(hyprland, "notify::focused-workspace", () => {
-                     onWorkspaceFocusedChange();
-                  });
-
-                  self.hook(
-                     hyprland,
-                     "urgent",
-
-                     (_, client: AstalHyprland.Client) => {
-                        self.toggleClassName(
-                           "urgent",
-                           index === client.get_workspace().get_id()
-                        );
-                     }
-                  );
-               },
-            },
-
-            new Widget.Label({
-               label: `${index}`,
-            })
+            }
          );
       }),
    });

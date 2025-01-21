@@ -1,22 +1,21 @@
-import { Widget } from "astal/gtk3";
-import { App } from "astal/gtk3";
+import { App, Astal, hook, Widget } from "astal/gtk4";
 import Notifd from "gi://AstalNotifd";
 import { setupAsPanelButton as setupAsPanelButton } from "../../functions";
 import { IconWithLabelFallback } from "../../wrappers/IconWithLabelFallback";
 
 const notifd = Notifd.get_default();
 
-export default function (): Widget.Box {
-   return new Widget.Box({
-      className: "notifications",
+export default function (): Astal.Box {
+   return Widget.Box({
+      cssClasses: ["notifications"],
 
       setup: (self) => {
          function onNotificationsChanged() {
             if (notifd.notifications.length > 0) {
                self.children = [
-                  new Widget.Button(
+                  Widget.Button(
                      {
-                        onClick: () => {
+                        onClicked: () => {
                            App.toggle_window("astal-notifications-overview");
                         },
 
@@ -28,16 +27,16 @@ export default function (): Widget.Box {
                         },
                      },
 
-                     IconWithLabelFallback({ icon: "notification-active" })
+                     IconWithLabelFallback({ iconName: "notification-active" })
                   ),
                ];
 
                self.visible = true;
             } else {
                self.children = [
-                  new Widget.Button(
+                  Widget.Button(
                      {
-                        onClick: () => {
+                        onClicked: () => {
                            App.toggle_window("astal-notifications-overview");
                         },
 
@@ -49,7 +48,7 @@ export default function (): Widget.Box {
                         },
                      },
 
-                     IconWithLabelFallback({ icon: "notifications" })
+                     IconWithLabelFallback({ iconName: "notifications" })
                   ),
                ];
             }
@@ -57,7 +56,7 @@ export default function (): Widget.Box {
 
          onNotificationsChanged();
 
-         self.hook(notifd, "notify::notifications", () =>
+         hook(self, notifd, "notify::notifications", () =>
             onNotificationsChanged()
          );
       },

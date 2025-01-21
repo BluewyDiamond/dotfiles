@@ -1,7 +1,7 @@
-import { Gtk, Widget } from "astal/gtk3";
+import { Astal, Gtk, hook, Widget } from "astal/gtk4";
 import AstalHyprland from "gi://AstalHyprland";
-import { Subscribable } from "astal/binding";
-import { Variable } from "astal";
+import { bind, Subscribable } from "astal/binding";
+import { Variable, writeFile } from "astal";
 import { IconWithLabelFallback } from "../../../wrappers/IconWithLabelFallback";
 import icons from "../../../../icons";
 import Hookable from "../../../../libs/services/Hookable";
@@ -11,32 +11,47 @@ const hyprland = AstalHyprland.get_default();
 function ClientWidget(
    client: AstalHyprland.Client,
    hyprland: AstalHyprland.Hyprland
-): Widget.Button {
-   return new Widget.Button(
+): Gtk.Button {
+   return Widget.Button(
       {
-         onClick: () => {
+         onClicked: () => {
             hyprland.dispatch("focuswindow", `address:0x${client.address}`);
          },
 
          setup: (self) => {
-            function onFocusedClientChanged() {
-               self.toggleClassName(
-                  "active",
-                  hyprland.focusedClient &&
-                     hyprland.focusedClient.address === client.address
-               );
-            }
+            hook(
+               self,
+               hyprland,
+               "urgent",
 
-            onFocusedClientChanged();
+               (_, urgentClient: AstalHyprland.Client) => {
+                  if (!urgentClient) return;
 
-            self.hook(hyprland, "notify::focused-client", () => {
-               onFocusedClientChanged();
+                  if (urgentClient.address === client.address) {
+                     console.log("hi");
+                     self.cssClasses = [...self.cssClasses, "urgent"];
+                  }
+               }
+            );
+
+            hook(self, hyprland, "notify::focused-client", () => {
+               const focusedClient = hyprland.focusedClient;
+               if (!focusedClient) return;
+
+               if (focusedClient.address === client.address) {
+                  self.cssClasses.filter((cssClass) => cssClass !== "urgent");
+                  self.cssClasses = [...self.cssClasses, "active"];
+               } else {
+                  self.cssClasses = self.cssClasses.filter(
+                     (cssClass) => cssClass !== "active"
+                  );
+               }
             });
          },
       },
 
       IconWithLabelFallback({
-         icon: client.class,
+         iconName: client.class,
          fallbackIcon: icons.fallback.executable,
       })
    );
@@ -87,12 +102,12 @@ export class ClientMap extends Hookable implements Subscribable {
    }
 
    private set(key: string, value: Gtk.Widget) {
-      this.map.get(key)?.destroy();
+      //this.map.get(key)?.unparent();
       this.map.set(key, value);
    }
 
    private delete(key: string) {
-      this.map.get(key)?.destroy();
+      //this.map.get(key)?.unparent(); // maybe uneeded
       this.map.delete(key);
    }
 

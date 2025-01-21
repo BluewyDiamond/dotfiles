@@ -1,4 +1,3 @@
-import { Gdk, Widget, Astal, Gtk } from "astal/gtk3";
 import HyprlandWorkspaces from "./modules/HyprlandWorkspaces";
 import Indicators from "./modules/Indicators";
 import HyprlandTaskbar from "./modules/HyprlandTaskbar";
@@ -10,27 +9,31 @@ import Power from "./modules/Power";
 import Battery from "./modules/Battery";
 import Ram from "./modules/Ram";
 import Cpu from "./modules/Cpu";
+import { Astal, Gdk, Gtk, Widget } from "astal/gtk4";
 
-export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
-   return new Widget.Window({
+export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
+   return Widget.Window({
       gdkmonitor: gdkmonitor,
       name: "astal-bar",
       namespace: "astal-bar",
-      className: "bar",
+      cssClasses: ["bar"],
       exclusivity: Astal.Exclusivity.EXCLUSIVE,
+      visible: true,
 
       anchor:
          Astal.WindowAnchor.TOP |
          Astal.WindowAnchor.LEFT |
          Astal.WindowAnchor.RIGHT,
 
-      child: new Widget.CenterBox({
-         startWidget: new Widget.Box({
+      child: Widget.CenterBox({
+         cssClasses: ["container"],
+
+         startWidget: Widget.Box({
             hexpand: true,
             halign: Gtk.Align.START,
 
             children: [
-               new Widget.Box({
+               Widget.Box({
                   children: [
                      AppLauncher(),
                      HyprlandWorkspaces(),
@@ -40,15 +43,15 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
             ],
          }),
 
-         centerWidget: new Widget.CenterBox({
+         centerWidget: Widget.CenterBox({
             halign: Gtk.Align.CENTER,
 
-            centerWidget: new Widget.Box({
+            centerWidget: Widget.Box({
                children: [Notifications(), Datetime()],
             }),
          }),
 
-         endWidget: new Widget.Box({
+         endWidget: Widget.Box({
             hexpand: true,
             halign: Gtk.Align.END,
 

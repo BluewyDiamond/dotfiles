@@ -1,6 +1,6 @@
 import { execAsync, timeout, Variable } from "astal";
 import { bind } from "astal/binding";
-import { App, Astal, Gdk, Widget } from "astal/gtk3";
+import { App, Astal, Gdk, Gtk, Widget } from "astal/gtk4";
 import AppMap from "./AppMap";
 import Apps from "gi://AstalApps";
 import PopupWindow, { LayoutPosition } from "../wrappers/PopupWindow";
@@ -9,31 +9,35 @@ function hide() {
    App.get_window("astal-app-launcher")?.hide();
 }
 
-export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
+export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
    const appMap = new AppMap();
-   const selectedIndex = Variable(0);
+   const selectedIndex: Variable<number | undefined> = Variable(undefined);
 
-   const entry = new Widget.Entry({
+   const entry = Widget.Entry({
       placeholderText: "Search",
-      text: bind(appMap.searchQuery),
+      text: appMap.searchQuery.get(),
       onChanged: (self) => appMap.searchQuery.set(self.text),
 
-      onActivate: () => {
+      onActivate: (self) => {
          const currentSearchQuery = appMap.searchQuery.get();
 
          if (currentSearchQuery.startsWith(":sh")) {
             execAsync(["fish", "-c", `${currentSearchQuery.slice(3)}`.trim()]);
          } else {
-            appMap.launchApp(selectedIndex.get());
+            const selectedIndexValue = selectedIndex.get();
+            if (!selectedIndexValue) return;
+            appMap.launchApp(selectedIndexValue);
          }
 
          hide();
          appMap.searchQuery.set("");
+         self.text = "";
+         selectedIndex.set(undefined);
       },
    });
 
-   const appsBox = new Widget.Box({
-      className: "apps-container",
+   const appsBox = Widget.Box({
+      cssClasses: ["apps-container"],
       vertical: true,
 
       onDestroy: () => {
@@ -41,21 +45,21 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
       },
    });
 
-   const shBox = new Widget.Box({
-      children: [new Widget.Label({ label: "shbox mode! :3" })],
+   const shBox = Widget.Box({
+      children: [Widget.Label({ label: "shbox mode! :3" })],
    });
 
-   const emptyBox = new Widget.Box({
-      children: [new Widget.Label({ label: "empty..." })],
+   const emptyBox = Widget.Box({
+      children: [Widget.Label({ label: "empty..." })],
    });
 
    // to avoid problems with entry
-   const hotswapBox = new Widget.Box({
-      className: "hotswap-box",
+   const hotswapBox = Widget.Box({
+      cssClasses: ["hotswap-box"],
    });
 
-   const mainBox = new Widget.Box({
-      className: "main-box",
+   const mainBox = Widget.Box({
+      cssClasses: ["main-box"],
       vertical: true,
       hexpand: false,
       children: [entry, hotswapBox],
@@ -65,19 +69,24 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
       {
          gdkmonitor: gdkmonitor,
          name: "astal-app-launcher",
-         className: "app-launcher",
+         cssClasses: ["app-launcher"],
          exclusivity: Astal.Exclusivity.IGNORE,
          layer: Astal.Layer.OVERLAY,
          position: LayoutPosition.TOP_CENTER,
 
          onKeyReleasedEvent: (self, event) => {
-            if (event.get_keyval()[1] === Gdk.KEY_Escape) {
+            if (event === Gdk.KEY_Escape) {
                self.hide();
                appMap.searchQuery.set("");
+               entry.text = "";
+               selectedIndex.set(undefined);
             }
 
-            if (event.get_keyval()[1] === Gdk.KEY_Up) {
-               const selectedIndexValue = selectedIndex.get();
+            if (event === Gdk.KEY_Up) {
+               const maxLength = appMap.length();
+               let selectedIndexValue = selectedIndex.get();
+               if (selectedIndexValue === undefined)
+                  selectedIndexValue = maxLength - 1;
 
                if (selectedIndexValue > 0) {
                   selectedIndex.set(selectedIndexValue - 1);
@@ -86,9 +95,10 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
                }
             }
 
-            if (event.get_keyval()[1] === Gdk.KEY_Down) {
-               const selectedIndexValue = selectedIndex.get();
+            if (event === Gdk.KEY_Down) {
                const maxLength = appMap.length();
+               let selectedIndexValue = selectedIndex.get();
+               if (selectedIndexValue === undefined) selectedIndexValue = -1;
 
                if (selectedIndexValue < maxLength - 1) {
                   selectedIndex.set(selectedIndexValue + 1);
@@ -120,18 +130,8 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
          const appWidgets = appMap.get();
          appsBox.children = appWidgets;
 
-         appsBox.children.forEach((widget) => {
-            if (widget instanceof Widget.Button) {
-               widget.vfunc_leave();
-            }
-         });
-
          if (hotswapBox.children[0] !== appsBox) {
             hotswapBox.children = [appsBox];
-
-            timeout(1, () => {
-               appsBox.queue_resize();
-            });
          } else {
             hotswapBox.children = [appsBox];
          }

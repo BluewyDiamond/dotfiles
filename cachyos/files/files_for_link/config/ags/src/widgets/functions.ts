@@ -1,19 +1,19 @@
-import { App, Gtk, Widget } from "astal/gtk3";
+import { App, Astal, Gtk, hook } from "astal/gtk4";
 
-export function setupAsPanelButton(button: Widget.Button, windowName: string) {
+export function setupAsPanelButton(button: Gtk.Button, windowName: string) {
    let open = false;
 
-   button.hook(App, "window-toggled", (_, window: Gtk.Window) => {
+   hook(button, App, "window-toggled", (_, window: Gtk.Window) => {
       if (window.name !== windowName) return;
 
       if (open && !window.visible) {
          open = false;
-         button.toggleClassName("active", false);
+         //button.toggleClassName("active", false);
       }
 
       if (window.visible) {
          open = true;
-         button.toggleClassName("active", true);
+         //button.toggleClassName("active", true);
       }
    });
 }

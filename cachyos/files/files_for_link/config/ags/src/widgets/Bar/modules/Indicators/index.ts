@@ -1,13 +1,13 @@
-import { Gtk, Widget } from "astal/gtk3";
+import { Astal, Gtk, Widget } from "astal/gtk4";
 import { IndicatorMap } from "./IndicatorMap";
 
-export default function (): Widget.Button {
+export default function (): Astal.Button {
    const indicatorsMap = new IndicatorMap();
 
-   return new Widget.Button({
-      className: "indicators",
+   return Widget.Button({
+      cssClasses: ["indicators"],
 
-      child: new Widget.Box({
+      child:  Widget.Box({
          setup: (self) => {
             function onIndicatorsChanged(list: Gtk.Widget[]) {
                if (list.length > 0) {

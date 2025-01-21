@@ -1,21 +1,25 @@
-import { App, Widget } from "astal/gtk3";
+import { App, Astal, Widget } from "astal/gtk4";
 import Bar from "./widgets/Bar";
 import { getCss } from "./utils/style";
+import AppLauncher from "./widgets/AppLauncher";
 import NotificationsOverview from "./widgets/NotificationsOverview";
 import NotificationsPopup from "./widgets/NotificationsPopup";
-import AppLauncher from "./widgets/AppLauncher";
 import PowerMenu from "./widgets/PowerMenu";
+//import NotificationsOverview from "./widgets/NotificationsOverview";
+//import NotificationsPopup from "./widgets/NotificationsPopup";
+//import AppLauncher from "./widgets/AppLauncher";
+//import PowerMenu from "./widgets/PowerMenu";
 
 App.start({
    css: getCss(),
    instanceName: "main",
 
    main() {
-      let bar: Widget.Window | undefined;
-      let notificationsOverview: Widget.Window | undefined;
-      let notificationsPopup: Widget.Window | undefined;
-      let appLauncher: Widget.Window | undefined;
-      let powerMenu: Widget.Window | undefined;
+      let bar: Astal.Window | undefined;
+      let notificationsOverview: Astal.Window | undefined;
+      let notificationsPopup: Astal.Window | undefined;
+      let appLauncher: Astal.Window | undefined;
+      let powerMenu: Astal.Window | undefined;
 
       function onMonitorsChanged() {
          bar?.destroy();
@@ -26,9 +30,9 @@ App.start({
 
          bar = undefined;
          notificationsOverview = undefined;
-         notificationsPopup = undefined;
+         //notificationsPopup = undefined;
          appLauncher = undefined;
-         powerMenu = undefined;
+         //powerMenu = undefined;
 
          const monitors = App.get_monitors();
 

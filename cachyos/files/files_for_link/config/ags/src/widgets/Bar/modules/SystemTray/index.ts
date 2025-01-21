@@ -1,13 +1,13 @@
-import { Gtk, Widget } from "astal/gtk3";
+import { Astal, Gtk, Widget } from "astal/gtk4";
 import { TrayItemMap2 as TrayItemMap } from "./TrayItemMap";
 
 // TODO: maybe fallback gicon?
 
-export default function (): Widget.Box {
+export default function (): Astal.Box {
    const trayItemMap = new TrayItemMap();
 
-   return new Widget.Box({
-      className: "system-tray",
+   return Widget.Box({
+      cssClasses: ["system-tray"],
 
       setup: (self) => {
          onTrayItemsChanged(trayItemMap.get());

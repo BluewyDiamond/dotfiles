@@ -1,8 +1,7 @@
 import { bind, interval, Variable } from "astal";
-import { Widget } from "astal/gtk3";
+import { Astal, Widget } from "astal/gtk4";
 import { CpuStats, getCpuStats } from "../../../utils";
 import { IconWithLabelFallback } from "../../wrappers/IconWithLabelFallback";
-import icons from "../../../icons";
 
 const INTERVAL = 2000;
 let last: CpuStats | null = null;
@@ -22,17 +21,17 @@ interval(INTERVAL, async () => {
    last = now;
 });
 
-export default function (): Widget.Button {
-   return new Widget.Button(
+export default function (): Astal.Button {
+   return Widget.Button(
       {
-         className: "cpu",
+         cssClasses: ["cpu"],
       },
 
-      new Widget.Box({
+      Widget.Box({
          children: [
-            IconWithLabelFallback({ icon: "", fallbackLabel: "CPU " }),
+            IconWithLabelFallback({ iconName: "", fallbackLabel: "CPU " }),
 
-            new Widget.Label({
+            Widget.Label({
                label: bind(cpuUsage).as((cpuUsage) => {
                   if (!cpuUsage) {
                      return "?";

@@ -1,4 +1,4 @@
-import { App, Astal, Gdk, Widget } from "astal/gtk3";
+import { App, Astal, Gdk, Gtk, Widget } from "astal/gtk4";
 import { IconWithLabelFallback } from "../wrappers/IconWithLabelFallback";
 import icons from "../../icons";
 import Variable from "astal/variable";
@@ -9,13 +9,29 @@ function hide() {
    App.get_window("astal-power-menu")?.hide();
 }
 
-function powerButtonSetup(self: Widget.Button, clickCount: Variable<number>) {
+function powerButtonSetup(self: Gtk.Button, clickCount: Variable<number>) {
    let countingDown = false;
 
    clickCount.subscribe((count) => {
-      self.toggleClassName("one", count === 1);
-      self.toggleClassName("two", count === 2);
-      self.toggleClassName("three", count === 3);
+      if (count === 1) {
+         self.cssClasses = [...self.cssClasses, "one"];
+
+         self.cssClasses = self.cssClasses.filter(
+            (cssClass) => cssClass !== "two" && cssClass !== "three"
+         );
+      } else if (count === 2) {
+         self.cssClasses = [...self.cssClasses, "two"];
+
+         self.cssClasses = self.cssClasses.filter(
+            (cssClass) => cssClass !== "one" && cssClass !== "three"
+         );
+      } else if (count === 3) {
+         self.cssClasses = [...self.cssClasses, "three"];
+
+         self.cssClasses = self.cssClasses.filter(
+            (cssClass) => cssClass !== "one" && cssClass !== "two"
+         );
+      }
 
       if (clickCount.get() === 0) {
          return;
@@ -51,7 +67,7 @@ function onPowerButtonClicked(
    onConditionsMet();
 }
 
-export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
+export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
    const sleepClickCount = Variable(0);
    const rebootClickCount = Variable(0);
    const poweroffClickCount = Variable(0);
@@ -60,17 +76,17 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
       {
          gdkmonitor: gdkmonitor,
          name: "astal-power-menu",
-         className: "power-menu",
+         cssClasses: ["power-menu"],
          position: LayoutPosition.CENTER,
       },
 
-      new Widget.Box({
-         className: "power-menu-content",
+      Widget.Box({
+         cssClasses: ["power-menu-content"],
 
          children: [
-            new Widget.Button(
+            Widget.Button(
                {
-                  onClick: () => {
+                  onClicked: () => {
                      onPowerButtonClicked(sleepClickCount, () => {
                         execAsync(["fish", "-c", "systemctl suspend"]);
                      });
@@ -82,13 +98,13 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
                },
 
                IconWithLabelFallback({
-                  icon: icons.powermenu.sleep,
+                  iconName: icons.powermenu.sleep,
                })
             ),
 
-            new Widget.Button(
+            Widget.Button(
                {
-                  onClick: () => {
+                  onClicked: () => {
                      onPowerButtonClicked(rebootClickCount, () => {
                         execAsync(["fish", "-c", "systemctl poweroff"]);
                      });
@@ -100,13 +116,13 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
                },
 
                IconWithLabelFallback({
-                  icon: icons.powermenu.reboot,
+                  iconName: icons.powermenu.reboot,
                })
             ),
 
-            new Widget.Button(
+            Widget.Button(
                {
-                  onClick: () => {
+                  onClicked: () => {
                      onPowerButtonClicked(poweroffClickCount, () => {
                         execAsync(["fish", "-c", "systemctl poweroff"]);
                      });
@@ -118,7 +134,7 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
                },
 
                IconWithLabelFallback({
-                  icon: icons.powermenu.shutdown,
+                  iconName: icons.powermenu.shutdown,
                })
             ),
          ],

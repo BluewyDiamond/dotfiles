@@ -1,16 +1,19 @@
 import { substitutes } from "../icons";
-import { Astal } from "astal/gtk3";
 import GLib from "gi://GLib";
 import Apps from "gi://AstalApps";
 import { readFileAsync } from "astal";
+import { Gtk } from "astal/gtk4";
+
+const gtkIconTheme = new Gtk.IconTheme();
 
 export function isValidIcon(icon: string): boolean {
-   return (
-         GLib.file_test(icon, GLib.FileTest.EXISTS) ||
-            Astal.Icon.lookup_icon(icon)
-      ) ?
-         true
-      :  false;
+   if (GLib.file_test(icon, GLib.FileTest.EXISTS)) {
+      return true;
+   } else if (gtkIconTheme.has_icon(icon)) {
+      return true;
+   } else {
+      return false;
+   }
 }
 
 export function hasIconInApps(icon: string, app: Apps.Application): boolean {
@@ -62,15 +65,21 @@ export function findIcon(icon: string): string {
       return icon;
    }
 
+   if (isValidIcon(icon + "-symbolic")) {
+      return icon + "-symbolic";
+   }
+
    const apps = new Apps.Apps();
    const foundedApp = apps.list.find((app) => hasIconInApps(icon, app));
 
-   if (foundedApp && isValidIcon(foundedApp?.iconName)) {
-      return foundedApp.iconName;
-   }
+   if (foundedApp) {
+      if (isValidIcon(foundedApp.iconName)) {
+         return foundedApp.iconName;
+      }
 
-   if (isValidIcon(icon + "-symbolic")) {
-      return icon + "-symbolic";
+      if (isValidIcon(foundedApp + "symbolic")) {
+         return foundedApp + "symbolic";
+      }
    }
 
    const substitute = substitutes[icon];
@@ -81,6 +90,10 @@ export function findIcon(icon: string): string {
 
    if (isValidIcon(substitute)) {
       return substitute;
+   }
+
+   if (isValidIcon(substitute + "symbolic")) {
+      return substitute + "symbolic";
    }
 
    return "";

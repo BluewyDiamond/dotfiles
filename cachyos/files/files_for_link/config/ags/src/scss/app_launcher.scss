@@ -40,8 +40,11 @@
 
                & > box {
                   & > .icon-with-label-fallback {
-                     & > icon,
-                     label {
+                     & > image {
+                        -gtk-icon-size: 55px;
+                     }
+
+                     & > label {
                         font-size: 55px;
                         min-width: 55px;
                      }

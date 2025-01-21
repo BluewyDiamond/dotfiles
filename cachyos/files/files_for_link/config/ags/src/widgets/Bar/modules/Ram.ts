@@ -1,28 +1,27 @@
 import { bind, interval, Variable } from "astal";
-import { Widget } from "astal/gtk3";
+import { Astal, Gtk, Widget } from "astal/gtk4";
 import { getMemoryStats, MemoryStats } from "../../../utils";
 import { IconWithLabelFallback } from "../../wrappers/IconWithLabelFallback";
-import icons from "../../../icons";
 
 const INTERVAL = 2000;
 const memoryStats: Variable<MemoryStats | null> = Variable(null);
 interval(INTERVAL, async () => memoryStats.set(await getMemoryStats()));
 
-export default function (): Widget.Button {
-   return new Widget.Button(
+export default function (): Gtk.Button {
+   return Widget.Button(
       {
-         className: "_ram",
+         cssClasses: ["_ram"],
       },
 
-      new Widget.Box(
+      Widget.Box(
          {},
 
          IconWithLabelFallback({
-            icon: "",
+            iconName: "",
             fallbackLabel: "RAM ",
          }),
 
-         new Widget.Label({
+         Widget.Label({
             label: bind(memoryStats).as((memoryStats) => {
                if (!memoryStats) {
                   return "?";

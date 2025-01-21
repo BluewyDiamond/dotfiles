@@ -1,14 +1,14 @@
-import { Gtk, Widget } from "astal/gtk3";
+import { Astal, Gtk, Widget } from "astal/gtk4";
 import { ClientMap } from "./ClientMap";
 
-export default function (): Widget.Box {
+export default function (): Astal.Box {
    // looks like the same widget can't be shared
    // in different boxes or other widgets
    // so each new instance needs their own instance of clientMap
    const clientMap = new ClientMap();
 
-   return new Widget.Box({
-      className: "hyprland-taskbar",
+   return Widget.Box({
+      cssClasses: ["hyprland-taskbar"],
 
       setup: (self) => {
          function onClientsChanged(list: Gtk.Widget[]) {

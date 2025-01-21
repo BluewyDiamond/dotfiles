@@ -1,7 +1,7 @@
 import { Subscribable } from "astal/binding";
 import { Variable } from "astal";
 import Apps from "gi://AstalApps";
-import { Gtk, Widget } from "astal/gtk3";
+import { Gtk, hook, Widget } from "astal/gtk4";
 import options from "../../options";
 import { IconWithLabelFallback } from "../wrappers/IconWithLabelFallback";
 import Pango from "gi://Pango";
@@ -10,13 +10,13 @@ const apps = new Apps.Apps();
 
 function AppWidget(
    app: Apps.Application,
-   selectedIndex: Variable<number>,
-   indexInList: Variable<number>,
-   onClicked: (self: Widget.Button) => void
-): Widget.Button {
+   selectedIndex: Variable<number | undefined>,
+   indexInList: Variable<number | undefined>,
+   onClicked: (self: Gtk.Button) => void
+): Gtk.Button {
    let variable: Variable<void>;
 
-   return new Widget.Button(
+   return Widget.Button(
       {
          hexpand: true,
 
@@ -25,33 +25,38 @@ function AppWidget(
          // alternatives: refactor AppWidget to where entry.grab_focus() can be called
          canFocus: false,
 
-         onClick: (self) => onClicked(self),
+         onClicked: (self) => onClicked(self),
 
          setup: (self) => {
             variable = Variable.derive(
                [selectedIndex, indexInList],
 
                (selectedIndex, indexInList) => {
-                  self.toggleClassName(
-                     "selected",
+                  if (
+                     typeof selectedIndex === "number" &&
+                     typeof indexInList === "number" &&
                      selectedIndex === indexInList
-                  );
+                  ) {
+                     self.cssClasses = [...self.cssClasses, "selected"];
+                  } else {
+                     self.cssClasses = self.cssClasses.filter(
+                        (cssClass) => cssClass !== "selected"
+                     );
+                  }
                }
             );
          },
 
-         onDestroy: () => {
-            variable.drop();
-         },
+         onDestroy: () => variable.drop(),
       },
 
-      new Widget.Box({
+      Widget.Box({
          children: [
             IconWithLabelFallback({
-               icon: app.iconName,
+               iconName: app.iconName,
             }),
 
-            new Widget.Box({
+            Widget.Box({
                valign: Gtk.Align.CENTER,
                vertical: true,
 
@@ -62,19 +67,19 @@ function AppWidget(
                   const children = [];
 
                   children.push(
-                     new Widget.Label({
-                        className: "name",
+                     Widget.Label({
+                        cssClasses: ["name"],
                         halign: Gtk.Align.START,
                         xalign: 0,
-                        truncate: true,
+                        ellipsize: Pango.EllipsizeMode.END,
                         label: app.name || "unknown",
                      })
                   );
 
                   if (app.description) {
                      children.push(
-                        new Widget.Label({
-                           className: "description",
+                        Widget.Label({
+                           cssClasses: ["description"],
                            halign: Gtk.Align.START,
                            xalign: 0,
                            wrap: true,
@@ -94,12 +99,12 @@ function AppWidget(
 
 class AppWithIndex {
    widget: Gtk.Widget;
-   indexInlist = Variable(-1);
+   indexInlist: Variable<number | undefined> = Variable(undefined);
 
    constructor(
       app: Apps.Application,
-      selectedIndex: Variable<number>,
-      onClicked: (self: Widget.Button, app: Apps.Application) => void
+      selectedIndex: Variable<number | undefined>,
+      onClicked: (self: Gtk.Button, app: Apps.Application) => void
    ) {
       this.widget = AppWidget(app, selectedIndex, this.indexInlist, (self) =>
          onClicked(self, app)
@@ -137,8 +142,8 @@ export default class AppMap implements Subscribable {
    }
 
    update(
-      selectedIndex: Variable<number>,
-      onClicked: (self: Widget.Button, app: Apps.Application) => void
+      selectedIndex: Variable<number | undefined>,
+      onClicked: (self: Gtk.Button, app: Apps.Application) => void
    ) {
       const searchQuery = this.searchQuery.get();
 
@@ -174,7 +179,7 @@ export default class AppMap implements Subscribable {
          index++;
       }
 
-      selectedIndex.set(0);
+      selectedIndex.set(undefined);
       this.var.set(orderedList);
    }
 
@@ -192,14 +197,14 @@ export default class AppMap implements Subscribable {
 
    private set(key: Apps.Application, value: AppWithIndex) {
       const x = this.map.get(key);
-      x?.widget.destroy();
+      //x?.widget.destroy();
       x?.destroy();
       this.map.set(key, value);
    }
 
    private delete(key: Apps.Application) {
       const x = this.map.get(key);
-      x?.widget.destroy();
+      //x?.widget.destroy();
       x?.destroy();
       this.map.delete(key);
    }

@@ -1,14 +1,14 @@
-import { App, Widget } from "astal/gtk3";
+import { App, Astal, Widget } from "astal/gtk4";
 import { IconWithLabelFallback } from "../../wrappers/IconWithLabelFallback";
 import icons from "../../../icons";
 import { setupAsPanelButton } from "../../functions";
 
-export default (): Widget.Button => {
-   return new Widget.Button(
+export default (): Astal.Button => {
+   return Widget.Button(
       {
-         className: "power",
+         cssClasses: ["power"],
 
-         onClick: () => {
+         onClicked: () => {
             App.toggle_window("astal-power-menu");
          },
 
@@ -16,6 +16,7 @@ export default (): Widget.Button => {
             setupAsPanelButton(self, "astal-power-menu");
          },
       },
-      IconWithLabelFallback({ icon: icons.powermenu.shutdown })
+
+      IconWithLabelFallback({ iconName: icons.powermenu.shutdown })
    );
 };

@@ -1,6 +1,6 @@
 import { timeout, Variable } from "astal";
 import { Subscribable } from "astal/binding";
-import { Gtk } from "astal/gtk3";
+import { Gtk } from "astal/gtk4";
 import Notifd from "gi://AstalNotifd";
 import Notification from "../wrappers/Notification";
 import options from "../../options";
@@ -82,13 +82,13 @@ export class NotificationMap extends Hookable implements Subscribable {
    }
 
    private set(key: number, value: Gtk.Widget) {
-      this.map.get(key)?.destroy();
+      //this.map.get(key)?.destroy();
       this.map.set(key, value);
       this.notify();
    }
 
    private delete(key: number) {
-      this.map.get(key)?.destroy();
+      //this.map.get(key)?.destroy();
       this.map.delete(key);
       this.notify();
    }

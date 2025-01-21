@@ -1,20 +1,17 @@
 import Hookable from "../../../../libs/services/Hookable";
 import { Variable } from "astal";
 import { Subscribable } from "astal/binding";
-import { Gtk, Widget } from "astal/gtk3";
+import { Astal, Gtk, hook, Widget } from "astal/gtk4";
 import Tray from "gi://AstalTray";
 
 const tray = Tray.get_default();
 
-function TrayItemButton(item: Tray.TrayItem): Widget.MenuButton {
-   return new Widget.MenuButton(
+function TrayItemButton(item: Tray.TrayItem): Gtk.MenuButton {
+   return Widget.MenuButton(
       {
-         className: "tray-item",
-
          setup: (self) => {
             function onItemChanged(item: Tray.TrayItem) {
                self.tooltipMarkup = item.tooltipMarkup;
-               self.usePopover = false;
                // @ts-ignore
                self.actionGroup = ["dbusmenu", item.actionGroup];
                self.menuModel = item.menuModel;
@@ -22,25 +19,27 @@ function TrayItemButton(item: Tray.TrayItem): Widget.MenuButton {
 
             onItemChanged(item);
 
-            self.hook(item, "changed", () => {
+            hook(self, item, "changed", () => {
                onItemChanged(tray.get_item(item.get_item_id()));
             });
 
-            self.connect("toggled", () => {
+            hook(self, self, "activate", () => {
                if (self.active) {
-                  self.toggleClassName("active", true);
+                  self.cssClasses = [...self.cssClasses, "active"];
                } else {
-                  self.toggleClassName("active", false);
+                  self.cssClasses = self.cssClasses.filter(
+                     (className) => className !== "active"
+                  );
                }
             });
          },
       },
 
-      new Widget.Icon({
+      Widget.Image({
          gicon: item.gicon,
 
          setup: (self) => {
-            self.hook(item, "changed", () => {
+            hook(self, item, "changed", () => {
                const changedItem = tray.get_item(item.get_item_id());
                self.gicon = changedItem.gicon;
             });
@@ -84,13 +83,13 @@ export class TrayItemMap2 extends Hookable implements Subscribable {
    }
 
    private set(key: string, value: Gtk.Widget) {
-      this.map.get(key)?.destroy();
+      //this.map.get(key)?.destroy();
       this.map.set(key, value);
       this.notify();
    }
 
    private delete(key: string) {
-      this.map.get(key)?.destroy();
+      //this.map.get(key)?.destroy();
       this.map.delete(key);
       this.notify();
    }

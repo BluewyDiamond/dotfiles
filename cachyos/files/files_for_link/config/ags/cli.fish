@@ -16,7 +16,7 @@ if not test -d $parent
 end
 
 function run
-    GTK_VERSION=3 gjs -m $build_dir/main.js & disown && exit
+    LD_PRELOAD=/usr/lib/libgtk4-layer-shell.so gjs -m $build_dir/main.js & disown && exit
 end
 
 function build
@@ -41,7 +41,7 @@ function types
 
     ln -s $astal_gjs_dir node_modules/astal
 
-    npx -y $ts_for_gir generate \* --ignore Gtk4 --ignore Astal4 --ignoreVersionConflicts --outdir "./@girs" \
+    npx -y $ts_for_gir generate \* --ignore Gtk3 --ignore Astal3 --ignoreVersionConflicts --outdir "./@girs" \
         -g $gir_dir
 end
 

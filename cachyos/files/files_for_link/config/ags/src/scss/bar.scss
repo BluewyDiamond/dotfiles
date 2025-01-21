@@ -3,15 +3,17 @@ $space_between_bar_modules: 7.2px;
 .bar {
    background: $color_background;
 
-   > centerbox {
+   .container {
       padding: 8px;
    }
 
    .icon-with-label-fallback {
-      & > icon {
-         // line height not available in gtk3
-         // migrate to gtk4 for a more complete experience
-         font-size: 24px;
+      & > image {
+         -gtk-icon-size: 24px;
+      }
+
+      & > label {
+         line-height: 1;
       }
    }
 }
@@ -65,6 +67,10 @@ $space_between_bar_modules: 7.2px;
          background: transparentize($color_primary, 0.5);
       }
    }
+
+   & .urgent {
+      background: $color_alert;
+   }
 }
 
 .notifications {
@@ -83,12 +89,12 @@ $space_between_bar_modules: 7.2px;
 .system-tray {
    margin-left: 7.2px;
 
-   .tray-item {
+   & > menubutton {
       @include bar-module();
       margin-left: $space_between_bar_modules;
 
-      & > icon {
-         font-size: 24px;
+      image {
+         -gtk-icon-size: 24px;
       }
 
       &:hover {
@@ -96,21 +102,17 @@ $space_between_bar_modules: 7.2px;
       }
    }
 
-   menu {
+   popover {
       background: $color_background;
       border: 2px solid $color_border;
       border-radius: $border_radius;
       padding: 10px;
 
-      menuitem {
+      modelbutton {
          margin-bottom: 7.2px;
          background: $color_surface;
          border-radius: $border_radius;
          padding: 4px;
-
-         &:last-child {
-            margin-bottom: 0;
-         }
 
          &:hover {
             background: transparentize($color_primary, 0.5);
@@ -139,8 +141,7 @@ $space_between_bar_modules: 7.2px;
    margin-left: $space_between_bar_modules;
 
    & > box {
-      & > icon,
-      & > label {
+      & > .icon-with-label-fallback {
          margin-left: 4px;
 
          &:first-child {

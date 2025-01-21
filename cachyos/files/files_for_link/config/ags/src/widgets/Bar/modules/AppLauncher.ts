@@ -1,14 +1,14 @@
-import { App, Widget } from "astal/gtk3";
+import { App, Astal, Gtk, Widget } from "astal/gtk4";
 import { setupAsPanelButton } from "../../functions";
 import { IconWithLabelFallback } from "../../wrappers/IconWithLabelFallback";
 import { GLib } from "astal";
 
-export default function (): Widget.Button {
-   return new Widget.Button(
+export default function (): Gtk.Button {
+   return Widget.Button(
       {
-         className: "app-launcher-b",
+         cssClasses: ["app-launcher-b"],
 
-         onClick: () => {
+         onClicked: () => {
             App.toggle_window("astal-app-launcher");
          },
 
@@ -17,6 +17,6 @@ export default function (): Widget.Button {
          },
       },
 
-      IconWithLabelFallback({ icon: GLib.get_os_info("LOGO") || "" })
+      IconWithLabelFallback({ iconName: GLib.get_os_info("LOGO") || "" })
    );
 }
