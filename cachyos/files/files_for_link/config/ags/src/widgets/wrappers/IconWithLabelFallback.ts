@@ -10,7 +10,7 @@ type IconWithLabelFallbackProps = {
 
 export function IconWithLabelFallback(
    props: IconWithLabelFallbackProps
-): Widget.Icon | Widget.Label {
+): Widget.Box {
    const { className, icon, fallbackIcon, fallbackLabel } = props;
 
    let foundedIcon = findIcon(icon);
@@ -23,15 +23,24 @@ export function IconWithLabelFallback(
       return ["icon-with-label-fallback", className].filter(Boolean).join(" ");
    }
 
+   // wrapper for easier css styling
+   const box = new Widget.Box({
+      className: setupClassName(),
+   });
+
    if (foundedIcon === "") {
-      return new Widget.Label({
-         className: setupClassName(),
-         label: fallbackLabel || "?",
-      });
+      box.children = [
+         new Widget.Label({
+            label: fallbackLabel || "?",
+         }),
+      ];
    } else {
-      return new Widget.Icon({
-         className: setupClassName(),
-         icon: foundedIcon,
-      });
+      box.children = [
+         new Widget.Icon({
+            icon: foundedIcon,
+         }),
+      ];
    }
+
+   return box;
 }

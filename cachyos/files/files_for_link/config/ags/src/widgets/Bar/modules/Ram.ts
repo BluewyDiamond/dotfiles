@@ -16,6 +16,7 @@ export default function (): Widget.Button {
 
       new Widget.Box(
          {},
+
          IconWithLabelFallback({
             icon: "",
             fallbackLabel: "RAM ",

@@ -40,14 +40,18 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
             ],
          }),
 
-         centerWidget: new Widget.Box({
+         centerWidget: new Widget.CenterBox({
             halign: Gtk.Align.CENTER,
-            children: [Notifications(), Datetime()],
+
+            centerWidget: new Widget.Box({
+               children: [Notifications(), Datetime()],
+            }),
          }),
 
          endWidget: new Widget.Box({
             hexpand: true,
             halign: Gtk.Align.END,
+
             children: [
                SystemTray(),
                Indicators(),

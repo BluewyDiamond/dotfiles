@@ -1,24 +1,16 @@
 $space_between_bar_modules: 7.2px;
 
-@keyframes ripple {
-   0% {
-      opacity: 0;
-   }
-
-   100% {
-      opacity: 1;
-   }
-}
-
-icon {
-   font-size: 22px;
-}
-
 .bar {
    background: $color_background;
 
    > centerbox {
       padding: 8px;
+   }
+
+   .icon-with-label-fallback {
+      & > icon {
+         font-size: 22px;
+      }
    }
 }
 
