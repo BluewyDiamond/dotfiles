@@ -1,4 +1,4 @@
-import { Widget } from "astal/gtk3";
+import { Gtk, Widget } from "astal/gtk3";
 import { findIcon } from "../../utils";
 
 type IconWithLabelFallbackProps = {

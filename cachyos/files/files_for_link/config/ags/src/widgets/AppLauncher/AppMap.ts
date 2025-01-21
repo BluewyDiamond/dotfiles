@@ -30,6 +30,7 @@ function AppWidget(
          setup: (self) => {
             variable = Variable.derive(
                [selectedIndex, indexInList],
+
                (selectedIndex, indexInList) => {
                   self.toggleClassName(
                      "selected",

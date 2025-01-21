@@ -40,9 +40,12 @@
 
                & > box {
                   & > .icon-with-label-fallback {
-                     font-size: 55px;
-                     min-width: 55px;
-                     min-height: 55px;
+                     & > icon,
+                     label {
+                        font-size: 55px;
+                        min-width: 55px;
+                     }
+
                      margin-right: 8px;
                   }
 
