@@ -1,5 +1,6 @@
 export default {
    missing: "image-missing-symbolic",
+   broken: "package-broken",
 
    app: {
       terminal: "terminal-symbolic",
@@ -28,7 +29,6 @@ export default {
       toolbars: "toolbars-symbolic",
       warning: "dialog-warning-symbolic",
       avatar: "avatar-default-symbolic",
-      broken: "package-broken",
 
       arrow: {
          right: "pan-end-symbolic",
