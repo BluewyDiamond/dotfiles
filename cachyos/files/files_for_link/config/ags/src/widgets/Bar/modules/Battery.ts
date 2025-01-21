@@ -1,6 +1,6 @@
 import { Widget } from "astal/gtk3";
 import { IconWithLabelFallback } from "../../wrappers/IconWithLabelFallback";
-import icons from "../../../libs/icons";
+import icons from "../../../icons";
 import { bind } from "astal/binding";
 import Battery from "gi://AstalBattery";
 

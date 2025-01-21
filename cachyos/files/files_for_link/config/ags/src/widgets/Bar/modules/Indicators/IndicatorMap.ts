@@ -2,11 +2,11 @@ import { Gtk } from "astal/gtk3";
 import { bind, Subscribable } from "astal/binding";
 import { Variable } from "astal";
 import PowerProfiles from "gi://AstalPowerProfiles";
-import icons from "../../../../libs/icons";
+import icons from "../../../../icons";
 import { findIcon } from "../../../../utils";
 import Wp from "gi://AstalWp";
 import { IconWithLabelFallback } from "../../../wrappers/IconWithLabelFallback";
-import Hookable from "../../../../libs/Hookable";
+import Hookable from "../../../../libs/services/Hookable";
 
 const powerProfiles = PowerProfiles.get_default();
 const wp = Wp.get_default();

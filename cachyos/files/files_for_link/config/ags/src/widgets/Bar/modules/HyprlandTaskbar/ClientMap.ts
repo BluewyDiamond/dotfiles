@@ -3,8 +3,8 @@ import AstalHyprland from "gi://AstalHyprland";
 import { Subscribable } from "astal/binding";
 import { Variable } from "astal";
 import { IconWithLabelFallback } from "../../../wrappers/IconWithLabelFallback";
-import icons from "../../../../libs/icons";
-import Hookable from "../../../../libs/Hookable";
+import icons from "../../../../icons";
+import Hookable from "../../../../libs/services/Hookable";
 
 const hyprland = AstalHyprland.get_default();
 

@@ -1,4 +1,4 @@
-import Hookable from "../../../../libs/Hookable";
+import Hookable from "../../../../libs/services/Hookable";
 import { Variable } from "astal";
 import { Subscribable } from "astal/binding";
 import { Gtk, Widget } from "astal/gtk3";

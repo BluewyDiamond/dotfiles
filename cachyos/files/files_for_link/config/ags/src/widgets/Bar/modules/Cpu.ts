@@ -2,7 +2,7 @@ import { bind, interval, Variable } from "astal";
 import { Widget } from "astal/gtk3";
 import { CpuStats, getCpuStats } from "../../../utils";
 import { IconWithLabelFallback } from "../../wrappers/IconWithLabelFallback";
-import icons from "../../../libs/icons";
+import icons from "../../../icons";
 
 const INTERVAL = 2000;
 let last: CpuStats | null = null;

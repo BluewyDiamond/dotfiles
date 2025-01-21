@@ -1,5 +1,5 @@
-import icons, { substitutes } from "../libs/icons";
-import { Astal, Gtk } from "astal/gtk3";
+import { substitutes } from "../icons";
+import { Astal } from "astal/gtk3";
 import GLib from "gi://GLib";
 import Apps from "gi://AstalApps";
 import { readFileAsync } from "astal";

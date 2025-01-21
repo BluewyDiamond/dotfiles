@@ -3,7 +3,7 @@ import { Subscribable } from "astal/binding";
 import { Gtk } from "astal/gtk3";
 import Notifd from "gi://AstalNotifd";
 import Notification from "../wrappers/Notification";
-import Hookable from "../../libs/Hookable";
+import Hookable from "../../libs/services/Hookable";
 
 const notifd = Notifd.get_default();
 

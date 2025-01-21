@@ -4,7 +4,7 @@ import { Gtk } from "astal/gtk3";
 import Notifd from "gi://AstalNotifd";
 import Notification from "../wrappers/Notification";
 import options from "../../options";
-import Hookable from "../../libs/Hookable";
+import Hookable from "../../libs/services/Hookable";
 
 const notifd = Notifd.get_default();
 
