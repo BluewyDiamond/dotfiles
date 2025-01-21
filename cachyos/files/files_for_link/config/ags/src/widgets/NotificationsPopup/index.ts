@@ -3,6 +3,7 @@ import Notifd from "gi://AstalNotifd";
 import { NotificationMap } from "./NotificationMap";
 import { bind } from "astal";
 import { noImplicitDestroy } from "astal/_astal";
+import Notification from "../wrappers/Notification";
 
 export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
    const notificationMap = new NotificationMap();
@@ -37,6 +38,8 @@ export default function (gdkmonitor: Gdk.Monitor): Widget.Window {
          window.visible = true;
       }
    }
+
+   onNotificationWidgetsChanged(notificationMap.get());
 
    notificationMap.subscribe((list) => {
       onNotificationWidgetsChanged(list);
