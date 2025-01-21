@@ -1,7 +1,7 @@
-import { Astal, Gtk, hook, Widget } from "astal/gtk4";
+import { Gtk, hook, Widget } from "astal/gtk4";
 import AstalHyprland from "gi://AstalHyprland";
-import { bind, Subscribable } from "astal/binding";
-import { Variable, writeFile } from "astal";
+import { Subscribable } from "astal/binding";
+import { Variable } from "astal";
 import { IconWithLabelFallback } from "../../../wrappers/IconWithLabelFallback";
 import icons from "../../../../icons";
 import Hookable from "../../../../libs/services/Hookable";
@@ -28,7 +28,6 @@ function ClientWidget(
                   if (!urgentClient) return;
 
                   if (urgentClient.address === client.address) {
-                     console.log("hi");
                      self.cssClasses = [...self.cssClasses, "urgent"];
                   }
                }
@@ -39,7 +38,10 @@ function ClientWidget(
                if (!focusedClient) return;
 
                if (focusedClient.address === client.address) {
-                  self.cssClasses.filter((cssClass) => cssClass !== "urgent");
+                  self.cssClasses = self.cssClasses.filter(
+                     (cssClass) => cssClass !== "urgent"
+                  );
+
                   self.cssClasses = [...self.cssClasses, "active"];
                } else {
                   self.cssClasses = self.cssClasses.filter(

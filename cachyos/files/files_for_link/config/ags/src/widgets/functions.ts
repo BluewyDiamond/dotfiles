@@ -8,12 +8,15 @@ export function setupAsPanelButton(button: Gtk.Button, windowName: string) {
 
       if (open && !window.visible) {
          open = false;
-         //button.toggleClassName("active", false);
+
+         button.cssClasses = button.cssClasses.filter(
+            (cssClass) => cssClass !== "active"
+         );
       }
 
       if (window.visible) {
          open = true;
-         //button.toggleClassName("active", true);
+         button.cssClasses = [...button.cssClasses, "active"];
       }
    });
 }

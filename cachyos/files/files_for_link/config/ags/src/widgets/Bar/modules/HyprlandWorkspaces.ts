@@ -11,6 +11,12 @@ export default function (): Astal.Box {
       children: options.bar.workspaces.values.map((index) => {
          return Widget.Button(
             {
+               onClicked: async () => {
+                  (async () => {
+                     hyprland.dispatch("workspace", `${index}`);
+                  })();
+               },
+
                setup: (self) => {
                   function onWorkspaceFocusedChange() {
                      const workspace = hyprland.focusedWorkspace;
@@ -65,15 +71,7 @@ export default function (): Astal.Box {
 
             Widget.Label({
                label: `${index}`,
-            }),
-
-            {
-               onClick: async () => {
-                  (async () => {
-                     hyprland.dispatch("workspace", `${index}`);
-                  })();
-               },
-            }
+            })
          );
       }),
    });
