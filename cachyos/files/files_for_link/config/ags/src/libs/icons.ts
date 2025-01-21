@@ -28,6 +28,7 @@ export default {
       toolbars: "toolbars-symbolic",
       warning: "dialog-warning-symbolic",
       avatar: "avatar-default-symbolic",
+      broken: "package-broken",
 
       arrow: {
          right: "pan-end-symbolic",
