@@ -1,6 +1,6 @@
 import { App, Widget } from "astal/gtk3";
 import Bar from "./widgets/Bar";
-import { getCss } from "./style";
+import { getCss } from "./utils/style";
 import NotificationsOverview from "./widgets/NotificationsOverview";
 import NotificationsPopup from "./widgets/NotificationsPopup";
 import AppLauncher from "./widgets/AppLauncher";
