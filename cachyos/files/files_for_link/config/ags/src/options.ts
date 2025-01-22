@@ -1,6 +1,6 @@
 export default {
    theme: {
-      icon: ["candy-icons", "Adwaita"]
+      icons: "candy-icons"
    },
 
    bar: {
