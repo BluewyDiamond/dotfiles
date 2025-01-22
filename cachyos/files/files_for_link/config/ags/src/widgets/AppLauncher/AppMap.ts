@@ -1,14 +1,14 @@
 import { Subscribable } from "astal/binding";
 import { Variable } from "astal";
 import Apps from "gi://AstalApps";
-import { Gtk, hook, Widget } from "astal/gtk4";
+import { Gtk, Widget } from "astal/gtk4";
 import options from "../../options";
 import { IconWithLabelFallback } from "../wrappers/IconWithLabelFallback";
 import Pango from "gi://Pango";
 
 const apps = new Apps.Apps();
 
-function AppWidget(
+function AppButton(
    app: Apps.Application,
    selectedIndex: Variable<number | undefined>,
    indexInList: Variable<number | undefined>,
@@ -106,7 +106,7 @@ class AppWithIndex {
       selectedIndex: Variable<number | undefined>,
       onClicked: (self: Gtk.Button, app: Apps.Application) => void
    ) {
-      this.widget = AppWidget(app, selectedIndex, this.indexInlist, (self) =>
+      this.widget = AppButton(app, selectedIndex, this.indexInlist, (self) =>
          onClicked(self, app)
       );
    }

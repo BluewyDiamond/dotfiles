@@ -12,14 +12,17 @@
       padding: 8px;
 
       & > entry {
+         & > text {
+            font-size: 28px;
+         }
+
          background: $color_surface;
          margin-bottom: 8px;
-         font-size: 28px;
          border-radius: $border_radius;
       }
 
       & > .hotswap-box {
-         & .apps-container {
+         & .apps-box {
             & > button {
                padding: 8px;
                background: $color_surface;

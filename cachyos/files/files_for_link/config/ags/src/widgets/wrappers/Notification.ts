@@ -1,6 +1,6 @@
 import { Gtk, Widget } from "astal/gtk4";
 import Notifd from "gi://AstalNotifd";
-import { findIcon, isValidIcon } from "../../utils";
+import { findIcon, isValidImage } from "../../utils";
 import { GLib } from "astal";
 import icons from "../../icons";
 import { IconWithLabelFallback } from "./IconWithLabelFallback";
@@ -91,13 +91,13 @@ export default function (props: NotificationProps): Gtk.Box {
             cssClasses: ["notification-content"],
 
             setup: (self) => {
-               if (notification.image && isValidIcon(notification.image)) {
+               if (notification.image && isValidImage(notification.image)) {
                   self.children = [
                      ...self.children,
 
-                     IconWithLabelFallback({
-                        cssClasses: ["notification-icon"],
-                        iconName: notification.image,
+                     Widget.Image({
+                        cssClasses: ["notification-image"],
+                        file: notification.image,
                      }),
                   ];
                }

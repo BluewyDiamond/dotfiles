@@ -8,10 +8,10 @@ import options from "../options";
 const gtkIconTheme = new Gtk.IconTheme();
 gtkIconTheme.set_theme_name(options.theme.icons);
 
-export function isValidIcon(icon: string): boolean {
-   if (GLib.file_test(icon, GLib.FileTest.EXISTS)) {
+export function isValidImage(image: string): boolean {
+   if (GLib.file_test(image, GLib.FileTest.EXISTS)) {
       return true;
-   } else if (gtkIconTheme.has_icon(icon)) {
+   } else if (gtkIconTheme.has_icon(image)) {
       return true;
    } else {
       return false;
@@ -63,11 +63,11 @@ export function findIcon(icon: string): string {
       return "";
    }
 
-   if (isValidIcon(icon)) {
+   if (isValidImage(icon)) {
       return icon;
    }
 
-   if (isValidIcon(icon + "-symbolic")) {
+   if (isValidImage(icon + "-symbolic")) {
       return icon + "-symbolic";
    }
 
@@ -75,11 +75,11 @@ export function findIcon(icon: string): string {
    const foundedApp = apps.list.find((app) => hasIconInApps(icon, app));
 
    if (foundedApp) {
-      if (isValidIcon(foundedApp.iconName)) {
+      if (isValidImage(foundedApp.iconName)) {
          return foundedApp.iconName;
       }
 
-      if (isValidIcon(foundedApp + "symbolic")) {
+      if (isValidImage(foundedApp + "symbolic")) {
          return foundedApp + "symbolic";
       }
    }
@@ -90,11 +90,11 @@ export function findIcon(icon: string): string {
       return "";
    }
 
-   if (isValidIcon(substitute)) {
+   if (isValidImage(substitute)) {
       return substitute;
    }
 
-   if (isValidIcon(substitute + "symbolic")) {
+   if (isValidImage(substitute + "symbolic")) {
       return substitute + "symbolic";
    }
 

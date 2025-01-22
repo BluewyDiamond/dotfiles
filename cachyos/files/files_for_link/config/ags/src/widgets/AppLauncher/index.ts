@@ -1,6 +1,5 @@
-import { execAsync, timeout, Variable } from "astal";
-import { bind } from "astal/binding";
-import { App, Astal, Gdk, Gtk, Widget } from "astal/gtk4";
+import { execAsync, Variable } from "astal";
+import { App, Astal, Gdk, Widget } from "astal/gtk4";
 import AppMap from "./AppMap";
 import Apps from "gi://AstalApps";
 import PopupWindow, { LayoutPosition } from "../wrappers/PopupWindow";
@@ -37,7 +36,7 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
    });
 
    const appsBox = Widget.Box({
-      cssClasses: ["apps-container"],
+      cssClasses: ["apps-box"],
       vertical: true,
 
       onDestroy: () => {
