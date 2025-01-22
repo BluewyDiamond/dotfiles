@@ -27,26 +27,36 @@ App.start({
       let powerMenu: Astal.Window | undefined;
 
       function onMonitorsChanged() {
-         if (notificationsOverview) App.remove_window(notificationsOverview);
-         if (notificationsPopup) App.remove_window(notificationsPopup);
-         if (appLauncher) App.remove_window(appLauncher);
-         if (powerMenu) App.remove_window(powerMenu);
+         if (bar) {
+            bar.destroy();
+            bar = undefined;
+         }
 
-         bar?.destroy();
-         notificationsOverview?.destroy();
-         notificationsPopup?.destroy();
-         appLauncher?.destroy();
-         powerMenu?.destroy();
+         // no need to call destroy cause
+         // of remove window method call
+         if (notificationsOverview) {
+            App.remove_window(notificationsOverview);
+            notificationsOverview = undefined;
+         }
 
-         bar = undefined;
-         notificationsOverview = undefined;
-         notificationsPopup = undefined;
-         appLauncher = undefined;
-         powerMenu = undefined;
+         if (notificationsPopup) {
+            App.remove_window(notificationsPopup);
+            notificationsPopup = undefined;
+         }
+
+         if (appLauncher) {
+            App.remove_window(appLauncher);
+            appLauncher = undefined;
+         }
+
+         if (powerMenu) {
+            App.remove_window(powerMenu);
+            powerMenu = undefined;
+         }
 
          const numOfMonitors = monitorManager.get_n_items();
 
-         for (let i = 0; i <= numOfMonitors; i++) {
+         for (let i = 0; i < numOfMonitors; i++) {
             const monitorItem = monitorManager.get_item(i);
             if (!monitorItem) continue;
             const monitor = monitorItem as Gdk.Monitor;
@@ -64,6 +74,7 @@ App.start({
          }
       }
 
+      onMonitorsChanged();
       onMonitorsChanged();
 
       // no need to cleanup cause listening for application
