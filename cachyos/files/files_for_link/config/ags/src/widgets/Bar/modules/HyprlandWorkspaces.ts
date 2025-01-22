@@ -19,14 +19,18 @@ export default function (): Astal.Box {
 
                setup: (self) => {
                   function onWorkspaceFocusedChange() {
-                     const workspace = hyprland.focusedWorkspace;
+                     // can be nullable...
+                     const workspace: AstalHyprland.Workspace | null =
+                        hyprland.focusedWorkspace;
+
                      if (!workspace) return;
 
-                     if (
-                        // get_workspace can return null despite what return type idicates
-                        (hyprland.get_workspace(index)?.get_clients().length ||
-                           0) > 0
-                     ) {
+                     // can also be nullable...
+                     const clients: AstalHyprland.Client[] | null = hyprland
+                        .get_workspace(index)
+                        ?.get_clients();
+
+                     if (clients != null && clients.length > 0) {
                         self.cssClasses = [...self.cssClasses, "occupied"];
                      } else {
                         self.cssClasses = self.cssClasses.filter(

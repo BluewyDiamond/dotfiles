@@ -14,6 +14,7 @@ function Filler(fillerProps: FillerProps): Gtk.Button {
       fillerProps;
 
    return Widget.Button({
+      cssClasses: ["filler-button"],
       widthRequest,
       heightRequest,
       hexpand,
@@ -25,6 +26,7 @@ function Filler(fillerProps: FillerProps): Gtk.Button {
 
 export enum LayoutPosition {
    TOP_CENTER,
+   TOP_RIGHT,
    CENTER,
 }
 
@@ -147,6 +149,33 @@ export default function (
             onClicked: curatedCallback,
          })
       );
+   } else if (position === LayoutPosition.TOP_RIGHT) {
+      anchor = Astal.WindowAnchor.TOP | Astal.WindowAnchor.RIGHT;
+
+      widget = Widget.Box(
+         {},
+
+         Filler({
+            widthRequest: options.filler.width,
+            hexpand: true,
+            vexpand: true,
+            onClicked: curatedCallback,
+         }),
+
+         Widget.Box(
+            {
+               vertical: true,
+            },
+
+            child,
+
+            Filler({
+               hexpand: true,
+               vexpand: true,
+               onClicked: curatedCallback,
+            })
+         )
+      );
    }
 
    return Widget.Window(
@@ -157,9 +186,9 @@ export default function (
          cssClasses: cssClasses,
          visible: false,
 
-         exclusivity: exclusivity,
-         layer: layer || Astal.Layer.TOP,
-         keymode: keymode || Astal.Keymode.EXCLUSIVE,
+         exclusivity: exclusivity ?? Astal.Exclusivity.IGNORE,
+         layer: layer ?? Astal.Layer.TOP,
+         keymode: keymode ?? Astal.Keymode.EXCLUSIVE,
          anchor: anchor,
 
          onKeyReleased: (self, event) => {
