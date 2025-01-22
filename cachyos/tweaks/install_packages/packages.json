@@ -52,12 +52,6 @@
 
    "hyprland_widgets": {
       "std": [
-         "upower",
-         "gvfs",
-         "libdbusmenu-gtk3",
-         "power-profiles-daemon",
-         "brightnessctl",
-
          "dart-sass",
          "fd",
 
@@ -69,14 +63,15 @@
       "aur": [
          "libastal-io-git",
          "libastal-git",
+         "libastal-gjs-git",
+         "libastal-4",
          "libastal-hyprland-git",
          "libastal-battery-git",
          "libastal-notifd-git",
          "libastal-wireplumber-git",
          "libastal-apps-git",
          "libastal-powerprofiles-git",
-         "libastal-tray-git",
-         "libastal-gjs-git"
+         "libastal-tray-git"
       ]
    },
 
