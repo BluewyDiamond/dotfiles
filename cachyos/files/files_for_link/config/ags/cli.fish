@@ -16,7 +16,11 @@ if not test -d $parent
 end
 
 function run
-    LD_PRELOAD=/usr/lib/libgtk4-layer-shell.so gjs -m $build_dir/main.js 
+    LD_PRELOAD=/usr/lib/libgtk4-layer-shell.so gjs -m $build_dir/main.js
+end
+
+function drun
+    LD_PRELOAD=/usr/lib/libgtk4-layer-shell.so gjs -m $build_dir/main.js & disown && exit
 end
 
 function build
