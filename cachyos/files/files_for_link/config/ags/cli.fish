@@ -50,6 +50,8 @@ function types
 end
 
 switch $argv[1]
+    case drun
+        drun
     case run
         run
     case build
