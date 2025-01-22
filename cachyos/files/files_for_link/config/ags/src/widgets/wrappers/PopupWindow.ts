@@ -2,19 +2,32 @@ import { App, Astal, Gdk, Gtk, Widget } from "astal/gtk4";
 import options from "../../options";
 
 type FillerProps = {
-   widthRequest?: number;
-   heightRequest?: number;
+   cssClasses?: string[];
    hexpand?: boolean;
    vexpand?: boolean;
+   widthRequest?: number;
+   heightRequest?: number;
    onClicked?: () => void;
 };
 
 function Filler(fillerProps: FillerProps): Gtk.Button {
-   const { widthRequest, heightRequest, hexpand, vexpand, onClicked } =
-      fillerProps;
+   const {
+      cssClasses,
+      hexpand,
+      vexpand,
+      widthRequest,
+      heightRequest,
+      onClicked,
+   } = fillerProps;
+
+   function setupClassName(): string[] {
+      const defaultCssClasses = ["filler-button"];
+      if (!cssClasses) return defaultCssClasses;
+      return [...defaultCssClasses, ...cssClasses];
+   }
 
    return Widget.Button({
-      cssClasses: ["filler-button"],
+      cssClasses: setupClassName(),
       widthRequest,
       heightRequest,
       hexpand,
@@ -24,7 +37,7 @@ function Filler(fillerProps: FillerProps): Gtk.Button {
    });
 }
 
-export enum LayoutPosition {
+export enum Position {
    TOP_CENTER,
    TOP_RIGHT,
    CENTER,
@@ -37,7 +50,7 @@ type PopupWindowProps = {
    exclusivity?: Astal.Exclusivity;
    layer?: Astal.Layer;
    keymode?: Astal.Keymode;
-   position: LayoutPosition;
+   position: Position;
    onFillerClicked?: () => void;
    onKeyReleasedEvent?: (self: Gtk.Widget, event: number) => void;
    onDestroyed?: (self: Gtk.Window) => void;
@@ -73,7 +86,7 @@ export default function (
    let anchor: Astal.WindowAnchor | undefined;
    let widget: Gtk.Widget | undefined;
 
-   if (position === LayoutPosition.TOP_CENTER) {
+   if (position === Position.TOP_CENTER) {
       anchor = Astal.WindowAnchor.TOP | Astal.WindowAnchor.BOTTOM;
 
       widget = Widget.Box(
@@ -111,7 +124,7 @@ export default function (
             onClicked: curatedCallback,
          })
       );
-   } else if (position === LayoutPosition.CENTER) {
+   } else if (position === Position.CENTER) {
       anchor = Astal.WindowAnchor.TOP | Astal.WindowAnchor.BOTTOM;
 
       widget = Widget.Box(
@@ -149,7 +162,7 @@ export default function (
             onClicked: curatedCallback,
          })
       );
-   } else if (position === LayoutPosition.TOP_RIGHT) {
+   } else if (position === Position.TOP_RIGHT) {
       anchor = Astal.WindowAnchor.TOP | Astal.WindowAnchor.RIGHT;
 
       widget = Widget.Box(
@@ -157,7 +170,6 @@ export default function (
 
          Filler({
             widthRequest: options.filler.width,
-            hexpand: true,
             vexpand: true,
             onClicked: curatedCallback,
          }),
@@ -167,14 +179,27 @@ export default function (
                vertical: true,
             },
 
+            Filler({
+               cssClasses: ["top-offset"],
+               hexpand: true,
+               onClicked: curatedCallback,
+            }),
+
             child,
 
             Filler({
                hexpand: true,
                vexpand: true,
+               heightRequest: options.filler.height,
                onClicked: curatedCallback,
             })
-         )
+         ),
+
+         Filler({
+            cssClasses: ["right-offset"],
+            vexpand: true,
+            onClicked: curatedCallback,
+         })
       );
    }
 

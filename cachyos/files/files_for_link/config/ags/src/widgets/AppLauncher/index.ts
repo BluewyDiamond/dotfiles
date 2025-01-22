@@ -2,7 +2,7 @@ import { execAsync, Variable } from "astal";
 import { App, Astal, Gdk, Widget } from "astal/gtk4";
 import AppMap from "./AppMap";
 import Apps from "gi://AstalApps";
-import PopupWindow, { LayoutPosition } from "../wrappers/PopupWindow";
+import PopupWindow, { Position } from "../wrappers/PopupWindow";
 
 function hide() {
    App.get_window("astal-app-launcher")?.hide();
@@ -71,7 +71,7 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
          cssClasses: ["app-launcher"],
          exclusivity: Astal.Exclusivity.IGNORE,
          layer: Astal.Layer.OVERLAY,
-         position: LayoutPosition.TOP_CENTER,
+         position: Position.TOP_CENTER,
 
          onKeyReleasedEvent: (self, event) => {
             if (event === Gdk.KEY_Escape) {

@@ -1,4 +1,12 @@
 .notifications-popup {
+   & .top-offset {
+      min-height: 20px;
+   }
+
+   & .right-offset {
+      min-width: 20px;
+   }
+
    & .notification {
       border: 4px solid $color_border;
    }

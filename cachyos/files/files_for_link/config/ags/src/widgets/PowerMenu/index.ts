@@ -3,7 +3,7 @@ import { IconWithLabelFallback } from "../wrappers/IconWithLabelFallback";
 import icons from "../../icons";
 import Variable from "astal/variable";
 import { execAsync, interval } from "astal";
-import PopupWindow, { LayoutPosition } from "../wrappers/PopupWindow";
+import PopupWindow, { Position } from "../wrappers/PopupWindow";
 
 function hide() {
    App.get_window("astal-power-menu")?.hide();
@@ -77,7 +77,7 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
          gdkmonitor: gdkmonitor,
          name: "astal-power-menu",
          cssClasses: ["power-menu"],
-         position: LayoutPosition.CENTER,
+         position: Position.CENTER,
       },
 
       Widget.Box({
