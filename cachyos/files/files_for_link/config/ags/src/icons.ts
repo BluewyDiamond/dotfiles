@@ -125,8 +125,8 @@ export default {
    },
 
    notifications: {
-      normal: "preferences-disabled-symbolic",
-      noisy: "alarm-clock",
+      normal: "notifications",
+      noisy: "notification-active",
       silent: "notifications-disabled-symbolic",
       message: "chat-bubbles-symbolic",
    },

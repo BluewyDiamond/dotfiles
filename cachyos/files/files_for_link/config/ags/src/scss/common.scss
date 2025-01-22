@@ -8,7 +8,7 @@
 
    & .notification-header {
       & .notification-app-icon {
-         font-size: 22px;
+         -gtk-icon-size: 24px;
          margin-right: 4px;
       }
 
@@ -22,7 +22,9 @@
       }
 
       & .notification-close {
-         font-size: 22px;
+         & > image {
+            -gtk-icon-size: 24px;
+         }
       }
    }
 
