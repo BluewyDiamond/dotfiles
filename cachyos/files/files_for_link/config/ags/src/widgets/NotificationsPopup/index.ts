@@ -8,8 +8,6 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
    const mainBox = Widget.Box({
       cssClasses: ["notifications-popup-content"],
       vertical: true,
-      noImplicitDestroy: true,
-      children: bind(notificationMap),
 
       onDestroy: () => {
          notificationMap.destroy();

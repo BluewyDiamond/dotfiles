@@ -1,4 +1,4 @@
-import { App, Astal, Gtk, Widget } from "astal/gtk4";
+import { App, Gtk, Widget } from "astal/gtk4";
 import { setupAsPanelButton } from "../../functions";
 import { IconWithLabelFallback } from "../../wrappers/IconWithLabelFallback";
 import { GLib } from "astal";

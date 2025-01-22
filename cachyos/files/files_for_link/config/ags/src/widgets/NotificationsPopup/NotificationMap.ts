@@ -19,7 +19,7 @@ export class NotificationMap extends Hookable implements Subscribable {
          if (this.map.size >= options.notificationsPopup.maxItems) {
             const item = this.map.entries().next().value;
             if (!item) return;
-            this.map.delete(item[0]);
+            this.delete(item[0]);
          }
       };
 

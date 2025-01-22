@@ -24,8 +24,8 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
          if (currentSearchQuery.startsWith(":sh")) {
             execAsync(["fish", "-c", `${currentSearchQuery.slice(3)}`.trim()]);
          } else {
-            const selectedIndexValue = selectedIndex.get();
-            if (!selectedIndexValue) return;
+            let selectedIndexValue = selectedIndex.get();
+            if (!selectedIndexValue) selectedIndexValue = 0;
             appMap.launchApp(selectedIndexValue);
          }
 
