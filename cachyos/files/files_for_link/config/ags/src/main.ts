@@ -27,6 +27,11 @@ App.start({
       let powerMenu: Astal.Window | undefined;
 
       function onMonitorsChanged() {
+         if (notificationsOverview) App.remove_window(notificationsOverview);
+         if (notificationsPopup) App.remove_window(notificationsPopup);
+         if (appLauncher) App.remove_window(appLauncher);
+         if (powerMenu) App.remove_window(powerMenu);
+
          bar?.destroy();
          notificationsOverview?.destroy();
          notificationsPopup?.destroy();
