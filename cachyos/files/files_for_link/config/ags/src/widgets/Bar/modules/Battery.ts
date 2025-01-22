@@ -8,7 +8,7 @@ const battery = Battery.get_default();
 
 export default function (): Astal.Box {
    return Widget.Box({
-      className: "battery",
+      cssClasses: ["battery"],
       visible: bind(battery, "isBattery"),
 
       children: [
