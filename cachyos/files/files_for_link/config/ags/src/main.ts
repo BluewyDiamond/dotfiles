@@ -1,20 +1,25 @@
-import { App, Astal, Widget } from "astal/gtk4";
+import { App, Astal, Gdk } from "astal/gtk4";
 import Bar from "./widgets/Bar";
 import { getCss } from "./utils/style";
 import AppLauncher from "./widgets/AppLauncher";
 import NotificationsOverview from "./widgets/NotificationsOverview";
 import NotificationsPopup from "./widgets/NotificationsPopup";
 import PowerMenu from "./widgets/PowerMenu";
-//import NotificationsOverview from "./widgets/NotificationsOverview";
-//import NotificationsPopup from "./widgets/NotificationsPopup";
-//import AppLauncher from "./widgets/AppLauncher";
-//import PowerMenu from "./widgets/PowerMenu";
 
 App.start({
    css: getCss(),
    instanceName: "main",
 
    main() {
+      const gdkDisplay = Gdk.Display.get_default();
+
+      if (!gdkDisplay) {
+         console.log("gdkDisplay is null...");
+         return;
+      }
+
+      const monitorManager = gdkDisplay.get_monitors();
+
       let bar: Astal.Window | undefined;
       let notificationsOverview: Astal.Window | undefined;
       let notificationsPopup: Astal.Window | undefined;
@@ -30,20 +35,16 @@ App.start({
 
          bar = undefined;
          notificationsOverview = undefined;
-         //notificationsPopup = undefined;
+         notificationsPopup = undefined;
          appLauncher = undefined;
-         //powerMenu = undefined;
+         powerMenu = undefined;
 
-         const monitors = App.get_monitors();
+         const numOfMonitors = monitorManager.get_n_items();
 
-         if (!monitors) {
-            return;
-         }
-
-         for (const monitor of monitors) {
-            if (!monitor) {
-               continue;
-            }
+         for (let i = 0; i <= numOfMonitors; i++) {
+            const monitorItem = monitorManager.get_item(i);
+            if (!monitorItem) continue;
+            const monitor = monitorItem as Gdk.Monitor;
 
             bar = Bar(monitor);
             notificationsOverview = NotificationsOverview(monitor);
@@ -60,8 +61,8 @@ App.start({
 
       onMonitorsChanged();
 
-      App.connect("notify::monitors", () => {
-         onMonitorsChanged();
-      });
+      // no need to cleanup cause listening for application
+      // to quit destroys wipes everything either way
+      monitorManager.connect("items-changed", () => onMonitorsChanged());
    },
 });
