@@ -2,6 +2,7 @@ import { App, Astal, hook, Widget } from "astal/gtk4";
 import Notifd from "gi://AstalNotifd";
 import { setupAsPanelButton as setupAsPanelButton } from "../../functions";
 import { IconWithLabelFallback } from "../../wrappers/IconWithLabelFallback";
+import icons from "../../../icons";
 
 const notifd = Notifd.get_default();
 
@@ -27,7 +28,7 @@ export default function (): Astal.Box {
                         },
                      },
 
-                     IconWithLabelFallback({ iconName: "notification-active" })
+                     IconWithLabelFallback({ iconName: icons.notifications.normal })
                   ),
                ];
 
