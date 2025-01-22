@@ -35,18 +35,22 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
             }),
 
             new Gtk.ScrolledWindow({
+               hexpand: true,
+               vexpand: true,
+               vscrollbarPolicy: Gtk.PolicyType.ALWAYS,
+               hscrollbarPolicy: Gtk.PolicyType.NEVER,
+
                child: Widget.Box({
                   cssClasses: ["notifications-box"],
                   vertical: true,
-                  vexpand: true,
 
                   setup: (self) => {
-                     self.children = notificationMap.get()
+                     self.children = notificationMap.get();
 
                      notificationMap.subscribe((list) => {
-                        self.children = list
-                     })
-                  }
+                        self.children = list;
+                     });
+                  },
                }),
             }),
          ],

@@ -22,7 +22,10 @@
       }
 
       & .notification-close {
-         & > image {
+         background: green;
+
+         image {
+            background: blue;
             -gtk-icon-size: 24px;
          }
       }

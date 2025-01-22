@@ -27,161 +27,159 @@ type NotificationProps = {
    setup?(): void;
 };
 
-export default function (props: NotificationProps): Gtk.Button {
+export default function (props: NotificationProps): Gtk.Box {
    const { notification, setup } = props;
 
-   return Widget.Button({
-      child: Widget.Box({
-         cssClasses: ["notification"],
-         vertical: true,
+   return Widget.Box({
+      cssClasses: ["notification"],
+      vertical: true,
 
-         children: [
-            Widget.Box({
-               cssClasses: ["notification-header"],
+      children: [
+         Widget.Box({
+            cssClasses: ["notification-header"],
 
-               setup: (self) => {
-                  let foundedIcon = findIcon(notification.app_icon);
+            setup: (self) => {
+               let foundedIcon = findIcon(notification.app_icon);
 
-                  if (foundedIcon === "") {
-                     foundedIcon = findIcon(notification.desktop_entry);
-                  }
+               if (foundedIcon === "") {
+                  foundedIcon = findIcon(notification.desktop_entry);
+               }
 
-                  if (foundedIcon) {
-                     self.children = [
-                        ...self.children,
-
-                        IconWithLabelFallback({
-                           cssClasses: ["notification-app-icon"],
-                           iconName: foundedIcon,
-                        }),
-                     ];
-                  }
-
+               if (foundedIcon) {
                   self.children = [
                      ...self.children,
 
-                     Widget.Label({
-                        halign: Gtk.Align.START,
-                        cssClasses: ["notification-app-name"],
-                        ellipsize: Pango.EllipsizeMode.END,
-                        label: notification.appName || "undefined",
+                     IconWithLabelFallback({
+                        cssClasses: ["notification-app-icon"],
+                        iconName: foundedIcon,
                      }),
-
-                     Widget.Label({
-                        halign: Gtk.Align.END,
-                        cssClasses: ["notification-time"],
-                        hexpand: true,
-                        label: time(notification.time),
-                     }),
-
-                     Widget.Button(
-                        {
-                           cssClasses: ["notification-close"],
-                           onClicked: () => notification.dismiss(),
-                        },
-
-                        IconWithLabelFallback({ iconName: icons.ui.close })
-                     ),
                   ];
-               },
-            }),
+               }
 
-            new Gtk.Separator({ visible: true }),
+               self.children = [
+                  ...self.children,
 
-            Widget.Box({
-               cssClasses: ["notification-content"],
+                  Widget.Label({
+                     halign: Gtk.Align.START,
+                     cssClasses: ["notification-app-name"],
+                     ellipsize: Pango.EllipsizeMode.END,
+                     label: notification.appName || "undefined",
+                  }),
 
-               setup: (self) => {
-                  if (notification.image && isValidIcon(notification.image)) {
-                     self.children = [
-                        ...self.children,
+                  Widget.Label({
+                     halign: Gtk.Align.END,
+                     cssClasses: ["notification-time"],
+                     hexpand: true,
+                     label: time(notification.time),
+                  }),
 
-                        IconWithLabelFallback({
-                           cssClasses: ["notification-icon"],
-                           iconName: notification.image,
-                        }),
-                     ];
-                  }
+                  Widget.Button(
+                     {
+                        cssClasses: ["notification-close"],
+                        onClicked: () => notification.dismiss(),
+                     },
 
+                     IconWithLabelFallback({ iconName: icons.ui.close })
+                  ),
+               ];
+            },
+         }),
+
+         new Gtk.Separator({ visible: true }),
+
+         Widget.Box({
+            cssClasses: ["notification-content"],
+
+            setup: (self) => {
+               if (notification.image && isValidIcon(notification.image)) {
                   self.children = [
                      ...self.children,
 
-                     Widget.Box({
-                        vertical: true,
-
-                        setup: (self) => {
-                           if (notification.summary) {
-                              self.children = [
-                                 ...self.children,
-
-                                 Widget.Label({
-                                    cssClasses: ["notification-summary"],
-                                    halign: Gtk.Align.START,
-                                    xalign: 0,
-                                    ellipsize: Pango.EllipsizeMode.END,
-                                    label: notification.summary,
-                                 }),
-                              ];
-                           }
-
-                           if (notification.body) {
-                              self.children = [
-                                 ...self.children,
-
-                                 Widget.Label({
-                                    cssClasses: ["notification-body"],
-                                    halign: Gtk.Align.START,
-                                    xalign: 0,
-                                    wrap: true,
-                                    wrapMode: Pango.WrapMode.WORD_CHAR,
-                                    label: notification.body,
-                                 }),
-                              ];
-                           }
-                        },
+                     IconWithLabelFallback({
+                        cssClasses: ["notification-icon"],
+                        iconName: notification.image,
                      }),
                   ];
-               },
-            }),
-         ],
+               }
 
-         setup: (self) => {
-            setup && setup();
-
-            if (notification.actions.length > 0) {
                self.children = [
                   ...self.children,
 
                   Widget.Box({
-                     cssClasses: ["notification-actions"],
-                     hexpand: true,
+                     vertical: true,
 
                      setup: (self) => {
-                        if (notification.get_actions().length > 0) {
-                           notification.get_actions().map(({ label, id }) => {
-                              self.children = [
-                                 ...self.children,
+                        if (notification.summary) {
+                           self.children = [
+                              ...self.children,
 
-                                 Widget.Button(
-                                    {
-                                       hexpand: true,
-                                       onClicked: () => notification.invoke(id),
-                                    },
+                              Widget.Label({
+                                 cssClasses: ["notification-summary"],
+                                 halign: Gtk.Align.START,
+                                 xalign: 0,
+                                 ellipsize: Pango.EllipsizeMode.END,
+                                 label: notification.summary,
+                              }),
+                           ];
+                        }
 
-                                    Widget.Label({
-                                       label: label,
-                                       halign: Gtk.Align.CENTER,
-                                       hexpand: true,
-                                    })
-                                 ),
-                              ];
-                           });
+                        if (notification.body) {
+                           self.children = [
+                              ...self.children,
+
+                              Widget.Label({
+                                 cssClasses: ["notification-body"],
+                                 halign: Gtk.Align.START,
+                                 xalign: 0,
+                                 wrap: true,
+                                 wrapMode: Pango.WrapMode.WORD_CHAR,
+                                 label: notification.body,
+                              }),
+                           ];
                         }
                      },
                   }),
                ];
-            }
-         },
-      }),
+            },
+         }),
+      ],
+
+      setup: (self) => {
+         setup && setup();
+
+         if (notification.actions.length > 0) {
+            self.children = [
+               ...self.children,
+
+               Widget.Box({
+                  cssClasses: ["notification-actions"],
+                  hexpand: true,
+
+                  setup: (self) => {
+                     if (notification.get_actions().length > 0) {
+                        notification.get_actions().map(({ label, id }) => {
+                           self.children = [
+                              ...self.children,
+
+                              Widget.Button(
+                                 {
+                                    hexpand: true,
+                                    onClicked: () => notification.invoke(id),
+                                 },
+
+                                 Widget.Label({
+                                    label: label,
+                                    halign: Gtk.Align.CENTER,
+                                    hexpand: true,
+                                 })
+                              ),
+                           ];
+                        });
+                     }
+                  },
+               }),
+            ];
+         }
+      },
    });
 }
