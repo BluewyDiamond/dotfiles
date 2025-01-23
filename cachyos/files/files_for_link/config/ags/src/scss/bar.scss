@@ -37,7 +37,7 @@ $space_between_bar_modules: 7.2px;
       transition: background 0.1s linear;
 
       &.occupied {
-         background: $color_on_surface;
+         background: $color_primary_container;
       }
 
       &.active {
@@ -45,7 +45,7 @@ $space_between_bar_modules: 7.2px;
       }
 
       &.urgent {
-         background: $color_tertiary;
+         background: $color_tertiary_container;
       }
 
       &:last-child {
@@ -65,7 +65,7 @@ $space_between_bar_modules: 7.2px;
    }
 
    & .urgent {
-      background: $color_tertiary;
+      background: $color_tertiary_container;
    }
 }
 
