@@ -1,15 +1,14 @@
-@mixin bar-module {
-   background: $color_surface_container;
-   color: $color_on_surface;
-   border-radius: $border_radius;
-   padding: 4px;
-
-   &.active {
-      background: $color_primary_container;
-   }
-}
-
 @mixin container-base {
    padding: 4px;
    border-radius: 4px;
+}
+
+@mixin bar-module {
+   @include container-base();
+   background: $color_surface_container;
+   color: $color_on_surface;
+
+   & .active {
+      background: $color_primary_container;
+   }
 }

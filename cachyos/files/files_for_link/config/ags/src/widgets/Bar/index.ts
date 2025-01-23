@@ -1,14 +1,14 @@
-import HyprlandWorkspaces from "./modules/HyprlandWorkspaces";
-import Indicators from "./modules/Indicators";
-import HyprlandTaskbar from "./modules/HyprlandTaskbar";
-import SystemTray from "./modules/SystemTray";
-import Datetime from "./modules/Time";
-import Notifications from "./modules/Notifications";
-import AppLauncher from "./modules/AppLauncher";
-import Power from "./modules/Power";
-import Battery from "./modules/Battery";
-import Ram from "./modules/Ram";
-import Cpu from "./modules/Cpu";
+import HyprlandWorkspaces from "./items/HyprlandWorkspaces";
+import Indicators from "./items/Indicators";
+import HyprlandTaskbar from "./items/HyprlandTaskbar";
+import SystemTray from "./items/SystemTray";
+import Datetime from "./items/Time";
+import Notifications from "./items/Notifications";
+import AppLauncher from "./items/AppLauncher";
+import Power from "./items/Power";
+import Battery from "./items/Battery";
+import Ram from "./items/Ram";
+import Cpu from "./items/Cpu";
 import { Astal, Gdk, Gtk, Widget } from "astal/gtk4";
 
 export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
