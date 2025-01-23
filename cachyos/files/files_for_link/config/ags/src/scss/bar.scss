@@ -34,7 +34,7 @@
          & > button {
             @include container_shape();
             margin-right: 4px;
-            background: $color_surface_container;
+            background: $color_surface;
             min-width: 12px;
 
             &:last-child {
@@ -101,17 +101,17 @@
             modelbutton {
                @include container-shape();
                margin-top: $space_between_items;
-               background: $color_secondary_container;
+               background: $color_surface_container;
                padding: $content_padding;
-               color: $color_on_secondary_container;
+               color: $color_on_surface;
 
                &:first-child {
                   margin-bottom: 0;
                }
 
-               // &:hover {
-               //    background: $color_primary_container;
-               // }
+               &:hover {
+                  background: $color_primary_container;
+               }
             }
          }
       }

@@ -56,14 +56,14 @@
                }
 
                &.selected {
-                  background: $color_primary;
+                  background: $color_primary_container;
 
                   .name {
-                     color: $color_on_primary;
+                     color: $color_on_primary_container;
                   }
 
                   .description {
-                     color: $color_on_primary;
+                     color: $color_on_primary_container;
                   }
                }
 
