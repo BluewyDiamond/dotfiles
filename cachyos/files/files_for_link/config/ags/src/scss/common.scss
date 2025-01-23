@@ -1,31 +1,34 @@
 .notification {
    background: $color_surface_container;
-   margin-bottom: 8px;
    border-radius: $border_radius;
    min-width: 500px;
-   padding: 8px;
+   padding: $content_padding;
 
    & .header {
       & .app-icon {
          -gtk-icon-size: 24px;
          margin-right: 4px;
+         padding: $content_padding;
       }
 
       & .app-name {
          color: $color_on_surface;
          font-size: 18px;
+         padding: $content_padding;
       }
 
       & .time {
          color: $color_on_surface;
          font-size: 18px;
          margin-right: 4px;
+         padding: $content_padding;
       }
 
       & .close {
-         @include container-base();
+         @include container-shape();
          color: $color_on_primary_container;
          background: $color_primary_container;
+         padding: $content_padding;
 
          image {
             -gtk-icon-size: 24px;
@@ -39,32 +42,34 @@
    }
 
    & .content {
-      padding: 8px;
-
       & .image {
          min-width: 100px;
          margin-right: 10px;
          border-radius: $border_radius;
+         padding: $content_padding;
       }
 
       & .summary {
          font-size: 18px;
          margin-bottom: 4px;
          color: $color_on_surface;
+         padding: $content_padding;
       }
 
       & .body {
          font-size: 16px;
          margin-bottom: 4px;
          color: $color_on_surface_variant;
+         padding: $content_padding;
       }
    }
 
    & .actions {
       & > button {
-         @include container-base();
+         @include container-shape();
          background: $color_primary_container;
          margin-right: 4px;
+         padding: $content_padding;
 
          &:last-child {
             margin-right: 0;

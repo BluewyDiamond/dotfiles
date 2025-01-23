@@ -1,11 +1,11 @@
 .power-menu {
    & .main-box {
-      @include container-base();
+      @include container-shape();
       background: $color_surface_container;
       border: 4px solid $color_outline_variant;
 
       button {
-         @include container-base();
+         @include container-shape();
          background: $color_primary_container;
          margin-right: 4px;
 

@@ -1,17 +1,14 @@
 .notifications-overview {
    & .main-box {
-      @include container-base();
+      @include container-shape();
       min-width: 500px;
       min-height: 500px;
+      padding: $space_between_items;
       background: $color_surface;
-
       border: 4px solid $color_outline_variant;
 
-      padding: 10px;
-      margin: 0.5rem 1rem 0.5rem 1rem;
-
       & > box {
-         margin-bottom: 8px;
+         margin-bottom: $space_between_items;
 
          &:last-child {
             margin-bottom: 0;
@@ -20,7 +17,8 @@
 
       & .actions-box {
          & > button {
-            @include container-base();
+            @include container-shape();
+            padding: $content_padding;
             background: $color_primary_container;
             color: $color_on_primary_container;
          }
@@ -28,8 +26,13 @@
 
       & .notifications-box {
          & .notification {
+            margin-bottom: $space_between_items;
             background: $color_surface_container;
             color: $color_on_surface;
+
+            &:last-child {
+               margin-bottom: 0;
+            }
          }
       }
    }

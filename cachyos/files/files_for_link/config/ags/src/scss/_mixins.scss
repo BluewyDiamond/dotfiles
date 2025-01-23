@@ -1,12 +1,12 @@
-@mixin container-base {
-   padding: 4px;
+@mixin container-shape {
    border-radius: 4px;
 }
 
 @mixin bar-module {
-   @include container-base();
+   @include container-shape();
    background: $color_surface_container;
    color: $color_on_surface;
+   padding: $content_padding;
 
    & .active {
       background: $color_primary_container;

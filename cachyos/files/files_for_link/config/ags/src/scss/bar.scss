@@ -2,7 +2,7 @@
    background: $color_surface;
 
    .container {
-      padding: 8px;
+      padding: $space_between_items;
    }
 
    .icon-with-label-fallback {
