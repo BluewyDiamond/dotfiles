@@ -137,14 +137,16 @@ local gitsigns = require("gitsigns")
 mappings.gitsigns = {
    {
       "n",
-      "[c",
+      "<leader>nh",
 
       function()
          if vim.wo.diff then
             return "[c"
          end
 
-         vim.schedule(gitsigns.prev_hunk)
+         vim.schedule(function()
+            gitsigns.nav_hunk("next", nil)
+         end)
          return "<Ignore>"
       end,
 
@@ -153,8 +155,7 @@ mappings.gitsigns = {
 
    { "n", "<leader>rh", gitsigns.reset_hunk, { noremap = true, silent = true, desc = "reset hunk" } },
    { "n", "<leader>ph", gitsigns.preview_hunk, { noremap = true, silent = true, desc = "preview hunk" } },
-   { "n", "<leader>gb", package.loaded.gitsigns.blame_line, { noremap = true, silent = true, desc = "blame line" } },
-   { "n", "<leader>td", gitsigns.toggle_deleted, { noremap = true, silent = true, desc = "toggle deleted" } },
+   { "n", "<leader>phi", gitsigns.preview_hunk_inline, { noremap = true, silent = true, desc = "toggle deleted" } },
 }
 
 mappings.blame = {
