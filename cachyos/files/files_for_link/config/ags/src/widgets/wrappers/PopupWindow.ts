@@ -170,6 +170,7 @@ export default function (
 
          Filler({
             widthRequest: options.filler.width,
+            hexpand: true,
             vexpand: true,
             onClicked: curatedCallback,
          }),

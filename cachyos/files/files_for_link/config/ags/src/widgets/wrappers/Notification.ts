@@ -33,6 +33,7 @@ export default function (props: NotificationProps): Gtk.Box {
    return Widget.Box({
       cssClasses: ["notification"],
       vertical: true,
+      hexpand: false,
 
       children: [
          Widget.Box({

@@ -1,8 +1,6 @@
 import { Astal, Gdk, Gtk, Widget } from "astal/gtk4";
 import { NotificationMap } from "./NotificationMap";
-import PopupWindow, {
-   Position as Position,
-} from "../wrappers/PopupWindow";
+import PopupWindow, { Position as Position } from "../wrappers/PopupWindow";
 
 export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
    const notificationMap = new NotificationMap();
@@ -17,6 +15,7 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
 
    const mainBox = Widget.Box({
       cssClasses: ["main-box"],
+      hexpand: false,
       children: [notificationsBox],
    });
 
