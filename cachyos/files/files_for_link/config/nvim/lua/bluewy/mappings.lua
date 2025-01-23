@@ -202,4 +202,13 @@ mappings.treesitter = {
    },
 }
 
+mappings.trouble = {
+   {
+      "n",
+      "<leader>ttd",
+      "<cmd>Trouble diagnostics toggle<cr>",
+      {},
+   },
+}
+
 return mappings
