@@ -6,7 +6,7 @@ import Tray from "gi://AstalTray";
 
 const tray = Tray.get_default();
 
-function TrayItemButton(item: Tray.TrayItem): Gtk.MenuButton {
+function TrayItemMenuButton(item: Tray.TrayItem): Gtk.MenuButton {
    return Widget.MenuButton(
       {
          setup: (self) => {
@@ -23,7 +23,7 @@ function TrayItemButton(item: Tray.TrayItem): Gtk.MenuButton {
                onItemChanged(tray.get_item(item.get_item_id()));
             });
 
-            hook(self, self, "activate", () => {
+            hook(self, self, "notify::active", () => {
                if (self.active) {
                   self.cssClasses = [...self.cssClasses, "active"];
                } else {
@@ -56,16 +56,19 @@ export class TrayItemMap extends Hookable implements Subscribable {
       super();
 
       tray.get_items()?.forEach((item) => {
-         this.set(item.get_item_id(), TrayItemButton(item));
+         this.map.set(item.get_item_id(), TrayItemMenuButton(item));
+         this.notify();
       });
 
       this.hook(tray, "item-added", (_, item_id) => {
          const item = tray.get_item(item_id);
-         this.set(item_id, TrayItemButton(item));
+         this.map.set(item_id, TrayItemMenuButton(item));
+         this.notify();
       });
 
       this.hook(tray, "item-removed", (_, item_id) => {
-         this.delete(item_id);
+         this.map.delete(item_id);
+         this.notify();
       });
    }
 
@@ -80,18 +83,6 @@ export class TrayItemMap extends Hookable implements Subscribable {
    destroy() {
       super.destroy();
       this.var.drop();
-   }
-
-   private set(key: string, value: Gtk.Widget) {
-      //this.map.get(key)?.destroy();
-      this.map.set(key, value);
-      this.notify();
-   }
-
-   private delete(key: string) {
-      //this.map.get(key)?.destroy();
-      this.map.delete(key);
-      this.notify();
    }
 
    private notify() {
