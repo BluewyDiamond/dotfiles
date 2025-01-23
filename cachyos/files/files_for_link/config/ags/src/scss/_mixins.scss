@@ -1,14 +1,18 @@
-@mixin container-shape {
+@mixin container_shape {
    border-radius: 4px;
 }
 
-@mixin bar-module {
-   @include container-shape();
+@mixin bar_item {
+   @include container_shape();
    background: $color_surface_container;
    color: $color_on_surface;
    padding: $content_padding;
 
-   & .active {
+   &.active {
       background: $color_primary_container;
+   }
+
+   &.urgent {
+      background: $color_tertiary_container;
    }
 }

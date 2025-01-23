@@ -6,7 +6,7 @@ const hyprland = AstalHyprland.get_default();
 
 export default function (): Astal.Box {
    return Widget.Box({
-      cssClasses: ["hyprland-workspaces"],
+      cssClasses: ["workspaces"],
 
       children: options.bar.workspaces.values.map((index) => {
          return Widget.Button(

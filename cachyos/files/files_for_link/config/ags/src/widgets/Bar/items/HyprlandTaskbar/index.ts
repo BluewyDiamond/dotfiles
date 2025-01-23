@@ -8,15 +8,15 @@ export default function (): Astal.Box {
    const clientMap = new ClientMap();
 
    return Widget.Box({
-      cssClasses: ["hyprland-taskbar"],
+      cssClasses: ["taskbar"],
 
       setup: (self) => {
          function onClientsChanged(list: Gtk.Widget[]) {
             if (list.length > 0) {
-               self.visible = true;
                self.children = list;
+               if (!self.visible) self.visible = true;
             } else {
-               self.visible = false;
+               if (self.visible) self.visible = false;
             }
          }
 

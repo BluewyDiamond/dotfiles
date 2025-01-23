@@ -26,8 +26,7 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
          Astal.WindowAnchor.RIGHT,
 
       child: Widget.CenterBox({
-         cssClasses: ["container"],
-
+         cssClasses: ["main-center-box"],
          startWidget: Widget.Box({
             hexpand: true,
             halign: Gtk.Align.START,

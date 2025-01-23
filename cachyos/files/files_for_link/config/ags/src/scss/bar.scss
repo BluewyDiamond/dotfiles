@@ -1,143 +1,152 @@
 .bar {
    background: $color_surface;
 
-   .container {
+   & > .main-center-box {
       padding: $space_between_items;
-   }
 
-   .icon-with-label-fallback {
-      & > image {
-         -gtk-icon-size: 24px;
+      .icon-with-label-fallback {
+         & > image {
+            -gtk-icon-size: 24px;
+         }
+
+         & > label {
+            line-height: 1;
+         }
       }
 
-      & > label {
-         line-height: 1;
-      }
-   }
-}
+      .app-launcher {
+         @include bar_item();
+         margin-right: $space_between_items;
 
-.app-launcher-b {
-   @include bar-module();
-   margin-right: $space_between_items;
-}
+         .active {
+            background: $color_primary_container;
+         }
 
-.hyprland-workspaces {
-   @include bar-module();
-   margin-right: $space_between_items;
-
-   > button {
-      margin-right: 4px;
-      background: $color_surface_container;
-      min-width: 3pt;
-      min-height: 3pt;
-      border-radius: 10%;
-      padding: 5px;
-      transition: background 0.1s linear;
-
-      &.occupied {
-         background: $color_primary_container;
+         .urgent {
+            background: $color_tertiary_container;
+         }
       }
 
-      &.active {
-         background: $color_primary;
+      .workspaces {
+         @include bar_item();
+         margin-right: $space_between_items;
+
+         & > button {
+            @include container_shape();
+            margin-right: 4px;
+            background: $color_surface_container;
+            min-width: 12px;
+
+            &:last-child {
+               margin-right: 0;
+            }
+
+            &.occupied {
+               background: $color_primary_container;
+            }
+
+            &.active {
+               background: $color_primary;
+            }
+
+            &.urgent {
+               background: $color_tertiary_container;
+            }
+
+            & > label {
+               font-size: 0;
+            }
+         }
       }
 
-      &.urgent {
-         background: $color_tertiary_container;
+      .taskbar {
+         & > button {
+            @include bar_item();
+            margin-right: $space_between_items;
+         }
       }
 
-      &:last-child {
-         margin-right: 0;
+      .notifications {
+         margin-right: $space_between_items;
+
+         & > button {
+            @include bar_item();
+         }
       }
 
-      > label {
-         font-size: 0;
+      .time {
+         @include bar_item();
+         margin-right: $space_between_items;
       }
-   }
-}
 
-.hyprland-taskbar {
-   & > button {
-      @include bar-module();
-      margin-right: $space_between_items;
-   }
+      .system-tray {
+         margin-left: $space_between_items;
 
-   & .urgent {
-      background: $color_tertiary_container;
-   }
-}
+         & > menubutton {
+            @include bar_item();
+            margin-left: $space_between_items;
 
-.notifications {
-   margin-right: $space_between_items;
+            image {
+               -gtk-icon-size: 24px;
+            }
+         }
 
-   & > button {
-      @include bar-module();
-   }
-}
+         popover {
+            background: $color_surface_container;
+            border: 4px solid $color_outline_variant;
+            border-radius: $border_radius;
+            padding: $space_between_items;
 
-.time {
-   @include bar-module();
-   margin-right: $space_between_items;
-}
-
-.system-tray {
-   margin-left: 7.2px;
-
-   & > menubutton {
-      @include bar-module();
-      margin-left: $space_between_items;
-
-      image {
-         -gtk-icon-size: 24px;
+            modelbutton {
+               margin-bottom: $space_between_items;
+               background: $color_surface;
+               border-radius: $border_radius;
+               padding: $content_padding;
+            }
+         }
       }
-   }
 
-   popover {
-      background: $color_surface_container;
-      border: 2px solid $color_outline;
-      border-radius: $border_radius;
-      padding: 10px;
-
-      modelbutton {
-         margin-bottom: 7.2px;
-         background: $color_surface;
-         border-radius: $border_radius;
-         padding: 4px;
+      ._ram {
+         @include bar_item();
+         margin-left: $space_between_items;
       }
-   }
-}
 
-._ram {
-   @include bar-module();
-   margin-left: $space_between_items;
-}
+      .cpu {
+         @include bar_item();
+         margin-left: $space_between_items;
+      }
 
-.cpu {
-   @include bar-module();
-   margin-left: $space_between_items;
-}
+      .battery {
+         @include bar_item();
+         margin-left: $space_between_items;
+      }
 
-.battery {
-   @include bar-module();
-   margin-left: $space_between_items;
-}
+      .indicators {
+         @include bar_item();
+         margin-left: $space_between_items;
 
-.indicators {
-   @include bar-module();
-   margin-left: $space_between_items;
+         & > box {
+            & > .icon-with-label-fallback {
+               margin-left: $inner_spacing;
 
-   & > box {
-      & > .icon-with-label-fallback {
-         margin-left: 4px;
+               &:first-child {
+                  margin-left: 0;
+               }
+            }
+         }
+      }
 
-         &:first-child {
-            margin-left: 0px;
+      .power {
+         @include bar_item();
+         margin-left: $space_between_items;
+
+         & .active {
+            background: $color_primary_container;
+         }
+
+         & .urgent {
+            background: $color_tertiary_container;
          }
       }
    }
-}
-
-.power {
-   @include bar-module();
-   margin-left: $space_between_items;
 }

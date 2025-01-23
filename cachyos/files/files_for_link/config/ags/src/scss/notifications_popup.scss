@@ -7,6 +7,10 @@
       min-width: 20px;
    }
 
+   & .filler-button {
+      background: pink;
+   }
+
    & .notification {
       background: $color_surface;
       border: 4px solid $color_outline_variant;

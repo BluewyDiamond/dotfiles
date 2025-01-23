@@ -6,7 +6,7 @@ import { GLib } from "astal";
 export default function (): Gtk.Button {
    return Widget.Button(
       {
-         cssClasses: ["app-launcher-b"],
+         cssClasses: ["app-launcher"],
 
          onClicked: () => {
             App.toggle_window("astal-app-launcher");

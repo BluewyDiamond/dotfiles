@@ -24,7 +24,7 @@
       }
 
       & .close {
-         @include container-shape();
+         @include container_shape();
          color: $color_on_primary_container;
          background: $color_primary_container;
          padding: $content_padding;
@@ -65,7 +65,7 @@
 
    & .actions {
       & > button {
-         @include container-shape();
+         @include container_shape();
          background: $color_primary_container;
          margin-right: 4px;
          padding: $content_padding;

@@ -8,10 +8,7 @@ import Hookable from "../../../../libs/services/Hookable";
 
 const hyprland = AstalHyprland.get_default();
 
-function ClientWidget(
-   client: AstalHyprland.Client,
-   hyprland: AstalHyprland.Hyprland
-): Gtk.Button {
+function ClientButton(client: AstalHyprland.Client): Gtk.Button {
    return Widget.Button(
       {
          onClicked: () => {
@@ -67,20 +64,20 @@ export class ClientMap extends Hookable implements Subscribable {
       super();
 
       hyprland.clients.forEach((client) => {
-         this.set(client.get_address(), ClientWidget(client, hyprland));
+         this.map.set(client.address, ClientButton(client));
       });
 
       this.sort();
       this.notify();
 
-      this.hook(hyprland, "client-added", (_, client) => {
-         this.set(client.get_address(), ClientWidget(client, hyprland));
+      this.hook(hyprland, "client-added", (_, client: AstalHyprland.Client) => {
+         this.map.set(client.address, ClientButton(client));
          this.sort();
          this.notify();
       });
 
-      this.hook(hyprland, "client-removed", (_, address) => {
-         this.delete(address);
+      this.hook(hyprland, "client-removed", (_, address: string) => {
+         this.map.delete(address);
          this.notify();
       });
 
@@ -101,16 +98,6 @@ export class ClientMap extends Hookable implements Subscribable {
    destroy() {
       super.destroy();
       this.var.drop();
-   }
-
-   private set(key: string, value: Gtk.Widget) {
-      //this.map.get(key)?.unparent();
-      this.map.set(key, value);
-   }
-
-   private delete(key: string) {
-      //this.map.get(key)?.unparent(); // maybe uneeded
-      this.map.delete(key);
    }
 
    private notify() {

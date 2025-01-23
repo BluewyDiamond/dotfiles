@@ -1,6 +1,6 @@
 .notifications-overview {
    & .main-box {
-      @include container-shape();
+      @include container_shape();
       min-width: 500px;
       min-height: 500px;
       padding: $space_between_items;
@@ -17,7 +17,7 @@
 
       & .actions-box {
          & > button {
-            @include container-shape();
+            @include container_shape();
             padding: $content_padding;
             background: $color_primary_container;
             color: $color_on_primary_container;

@@ -90,7 +90,10 @@ export default function (
       anchor = Astal.WindowAnchor.TOP | Astal.WindowAnchor.BOTTOM;
 
       widget = Widget.Box(
-         {},
+         {
+            hexpand: false,
+            vexpand: false,
+         },
 
          Filler({
             widthRequest: options.filler.width,
@@ -100,7 +103,11 @@ export default function (
          }),
 
          Widget.Box(
-            { vertical: true },
+            {
+               vertical: true,
+               hexpand: false,
+               vexpand: false,
+            },
 
             Widget.Button({
                cssClasses: ["top-offset"],
@@ -128,7 +135,10 @@ export default function (
       anchor = Astal.WindowAnchor.TOP | Astal.WindowAnchor.BOTTOM;
 
       widget = Widget.Box(
-         {},
+         {
+            hexpand: false,
+            vexpand: false,
+         },
 
          Filler({
             widthRequest: options.filler.width,
@@ -138,7 +148,11 @@ export default function (
          }),
 
          Widget.Box(
-            { vertical: true },
+            {
+               vertical: true,
+               hexpand: false,
+               vexpand: false,
+            },
 
             Filler({
                hexpand: true,
@@ -166,7 +180,10 @@ export default function (
       anchor = Astal.WindowAnchor.TOP | Astal.WindowAnchor.RIGHT;
 
       widget = Widget.Box(
-         {},
+         {
+            hexpand: false,
+            vexpand: false,
+         },
 
          Filler({
             widthRequest: options.filler.width,
@@ -178,6 +195,8 @@ export default function (
          Widget.Box(
             {
                vertical: true,
+               hexpand: false,
+               vexpand: false,
             },
 
             Filler({
