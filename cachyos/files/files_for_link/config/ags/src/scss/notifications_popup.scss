@@ -10,5 +10,12 @@
    & .notification {
       background: $color_surface;
       border: 4px solid $color_outline_variant;
+
+      // i have no idea why i have to override this
+      & .header {
+         & .time {
+            background: $color_surface;
+         }
+      }
    }
 }

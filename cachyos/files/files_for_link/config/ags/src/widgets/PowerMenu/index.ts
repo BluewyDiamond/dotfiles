@@ -81,7 +81,7 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
       },
 
       Widget.Box({
-         cssClasses: ["power-menu-content"],
+         cssClasses: ["main-box"],
 
          children: [
             Widget.Button(
