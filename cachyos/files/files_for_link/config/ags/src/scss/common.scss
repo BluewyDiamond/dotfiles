@@ -25,8 +25,8 @@
 
       & .close {
          @include container_shape();
-         color: $color_on_primary_container;
-         background: $color_primary_container;
+         color: $color_on_secondary_container;
+         background: $color_secondary_container;
          padding: $content_padding;
 
          image {
@@ -66,7 +66,7 @@
    & .actions {
       & > button {
          @include container_shape();
-         background: $color_primary_container;
+         background: $color_secondary_container;
          margin-right: 4px;
          padding: $content_padding;
 
@@ -75,7 +75,7 @@
          }
 
          & > label {
-            color: $color_on_primary_container;
+            color: $color_on_secondary_container;
          }
       }
    }

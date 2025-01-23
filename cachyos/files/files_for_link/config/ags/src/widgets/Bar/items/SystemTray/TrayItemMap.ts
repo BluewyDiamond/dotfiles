@@ -13,7 +13,7 @@ function TrayItemMenuButton(item: Tray.TrayItem): Gtk.MenuButton {
             function onItemChanged(item: Tray.TrayItem) {
                self.tooltipMarkup = item.tooltipMarkup;
                // @ts-ignore
-               self.actionGroup = ["dbusmenu", item.actionGroup];
+               self.insert_action_group("dbusmenu", item.actionGroup);
                self.menuModel = item.menuModel;
             }
 

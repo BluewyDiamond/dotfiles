@@ -42,15 +42,15 @@
             }
 
             &.occupied {
-               background: $color_primary_container;
+               background: $color_secondary_container;
             }
 
             &.active {
-               background: $color_primary;
+               background: $color_primary_container;
             }
 
             &.urgent {
-               background: $color_tertiary_container;
+               background: $color_warning_container;
             }
 
             & > label {
@@ -80,8 +80,6 @@
       }
 
       .system-tray {
-         margin-left: $space_between_items;
-
          & > menubutton {
             @include bar_item();
             margin-left: $space_between_items;
@@ -92,16 +90,28 @@
          }
 
          popover {
-            background: $color_surface_container;
+            all: unset;
+            background: $color_surface;
             border: 4px solid $color_outline_variant;
             border-radius: $border_radius;
             padding: $space_between_items;
+            padding-top: 0;
+            margin-top: 0;
 
             modelbutton {
-               margin-bottom: $space_between_items;
-               background: $color_surface;
-               border-radius: $border_radius;
+               @include container-shape();
+               margin-top: $space_between_items;
+               background: $color_secondary_container;
                padding: $content_padding;
+               color: $color_on_secondary_container;
+
+               &:first-child {
+                  margin-bottom: 0;
+               }
+
+               // &:hover {
+               //    background: $color_primary_container;
+               // }
             }
          }
       }
