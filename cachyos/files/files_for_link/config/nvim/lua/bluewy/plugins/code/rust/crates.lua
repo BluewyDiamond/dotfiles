@@ -3,6 +3,6 @@ return {
    tag = "stable",
 
    config = function()
-      require("crates").setup()
+      require("crates").setup({})
    end,
 }
