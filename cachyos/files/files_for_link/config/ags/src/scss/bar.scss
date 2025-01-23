@@ -1,7 +1,7 @@
 $space_between_bar_modules: 7.2px;
 
 .bar {
-   background: $color_background;
+   background: $color_surface;
 
    .container {
       padding: 8px;
@@ -29,7 +29,7 @@ $space_between_bar_modules: 7.2px;
 
    > button {
       margin-right: 4px;
-      background: $color_background;
+      background: $color_surface_container;
       min-width: 3pt;
       min-height: 3pt;
       border-radius: 10%;
@@ -45,7 +45,7 @@ $space_between_bar_modules: 7.2px;
       }
 
       &.urgent {
-         background: $color_alert;
+         background: $color_tertiary;
       }
 
       &:last-child {
@@ -62,14 +62,10 @@ $space_between_bar_modules: 7.2px;
    & > button {
       @include bar-module();
       margin-right: $space_between_bar_modules;
-
-      &:hover {
-         background: transparentize($color_primary, 0.5);
-      }
    }
 
    & .urgent {
-      background: $color_alert;
+      background: $color_tertiary;
    }
 }
 
@@ -96,15 +92,11 @@ $space_between_bar_modules: 7.2px;
       image {
          -gtk-icon-size: 24px;
       }
-
-      &:hover {
-         background: transparentize($color_primary, 0.5);
-      }
    }
 
    popover {
-      background: $color_background;
-      border: 2px solid $color_border;
+      background: $color_surface_container;
+      border: 2px solid $color_outline;
       border-radius: $border_radius;
       padding: 10px;
 
@@ -113,10 +105,6 @@ $space_between_bar_modules: 7.2px;
          background: $color_surface;
          border-radius: $border_radius;
          padding: 4px;
-
-         &:hover {
-            background: transparentize($color_primary, 0.5);
-         }
       }
    }
 }

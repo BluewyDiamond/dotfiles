@@ -5,27 +5,37 @@
 
    & .main-box {
       min-width: 500px;
-      background: $color_background;
-      color: $color_on_background;
+      background: $color_surface;
       border-radius: $border_radius;
-      border: 4px solid $color_border;
+      border: 4px solid $color_outline_variant;
       padding: 8px;
 
       & > entry {
          & > text {
             font-size: 28px;
+            color: $color_on_surface;
          }
 
-         background: $color_surface;
+         background: $color_surface_container;
          margin-bottom: 8px;
          border-radius: $border_radius;
       }
 
       & > .hotswap-box {
+         & .empty-box {
+            color: $color_on_surface;
+            background: $color_surface_container;
+         }
+
+         & .sh-box {
+            color: $color_on_surface;
+            background: $color_surface_container;
+         }
+
          & .apps-box {
             & > button {
                padding: 8px;
-               background: $color_surface;
+               background: $color_surface_container;
                border-radius: $border_radius;
                margin-bottom: 8px;
 
@@ -34,15 +44,31 @@
                }
 
                &:hover {
-                  background: transparentize($color_primary, 0.5);
+                  background: $color_primary_container;
+
+                  .name {
+                     color: $color_on_primary_container;
+                  }
+
+                  .description {
+                     color: $color_on_primary_container;
+                  }
                }
 
                &.selected {
-                  background: transparentize($color_primary, 0.5);
+                  background: $color_primary;
+
+                  .name {
+                     color: $color_on_primary;
+                  }
+
+                  .description {
+                     color: $color_on_primary;
+                  }
                }
 
                & > box {
-                  & > .icon-with-label-fallback {
+                  & .icon-with-label-fallback {
                      & > image {
                         -gtk-icon-size: 55px;
                      }
@@ -55,15 +81,14 @@
                      margin-right: 8px;
                   }
 
-                  & > box {
-                     & > .name {
-                        font-size: 22px;
-                     }
+                  & .name {
+                     font-size: 22px;
+                     color: $color_on_surface;
+                  }
 
-                     & > .description {
-                        font-size: 18px;
-                        color: darken($color_on_surface, 10%);
-                     }
+                  & .description {
+                     font-size: 18px;
+                     color: $color_on_surface_variant;
                   }
                }
             }

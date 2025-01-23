@@ -1,16 +1,16 @@
 .notifications-overview {
    & .main-box {
+      @include container-base();
       min-width: 500px;
       min-height: 500px;
-      background: $color_background;
+      background: $color_surface;
 
-      border: 4px solid $color_border;
+      border: 4px solid $color_outline_variant;
 
       padding: 10px;
       margin: 0.5rem 1rem 0.5rem 1rem;
 
       & > box {
-         padding: 8px;
          margin-bottom: 8px;
 
          &:last-child {
@@ -20,16 +20,15 @@
 
       & .actions-box {
          & > button {
-            background: $color_surface;
-            color: $color_on_surface;
-            padding: 4px;
-            border-radius: $border_radius;
+            @include container-base();
+            background: $color_primary_container;
+            color: $color_on_primary_container;
          }
       }
 
       & .notifications-box {
          & .notification {
-            background: $color_surface;
+            background: $color_surface_container;
             color: $color_on_surface;
          }
       }

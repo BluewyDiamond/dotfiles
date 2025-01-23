@@ -8,6 +8,7 @@
    }
 
    & .notification {
-      border: 4px solid $color_border;
+      background: $color_surface;
+      border: 4px solid $color_outline_variant;
    }
 }

@@ -1,14 +1,37 @@
-$color_primary: #e06c75;
-$color_on_primary: #000000;
-$color_error: #ff0000;
-$color_on_error: #000000;
-$color_background: #15171c;
-$color_on_background: #abb2bf;
-$color_surface: #282c34;
+$color_primary: #ffb3b6;
+$color_on_primary: #561d23;
+$color_primary_container: #723338;
+$color_on_primary_container: #ffdada;
+
+$color_tertiary: #feb876;
+$color_on_tertiary: #4b2800;
+$color_tertiary_container: #6a3b01;
+$color_on_tertiary_container: #ffdcbf;
+
+// $color_surface_dim: #111318;
+$color_surface: #111318;
+// $color_surface_bright: #37393e;
+
+// $color_surface_container_lowest: #0c0e13;
+// $color_surface_container_low: #1a1b20;
+$color_surface_container: #21252b;
+// $color_surface_container_high: #282a2f;
+// $color_surface_container_highest: #33353a;
+
 $color_on_surface: #abb2bf;
-$color_alert: #d19a66;
-$color_on_alert: #000000;
-$color_border: #7f848e;
+$color_on_surface_variant: #7f848e;
+
+$color_error: #ffb4a8;
+$color_on_error: #561e16;
+$color_error_container: #73342a;
+$color_on_error_container: #ffdad4;
+
+$color_inverse_surface: #e2e2e9;
+$color_inverse_on_surface: #2f3036;
+$color_inverse_primary: #8f4a4e;
+
+$color_outline: #8e9099;
+$color_outline_variant: #43474e;
 
 $border_radius: 4px;
 

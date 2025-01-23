@@ -1,27 +1,30 @@
 .notification {
-   background: $color_background;
-   color: $color_on_background;
+   background: $color_surface_container;
    margin-bottom: 8px;
    border-radius: $border_radius;
    min-width: 500px;
    padding: 8px;
 
-   & .notification-header {
-      & .notification-app-icon {
+   & .header {
+      & .app-icon {
          -gtk-icon-size: 24px;
          margin-right: 4px;
       }
 
-      & .notification-app-name {
+      & .app-name {
+         color: $color_on_surface;
          font-size: 18px;
       }
 
-      & .notification-time {
+      & .time {
+         color: $color_on_surface;
          font-size: 18px;
          margin-right: 4px;
       }
 
-      & .notification-close {
+      & .close {
+         color: $color_on_surface;
+
          image {
             -gtk-icon-size: 24px;
          }
@@ -30,36 +33,35 @@
 
    & > separator {
       margin: 0 0.4rem;
-      background-color: $color_on_surface;
+      background-color: $color_outline_variant;
    }
 
-   & .notification-content {
+   & .content {
       padding: 8px;
 
-      & .notification-image {
+      & .image {
          min-width: 100px;
          margin-right: 10px;
          border-radius: $border_radius;
       }
 
-      & > box {
-         & .notification-summary {
-            font-size: 18px;
-            margin-bottom: 4px;
-         }
+      & .summary {
+         font-size: 18px;
+         margin-bottom: 4px;
+         color: $color_on_surface;
+      }
 
-         & .notification-body {
-            font-size: 16px;
-            margin-bottom: 4px;
-            color: transparentize($color_on_surface, 0.2);
-         }
+      & .body {
+         font-size: 16px;
+         margin-bottom: 4px;
+         color: $color_on_surface_variant;
       }
    }
 
-   & .notification-actions {
+   & .actions {
       & > button {
-         background: $color_surface;
-         border-radius: $border_radius;
+         @include container-base();
+         background: $color_primary_container;
          margin-right: 4px;
 
          &:last-child {
@@ -67,7 +69,7 @@
          }
 
          & > label {
-            color: $color_primary;
+            color: $color_on_primary_container;
          }
       }
    }

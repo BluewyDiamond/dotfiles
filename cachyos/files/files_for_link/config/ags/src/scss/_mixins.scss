@@ -1,10 +1,15 @@
 @mixin bar-module {
-   background: $color_surface;
+   background: $color_surface_container;
    color: $color_on_surface;
    border-radius: $border_radius;
    padding: 4px;
 
    &.active {
-      background: transparentize($color_primary, 0.5);
+      background: $color_primary_container;
    }
+}
+
+@mixin container-base {
+   padding: 4px;
+   border-radius: 4px;
 }

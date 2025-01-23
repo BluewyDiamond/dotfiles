@@ -45,10 +45,12 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
    });
 
    const shBox = Widget.Box({
+      cssClasses: ["sh-box"],
       children: [Widget.Label({ label: "shbox mode! :3" })],
    });
 
    const emptyBox = Widget.Box({
+      cssClasses: ["empty-box"],
       children: [Widget.Label({ label: "empty..." })],
    });
 

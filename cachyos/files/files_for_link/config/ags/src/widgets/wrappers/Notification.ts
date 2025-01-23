@@ -36,7 +36,7 @@ export default function (props: NotificationProps): Gtk.Box {
 
       children: [
          Widget.Box({
-            cssClasses: ["notification-header"],
+            cssClasses: ["header"],
 
             setup: (self) => {
                let foundedIcon = findIcon(notification.app_icon);
@@ -50,7 +50,7 @@ export default function (props: NotificationProps): Gtk.Box {
                      ...self.children,
 
                      IconWithLabelFallback({
-                        cssClasses: ["notification-app-icon"],
+                        cssClasses: ["app-icon"],
                         iconName: foundedIcon,
                      }),
                   ];
@@ -61,21 +61,21 @@ export default function (props: NotificationProps): Gtk.Box {
 
                   Widget.Label({
                      halign: Gtk.Align.START,
-                     cssClasses: ["notification-app-name"],
+                     cssClasses: ["app-name"],
                      ellipsize: Pango.EllipsizeMode.END,
                      label: notification.appName || "undefined",
                   }),
 
                   Widget.Label({
                      halign: Gtk.Align.END,
-                     cssClasses: ["notification-time"],
+                     cssClasses: ["time"],
                      hexpand: true,
                      label: time(notification.time),
                   }),
 
                   Widget.Button(
                      {
-                        cssClasses: ["notification-close"],
+                        cssClasses: ["close"],
                         onClicked: () => notification.dismiss(),
                      },
 
@@ -88,7 +88,7 @@ export default function (props: NotificationProps): Gtk.Box {
          new Gtk.Separator({ visible: true }),
 
          Widget.Box({
-            cssClasses: ["notification-content"],
+            cssClasses: ["content"],
 
             setup: (self) => {
                if (notification.image && isValidImage(notification.image)) {
@@ -96,7 +96,7 @@ export default function (props: NotificationProps): Gtk.Box {
                      ...self.children,
 
                      Widget.Image({
-                        cssClasses: ["notification-image"],
+                        cssClasses: ["image"],
                         file: notification.image,
                      }),
                   ];
@@ -114,7 +114,7 @@ export default function (props: NotificationProps): Gtk.Box {
                               ...self.children,
 
                               Widget.Label({
-                                 cssClasses: ["notification-summary"],
+                                 cssClasses: ["summary"],
                                  halign: Gtk.Align.START,
                                  xalign: 0,
                                  ellipsize: Pango.EllipsizeMode.END,
@@ -128,7 +128,7 @@ export default function (props: NotificationProps): Gtk.Box {
                               ...self.children,
 
                               Widget.Label({
-                                 cssClasses: ["notification-body"],
+                                 cssClasses: ["body"],
                                  halign: Gtk.Align.START,
                                  xalign: 0,
                                  wrap: true,
@@ -152,7 +152,7 @@ export default function (props: NotificationProps): Gtk.Box {
                ...self.children,
 
                Widget.Box({
-                  cssClasses: ["notification-actions"],
+                  cssClasses: ["actions"],
                   hexpand: true,
 
                   setup: (self) => {
