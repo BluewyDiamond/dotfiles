@@ -29,7 +29,7 @@ function build
     end
 
     mkdir -p $build_dir
-    esbuild $parent/src/main.ts --outdir=$build_dir --bundle --external:gi://\* --external:console --external:system --tsconfig=tsconfig.json --platform=neutral
+    esbuild $parent/src/main.ts --outdir=$build_dir --bundle --external:gi://\* --external:console --external:system --tsconfig=tsconfig.json --platform=neutral --minify
 end
 
 function types
