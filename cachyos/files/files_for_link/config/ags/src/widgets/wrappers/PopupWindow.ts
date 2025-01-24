@@ -1,5 +1,6 @@
-import { App, Astal, Gdk, Gtk, Widget } from "astal/gtk4";
+import { App, Astal, Gdk, Gtk, hook, Widget } from "astal/gtk4";
 import options from "../../options";
+import { interval } from "astal";
 
 type FillerProps = {
    cssClasses?: string[];
@@ -51,6 +52,7 @@ type PopupWindowProps = {
    layer?: Astal.Layer;
    keymode?: Astal.Keymode;
    position: Position;
+   clickThroughFiller?: boolean;
    onFillerClicked?: () => void;
    onKeyReleasedEvent?: (self: Gtk.Widget, event: number) => void;
    onDestroyed?: (self: Gtk.Window) => void;
@@ -69,6 +71,7 @@ export default function (
       layer,
       keymode,
       position,
+      clickThroughFiller,
       onFillerClicked,
       onKeyReleasedEvent,
       onDestroyed,
@@ -223,7 +226,7 @@ export default function (
       );
    }
 
-   return Widget.Window(
+   const window = Widget.Window(
       {
          gdkmonitor: gdkmonitor,
          name: name,
@@ -256,4 +259,30 @@ export default function (
 
       widget
    );
+
+   if (clickThroughFiller) {
+      Astal.Extra.updateInputRegion(child, window);
+
+      // need to listen to resize signals but
+      // idk which signal is available for it
+      //hook(child, child, "notify::size-allocate", () => {
+      //   Astal.Extra.updateInputRegion(child, window);
+      //   console.log(child.get_width());
+      //});
+
+      // temporary workaround
+      hook(window, window, "notify::visible", () => {
+         let x;
+         if (window.visible) {
+           x = interval(1000, () => {
+               Astal.Extra.updateInputRegion(child, window);
+            });
+
+         } else {
+            x?.cancel()
+         }
+      });
+   }
+
+   return window;
 }
