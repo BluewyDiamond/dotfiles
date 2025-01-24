@@ -1,4 +1,8 @@
 .notifications-overview {
+   & .top-offset {
+      min-height: 20px;
+   }
+
    & .main-box {
       @include container_shape();
       min-width: 500px;
