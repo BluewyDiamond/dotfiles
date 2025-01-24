@@ -261,7 +261,7 @@ export default function (
    );
 
    if (clickThroughFiller) {
-      Astal.Extra.updateInputRegion(child, window);
+      Astal.Extra.makeSingleClickableWidget(child, window);
 
       // need to listen to resize signals but
       // idk which signal is available for it
@@ -273,9 +273,10 @@ export default function (
       // temporary workaround
       hook(window, window, "notify::visible", () => {
          let x;
+
          if (window.visible) {
            x = interval(1000, () => {
-               Astal.Extra.updateInputRegion(child, window);
+               Astal.Extra.makeSingleClickableWidget(child, window);
             });
 
          } else {
