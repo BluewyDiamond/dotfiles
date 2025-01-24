@@ -28,7 +28,9 @@ export default function (): Astal.Box {
                         },
                      },
 
-                     IconWithLabelFallback({ iconName: icons.notifications.normal })
+                     IconWithLabelFallback({
+                        iconName: icons.notifications.noisy,
+                     })
                   ),
                ];
 
@@ -49,7 +51,9 @@ export default function (): Astal.Box {
                         },
                      },
 
-                     IconWithLabelFallback({ iconName: "notifications" })
+                     IconWithLabelFallback({
+                        iconName: icons.notifications.normal,
+                     })
                   ),
                ];
             }
