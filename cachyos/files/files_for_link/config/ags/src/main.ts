@@ -75,7 +75,6 @@ App.start({
       }
 
       onMonitorsChanged();
-      onMonitorsChanged();
 
       // no need to cleanup cause listening for application
       // to quit destroys wipes everything either way
