@@ -15,6 +15,7 @@ return {
             php = { "pretty-php" },
             rust = { "rustfmt" },
             typescript = { "prettier" },
+            vala = { "uncrustify" },
 
             -- data formats
             json = { "prettier" },
