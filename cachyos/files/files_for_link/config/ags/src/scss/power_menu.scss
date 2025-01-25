@@ -23,7 +23,7 @@
             color: black;
             background: linear-gradient(
                to top,
-               $color_primary 33.33%,
+               $color_primary_container 33.33%,
                $color_surface 66.67%
             );
          }
@@ -32,14 +32,14 @@
             color: black;
             background: linear-gradient(
                to top,
-               $color_primary 66.66%,
+               $color_primary_container 66.66%,
                $color_surface 33.34%
             );
          }
 
          &.three {
             color: black;
-            background: $color_primary;
+            background: $color_primary_container;
          }
 
          & > .icon-with-label-fallback {
