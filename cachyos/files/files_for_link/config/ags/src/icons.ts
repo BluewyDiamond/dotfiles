@@ -2,10 +2,6 @@ export default {
    missing: "image-missing-symbolic",
    broken: "package-broken",
 
-   app: {
-      terminal: "terminal-symbolic",
-   },
-
    fallback: {
       executable: "application-x-executable",
       notification: "dialog-information-symbolic",

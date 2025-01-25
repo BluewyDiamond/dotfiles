@@ -1,4 +1,4 @@
-import { App, Astal, Gtk, hook } from "astal/gtk4";
+import { App, Gtk, hook } from "astal/gtk4";
 
 export function setupAsPanelButton(button: Gtk.Button, windowName: string) {
    let open = false;
