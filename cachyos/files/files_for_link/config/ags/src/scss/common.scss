@@ -1,33 +1,33 @@
 .notification {
    background: $color_surface_container;
    border-radius: $border_radius;
-   padding: $content_padding;
+   padding: $space_small;
 
    & .header {
       & .app-icon {
          -gtk-icon-size: 24px;
          margin-right: 4px;
-         padding: $content_padding;
+         padding: $space_small;
       }
 
       & .app-name {
          color: $color_on_surface;
          font-size: 18px;
-         padding: $content_padding;
+         padding: $space_small;
       }
 
       & .time {
          color: $color_on_surface;
          font-size: 18px;
          margin-right: 4px;
-         padding: $content_padding;
+         padding: $space_small;
       }
 
       & .close {
          @include container_shape();
          color: $color_on_secondary_container;
          background: $color_secondary_container;
-         padding: $content_padding;
+         padding: $space_small;
 
          image {
             -gtk-icon-size: 24px;
@@ -45,21 +45,21 @@
          min-width: 100px;
          margin-right: 10px;
          border-radius: $border_radius;
-         padding: $content_padding;
+         padding: $space_small;
       }
 
       & .summary {
          font-size: 18px;
          margin-bottom: 4px;
          color: $color_on_surface;
-         padding: $content_padding;
+         padding: $space_small;
       }
 
       & .body {
          font-size: 16px;
          margin-bottom: 4px;
          color: $color_on_surface_variant;
-         padding: $content_padding;
+         padding: $space_small;
       }
    }
 
@@ -68,7 +68,7 @@
          @include container_shape();
          background: $color_secondary_container;
          margin-right: 4px;
-         padding: $content_padding;
+         padding: $space_small;
 
          &:last-child {
             margin-right: 0;

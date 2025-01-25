@@ -6,7 +6,7 @@
    @include container_shape();
    background: $color_surface_container;
    color: $color_on_surface;
-   padding: $content_padding;
+   padding: $space_small;
 
    &.active {
       background: $color_primary_container;

@@ -1,14 +1,14 @@
 .power-menu {
    & .main-box {
       @include container_shape();
-      padding: $space_between_items;
+      padding: $space_medium;
       background: $color_surface;
       border: 4px solid $color_outline_variant;
 
       button {
          @include container_shape();
          background: $color_surface_container;
-         margin-right: $space_between_items;
+         margin-right: $space_medium;
 
          &:last-child {
             margin-right: 0;

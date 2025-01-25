@@ -2,7 +2,7 @@
    background: $color_surface;
 
    & > .main-center-box {
-      padding: $space_between_items;
+      padding: $space_medium;
 
       .icon-with-label-fallback {
          & > image {
@@ -16,7 +16,7 @@
 
       .app-launcher {
          @include bar_item();
-         margin-right: $space_between_items;
+         margin-right: $space_medium;
 
          &:hover {
             background: $color_primary_container;
@@ -33,7 +33,7 @@
 
       .workspaces {
          @include bar_item();
-         margin-right: $space_between_items;
+         margin-right: $space_medium;
 
          & > button {
             @include container_shape();
@@ -78,7 +78,7 @@
       .taskbar {
          & > button {
             @include bar_item();
-            margin-right: $space_between_items;
+            margin-right: $space_medium;
 
             &:hover {
                background: $color_primary_container;
@@ -87,7 +87,7 @@
       }
 
       .notifications {
-         margin-right: $space_between_items;
+         margin-right: $space_medium;
 
          & > button {
             @include bar_item();
@@ -100,13 +100,13 @@
 
       .time {
          @include bar_item();
-         margin-right: $space_between_items;
+         margin-right: $space_medium;
       }
 
       .system-tray {
          & > menubutton {
             @include bar_item();
-            margin-left: $space_between_items;
+            margin-left: $space_medium;
 
             &:hover {
                background: $color_primary_container;
@@ -122,15 +122,15 @@
             background: $color_surface;
             border: 4px solid $color_outline_variant;
             border-radius: $border_radius;
-            padding: $space_between_items;
+            padding: $space_medium;
             padding-top: 0;
             margin-top: 0;
 
             modelbutton {
                @include container-shape();
-               margin-top: $space_between_items;
+               margin-top: $space_medium;
                background: $color_surface_container;
-               padding: $content_padding;
+               padding: $space_small;
                color: $color_on_surface;
 
                &:first-child {
@@ -146,26 +146,26 @@
 
       ._ram {
          @include bar_item();
-         margin-left: $space_between_items;
+         margin-left: $space_medium;
       }
 
       .cpu {
          @include bar_item();
-         margin-left: $space_between_items;
+         margin-left: $space_medium;
       }
 
       .battery {
          @include bar_item();
-         margin-left: $space_between_items;
+         margin-left: $space_medium;
       }
 
       .indicators {
          @include bar_item();
-         margin-left: $space_between_items;
+         margin-left: $space_medium;
 
          & > box {
             & > .icon-with-label-fallback {
-               margin-left: $inner_spacing;
+               margin-left: $space_small;
 
                &:first-child {
                   margin-left: 0;
@@ -176,7 +176,7 @@
 
       .power {
          @include bar_item();
-         margin-left: $space_between_items;
+         margin-left: $space_medium;
 
          &:hover {
             background: $color_primary_container;

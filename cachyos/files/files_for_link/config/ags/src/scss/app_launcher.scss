@@ -14,6 +14,7 @@
          & > text {
             font-size: 28px;
             color: $color_on_surface;
+            padding: $space_small;
          }
 
          background: $color_surface_container;
@@ -23,18 +24,22 @@
 
       & > .hotswap-box {
          & .empty-box {
+            @include container-shape();
             color: $color_on_surface;
             background: $color_surface_container;
+            padding: $space_small;
          }
 
          & .sh-box {
+            @include container-shape();
             color: $color_on_surface;
             background: $color_surface_container;
+            padding: $space_small;
          }
 
          & .apps-box {
             & > button {
-               padding: 8px;
+               padding: $space_medium;
                background: $color_surface_container;
                border-radius: $border_radius;
                margin-bottom: 8px;

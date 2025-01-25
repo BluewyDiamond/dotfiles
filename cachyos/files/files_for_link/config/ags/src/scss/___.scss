@@ -51,9 +51,8 @@ $color_outline_variant: #53433f;
 $border_radius: 4px;
 
 // other
-$space_between_items: 7.2px;
-$content_padding: 4px;
-$inner_spacing: 4px;
+$space_medium: 7.2px; // ideal for spacing parent items, ex: widgets...
+$space_small: 4px; // ideal for spacing children items, ex: text in a label, icons that are next to each other...
 
 * {
    all: unset;
