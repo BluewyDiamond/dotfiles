@@ -1,6 +1,6 @@
 export default {
    theme: {
-      icons: "candy-icons"
+      icons: "candy-icons",
    },
 
    bar: {

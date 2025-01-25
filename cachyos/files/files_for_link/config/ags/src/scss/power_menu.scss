@@ -9,13 +9,14 @@
          @include container_shape();
          background: $color_surface_container;
          margin-right: $space_medium;
+         padding: $space_small;
 
          &:last-child {
             margin-right: 0;
          }
 
          &:hover {
-            color: $color_primary;
+            background: $color_primary_container;
          }
 
          &.one {
@@ -44,7 +45,7 @@
          & > .icon-with-label-fallback {
             image {
                -gtk-icon-size: 55px;
-               color: $color_on_primary_container;
+               color: $color_on_surface;
             }
          }
       }

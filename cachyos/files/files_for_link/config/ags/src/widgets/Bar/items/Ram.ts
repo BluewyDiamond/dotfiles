@@ -2,6 +2,7 @@ import { bind, interval, Variable } from "astal";
 import { Astal, Gtk, Widget } from "astal/gtk4";
 import { getMemoryStats, MemoryStats } from "../../../utils";
 import { IconWithLabelFallback } from "../../wrappers/IconWithLabelFallback";
+import icons from "../../../icons";
 
 const INTERVAL = 2000;
 const memoryStats: Variable<MemoryStats | null> = Variable(null);
@@ -17,14 +18,14 @@ export default function (): Gtk.Button {
          {},
 
          IconWithLabelFallback({
-            iconName: "",
+            iconName: icons.system.ram,
             fallbackLabel: "RAM ",
          }),
 
          Widget.Label({
             label: bind(memoryStats).as((memoryStats) => {
                if (!memoryStats) {
-                  return "?";
+                  return "???";
                }
 
                return `${Math.ceil(memoryStats.usage * 100)

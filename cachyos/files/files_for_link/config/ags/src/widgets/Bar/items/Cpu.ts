@@ -1,27 +1,32 @@
 import { bind, interval, Variable } from "astal";
-import { Astal, Widget } from "astal/gtk4";
+import { Gtk, Widget } from "astal/gtk4";
 import { CpuStats, getCpuStats } from "../../../utils";
 import { IconWithLabelFallback } from "../../wrappers/IconWithLabelFallback";
+import icons from "../../../icons";
 
 const INTERVAL = 2000;
-let last: CpuStats | null = null;
+let lastCpuStats: CpuStats | null = null;
 const cpuUsage: Variable<number | null> = Variable(null);
 
 interval(INTERVAL, async () => {
-   const now = await getCpuStats();
+   const cpuStats = await getCpuStats();
 
-   if (!now) {
-      return;
+   if (cpuStats) {
+      if (lastCpuStats) {
+         cpuUsage.set(
+            1 -
+               (cpuStats.idle - lastCpuStats.idle) /
+                  (cpuStats.total - lastCpuStats.total)
+         );
+      } else {
+         cpuUsage.set(null);
+      }
    }
 
-   if (last) {
-      cpuUsage.set(1 - (now.idle - last.idle) / (now.total - last.total));
-   }
-
-   last = now;
+   lastCpuStats = cpuStats;
 });
 
-export default function (): Astal.Button {
+export default function (): Gtk.Button {
    return Widget.Button(
       {
          cssClasses: ["cpu"],
@@ -29,12 +34,12 @@ export default function (): Astal.Button {
 
       Widget.Box({
          children: [
-            IconWithLabelFallback({ iconName: "", fallbackLabel: "CPU " }),
+            IconWithLabelFallback({ iconName: icons.system.cpu, fallbackLabel: "CPU " }),
 
             Widget.Label({
                label: bind(cpuUsage).as((cpuUsage) => {
                   if (!cpuUsage) {
-                     return "?";
+                     return "???%";
                   }
 
                   return `${Math.ceil(cpuUsage * 100)

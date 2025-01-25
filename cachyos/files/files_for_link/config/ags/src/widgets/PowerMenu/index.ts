@@ -2,79 +2,72 @@ import { App, Astal, Gdk, Gtk, Widget } from "astal/gtk4";
 import { IconWithLabelFallback } from "../wrappers/IconWithLabelFallback";
 import icons from "../../icons";
 import Variable from "astal/variable";
-import { execAsync, interval } from "astal";
+import { execAsync, interval, timeout } from "astal";
 import PopupWindow, { Position } from "../wrappers/PopupWindow";
 
+// Hide the window with the given name
 function hide() {
    App.get_window("astal-power-menu")?.hide();
 }
 
-function powerButtonSetup(self: Gtk.Button, clickCount: Variable<number>) {
-   let countingDown = false;
+function PowerButton(widget: Gtk.Widget, onThree: () => void): Gtk.Button {
+   const clicks = Variable(0);
+   let onInactive;
+   let countDown;
 
-   clickCount.subscribe((count) => {
-      if (count === 1) {
-         self.cssClasses = [...self.cssClasses, "one"];
+   return Widget.Button(
+      {
+         onClicked: () => {
+            countDown?.cancel();
+            countDown = undefined;
+            onInactive?.cancel();
+            onInactive = undefined;
 
-         self.cssClasses = self.cssClasses.filter(
-            (cssClass) => cssClass !== "two" && cssClass !== "three"
-         );
-      } else if (count === 2) {
-         self.cssClasses = [...self.cssClasses, "two"];
+            clicks.set(clicks.get() + 1);
 
-         self.cssClasses = self.cssClasses.filter(
-            (cssClass) => cssClass !== "one" && cssClass !== "three"
-         );
-      } else if (count === 3) {
-         self.cssClasses = [...self.cssClasses, "three"];
+            onInactive = timeout(3000, () => {
+               countDown = interval(3000, () => {
+                  const clicksValue = clicks.get();
 
-         self.cssClasses = self.cssClasses.filter(
-            (cssClass) => cssClass !== "one" && cssClass !== "two"
-         );
-      }
+                  if (clicksValue > 0) {
+                     clicks.set(clicksValue - 1);
+                  } else {
+                     countDown?.cancel();
+                  }
+               });
+            });
+         },
 
-      if (clickCount.get() === 0) {
-         return;
-      }
+         setup: (self) => {
+            clicks.subscribe((clicks) => {
+               self.cssClasses = self.cssClasses.filter(
+                  (cssClass) => !["one", "two", "three"].includes(cssClass)
+               );
 
-      if (countingDown) return;
-      countingDown = true;
+               if (clicks === 1) {
+                  self.cssClasses = [...self.cssClasses, "one"];
+               } else if (clicks === 2) {
+                  self.cssClasses = [...self.cssClasses, "two"];
+               } else if (clicks === 3) {
+                  self.cssClasses = [...self.cssClasses, "three"];
 
-      const gc = interval(3000, () => {
-         if (clickCount.get() === 0) {
-            gc.cancel();
-            countingDown = false;
-            return;
-         }
+                  timeout(1000, () => onThree());
+               } else if (clicks > 3) {
+                  self.cssClasses = [...self.cssClasses, "three"];
+               }
+            });
+         },
+      },
 
-         clickCount.set(clickCount.get() - 1);
-      });
-   });
+      widget
+   );
 }
 
-function onPowerButtonClicked(
-   clickCount: Variable<number>,
-   onConditionsMet: () => void
-) {
-   clickCount.set(clickCount.get() + 1);
-
-   if (clickCount.get() !== 3) {
-      return;
-   }
-
-   hide();
-   clickCount.set(0);
-   onConditionsMet();
-}
-
+// Create the power menu popup window
 export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
-   const sleepClickCount = Variable(0);
-   const rebootClickCount = Variable(0);
-   const poweroffClickCount = Variable(0);
-
    return PopupWindow(
       {
-         gdkmonitor: gdkmonitor,
+         gdkmonitor,
          name: "astal-power-menu",
          cssClasses: ["power-menu"],
          position: Position.CENTER,
@@ -84,58 +77,19 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
          cssClasses: ["main-box"],
 
          children: [
-            Widget.Button(
-               {
-                  onClicked: () => {
-                     onPowerButtonClicked(sleepClickCount, () => {
-                        execAsync(["fish", "-c", "systemctl suspend"]);
-                     });
-                  },
-
-                  setup: (self) => {
-                     powerButtonSetup(self, sleepClickCount);
-                  },
-               },
-
-               IconWithLabelFallback({
-                  iconName: icons.powermenu.sleep,
-               })
+            PowerButton(
+               IconWithLabelFallback({ iconName: icons.powermenu.sleep }),
+               () => execAsync(["fish", "-c", "systemctl suspend"])
             ),
 
-            Widget.Button(
-               {
-                  onClicked: () => {
-                     onPowerButtonClicked(rebootClickCount, () => {
-                        execAsync(["fish", "-c", "systemctl poweroff"]);
-                     });
-                  },
-
-                  setup: (self) => {
-                     powerButtonSetup(self, rebootClickCount);
-                  },
-               },
-
-               IconWithLabelFallback({
-                  iconName: icons.powermenu.reboot,
-               })
+            PowerButton(
+               IconWithLabelFallback({ iconName: icons.powermenu.reboot }),
+               () => execAsync(["fish", "-c", "systemctl reboot"])
             ),
 
-            Widget.Button(
-               {
-                  onClicked: () => {
-                     onPowerButtonClicked(poweroffClickCount, () => {
-                        execAsync(["fish", "-c", "systemctl poweroff"]);
-                     });
-                  },
-
-                  setup: (self) => {
-                     powerButtonSetup(self, poweroffClickCount);
-                  },
-               },
-
-               IconWithLabelFallback({
-                  iconName: icons.powermenu.shutdown,
-               })
+            PowerButton(
+               IconWithLabelFallback({ iconName: icons.powermenu.shutdown }),
+               () => execAsync(["fish", "-c", "systemctl poweroff"])
             ),
          ],
       })

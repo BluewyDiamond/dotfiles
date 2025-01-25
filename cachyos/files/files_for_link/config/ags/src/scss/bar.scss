@@ -147,11 +147,19 @@
       ._ram {
          @include bar_item();
          margin-left: $space_medium;
+
+         & .icon-with-label-fallback {
+            margin-right: $space-small;
+         }
       }
 
       .cpu {
          @include bar_item();
          margin-left: $space_medium;
+
+         & .icon-with-label-fallback {
+            margin-right: $space-small;
+         }
       }
 
       .battery {
