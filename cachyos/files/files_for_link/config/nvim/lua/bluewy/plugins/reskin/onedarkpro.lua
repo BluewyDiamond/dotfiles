@@ -5,6 +5,10 @@ return {
 
    config = function()
       require("onedarkpro").setup({
+         styles = {
+            comments = "italic",
+         },
+
          colors = {
             bg = "#282C34",
             fg = "#ABB2BF",

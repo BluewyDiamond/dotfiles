@@ -25,6 +25,7 @@ return {
             -- other
             css = { "prettier" },
             scss = { "prettier" },
+            html = { "prettier" },
          },
       })
    end,
