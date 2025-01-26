@@ -96,7 +96,12 @@ mappings.conform = {
 }
 
 mappings.fzf_lua = {
-   { "n", "<leader>ff", ":lua require('fzf-lua').files()<CR>", { noremap = true, silent = true, desc = "find files" } },
+   {
+      "n",
+      "<leader>ff",
+      ":lua require('fzf-lua').files()<CR>",
+      { noremap = true, silent = true, desc = "find files" },
+   },
 
    {
       "n",
@@ -107,13 +112,25 @@ mappings.fzf_lua = {
 }
 
 mappings.lsp = {
-   { "n", "<leader>of", vim.diagnostic.open_float, { noremap = true, silent = true, desc = "open float diagnostics" } },
+   {
+      "n",
+      "<leader>of",
+      vim.diagnostic.open_float,
+      { noremap = true, silent = true, desc = "open float diagnostics" },
+   },
+
    { "n", "gD", vim.lsp.buf.declaration, { noremap = true, silent = true, desc = "go to declaration" } },
    { "n", "gd", vim.lsp.buf.definition, { noremap = true, silent = true, desc = "go to definition" } },
    { "n", "K", vim.lsp.buf.hover, { noremap = true, silent = true, desc = "hover" } },
    { "n", "gi", vim.lsp.buf.implementation, { noremap = true, silent = true, desc = "go to implementation" } },
    { "n", "<leader>ls", vim.lsp.buf.signature_help, { noremap = true, silent = true, desc = "show signature help" } },
-   { "n", "<leader>D", vim.lsp.buf.type_definition, { noremap = true, silent = true, desc = "go to type definition" } },
+   {
+      "n",
+      "<leader>D",
+      vim.lsp.buf.type_definition,
+      { noremap = true, silent = true, desc = "go to type definition" },
+   },
+
    { "n", "<leader>ra", vim.lsp.buf.rename, { noremap = true, silent = true, desc = "refactor rename" } },
    { "n", "<leader>ca", vim.lsp.buf.code_action, { noremap = true, silent = true, desc = "show code actions" } },
    { "n", "gr", vim.lsp.buf.references, { noremap = true, silent = true, desc = "go to references" } },

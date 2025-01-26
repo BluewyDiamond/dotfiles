@@ -1,11 +1,11 @@
 return {
    {
-      "hrsh7th/nvim-cmp", --> latest commit
+      "hrsh7th/nvim-cmp",
 
       dependencies = {
          "hrsh7th/cmp-nvim-lsp", --> latest comimt
-         "hrsh7th/cmp-path", --> latest commit
-         "windwp/nvim-autopairs", --> latest commit
+         "hrsh7th/cmp-path",
+         "windwp/nvim-autopairs",
          {
             "L3MON4D3/LuaSnip",
 
@@ -55,7 +55,7 @@ return {
    },
 
    {
-      "windwp/nvim-ts-autotag", --> latest commit
+      "windwp/nvim-ts-autotag",
 
       config = function()
          require("nvim-ts-autotag").setup()

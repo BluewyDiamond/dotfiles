@@ -1,8 +1,8 @@
 return {
-   "pmizio/typescript-tools.nvim", --> latest commit
+   "pmizio/typescript-tools.nvim",
 
    dependencies = {
-      { "nvim-lua/plenary.nvim" }, --> latest commit
+      { "nvim-lua/plenary.nvim" },
       { "neovim/nvim-lspconfig" },
    },
 

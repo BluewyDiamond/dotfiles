@@ -1,5 +1,5 @@
 return {
-   "FabijanZulj/blame.nvim", --> latest commit
+   "FabijanZulj/blame.nvim",
 
    config = function()
       require("blame").setup()

@@ -1,5 +1,5 @@
 return {
-   "mfussenegger/nvim-lint", --> latest commit
+   "mfussenegger/nvim-lint",
    event = { "BufReadPre", "BufNewFile" },
 
    config = function()

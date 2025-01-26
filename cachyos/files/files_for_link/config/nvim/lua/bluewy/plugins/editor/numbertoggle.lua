@@ -1,3 +1,3 @@
 return {
-   "sitiom/nvim-numbertoggle", --> latest commit
+   "sitiom/nvim-numbertoggle",
 }
