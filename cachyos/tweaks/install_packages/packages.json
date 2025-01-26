@@ -47,18 +47,16 @@
          "hyprpaper"
       ],
 
-      "aur": ["bibata-cursor-theme-bin"]
+      "aur": [
+         "bibata-cursor-theme-bin",
+         "sweet-gtk-theme",
+         "candy-icons-git",
+         "sweet-folders-icons-git"
+      ]
    },
 
    "hyprland_widgets": {
-      "std": [
-         "dart-sass",
-         "fd",
-
-         "npx",
-         "gjs",
-         "esbuild"
-      ],
+      "std": ["dart-sass", "fd", "npx", "gjs", "esbuild"],
 
       "aur": [
          "libastal-io-git",
