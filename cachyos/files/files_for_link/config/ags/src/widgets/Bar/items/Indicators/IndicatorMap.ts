@@ -14,7 +14,8 @@ const wp = Wp.get_default();
 export class IndicatorMap extends Hookable implements Subscribable {
    private map: Map<string, Gtk.Widget> = new Map();
    private var: Variable<Array<Gtk.Widget>> = Variable([]);
-   private vars: Set<Variable<any>> = new Set();
+   // store references to be able to destroy them later
+   private derives: Set<Variable<any>> = new Set();
 
    constructor() {
       super();
@@ -28,7 +29,9 @@ export class IndicatorMap extends Hookable implements Subscribable {
             } else if (activeProfile === "powersaver") {
                this.set(
                   "powerprofiles",
-                  IconWithLabelFallback({ iconName: icons.powerprofile.powerSaver })
+                  IconWithLabelFallback({
+                     iconName: icons.powerprofile.powerSaver,
+                  })
                );
             } else if (activeProfile === "performance") {
                this.set(
@@ -53,7 +56,10 @@ export class IndicatorMap extends Hookable implements Subscribable {
          const audio = wp?.get_audio();
 
          if (!audio) {
-            this.set("recoders", IconWithLabelFallback({ iconName: icons.broken }));
+            this.set(
+               "recoders",
+               IconWithLabelFallback({ iconName: icons.broken })
+            );
 
             return;
          }
@@ -61,12 +67,15 @@ export class IndicatorMap extends Hookable implements Subscribable {
          const mic = audio.get_default_microphone();
 
          if (!mic) {
-            this.set("recoders", IconWithLabelFallback({ iconName: icons.broken }));
+            this.set(
+               "recoders",
+               IconWithLabelFallback({ iconName: icons.broken })
+            );
 
             return;
          }
 
-         this.vars.add(
+         this.derives.add(
             Variable.derive(
                [bind(audio, "recorders"), bind(mic, "volume")],
 
@@ -109,7 +118,10 @@ export class IndicatorMap extends Hookable implements Subscribable {
          const audio = wp?.get_audio();
 
          if (!audio) {
-            this.set("recoders", IconWithLabelFallback({ iconName: icons.broken }));
+            this.set(
+               "recoders",
+               IconWithLabelFallback({ iconName: icons.broken })
+            );
 
             return;
          }
@@ -117,12 +129,15 @@ export class IndicatorMap extends Hookable implements Subscribable {
          const speaker = audio.get_default_speaker();
 
          if (!speaker) {
-            this.set("recoders", IconWithLabelFallback({ iconName: icons.broken }));
+            this.set(
+               "recoders",
+               IconWithLabelFallback({ iconName: icons.broken })
+            );
 
             return;
          }
 
-         this.vars.add(
+         this.derives.add(
             Variable.derive([bind(speaker, "volume")], (volume) => {
                let icon = "";
 
@@ -148,12 +163,15 @@ export class IndicatorMap extends Hookable implements Subscribable {
          const video = wp?.get_video();
 
          if (!video) {
-            this.set("recoders", IconWithLabelFallback({ iconName: icons.broken }));
+            this.set(
+               "recoders",
+               IconWithLabelFallback({ iconName: icons.broken })
+            );
 
             return;
          }
 
-         this.vars.add(
+         this.derives.add(
             Variable.derive(
                [bind(video, "recorders")],
 
@@ -186,7 +204,7 @@ export class IndicatorMap extends Hookable implements Subscribable {
    destroy() {
       super.destroy();
       this.var.drop();
-      this.vars.forEach((derivedVar) => derivedVar.drop());
+      this.derives.forEach((derivedVar) => derivedVar.drop());
    }
 
    private set(key: string, value: Gtk.Widget) {

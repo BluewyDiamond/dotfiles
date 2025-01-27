@@ -1,4 +1,4 @@
-import { Astal, Widget } from "astal/gtk4";
+import { Gtk, Widget } from "astal/gtk4";
 import { GLib, Variable } from "astal";
 
 const time = Variable<string>("").poll(
@@ -6,7 +6,7 @@ const time = Variable<string>("").poll(
    () => GLib.DateTime.new_now_local().format("%H:%M - %A %e.")!
 );
 
-export default function (): Astal.Label {
+export default function (): Gtk.Label {
    return Widget.Label({
       cssClasses: ["time"],
       label: time(),

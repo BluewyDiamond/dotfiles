@@ -1,9 +1,9 @@
-import { App, Astal, Widget } from "astal/gtk4";
+import { App, Gtk, Widget } from "astal/gtk4";
 import { IconWithLabelFallback } from "../../wrappers/IconWithLabelFallback";
 import icons from "../../../icons";
 import { setupAsPanelButton } from "../../functions";
 
-export default (): Astal.Button => {
+export default (): Gtk.Button => {
    return Widget.Button(
       {
          cssClasses: ["power"],

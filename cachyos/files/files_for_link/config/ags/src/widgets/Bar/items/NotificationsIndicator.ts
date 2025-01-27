@@ -33,8 +33,6 @@ export default function (): Astal.Box {
                      })
                   ),
                ];
-
-               self.visible = true;
             } else {
                self.children = [
                   Widget.Button(
