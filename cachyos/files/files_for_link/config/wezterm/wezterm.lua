@@ -75,12 +75,14 @@ config.keys = {
    {
       key = "k",
       mods = "LEADER",
+
       action = act.PromptInputLine({
          description = wezterm.format({
             { Attribute = { Intensity = "Bold" } },
             { Foreground = { AnsiColor = "Fuchsia" } },
             { Text = "Renaming Tab Title...:" },
          }),
+
          action = wezterm.action_callback(function(window, pane, line)
             if line then
                window:active_tab():set_title(line)
@@ -108,6 +110,7 @@ config.key_tables = {
       { key = "Escape", action = "PopKeyTable" },
       { key = "Enter", action = "PopKeyTable" },
    },
+
    move_tab = {
       { key = "n", action = act.MoveTabRelative(-1) },
       { key = "e", action = act.MoveTabRelative(-1) },
