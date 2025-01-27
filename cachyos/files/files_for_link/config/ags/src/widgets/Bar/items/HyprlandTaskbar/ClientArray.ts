@@ -56,10 +56,10 @@ function ClientButton(client: AstalHyprland.Client): Gtk.Button {
    );
 }
 
-export class ClientMap extends Hookable implements Subscribable {
+export class ClientArray extends Hookable implements Subscribable {
    // have to sort, so using a map might not be optimal
-   private arr: Array<{ adress: string; widget: Gtk.Widget }> = [];
-   private var: Variable<Array<Gtk.Widget>> = Variable([]);
+   private array: Array<{ adress: string; widget: Gtk.Widget }> = [];
+   private variable: Variable<Array<Gtk.Widget>> = Variable([]);
 
    constructor() {
       super();
@@ -86,24 +86,24 @@ export class ClientMap extends Hookable implements Subscribable {
    }
 
    get(): Gtk.Widget[] {
-      return this.var.get();
+      return this.variable.get();
    }
 
    subscribe(callback: (list: Array<Gtk.Widget>) => void): () => void {
-      return this.var.subscribe(callback);
+      return this.variable.subscribe(callback);
    }
 
    destroy() {
       super.destroy();
-      this.var.drop();
+      this.variable.drop();
    }
 
    private notify() {
-      this.var.set([...this.arr.map((item) => item.widget)]);
+      this.variable.set([...this.array.map((item) => item.widget)]);
    }
 
    private add(client: AstalHyprland.Client) {
-      const index = this.arr.findIndex((item) => {
+      const index = this.array.findIndex((item) => {
          const predicateClient = hyprland.get_client(item.adress);
          if (!predicateClient) return false;
 
@@ -113,9 +113,9 @@ export class ClientMap extends Hookable implements Subscribable {
       const widget = ClientButton(client);
 
       if (index === -1) {
-         this.arr.push({ adress: client.address, widget: widget });
+         this.array.push({ adress: client.address, widget: widget });
       } else {
-         this.arr.splice(index, 0, {
+         this.array.splice(index, 0, {
             adress: client.address,
             widget: widget,
          });
@@ -123,13 +123,13 @@ export class ClientMap extends Hookable implements Subscribable {
    }
 
    private remove(address: string) {
-      const index = this.arr.findIndex((item) => item.adress === address);
+      const index = this.array.findIndex((item) => item.adress === address);
 
       if (index === -1) {
          console.error("Client to be removed is not present in the array.");
       }
 
-      this.arr.splice(index, 1);
+      this.array.splice(index, 1);
    }
 
    private move(client: AstalHyprland.Client) {
