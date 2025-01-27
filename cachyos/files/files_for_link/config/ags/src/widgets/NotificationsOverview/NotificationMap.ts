@@ -9,62 +9,54 @@ const notifd = Notifd.get_default();
 
 export class NotificationMap extends Hookable implements Subscribable {
    private map: Map<number, Gtk.Widget> = new Map();
-   private var: Variable<Array<Gtk.Widget>> = Variable([]);
+   private variable: Variable<Array<Gtk.Widget>> = Variable([]);
 
    constructor() {
       super();
 
       notifd.notifications.forEach((notification) => {
-         this.set(
+         this.map.set(
             notification.id,
             Notification({ notification: notification })
          );
+
+         this.notify();
       });
 
-      this.hook(notifd, "notified", (_, id) => {
+      this.hook(notifd, "notified", (_, id: number) => {
          const notification = notifd.get_notification(id);
-         this.set(id, Notification({ notification: notification }));
+         this.map.set(id, Notification({ notification: notification }));
+         this.notify();
       });
 
       this.hook(notifd, "resolved", (_, id) => {
-         this.delete(id);
+         this.map.delete(id);
+         this.notify();
       });
    }
 
    get() {
-      return this.var.get();
+      return this.variable.get();
    }
 
    subscribe(callback: (list: Array<Gtk.Widget>) => void) {
-      return this.var.subscribe(callback);
+      return this.variable.subscribe(callback);
    }
 
    destroy() {
       super.destroy();
-      this.var.drop();
+      this.variable.drop();
    }
 
    clear() {
       this.map.forEach((_, id) => {
-         notifd.get_notification(id)?.dismiss()
-      })
+         notifd.get_notification(id)?.dismiss();
+      });
 
-      this.notify()
-   }
-
-   private set(key: number, value: Gtk.Widget) {
-      //this.map.get(key)?.destroy();
-      this.map.set(key, value);
-      this.notify();
-   }
-
-   private delete(key: number) {
-      //this.map.get(key)?.destroy();
-      this.map.delete(key);
       this.notify();
    }
 
    private notify() {
-      this.var.set([...this.map.values()].reverse());
+      this.variable.set([...this.map.values()].reverse());
    }
 }

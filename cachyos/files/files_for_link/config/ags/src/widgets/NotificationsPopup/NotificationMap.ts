@@ -19,14 +19,15 @@ export class NotificationMap extends Hookable implements Subscribable {
          if (this.map.size >= options.notificationsPopup.maxItems) {
             const item = this.map.entries().next().value;
             if (!item) return;
-            this.delete(item[0]);
+            this.map.delete(item[0]);
+            this.notify();
          }
       };
 
       notifd.notifications.forEach((notification) => {
          capNotifications();
 
-         this.set(
+         this.map.set(
             notification.id,
 
             Notification({
@@ -35,36 +36,43 @@ export class NotificationMap extends Hookable implements Subscribable {
                setup: () => {
                   if (options.notificationsPopup.timeout) {
                      timeout(options.notificationsPopup.timeout, () =>
-                        this.delete(notification.id)
+                        this.map.delete(notification.id)
                      );
                   }
                },
             })
          );
+
+         this.notify();
       });
 
       this.hook(notifd, "notified", (_, id) => {
          capNotifications();
          const notification = notifd.get_notification(id);
 
-         this.set(
+         this.map.set(
             id,
+
             Notification({
                notification: notification,
 
                setup: () => {
-                  if (options.notificationsPopup.timeout) {
-                     timeout(options.notificationsPopup.timeout, () =>
-                        this.delete(notification.id)
-                     );
-                  }
+                  if (!options.notificationsPopup.timeout) return;
+
+                  timeout(options.notificationsPopup.timeout, () => {
+                     this.map.delete(notification.id);
+                     this.notify();
+                  });
                },
             })
          );
+
+         this.notify();
       });
 
       this.hook(notifd, "resolved", (_, id) => {
-         this.delete(id);
+         this.map.delete(id);
+         this.notify();
       });
    }
 
@@ -79,18 +87,6 @@ export class NotificationMap extends Hookable implements Subscribable {
    destroy() {
       super.destroy();
       this.var.drop();
-   }
-
-   private set(key: number, value: Gtk.Widget) {
-      //this.map.get(key)?.destroy();
-      this.map.set(key, value);
-      this.notify();
-   }
-
-   private delete(key: number) {
-      //this.map.get(key)?.destroy();
-      this.map.delete(key);
-      this.notify();
    }
 
    private notify() {
