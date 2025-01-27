@@ -7,43 +7,40 @@ import Battery from "gi://AstalBattery";
 const battery = Battery.get_default();
 
 export default function (): Astal.Box {
+   const label = Widget.Label({
+      label: bind(battery, "percentage").as(
+         (percentage) =>
+            `${Math.floor(percentage * 100)
+               .toString()
+               .padStart(3, "_")}%`
+      ),
+   });
+
    return Widget.Box({
       cssClasses: ["battery"],
       visible: bind(battery, "isBattery"),
 
-      children: [
-         Widget.Box({
-            setup: (self) => {
-               function onChargingChanged() {
-                  if (battery.charging) {
-                     self.children = [
-                        IconWithLabelFallback({
-                           iconName: icons.battery.charging.default,
-                        }),
-                     ];
-                  } else {
-                     self.children = [
-                        IconWithLabelFallback({ iconName: icons.battery.default }),
-                     ];
-                  }
-               }
+      setup: (self) => {
+         function onChargingChanged() {
+            if (battery.charging) {
+               self.children = [
+                  IconWithLabelFallback({
+                     iconName: icons.battery.charging.default,
+                  }),
 
-               onChargingChanged();
+                  label,
+               ];
+            } else {
+               self.children = [
+                  IconWithLabelFallback({ iconName: icons.battery.default }),
+                  label,
+               ];
+            }
+         }
 
-               hook(self, battery, "notify::charging", () =>
-                  onChargingChanged()
-               );
-            },
-         }),
+         onChargingChanged();
 
-         Widget.Label({
-            label: bind(battery, "percentage").as(
-               (percentage) =>
-                  `${Math.floor(percentage * 100)
-                     .toString()
-                     .padStart(3, "_")}%`
-            ),
-         }),
-      ],
+         hook(self, battery, "notify::charging", () => onChargingChanged());
+      },
    });
 }
