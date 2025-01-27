@@ -66,6 +66,15 @@ return {
             fishOption = { fg = "${yellow}" },
             fishEscapedNl = { fg = "${purple}" },
             fishVariable = { fg = "${red}" },
+
+            -- typescript
+            typescriptIdentifierName = { fg = "${red}" },
+            typescriptBlock = { fg = "${yellow}" },
+            ["@lsp.typemod.function.readonly.typescript"] = { fg = "${blue}" },
+            ["@lsp.typemod.parameter.declaration.typescript"] = { fg = "${red}" },
+            special = { fg = "${purple}" },
+            ["@namespace"] = { fg = "${yellow}" },
+            ["@parameter"] = { fg = "${red}" },
          },
       })
 
