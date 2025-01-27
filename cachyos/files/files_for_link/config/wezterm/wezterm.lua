@@ -14,14 +14,12 @@ end
 --------------------
 -- Settings
 --------------------
-
 config.default_prog = { fish_path, "-l" }
-
 config.color_scheme = "One Dark (Gogh)"
-
 config.font_size = 16
+
 config.font = wezterm.font_with_fallback({
-   { family = "IosevkaTerm Nerd Font Mono", scale = 1.0, weight = "Medium" },
+   { family = "IosevkaTerm Nerd Font Mono", scale = 1.0 },
 })
 
 config.window_background_opacity = 0.9
