@@ -3,9 +3,10 @@ return {
       "hrsh7th/nvim-cmp",
 
       dependencies = {
-         "hrsh7th/cmp-nvim-lsp", --> latest comimt
+         "hrsh7th/cmp-nvim-lsp",
          "hrsh7th/cmp-path",
          "windwp/nvim-autopairs",
+
          {
             "L3MON4D3/LuaSnip",
 
@@ -17,9 +18,9 @@ return {
       },
 
       config = function()
-         local cmp = require("cmp")
          require("luasnip.loaders.from_vscode").lazy_load()
          require("nvim-autopairs").setup()
+         local cmp = require("cmp")
          local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 
          cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
@@ -46,9 +47,9 @@ return {
 
             sources = cmp.config.sources({
                { name = "nvim_lsp" }, -- lsp
-               { name = "buffer", max_item_count = 5 }, -- text within current buffer
-               { name = "path", max_item_count = 3 }, -- file system paths
-               { name = "luasnip", max_item_count = 3 }, -- snippets
+               { name = "buffer", max_item_count = 5 },
+               { name = "path", max_item_count = 3 },
+               { name = "luasnip", max_item_count = 3 },
             }, {}),
          })
       end,

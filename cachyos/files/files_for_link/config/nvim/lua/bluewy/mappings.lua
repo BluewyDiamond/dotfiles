@@ -88,7 +88,7 @@ mappings.conform = {
       "<leader>fm",
 
       function()
-         require("conform").format({ lsp_fallback = true })
+         require("conform").format({})
       end,
 
       { desc = "format code" },

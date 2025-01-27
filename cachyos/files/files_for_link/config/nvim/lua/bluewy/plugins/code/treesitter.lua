@@ -1,7 +1,6 @@
 return {
-   "nvim-treesitter/nvim-treesitter", -- in order to track the latest syntax updates
+   "nvim-treesitter/nvim-treesitter",
 
-   -- Update parsers to work with the latest version of the plugin to avoid breaking anything.
    build = function()
       require("nvim-treesitter.install").update({
          with_sync = true,
