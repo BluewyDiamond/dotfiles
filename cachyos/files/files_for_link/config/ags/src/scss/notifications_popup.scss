@@ -1,6 +1,6 @@
 .notifications-popup {
    & .top-offset {
-      min-height: 20px;
+      min-height: $space_from_other_layers;
    }
 
    & .right-offset {

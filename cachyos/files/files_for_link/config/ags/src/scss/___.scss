@@ -46,6 +46,7 @@ $border_radius: 4px;
 // other
 $space_medium: 7.2px; // ideal for spacing parent items, ex: widgets...
 $space_small: 4px; // ideal for spacing children items, ex: text in a label, icons that are next to each other...
+$space_from_other_layers: 20px;
 
 * {
    all: unset;
