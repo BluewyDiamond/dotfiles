@@ -57,32 +57,30 @@ function ClientButton(client: AstalHyprland.Client): Gtk.Button {
 }
 
 export class ClientMap extends Hookable implements Subscribable {
-   private map: Map<string, Gtk.Widget> = new Map();
+   // have to sort, so using a map might not be optimal
+   private arr: Array<{ adress: string; widget: Gtk.Widget }> = [];
    private var: Variable<Array<Gtk.Widget>> = Variable([]);
 
    constructor() {
       super();
 
       hyprland.clients.forEach((client) => {
-         this.map.set(client.address, ClientButton(client));
+         this.add(client);
+         this.notify();
       });
 
-      this.sort();
-      this.notify();
-
       this.hook(hyprland, "client-added", (_, client: AstalHyprland.Client) => {
-         this.map.set(client.address, ClientButton(client));
-         this.sort();
+         this.add(client);
          this.notify();
       });
 
       this.hook(hyprland, "client-removed", (_, address: string) => {
-         this.map.delete(address);
+         this.remove(address);
          this.notify();
       });
 
-      this.hook(hyprland, "client-moved", () => {
-         this.sort();
+      this.hook(hyprland, "client-moved", (_, client: AstalHyprland.Client) => {
+         this.move(client);
          this.notify();
       });
    }
@@ -101,25 +99,41 @@ export class ClientMap extends Hookable implements Subscribable {
    }
 
    private notify() {
-      this.var.set([...this.map.values()]);
+      this.var.set([...this.arr.map((item) => item.widget)]);
    }
 
-   private sort() {
-      const sortedEntries = [...this.map.entries()].sort((a, b) => {
-         const clientA = hyprland.get_client(a[0]);
-         const clientB = hyprland.get_client(b[0]);
+   private add(client: AstalHyprland.Client) {
+      const index = this.arr.findIndex((item) => {
+         const predicateClient = hyprland.get_client(item.adress);
+         if (!predicateClient) return false;
 
-         if (!clientA || !clientB) {
-            return 0;
-         }
-
-         return clientA.workspace.id - clientB.workspace.id;
+         return client.workspace.id < predicateClient.workspace.id;
       });
 
-      this.map.clear();
+      const widget = ClientButton(client);
 
-      sortedEntries.forEach(([key, value]) => {
-         this.map.set(key, value);
-      });
+      if (index === -1) {
+         this.arr.push({ adress: client.address, widget: widget });
+      } else {
+         this.arr.splice(index, 0, {
+            adress: client.address,
+            widget: widget,
+         });
+      }
+   }
+
+   private remove(address: string) {
+      const index = this.arr.findIndex((item) => item.adress === address);
+
+      if (index === -1) {
+         console.error("Client to be removed is not present in the array.");
+      }
+
+      this.arr.splice(index, 1);
+   }
+
+   private move(client: AstalHyprland.Client) {
+      this.remove(client.address);
+      this.add(client);
    }
 }
