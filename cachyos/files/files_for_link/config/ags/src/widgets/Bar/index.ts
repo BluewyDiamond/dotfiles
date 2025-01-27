@@ -3,7 +3,7 @@ import Indicators from "./items/Indicators";
 import HyprlandTaskbar from "./items/HyprlandTaskbar";
 import SystemTray from "./items/SystemTray";
 import Datetime from "./items/Time";
-import Notifications from "./items/Notifications";
+import NotificationsIndicator from "./items/NotificationsIndicator";
 import AppLauncher from "./items/AppLauncher";
 import Power from "./items/Power";
 import Battery from "./items/Battery";
@@ -47,7 +47,7 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
             halign: Gtk.Align.CENTER,
 
             centerWidget: Widget.Box({
-               children: [Notifications(), Datetime()],
+               children: [NotificationsIndicator(), Datetime()],
             }),
          }),
 
