@@ -22,7 +22,6 @@ config.font = wezterm.font_with_fallback({
    { family = "IosevkaTerm Nerd Font Mono", scale = 1.0 },
 })
 
-config.window_background_opacity = 0.9
 config.window_decorations = "NONE"
 config.window_close_confirmation = "AlwaysPrompt"
 config.scrollback_lines = 3000
@@ -39,6 +38,7 @@ config.inactive_pane_hsb = {
 
 config.disable_default_key_bindings = true
 config.leader = { key = "a", mods = "CTRL", timeout_milliseconds = 1000 }
+
 config.keys = {
    { key = "a", mods = "LEADER|CTRL", action = act.SendKey({ key = "a", mods = "CTRL" }) },
    { key = "c", mods = "LEADER", action = act.ActivateCopyMode }, -- something like vim
