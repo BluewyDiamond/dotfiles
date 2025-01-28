@@ -116,6 +116,13 @@
       ]
    },
 
+   "discord": {
+      "std": [
+         "speech-dispatcher",
+         "legcord"
+      ]
+   },
+
    "amd_cpu": {
       "std": ["amd-ucode"]
    },
