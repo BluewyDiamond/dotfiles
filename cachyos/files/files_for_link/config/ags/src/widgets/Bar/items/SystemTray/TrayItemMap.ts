@@ -12,14 +12,13 @@ function TrayItemMenuButton(item: Tray.TrayItem): Gtk.MenuButton {
          setup: (self) => {
             function onItemChanged(item: Tray.TrayItem) {
                self.tooltipMarkup = item.tooltipMarkup;
-               // @ts-ignore
                self.insert_action_group("dbusmenu", item.actionGroup);
                self.menuModel = item.menuModel;
             }
 
             onItemChanged(item);
 
-            hook(self, item, "changed", () => {
+            hook(self, item, "notify::gicon", () => {
                onItemChanged(tray.get_item(item.get_item_id()));
             });
 
