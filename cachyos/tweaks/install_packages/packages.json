@@ -36,8 +36,6 @@
       "std": [
          "ttf-iosevkaterm-nerd",
 
-         "qt6ct",
-         "qt5ct",
          "kvantum",
          "kvantum-qt5",
 
@@ -48,6 +46,8 @@
       ],
 
       "aur": [
+         "qt6ct-kde",
+         "qt5ct-kde",
          "bibata-cursor-theme-bin",
          "sweet-gtk-theme",
          "candy-icons-git",
@@ -117,10 +117,7 @@
    },
 
    "discord": {
-      "std": [
-         "speech-dispatcher",
-         "legcord"
-      ]
+      "std": ["speech-dispatcher", "legcord"]
    },
 
    "amd_cpu": {
