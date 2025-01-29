@@ -43,12 +43,12 @@
          }
 
          & > .icon-with-label-fallback {
-            image {
+            &.image {
                -gtk-icon-size: 55px;
                color: $color_on_surface;
             }
 
-            .label {
+            &.label {
                min-width: 55px;
                min-height: 55px;
             }
