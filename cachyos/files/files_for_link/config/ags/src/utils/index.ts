@@ -3,8 +3,11 @@ import GLib from "gi://GLib";
 import Apps from "gi://AstalApps";
 import { readFileAsync } from "astal";
 import { Gtk } from "astal/gtk4";
+import options from "../options";
 
 const gtkIconTheme = new Gtk.IconTheme();
+// without it it does not find the icons
+gtkIconTheme.set_theme_name(options.theme.icons);
 
 export function isValidImage(image: string): boolean {
    if (GLib.file_test(image, GLib.FileTest.EXISTS)) {
