@@ -60,7 +60,7 @@
                   }
                }
 
-               .selected {
+               &.selected {
                   background: $color_primary_container;
 
                   .name {
