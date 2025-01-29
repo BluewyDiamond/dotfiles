@@ -5,10 +5,12 @@ import AppLauncher from "./widgets/AppLauncher";
 import NotificationsOverview from "./widgets/NotificationsOverview";
 import NotificationsPopup from "./widgets/NotificationsPopup";
 import PowerMenu from "./widgets/PowerMenu";
+import options from "./options";
 
 App.start({
    css: getCss(),
    instanceName: "main",
+   iconTheme: options.theme.icons,
 
    main() {
       const gdkDisplay = Gdk.Display.get_default();
