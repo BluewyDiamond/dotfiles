@@ -5,11 +5,13 @@
       padding: $space_medium;
 
       .icon-with-label-fallback {
-         & > image {
+         &.image {
             -gtk-icon-size: 24px;
          }
 
-         & > label {
+         &.label {
+            min-width: 24px;
+            min-height: 24px;
             line-height: 1;
          }
       }
@@ -148,8 +150,8 @@
          @include bar_item();
          margin-left: $space_medium;
 
-         & .icon-with-label-fallback {
-            margin-right: $space-small;
+         & > .icon-with-label-fallback {
+            margin-right: $space_small;
          }
       }
 
@@ -157,8 +159,8 @@
          @include bar_item();
          margin-left: $space_medium;
 
-         & .icon-with-label-fallback {
-            margin-right: $space-small;
+         & > .icon-with-label-fallback {
+            margin-right: $space_small;
          }
       }
 

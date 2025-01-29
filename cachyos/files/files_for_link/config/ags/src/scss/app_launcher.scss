@@ -1,9 +1,9 @@
 .app-launcher {
-   & .top-offset {
+   .top-offset {
       min-height: 200px;
    }
 
-   & .main-box {
+   .main-box {
       min-width: 500px;
       background: $color_surface;
       border-radius: $border_radius;
@@ -60,7 +60,7 @@
                   }
                }
 
-               &.selected {
+               .selected {
                   background: $color_primary_container;
 
                   .name {
@@ -73,25 +73,25 @@
                }
 
                & > box {
-                  & .icon-with-label-fallback {
-                     & > image {
+                  .icon-with-label-fallback {
+                     margin-right: 8px;
+
+                     &.image {
                         -gtk-icon-size: 55px;
                      }
 
-                     & > label {
+                     &.label {
                         font-size: 55px;
                         min-width: 55px;
                      }
-
-                     margin-right: 8px;
                   }
 
-                  & .name {
+                  .name {
                      font-size: 22px;
                      color: $color_on_surface;
                   }
 
-                  & .description {
+                  .description {
                      font-size: 18px;
                      color: $color_on_surface_variant;
                   }

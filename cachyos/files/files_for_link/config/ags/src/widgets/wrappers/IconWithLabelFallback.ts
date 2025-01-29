@@ -1,4 +1,4 @@
-import { Astal, Gtk, Widget } from "astal/gtk4";
+import { Gtk, Widget } from "astal/gtk4";
 import { findIcon } from "../../utils";
 
 type IconWithLabelFallbackProps = {
@@ -10,7 +10,7 @@ type IconWithLabelFallbackProps = {
 
 export function IconWithLabelFallback(
    props: IconWithLabelFallbackProps
-): Astal.Box {
+): Gtk.Image | Gtk.Label {
    const { cssClasses, iconName, fallbackIcon, fallbackLabel } = props;
 
    let foundedIcon = findIcon(iconName);
@@ -36,24 +36,15 @@ export function IconWithLabelFallback(
       return ["icon-with-label-fallback", ...cssClasses];
    }
 
-   // wrapper for easier css styling
-   const box = Widget.Box({
-      cssClasses: setupClassName(),
-   });
-
    if (foundedIcon === "") {
-      box.children = [
-         Widget.Label({
-            label: fallbackLabel || "?",
-         }),
-      ];
+      return Widget.Label({
+         cssClasses: [...setupClassName(), "label"],
+         label: fallbackLabel || "?",
+      });
    } else {
-      box.children = [
-         Widget.Image({
-            iconName: foundedIcon,
-         }),
-      ];
+      return Widget.Image({
+         cssClasses: [...setupClassName(), "image"],
+         iconName: foundedIcon,
+      });
    }
-
-   return box;
 }
