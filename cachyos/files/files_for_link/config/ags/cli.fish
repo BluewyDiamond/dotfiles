@@ -49,6 +49,18 @@ function types
         -g $gir_dir
 end
 
+function install
+    if test -d $build_dir/astal
+        rm -r $build_dir/astal
+    end
+
+    mkdir -p $build_dir/astal
+
+    git clone https://github.com/BluewyDiamond/astal $build_dir/astal
+    pushd $build_dir/astal
+    arch-meson build && meson compile -C build
+end
+
 switch $argv[1]
     case drun
         drun
