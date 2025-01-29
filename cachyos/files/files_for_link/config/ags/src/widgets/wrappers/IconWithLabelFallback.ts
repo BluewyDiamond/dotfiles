@@ -15,6 +15,18 @@ export function IconWithLabelFallback(
 
    let foundedIcon = findIcon(iconName);
 
+   // The Gtk4.Image
+   // does not accept icon names with extension at the end.
+   if (foundedIcon === "") {
+      const lastDotIndex = foundedIcon.lastIndexOf(".");
+
+      if (lastDotIndex > 0) {
+         foundedIcon = foundedIcon.substring(0, lastDotIndex);
+      }
+
+      foundedIcon = findIcon(foundedIcon);
+   }
+
    if (foundedIcon === "") {
       foundedIcon = findIcon(fallbackIcon || "");
    }
