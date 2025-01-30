@@ -56,13 +56,12 @@
    },
 
    "hyprland_widgets": {
-      "std": ["dart-sass", "fd", "npx", "gjs", "esbuild"],
+      "std": ["dart-sass", "fd", "npx", "gjs", "esbuild", "gtk4-layer-shell"],
 
       "aur": [
          "libastal-io-git",
          "libastal-git",
          "libastal-gjs-git",
-         "libastal-4",
          "libastal-hyprland-git",
          "libastal-battery-git",
          "libastal-notifd-git",
