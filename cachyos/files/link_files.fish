@@ -1,5 +1,5 @@
 #!/usr/bin/env fish
 
-for file in $PWD/files_for_link/*
+for file in $PWD/modules/*
     ./manage_module.fish $file
 end
