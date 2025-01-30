@@ -28,18 +28,22 @@ if not which trash &>/dev/null
     sudo pacman -S trash-cli
 end
 
-set module (realpath $argv)
+set module $argv
 set hook_file $module/options.json
 
 set the_files
 
 for file in (command ls $module/index)
-    # idk why is this printing to output
     set -a the_files "$module/index/$file"
 end
 
 set pre_hook $module/prehook
 set post_hook $module/posthook
+
+if not test -d $module
+    prompt "Module does not exist..."
+    exit 1
+end
 
 if not test -f $hook_file
     prompt "Missing hook file..."
@@ -108,8 +112,7 @@ switch $operation
         end
     case link
         for submodule in $the_files
-            echo $submodule
-            ln -s -r $submodule $target_dir
+            ln -s $submodule $target_dir
         end
 end
 
