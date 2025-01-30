@@ -54,7 +54,23 @@ set operation (jq -r '.operation' $hook_file)
 set on_conflict (jq -r '.on_conflict' $hook_file)
 set target_dir (jq -r '.target_dir' $hook_file)
 set target_dir (eval echo "$target_dir")
+set only_hooks (jq -r '.only_hooks' $hook_file)
+set only_hooks (jq -r '.sudo' $hook_file)
 
+switch $only_hooks
+    case true
+        if test -f $pre_hook
+            $pre_hook
+        end
+
+        if test -f $post_hook
+            $post_hook
+        end
+
+        exit 0
+end
+
+# validate variables
 switch $operation
     case copy
     case link
@@ -85,18 +101,36 @@ end
 switch $on_conflict
     case trash
         for submodule in $the_files
+            set -l command
+
+            switch $sudo
+                case true
+                    set command 'sudo trash'
+                case '*'
+                    set command trash
+            end
+
             set -l name (basename $submodule)
 
             if test -e "$target_dir/$name" -o -L "$target_dir/$name"
-                trash "$target_dir/$name"
+                $command "$target_dir/$name"
             end
         end
     case remove
         for submodule in $the_files
+            set -l command
+
+            switch $sudo
+                case true
+                    set command 'sudo rm -r'
+                case '*'
+                    set command 'rm -r'
+            end
+
             set -l name (basename $submodule)
 
             if test -e "$target_dir/$name" -o -L "$target_dir/$name"
-                rm -r "$target_dir/$name"
+                $command "$target_dir/$name"
             end
         end
 
@@ -107,12 +141,30 @@ end
 
 switch $operation
     case copy
+        set -l command
+
+        switch $sudo
+            case true
+                set command 'sudo cp'
+            case '*'
+                set command cp
+        end
+
         for submodule in $the_files
-            cp -r $submodule $target_dir
+            $command -r $submodule $target_dir
         end
     case link
+        set -l command
+
+        switch $sudo
+            case true
+                set command 'sudo ln -s'
+            case '*'
+                set command 'ln -s'
+        end
+
         for submodule in $the_files
-            ln -s $submodule $target_dir
+            $command -s $submodule $target_dir
         end
 end
 

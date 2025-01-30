@@ -1,0 +1,6 @@
+{
+   "sudo": true,
+   "operation": "copy",
+   "on_conflict": "trash",
+   "target_dir": "/usr/share/X11/xkb/symbols"
+}
