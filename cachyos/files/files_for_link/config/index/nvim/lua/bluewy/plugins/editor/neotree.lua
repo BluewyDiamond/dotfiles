@@ -6,6 +6,9 @@ return {
       { "nvim-lua/plenary.nvim" },
       { "nvim-tree/nvim-web-devicons" },
       { "MunifTanjim/nui.nvim" },
+
+      -- other
+      "luckasRanarison/neo-rename.nvim",
    },
 
    config = function()
@@ -14,5 +17,7 @@ return {
             return a.path < b.path
          end,
       })
+
+      require("neo-rename").setup()
    end,
 }
