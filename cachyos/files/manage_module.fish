@@ -24,6 +24,10 @@ if not which jq &>/dev/null
     sudo pacman -S jq
 end
 
+if not which trash &>/dev/null
+    sudo pacman -S trash-cli
+end
+
 set module (realpath $argv)
 set hook_file $module/options.json
 
