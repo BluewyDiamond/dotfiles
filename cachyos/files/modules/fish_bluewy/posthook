@@ -13,7 +13,7 @@ touch $init_file
 echo "source $HOME/.config/fish_bluewy/config.fish" >$init_file
 
 # part 2
-set src_theme_file (realpath (dirname (status filename)))/custom/fish_bluewy/themes/one_dark_custom.theme
+set src_theme_file (realpath (dirname (status filename)))/src/fish_bluewy/themes/one_dark_custom.theme
 set target_theme_file $HOME/.config/fish/themes/one_dark_custom.theme
 
 if test -f $target_theme_file -o -L $target_theme_file
