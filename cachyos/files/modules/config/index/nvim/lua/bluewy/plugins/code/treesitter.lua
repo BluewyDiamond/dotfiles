@@ -21,6 +21,10 @@ return {
 
             "lua",
          },
+
+         highlight = {
+            enable = true
+         }
       })
    end,
 }
