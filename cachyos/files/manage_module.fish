@@ -86,8 +86,6 @@ if not test -d $target_dir
     exit 1
 end
 
-
-
 if test -f $pre_hook_exe -a -x $pre_hook_exe
     $pre_hook_exe
 end
