@@ -90,10 +90,11 @@ if test -f $pre_hook_exe -a -x $pre_hook_exe
     $pre_hook_exe
 end
 
+set src_dir $module/src
 set folders
 
-for file in (command ls $module/index)
-    set -a folders "$module/index/$file"
+for file in (command ls $src_dir)
+    set -a folders "$src_dir/$file"
 end
 
 switch $on_conflict
