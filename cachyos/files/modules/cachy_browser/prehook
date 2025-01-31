@@ -3,11 +3,6 @@
 set CACHY_BROWSER_OVERRIDES (realpath (dirname (status filename)))/index/cachy.overrides.cfg
 set CACHY_BROWSER_CSS (realpath (dirname (status filename)))/index/userChrome.css
 
-echo $CACHY_BROWSER_OVERRIDES
-echo $CACHY_BROWSER_CSS
-
-exit 0
-
 mkdir -p $HOME/.cachy
 
 ln -sf $CACHY_BROWSER_OVERRIDES $HOME/.cachy/cachy.overrides.cfg
