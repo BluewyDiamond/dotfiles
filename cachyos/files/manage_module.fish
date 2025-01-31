@@ -50,6 +50,21 @@ set target_dir (eval echo "$target_dir")
 set only_hooks (jq -r '.only_hooks' $options_file)
 set sudo (jq -r '.sudo' $options_file)
 
+set pre_hook_exe $module/prehook
+set post_hook_exe $module/posthook
+
+if test $only_hooks = true
+    if test -f $pre_hook_exe -a -x $pre_hook_exe
+        $pre_hook_exe
+    end
+
+    if test -f $post_hook_exe -a -x $post_hook_exe
+        $post_hook_exe
+    end
+
+    exit 0
+end
+
 switch $operation
     case copy link
 
@@ -71,8 +86,7 @@ if not test -d $target_dir
     exit 1
 end
 
-set pre_hook_exe $module/prehook
-set post_hook_exe $module/posthook
+
 
 if test -f $pre_hook_exe -a -x $pre_hook_exe
     $pre_hook_exe
