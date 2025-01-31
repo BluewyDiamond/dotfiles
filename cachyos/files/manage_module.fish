@@ -1,8 +1,8 @@
 #!/usr/bin/env fish
 
-set SCRIPT_NAME (basename (status filename))
+set SCRIPT_NAME (path basename (status filename))
 
-function prompt
+function log_message
     set_color magenta
     echo -n "$SCRIPT_NAME => "
     set_color yellow
@@ -10,7 +10,7 @@ function prompt
     set_color normal
 end
 
-function input
+function read_input
     read -P (set_color magenta)"INPUT => "(set_color yellow) value
 
     if test -z "$value"
@@ -20,154 +20,131 @@ function input
     echo $value
 end
 
-if not which jq &>/dev/null
-    sudo pacman -S jq
+if not command -q jq
+    log_message "Installing jq..."
+    sudo pacman -S jq || exit 1
 end
 
-if not which trash &>/dev/null
-    sudo pacman -S trash-cli
+if not command -q trash
+    log_message "Installing trash-cli..."
+    sudo pacman -S trash-cli || exit 1
 end
 
-set module $argv
-set hook_file $module/options.json
-
-set the_files
-
-for file in (command ls $module/index)
-    set -a the_files "$module/index/$file"
-end
-
-set pre_hook $module/prehook
-set post_hook $module/posthook
+set module $argv[1]
+set options_file $module/options.json
 
 if not test -d $module
-    prompt "Module does not exist..."
+    log_message "Module does not exist..."
     exit 1
 end
 
-if not test -f $hook_file
-    prompt "Missing hook file..."
+if not test -f $options_file
+    log_message "Missing options file..."
     exit 1
 end
 
-set operation (jq -r '.operation' $hook_file)
-set on_conflict (jq -r '.on_conflict' $hook_file)
-set target_dir (jq -r '.target_dir' $hook_file)
+set operation (jq -r '.operation' $options_file)
+set on_conflict (jq -r '.on_conflict' $options_file)
+set target_dir (jq -r '.target_dir' $options_file)
 set target_dir (eval echo "$target_dir")
-set only_hooks (jq -r '.only_hooks' $hook_file)
-set only_hooks (jq -r '.sudo' $hook_file)
+set only_hooks (jq -r '.only_hooks' $options_file)
+set sudo (jq -r '.sudo' $options_file)
 
-switch $only_hooks
-    case true
-        if test -f $pre_hook
-            $pre_hook
-        end
-
-        if test -f $post_hook
-            $post_hook
-        end
-
-        exit 0
-end
-
-# validate variables
 switch $operation
-    case copy
-    case link
+    case copy link
 
     case '*'
-        prompt "Invalid operation field..."
+        log_message "Invalid operation field..."
         exit 1
 end
 
 switch $on_conflict
-    case trash
-    case remove
+    case trash remove
 
     case '*'
-        prompt "Invalid on_conflict field..."
+        log_message "Invalid on_conflict field..."
         exit 1
 end
 
 if not test -d $target_dir
-    prompt "Invalid target directory..."
+    log_message "Invalid target directory..."
     exit 1
 end
 
-if test -f $pre_hook
-    $pre_hook
+set pre_hook_exe $module/prehook
+set post_hook_exe $module/posthook
+
+if test -f $pre_hook_exe -a -x $pre_hook_exe
+    $pre_hook_exe
+end
+
+set folders
+
+for file in (command ls $module/index)
+    set -a folders "$module/index/$file"
 end
 
 switch $on_conflict
     case trash
-        for submodule in $the_files
-            set -l command
-
-            switch $sudo
-                case true
-                    set command 'sudo trash'
-                case '*'
-                    set command trash
-            end
-
-            set -l name (basename $submodule)
+        for folder in $folders
+            set name (path basename $folder)
 
             if test -e "$target_dir/$name" -o -L "$target_dir/$name"
-                $command "$target_dir/$name"
+                if test "$sudo" = true
+                    sudo trash "$target_dir/$name"
+                else
+                    trash "$target_dir/$name"
+                end
             end
         end
     case remove
-        for submodule in $the_files
-            set -l command
-
-            switch $sudo
-                case true
-                    set command 'sudo rm -r'
-                case '*'
-                    set command 'rm -r'
-            end
-
-            set -l name (basename $submodule)
+        for folder in $folders
+            set name (path basename $folder)
 
             if test -e "$target_dir/$name" -o -L "$target_dir/$name"
-                $command "$target_dir/$name"
+                if test "$sudo" = true
+                    sudo rm -r "$target_dir/$name"
+                else
+                    rm -r "$target_dir/$name"
+                end
+            end
+        end
+    case skip
+        set quit false
+
+        for folder in $folders
+            set name (path basename $folder)
+
+            if test -e "$target_dir/$name" -o -L "$target_dir/$name"
+                set quit true
             end
         end
 
-    case '*'
-        echo oopsie
-        exit 1
+        if test quit = true
+            log_message "Skipping because on_conflict is set to skip."
+            exit 1
+        end
 end
 
 switch $operation
     case copy
-        set -l command
-
-        switch $sudo
-            case true
-                set command 'sudo cp'
-            case '*'
-                set command cp
-        end
-
-        for submodule in $the_files
-            $command -r $submodule $target_dir
+        for folder in $folders
+            if test "$sudo" = true
+                sudo cp -r $folder $target_dir
+            else
+                cp -r $folder $target_dir
+            end
         end
     case link
-        set -l command
-
-        switch $sudo
-            case true
-                set command 'sudo ln -s'
-            case '*'
-                set command 'ln -s'
-        end
-
-        for submodule in $the_files
-            $command -s $submodule $target_dir
+        for folder in $folders
+            if test "$sudo" = true
+                sudo ln -s $folder $target_dir
+            else
+                ln -s $folder $target_dir
+            end
         end
 end
 
-if test -f $post_hook
-    $post_hook
+if test -f $post_hook_exe -a -x $post_hook_exe
+    $post_hook_exe
 end

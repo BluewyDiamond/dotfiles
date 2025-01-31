@@ -1,4 +1,6 @@
 {
+   "only_hooks": false,
+   "sudo": false,
    "operation": "link",
    "on_conflict": "trash",
    "target_dir": "$HOME/.config"

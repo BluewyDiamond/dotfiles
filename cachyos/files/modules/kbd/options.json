@@ -2,5 +2,5 @@
    "sudo": true,
    "operation": "copy",
    "on_conflict": "remove",
-   "target_dir": "/usr/share/X11/xkb/symbols"
+   "target_dir": "/usr/share/kbd/keymaps"
 }
