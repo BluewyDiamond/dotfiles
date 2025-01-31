@@ -9,7 +9,8 @@ return {
          fish = { "fish" },
 
          php = { "php" },
-         typescript = { "eslint" },
+         javascript = { "eslint_d" },
+         typescript = { "eslint_d" },
          rust = { "clippy" },
       }
 
