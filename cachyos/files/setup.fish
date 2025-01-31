@@ -2,6 +2,6 @@
 
 set current_dir (realpath (dirname (status filename)))
 
-for file in $PWD/modules/*
+for file in $current_dir/modules/*
     $current_dir/manage_module.fish $file
 end

@@ -1,7 +1,7 @@
 #!/usr/bin/env fish
 
-set CACHY_BROWSER_OVERRIDES (realpath (dirname (status filename)))/index/cachy.overrides.cfg
-set CACHY_BROWSER_CSS (realpath (dirname (status filename)))/index/userChrome.css
+set CACHY_BROWSER_OVERRIDES (realpath (dirname (status filename)))/src/cachy.overrides.cfg
+set CACHY_BROWSER_CSS (realpath (dirname (status filename)))/src/userChrome.css
 
 mkdir -p $HOME/.cachy
 
