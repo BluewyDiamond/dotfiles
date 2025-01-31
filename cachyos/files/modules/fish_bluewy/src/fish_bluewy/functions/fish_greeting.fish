@@ -14,7 +14,7 @@ function fish_greeting
             command clear
             prompt_to_bottom_line
 
-            if which figlet &>dev/null
+            if which figlet &>/dev/null
                 figlet -f big "$(date +"%A, %B %d, %Y %H:%M:%S")"
             end
         case '*'
