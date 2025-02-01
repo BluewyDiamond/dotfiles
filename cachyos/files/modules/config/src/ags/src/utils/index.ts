@@ -68,8 +68,13 @@ export function findIcon(icon: string): string {
       return icon;
    }
 
-   if (isValidImage(icon + "-symbolic")) {
-      return icon + "-symbolic";
+   if (icon.endsWith("-symbolic")) {
+      const modifiedIcon = icon.slice(0, -"-symbolic".length);
+      if (modifiedIcon) return modifiedIcon;
+   } else {
+      if (isValidImage(icon + "-symbolic")) {
+         return icon + "-symbolic";
+      }
    }
 
    const apps = new Apps.Apps();

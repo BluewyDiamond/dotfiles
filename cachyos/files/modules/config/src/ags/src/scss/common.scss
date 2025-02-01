@@ -5,9 +5,20 @@
 
    & .header {
       & .app-icon {
-         -gtk-icon-size: 24px;
          margin-right: 4px;
          padding: $space_small;
+
+         &.image {
+            -gtk-icon-size: 24px;
+            color: $color_on_surface;
+         }
+
+         &.label {
+            color: $color_on_surface;
+            font-size: 16px;
+            min-width: 24px;
+            min-height: 24px;
+         }
       }
 
       & .app-name {
@@ -25,8 +36,8 @@
 
       & .close {
          @include container_shape();
-         color: $color_on_secondary_container;
-         background: $color_secondary_container;
+         color: $color_on_surface;
+         background: $color_surface_container;
          padding: $space_small;
 
          image {
@@ -42,7 +53,7 @@
 
    & .content {
       & .image {
-         min-width: 100px;
+         -gtk-icon-size: 100px;
          margin-right: 10px;
          border-radius: $border_radius;
          padding: $space_small;
@@ -66,7 +77,7 @@
    & .actions {
       & > button {
          @include container_shape();
-         background: $color_secondary_container;
+         background: $color_surface_container;
          margin-right: 4px;
          padding: $space_small;
 
@@ -75,7 +86,7 @@
          }
 
          & > label {
-            color: $color_on_secondary_container;
+            color: $color_on_surface;
          }
       }
    }

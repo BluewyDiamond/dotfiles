@@ -23,8 +23,8 @@
          & > button {
             @include container_shape();
             padding: $space_small;
-            background: $color_primary_container;
-            color: $color_on_primary_container;
+            background: $color_surface_container;
+            color: $color_on_surface;
          }
       }
 
@@ -36,6 +36,25 @@
 
             &:last-child {
                margin-bottom: 0;
+            }
+
+            & .header {
+               & .close {
+                  @include container_shape();
+                  color: $color_on_secondary_container;
+                  background: $color_secondary_container;
+               }
+            }
+
+            & .actions {
+               & > button {
+                  @include container_shape();
+                  background: $color_secondary_container;
+
+                  & > label {
+                     color: $color_on_surface;
+                  }
+               }
             }
          }
       }

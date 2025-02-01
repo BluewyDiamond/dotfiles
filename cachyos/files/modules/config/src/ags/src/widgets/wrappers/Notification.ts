@@ -46,16 +46,15 @@ export default function (props: NotificationProps): Gtk.Box {
                   foundedIcon = findIcon(notification.desktop_entry);
                }
 
-               if (foundedIcon) {
-                  self.children = [
-                     ...self.children,
+               self.children = [
+                  ...self.children,
 
-                     IconWithLabelFallback({
-                        cssClasses: ["app-icon"],
-                        iconName: foundedIcon,
-                     }),
-                  ];
-               }
+                  IconWithLabelFallback({
+                     cssClasses: ["app-icon"],
+                     iconName: foundedIcon,
+                     fallbackLabel: ">",
+                  }),
+               ];
 
                self.children = [
                   ...self.children,
@@ -80,7 +79,9 @@ export default function (props: NotificationProps): Gtk.Box {
                         onClicked: () => notification.dismiss(),
                      },
 
-                     IconWithLabelFallback({ iconName: icons.ui.close })
+                     IconWithLabelFallback({
+                        iconName: icons.ui.close + "-symbolic",
+                     })
                   ),
                ];
             },
