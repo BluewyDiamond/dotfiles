@@ -54,11 +54,13 @@ function install
         rm -r $build_dir/astal
     end
 
-    mkdir -p $build_dir/astal
-
+    mkdir -p $build_dir
     git clone https://github.com/BluewyDiamond/astal $build_dir/astal
-    pushd $build_dir/astal
+
+    pushd $build_dir/astal/lib/astal/gtk4
     arch-meson build && meson compile -C build
+    meson install -C build --destdir "$pkgdir"
+    popd
 end
 
 switch $argv[1]
@@ -70,6 +72,8 @@ switch $argv[1]
         build
     case types
         types
+    case install
+        install
     case '*'
         echo "Unknown option..."
 end
