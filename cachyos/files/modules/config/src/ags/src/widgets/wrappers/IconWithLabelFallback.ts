@@ -1,34 +1,33 @@
 import { Gtk, Widget } from "astal/gtk4";
 import { findIcon } from "../../utils";
+import { Icon } from "../../icons";
 
 type IconWithLabelFallbackProps = {
    cssClasses?: string[];
-   iconName: string;
-   fallbackIcon?: string;
+   icon: Icon;
+   fallbackIcon?: Icon;
+   symbolic?: boolean;
    fallbackLabel?: string;
 };
 
 export function IconWithLabelFallback(
    props: IconWithLabelFallbackProps
 ): Gtk.Image | Gtk.Label {
-   const { cssClasses, iconName, fallbackIcon, fallbackLabel } = props;
+   const { cssClasses, icon, fallbackIcon, symbolic, fallbackLabel } = props;
+   let foundedIcon = "";
 
-   let foundedIcon = findIcon(iconName);
-
-   // The Gtk4.Image
-   // does not accept icon names with extension at the end.
-   if (foundedIcon === "") {
-      const lastDotIndex = foundedIcon.lastIndexOf(".");
-
-      if (lastDotIndex > 0) {
-         foundedIcon = foundedIcon.substring(0, lastDotIndex);
-      }
-
-      foundedIcon = findIcon(foundedIcon);
+   if (symbolic) {
+      foundedIcon = findIcon(icon.symbolic);
+   } else {
+      foundedIcon = findIcon(icon.normal);
    }
 
    if (foundedIcon === "") {
-      foundedIcon = findIcon(fallbackIcon || "");
+      if (symbolic) {
+         foundedIcon = findIcon(fallbackIcon?.symbolic ?? "");
+      } else {
+         foundedIcon = findIcon(fallbackIcon?.normal ?? "");
+      }
    }
 
    function setupClassName(): string[] {

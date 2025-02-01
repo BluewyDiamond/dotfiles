@@ -34,7 +34,7 @@ export default function (): Gtk.Button {
 
       Widget.Box({
          children: [
-            IconWithLabelFallback({ iconName: icons.system.cpu, fallbackLabel: "CPU " }),
+            IconWithLabelFallback({ icon: icons.system.cpu, fallbackLabel: "CPU " }),
 
             Widget.Label({
                label: bind(cpuUsage).as((cpuUsage) => {

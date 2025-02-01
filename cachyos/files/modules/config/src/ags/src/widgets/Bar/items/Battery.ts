@@ -25,14 +25,14 @@ export default function (): Astal.Box {
             if (battery.charging) {
                self.children = [
                   IconWithLabelFallback({
-                     iconName: icons.battery.charging.default,
+                     icon: icons.battery.charging.default,
                   }),
 
                   label,
                ];
             } else {
                self.children = [
-                  IconWithLabelFallback({ iconName: icons.battery.default }),
+                  IconWithLabelFallback({ icon: icons.battery.default }),
                   label,
                ];
             }

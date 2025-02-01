@@ -5,6 +5,7 @@ import { Gtk, Widget } from "astal/gtk4";
 import options from "../../options";
 import { IconWithLabelFallback } from "../wrappers/IconWithLabelFallback";
 import Pango from "gi://Pango";
+import { createIcon } from "../../icons";
 
 const apps = new Apps.Apps();
 
@@ -53,7 +54,7 @@ function AppButton(
       Widget.Box({
          children: [
             IconWithLabelFallback({
-               iconName: app.iconName,
+               icon: createIcon(app.iconName),
             }),
 
             Widget.Box({

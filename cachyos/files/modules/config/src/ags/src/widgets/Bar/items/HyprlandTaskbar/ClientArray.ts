@@ -3,7 +3,7 @@ import AstalHyprland from "gi://AstalHyprland";
 import { Subscribable } from "astal/binding";
 import { Variable } from "astal";
 import { IconWithLabelFallback } from "../../../wrappers/IconWithLabelFallback";
-import icons from "../../../../icons";
+import icons, { createIcon } from "../../../../icons";
 import Hookable from "../../../../libs/services/Hookable";
 
 const hyprland = AstalHyprland.get_default();
@@ -50,7 +50,7 @@ function ClientButton(client: AstalHyprland.Client): Gtk.Button {
       },
 
       IconWithLabelFallback({
-         iconName: client.class,
+         icon: createIcon(client.class),
          fallbackIcon: icons.fallback.executable,
       })
    );

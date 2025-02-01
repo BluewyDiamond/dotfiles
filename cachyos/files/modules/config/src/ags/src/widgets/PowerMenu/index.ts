@@ -78,17 +78,17 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
 
          children: [
             PowerButton(
-               IconWithLabelFallback({ iconName: icons.powermenu.sleep }),
+               IconWithLabelFallback({ icon: icons.powermenu.sleep }),
                () => execAsync(["fish", "-c", "systemctl suspend"])
             ),
 
             PowerButton(
-               IconWithLabelFallback({ iconName: icons.powermenu.reboot }),
+               IconWithLabelFallback({ icon: icons.powermenu.reboot }),
                () => execAsync(["fish", "-c", "systemctl reboot"])
             ),
 
             PowerButton(
-               IconWithLabelFallback({ iconName: icons.powermenu.shutdown }),
+               IconWithLabelFallback({ icon: icons.powermenu.shutdown }),
                () => execAsync(["fish", "-c", "systemctl poweroff"])
             ),
          ],

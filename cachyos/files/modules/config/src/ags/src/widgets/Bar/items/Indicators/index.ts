@@ -1,7 +1,7 @@
 import { Astal, Gtk, Widget } from "astal/gtk4";
 import { IndicatorMap } from "./IndicatorMap";
 
-export default function (): Astal.Button {
+export default function (): Gtk.Button {
    const indicatorsMap = new IndicatorMap();
 
    return Widget.Button({

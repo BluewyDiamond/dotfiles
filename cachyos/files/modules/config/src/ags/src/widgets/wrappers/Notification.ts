@@ -2,9 +2,10 @@ import { Gtk, Widget } from "astal/gtk4";
 import Notifd from "gi://AstalNotifd";
 import { findIcon, isValidImage } from "../../utils";
 import { GLib } from "astal";
-import icons from "../../icons";
+import icons, { createIcon } from "../../icons";
 import { IconWithLabelFallback } from "./IconWithLabelFallback";
 import Pango from "gi://Pango?version=1.0";
+import options from "../../options";
 
 const urgency = (n: Notifd.Notification) => {
    const { LOW, NORMAL, CRITICAL } = Notifd.Urgency;
@@ -51,7 +52,13 @@ export default function (props: NotificationProps): Gtk.Box {
 
                   IconWithLabelFallback({
                      cssClasses: ["app-icon"],
-                     iconName: foundedIcon,
+                     icon: createIcon(foundedIcon),
+                     fallbackIcon: icons.fallback.notification,
+
+                     symbolic:
+                        options.notificationsOverview.symbolic.notification
+                           .appIcon,
+
                      fallbackLabel: ">",
                   }),
                ];
@@ -80,7 +87,11 @@ export default function (props: NotificationProps): Gtk.Box {
                      },
 
                      IconWithLabelFallback({
-                        iconName: icons.ui.close + "-symbolic",
+                        icon: icons.ui.close,
+
+                        symbolic:
+                           options.notificationsOverview.symbolic.notification
+                              .close,
                      })
                   ),
                ];
@@ -119,7 +130,8 @@ export default function (props: NotificationProps): Gtk.Box {
                                  cssClasses: ["summary"],
                                  halign: Gtk.Align.START,
                                  xalign: 0,
-                                 ellipsize: Pango.EllipsizeMode.END,
+                                 wrap: true,
+                                 wrapMode: Pango.WrapMode.WORD_CHAR,
                                  label: notification.summary,
                               }),
                            ];

@@ -7,6 +7,21 @@ export default {
       workspaces: {
          values: [1, 2, 3, 4, 8, 9, 10],
       },
+
+      indicators: {
+         powerprofiles: {
+            symbolic: true,
+         },
+      },
+   },
+
+   notificationsOverview: {
+      symbolic: {
+         notification: {
+            appIcon: true,
+            close: true,
+         },
+      },
    },
 
    notificationsPopup: {

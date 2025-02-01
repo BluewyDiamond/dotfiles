@@ -18,7 +18,7 @@ export default function (): Gtk.Button {
          {},
 
          IconWithLabelFallback({
-            iconName: icons.system.ram,
+            icon: icons.system.ram,
             fallbackLabel: "RAM ",
          }),
 

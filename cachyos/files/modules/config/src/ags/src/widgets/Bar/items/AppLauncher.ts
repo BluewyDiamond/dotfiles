@@ -2,6 +2,7 @@ import { App, Gtk, Widget } from "astal/gtk4";
 import { setupAsPanelButton } from "../../functions";
 import { IconWithLabelFallback } from "../../wrappers/IconWithLabelFallback";
 import { GLib } from "astal";
+import { createIcon } from "../../../icons";
 
 export default function (): Gtk.Button {
    return Widget.Button(
@@ -17,6 +18,6 @@ export default function (): Gtk.Button {
          },
       },
 
-      IconWithLabelFallback({ iconName: GLib.get_os_info("LOGO") || "" })
+      IconWithLabelFallback({ icon: createIcon(GLib.get_os_info("LOGO") || "" )})
    );
 }

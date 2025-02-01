@@ -1,168 +1,179 @@
+export type Icon = {
+   normal: string;
+   symbolic: string;
+};
+
+export function createIcon(normal?: string, symbolic?: string): Icon {
+   return {
+      normal: normal ?? "",
+      symbolic: symbolic ?? (normal ? `${normal}-symbolic` : ""),
+   };
+}
+
 export default {
-   missing: "image-missing",
-   broken: "package-broken",
+   missing: createIcon("image-missing"),
+   broken: createIcon("package-broken"),
 
    fallback: {
-      executable: "application-x-executable",
-      notification: "dialog-information",
-      video: "video-x-generic",
-      audio: "audio-x-generic",
+      executable: createIcon("application-x-executable"),
+      notification: createIcon("dialog-information"),
+      video: createIcon("video-x-generic"),
+      audio: createIcon("audio-x-generic"),
    },
 
    ui: {
-      close: "window-close",
-      colorpicker: "color-select",
-      info: "info",
-      link: "external-link",
-      lock: "system-lock-screen",
-      menu: "open-menu",
-      refresh: "view-refresh",
-      search: "system-search",
-      settings: "emblem-system",
-      themes: "preferences-desktop-theme",
-      tick: "object-select",
-      time: "hourglass",
-      toolbars: "toolbars",
-      warning: "dialog-warning",
-      avatar: "avatar-default",
+      close: createIcon("window-close"),
+      colorpicker: createIcon("color-select"),
+      info: createIcon("info"),
+      link: createIcon("external-link"),
+      lock: createIcon("system-lock-screen"),
+      menu: createIcon("open-menu"),
+      refresh: createIcon("view-refresh"),
+      search: createIcon("system-search"),
+      settings: createIcon("emblem-system"),
+      themes: createIcon("preferences-desktop-theme"),
+      tick: createIcon("object-select"),
+      time: createIcon("hourglass"),
+      toolbars: createIcon("toolbars"),
+      warning: createIcon("dialog-warning"),
+      avatar: createIcon("avatar-default"),
 
       arrow: {
-         right: "pan-end",
-         left: "pan-start",
-         down: "pan-down",
-         up: "pan-up",
+         right: createIcon("pan-end"),
+         left: createIcon("pan-start"),
+         down: createIcon("pan-down"),
+         up: createIcon("pan-up"),
       },
    },
 
    audio: {
       mic: {
-         muted: "microphone-disabled",
-         low: "microphone-sensitivity-low",
-         medium: "microphone-sensitivity-medium",
-         high: "microphone-sensitivity-high",
+         muted: createIcon("microphone-disabled"),
+         low: createIcon("microphone-sensitivity-low"),
+         medium: createIcon("microphone-sensitivity-medium"),
+         high: createIcon("microphone-sensitivity-high"),
       },
 
       volume: {
-         muted: "audio-volume-muted",
-         low: "audio-volume-low",
-         medium: "audio-volume-medium",
-         high: "audio-volume-high",
-         overamplified: "audio-volume-overamplified",
+         muted: createIcon("audio-volume-muted"),
+         low: createIcon("audio-volume-low"),
+         medium: createIcon("audio-volume-medium"),
+         high: createIcon("audio-volume-high"),
+         overamplified: createIcon("audio-volume-overamplified"),
       },
 
       type: {
-         headset: "audio-headphones",
-         speaker: "audio-speakers",
-         card: "audio-card",
+         headset: createIcon("audio-headphones"),
+         speaker: createIcon("audio-speakers"),
+         card: createIcon("audio-card"),
       },
 
-      mixer: "mixer",
+      mixer: createIcon("mixer"),
    },
 
    powerprofile: {
-      balanced: "power-profile-balanced",
-      powerSaver: "power-profile-power-saver",
-      performance: "power-profile-performance",
+      balanced: createIcon("power-profile-balanced"),
+      powerSaver: createIcon("power-profile-power-saver"),
+      performance: createIcon("power-profile-performance"),
    },
 
    battery: {
-      default: "battery",
-      at000: "battery-000",
-      at010: "battery-010",
-      at020: "battery-020",
-      at030: "battery-030",
-      at040: "battery-040",
-      at050: "battery-050",
-      at060: "battery-060",
-      at070: "battery-070",
-      at080: "battery-080",
-      at090: "battery-090",
-      at100: "battery-100",
+      default: createIcon("battery"),
+      at000: createIcon("battery-000"),
+      at010: createIcon("battery-010"),
+      at020: createIcon("battery-020"),
+      at030: createIcon("battery-030"),
+      at040: createIcon("battery-040"),
+      at050: createIcon("battery-050"),
+      at060: createIcon("battery-060"),
+      at070: createIcon("battery-070"),
+      at080: createIcon("battery-080"),
+      at090: createIcon("battery-090"),
+      at100: createIcon("battery-100"),
 
       charging: {
-         default: "battery-good-charging",
-         at000: "battery-000-charging",
-         at010: "battery-010-charging",
-         at020: "battery-020-charging",
-         at030: "battery-030-charging",
-         at040: "battery-040-charging",
-         at050: "battery-050-charging",
-         at060: "battery-060-charging",
-         at070: "battery-070-charging",
-         at080: "battery-080-charging",
-         at090: "battery-090-charging",
-         at100: "battery-100-charging",
+         default: createIcon("battery-good-charging"),
+         at000: createIcon("battery-000-charging"),
+         at010: createIcon("battery-010-charging"),
+         at020: createIcon("battery-020-charging"),
+         at030: createIcon("battery-030-charging"),
+         at040: createIcon("battery-040-charging"),
+         at050: createIcon("battery-050-charging"),
+         at060: createIcon("battery-060-charging"),
+         at070: createIcon("battery-070-charging"),
+         at080: createIcon("battery-080-charging"),
+         at090: createIcon("battery-090-charging"),
+         at100: createIcon("battery-100-charging"),
       },
 
-      warning: "battery-empty",
+      warning: createIcon("battery-empty"),
    },
 
    bluetooth: {
-      enabled: "bluetooth-active",
-      disabled: "bluetooth-disabled",
+      enabled: createIcon("bluetooth-active"),
+      disabled: createIcon("bluetooth-disabled"),
    },
 
    brightness: {
-      indicator: "display-brightness",
-      keyboard: "keyboard-brightness",
-      screen: "display-brightness",
+      indicator: createIcon("display-brightness"),
+      keyboard: createIcon("keyboard-brightness"),
+      screen: createIcon("display-brightness"),
    },
 
    powermenu: {
-      sleep: "system-suspend",
-      reboot: "system-reboot",
-      logout: "system-log-out",
-      shutdown: "system-shutdown",
+      sleep: createIcon("system-suspend"),
+      reboot: createIcon("system-reboot"),
+      logout: createIcon("system-log-out"),
+      shutdown: createIcon("system-shutdown"),
    },
 
    recorder: {
-      recording: "media-record",
-      screencast: "com.github.artemanufrij.screencast",
+      recording: createIcon("media-record"),
+      screencast: createIcon("com.github.artemanufrij.screencast"),
    },
 
    notifications: {
-      normal: "notifications",
-      noisy: "notification-active",
-      silent: "notifications-disabled",
-      message: "chat-bubbles",
+      normal: createIcon("notifications"),
+      noisy: createIcon("notification-active"),
+      silent: createIcon("notifications-disabled"),
+      message: createIcon("chat-bubbles"),
    },
 
    trash: {
-      full: "user-trash-full",
-      empty: "user-trash",
+      full: createIcon("user-trash-full"),
+      empty: createIcon("user-trash"),
    },
 
    mpris: {
       shuffle: {
-         enabled: "media-playlist-shuffle",
-         disabled: "media-playlist-consecutive",
+         enabled: createIcon("media-playlist-shuffle"),
+         disabled: createIcon("media-playlist-consecutive"),
       },
 
       loop: {
-         none: "media-playlist-repeat",
-         track: "media-playlist-repeat-song",
-         playlist: "media-playlist-repeat",
+         none: createIcon("media-playlist-repeat"),
+         track: createIcon("media-playlist-repeat-song"),
+         playlist: createIcon("media-playlist-repeat"),
       },
 
-      playing: "media-playback-pause",
-      paused: "media-playback-start",
-      stopped: "media-playback-start",
-      prev: "media-skip-backward",
-      next: "media-skip-forward",
+      playing: createIcon("media-playback-pause"),
+      paused: createIcon("media-playback-start"),
+      stopped: createIcon("media-playback-start"),
+      prev: createIcon("media-skip-backward"),
+      next: createIcon("media-skip-forward"),
    },
 
    system: {
-      cpu: "cpu",
-      ram: "memory",
-      temp: "temperature",
+      cpu: createIcon("cpu"),
+      ram: createIcon("memory"),
+      temp: createIcon("temperature"),
    },
 
    color: {
-      dark: "dark-mode",
-      light: "light-mode",
+      dark: createIcon("dark-mode"),
+      light: createIcon("light-mode"),
    },
 };
-
 export const substitutes: { [key: string]: string } = {
    "transmission-gtk": "transmission",
    "blueberry.py": "blueberry",

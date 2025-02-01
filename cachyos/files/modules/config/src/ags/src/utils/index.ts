@@ -60,49 +60,18 @@ export function hasIconInApps(icon: string, app: Apps.Application): boolean {
 }
 
 export function findIcon(icon: string): string {
-   if (!icon) {
-      return "";
-   }
-
-   if (isValidImage(icon)) {
-      return icon;
-   }
-
-   if (icon.endsWith("-symbolic")) {
-      const modifiedIcon = icon.slice(0, -"-symbolic".length);
-      if (modifiedIcon) return modifiedIcon;
-   } else {
-      if (isValidImage(icon + "-symbolic")) {
-         return icon + "-symbolic";
-      }
-   }
+   if (!icon) return "";
+   if (isValidImage(icon)) return icon;
 
    const apps = new Apps.Apps();
    const foundedApp = apps.list.find((app) => hasIconInApps(icon, app));
 
-   if (foundedApp) {
-      if (isValidImage(foundedApp.iconName)) {
-         return foundedApp.iconName;
-      }
-
-      if (isValidImage(foundedApp + "symbolic")) {
-         return foundedApp + "symbolic";
-      }
-   }
+   if (foundedApp)
+      if (isValidImage(foundedApp.iconName)) return foundedApp.iconName;
 
    const substitute = substitutes[icon];
-
-   if (!substitute) {
-      return "";
-   }
-
-   if (isValidImage(substitute)) {
-      return substitute;
-   }
-
-   if (isValidImage(substitute + "symbolic")) {
-      return substitute + "symbolic";
-   }
+   if (!substitute) return "";
+   if (isValidImage(substitute)) return substitute;
 
    return "";
 }

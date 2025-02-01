@@ -7,6 +7,7 @@ import { findIcon } from "../../../../utils";
 import Wp from "gi://AstalWp";
 import { IconWithLabelFallback } from "../../../wrappers/IconWithLabelFallback";
 import Hookable from "../../../../libs/services/Hookable";
+import options from "../../../../options";
 
 const powerProfiles = PowerProfiles.get_default();
 const wp = Wp.get_default();
@@ -30,20 +31,22 @@ export class IndicatorMap extends Hookable implements Subscribable {
                this.set(
                   "powerprofiles",
                   IconWithLabelFallback({
-                     iconName: icons.powerprofile.powerSaver,
+                     icon: icons.powerprofile.powerSaver,
+                     symbolic: options.bar.indicators.powerprofiles.symbolic,
                   })
                );
             } else if (activeProfile === "performance") {
                this.set(
                   "powerprofiles",
                   IconWithLabelFallback({
-                     iconName: icons.powerprofile.performance,
+                     icon: icons.powerprofile.performance,
+                     symbolic: options.bar.indicators.powerprofiles.symbolic,
                   })
                );
             } else {
                this.set(
                   "powerprofiles",
-                  IconWithLabelFallback({ iconName: icons.broken })
+                  IconWithLabelFallback({ icon: icons.broken })
                );
             }
          };
@@ -56,10 +59,7 @@ export class IndicatorMap extends Hookable implements Subscribable {
          const audio = wp?.get_audio();
 
          if (!audio) {
-            this.set(
-               "recoders",
-               IconWithLabelFallback({ iconName: icons.broken })
-            );
+            this.set("recoders", IconWithLabelFallback({ icon: icons.broken }));
 
             return;
          }
@@ -67,10 +67,7 @@ export class IndicatorMap extends Hookable implements Subscribable {
          const mic = audio.get_default_microphone();
 
          if (!mic) {
-            this.set(
-               "recoders",
-               IconWithLabelFallback({ iconName: icons.broken })
-            );
+            this.set("recoders", IconWithLabelFallback({ icon: icons.broken }));
 
             return;
          }
@@ -84,13 +81,13 @@ export class IndicatorMap extends Hookable implements Subscribable {
                      if (!mic) {
                         this.set(
                            "recoders",
-                           IconWithLabelFallback({ iconName: icons.broken })
+                           IconWithLabelFallback({ icon: icons.broken })
                         );
 
                         return;
                      }
 
-                     let icon = "";
+                     let icon;
 
                      if (micVolume > 0.67) {
                         icon = icons.audio.mic.high;
@@ -104,7 +101,7 @@ export class IndicatorMap extends Hookable implements Subscribable {
 
                      this.set(
                         "recorders",
-                        IconWithLabelFallback({ iconName: icon })
+                        IconWithLabelFallback({ icon: icon })
                      );
                   } else {
                      this.delete("recorders");
@@ -118,10 +115,7 @@ export class IndicatorMap extends Hookable implements Subscribable {
          const audio = wp?.get_audio();
 
          if (!audio) {
-            this.set(
-               "recoders",
-               IconWithLabelFallback({ iconName: icons.broken })
-            );
+            this.set("recoders", IconWithLabelFallback({ icon: icons.broken }));
 
             return;
          }
@@ -129,17 +123,14 @@ export class IndicatorMap extends Hookable implements Subscribable {
          const speaker = audio.get_default_speaker();
 
          if (!speaker) {
-            this.set(
-               "recoders",
-               IconWithLabelFallback({ iconName: icons.broken })
-            );
+            this.set("recoders", IconWithLabelFallback({ icon: icons.broken }));
 
             return;
          }
 
          this.derives.add(
             Variable.derive([bind(speaker, "volume")], (volume) => {
-               let icon = "";
+               let icon;
 
                if (volume > 0.67) {
                   icon = icons.audio.volume.high;
@@ -151,10 +142,7 @@ export class IndicatorMap extends Hookable implements Subscribable {
                   icon = icons.audio.volume.muted;
                }
 
-               this.set(
-                  "speaker",
-                  IconWithLabelFallback({ iconName: findIcon(icon) })
-               );
+               this.set("speaker", IconWithLabelFallback({ icon: icon }));
             })
          );
       }
@@ -163,10 +151,7 @@ export class IndicatorMap extends Hookable implements Subscribable {
          const video = wp?.get_video();
 
          if (!video) {
-            this.set(
-               "recoders",
-               IconWithLabelFallback({ iconName: icons.broken })
-            );
+            this.set("recoders", IconWithLabelFallback({ icon: icons.broken }));
 
             return;
          }
@@ -181,7 +166,7 @@ export class IndicatorMap extends Hookable implements Subscribable {
                         "screen-recorders",
 
                         IconWithLabelFallback({
-                           iconName: findIcon(icons.recorder.screencast),
+                           icon: icons.recorder.screencast,
                         })
                      );
                   } else {
