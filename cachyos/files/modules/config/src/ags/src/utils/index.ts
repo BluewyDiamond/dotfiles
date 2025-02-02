@@ -1,4 +1,4 @@
-import { substitutes } from "../icons";
+import { substitutes } from "../libs/icons";
 import GLib from "gi://GLib";
 import Apps from "gi://AstalApps";
 import { readFileAsync } from "astal";
@@ -68,10 +68,6 @@ export function findIcon(icon: string): string {
 
    if (foundedApp)
       if (isValidImage(foundedApp.iconName)) return foundedApp.iconName;
-
-   const substitute = substitutes[icon];
-   if (!substitute) return "";
-   if (isValidImage(substitute)) return substitute;
 
    return "";
 }

@@ -174,14 +174,3 @@ export default {
       light: createIcon("light-mode"),
    },
 };
-export const substitutes: { [key: string]: string } = {
-   "transmission-gtk": "transmission",
-   "blueberry.py": "blueberry",
-   "com.raggesilver.BlackBox": "terminal",
-   "org.wezfurlong.wezterm": "terminal",
-   "audio-headset-bluetooth": "audio-headphones",
-   "audio-card-analog-usb": "audio-speakers",
-   "audio-card-analog-pci": "audio-card",
-   "preferences-system": "emblem-system",
-   "jetbrains-studio": "android-studio",
-};

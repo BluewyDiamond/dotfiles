@@ -2,7 +2,7 @@ import { App, Gtk, Widget } from "astal/gtk4";
 import { setupAsPanelButton } from "../../functions";
 import { IconWithLabelFallback } from "../../wrappers/IconWithLabelFallback";
 import { GLib } from "astal";
-import { createIcon } from "../../../icons";
+import { createIcon } from "../../../libs/icons";
 
 export default function (): Gtk.Button {
    return Widget.Button(

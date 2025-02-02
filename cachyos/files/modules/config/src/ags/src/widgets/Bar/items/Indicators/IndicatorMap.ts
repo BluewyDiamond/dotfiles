@@ -2,7 +2,7 @@ import { Gtk } from "astal/gtk4";
 import { bind, Subscribable } from "astal/binding";
 import { Variable } from "astal";
 import PowerProfiles from "gi://AstalPowerProfiles";
-import icons from "../../../../icons";
+import icons from "../../../../libs/icons";
 import { findIcon } from "../../../../utils";
 import Wp from "gi://AstalWp";
 import { IconWithLabelFallback } from "../../../wrappers/IconWithLabelFallback";

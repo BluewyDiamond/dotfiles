@@ -1,6 +1,6 @@
 import { App, Astal, Gdk, Gtk, Widget } from "astal/gtk4";
 import { IconWithLabelFallback } from "../wrappers/IconWithLabelFallback";
-import icons from "../../icons";
+import icons from "../../libs/icons";
 import Variable from "astal/variable";
 import { execAsync, interval, timeout } from "astal";
 import PopupWindow, { Position } from "../wrappers/PopupWindow";

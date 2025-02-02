@@ -1,6 +1,6 @@
 import { Gtk, Widget } from "astal/gtk4";
 import { findIcon } from "../../utils";
-import { Icon } from "../../icons";
+import { Icon } from "../../libs/icons";
 
 type IconWithLabelFallbackProps = {
    cssClasses?: string[];
