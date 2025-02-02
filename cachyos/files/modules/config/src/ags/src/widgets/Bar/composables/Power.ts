@@ -1,7 +1,7 @@
 import { App, Gtk, Widget } from "astal/gtk4";
-import { IconWithLabelFallback } from "../../wrappers/IconWithLabelFallback";
+import { IconWithLabelFallback } from "../../composables/IconWithLabelFallback";
 import icons from "../../../libs/icons";
-import { setupAsPanelButton } from "../../functions";
+import { onWindowVisible } from "../../functions";
 
 export default (): Gtk.Button => {
    return Widget.Button(
@@ -12,9 +12,7 @@ export default (): Gtk.Button => {
             App.toggle_window("astal-power-menu");
          },
 
-         setup: (self) => {
-            setupAsPanelButton(self, "astal-power-menu");
-         },
+         setup: (self) => onWindowVisible( "astal-power-menu", self)
       },
 
       IconWithLabelFallback({ icon: icons.powermenu.shutdown })

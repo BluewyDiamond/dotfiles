@@ -1,5 +1,5 @@
 import { Astal, hook, Widget } from "astal/gtk4";
-import { IconWithLabelFallback } from "../../wrappers/IconWithLabelFallback";
+import { IconWithLabelFallback } from "../../composables/IconWithLabelFallback";
 import icons from "../../../libs/icons";
 import { bind } from "astal/binding";
 import Battery from "gi://AstalBattery";

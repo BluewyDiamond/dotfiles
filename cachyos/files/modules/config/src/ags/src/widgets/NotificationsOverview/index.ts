@@ -1,6 +1,6 @@
 import { Astal, Gdk, Gtk, Widget } from "astal/gtk4";
 import { NotificationMap } from "./NotificationMap";
-import PopupWindow, { Position } from "../wrappers/PopupWindow";
+import PopupWindow, { Position } from "../composables/PopupWindow";
 
 export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
    const notificationMap = new NotificationMap();

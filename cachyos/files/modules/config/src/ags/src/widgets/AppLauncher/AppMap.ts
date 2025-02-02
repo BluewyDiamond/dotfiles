@@ -3,9 +3,9 @@ import { Variable } from "astal";
 import Apps from "gi://AstalApps";
 import { Gtk, Widget } from "astal/gtk4";
 import options from "../../options";
-import { IconWithLabelFallback } from "../wrappers/IconWithLabelFallback";
 import Pango from "gi://Pango";
 import { createIcon } from "../../libs/icons";
+import { IconWithLabelFallback } from "../composables/IconWithLabelFallback";
 
 const apps = new Apps.Apps();
 

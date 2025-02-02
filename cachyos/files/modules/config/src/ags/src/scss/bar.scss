@@ -89,14 +89,11 @@
       }
 
       .notifications {
+         @include bar_item();
          margin-right: $space_medium;
 
-         & > button {
-            @include bar_item();
-
-            &:hover {
-               background: $color_primary_container;
-            }
+         &:hover {
+            background: $color_primary_container;
          }
       }
 

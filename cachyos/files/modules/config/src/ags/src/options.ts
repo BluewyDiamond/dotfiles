@@ -4,6 +4,8 @@ export default {
    },
 
    bar: {
+      name: "astal_bar",
+
       workspaces: {
          values: [1, 2, 3, 4, 8, 9, 10],
       },
@@ -16,6 +18,8 @@ export default {
    },
 
    notificationsOverview: {
+      name: "astal_notifications_overview",
+
       symbolic: {
          notification: {
             appIcon: true,
@@ -25,11 +29,13 @@ export default {
    },
 
    notificationsPopup: {
+      name: "astal_notifications_popup",
       timeout: 5000,
       maxItems: 5,
    },
 
    appLauncher: {
+      name: "astal_app_launcher",
       maxItems: 5,
    },
 

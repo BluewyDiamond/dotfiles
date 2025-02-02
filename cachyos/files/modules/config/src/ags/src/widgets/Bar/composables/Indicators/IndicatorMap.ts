@@ -5,7 +5,7 @@ import PowerProfiles from "gi://AstalPowerProfiles";
 import icons from "../../../../libs/icons";
 import { findIcon } from "../../../../utils";
 import Wp from "gi://AstalWp";
-import { IconWithLabelFallback } from "../../../wrappers/IconWithLabelFallback";
+import { IconWithLabelFallback } from "../../../composables/IconWithLabelFallback";
 import Hookable from "../../../../libs/services/Hookable";
 import options from "../../../../options";
 

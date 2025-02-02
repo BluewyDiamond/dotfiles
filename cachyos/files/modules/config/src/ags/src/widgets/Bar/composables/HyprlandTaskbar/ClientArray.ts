@@ -2,7 +2,7 @@ import { Gtk, hook, Widget } from "astal/gtk4";
 import AstalHyprland from "gi://AstalHyprland";
 import { Subscribable } from "astal/binding";
 import { Variable } from "astal";
-import { IconWithLabelFallback } from "../../../wrappers/IconWithLabelFallback";
+import { IconWithLabelFallback } from "../../../composables/IconWithLabelFallback";
 import icons, { createIcon } from "../../../../libs/icons";
 import Hookable from "../../../../libs/services/Hookable";
 

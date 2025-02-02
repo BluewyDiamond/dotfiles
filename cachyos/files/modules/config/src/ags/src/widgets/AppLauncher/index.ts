@@ -2,10 +2,11 @@ import { execAsync, Variable } from "astal";
 import { App, Astal, Gdk, Widget } from "astal/gtk4";
 import AppMap from "./AppMap";
 import Apps from "gi://AstalApps";
-import PopupWindow, { Position } from "../wrappers/PopupWindow";
+import PopupWindow, { Position } from "../composables/PopupWindow";
+import options from "../../options";
 
 function hide() {
-   App.get_window("astal-app-launcher")?.hide();
+   App.get_window(options.appLauncher.name)?.hide();
 }
 
 export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
@@ -69,7 +70,7 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
    const window = PopupWindow(
       {
          gdkmonitor: gdkmonitor,
-         name: "astal-app-launcher",
+         name: options.appLauncher.name,
          cssClasses: ["app-launcher"],
          exclusivity: Astal.Exclusivity.IGNORE,
          layer: Astal.Layer.OVERLAY,

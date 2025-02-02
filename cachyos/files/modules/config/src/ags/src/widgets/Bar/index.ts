@@ -1,21 +1,22 @@
-import HyprlandWorkspaces from "./items/HyprlandWorkspaces";
-import Indicators from "./items/Indicators";
-import HyprlandTaskbar from "./items/HyprlandTaskbar";
-import SystemTray from "./items/SystemTray";
-import Datetime from "./items/Time";
-import NotificationsIndicator from "./items/NotificationsIndicator";
-import AppLauncher from "./items/AppLauncher";
-import Power from "./items/Power";
-import Battery from "./items/Battery";
-import Ram from "./items/Ram";
-import Cpu from "./items/Cpu";
+import HyprlandWorkspaces from "./composables/HyprlandWorkspaces";
+import Indicators from "./composables/Indicators";
+import HyprlandTaskbar from "./composables/HyprlandTaskbar";
+import SystemTray from "./composables/SystemTray";
+import Datetime from "./composables/Time";
+import NotificationsIndicator from "./composables/NotificationsIndicator";
+import AppLauncher from "./composables/AppLauncher";
+import Power from "./composables/Power";
+import Battery from "./composables/Battery";
+import Ram from "./composables/Ram";
+import Cpu from "./composables/Cpu";
 import { Astal, Gdk, Gtk, Widget } from "astal/gtk4";
+import options from "../../options";
 
 export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
    return Widget.Window({
       gdkmonitor: gdkmonitor,
-      name: "astal-bar",
-      namespace: "astal-bar",
+      name: options.bar.name,
+      namespace: options.bar.name,
       cssClasses: ["bar"],
       exclusivity: Astal.Exclusivity.EXCLUSIVE,
       visible: true,

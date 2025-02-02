@@ -1,7 +1,7 @@
 import { bind, interval, Variable } from "astal";
 import { Gtk, Widget } from "astal/gtk4";
 import { CpuStats, getCpuStats } from "../../../utils";
-import { IconWithLabelFallback } from "../../wrappers/IconWithLabelFallback";
+import { IconWithLabelFallback } from "../../composables/IconWithLabelFallback";
 import icons from "../../../libs/icons";
 
 const INTERVAL = 2000;
