@@ -111,6 +111,8 @@ export default function (props: NotificationProps): Gtk.Box {
                      Widget.Image({
                         cssClasses: ["image"],
                         file: notification.image,
+                        halign: Gtk.Align.START,
+                        valign: Gtk.Align.START,
                      }),
                   ];
                }
