@@ -95,21 +95,21 @@ mappings.conform = {
    },
 }
 
-mappings.fzf_lua = {
-   {
-      "n",
-      "<leader>ff",
-      ":lua require('fzf-lua').files()<CR>",
-      { noremap = true, silent = true, desc = "find files" },
-   },
-
-   {
-      "n",
-      "<leader>fw",
-      ":lua require('fzf-lua').live_grep()<CR>",
-      { noremap = true, silent = true, desc = "find files" },
-   },
-}
+-- mappings.fzf_lua = {
+--    {
+--       "n",
+--       "<leader>ff",
+--       ":lua require('fzf-lua').files()<CR>",
+--       { noremap = true, silent = true, desc = "find files" },
+--    },
+--
+--    {
+--       "n",
+--       "<leader>fw",
+--       ":lua require('fzf-lua').live_grep()<CR>",
+--       { noremap = true, silent = true, desc = "find files" },
+--    },
+-- }
 
 mappings.lsp = {
    {
@@ -179,14 +179,14 @@ mappings.blame = {
    { "n", "<leader>fu", ":BlameToggle<CR>", { noremap = true, silent = true, desc = "toggle git blame" } },
 }
 
-mappings.neo_tree = {
-   {
-      "n",
-      "<C-n>",
-      ":Neotree source=filesystem reveal=true position=right toggle<CR>",
-      { noremap = true, silent = true },
-   },
-}
+-- mappings.neo_tree = {
+--    {
+--       "n",
+--       "<C-n>",
+--       ":Neotree source=filesystem reveal=true position=right toggle<CR>",
+--       { noremap = true, silent = true },
+--    },
+-- }
 
 mappings.rainbow_delimiters = {
    {
@@ -225,6 +225,53 @@ mappings.trouble = {
       "<leader>ttd",
       "<cmd>Trouble diagnostics toggle<cr>",
       {},
+   },
+}
+
+local Snacks = require("snacks")
+
+mappings.snacks = {
+   {
+      "n",
+      "<leader>ff",
+
+      function()
+         Snacks.picker.files({
+            finder = "files",
+            format = "file",
+            show_empty = true,
+            supports_live = true,
+            layout = "ivy",
+         })
+      end,
+
+      { noremap = true, silent = true, desc = "find files" },
+   },
+
+   {
+      "n",
+      "<leader>fb",
+
+      function()
+         Snacks.picker.buffers({
+            layout = "ivy",
+         })
+      end,
+
+      { noremap = true, silent = true, desc = "find buffers" },
+   },
+
+   {
+      "n",
+      "<C-n>",
+
+      function()
+         Snacks.picker.explorer({
+            layout = { layout = { position = "right" } },
+         })
+      end,
+
+      { noremap = true, silent = true, desc = "toggle explorer" },
    },
 }
 
