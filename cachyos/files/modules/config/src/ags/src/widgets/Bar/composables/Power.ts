@@ -1,7 +1,7 @@
 import { App, Gtk, Widget } from "astal/gtk4";
 import { IconWithLabelFallback } from "../../composables/IconWithLabelFallback";
 import icons from "../../../libs/icons";
-import { onWindowVisible } from "../../functions";
+import { onWindowVisible } from "../../../utils/widget";
 
 export default (): Gtk.Button => {
    return Widget.Button(

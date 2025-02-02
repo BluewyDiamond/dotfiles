@@ -1,4 +1,4 @@
-import { Astal, Gtk, Widget } from "astal/gtk4";
+import { Gtk, Widget } from "astal/gtk4";
 import { IndicatorMap } from "./IndicatorMap";
 
 export default function (): Gtk.Button {

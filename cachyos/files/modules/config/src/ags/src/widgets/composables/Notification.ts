@@ -1,11 +1,11 @@
 import { Gtk, Widget } from "astal/gtk4";
 import Notifd from "gi://AstalNotifd";
-import { findIcon, isValidImage } from "../../utils";
 import { GLib } from "astal";
 import icons, { createIcon } from "../../libs/icons";
 import { IconWithLabelFallback } from "./IconWithLabelFallback";
 import Pango from "gi://Pango?version=1.0";
 import options from "../../options";
+import { findIcon, isValidImage } from "../../utils/image";
 
 const urgency = (n: Notifd.Notification) => {
    const { LOW, NORMAL, CRITICAL } = Notifd.Urgency;
@@ -32,7 +32,7 @@ export default function (props: NotificationProps): Gtk.Box {
    const { notification, setup } = props;
 
    return Widget.Box({
-      cssClasses: ["notification"],
+      cssClasses: ["notification", urgency(notification)],
       vertical: true,
       hexpand: false,
 

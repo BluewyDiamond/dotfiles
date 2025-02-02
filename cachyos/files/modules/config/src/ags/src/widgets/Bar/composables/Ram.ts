@@ -1,8 +1,8 @@
 import { bind, interval, Variable } from "astal";
 import { Astal, Gtk, Widget } from "astal/gtk4";
-import { getMemoryStats, MemoryStats } from "../../../utils";
 import { IconWithLabelFallback } from "../../composables/IconWithLabelFallback";
 import icons from "../../../libs/icons";
+import { getMemoryStats, MemoryStats } from "../../../utils/hardware";
 
 const INTERVAL = 2000;
 const memoryStats: Variable<MemoryStats | null> = Variable(null);
