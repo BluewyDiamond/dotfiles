@@ -224,7 +224,7 @@ mappings.trouble = {
       "n",
       "<leader>ttd",
       "<cmd>Trouble diagnostics toggle<cr>",
-      {},
+      { noremap = true, silent = true, desc = "toggle trouble diagnostics" },
    },
 }
 
