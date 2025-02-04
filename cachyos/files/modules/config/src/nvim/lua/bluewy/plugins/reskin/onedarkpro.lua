@@ -75,6 +75,9 @@ return {
             special = { fg = "${purple}" },
             ["@namespace"] = { fg = "${yellow}" },
             ["@parameter"] = { fg = "${red}" },
+            ["@constructor"] = { fg = "${purple}" },
+            ["@constant.builtin"] = { fg = "${yellow}" },
+            ["@constant"] = { fg = "${yellow}" },
          },
       })
 

@@ -23,8 +23,8 @@ return {
          },
 
          highlight = {
-            enable = true
-         }
+            enable = true,
+         },
       })
    end,
 }
