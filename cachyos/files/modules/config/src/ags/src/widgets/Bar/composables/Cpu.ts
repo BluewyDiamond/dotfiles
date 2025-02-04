@@ -2,28 +2,27 @@ import { bind, interval, Variable } from "astal";
 import { Gtk, Widget } from "astal/gtk4";
 import { IconWithLabelFallback } from "../../composables/IconWithLabelFallback";
 import icons from "../../../libs/icons";
-import { CpuStats, getCpuStats } from "../../../utils/hardware";
+import GTop from "gi://GTop";
 
 const INTERVAL = 2000;
-let lastCpuStats: CpuStats | null = null;
+let lastCpuStats: GTop.glibtop_cpu | null = null;
 const cpuUsage: Variable<number | null> = Variable(null);
 
 interval(INTERVAL, async () => {
-   const cpuStats = await getCpuStats();
+   const gtopCpu = new GTop.glibtop_cpu();
+   GTop.glibtop_get_cpu(gtopCpu);
 
-   if (cpuStats) {
-      if (lastCpuStats) {
-         cpuUsage.set(
-            1 -
-               (cpuStats.idle - lastCpuStats.idle) /
-                  (cpuStats.total - lastCpuStats.total)
-         );
-      } else {
-         cpuUsage.set(null);
-      }
+   if (lastCpuStats) {
+      cpuUsage.set(
+         1 -
+            (gtopCpu.idle - lastCpuStats.idle) /
+               (gtopCpu.total - lastCpuStats.total)
+      );
+   } else {
+      cpuUsage.set(null);
    }
 
-   lastCpuStats = cpuStats;
+   lastCpuStats = gtopCpu;
 });
 
 export default function (): Gtk.Button {
@@ -34,7 +33,10 @@ export default function (): Gtk.Button {
 
       Widget.Box({
          children: [
-            IconWithLabelFallback({ icon: icons.system.cpu, fallbackLabel: "CPU " }),
+            IconWithLabelFallback({
+               icon: icons.system.cpu,
+               fallbackLabel: "CPU ",
+            }),
 
             Widget.Label({
                label: bind(cpuUsage).as((cpuUsage) => {

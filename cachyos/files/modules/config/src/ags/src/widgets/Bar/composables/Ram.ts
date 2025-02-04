@@ -1,12 +1,22 @@
 import { bind, interval, Variable } from "astal";
-import { Astal, Gtk, Widget } from "astal/gtk4";
+import { Gtk, Widget } from "astal/gtk4";
 import { IconWithLabelFallback } from "../../composables/IconWithLabelFallback";
 import icons from "../../../libs/icons";
-import { getMemoryStats, MemoryStats } from "../../../utils/hardware";
+import GTop from "gi://GTop";
 
 const INTERVAL = 2000;
-const memoryStats: Variable<MemoryStats | null> = Variable(null);
-interval(INTERVAL, async () => memoryStats.set(await getMemoryStats()));
+
+function getGtopMem(): GTop.glibtop_mem {
+   const gtopMem = new GTop.glibtop_mem();
+   GTop.glibtop_get_mem(gtopMem);
+   return gtopMem;
+}
+
+const gtopMemVariable: Variable<GTop.glibtop_mem> = Variable(getGtopMem());
+
+interval(INTERVAL, async () => {
+   gtopMemVariable.set(getGtopMem());
+});
 
 export default function (): Gtk.Button {
    return Widget.Button(
@@ -23,12 +33,13 @@ export default function (): Gtk.Button {
          }),
 
          Widget.Label({
-            label: bind(memoryStats).as((memoryStats) => {
-               if (!memoryStats) {
-                  return "???";
-               }
-
-               return `${Math.ceil(memoryStats.usage * 100)
+            label: bind(gtopMemVariable).as((gtopMem) => {
+               return `${Math.ceil(
+                  (1 -
+                     (gtopMem.free + gtopMem.buffer + gtopMem.cached) /
+                        gtopMem.total) *
+                     100
+               )
                   .toString()
                   .padStart(3, "_")}%`;
             }),
