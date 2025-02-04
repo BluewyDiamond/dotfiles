@@ -32,7 +32,7 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
          hide();
          appMap.searchQuery.set("");
          self.text = "";
-         appMap.selectedIndex.set(undefined);
+         appMap.selectedIndex.set(null);
       },
    });
 
@@ -86,13 +86,13 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
                self.hide();
                appMap.searchQuery.set("");
                entry.text = "";
-               appMap.selectedIndex.set(undefined);
+               appMap.selectedIndex.set(null);
             }
 
             if (event === Gdk.KEY_Up) {
                const maxLength = appMap.length();
                let selectedIndexValue = appMap.selectedIndex.get();
-               if (selectedIndexValue === undefined)
+               if (selectedIndexValue === null)
                   selectedIndexValue = maxLength - 1;
 
                if (selectedIndexValue > 0) {
@@ -105,7 +105,7 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
             if (event === Gdk.KEY_Down) {
                const maxLength = appMap.length();
                let selectedIndexValue = appMap.selectedIndex.get();
-               if (selectedIndexValue === undefined) selectedIndexValue = -1;
+               if (selectedIndexValue === null) selectedIndexValue = -1;
 
                if (selectedIndexValue < maxLength - 1) {
                   appMap.selectedIndex.set(selectedIndexValue + 1);
