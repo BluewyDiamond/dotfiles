@@ -11,8 +11,8 @@ const apps = new Apps.Apps();
 
 function AppButton(
    app: Apps.Application,
-   selectedIndex: Variable<number | undefined>,
-   indexInList: Variable<number | undefined>,
+   selectedIndex: Variable<number | null>,
+   indexInList: Variable<number | null>,
    onClicked: (self: Gtk.Button) => void
 ): Gtk.Button {
    let variable: Variable<void>;
@@ -98,13 +98,13 @@ function AppButton(
    );
 }
 
-class AppWithIndex {
+class AppButtonWithIndex {
    widget: Gtk.Widget;
-   indexInlist: Variable<number | undefined> = Variable(undefined);
+   indexInlist: Variable<number | null> = Variable(null);
 
    constructor(
       app: Apps.Application,
-      selectedIndex: Variable<number | undefined>,
+      selectedIndex: Variable<number | null>,
       onClicked: (self: Gtk.Button, app: Apps.Application) => void
    ) {
       this.widget = AppButton(app, selectedIndex, this.indexInlist, (self) =>
@@ -118,70 +118,79 @@ class AppWithIndex {
 }
 
 export default class AppMap implements Subscribable {
-   searchQuery = Variable("");
-   private map: Map<Apps.Application, AppWithIndex> = new Map();
-   private var: Variable<Gtk.Widget[]> = new Variable([]);
+   private map: Map<Apps.Application, AppButtonWithIndex> = new Map();
+   private variable: Variable<Gtk.Widget[]> = new Variable([]);
 
-   constructor() {
-      // updates are called manually
+   searchQuery = Variable("");
+   selectedIndex: Variable<number | null> = Variable(null);
+
+   constructor(onAppClicked: () => void) {
+      this.searchQuery.subscribe((searchQuery) => {
+         if (searchQuery === "") {
+            this.clear();
+            return;
+         }
+
+         const queriedAppsSet = new Set(
+            apps.fuzzy_query(searchQuery).slice(0, options.appLauncher.maxItems)
+         );
+
+         this.map.forEach((_, app) => {
+            if (!queriedAppsSet.has(app)) {
+               this.map.delete(app);
+            }
+         });
+
+         const onClicked = (app: Apps.Application) => {
+            app.launch();
+            this.searchQuery.set("");
+         };
+
+         queriedAppsSet.forEach((app) => {
+            if (this.map.has(app)) return;
+            this.map.set(
+               app,
+
+               new AppButtonWithIndex(app, this.selectedIndex, () => {
+                  onAppClicked();
+                  onClicked(app);
+               })
+            );
+         });
+
+         let orderedList: Gtk.Widget[] = [];
+         let index = 0;
+
+         for (const app of queriedAppsSet) {
+            const appButtonWithIndex = this.map.get(app);
+            if (!appButtonWithIndex) continue;
+
+            appButtonWithIndex.indexInlist.set(index);
+            orderedList.push(appButtonWithIndex.widget);
+            index++;
+         }
+
+         this.selectedIndex.set(null);
+         this.variable.set(orderedList);
+      });
    }
 
    get() {
-      return this.var.get();
+      return this.variable.get();
    }
 
    subscribe(callback: (list: Array<Gtk.Widget>) => void) {
-      return this.var.subscribe(callback);
+      return this.variable.subscribe(callback);
    }
 
    destroy() {
-      this.var.drop();
+      this.variable.drop();
+      this.searchQuery.drop();
+      this.selectedIndex.drop();
    }
 
    length(): number {
       return this.map.size;
-   }
-
-   update(
-      selectedIndex: Variable<number | undefined>,
-      onClicked: (self: Gtk.Button, app: Apps.Application) => void
-   ) {
-      const searchQuery = this.searchQuery.get();
-
-      const queriedAppsSet = new Set(
-         apps.fuzzy_query(searchQuery).slice(0, options.appLauncher.maxItems)
-      );
-
-      this.map.forEach((_, app) => {
-         if (!queriedAppsSet.has(app)) {
-            this.delete(app);
-         }
-      });
-
-      queriedAppsSet.forEach((app) => {
-         if (this.map.has(app)) return;
-         this.set(
-            app,
-
-            new AppWithIndex(app, selectedIndex, (self, app) =>
-               onClicked(self, app)
-            )
-         );
-      });
-
-      let orderedList: Gtk.Widget[] = [];
-      let index = 0;
-
-      for (const app of queriedAppsSet) {
-         const appWithIndex = this.map.get(app);
-         if (!appWithIndex) return;
-         appWithIndex.indexInlist.set(index);
-         orderedList.push(appWithIndex.widget);
-         index++;
-      }
-
-      selectedIndex.set(undefined);
-      this.var.set(orderedList);
    }
 
    launchApp(indexInList: number) {
@@ -193,20 +202,6 @@ export default class AppMap implements Subscribable {
    }
 
    clear() {
-      this.map.forEach((_, app) => this.delete(app));
-   }
-
-   private set(key: Apps.Application, value: AppWithIndex) {
-      const x = this.map.get(key);
-      //x?.widget.destroy();
-      x?.destroy();
-      this.map.set(key, value);
-   }
-
-   private delete(key: Apps.Application) {
-      const x = this.map.get(key);
-      //x?.widget.destroy();
-      x?.destroy();
-      this.map.delete(key);
+      this.map.forEach((_, app) => this.map.delete(app));
    }
 }
