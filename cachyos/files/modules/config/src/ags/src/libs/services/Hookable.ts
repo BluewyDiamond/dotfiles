@@ -1,8 +1,10 @@
+import { Variable } from "astal";
 import { Connectable, Subscribable } from "astal/binding";
 
 export default class Hookable {
    private connectedSignals: Array<[Connectable | Subscribable, number]> = [];
    private subscriptions: Array<() => void> = [];
+   derives: Set<Variable<any>> = new Set();
 
    hook(
       object: Connectable,
@@ -37,5 +39,6 @@ export default class Hookable {
       this.connectedSignals = [];
       this.subscriptions.forEach((unsubscribe) => unsubscribe());
       this.subscriptions = [];
+      this.derives.forEach((variable) => variable.drop());
    }
 }

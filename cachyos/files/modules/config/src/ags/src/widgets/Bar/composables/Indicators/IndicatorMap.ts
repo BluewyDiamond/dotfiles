@@ -12,10 +12,8 @@ const powerProfiles = PowerProfiles.get_default();
 const wp = Wp.get_default();
 
 export class IndicatorMap extends Hookable implements Subscribable {
-   private map: Map<string, Gtk.Widget> = new Map();
+   private map: Map<string, Gtk.Widget | null> = new Map();
    private var: Variable<Array<Gtk.Widget>> = Variable([]);
-   // store references to be able to destroy them later
-   private derives: Set<Variable<any>> = new Set();
 
    constructor() {
       super();
@@ -25,28 +23,35 @@ export class IndicatorMap extends Hookable implements Subscribable {
             const activeProfile = powerProfiles.get_active_profile();
 
             if (activeProfile === "balanced") {
-               this.delete("powerprofiles");
+               this.map.set("powerprofiles", null);
+               this.notify();
             } else if (activeProfile === "powersaver") {
-               this.set(
+               this.map.set(
                   "powerprofiles",
                   IconWithLabelFallback({
                      icon: icons.powerprofile.powerSaver,
                      symbolic: options.bar.indicators.powerprofiles.symbolic,
                   })
                );
+
+               this.notify();
             } else if (activeProfile === "performance") {
-               this.set(
+               this.map.set(
                   "powerprofiles",
                   IconWithLabelFallback({
                      icon: icons.powerprofile.performance,
                      symbolic: options.bar.indicators.powerprofiles.symbolic,
                   })
                );
+
+               this.notify();
             } else {
-               this.set(
+               this.map.set(
                   "powerprofiles",
                   IconWithLabelFallback({ icon: icons.broken })
                );
+
+               this.notify();
             }
          };
 
@@ -58,16 +63,24 @@ export class IndicatorMap extends Hookable implements Subscribable {
          const audio = wp?.get_audio();
 
          if (!audio) {
-            this.set("recoders", IconWithLabelFallback({ icon: icons.broken }));
+            this.map.set(
+               "recoders",
+               IconWithLabelFallback({ icon: icons.broken })
+            );
 
+            this.notify();
             return;
          }
 
          const mic = audio.get_default_microphone();
 
          if (!mic) {
-            this.set("recoders", IconWithLabelFallback({ icon: icons.broken }));
+            this.map.set(
+               "recoders",
+               IconWithLabelFallback({ icon: icons.broken })
+            );
 
+            this.notify();
             return;
          }
 
@@ -78,11 +91,12 @@ export class IndicatorMap extends Hookable implements Subscribable {
                (recorders, micVolume) => {
                   if (recorders.length > 0) {
                      if (!mic) {
-                        this.set(
+                        this.map.set(
                            "recoders",
                            IconWithLabelFallback({ icon: icons.broken })
                         );
 
+                        this.notify();
                         return;
                      }
 
@@ -98,12 +112,15 @@ export class IndicatorMap extends Hookable implements Subscribable {
                         icon = icons.audio.mic.muted;
                      }
 
-                     this.set(
+                     this.map.set(
                         "recorders",
                         IconWithLabelFallback({ icon: icon })
                      );
+
+                     this.notify();
                   } else {
-                     this.delete("recorders");
+                     this.map.set("recorders", null);
+                     this.notify();
                   }
                }
             )
@@ -114,16 +131,24 @@ export class IndicatorMap extends Hookable implements Subscribable {
          const audio = wp?.get_audio();
 
          if (!audio) {
-            this.set("recoders", IconWithLabelFallback({ icon: icons.broken }));
+            this.map.set(
+               "recoders",
+               IconWithLabelFallback({ icon: icons.broken })
+            );
 
+            this.notify();
             return;
          }
 
          const speaker = audio.get_default_speaker();
 
          if (!speaker) {
-            this.set("recoders", IconWithLabelFallback({ icon: icons.broken }));
+            this.map.set(
+               "recoders",
+               IconWithLabelFallback({ icon: icons.broken })
+            );
 
+            this.notify();
             return;
          }
 
@@ -141,7 +166,8 @@ export class IndicatorMap extends Hookable implements Subscribable {
                   icon = icons.audio.volume.muted;
                }
 
-               this.set("speaker", IconWithLabelFallback({ icon: icon }));
+               this.map.set("speaker", IconWithLabelFallback({ icon: icon }));
+               this.notify();
             })
          );
       }
@@ -150,8 +176,12 @@ export class IndicatorMap extends Hookable implements Subscribable {
          const video = wp?.get_video();
 
          if (!video) {
-            this.set("recoders", IconWithLabelFallback({ icon: icons.broken }));
+            this.map.set(
+               "recoders",
+               IconWithLabelFallback({ icon: icons.broken })
+            );
 
+            this.notify();
             return;
          }
 
@@ -161,15 +191,18 @@ export class IndicatorMap extends Hookable implements Subscribable {
 
                (recorders: Wp.Endpoint[]) => {
                   if (recorders.length > 0) {
-                     this.set(
+                     this.map.set(
                         "screen-recorders",
 
                         IconWithLabelFallback({
                            icon: icons.recorder.screencast,
                         })
                      );
+
+                     this.notify();
                   } else {
-                     this.delete("screen-recorders");
+                     this.map.set("screen-recorders", null);
+                     this.notify();
                   }
                }
             )
@@ -188,22 +221,19 @@ export class IndicatorMap extends Hookable implements Subscribable {
    destroy() {
       super.destroy();
       this.var.drop();
-      this.derives.forEach((derivedVar) => derivedVar.drop());
-   }
-
-   private set(key: string, value: Gtk.Widget) {
-      //this.map.get(key)?.destroy();
-      this.map.set(key, value);
-      this.notify();
-   }
-
-   private delete(key: string) {
-      //this.map.get(key)?.destroy();
-      this.map.delete(key);
-      this.notify();
    }
 
    private notify() {
-      this.var.set([...this.map.values()].reverse());
+      const array = [];
+
+      for (const widget of this.map.values()) {
+         if (widget === null) {
+            continue;
+         }
+
+         array.push(widget);
+      }
+
+      this.var.set(array);
    }
 }
