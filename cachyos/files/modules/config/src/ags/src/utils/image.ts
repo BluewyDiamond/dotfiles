@@ -9,6 +9,7 @@ gtkIconTheme.set_theme_name(options.theme.icons);
 
 export function getIcon(icon: string): string {
    icon = icon.toLowerCase();
+   let approximate = "";
 
    for (const iconName of gtkIconTheme.iconNames) {
       const iconInLowerCase = iconName.toLowerCase();
@@ -17,12 +18,12 @@ export function getIcon(icon: string): string {
          return iconName;
       }
 
-      if (iconInLowerCase.includes(icon)) {
-         return iconName;
+      if (!approximate && iconInLowerCase.includes(icon)) {
+         approximate = iconName;
       }
    }
 
-   return "";
+   return approximate;
 }
 
 export function hasIconInApps(icon: string, app: Apps.Application): boolean {
