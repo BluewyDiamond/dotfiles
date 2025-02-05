@@ -237,10 +237,20 @@ mappings.snacks = {
 
       function()
          Snacks.picker.files({
-            finder = "files",
-            format = "file",
-            show_empty = true,
-            supports_live = true,
+            layout = "ivy",
+         })
+      end,
+
+      { noremap = true, silent = true, desc = "find files" },
+   },
+
+   {
+      "n",
+      "<leader>ff",
+
+      function()
+         --- @type snacks.picker.grep.Config
+         Snacks.picker.grep({
             layout = "ivy",
          })
       end,
