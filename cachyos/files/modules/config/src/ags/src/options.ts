@@ -33,6 +33,10 @@ export default {
    },
 
    notification: {
+      closeIcon: {
+         symbolic: true,
+      },
+
       fallbackIcon: {
          symbolic: true,
       },

@@ -87,10 +87,7 @@ export default function (props: NotificationProps): Gtk.Box {
 
                      IconWithLabelFallback({
                         icon: icons.ui.close,
-
-                        symbolic:
-                           options.notificationsOverview.symbolic.notification
-                              .close,
+                        symbolic: options.notification.closeIcon.symbolic,
                      })
                   ),
                ];
