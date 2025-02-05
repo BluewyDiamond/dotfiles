@@ -52,8 +52,6 @@ export class NotificationMap extends Hookable implements Subscribable {
       this.map.forEach((_, id) => {
          notifd.get_notification(id)?.dismiss();
       });
-
-      this.notify();
    }
 
    private notify() {
