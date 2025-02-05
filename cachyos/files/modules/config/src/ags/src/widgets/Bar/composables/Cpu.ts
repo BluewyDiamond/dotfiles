@@ -25,7 +25,7 @@ function calculateCpuUsage(
    return 1 - (now.idle - previous.idle) / totalDifference;
 }
 
-let lastCpuStats: GTop.glibtop_cpu = getGtopCpu();
+let lastCpuStats = getGtopCpu();
 
 const cpuUsage: Variable<number> = Variable(
    calculateCpuUsage(getGtopCpu(), lastCpuStats)
