@@ -1,6 +1,7 @@
 import { App, Astal, Gdk, Gtk, hook, Widget } from "astal/gtk4";
 import options from "../../options";
-import { interval } from "astal";
+import { AstalIO, interval } from "astal";
+import { matchInputRegionOfWidget as makeClickThroughWindowWithExceptions } from "../../utils/widget";
 
 type FillerProps = {
    cssClasses?: string[];
@@ -261,26 +262,17 @@ export default function (
    );
 
    if (clickThroughFiller) {
-      Astal.Extra.makeSingleClickableWidget(child, window);
+      makeClickThroughWindowWithExceptions(window, child);
 
-      // need to listen to resize signals but
-      // idk which signal is available for it
-      //hook(child, child, "notify::size-allocate", () => {
-      //   Astal.Extra.updateInputRegion(child, window);
-      //   console.log(child.get_width());
-      //});
+      let intervalId: AstalIO.Time | undefined;
 
-      // temporary workaround
       hook(window, window, "notify::visible", () => {
-         let x;
-
          if (window.visible) {
-           x = interval(1000, () => {
-               Astal.Extra.makeSingleClickableWidget(child, window);
+            intervalId = interval(1000, () => {
+               makeClickThroughWindowWithExceptions(window, child);
             });
-
          } else {
-            x?.cancel()
+            intervalId?.cancel();
          }
       });
    }
