@@ -5,7 +5,7 @@ import icons, { createIcon } from "../../libs/icons";
 import { IconWithLabelFallback } from "./IconWithLabelFallback";
 import Pango from "gi://Pango?version=1.0";
 import options from "../../options";
-import { findIcon, isValidImage } from "../../utils/image";
+import { findIcon } from "../../utils/image";
 
 const urgency = (n: Notifd.Notification) => {
    const { LOW, NORMAL, CRITICAL } = Notifd.Urgency;
@@ -55,9 +55,8 @@ export default function (props: NotificationProps): Gtk.Box {
                      icon: createIcon(foundedIcon),
                      fallbackIcon: icons.fallback.notification,
 
-                     symbolic:
-                        options.notificationsOverview.symbolic.notification
-                           .appIcon,
+                     fallbackIconIsSymbolic:
+                        options.notification.fallbackIcon.symbolic,
 
                      fallbackLabel: ">",
                   }),
@@ -98,13 +97,20 @@ export default function (props: NotificationProps): Gtk.Box {
             },
          }),
 
-         new Gtk.Separator({ visible: true }),
+         new Gtk.Separator({
+            cssClasses: ["separator"],
+            hexpand: true,
+            visible: true,
+         }),
 
          Widget.Box({
             cssClasses: ["content"],
 
             setup: (self) => {
-               if (notification.image && isValidImage(notification.image)) {
+               if (
+                  notification.image &&
+                  GLib.file_test(notification.image, GLib.FileTest.EXISTS)
+               ) {
                   self.children = [
                      ...self.children,
 

@@ -7,49 +7,46 @@ const gtkIconTheme = new Gtk.IconTheme();
 // without it it does not find the icons
 gtkIconTheme.set_theme_name(options.theme.icons);
 
-export function isValidImage(image: string): boolean {
-   if (GLib.file_test(image, GLib.FileTest.EXISTS)) {
-      return true;
-   } else if (gtkIconTheme.has_icon(image)) {
-      return true;
-   } else {
-      return false;
+export function getIcon(icon: string): string {
+   icon = icon.toLowerCase();
+
+   for (const iconName of gtkIconTheme.iconNames) {
+      const iconInLowerCase = iconName.toLowerCase();
+
+      if (iconInLowerCase === icon) {
+         return iconName;
+      }
+
+      if (iconInLowerCase.includes(icon)) {
+         return iconName;
+      }
    }
+
+   return "";
 }
 
 export function hasIconInApps(icon: string, app: Apps.Application): boolean {
-   const iconInLowerCase = icon.toLowerCase();
+   icon = icon.toLowerCase();
    const name = app.get_name()?.toLowerCase();
    const entry = app.get_entry()?.toLowerCase();
    const executable = app.get_executable()?.toLowerCase();
    const description = app.get_description()?.toLowerCase();
 
-   if (
-      name &&
-      (name.includes(iconInLowerCase) || iconInLowerCase.includes(name))
-   ) {
+   if (name && (name.includes(icon) || icon.includes(name))) {
       return true;
    }
 
-   if (
-      entry &&
-      (entry.includes(iconInLowerCase) || iconInLowerCase.includes(entry))
-   ) {
+   if (entry && (entry.includes(icon) || icon.includes(entry))) {
       return true;
    }
 
-   if (
-      executable &&
-      (executable.includes(iconInLowerCase) ||
-         iconInLowerCase.includes(executable))
-   ) {
+   if (executable && (executable.includes(icon) || icon.includes(executable))) {
       return true;
    }
 
    if (
       description &&
-      (description.includes(iconInLowerCase) ||
-         iconInLowerCase.includes(description))
+      (description.includes(icon) || icon.includes(description))
    ) {
       return true;
    }
@@ -59,13 +56,14 @@ export function hasIconInApps(icon: string, app: Apps.Application): boolean {
 
 export function findIcon(icon: string): string {
    if (!icon) return "";
-   if (isValidImage(icon)) return icon;
+
+   const theIcon = getIcon(icon);
+   if (theIcon) return theIcon;
 
    const apps = new Apps.Apps();
    const foundedApp = apps.list.find((app) => hasIconInApps(icon, app));
 
-   if (foundedApp)
-      if (isValidImage(foundedApp.iconName)) return foundedApp.iconName;
+   if (foundedApp) if (getIcon(foundedApp.iconName)) return foundedApp.iconName;
 
    return "";
 }

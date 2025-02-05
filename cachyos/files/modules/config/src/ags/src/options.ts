@@ -19,13 +19,6 @@ export default {
 
    notificationsOverview: {
       name: "astal_notifications_overview",
-
-      symbolic: {
-         notification: {
-            appIcon: true,
-            close: true,
-         },
-      },
    },
 
    notificationsPopup: {
@@ -37,6 +30,12 @@ export default {
    appLauncher: {
       name: "astal_app_launcher",
       maxItems: 5,
+   },
+
+   notification: {
+      fallbackIcon: {
+         symbolic: true,
+      },
    },
 
    filler: {

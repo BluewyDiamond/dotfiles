@@ -5,15 +5,23 @@ import { findIcon } from "../../utils/image";
 type IconWithLabelFallbackProps = {
    cssClasses?: string[];
    icon: Icon;
-   fallbackIcon?: Icon;
    symbolic?: boolean;
+   fallbackIcon?: Icon;
+   fallbackIconIsSymbolic?: boolean;
    fallbackLabel?: string;
 };
 
 export function IconWithLabelFallback(
    props: IconWithLabelFallbackProps
 ): Gtk.Image | Gtk.Label {
-   const { cssClasses, icon, fallbackIcon, symbolic, fallbackLabel } = props;
+   const {
+      cssClasses,
+      icon,
+      symbolic,
+      fallbackIcon,
+      fallbackIconIsSymbolic,
+      fallbackLabel,
+   } = props;
    let foundedIcon = "";
 
    if (symbolic) {
@@ -23,7 +31,7 @@ export function IconWithLabelFallback(
    }
 
    if (foundedIcon === "") {
-      if (symbolic) {
+      if (fallbackIconIsSymbolic) {
          foundedIcon = findIcon(fallbackIcon?.symbolic ?? "");
       } else {
          foundedIcon = findIcon(fallbackIcon?.normal ?? "");

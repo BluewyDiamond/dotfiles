@@ -4,9 +4,10 @@
    padding: $space_small;
 
    & .header {
+      margin-bottom: $space_medium;
+
       & .app-icon {
          margin-right: 4px;
-         padding: $space_small;
 
          &.image {
             -gtk-icon-size: 24px;
@@ -24,21 +25,18 @@
       & .app-name {
          color: $color_on_surface;
          font-size: 18px;
-         padding: $space_small;
       }
 
       & .time {
          color: $color_on_surface;
          font-size: 18px;
          margin-right: 4px;
-         padding: $space_small;
       }
 
       & .close {
          @include container_shape();
          color: $color_on_surface;
          background: $color_surface_container;
-         padding: $space_small;
 
          image {
             -gtk-icon-size: 24px;
@@ -46,9 +44,10 @@
       }
    }
 
-   & > separator {
+   & .separator {
+      min-height: 1px;
       margin: 0 0.4rem;
-      background-color: $color_outline_variant;
+      background: $color_outline_variant;
    }
 
    & .content {
