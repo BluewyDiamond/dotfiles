@@ -246,7 +246,7 @@ mappings.snacks = {
 
    {
       "n",
-      "<leader>ff",
+      "<leader>fw",
 
       function()
          --- @type snacks.picker.grep.Config
