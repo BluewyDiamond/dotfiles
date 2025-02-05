@@ -1,4 +1,3 @@
-import GLib from "gi://GLib";
 import Apps from "gi://AstalApps";
 import { Gtk } from "astal/gtk4";
 import options from "../options";
