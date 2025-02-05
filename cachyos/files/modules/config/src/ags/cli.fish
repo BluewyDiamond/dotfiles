@@ -29,7 +29,7 @@ function build
     end
 
     mkdir -p $build_dir
-    esbuild $parent/src/main.ts --outdir=$build_dir --bundle --external:gi://\* --external:console --external:system --tsconfig=tsconfig.json --platform=neutral
+    bun build --minify --target bun --external gi://\* --external system --external console --outdir=$build_dir -- $parent/src/main.ts
 end
 
 function types
@@ -45,7 +45,7 @@ function types
 
     ln -s $astal_gjs_dir node_modules/astal
 
-    npx -y $ts_for_gir generate \* --ignore Gtk3 --ignore Astal3 --ignoreVersionConflicts --outdir "./@girs" \
+    bunx $ts_for_gir generate \* --ignore Gtk3 --ignore Astal3 --ignoreVersionConflicts --outdir "./@girs" \
         -g $gir_dir
 end
 
