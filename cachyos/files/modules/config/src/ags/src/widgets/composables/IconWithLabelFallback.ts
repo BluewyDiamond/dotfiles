@@ -24,7 +24,7 @@ export function IconWithLabelFallback(
    } = props;
    let foundedIcon = "";
 
-   if (symbolic === undefined) {
+   if (symbolic) {
       foundedIcon = findIcon(icon.symbolic);
    } else {
       foundedIcon = findIcon(icon.normal);
