@@ -82,8 +82,13 @@ switch $on_conflict
 end
 
 if not test -d $target_dir
-    log_message "Invalid target directory..."
-    exit 1
+    log_message "Creating target directory."
+    mkdir -p $target_dir
+
+    if not test -d $target_dir
+        log_message "Invalid target directory..."
+        exit 1
+    end
 end
 
 if test -f $pre_hook_exe -a -x $pre_hook_exe
