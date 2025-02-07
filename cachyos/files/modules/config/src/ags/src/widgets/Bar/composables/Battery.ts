@@ -1,4 +1,4 @@
-import { Astal, hook, Widget } from "astal/gtk4";
+import { type Astal, hook, Widget } from "astal/gtk4";
 import { IconWithLabelFallback } from "../../composables/IconWithLabelFallback";
 import icons from "../../../libs/icons";
 import { bind } from "astal/binding";
@@ -21,7 +21,7 @@ export default function (): Astal.Box {
       visible: bind(battery, "isBattery"),
 
       setup: (self) => {
-         function onChargingChanged() {
+         const onChargingChanged = (): void => {
             if (battery.charging) {
                self.children = [
                   IconWithLabelFallback({
@@ -36,11 +36,13 @@ export default function (): Astal.Box {
                   label,
                ];
             }
-         }
+         };
 
          onChargingChanged();
 
-         hook(self, battery, "notify::charging", () => onChargingChanged());
+         hook(self, battery, "notify::charging", () => {
+            onChargingChanged();
+         });
       },
    });
 }

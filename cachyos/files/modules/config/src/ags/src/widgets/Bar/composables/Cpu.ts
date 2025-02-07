@@ -1,5 +1,5 @@
 import { bind, interval, timeout, Variable } from "astal";
-import { Gtk, Widget } from "astal/gtk4";
+import { type Gtk, Widget } from "astal/gtk4";
 import { IconWithLabelFallback } from "../../composables/IconWithLabelFallback";
 import icons from "../../../libs/icons";
 import GTop from "gi://GTop";
@@ -39,7 +39,12 @@ const updateCpuUsage = () => {
 };
 
 updateCpuUsage();
-timeout(INTERVAL, () => interval(INTERVAL, () => updateCpuUsage()));
+
+timeout(INTERVAL, () =>
+   interval(INTERVAL, () => {
+      updateCpuUsage();
+   })
+);
 
 export default function (): Gtk.Button {
    return Widget.Button(
@@ -55,11 +60,12 @@ export default function (): Gtk.Button {
             }),
 
             Widget.Label({
-               label: bind(cpuUsage).as((cpuUsage) => {
-                  return `${Math.ceil(cpuUsage * 100)
-                     .toString()
-                     .padStart(3, "_")}%`;
-               }),
+               label: bind(cpuUsage).as(
+                  (cpuUsage) =>
+                     `${Math.ceil(cpuUsage * 100)
+                        .toString()
+                        .padStart(3, "_")}%`
+               ),
             }),
          ],
       })

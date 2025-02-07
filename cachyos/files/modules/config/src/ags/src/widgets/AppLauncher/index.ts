@@ -4,7 +4,7 @@ import AppMap from "./AppMap";
 import PopupWindow, { Position } from "../composables/PopupWindow";
 import options from "../../options";
 
-function hide() {
+function hide(): void {
    App.get_window(options.appLauncher.name)?.hide();
 }
 
@@ -16,16 +16,18 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
    const entry = Widget.Entry({
       placeholderText: "Search",
       text: appMap.searchQuery.get(),
-      onChanged: (self) => appMap.searchQuery.set(self.text),
+      onChanged: (self) => {
+         appMap.searchQuery.set(self.text);
+      },
 
       onActivate: (self) => {
          const currentSearchQuery = appMap.searchQuery.get();
 
          if (currentSearchQuery.startsWith(":sh")) {
-            execAsync(["fish", "-c", `${currentSearchQuery.slice(3)}`.trim()]);
+            void execAsync(["fish", "-c", currentSearchQuery.slice(3).trim()]);
          } else {
             let selectedIndexValue = appMap.selectedIndex.get();
-            if (!selectedIndexValue) selectedIndexValue = 0;
+            if (selectedIndexValue === null) selectedIndexValue = 0;
             appMap.launchApp(selectedIndexValue);
          }
 
@@ -74,7 +76,7 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
 
    const window = PopupWindow(
       {
-         gdkmonitor: gdkmonitor,
+         gdkmonitor,
          name: options.appLauncher.name,
          cssClasses: ["app-launcher"],
          exclusivity: Astal.Exclusivity.IGNORE,
@@ -92,8 +94,10 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
             if (event === Gdk.KEY_Up) {
                const maxLength = appMap.length();
                let selectedIndexValue = appMap.selectedIndex.get();
-               if (selectedIndexValue === null)
+
+               if (selectedIndexValue === null) {
                   selectedIndexValue = maxLength - 1;
+               }
 
                if (selectedIndexValue > 0) {
                   appMap.selectedIndex.set(selectedIndexValue - 1);
@@ -119,7 +123,7 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
       mainBox
    );
 
-   function onSearchQueryChanged(searchQuery: string) {
+   const onSearchQueryChanged = (searchQuery: string): void => {
       if (searchQuery === "") {
          hotswapBox.children = [emptyBox];
       } else if (searchQuery.startsWith(":sh")) {
@@ -128,7 +132,7 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
       } else {
          hotswapBox.children = [appsBox];
       }
-   }
+   };
 
    onSearchQueryChanged(appMap.searchQuery.get());
 

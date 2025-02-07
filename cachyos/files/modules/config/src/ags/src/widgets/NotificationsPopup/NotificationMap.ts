@@ -1,6 +1,6 @@
 import { timeout, Variable } from "astal";
-import { Subscribable } from "astal/binding";
-import { Gtk } from "astal/gtk4";
+import type { Subscribable } from "astal/binding";
+import type { Gtk } from "astal/gtk4";
 import Notifd from "gi://AstalNotifd";
 import Notification from "../composables/Notification";
 import options from "../../options";
@@ -9,17 +9,21 @@ import Hookable from "../../libs/services/Hookable";
 const notifd = Notifd.get_default();
 
 export class NotificationMap extends Hookable implements Subscribable {
-   private map: Map<number, Gtk.Widget> = new Map();
-   private var: Variable<Array<Gtk.Widget>> = Variable([]);
+   private readonly map: Map<number, Gtk.Widget> = new Map<
+      number,
+      Gtk.Widget
+   >();
+
+   private readonly var: Variable<Gtk.Widget[]> = Variable([]);
 
    constructor() {
       super();
 
-      const capNotifications = () => {
+      const capNotifications = (): void => {
          if (this.map.size >= options.notificationsPopup.maxItems) {
-            const item = this.map.entries().next().value;
-            if (!item) return;
-            this.map.delete(item[0]);
+            const [key] = this.map.entries().next().value ?? [];
+            if (key === undefined) return;
+            this.map.delete(key);
             this.notify();
          }
       };
@@ -34,7 +38,7 @@ export class NotificationMap extends Hookable implements Subscribable {
                notification: notifd.get_notification(notification.id),
 
                setup: () => {
-                  if (options.notificationsPopup.timeout) {
+                  if (typeof options.notificationsPopup.timeout === "number") {
                      timeout(options.notificationsPopup.timeout, () =>
                         this.map.delete(notification.id)
                      );
@@ -46,7 +50,7 @@ export class NotificationMap extends Hookable implements Subscribable {
          this.notify();
       });
 
-      this.hook(notifd, "notified", (_, id) => {
+      this.hook(notifd, "notified", (_, id: number) => {
          capNotifications();
          const notification = notifd.get_notification(id);
 
@@ -57,7 +61,9 @@ export class NotificationMap extends Hookable implements Subscribable {
                notification: notification,
 
                setup: () => {
-                  if (!options.notificationsPopup.timeout) return;
+                  if (typeof options.notificationsPopup.timeout !== "number") {
+                     return;
+                  }
 
                   timeout(options.notificationsPopup.timeout, () => {
                      this.map.delete(notification.id);
@@ -70,26 +76,26 @@ export class NotificationMap extends Hookable implements Subscribable {
          this.notify();
       });
 
-      this.hook(notifd, "resolved", (_, id) => {
+      this.hook(notifd, "resolved", (_, id: number) => {
          this.map.delete(id);
          this.notify();
       });
    }
 
-   get() {
+   get(): Gtk.Widget[] {
       return this.var.get();
    }
 
-   subscribe(callback: (list: Array<Gtk.Widget>) => void) {
+   subscribe(callback: (list: Gtk.Widget[]) => void): () => void {
       return this.var.subscribe(callback);
    }
 
-   destroy() {
+   destroy(): void {
       super.destroy();
       this.var.drop();
    }
 
-   private notify() {
+   private notify(): void {
       this.var.set([...this.map.values()].reverse());
    }
 }

@@ -1,6 +1,6 @@
-import { Astal, Gdk, Gtk, Widget } from "astal/gtk4";
+import { Astal, type Gdk, type Gtk, Widget } from "astal/gtk4";
 import { NotificationMap } from "./NotificationMap";
-import PopupWindow, { Position as Position } from "../composables/PopupWindow";
+import PopupWindow, { Position } from "../composables/PopupWindow";
 
 export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
    const notificationMap = new NotificationMap();
@@ -21,7 +21,7 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
 
    const window = PopupWindow(
       {
-         gdkmonitor: gdkmonitor,
+         gdkmonitor,
          name: "astal-notifications-popup",
          cssClasses: ["notifications-popup"],
          position: Position.TOP_RIGHT,
@@ -34,7 +34,7 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
       mainBox
    );
 
-   function onNotificationWidgetsChanged(list: Gtk.Widget[]) {
+   const onNotificationWidgetsChanged = (list: Gtk.Widget[]): void => {
       notificationsBox.children = list;
 
       if (list.length <= 0) {
@@ -42,7 +42,7 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
       } else {
          window.visible = true;
       }
-   }
+   };
 
    onNotificationWidgetsChanged(notificationMap.get());
 

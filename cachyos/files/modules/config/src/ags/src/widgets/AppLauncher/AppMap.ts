@@ -1,4 +1,4 @@
-import { Subscribable } from "astal/binding";
+import type { Subscribable } from "astal/binding";
 import { Variable } from "astal";
 import Apps from "gi://AstalApps";
 import { Gtk, Widget } from "astal/gtk4";
@@ -15,7 +15,7 @@ function AppButton(
    indexInList: Variable<number | null>,
    onClicked: (self: Gtk.Button) => void
 ): Gtk.Button {
-   let variable: Variable<void>;
+   let variable: Variable<void> | null = null;
 
    return Widget.Button(
       {
@@ -26,7 +26,9 @@ function AppButton(
          // alternatives: refactor AppWidget to where entry.grab_focus() can be called
          canFocus: false,
 
-         onClicked: (self) => onClicked(self),
+         onClicked: (self) => {
+            onClicked(self);
+         },
 
          setup: (self) => {
             variable = Variable.derive(
@@ -48,7 +50,7 @@ function AppButton(
             );
          },
 
-         onDestroy: () => variable.drop(),
+         onDestroy: () => variable?.drop(),
       },
 
       Widget.Box({
@@ -73,11 +75,11 @@ function AppButton(
                         halign: Gtk.Align.START,
                         xalign: 0,
                         ellipsize: Pango.EllipsizeMode.END,
-                        label: app.name || "unknown",
+                        label: app.name === "" ? "unknown" : app.name,
                      })
                   );
 
-                  if (app.description) {
+                  if (app.description !== "") {
                      children.push(
                         Widget.Label({
                            cssClasses: ["description"],
@@ -107,19 +109,25 @@ class AppButtonWithIndex {
       selectedIndex: Variable<number | null>,
       onClicked: (self: Gtk.Button, app: Apps.Application) => void
    ) {
-      this.widget = AppButton(app, selectedIndex, this.indexInlist, (self) =>
-         onClicked(self, app)
-      );
+      this.widget = AppButton(app, selectedIndex, this.indexInlist, (self) => {
+         onClicked(self, app);
+      });
    }
 
-   destroy() {
+   destroy(): void {
       this.indexInlist.drop();
    }
 }
 
 export default class AppMap implements Subscribable {
-   private map: Map<Apps.Application, AppButtonWithIndex> = new Map();
-   private variable: Variable<Gtk.Widget[]> = new Variable([]);
+   private readonly map: Map<Apps.Application, AppButtonWithIndex> = new Map<
+      Apps.Application,
+      AppButtonWithIndex
+   >();
+
+   private readonly variable: Variable<Gtk.Widget[]> = new Variable<
+      Gtk.Widget[]
+   >([]);
 
    searchQuery = Variable("");
    selectedIndex: Variable<number | null> = Variable(null);
@@ -141,7 +149,7 @@ export default class AppMap implements Subscribable {
             }
          });
 
-         const onClicked = (app: Apps.Application) => {
+         const onClicked = (app: Apps.Application): void => {
             app.launch();
             this.searchQuery.set("");
          };
@@ -163,7 +171,7 @@ export default class AppMap implements Subscribable {
 
          for (const app of queriedAppsSet) {
             const appButtonWithIndex = this.map.get(app);
-            if (!appButtonWithIndex) continue;
+            if (appButtonWithIndex === undefined) continue;
 
             appButtonWithIndex.indexInlist.set(index);
             orderedList.push(appButtonWithIndex.widget);
@@ -175,15 +183,15 @@ export default class AppMap implements Subscribable {
       });
    }
 
-   get() {
+   get(): Gtk.Widget[] {
       return this.variable.get();
    }
 
-   subscribe(callback: (list: Array<Gtk.Widget>) => void) {
+   subscribe(callback: (list: Gtk.Widget[]) => void): () => void {
       return this.variable.subscribe(callback);
    }
 
-   destroy() {
+   destroy(): void {
       this.variable.drop();
       this.searchQuery.drop();
       this.selectedIndex.drop();
@@ -193,7 +201,7 @@ export default class AppMap implements Subscribable {
       return this.map.size;
    }
 
-   launchApp(indexInList: number) {
+   launchApp(indexInList: number): void {
       for (const [key, value] of this.map) {
          if (value.indexInlist.get() === indexInList) {
             key.launch();
@@ -201,7 +209,7 @@ export default class AppMap implements Subscribable {
       }
    }
 
-   clear() {
+   clear(): void {
       this.map.forEach((_, app) => this.map.delete(app));
    }
 }

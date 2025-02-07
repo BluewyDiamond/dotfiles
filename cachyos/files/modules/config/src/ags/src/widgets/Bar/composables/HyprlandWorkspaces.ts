@@ -1,4 +1,4 @@
-import { Astal, hook, Widget } from "astal/gtk4";
+import { type Astal, hook, Widget } from "astal/gtk4";
 import options from "../../../options";
 import AstalHyprland from "gi://AstalHyprland";
 
@@ -8,29 +8,22 @@ export default function (): Astal.Box {
    return Widget.Box({
       cssClasses: ["workspaces"],
 
-      children: options.bar.workspaces.values.map((index) => {
-         return Widget.Button(
+      children: options.bar.workspaces.values.map((index) =>
+         Widget.Button(
             {
-               onClicked: async () => {
-                  (async () => {
-                     hyprland.dispatch("workspace", `${index}`);
-                  })();
+               onClicked: () => {
+                  hyprland.dispatch("workspace", `${index}`);
                },
 
                setup: (self) => {
-                  function onWorkspaceFocusedChange() {
-                     // can be nullable...
-                     const workspace: AstalHyprland.Workspace | null =
-                        hyprland.focusedWorkspace;
+                  const onWorkspaceFocusedChange = (): void => {
+                     const { focusedWorkspace } = hyprland;
 
-                     if (!workspace) return;
-
-                     // can also be nullable...
                      const clients: AstalHyprland.Client[] | null = hyprland
                         .get_workspace(index)
-                        ?.get_clients();
+                        .get_clients();
 
-                     if (clients != null && clients.length > 0) {
+                     if (clients.length > 0) {
                         self.cssClasses = [...self.cssClasses, "occupied"];
                      } else {
                         self.cssClasses = self.cssClasses.filter(
@@ -38,7 +31,7 @@ export default function (): Astal.Box {
                         );
                      }
 
-                     if (workspace.id === index) {
+                     if (focusedWorkspace.id === index) {
                         self.cssClasses = self.cssClasses.filter(
                            (cssClass) => cssClass !== "urgent"
                         );
@@ -49,7 +42,7 @@ export default function (): Astal.Box {
                            (cssClass) => cssClass !== "active"
                         );
                      }
-                  }
+                  };
 
                   onWorkspaceFocusedChange();
 
@@ -63,8 +56,6 @@ export default function (): Astal.Box {
                      "urgent",
 
                      (_, client: AstalHyprland.Client) => {
-                        if (!client) return;
-
                         if (index === client.get_workspace().get_id()) {
                            self.cssClasses = [...self.cssClasses, "urgent"];
                         }
@@ -76,7 +67,7 @@ export default function (): Astal.Box {
             Widget.Label({
                label: `${index}`,
             })
-         );
-      }),
+         )
+      ),
    });
 }

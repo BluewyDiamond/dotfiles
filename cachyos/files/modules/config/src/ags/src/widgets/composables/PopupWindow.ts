@@ -1,16 +1,16 @@
-import { App, Astal, Gdk, Gtk, hook, Widget } from "astal/gtk4";
+import { App, Astal, Gdk, type Gtk, hook, Widget } from "astal/gtk4";
 import options from "../../options";
-import { AstalIO, interval } from "astal";
+import { type AstalIO, interval } from "astal";
 import { matchInputRegionOfWidget as makeClickThroughWindowWithExceptions } from "../../utils/widget";
 
-type FillerProps = {
+interface FillerProps {
    cssClasses?: string[];
    hexpand?: boolean;
    vexpand?: boolean;
    widthRequest?: number;
    heightRequest?: number;
    onClicked?: () => void;
-};
+}
 
 function Filler(fillerProps: FillerProps): Gtk.Button {
    const {
@@ -24,7 +24,7 @@ function Filler(fillerProps: FillerProps): Gtk.Button {
 
    function setupClassName(): string[] {
       const defaultCssClasses = ["filler-button"];
-      if (!cssClasses) return defaultCssClasses;
+      if (cssClasses === undefined) return defaultCssClasses;
       return [...defaultCssClasses, ...cssClasses];
    }
 
@@ -35,7 +35,7 @@ function Filler(fillerProps: FillerProps): Gtk.Button {
       hexpand,
       vexpand,
       canFocus: false,
-      onClicked: onClicked,
+      onClicked,
    });
 }
 
@@ -45,7 +45,7 @@ export enum Position {
    CENTER,
 }
 
-type PopupWindowProps = {
+interface PopupWindowProps {
    gdkmonitor?: Gdk.Monitor;
    name: string;
    cssClasses?: string[];
@@ -57,7 +57,7 @@ type PopupWindowProps = {
    onFillerClicked?: () => void;
    onKeyReleasedEvent?: (self: Gtk.Widget, event: number) => void;
    onDestroyed?: (self: Gtk.Window) => void;
-};
+}
 
 // This implementation fixes label wrapping.
 export default function (
@@ -67,7 +67,7 @@ export default function (
    const {
       gdkmonitor,
       name,
-      cssClasses: cssClasses,
+      cssClasses,
       exclusivity,
       layer,
       keymode,
@@ -78,8 +78,8 @@ export default function (
       onDestroyed,
    } = popupWindowProps;
 
-   const curatedCallback = () => {
-      if (onFillerClicked) {
+   const curatedCallback = (): void => {
+      if (onFillerClicked !== undefined) {
          onFillerClicked();
          return;
       }
@@ -87,8 +87,8 @@ export default function (
       App.get_window(name)?.hide();
    };
 
-   let anchor: Astal.WindowAnchor | undefined;
-   let widget: Gtk.Widget | undefined;
+   let anchor: Astal.WindowAnchor | null = null;
+   let widget: Gtk.Widget | null = null;
 
    if (position === Position.TOP_CENTER) {
       anchor = Astal.WindowAnchor.TOP | Astal.WindowAnchor.BOTTOM;
@@ -229,19 +229,19 @@ export default function (
 
    const window = Widget.Window(
       {
-         gdkmonitor: gdkmonitor,
-         name: name,
+         gdkmonitor,
+         name,
          namespace: name,
-         cssClasses: cssClasses,
+         cssClasses,
          visible: false,
 
          exclusivity: exclusivity ?? Astal.Exclusivity.IGNORE,
          layer: layer ?? Astal.Layer.TOP,
          keymode: keymode ?? Astal.Keymode.EXCLUSIVE,
-         anchor: anchor,
+         anchor: anchor ?? undefined,
 
          onKeyReleased: (self, event) => {
-            if (onKeyReleasedEvent) {
+            if (onKeyReleasedEvent !== undefined) {
                onKeyReleasedEvent(self, event);
                return;
             }
@@ -252,7 +252,7 @@ export default function (
          },
 
          onDestroy: (self) => {
-            if (onDestroyed) {
+            if (onDestroyed !== undefined) {
                onDestroyed(self);
             }
          },
@@ -261,10 +261,10 @@ export default function (
       widget
    );
 
-   if (clickThroughFiller) {
+   if (clickThroughFiller !== undefined && clickThroughFiller) {
       makeClickThroughWindowWithExceptions(window, child);
 
-      let intervalId: AstalIO.Time | undefined;
+      let intervalId: AstalIO.Time | null = null;
 
       hook(window, window, "notify::visible", () => {
          if (window.visible) {

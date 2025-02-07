@@ -1,27 +1,22 @@
-import { App, Astal, Gdk, Gtk, Widget } from "astal/gtk4";
+import { type Astal, type Gdk, type Gtk, Widget } from "astal/gtk4";
 import { IconWithLabelFallback } from "../composables/IconWithLabelFallback";
 import icons from "../../libs/icons";
 import Variable from "astal/variable";
-import { execAsync, interval, timeout } from "astal";
+import { type AstalIO, execAsync, interval, timeout } from "astal";
 import PopupWindow, { Position } from "../composables/PopupWindow";
-
-// Hide the window with the given name
-function hide() {
-   App.get_window("astal-power-menu")?.hide();
-}
 
 function PowerButton(widget: Gtk.Widget, onThree: () => void): Gtk.Button {
    const clicks = Variable(0);
-   let onInactive;
-   let countDown;
+   let onInactive: AstalIO.Time | null = null;
+   let countDown: AstalIO.Time | null = null;
 
    return Widget.Button(
       {
          onClicked: () => {
             countDown?.cancel();
-            countDown = undefined;
+            countDown = null;
             onInactive?.cancel();
-            onInactive = undefined;
+            onInactive = null;
 
             clicks.set(clicks.get() + 1);
 
@@ -51,7 +46,9 @@ function PowerButton(widget: Gtk.Widget, onThree: () => void): Gtk.Button {
                } else if (clicks === 3) {
                   self.cssClasses = [...self.cssClasses, "three"];
 
-                  timeout(1000, () => onThree());
+                  timeout(1000, () => {
+                     onThree();
+                  });
                } else if (clicks > 3) {
                   self.cssClasses = [...self.cssClasses, "three"];
                }
@@ -79,17 +76,26 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
          children: [
             PowerButton(
                IconWithLabelFallback({ icon: icons.powermenu.sleep }),
-               () => execAsync(["fish", "-c", "systemctl suspend"])
+
+               () => {
+                  void execAsync(["fish", "-c", "systemctl suspend"]);
+               }
             ),
 
             PowerButton(
                IconWithLabelFallback({ icon: icons.powermenu.reboot }),
-               () => execAsync(["fish", "-c", "systemctl reboot"])
+
+               () => {
+                  void execAsync(["fish", "-c", "systemctl reboot"]);
+               }
             ),
 
             PowerButton(
                IconWithLabelFallback({ icon: icons.powermenu.shutdown }),
-               () => execAsync(["fish", "-c", "systemctl poweroff"])
+
+               () => {
+                  void execAsync(["fish", "-c", "systemctl poweroff"]);
+               }
             ),
          ],
       })

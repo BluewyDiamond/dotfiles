@@ -7,32 +7,32 @@ import Pango from "gi://Pango?version=1.0";
 import options from "../../options";
 import { findIcon } from "../../utils/image";
 
-const urgency = (n: Notifd.Notification) => {
-   const { LOW, NORMAL, CRITICAL } = Notifd.Urgency;
+function getUrgency(n: Notifd.Notification): string {
    switch (n.urgency) {
-      case LOW:
+      case Notifd.Urgency.LOW:
          return "low";
-      case CRITICAL:
+      case Notifd.Urgency.CRITICAL:
          return "critical";
-      case NORMAL:
+      case Notifd.Urgency.NORMAL:
       default:
          return "normal";
    }
-};
+}
 
-const time = (time: number, format = "%H:%M") =>
-   GLib.DateTime.new_from_unix_local(time).format(format)!;
+function time(time: number, format = "%H:%M"): string {
+   return GLib.DateTime.new_from_unix_local(time).format(format) ?? "?";
+}
 
-type NotificationProps = {
+interface NotificationProps {
    notification: Notifd.Notification;
-   setup?(): void;
-};
+   setup?: () => void;
+}
 
 export default function (props: NotificationProps): Gtk.Box {
    const { notification, setup } = props;
 
    return Widget.Box({
-      cssClasses: ["notification", urgency(notification)],
+      cssClasses: ["notification", getUrgency(notification)],
       vertical: true,
       hexpand: false,
 
@@ -69,7 +69,11 @@ export default function (props: NotificationProps): Gtk.Box {
                      halign: Gtk.Align.START,
                      cssClasses: ["app-name"],
                      ellipsize: Pango.EllipsizeMode.END,
-                     label: notification.appName || "undefined",
+
+                     label:
+                        notification.appName === "" ?
+                           "unnamed"
+                        :  notification.appName,
                   }),
 
                   Widget.Label({
@@ -82,7 +86,10 @@ export default function (props: NotificationProps): Gtk.Box {
                   Widget.Button(
                      {
                         cssClasses: ["close"],
-                        onClicked: () => notification.dismiss(),
+
+                        onClicked: () => {
+                           notification.dismiss();
+                        },
                      },
 
                      IconWithLabelFallback({
@@ -105,7 +112,7 @@ export default function (props: NotificationProps): Gtk.Box {
 
             setup: (self) => {
                if (
-                  notification.image &&
+                  notification.image !== "" &&
                   GLib.file_test(notification.image, GLib.FileTest.EXISTS)
                ) {
                   self.children = [
@@ -127,7 +134,7 @@ export default function (props: NotificationProps): Gtk.Box {
                      vertical: true,
 
                      setup: (self) => {
-                        if (notification.summary) {
+                        if (notification.summary !== "") {
                            self.children = [
                               ...self.children,
 
@@ -142,7 +149,7 @@ export default function (props: NotificationProps): Gtk.Box {
                            ];
                         }
 
-                        if (notification.body) {
+                        if (notification.body !== "") {
                            self.children = [
                               ...self.children,
 
@@ -164,7 +171,7 @@ export default function (props: NotificationProps): Gtk.Box {
       ],
 
       setup: (self) => {
-         setup && setup();
+         setup !== undefined && setup();
 
          if (notification.actions.length > 0) {
             self.children = [
@@ -176,18 +183,21 @@ export default function (props: NotificationProps): Gtk.Box {
 
                   setup: (self) => {
                      if (notification.get_actions().length > 0) {
-                        notification.get_actions().map(({ label, id }) => {
+                        notification.get_actions().forEach(({ label, id }) => {
                            self.children = [
                               ...self.children,
 
                               Widget.Button(
                                  {
                                     hexpand: true,
-                                    onClicked: () => notification.invoke(id),
+
+                                    onClicked: () => {
+                                       notification.invoke(id);
+                                    },
                                  },
 
                                  Widget.Label({
-                                    label: label,
+                                    label,
                                     halign: Gtk.Align.CENTER,
                                     hexpand: true,
                                  })

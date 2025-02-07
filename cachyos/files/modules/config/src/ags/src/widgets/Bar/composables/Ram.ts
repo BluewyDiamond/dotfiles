@@ -1,5 +1,5 @@
 import { bind, interval, Variable } from "astal";
-import { Gtk, Widget } from "astal/gtk4";
+import { type Gtk, Widget } from "astal/gtk4";
 import { IconWithLabelFallback } from "../../composables/IconWithLabelFallback";
 import icons from "../../../libs/icons";
 import GTop from "gi://GTop";
@@ -14,7 +14,7 @@ function getGtopMem(): GTop.glibtop_mem {
 
 const gtopMemVariable: Variable<GTop.glibtop_mem> = Variable(getGtopMem());
 
-interval(INTERVAL, async () => {
+interval(INTERVAL, () => {
    gtopMemVariable.set(getGtopMem());
 });
 
@@ -33,16 +33,17 @@ export default function (): Gtk.Button {
          }),
 
          Widget.Label({
-            label: bind(gtopMemVariable).as((gtopMem) => {
-               return `${Math.ceil(
-                  (1 -
-                     (gtopMem.free + gtopMem.buffer + gtopMem.cached) /
-                        gtopMem.total) *
-                     100
-               )
-                  .toString()
-                  .padStart(3, "_")}%`;
-            }),
+            label: bind(gtopMemVariable).as(
+               (gtopMem) =>
+                  `${Math.ceil(
+                     (1 -
+                        (gtopMem.free + gtopMem.buffer + gtopMem.cached) /
+                           gtopMem.total) *
+                        100
+                  )
+                     .toString()
+                     .padStart(3, "_")}%`
+            ),
          })
       )
    );
