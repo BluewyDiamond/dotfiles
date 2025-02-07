@@ -1,4 +1,4 @@
-import { App, Astal, Gdk } from "astal/gtk4";
+import { App, type Astal, Gdk } from "astal/gtk4";
 import Bar from "./widgets/Bar";
 import { getCss } from "./utils/style";
 import AppLauncher from "./widgets/AppLauncher";
@@ -15,53 +15,53 @@ App.start({
    main() {
       const gdkDisplay = Gdk.Display.get_default();
 
-      if (!gdkDisplay) {
-         console.log("gdkDisplay is null...");
+      if (gdkDisplay === null) {
+         print("gdkDisplay is null...");
          return;
       }
 
       const monitorManager = gdkDisplay.get_monitors();
 
-      let bar: Astal.Window | undefined;
-      let notificationsOverview: Astal.Window | undefined;
-      let notificationsPopup: Astal.Window | undefined;
-      let appLauncher: Astal.Window | undefined;
-      let powerMenu: Astal.Window | undefined;
+      let bar: Astal.Window | null = null;
+      let notificationsOverview: Astal.Window | null = null;
+      let notificationsPopup: Astal.Window | null = null;
+      let appLauncher: Astal.Window | null = null;
+      let powerMenu: Astal.Window | null = null;
 
-      function onMonitorsChanged() {
-         if (bar) {
+      const onMonitorsChanged = (): void => {
+         if (bar !== null) {
             bar.destroy();
-            bar = undefined;
+            bar = null;
          }
 
          // no need to call destroy cause
          // of remove window method call
-         if (notificationsOverview) {
+         if (notificationsOverview !== null) {
             App.remove_window(notificationsOverview);
-            notificationsOverview = undefined;
+            notificationsOverview = null;
          }
 
-         if (notificationsPopup) {
+         if (notificationsPopup !== null) {
             App.remove_window(notificationsPopup);
-            notificationsPopup = undefined;
+            notificationsPopup = null;
          }
 
-         if (appLauncher) {
+         if (appLauncher !== null) {
             App.remove_window(appLauncher);
-            appLauncher = undefined;
+            appLauncher = null;
          }
 
-         if (powerMenu) {
+         if (powerMenu !== null) {
             App.remove_window(powerMenu);
-            powerMenu = undefined;
+            powerMenu = null;
          }
 
          const numOfMonitors = monitorManager.get_n_items();
 
          for (let i = 0; i < numOfMonitors; i++) {
-            const monitorItem = monitorManager.get_item(i);
-            if (!monitorItem) continue;
-            const monitor = monitorItem as Gdk.Monitor;
+            const monitor = monitorManager.get_item(i);
+            if (monitor === null) continue;
+            if (!(monitor instanceof Gdk.Monitor)) continue;
 
             bar = Bar(monitor);
             notificationsOverview = NotificationsOverview(monitor);
@@ -74,12 +74,14 @@ App.start({
             App.add_window(appLauncher);
             App.add_window(powerMenu);
          }
-      }
+      };
 
       onMonitorsChanged();
 
       // no need to cleanup cause listening for application
       // to quit destroys wipes everything either way
-      monitorManager.connect("items-changed", () => onMonitorsChanged());
+      monitorManager.connect("items-changed", () => {
+         onMonitorsChanged();
+      });
    },
 });

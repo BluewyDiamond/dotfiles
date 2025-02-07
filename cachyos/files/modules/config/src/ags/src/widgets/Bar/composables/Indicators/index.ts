@@ -1,4 +1,4 @@
-import { Gtk, Widget } from "astal/gtk4";
+import { type Gtk, Widget } from "astal/gtk4";
 import { IndicatorMap } from "./IndicatorMap";
 
 export default function (): Gtk.Button {
@@ -7,9 +7,9 @@ export default function (): Gtk.Button {
    return Widget.Button({
       cssClasses: ["indicators"],
 
-      child:  Widget.Box({
+      child: Widget.Box({
          setup: (self) => {
-            function onIndicatorsChanged(list: Gtk.Widget[]) {
+            const onIndicatorsChanged = (list: Gtk.Widget[]): void => {
                if (list.length > 0) {
                   self.children = list;
                   self.visible = true;
@@ -17,7 +17,7 @@ export default function (): Gtk.Button {
                   self.children = [];
                   self.visible = false;
                }
-            }
+            };
 
             onIndicatorsChanged(indicatorsMap.get());
 

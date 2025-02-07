@@ -1,4 +1,4 @@
-import { Astal, Gtk, Widget } from "astal/gtk4";
+import { type Astal, type Gtk, Widget } from "astal/gtk4";
 import { ClientArray } from "./ClientArray";
 
 export default function (): Astal.Box {
@@ -11,14 +11,14 @@ export default function (): Astal.Box {
       cssClasses: ["taskbar"],
 
       setup: (self) => {
-         function onClientsChanged(list: Gtk.Widget[]) {
+         const onClientsChanged = (list: Gtk.Widget[]): void => {
             if (list.length > 0) {
                self.children = list;
-               if (!self.visible) self.visible = true;
+               self.visible ||= list.length > 0;
             } else {
-               if (self.visible) self.visible = false;
+               self.visible &&= list.length > 0;
             }
-         }
+         };
 
          onClientsChanged(clientMap.get());
 

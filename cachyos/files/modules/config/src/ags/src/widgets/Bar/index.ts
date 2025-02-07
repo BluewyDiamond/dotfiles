@@ -9,12 +9,12 @@ import Power from "./composables/Power";
 import Battery from "./composables/Battery";
 import Ram from "./composables/Ram";
 import Cpu from "./composables/Cpu";
-import { Astal, Gdk, Gtk, Widget } from "astal/gtk4";
+import { Astal, type Gdk, Gtk, Widget } from "astal/gtk4";
 import options from "../../options";
 
 export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
    return Widget.Window({
-      gdkmonitor: gdkmonitor,
+      gdkmonitor,
       name: options.bar.name,
       namespace: options.bar.name,
       cssClasses: ["bar"],

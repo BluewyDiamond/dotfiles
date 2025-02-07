@@ -1,6 +1,6 @@
-import { Gtk, hook, Widget } from "astal/gtk4";
+import { type Gtk, hook, Widget } from "astal/gtk4";
 import AstalHyprland from "gi://AstalHyprland";
-import { Subscribable } from "astal/binding";
+import type { Subscribable } from "astal/binding";
 import { Variable } from "astal";
 import { IconWithLabelFallback } from "../../../composables/IconWithLabelFallback";
 import icons, { createIcon } from "../../../../libs/icons";
@@ -22,8 +22,6 @@ function ClientButton(client: AstalHyprland.Client): Gtk.Button {
                "urgent",
 
                (_, urgentClient: AstalHyprland.Client) => {
-                  if (!urgentClient) return;
-
                   if (urgentClient.address === client.address) {
                      self.cssClasses = [...self.cssClasses, "urgent"];
                   }
@@ -31,8 +29,7 @@ function ClientButton(client: AstalHyprland.Client): Gtk.Button {
             );
 
             hook(self, hyprland, "notify::focused-client", () => {
-               const focusedClient = hyprland.focusedClient;
-               if (!focusedClient) return;
+               const { focusedClient } = hyprland;
 
                if (focusedClient.address === client.address) {
                   self.cssClasses = self.cssClasses.filter(
@@ -58,8 +55,8 @@ function ClientButton(client: AstalHyprland.Client): Gtk.Button {
 
 export class ClientArray extends Hookable implements Subscribable {
    // have to sort, so using a map might not be optimal
-   private array: Array<{ adress: string; widget: Gtk.Widget }> = [];
-   private variable: Variable<Array<Gtk.Widget>> = Variable([]);
+   private readonly array: Array<{ adress: string; widget: Gtk.Widget }> = [];
+   private readonly variable: Variable<Gtk.Widget[]> = Variable([]);
 
    constructor() {
       super();
@@ -89,50 +86,49 @@ export class ClientArray extends Hookable implements Subscribable {
       return this.variable.get();
    }
 
-   subscribe(callback: (list: Array<Gtk.Widget>) => void): () => void {
+   subscribe(callback: (list: Gtk.Widget[]) => void): () => void {
       return this.variable.subscribe(callback);
    }
 
-   destroy() {
+   destroy(): void {
       super.destroy();
       this.variable.drop();
    }
 
-   private notify() {
+   private notify(): void {
       this.variable.set([...this.array.map((item) => item.widget)]);
    }
 
-   private add(client: AstalHyprland.Client) {
+   private add(client: AstalHyprland.Client): void {
       const index = this.array.findIndex((item) => {
          const predicateClient = hyprland.get_client(item.adress);
-         if (!predicateClient) return false;
-
+         if (predicateClient == null) return false;
          return client.workspace.id < predicateClient.workspace.id;
       });
 
       const widget = ClientButton(client);
 
       if (index === -1) {
-         this.array.push({ adress: client.address, widget: widget });
+         this.array.push({ adress: client.address, widget });
       } else {
          this.array.splice(index, 0, {
             adress: client.address,
-            widget: widget,
+            widget,
          });
       }
    }
 
-   private remove(address: string) {
+   private remove(address: string): void {
       const index = this.array.findIndex((item) => item.adress === address);
 
       if (index === -1) {
-         console.error("Client to be removed is not present in the array.");
+         print("Client to be removed is not present in the array.");
       }
 
       this.array.splice(index, 1);
    }
 
-   private move(client: AstalHyprland.Client) {
+   private move(client: AstalHyprland.Client): void {
       this.remove(client.address);
       this.add(client);
    }

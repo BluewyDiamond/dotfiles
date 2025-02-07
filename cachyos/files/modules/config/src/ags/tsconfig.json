@@ -4,7 +4,6 @@
    "compilerOptions": {
       "experimentalDecorators": true,
       "strict": true,
-      "noImplicitReturns": true,
       "target": "ES2022",
       "module": "ES2022",
       "moduleResolution": "Bundler",
@@ -14,6 +13,8 @@
       "paths": {
          "astal": ["/usr/share/astal/gjs"],
          "astal/*": ["/usr/share/astal/gjs/*"]
-      }
+      },
+
+      "allowDefaultProject": ["*.js"]
    }
 }

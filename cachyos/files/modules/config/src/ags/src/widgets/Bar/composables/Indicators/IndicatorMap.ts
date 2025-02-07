@@ -1,8 +1,8 @@
-import { Gtk } from "astal/gtk4";
-import { bind, Subscribable } from "astal/binding";
+import type { Gtk } from "astal/gtk4";
+import { bind, type Subscribable } from "astal/binding";
 import { Variable } from "astal";
 import PowerProfiles from "gi://AstalPowerProfiles";
-import icons from "../../../../libs/icons";
+import icons, { Icon } from "../../../../libs/icons";
 import Wp from "gi://AstalWp";
 import { IconWithLabelFallback } from "../../../composables/IconWithLabelFallback";
 import Hookable from "../../../../libs/services/Hookable";
@@ -12,14 +12,18 @@ const powerProfiles = PowerProfiles.get_default();
 const wp = Wp.get_default();
 
 export class IndicatorMap extends Hookable implements Subscribable {
-   private map: Map<string, Gtk.Widget | null> = new Map();
-   private var: Variable<Array<Gtk.Widget>> = Variable([]);
+   private readonly map: Map<string, Gtk.Widget | null> = new Map<
+      string,
+      Gtk.Widget | null
+   >();
+
+   private readonly var: Variable<Gtk.Widget[]> = Variable([]);
 
    constructor() {
       super();
 
       {
-         const onPowerProfileChanged = () => {
+         const onPowerProfileChanged = (): void => {
             const activeProfile = powerProfiles.get_active_profile();
 
             if (activeProfile === "balanced") {
@@ -56,13 +60,16 @@ export class IndicatorMap extends Hookable implements Subscribable {
          };
 
          onPowerProfileChanged();
-         this.hook(powerProfiles, "notify", () => onPowerProfileChanged());
+
+         this.hook(powerProfiles, "notify", () => {
+            onPowerProfileChanged();
+         });
       }
 
       {
          const audio = wp?.get_audio();
 
-         if (!audio) {
+         if (audio == null) {
             this.map.set(
                "recoders",
                IconWithLabelFallback({ icon: icons.broken })
@@ -74,7 +81,7 @@ export class IndicatorMap extends Hookable implements Subscribable {
 
          const mic = audio.get_default_microphone();
 
-         if (!mic) {
+         if (mic === null) {
             this.map.set(
                "recoders",
                IconWithLabelFallback({ icon: icons.broken })
@@ -90,16 +97,6 @@ export class IndicatorMap extends Hookable implements Subscribable {
 
                (recorders, micVolume) => {
                   if (recorders.length > 0) {
-                     if (!mic) {
-                        this.map.set(
-                           "recoders",
-                           IconWithLabelFallback({ icon: icons.broken })
-                        );
-
-                        this.notify();
-                        return;
-                     }
-
                      let icon;
 
                      if (micVolume > 0.67) {
@@ -112,11 +109,7 @@ export class IndicatorMap extends Hookable implements Subscribable {
                         icon = icons.audio.mic.muted;
                      }
 
-                     this.map.set(
-                        "recorders",
-                        IconWithLabelFallback({ icon: icon })
-                     );
-
+                     this.map.set("recorders", IconWithLabelFallback({ icon }));
                      this.notify();
                   } else {
                      this.map.set("recorders", null);
@@ -130,7 +123,7 @@ export class IndicatorMap extends Hookable implements Subscribable {
       {
          const audio = wp?.get_audio();
 
-         if (!audio) {
+         if (audio == null) {
             this.map.set(
                "recoders",
                IconWithLabelFallback({ icon: icons.broken })
@@ -142,7 +135,7 @@ export class IndicatorMap extends Hookable implements Subscribable {
 
          const speaker = audio.get_default_speaker();
 
-         if (!speaker) {
+         if (speaker === null) {
             this.map.set(
                "recoders",
                IconWithLabelFallback({ icon: icons.broken })
@@ -154,19 +147,25 @@ export class IndicatorMap extends Hookable implements Subscribable {
 
          this.derives.add(
             Variable.derive([bind(speaker, "volume")], (volume) => {
-               let icon;
+               let icon: Icon | null = null;
+
+               const {
+                  audio: {
+                     volume: { high, medium, low, muted },
+                  },
+               } = icons;
 
                if (volume > 0.67) {
-                  icon = icons.audio.volume.high;
+                  icon = high;
                } else if (volume > 0.34) {
-                  icon = icons.audio.volume.medium;
+                  icon = medium;
                } else if (volume > 0.1) {
-                  icon = icons.audio.volume.low;
+                  icon = low;
                } else {
-                  icon = icons.audio.volume.muted;
+                  icon = muted;
                }
 
-               this.map.set("speaker", IconWithLabelFallback({ icon: icon }));
+               this.map.set("speaker", IconWithLabelFallback({ icon }));
                this.notify();
             })
          );
@@ -175,7 +174,7 @@ export class IndicatorMap extends Hookable implements Subscribable {
       {
          const video = wp?.get_video();
 
-         if (!video) {
+         if (video == null) {
             this.map.set(
                "recoders",
                IconWithLabelFallback({ icon: icons.broken })
@@ -210,20 +209,20 @@ export class IndicatorMap extends Hookable implements Subscribable {
       }
    }
 
-   get() {
+   get(): Gtk.Widget[] {
       return this.var.get();
    }
 
-   subscribe(callback: (list: Array<Gtk.Widget>) => void) {
+   subscribe(callback: (list: Gtk.Widget[]) => void): () => void {
       return this.var.subscribe(callback);
    }
 
-   destroy() {
+   destroy(): void {
       super.destroy();
       this.var.drop();
    }
 
-   private notify() {
+   private notify(): void {
       const array = [];
 
       for (const widget of this.map.values()) {

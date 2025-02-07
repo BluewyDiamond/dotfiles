@@ -158,7 +158,7 @@ export default class AppMap implements Subscribable {
             );
          });
 
-         let orderedList: Gtk.Widget[] = [];
+         const orderedList: Gtk.Widget[] = [];
          let index = 0;
 
          for (const app of queriedAppsSet) {

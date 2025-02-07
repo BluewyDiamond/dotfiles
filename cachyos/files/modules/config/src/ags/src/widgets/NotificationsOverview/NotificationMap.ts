@@ -1,6 +1,6 @@
 import { Variable } from "astal";
-import { Subscribable } from "astal/binding";
-import { Gtk } from "astal/gtk4";
+import type { Subscribable } from "astal/binding";
+import type { Gtk } from "astal/gtk4";
 import Notifd from "gi://AstalNotifd";
 import Notification from "../composables/Notification";
 import Hookable from "../../libs/services/Hookable";
@@ -8,53 +8,54 @@ import Hookable from "../../libs/services/Hookable";
 const notifd = Notifd.get_default();
 
 export class NotificationMap extends Hookable implements Subscribable {
-   private map: Map<number, Gtk.Widget> = new Map();
-   private variable: Variable<Array<Gtk.Widget>> = Variable([]);
+   private readonly map: Map<number, Gtk.Widget> = new Map<
+      number,
+      Gtk.Widget
+   >();
+
+   private readonly variable: Variable<Gtk.Widget[]> = Variable([]);
 
    constructor() {
       super();
 
       notifd.notifications.forEach((notification) => {
-         this.map.set(
-            notification.id,
-            Notification({ notification: notification })
-         );
+         this.map.set(notification.id, Notification({ notification }));
 
          this.notify();
       });
 
       this.hook(notifd, "notified", (_, id: number) => {
          const notification = notifd.get_notification(id);
-         this.map.set(id, Notification({ notification: notification }));
+         this.map.set(id, Notification({ notification }));
          this.notify();
       });
 
-      this.hook(notifd, "resolved", (_, id) => {
+      this.hook(notifd, "resolved", (_, id: number) => {
          this.map.delete(id);
          this.notify();
       });
    }
 
-   get() {
+   get(): Gtk.Widget[] {
       return this.variable.get();
    }
 
-   subscribe(callback: (list: Array<Gtk.Widget>) => void) {
+   subscribe(callback: (list: Gtk.Widget[]) => void): () => void {
       return this.variable.subscribe(callback);
    }
 
-   destroy() {
+   destroy(): void {
       super.destroy();
       this.variable.drop();
    }
 
-   clear() {
+   clear(): void {
       this.map.forEach((_, id) => {
-         notifd.get_notification(id)?.dismiss();
+         notifd.get_notification(id).dismiss();
       });
    }
 
-   private notify() {
+   private notify(): void {
       this.variable.set([...this.map.values()].reverse());
    }
 }

@@ -1,7 +1,7 @@
 import Hookable from "../../../../libs/services/Hookable";
 import { Variable } from "astal";
-import { Subscribable } from "astal/binding";
-import { Gtk, hook, Widget } from "astal/gtk4";
+import type { Subscribable } from "astal/binding";
+import { type Gtk, hook, Widget } from "astal/gtk4";
 import Tray from "gi://AstalTray";
 
 const tray = Tray.get_default();
@@ -10,11 +10,13 @@ function TrayItemMenuButton(item: Tray.TrayItem): Gtk.MenuButton {
    return Widget.MenuButton(
       {
          setup: (self) => {
-            function onItemChanged(item: Tray.TrayItem) {
-               self.tooltipMarkup = item.tooltipMarkup;
-               self.insert_action_group("dbusmenu", item.actionGroup);
-               self.menuModel = item.menuModel;
-            }
+            const onItemChanged = (item: Tray.TrayItem): void => {
+               const { tooltipMarkup, actionGroup, menuModel } = item;
+
+               self.tooltipMarkup = tooltipMarkup;
+               self.insert_action_group("dbusmenu", actionGroup);
+               self.menuModel = menuModel;
+            };
 
             onItemChanged(item);
 
@@ -40,7 +42,8 @@ function TrayItemMenuButton(item: Tray.TrayItem): Gtk.MenuButton {
          setup: (self) => {
             hook(self, item, "changed", () => {
                const changedItem = tray.get_item(item.get_item_id());
-               self.gicon = changedItem.gicon;
+               const { gicon } = changedItem;
+               self.gicon = gicon;
             });
          },
       })
@@ -48,43 +51,49 @@ function TrayItemMenuButton(item: Tray.TrayItem): Gtk.MenuButton {
 }
 
 export class TrayItemMap extends Hookable implements Subscribable {
-   private map: Map<string, Gtk.Widget> = new Map();
-   private var: Variable<Array<Gtk.Widget>> = new Variable([]);
+   private readonly map: Map<string, Gtk.Widget> = new Map<
+      string,
+      Gtk.Widget
+   >();
+
+   private readonly variable: Variable<Gtk.Widget[]> = new Variable<
+      Gtk.Widget[]
+   >([]);
 
    constructor() {
       super();
 
-      tray.get_items()?.forEach((item) => {
+      tray.get_items().forEach((item) => {
          this.map.set(item.get_item_id(), TrayItemMenuButton(item));
          this.notify();
       });
 
-      this.hook(tray, "item-added", (_, item_id) => {
-         const item = tray.get_item(item_id);
-         this.map.set(item_id, TrayItemMenuButton(item));
+      this.hook(tray, "item-added", (_, itemId: string) => {
+         const item = tray.get_item(itemId);
+         this.map.set(itemId, TrayItemMenuButton(item));
          this.notify();
       });
 
-      this.hook(tray, "item-removed", (_, item_id) => {
-         this.map.delete(item_id);
+      this.hook(tray, "item-removed", (_, itemId: string) => {
+         this.map.delete(itemId);
          this.notify();
       });
    }
 
    get(): Gtk.Widget[] {
-      return this.var.get();
+      return this.variable.get();
    }
 
-   subscribe(callback: (list: Array<Gtk.Widget>) => void): () => void {
-      return this.var.subscribe(callback);
+   subscribe(callback: (list: Gtk.Widget[]) => void): () => void {
+      return this.variable.subscribe(callback);
    }
 
-   destroy() {
+   destroy(): void {
       super.destroy();
-      this.var.drop();
+      this.variable.drop();
    }
 
-   private notify() {
-      this.var.set([...this.map.values()]);
+   private notify(): void {
+      this.variable.set([...this.map.values()]);
    }
 }

@@ -1,4 +1,4 @@
-import { App, Gtk, Widget } from "astal/gtk4";
+import { App, type Gtk, Widget } from "astal/gtk4";
 import { IconWithLabelFallback } from "../../composables/IconWithLabelFallback";
 import { GLib } from "astal";
 import { createIcon } from "../../../libs/icons";
@@ -14,11 +14,13 @@ export default function (): Gtk.Button {
             App.toggle_window(options.appLauncher.name);
          },
 
-         setup: (self) => onWindowVisible(options.appLauncher.name, self),
+         setup: (self) => {
+            onWindowVisible(options.appLauncher.name, self);
+         },
       },
 
       IconWithLabelFallback({
-         icon: createIcon(GLib.get_os_info("LOGO") || ""),
+         icon: createIcon(GLib.get_os_info("LOGO") ?? ""),
       })
    );
 }

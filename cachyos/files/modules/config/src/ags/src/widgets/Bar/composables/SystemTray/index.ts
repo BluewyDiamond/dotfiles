@@ -1,5 +1,5 @@
-import { Astal, Gtk, Widget } from "astal/gtk4";
-import { TrayItemMap as TrayItemMap } from "./TrayItemMap";
+import { type Astal, type Gtk, Widget } from "astal/gtk4";
+import { TrayItemMap } from "./TrayItemMap";
 
 // TODO: maybe fallback gicon?
 
@@ -10,13 +10,7 @@ export default function (): Astal.Box {
       cssClasses: ["system-tray"],
 
       setup: (self) => {
-         onTrayItemsChanged(trayItemMap.get());
-
-         trayItemMap.subscribe((list) => {
-            onTrayItemsChanged(list);
-         });
-
-         function onTrayItemsChanged(items: Gtk.Widget[]) {
+         const onTrayItemsChanged = (items: Gtk.Widget[]): void => {
             if (items.length > 0) {
                self.children = items;
                self.visible = true;
@@ -24,7 +18,13 @@ export default function (): Astal.Box {
                self.children = [];
                self.visible = false;
             }
-         }
+         };
+
+         onTrayItemsChanged(trayItemMap.get());
+
+         trayItemMap.subscribe((list) => {
+            onTrayItemsChanged(list);
+         });
       },
 
       onDestroy: () => {
