@@ -21,7 +21,9 @@ function ClientButton(client: AstalHyprland.Client): Gtk.Button {
                hyprland,
                "urgent",
 
-               (_, urgentClient: AstalHyprland.Client) => {
+               (_, urgentClient: AstalHyprland.Client | null) => {
+                  if (urgentClient === null) return;
+
                   if (urgentClient.address === client.address) {
                      self.cssClasses = [...self.cssClasses, "urgent"];
                   }
@@ -29,7 +31,10 @@ function ClientButton(client: AstalHyprland.Client): Gtk.Button {
             );
 
             hook(self, hyprland, "notify::focused-client", () => {
-               const { focusedClient } = hyprland;
+               const focusedClient =
+                  hyprland.focusedClient as AstalHyprland.Client | null;
+
+               if (focusedClient === null) return;
 
                if (focusedClient.address === client.address) {
                   self.cssClasses = self.cssClasses.filter(
