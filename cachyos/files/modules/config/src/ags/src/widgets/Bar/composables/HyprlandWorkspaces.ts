@@ -69,7 +69,14 @@ export default function (): Astal.Box {
                      "urgent",
 
                      (_, client: AstalHyprland.Client) => {
-                        if (index === client.get_workspace().get_id()) {
+                        const workspace =
+                           client.workspace as AstalHyprland.Workspace | null;
+
+                        if (workspace === null) {
+                           return;
+                        }
+
+                        if (index === workspace.id) {
                            self.cssClasses = [...self.cssClasses, "urgent"];
                         }
                      }
