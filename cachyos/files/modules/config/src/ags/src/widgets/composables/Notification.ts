@@ -111,8 +111,11 @@ export default function (props: NotificationProps): Gtk.Box {
             cssClasses: ["content"],
 
             setup: (self) => {
+               const notificationImage = notification.image as string | null;
+
                if (
-                  notification.image !== "" &&
+                  notificationImage !== null &&
+                  notificationImage !== "" &&
                   GLib.file_test(notification.image, GLib.FileTest.EXISTS)
                ) {
                   self.children = [
