@@ -23,18 +23,20 @@ export default function (): Astal.Box {
                         index
                      ) as AstalHyprland.Workspace | null;
 
-                     if (workspace === null) return;
+                     if (workspace === null) {
+                        self.cssClasses = self.cssClasses.filter(
+                           (cssClass) =>
+                              cssClass !== "active" && cssClass !== "occupied"
+                        );
 
+                        return;
+                     }
                      const clients: AstalHyprland.Client[] | null =
                         workspace.get_clients() as
                            | AstalHyprland.Client[]
                            | null;
 
-                     if (clients === null) {
-                        return;
-                     }
-
-                     if (clients.length > 0) {
+                     if (clients !== null && clients.length > 0) {
                         self.cssClasses = [...self.cssClasses, "occupied"];
                      } else {
                         self.cssClasses = self.cssClasses.filter(
