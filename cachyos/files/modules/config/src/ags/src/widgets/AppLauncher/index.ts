@@ -92,7 +92,7 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
 
                Widget.Button({
                   cssClasses: ["refresh"],
-                  canFocus: false,
+                  //canFocus: false,
                   child: IconWithLabelFallback({ icon: icons.ui.refresh }),
 
                   onClicked: () => {

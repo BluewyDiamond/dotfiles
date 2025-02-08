@@ -18,6 +18,10 @@
             margin-right: 8px;
             border-radius: $border_radius;
 
+            & selection {
+               background: transparentize(blue, 0.5);
+            }
+
             & > text {
                font-size: 28px;
                color: $color_on_surface;
@@ -27,8 +31,13 @@
 
          & .refresh {
             @include container-shape();
-            background: $color_secondary_container;
-            color: $color_on_secondary_container;
+            background: $color_surface_container;
+            color: $color_on_surface;
+
+            &:focus {
+               background: $color_secondary_container;
+               color: $color_on_secondary_container;
+            }
 
             .icon-with-label-fallback {
                &.image {
