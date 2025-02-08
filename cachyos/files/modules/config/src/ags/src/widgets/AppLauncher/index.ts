@@ -1,5 +1,5 @@
 import { execAsync } from "astal";
-import { App, Astal, Gdk, Widget } from "astal/gtk4";
+import { App, Astal, Gdk, Gtk, Widget } from "astal/gtk4";
 import AppMap from "./AppMap";
 import PopupWindow, { Position } from "../composables/PopupWindow";
 import options from "../../options";
@@ -9,13 +9,20 @@ function hide(): void {
 }
 
 export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
+   let entry: Gtk.Entry | null = null;
+
    const appMap = new AppMap(() => {
       hide();
+      appMap.searchQuery.set("");
+
+      if (entry !== null) {
+         entry.text = "";
+      }
    });
 
-   const entry = Widget.Entry({
+   entry = Widget.Entry({
       placeholderText: "Search",
-      text: appMap.searchQuery.get(),
+
       onChanged: (self) => {
          appMap.searchQuery.set(self.text);
       },
@@ -33,8 +40,8 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
 
          hide();
          appMap.searchQuery.set("");
-         self.text = "";
          appMap.selectedIndex.set(null);
+         self.text = "";
       },
    });
 
@@ -87,8 +94,8 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
             if (event === Gdk.KEY_Escape) {
                self.hide();
                appMap.searchQuery.set("");
-               entry.text = "";
                appMap.selectedIndex.set(null);
+               entry.text = "";
             }
 
             if (event === Gdk.KEY_Up) {
