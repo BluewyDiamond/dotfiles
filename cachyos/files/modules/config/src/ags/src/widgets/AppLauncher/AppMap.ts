@@ -209,6 +209,10 @@ export default class AppMap implements Subscribable {
       }
    }
 
+   reload(): void {
+      apps.reload();
+   }
+
    clear(): void {
       this.map.forEach((_, app) => this.map.delete(app));
    }

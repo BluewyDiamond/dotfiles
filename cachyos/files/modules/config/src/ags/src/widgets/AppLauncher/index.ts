@@ -1,8 +1,10 @@
 import { execAsync } from "astal";
-import { App, Astal, Gdk, Gtk, Widget } from "astal/gtk4";
+import { App, Astal, Gdk, type Gtk, Widget } from "astal/gtk4";
 import AppMap from "./AppMap";
 import PopupWindow, { Position } from "../composables/PopupWindow";
 import options from "../../options";
+import { IconWithLabelFallback } from "../composables/IconWithLabelFallback";
+import icons from "../../libs/icons";
 
 function hide(): void {
    App.get_window(options.appLauncher.name)?.hide();
@@ -21,6 +23,8 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
    });
 
    entry = Widget.Entry({
+      cssClasses: ["search"],
+      hexpand: true,
       placeholderText: "Search",
 
       onChanged: (self) => {
@@ -78,7 +82,31 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
       cssClasses: ["main-box"],
       vertical: true,
       hexpand: false,
-      children: [entry, hotswapBox],
+
+      children: [
+         Widget.Box({
+            cssClasses: ["the-box"],
+            hexpand: true,
+            children: [
+               entry,
+
+               Widget.Button({
+                  cssClasses: ["refresh"],
+                  canFocus: false,
+                  child: IconWithLabelFallback({ icon: icons.ui.refresh }),
+
+                  onClicked: () => {
+                     appMap.reload();
+                     const searchQuery = appMap.searchQuery.get();
+                     appMap.searchQuery.set("");
+                     appMap.searchQuery.set(searchQuery);
+                  },
+               }),
+            ],
+         }),
+
+         hotswapBox,
+      ],
    });
 
    const window = PopupWindow(

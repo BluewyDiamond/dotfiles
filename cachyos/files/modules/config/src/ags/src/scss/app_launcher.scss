@@ -10,16 +10,38 @@
       border: 4px solid $color_outline_variant;
       padding: 8px;
 
-      & > entry {
-         & > text {
-            font-size: 28px;
-            color: $color_on_surface;
-            padding: $space_small;
+      & .the-box {
+         margin-bottom: 8px;
+
+         & .search {
+            background: $color_surface_container;
+            margin-right: 8px;
+            border-radius: $border_radius;
+
+            & > text {
+               font-size: 28px;
+               color: $color_on_surface;
+               padding: $space_small;
+            }
          }
 
-         background: $color_surface_container;
-         margin-bottom: 8px;
-         border-radius: $border_radius;
+         & .refresh {
+            @include container-shape();
+            background: $color_secondary_container;
+            color: $color_on_secondary_container;
+
+            .icon-with-label-fallback {
+               &.image {
+                  -gtk-icon-size: 24px;
+               }
+
+               &.label {
+                  min-width: 24px;
+                  min-height: 24px;
+                  line-height: 1;
+               }
+            }
+         }
       }
 
       & > .hotswap-box {

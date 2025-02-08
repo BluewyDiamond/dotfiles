@@ -57,6 +57,7 @@ interface PopupWindowProps {
    onFillerClicked?: () => void;
    onKeyReleasedEvent?: (self: Gtk.Widget, event: number) => void;
    onDestroyed?: (self: Gtk.Window) => void;
+   setup?: (self: Gtk.Window) => void;
 }
 
 // This implementation fixes label wrapping.
@@ -76,6 +77,7 @@ export default function (
       onFillerClicked,
       onKeyReleasedEvent,
       onDestroyed,
+      setup,
    } = popupWindowProps;
 
    const curatedCallback = (): void => {
@@ -254,6 +256,12 @@ export default function (
          onDestroy: (self) => {
             if (onDestroyed !== undefined) {
                onDestroyed(self);
+            }
+         },
+
+         setup: (self) => {
+            if (setup !== undefined) {
+               setup(self);
             }
          },
       },
