@@ -42,6 +42,10 @@ export default {
       },
    },
 
+   sh: {
+      cmd: ["fish", "-c"]
+   },
+
    filler: {
       width: 4000,
       height: 4000,

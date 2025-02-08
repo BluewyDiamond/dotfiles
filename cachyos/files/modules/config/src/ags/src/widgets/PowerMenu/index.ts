@@ -4,6 +4,7 @@ import icons from "../../libs/icons";
 import Variable from "astal/variable";
 import { type AstalIO, execAsync, interval, timeout } from "astal";
 import PopupWindow, { Position } from "../composables/PopupWindow";
+import options from "../../options";
 
 function PowerButton(widget: Gtk.Widget, onThree: () => void): Gtk.Button {
    const clicks = Variable(0);
@@ -78,7 +79,7 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
                IconWithLabelFallback({ icon: icons.powermenu.sleep }),
 
                () => {
-                  void execAsync(["fish", "-c", "systemctl suspend"]);
+                  void execAsync([...options.sh.cmd, "systemctl suspend"]);
                }
             ),
 
@@ -86,7 +87,7 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
                IconWithLabelFallback({ icon: icons.powermenu.reboot }),
 
                () => {
-                  void execAsync(["fish", "-c", "systemctl reboot"]);
+                  void execAsync([...options.sh.cmd, "systemctl reboot"]);
                }
             ),
 
@@ -94,7 +95,7 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
                IconWithLabelFallback({ icon: icons.powermenu.shutdown }),
 
                () => {
-                  void execAsync(["fish", "-c", "systemctl poweroff"]);
+                  void execAsync([...options.sh.cmd, "systemctl poweroff"]);
                }
             ),
          ],

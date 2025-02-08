@@ -35,7 +35,14 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
          const currentSearchQuery = appMap.searchQuery.get();
 
          if (currentSearchQuery.startsWith(":sh")) {
-            void execAsync(["fish", "-c", currentSearchQuery.slice(3).trim()]);
+            void execAsync([
+               ...options.sh.cmd,
+               currentSearchQuery.slice(3).trim(),
+            ]);
+         } else if (currentSearchQuery.startsWith(":refresh")) {
+            appMap.reload();
+            self.text = "";
+            return;
          } else {
             let selectedIndexValue = appMap.selectedIndex.get();
             if (selectedIndexValue === null) selectedIndexValue = 0;
@@ -92,7 +99,7 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
 
                Widget.Button({
                   cssClasses: ["refresh"],
-                  //canFocus: false,
+                  canFocus: false,
                   child: IconWithLabelFallback({ icon: icons.ui.refresh }),
 
                   onClicked: () => {
