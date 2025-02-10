@@ -1,20 +1,20 @@
+.icon-with-label-fallback {
+   &.image {
+      -gtk-icon-size: 24px;
+   }
+
+   &.label {
+      min-width: 24px;
+      min-height: 24px;
+      line-height: 1;
+   }
+}
+
 .bar {
    background: $color_surface;
 
    & > .main-center-box {
       padding: $space_medium;
-
-      .icon-with-label-fallback {
-         &.image {
-            -gtk-icon-size: 24px;
-         }
-
-         &.label {
-            min-width: 24px;
-            min-height: 24px;
-            line-height: 1;
-         }
-      }
    }
 }
 
