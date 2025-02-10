@@ -103,7 +103,7 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
 
                   child: IconWithLabelFallback({
                      icon: icons.ui.refresh,
-                     symbolic: true,
+                     symbolic: options.appLauncher.refresh.symbolic,
                   }),
 
                   onClicked: () => {

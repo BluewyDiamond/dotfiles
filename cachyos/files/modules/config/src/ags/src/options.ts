@@ -30,6 +30,10 @@ export default {
    appLauncher: {
       name: "astal_app_launcher",
       maxItems: 5,
+
+      refresh: {
+         symbolic: true,
+      },
    },
 
    controlCenter: {
@@ -37,8 +41,8 @@ export default {
 
       actions: {
          rows: 2,
-         columns: 2
-      }
+         columns: 2,
+      },
    },
 
    notification: {
@@ -52,7 +56,7 @@ export default {
    },
 
    sh: {
-      cmd: ["fish", "-c"]
+      cmd: ["fish", "-c"],
    },
 
    filler: {

@@ -68,7 +68,11 @@ export default function (): Astal.Box {
                      hyprland,
                      "urgent",
 
-                     (_, client: AstalHyprland.Client) => {
+                     (_, client: AstalHyprland.Client | null) => {
+                        if (client === null) {
+                           return;
+                        }
+
                         const workspace =
                            client.workspace as AstalHyprland.Workspace | null;
 
