@@ -29,7 +29,7 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
                      child: Widget.Label({ label: "Clear All" }),
 
                      onClicked: () => {
-                        notificationMap.clear();
+                        void notificationMap.clear();
                      },
                   }),
                ],
