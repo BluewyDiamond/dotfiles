@@ -147,6 +147,7 @@ export default function (props: NotificationProps): Gtk.Box {
                                  xalign: 0,
                                  wrap: true,
                                  wrapMode: Pango.WrapMode.WORD_CHAR,
+                                 useMarkup: true,
                                  label: notification.summary,
                               }),
                            ];
@@ -162,6 +163,7 @@ export default function (props: NotificationProps): Gtk.Box {
                                  xalign: 0,
                                  wrap: true,
                                  wrapMode: Pango.WrapMode.WORD_CHAR,
+                                 useMarkup: true,
                                  label: notification.body,
                               }),
                            ];
