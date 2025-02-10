@@ -11,6 +11,7 @@ import Ram from "./composables/Ram";
 import Cpu from "./composables/Cpu";
 import { Astal, type Gdk, Gtk, Widget } from "astal/gtk4";
 import options from "../../options";
+import ControlCenter from "./composables/ControlCenter";
 
 export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
    return Widget.Window({
@@ -62,7 +63,7 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
                Ram(),
                Cpu(),
                Battery(),
-               Power(),
+               ControlCenter(),
             ],
          }),
       }),

@@ -17,7 +17,7 @@ export default function (): Astal.Box {
    });
 
    return Widget.Box({
-      cssClasses: ["battery"],
+      cssClasses: ["bar-item", "bar-item-battery"],
       visible: bind(battery, "isBattery"),
 
       setup: (self) => {

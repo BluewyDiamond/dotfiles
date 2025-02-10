@@ -15,187 +15,195 @@
             line-height: 1;
          }
       }
+   }
+}
 
-      .app-launcher {
-         @include bar_item();
-         margin-right: $space_medium;
+.bar-item {
+   @include container_shape();
+   background: $color_surface_container;
+   color: $color_on_surface;
+   padding: $space_small;
 
-         &:hover {
-            background: $color_primary_container;
-         }
+   &.active {
+      background: $color_primary_container;
+   }
 
-         &.active {
-            background: $color_primary_container;
-         }
+   &.urgent {
+      background: $color_warning_container;
+   }
+}
 
-         &.urgent {
-            background: $color_tertiary_container;
-         }
+.bar-item-app-launcher {
+   margin-right: $space_medium;
+
+   &:hover {
+      background: $color_primary_container;
+   }
+
+   &.active {
+      background: $color_primary_container;
+   }
+
+   &.urgent {
+      background: $color_tertiary_container;
+   }
+}
+
+.bar-item-workspaces {
+   margin-right: $space_medium;
+
+   & > button {
+      @include container_shape();
+      margin-right: 4px;
+      background: $color_surface;
+      min-width: 12px;
+
+      &:hover {
+         background: $color_primary_container;
       }
 
-      .workspaces {
-         @include bar_item();
-         margin-right: $space_medium;
-
-         & > button {
-            @include container_shape();
-            margin-right: 4px;
-            background: $color_surface;
-            min-width: 12px;
-
-            &:hover {
-               background: $color_primary_container;
-            }
-
-            &:last-child {
-               margin-right: 0;
-            }
-
-            &.occupied {
-               background: $color_secondary_container;
-
-               &:hover {
-                  background: $color_primary_container;
-               }
-            }
-
-            &.active {
-               background: $color_primary_container;
-            }
-
-            &.urgent {
-               background: $color_warning_container;
-
-               &:hover {
-                  background: $color_primary_container;
-               }
-            }
-
-            & > label {
-               font-size: 0;
-            }
-         }
+      &:last-child {
+         margin-right: 0;
       }
 
-      .taskbar {
-         & > button {
-            @include bar_item();
-            margin-right: $space_medium;
-
-            &:hover {
-               background: $color_primary_container;
-            }
-         }
-      }
-
-      .notifications {
-         @include bar_item();
-         margin-right: $space_medium;
+      &.occupied {
+         background: $color_secondary_container;
 
          &:hover {
             background: $color_primary_container;
          }
       }
 
-      .time {
-         @include bar_item();
-         margin-right: $space_medium;
+      &.active {
+         background: $color_primary_container;
       }
 
-      .system-tray {
-         & > menubutton {
-            @include bar_item();
-            margin-left: $space_medium;
-
-            &:hover {
-               background: $color_primary_container;
-            }
-
-            & image {
-               -gtk-icon-size: 24px;
-            }
-         }
-
-         popover {
-            all: unset;
-            background: $color_surface;
-            border: 4px solid $color_outline_variant;
-            border-radius: $border_radius;
-            padding: $space_medium;
-            padding-top: 0;
-            margin-top: 0;
-
-            modelbutton {
-               @include container-shape();
-               margin-top: $space_medium;
-               background: $color_surface_container;
-               padding: $space_small;
-               color: $color_on_surface;
-
-               &:first-child {
-                  margin-bottom: 0;
-               }
-
-               &:hover {
-                  background: $color_primary_container;
-               }
-            }
-         }
-      }
-
-      ._ram {
-         @include bar_item();
-         margin-left: $space_medium;
-
-         & > .icon-with-label-fallback {
-            margin-right: $space_small;
-         }
-      }
-
-      .cpu {
-         @include bar_item();
-         margin-left: $space_medium;
-
-         & > .icon-with-label-fallback {
-            margin-right: $space_small;
-         }
-      }
-
-      .battery {
-         @include bar_item();
-         margin-left: $space_medium;
-      }
-
-      .indicators {
-         @include bar_item();
-         margin-left: $space_medium;
-
-         & > box {
-            & > .icon-with-label-fallback {
-               margin-left: $space_small;
-
-               &:first-child {
-                  margin-left: 0;
-               }
-            }
-         }
-      }
-
-      .power {
-         @include bar_item();
-         margin-left: $space_medium;
+      &.urgent {
+         background: $color_warning_container;
 
          &:hover {
             background: $color_primary_container;
          }
+      }
 
-         & .active {
-            background: $color_primary_container;
+      & > label {
+         font-size: 0;
+      }
+   }
+}
+
+.bar-item-taskbar {
+   & > button {
+      margin-right: $space_medium;
+
+      &:hover {
+         background: $color_primary_container;
+      }
+   }
+}
+
+.bar-item-notifications {
+   margin-right: $space_medium;
+
+   &:hover {
+      background: $color_primary_container;
+   }
+}
+
+.bar-item-time {
+   margin-right: $space_medium;
+}
+
+.bar-item-system-tray {
+   & > menubutton {
+      margin-left: $space_medium;
+
+      &:hover {
+         background: $color_primary_container;
+      }
+
+      & image {
+         -gtk-icon-size: 24px;
+      }
+   }
+
+   popover {
+      all: unset;
+      background: $color_surface;
+      border: 4px solid $color_outline_variant;
+      border-radius: $border_radius;
+      padding: $space_medium;
+      padding-top: 0;
+      margin-top: 0;
+
+      modelbutton {
+         @include container-shape();
+         margin-top: $space_medium;
+         background: $color_surface_container;
+         padding: $space_small;
+         color: $color_on_surface;
+
+         &:first-child {
+            margin-bottom: 0;
          }
 
-         & .urgent {
-            background: $color_tertiary_container;
+         &:hover {
+            background: $color_primary_container;
          }
       }
    }
+}
+
+.bar-item-ram {
+   margin-left: $space_medium;
+
+   & > .icon-with-label-fallback {
+      margin-right: $space_small;
+   }
+}
+
+.bar-item-cpu {
+   margin-left: $space_medium;
+
+   & > .icon-with-label-fallback {
+      margin-right: $space_small;
+   }
+}
+
+.bar-item-battery {
+   margin-left: $space_medium;
+}
+
+.bar-item-indicators {
+   margin-left: $space_medium;
+
+   & > box {
+      & > .icon-with-label-fallback {
+         margin-left: $space_small;
+
+         &:first-child {
+            margin-left: 0;
+         }
+      }
+   }
+}
+
+.bar-item-power {
+   margin-left: $space_medium;
+
+   &:hover {
+      background: $color_primary_container;
+   }
+
+   & .active {
+      background: $color_primary_container;
+   }
+
+   & .urgent {
+      background: $color_tertiary_container;
+   }
+}
+
+.bar-item-control-center {
+   margin-left: $space_medium;
 }

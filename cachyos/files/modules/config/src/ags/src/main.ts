@@ -6,6 +6,7 @@ import NotificationsOverview from "./widgets/NotificationsOverview";
 import NotificationsPopup from "./widgets/NotificationsPopup";
 import PowerMenu from "./widgets/PowerMenu";
 import options from "./options";
+import ControlCenter from "./widgets/ControlCenter";
 
 App.start({
    css: getCss(),
@@ -27,6 +28,7 @@ App.start({
       let notificationsPopup: Astal.Window | null = null;
       let appLauncher: Astal.Window | null = null;
       let powerMenu: Astal.Window | null = null;
+      let controlCenterWindow: Astal.Window | null = null;
 
       const onMonitorsChanged = (): void => {
          if (bar !== null) {
@@ -56,6 +58,11 @@ App.start({
             powerMenu = null;
          }
 
+         if (controlCenterWindow !== null) {
+            App.remove_window(controlCenterWindow);
+            controlCenterWindow = null;
+         }
+
          const numOfMonitors = monitorManager.get_n_items();
 
          for (let i = 0; i < numOfMonitors; i++) {
@@ -68,11 +75,13 @@ App.start({
             notificationsPopup = NotificationsPopup(monitor);
             appLauncher = AppLauncher(monitor);
             powerMenu = PowerMenu(monitor);
+            controlCenterWindow = ControlCenter(monitor);
 
             App.add_window(notificationsOverview);
             App.add_window(notificationsPopup);
             App.add_window(appLauncher);
             App.add_window(powerMenu);
+            App.add_window(controlCenterWindow);
          }
       };
 

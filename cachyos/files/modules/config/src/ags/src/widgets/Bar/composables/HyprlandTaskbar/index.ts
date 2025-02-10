@@ -8,7 +8,7 @@ export default function (): Astal.Box {
    const clientMap = new ClientArray();
 
    return Widget.Box({
-      cssClasses: ["taskbar"],
+      cssClasses: ["bar-item-taskbar"],
 
       setup: (self) => {
          const onClientsChanged = (list: Gtk.Widget[]): void => {

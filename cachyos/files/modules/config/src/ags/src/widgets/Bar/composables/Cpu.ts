@@ -49,7 +49,7 @@ timeout(INTERVAL, () =>
 export default function (): Gtk.Button {
    return Widget.Button(
       {
-         cssClasses: ["cpu"],
+         cssClasses: ["bar-item", "bar-item-cpu"],
       },
 
       Widget.Box({

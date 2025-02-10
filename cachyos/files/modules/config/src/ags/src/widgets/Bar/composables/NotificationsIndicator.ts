@@ -7,7 +7,7 @@ const notifd = Notifd.get_default();
 
 export default function (): Gtk.Button {
    return Widget.Button({
-      cssClasses: ["notifications"],
+      cssClasses: ["bar-item", "bar-item-notifications"],
 
       onClicked: () => {
          App.toggle_window("astal-notifications-overview");

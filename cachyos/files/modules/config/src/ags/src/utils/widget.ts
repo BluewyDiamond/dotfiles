@@ -1,7 +1,42 @@
-import { App, Gtk, hook } from "astal/gtk4";
+import { App, Gtk, hook, Widget } from "astal/gtk4";
 import cairo from "gi://cairo";
 
-export function onWindowVisible(windowName: string, widget: Gtk.Widget) {
+export function paginateBoxes(
+   rows: number,
+   columns: number,
+   widgets: Gtk.Widget[]
+): Gtk.Box[] {
+   const pageSize = rows * columns;
+   const pages: Gtk.Box[] = [];
+
+   for (
+      let widgetCount = 0;
+      widgetCount < widgets.length;
+      widgetCount += pageSize
+   ) {
+      const page = Widget.Box({ vertical: true });
+      const chunk = widgets.slice(widgetCount, widgetCount + pageSize);
+
+      for (let rowCount = 0; rowCount < rows; rowCount++) {
+         const start = rowCount * columns;
+         const end = start + columns;
+         const rowArray = chunk.slice(start, end);
+         const rowBox = Widget.Box({});
+
+         for (const widget of rowArray) {
+            rowBox.append(widget);
+         }
+
+         page.append(rowBox);
+      }
+
+      pages.push(page);
+   }
+
+   return pages;
+}
+
+export function onWindowVisible(windowName: string, widget: Gtk.Widget): void {
    let open = false;
 
    hook(widget, App, "window-toggled", (_, window: Gtk.Window) => {
@@ -25,12 +60,12 @@ export function onWindowVisible(windowName: string, widget: Gtk.Widget) {
 export function matchInputRegionOfWidget(
    window: Gtk.Window,
    widget: Gtk.Widget
-) {
+): void {
    const windowGdkNative = window.get_native();
-   if (!windowGdkNative) return;
+   if (windowGdkNative === null) return;
 
    const windowGdkSurface = windowGdkNative.get_surface();
-   if (!windowGdkSurface) return;
+   if (windowGdkSurface === null) return;
 
    const translatedCoordinates = widget.translate_coordinates(window, 0, 0);
 
@@ -43,7 +78,7 @@ export function matchInputRegionOfWidget(
 
    const cairoRegion = new cairo.Region();
 
-   // @ts-ignore
+   // @ts-expect-error
    cairoRegion.unionRectangle(rectangleInt);
 
    windowGdkSurface.set_input_region(cairoRegion);

@@ -9,6 +9,8 @@ const tray = Tray.get_default();
 function TrayItemMenuButton(item: Tray.TrayItem): Gtk.MenuButton {
    return Widget.MenuButton(
       {
+         cssClasses: ["bar-item"],
+
          setup: (self) => {
             const onItemChanged = (item: Tray.TrayItem): void => {
                const { tooltipMarkup, actionGroup, menuModel } = item;

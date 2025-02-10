@@ -11,6 +11,8 @@ const hyprland = AstalHyprland.get_default();
 function ClientButton(client: AstalHyprland.Client): Gtk.Button {
    return Widget.Button(
       {
+         cssClasses: ["bar-item"],
+
          onClicked: () => {
             hyprland.dispatch("focuswindow", `address:0x${client.address}`);
          },

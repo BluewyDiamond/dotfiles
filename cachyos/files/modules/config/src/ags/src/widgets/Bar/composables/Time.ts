@@ -8,7 +8,7 @@ const time = Variable<string>("").poll(
 
 export default function (): Gtk.Label {
    return Widget.Label({
-      cssClasses: ["time"],
+      cssClasses: ["bar-item", "bar-item-time"],
       label: time(),
    });
 }

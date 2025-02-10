@@ -7,7 +7,7 @@ export default function (): Astal.Box {
    const trayItemMap = new TrayItemMap();
 
    return Widget.Box({
-      cssClasses: ["system-tray"],
+      cssClasses: ["bar-item-tray"],
 
       setup: (self) => {
          const onTrayItemsChanged = (items: Gtk.Widget[]): void => {

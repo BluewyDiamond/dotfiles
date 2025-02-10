@@ -5,7 +5,7 @@ export default function (): Gtk.Button {
    const indicatorsMap = new IndicatorMap();
 
    return Widget.Button({
-      cssClasses: ["indicators"],
+      cssClasses: ["bar-item", "bar-item-indicators"],
 
       child: Widget.Box({
          setup: (self) => {

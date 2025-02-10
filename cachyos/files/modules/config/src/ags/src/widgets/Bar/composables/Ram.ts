@@ -21,7 +21,7 @@ interval(INTERVAL, () => {
 export default function (): Gtk.Button {
    return Widget.Button(
       {
-         cssClasses: ["_ram"],
+         cssClasses: ["bar-item", "bar-item-ram"],
       },
 
       Widget.Box(

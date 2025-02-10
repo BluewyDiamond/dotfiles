@@ -32,6 +32,15 @@ export default {
       maxItems: 5,
    },
 
+   controlCenter: {
+      name: "control_center",
+
+      actions: {
+         rows: 2,
+         columns: 2
+      }
+   },
+
    notification: {
       closeIcon: {
          symbolic: true,
