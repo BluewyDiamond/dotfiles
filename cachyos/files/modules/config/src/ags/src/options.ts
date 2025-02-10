@@ -55,7 +55,7 @@ export default {
       },
    },
 
-   rapidTimeout: 200,
+   rapidTimeout: 100,
 
    sh: {
       cmd: ["fish", "-c"],

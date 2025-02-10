@@ -4,6 +4,7 @@ import type { Gtk } from "astal/gtk4";
 import Notifd from "gi://AstalNotifd";
 import Notification from "../composables/Notification";
 import Hookable from "../../libs/services/Hookable";
+import options from "../../options";
 
 const notifd = Notifd.get_default();
 
@@ -49,10 +50,14 @@ export class NotificationMap extends Hookable implements Subscribable {
       this.variable.drop();
    }
 
-   clear(): void {
-      this.map.forEach((_, id) => {
-         notifd.get_notification(id).dismiss();
-      });
+   async clear(): Promise<void> {
+      for (const [key, _] of this.map) {
+         notifd.get_notification(key).dismiss();
+
+         await new Promise((resolve) => {
+            setTimeout(resolve, options.rapidTimeout);
+         });
+      }
    }
 
    private notify(): void {
