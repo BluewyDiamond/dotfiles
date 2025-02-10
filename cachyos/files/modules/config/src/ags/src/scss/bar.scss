@@ -114,8 +114,8 @@
    margin-right: $space_medium;
 }
 
-.bar-item-system-tray {
-   & > menubutton {
+.bar-item-tray {
+   .tray-item {
       margin-left: $space_medium;
 
       &:hover {
