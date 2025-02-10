@@ -3,6 +3,10 @@
    border-radius: $border_radius;
    padding: $space_small;
 
+   &.low {
+      
+   }
+
    & .header {
       margin-bottom: $space_medium;
 

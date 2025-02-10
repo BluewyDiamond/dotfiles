@@ -18,68 +18,7 @@ export class NotificationMap extends Hookable implements Subscribable {
 
    constructor() {
       super();
-
-      const capNotifications = (): void => {
-         if (this.map.size >= options.notificationsPopup.maxItems) {
-            const [key] = this.map.entries().next().value ?? [];
-            if (key === undefined) return;
-            this.map.delete(key);
-            this.notify();
-         }
-      };
-
-      notifd.notifications.forEach((notification) => {
-         capNotifications();
-
-         this.map.set(
-            notification.id,
-
-            Notification({
-               notification: notifd.get_notification(notification.id),
-
-               setup: () => {
-                  if (typeof options.notificationsPopup.timeout === "number") {
-                     timeout(options.notificationsPopup.timeout, () =>
-                        this.map.delete(notification.id)
-                     );
-                  }
-               },
-            })
-         );
-
-         this.notify();
-      });
-
-      this.hook(notifd, "notified", (_, id: number) => {
-         capNotifications();
-         const notification = notifd.get_notification(id);
-
-         this.map.set(
-            id,
-
-            Notification({
-               notification: notification,
-
-               setup: () => {
-                  if (typeof options.notificationsPopup.timeout !== "number") {
-                     return;
-                  }
-
-                  timeout(options.notificationsPopup.timeout, () => {
-                     this.map.delete(notification.id);
-                     this.notify();
-                  });
-               },
-            })
-         );
-
-         this.notify();
-      });
-
-      this.hook(notifd, "resolved", (_, id: number) => {
-         this.map.delete(id);
-         this.notify();
-      });
+      void this.init();
    }
 
    get(): Gtk.Widget[] {
@@ -97,5 +36,68 @@ export class NotificationMap extends Hookable implements Subscribable {
 
    private notify(): void {
       this.var.set([...this.map.values()].reverse());
+   }
+
+   private async init(): Promise<void> {
+      const capNotifications = (): void => {
+         if (this.map.size >= options.notificationsPopup.maxItems) {
+            const [key] = this.map.entries().next().value ?? [];
+            if (key === undefined) return;
+            this.map.delete(key);
+            this.notify();
+         }
+      };
+
+      const setNotification = (notification: Notifd.Notification): void => {
+         this.map.set(
+            notification.id,
+
+            Notification({
+               notification: notifd.get_notification(notification.id),
+
+               setup: () => {
+                  if (
+                     notification.urgency !== Notifd.Urgency.CRITICAL &&
+                     typeof options.notificationsPopup.timeout === "number"
+                  ) {
+                     timeout(options.notificationsPopup.timeout, () => {
+                        this.map.delete(notification.id);
+                        this.notify();
+                     });
+                  }
+               },
+            })
+         );
+
+         this.notify();
+      };
+
+      for (const notification of notifd.notifications) {
+         capNotifications();
+         setNotification(notification);
+
+         await new Promise((resolve) =>
+            setTimeout(resolve, options.rapidTimeout)
+         );
+      }
+
+      this.hook(notifd, "notified", (_, id: number) => {
+         const notification = notifd.get_notification(
+            id
+         ) as Notifd.Notification | null;
+
+         if (notification === null) {
+            return;
+         }
+
+         capNotifications();
+         setNotification(notification);
+         this.notify();
+      });
+
+      this.hook(notifd, "resolved", (_, id: number) => {
+         this.map.delete(id);
+         this.notify();
+      });
    }
 }
