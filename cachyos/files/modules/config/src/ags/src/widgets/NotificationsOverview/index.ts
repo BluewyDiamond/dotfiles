@@ -7,7 +7,7 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
 
    return PopupWindow(
       {
-        gdkmonitor,
+         gdkmonitor,
          name: "astal-notifications-overview",
          cssClasses: ["notifications-overview"],
          position: Position.TOP_CENTER,
@@ -28,8 +28,8 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
                   Widget.Button({
                      child: Widget.Label({ label: "Clear All" }),
 
-                     onClicked: () => {
-                        void notificationMap.clear();
+                     onClicked: async () => {
+                        await notificationMap.clear();
                      },
                   }),
                ],
