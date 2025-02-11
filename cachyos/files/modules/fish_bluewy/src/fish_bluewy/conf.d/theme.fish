@@ -1,3 +1,7 @@
+if not status is-interactive
+    return
+end
+
 # Hardcoded ANSI color escape sequences
 # Each line sets a specific ANSI color index (0-15) to a hardcoded hex color value
 
