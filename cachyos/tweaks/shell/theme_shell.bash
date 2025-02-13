@@ -2,8 +2,7 @@
 
 script_name="$(basename "$0")"
 
-command -v "$script_name" >/dev/null 2>&1 ||
- script_name="$0"
+command -v "$script_name" > /dev/null 2>&1 || script_name="$0"
 
 num_of_ansi=8
 
@@ -224,30 +223,22 @@ set_colors () {
     fi
 }
 
-if [[ "$1" == "help" ]]
-    then
+if [[ "$1" == "help" ]]; then
     [[ "$2" == "" ]] && usage || prog_help "$2" || exit 1
-    elif [[ "$1" == "get" ]]
-    then
+elif [[ "$1" == "get" ]]; then
     get_and_print
-    elif [[ "$1" == "set" ]] || [[ "$1" == "set-soft" ]]
-    then
+elif [[ "$1" == "set" ]] || [[ "$1" == "set-soft" ]]; then
     [[ "$2" == "" ]] && die "Expected color file!"
 
     soft_arg=0
-    [[ "$1" == "set-soft" ]] &&
- soft_arg=1
+    [[ "$1" == "set-soft" ]] && soft_arg=1
 
     set_colors "$2" "$soft_arg"
-    elif [[ "$1" == "ansi-show" ]]
-    then
+elif [[ "$1" == "ansi-show" ]]; then
     print_little_ansi_display
-    elif [[ "$1" == "rc-bash" ]]
-    then
+elif [[ "$1" == "rc-bash" ]]; then
     rc_bash
 else
     usage
     exit 1
-    fi
-
-    t
+fi
