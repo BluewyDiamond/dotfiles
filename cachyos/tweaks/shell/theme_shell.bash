@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# https://gitlab.com/Oglo12/bash-scripts
 
 script_name="$(basename "$0")"
 
