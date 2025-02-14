@@ -17,7 +17,10 @@ export default function (): Astal.Box {
 
                setup: (self) => {
                   const onWorkspaceFocusedChange = (): void => {
-                     const { focusedWorkspace } = hyprland;
+                     const {
+                        focusedWorkspace,
+                     }: { focusedWorkspace: AstalHyprland.Workspace | null } =
+                        hyprland;
 
                      const workspace = hyprland.get_workspace(
                         index
@@ -31,6 +34,7 @@ export default function (): Astal.Box {
 
                         return;
                      }
+
                      const clients: AstalHyprland.Client[] | null =
                         workspace.get_clients() as
                            | AstalHyprland.Client[]
