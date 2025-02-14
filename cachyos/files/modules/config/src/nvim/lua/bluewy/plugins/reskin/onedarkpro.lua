@@ -21,37 +21,37 @@ return {
          },
 
          highlights = {
-            -- general due to rust
-            -- hmmmm, TODO: figure out why i put this in
-            -- ["@function.builtin"] = {}, -- blank because yellow is definetly not right
+            -- rust semantic tokens
+            -- ex: unwrap()
+            ["@function.builtin"] = {},
 
-            -- rust specific
-            ["@lsp.type.parameter.rust"] = { fg = "${red}" },
-            ["@lsp.type.namespace.rust"] = { fg = "${yellow}" },
-            ["@lsp.type.formatSpecifier.rust"] = { fg = "${purple}" },
-            ["@lsp.type.function.rust"] = { fg = "${blue}" },
-            ["@lsp.type.macro.rust"] = { fg = "${orange}" },
-            ["@lsp.type.method.rust"] = { fg = "${blue}" },
-            ["@lsp.type.static.rust"] = { fg = "${red}" },
-            ["@lsp.type.struct.rust"] = { fg = "${yellow}" },
-            ["@lsp.type.typeAlias.rust"] = { fg = "${yellow}" },
-            ["@lsp.typemod.function.defaultLibrary.rust"] = { fg = "${cyan}" },
-            ["@lsp.typemod.method.defaultLibrary.rust"] = { fg = "${blue}" },
+            -- ex: self
+            ["@lsp.type.selfKeyword.rust"] = { fg = "${purple}" },
+
+            -- ex: *, =, + ...
+            ["@operator"] = {},
+
+            -- ex: #[derive()]
+            ["@lsp.type.decorator.rust"] = {},
+
+            -- ex: StatusCode::Ok <--
             ["@lsp.type.const.rust"] = { fg = "${orange}" },
 
-            -- for example: ->
-            rustArrowCharacter = { fg = "${white}" },
-            -- for example: =>, +, !=, &&
-            rustOperator = { fg = "${white}" },
-            -- for example: self
-            rustSelf = { fg = "${purple}" },
-            -- for example: &, *, @, !, ?
-            rustSigil = { fg = "${white}" },
-            -- for example: static, const
-            rustStorage = { fg = "${purple}" },
+            -- ex: Self
+            ["@lsp.type.selfTypeKeyword.rust"] = { fg = "${purple}" },
 
-            -- not working, maybe something else is conflicting with it?
-            rustBoxPlacementBalance = { fg = "${purple}" },
+            -- rust treesitter
+            -- ex: (), {}
+            ["@punctuation.bracket.rust"] = {},
+            ["@odp.punctuation_token_bracket.rust"] = {},
+
+            -- ex: pub static ref SERVER_ADDRESS
+            ["@constant.rust"] = { fg = "${red}" },
+
+            -- ex: _
+            ["@character.special.rust"] = { fg = "${red}" },
+
+            -- TODO: Redo the following:
 
             -- html
             htmlArg = { fg = "${orange}" },
