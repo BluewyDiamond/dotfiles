@@ -73,10 +73,18 @@ export class ClientArray extends Hookable implements Subscribable {
          this.notify();
       });
 
-      this.hook(hyprland, "client-added", (_, client: AstalHyprland.Client) => {
-         this.add(client);
-         this.notify();
-      });
+      this.hook(
+         hyprland,
+         "client-added",
+         (_, client: AstalHyprland.Client | null) => {
+            if (client === null) {
+               return;
+            }
+
+            this.add(client);
+            this.notify();
+         }
+      );
 
       this.hook(hyprland, "client-removed", (_, address: string) => {
          this.remove(address);
