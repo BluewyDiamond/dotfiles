@@ -1,15 +1,39 @@
 {
+   "system": {
+      "std": [
+         "base",
+         "base-devel",
+         "linux-firmware",
+         "refind",
+         "fish",
+         "bash",
+         "sudo",
+
+         "cachyos-hooks",
+         "cachyos-keyring",
+         "cachyos-mirrorlist",
+         "cachyos-rate-mirrors",
+         "cachyos-v3-mirrorlist",
+         "cachyos-v4-mirrorlist",
+         "cachyos-settings",
+
+         "chwd",
+         "neovim",
+         "iwd"
+      ]
+   },
+
    "neovim": {
       "std": ["neovim", "stylua", "ripgrep", "fzf", "prettier", "eslint_d"],
       "aur": ["fish-lsp-git"]
    },
 
    "tty_session": {
-      "std": ["trash-cli", "zellij"]
+      "std": ["trash-cli", "zellij", "eza", "git", "fisher"]
    },
 
    "tty_rice": {
-      "std": ["terminus-font", "figlet"]
+      "std": ["terminus-font", "figlet", "fastfetch"]
    },
 
    "hyprland": {
@@ -95,7 +119,7 @@
       "aur": ["wayshot"]
    },
 
-   "gui_alternatives": {
+   "applications": {
       "std": [
          "pavucontrol",
          "gparted",
@@ -129,7 +153,7 @@
       "std": ["lact"]
    },
 
-   "minimal_virtualization": {
+   "virtualization": {
       "std": [
          "qemu-base",
          "virt-manager",

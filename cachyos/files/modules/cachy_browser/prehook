@@ -1,18 +1,21 @@
 #!/usr/bin/env fish
 
-set CACHY_BROWSER_OVERRIDES (realpath (dirname (status filename)))/src/cachy.overrides.cfg
-set CACHY_BROWSER_CSS (realpath (dirname (status filename)))/src/userChrome.css
+set -l script_dir (realpath (dirname (status filename)))
+set -l cachy_browser_overrides_file "$script_dir/src/cachy.overrides.cfg"
+set -l cachy_browser_css_file "$script_dir/src/userChrome.css"
 
-mkdir -p $HOME/.cachy
+mkdir -p "$HOME/.cachy"
 
-ln -sf $CACHY_BROWSER_OVERRIDES $HOME/.cachy/cachy.overrides.cfg
+ln -sf "$cachy_browser_overrides_file" "$HOME/.cachy/cachy.overrides.cfg"
 
-set target_dirs (find $HOME/.cachy -type d -name '*default-release' 2>/dev/null)
+set -l target_dirs (find "$HOME/.cachy" -type d -name '*default-release' 2>/dev/null)
 
 for dir in $target_dirs
-    if not test -d "$dir/chrome"
-        mkdir -p "$dir/chrome"
+    set -l chrome_dir "$dir/chrome"
+
+    if not test -d "$chrome_dir"
+        mkdir -p "$chrome_dir"
     end
 
-    ln -sf $CACHY_BROWSER_CSS "$dir/chrome"
+    ln -sf "$cachy_browser_css_file" "$chrome_dir/userChrome.css"
 end
