@@ -5,7 +5,7 @@ import { Gtk, Widget } from "astal/gtk4";
 import options from "../../options";
 import Pango from "gi://Pango";
 import { createIcon } from "../../libs/icons";
-import { IconWithLabelFallback } from "../composables/IconWithLabelFallback";
+import { IconWithLabelFallback } from "../composables/iconWithLabelFallback";
 
 const apps = new Apps.Apps();
 

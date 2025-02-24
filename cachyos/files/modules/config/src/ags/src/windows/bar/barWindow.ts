@@ -1,17 +1,17 @@
-import HyprlandWorkspaces from "./composables/HyprlandWorkspaces";
-import Indicators from "./composables/Indicators";
-import HyprlandTaskbar from "./composables/HyprlandTaskbar";
-import SystemTray from "./composables/SystemTray";
-import Datetime from "./composables/Time";
-import NotificationsIndicator from "./composables/NotificationsIndicator";
-import AppLauncher from "./composables/AppLauncher";
-import Power from "./composables/Power";
-import Battery from "./composables/Battery";
-import Ram from "./composables/Ram";
-import Cpu from "./composables/Cpu";
+import HyprlandWorkspaces from "./composables/workspacesBox";
+import Indicators from "./composables/indicators/indicatorsButton";
+import HyprlandTaskbar from "./composables/taskbar/taskbarBox";
+import SystemTray from "./composables/tray/trayBox";
+import Datetime from "./composables/timeLabel";
+import NotificationsIndicator from "./composables/notificationsButton";
+import AppLauncher from "./composables/appLauncherButton";
+import Power from "./composables/powerButton";
+import Battery from "./composables/batteryBox";
+import Ram from "./composables/ramButton";
+import Cpu from "./composables/cpuButton";
 import { Astal, type Gdk, Gtk, Widget } from "astal/gtk4";
 import options from "../../options";
-import ControlCenter from "./composables/ControlCenter";
+import ControlCenter from "./composables/controlCenterButton";
 
 export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
    return Widget.Window({

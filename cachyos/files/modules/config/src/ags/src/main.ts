@@ -1,12 +1,12 @@
 import { App, type Astal, Gdk } from "astal/gtk4";
-import Bar from "./widgets/Bar";
+import Bar from "./windows/bar/barWindow";
 import { getCss } from "./utils/style";
-import AppLauncher from "./widgets/AppLauncher";
-import NotificationsOverview from "./widgets/NotificationsOverview";
-import NotificationsPopup from "./widgets/NotificationsPopup";
-import PowerMenu from "./widgets/PowerMenu";
+import AppLauncher from "./windows/appLauncher/appLauncherWindow";
+import NotificationsOverview from "./windows/notificationsOverview/notificationsOverviewWindow";
+import NotificationsPopup from "./windows/notificationsPopup/notificationsPopupWindow";
+import PowerMenu from "./windows/powerMenu/powerMenuWindow";
 import options from "./options";
-import ControlCenter from "./widgets/ControlCenter";
+import ControlCenter from "./windows/controlCenter/controlCenterWindow";
 
 App.start({
    css: getCss(),
@@ -21,41 +21,41 @@ App.start({
          return;
       }
 
-      const monitorManager = gdkDisplay.get_monitors();
+      const monitors = gdkDisplay.get_monitors();
 
-      let bar: Astal.Window | null = null;
-      let notificationsOverview: Astal.Window | null = null;
-      let notificationsPopup: Astal.Window | null = null;
-      let appLauncher: Astal.Window | null = null;
-      let powerMenu: Astal.Window | null = null;
+      let barWindow: Astal.Window | null = null;
+      let notificationsOverviewWindow: Astal.Window | null = null;
+      let notificationsPopupWindow: Astal.Window | null = null;
+      let appLauncherWindow: Astal.Window | null = null;
+      let powerMenuWindow: Astal.Window | null = null;
       let controlCenterWindow: Astal.Window | null = null;
 
       const onMonitorsChanged = (): void => {
-         if (bar !== null) {
-            bar.destroy();
-            bar = null;
+         if (barWindow !== null) {
+            barWindow.destroy();
+            barWindow = null;
          }
 
          // no need to call destroy cause
          // of remove window method call
-         if (notificationsOverview !== null) {
-            App.remove_window(notificationsOverview);
-            notificationsOverview = null;
+         if (notificationsOverviewWindow !== null) {
+            App.remove_window(notificationsOverviewWindow);
+            notificationsOverviewWindow = null;
          }
 
-         if (notificationsPopup !== null) {
-            App.remove_window(notificationsPopup);
-            notificationsPopup = null;
+         if (notificationsPopupWindow !== null) {
+            App.remove_window(notificationsPopupWindow);
+            notificationsPopupWindow = null;
          }
 
-         if (appLauncher !== null) {
-            App.remove_window(appLauncher);
-            appLauncher = null;
+         if (appLauncherWindow !== null) {
+            App.remove_window(appLauncherWindow);
+            appLauncherWindow = null;
          }
 
-         if (powerMenu !== null) {
-            App.remove_window(powerMenu);
-            powerMenu = null;
+         if (powerMenuWindow !== null) {
+            App.remove_window(powerMenuWindow);
+            powerMenuWindow = null;
          }
 
          if (controlCenterWindow !== null) {
@@ -63,24 +63,24 @@ App.start({
             controlCenterWindow = null;
          }
 
-         const numOfMonitors = monitorManager.get_n_items();
+         const monitorsCount = monitors.get_n_items();
 
-         for (let i = 0; i < numOfMonitors; i++) {
-            const monitor = monitorManager.get_item(i);
+         for (let i = 0; i < monitorsCount; i++) {
+            const monitor = monitors.get_item(i);
             if (monitor === null) continue;
             if (!(monitor instanceof Gdk.Monitor)) continue;
 
-            bar = Bar(monitor);
-            notificationsOverview = NotificationsOverview(monitor);
-            notificationsPopup = NotificationsPopup(monitor);
-            appLauncher = AppLauncher(monitor);
-            powerMenu = PowerMenu(monitor);
+            barWindow = Bar(monitor);
+            notificationsOverviewWindow = NotificationsOverview(monitor);
+            notificationsPopupWindow = NotificationsPopup(monitor);
+            appLauncherWindow = AppLauncher(monitor);
+            powerMenuWindow = PowerMenu(monitor);
             controlCenterWindow = ControlCenter(monitor);
 
-            App.add_window(notificationsOverview);
-            App.add_window(notificationsPopup);
-            App.add_window(appLauncher);
-            App.add_window(powerMenu);
+            App.add_window(notificationsOverviewWindow);
+            App.add_window(notificationsPopupWindow);
+            App.add_window(appLauncherWindow);
+            App.add_window(powerMenuWindow);
             App.add_window(controlCenterWindow);
          }
       };
@@ -89,7 +89,7 @@ App.start({
 
       // no need to cleanup cause listening for application
       // to quit destroys wipes everything either way
-      monitorManager.connect("items-changed", () => {
+      monitors.connect("items-changed", () => {
          onMonitorsChanged();
       });
    },

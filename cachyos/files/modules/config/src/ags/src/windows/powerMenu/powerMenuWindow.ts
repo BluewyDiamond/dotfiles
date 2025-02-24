@@ -1,9 +1,9 @@
 import { type Astal, type Gdk, type Gtk, Widget } from "astal/gtk4";
-import { IconWithLabelFallback } from "../composables/IconWithLabelFallback";
+import { IconWithLabelFallback } from "../composables/iconWithLabelFallback";
 import icons from "../../libs/icons";
 import Variable from "astal/variable";
 import { type AstalIO, execAsync, interval, timeout } from "astal";
-import PopupWindow, { Position } from "../composables/PopupWindow";
+import PopupWindow, { Position } from "../composables/popupWindow";
 import options from "../../options";
 
 function PowerButton(widget: Gtk.Widget, onThree: () => void): Gtk.Button {

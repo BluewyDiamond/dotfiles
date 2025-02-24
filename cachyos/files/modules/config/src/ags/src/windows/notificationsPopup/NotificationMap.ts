@@ -2,7 +2,7 @@ import { timeout, Variable } from "astal";
 import type { Subscribable } from "astal/binding";
 import type { Gtk } from "astal/gtk4";
 import Notifd from "gi://AstalNotifd";
-import Notification from "../composables/Notification";
+import Notification from "../composables/notificationBox";
 import options from "../../options";
 import Hookable from "../../libs/services/Hookable";
 

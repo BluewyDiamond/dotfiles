@@ -1,6 +1,6 @@
 import { App, type Gtk, hook, Widget } from "astal/gtk4";
 import Notifd from "gi://AstalNotifd";
-import { IconWithLabelFallback } from "../../composables/IconWithLabelFallback";
+import { IconWithLabelFallback } from "../../composables/iconWithLabelFallback";
 import icons from "../../../libs/icons";
 
 const notifd = Notifd.get_default();

@@ -1,6 +1,6 @@
 import { bind, interval, Variable } from "astal";
 import { type Gtk, Widget } from "astal/gtk4";
-import { IconWithLabelFallback } from "../../composables/IconWithLabelFallback";
+import { IconWithLabelFallback } from "../../composables/iconWithLabelFallback";
 import icons from "../../../libs/icons";
 import GTop from "gi://GTop";
 

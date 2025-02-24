@@ -1,5 +1,5 @@
 import { App, type Gtk, Widget } from "astal/gtk4";
-import { IconWithLabelFallback } from "../../composables/IconWithLabelFallback";
+import { IconWithLabelFallback } from "../../composables/iconWithLabelFallback";
 import { GLib } from "astal";
 import { createIcon } from "../../../libs/icons";
 import options from "../../../options";

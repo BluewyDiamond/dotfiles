@@ -2,7 +2,7 @@ import { Gtk, Widget } from "astal/gtk4";
 import Notifd from "gi://AstalNotifd";
 import { GLib } from "astal";
 import icons, { createIcon } from "../../libs/icons";
-import { IconWithLabelFallback } from "./IconWithLabelFallback";
+import { IconWithLabelFallback } from "./iconWithLabelFallback";
 import Pango from "gi://Pango?version=1.0";
 import options from "../../options";
 import { findIcon } from "../../utils/image";

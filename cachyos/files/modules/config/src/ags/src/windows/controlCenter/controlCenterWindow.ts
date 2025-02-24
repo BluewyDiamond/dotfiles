@@ -1,5 +1,5 @@
 import { type Astal, type Gdk, type Gtk, Widget } from "astal/gtk4";
-import PopupWindow, { Position } from "../composables/PopupWindow";
+import PopupWindow, { Position } from "../composables/popupWindow";
 import options from "../../options";
 import { paginateBoxes } from "../../utils/widget";
 

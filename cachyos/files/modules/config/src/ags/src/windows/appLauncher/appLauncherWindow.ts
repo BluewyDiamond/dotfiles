@@ -1,9 +1,9 @@
 import { execAsync } from "astal";
 import { App, Astal, Gdk, type Gtk, Widget } from "astal/gtk4";
 import AppMap from "./AppMap";
-import PopupWindow, { Position } from "../composables/PopupWindow";
+import PopupWindow, { Position } from "../composables/popupWindow";
 import options from "../../options";
-import { IconWithLabelFallback } from "../composables/IconWithLabelFallback";
+import { IconWithLabelFallback } from "../composables/iconWithLabelFallback";
 import icons from "../../libs/icons";
 
 function hide(): void {
