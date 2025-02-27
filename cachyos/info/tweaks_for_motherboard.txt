@@ -1,0 +1,16 @@
+bios {
+   ram_expo = expo_tweaked
+   memory_context_restore = enabled
+   power_down = enabled
+
+   pbo_limits = disabled // as in don't draw extra power
+   curve_optimizer = -30
+   cpu_platform_temperature_limit = 85
+
+   cpu_core_voltage = 1.0v // can be found as "soc"
+
+   smart_resizable_bar = on
+   csm = disabled
+   secure_boot = disabled
+   fan_profiles = custom
+}

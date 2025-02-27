@@ -1,0 +1,10 @@
+rx_5700xt {
+   fan_profile = {
+      35 = 0,
+      40 = 0.13, // minimum required to spin the fans
+      55 = 0.13,
+      80 = 1
+   }
+
+   power_draw = allow_max
+}
