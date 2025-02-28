@@ -1,7 +1,9 @@
 rx_5700xt {
+   fan_tracking_temperature = junction
+
    fan_profile = {
-      35 = 0,
-      38 = 0.13, // minimum required to spin the fans
+      42 = 0,
+      43 = 0.13, // minimum required to spin the fans
       48 = 0.13,
       55 = 0.25,
       70 = 0.5,
