@@ -1,10 +1,15 @@
 rx_5700xt {
    fan_profile = {
       35 = 0,
-      40 = 0.13, // minimum required to spin the fans
-      55 = 0.13,
+      38 = 0.13, // minimum required to spin the fans
+      48 = 0.13,
+      55 = 0.25,
+      70 = 0.5,
       80 = 1
    }
 
+   spin_down_delay = 3000ms
+   speed_change_threshold = 3celcius
    power_draw = allow_max
+   performance_profile = 3d_fullscreen
 }
