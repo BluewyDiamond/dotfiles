@@ -1,6 +1,0 @@
-{
-   "sudo": true,
-   "operation": "copy",
-   "on_conflict": "remove",
-   "target_dir": "/usr/share/kbd/keymaps"
-}

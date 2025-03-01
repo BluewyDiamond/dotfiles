@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xkbConfigRegistry SYSTEM "xkb.dtd">
+<xkbConfigRegistry version="1.1">
+  <layoutList>
+    <layout>
+      <configItem>
+        <name>colemak_dh_wide_custom_eu_ansi</name>
+        <shortDescription>en</shortDescription>
+        <description>English (Colemak-DH Wide EU ANSI)</description>
+        <languageList>
+          <iso639Id>eng</iso639Id>
+        </languageList>
+      </configItem>
+    </layout>
+    <layout>
+      <configItem>
+        <name>colemak_dh_wide_custom_eu_iso</name>
+        <shortDescription>en</shortDescription>
+        <description>English (Colemak-DH Wide EU ISO)</description>
+        <languageList>
+          <iso639Id>eng</iso639Id>
+        </languageList>
+      </configItem>
+    </layout>
+  </layoutList>
+</xkbConfigRegistry>

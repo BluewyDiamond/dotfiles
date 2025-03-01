@@ -27,10 +27,8 @@ xkb_symbols "colemak_dh_wide_custom_iso" {
     key <AE07> { [            6,  asciicircum,         hstroke,          Hstroke ] };
 };
 
-//
-
-default partial alphanumeric_keys modifier_keys 
-xkb_symbols "colemak_dh_wide_custom_ansi_eu"  {
+partial alphanumeric_keys modifier_keys
+xkb_symbols "colemak_dh_wide_custom_eu_ansi"  {
         include "eu(basic)"
         name[Group1] = "EurKEY (Colemak-DH, ANSI, Custom)";
 
@@ -83,8 +81,8 @@ xkb_symbols "colemak_dh_wide_custom_ansi_eu"  {
         key <BKSP> { [   Caps_Lock,     Caps_Lock,       Caps_Lock,        Caps_Lock ] };
 };
 
-partial alphanumeric_keys modifier_keys 
-xkb_symbols "colemak_dh_wide_custom_iso_eu"  {
+default partial alphanumeric_keys modifier_keys 
+xkb_symbols "colemak_dh_wide_custom_eu_iso"  {
         include "bluewy(colemak_dh_wide_custom_ansi_eu)"
         name[Group1] = "EurKEY (Colemak-DH, ISO, Custom)";
 

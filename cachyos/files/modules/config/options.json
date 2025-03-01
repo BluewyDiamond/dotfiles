@@ -1,5 +1,0 @@
-{
-   "operation": "link",
-   "on_conflict": "trash",
-   "target_dir": "$HOME/.config"
-}
