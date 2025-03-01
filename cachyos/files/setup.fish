@@ -75,7 +75,7 @@ function manage
         set -l -a wee $do_it mkdir -p (dirname $target)
     end
 
-    if test -e "$target"
+    if test -e "$target" -o -L "$target"
         message "WARNING: $target already exists, it will be trashed."
         set -l -a wee $do_it trash $target
         $wee

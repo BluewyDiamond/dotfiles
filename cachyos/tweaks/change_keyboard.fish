@@ -33,12 +33,12 @@ switch $choice
         localectl set-x11-keymap --no-convert bluewy colemak_dh_wide_custom_iso
         prompt "Done!"
     case 3
-        localectl set-keymap --no-convert colemak_dh_wide_custom_ansi_eu
-        localectl set-x11-keymap --no-convert bluewy colemak_dh_wide_custom_ansi_eu
+        localectl set-keymap --no-convert colemak_dh_wide_custom_eu_ansi
+        localectl set-x11-keymap --no-convert bluewy colemak_dh_wide_custom_eu_ansi
         prompt "Done!"
     case 4
-        localectl set-keymap --no-convert colemak_dh_wide_custom_iso_eu
-        localectl set-x11-keymap --no-convert bluewy colemak_dh_wide_custom_iso_eu
+        localectl set-keymap --no-convert colemak_dh_wide_custom_eu_iso
+        localectl set-x11-keymap --no-convert bluewy colemak_dh_wide_custom_eu_iso
         prompt "Done!"
     case '*'
         prompt "Invalid Input (Unchanged)"
