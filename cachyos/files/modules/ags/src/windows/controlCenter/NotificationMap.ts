@@ -8,13 +8,17 @@ import options from "../../options";
 
 const notifd = Notifd.get_default();
 
-interface Page {
-   box: Astal.Box;
-   notifications: Map<number, Gtk.Widget>;
-}
-
 export class NotificationPagesMap extends Hookable implements Subscribable {
-   private readonly pages: Map<number, Page> = new Map<number, Page>();
+   private readonly notificationsMap: Map<number, Gtk.Widget> = new Map<
+      number,
+      Gtk.Widget
+   >();
+
+   private readonly pagesMap: Map<number, Astal.Box> = new Map<
+      number,
+      Astal.Box
+   >();
+
    private readonly variable: Variable<Gtk.Widget[]> = Variable([]);
 
    constructor() {
@@ -30,91 +34,71 @@ export class NotificationPagesMap extends Hookable implements Subscribable {
       return this.variable.subscribe(callback);
    }
 
-   async clear(): Promise<void> {}
+   async clear(): Promise<void> {
+      this.notificationsMap.clear();
+      this.pagesMap.clear();
+      this.variable.set([]);
+   }
 
    private init(): void {
       notifd.notifications.forEach((notification) => {
-         this.set(notification.id, Notification({ notification }));
-         this.notify();
+         this.notificationsMap.set(
+            notification.id,
+            Notification({ notification })
+         );
       });
 
       this.hook(notifd, "notified", (_, id: number) => {
          const notification = notifd.get_notification(id);
-         this.set(id, Notification({ notification }));
+         this.notificationsMap.set(id, Notification({ notification }));
          this.notify();
       });
 
       this.hook(notifd, "resolved", (_, id: number) => {
-         this.delete(id);
+         this.notificationsMap.delete(id);
          this.notify();
       });
    }
 
    private notify(): void {
-      this.pages.forEach((page) => {
-         page.box.children = [];
-
-         Array.from(page.notifications.values())
-            .reverse()
-            .forEach((notificationWidget) => {
-               page.box.append(notificationWidget);
-            });
+      this.pagesMap.forEach((page) => {
+         page.children = [];
       });
 
-      const boxes: Gtk.Widget[] = Array.from(this.pages.values())
-         .reverse()
-         .map((page) => page.box);
+      let pageIndex = 0;
+      let currentPage = this.pagesMap.get(pageIndex);
 
-      this.variable.set(boxes);
-   }
-
-   private set(notificationId: number, widget: Gtk.Widget): void {
-      let foundedPage: null | Page = null;
-
-      for (const [_, page] of this.pages) {
+      for (const [_, notification] of Array.from(
+         this.notificationsMap.entries()
+      ).reverse()) {
          if (
-            page.notifications.size <
-            options.controlCenter.maxNotificationsPerPage
+            currentPage === undefined ||
+            currentPage.get_children().length >=
+               options.controlCenter.maxNotificationsPerPage
          ) {
-            foundedPage = page;
-            break;
+            pageIndex++;
+            currentPage = this.pagesMap.get(pageIndex);
+
+            if (currentPage === undefined) {
+               currentPage = Widget.Box({ vertical: true });
+               this.pagesMap.set(pageIndex, currentPage);
+            }
          }
+
+         currentPage.append(notification);
       }
 
-      if (foundedPage !== null) {
-         foundedPage.notifications.set(notificationId, widget);
-      } else {
-         const newPage = {
-            box: Widget.Box({
-               cssClasses: ["control-center-notifications-page"],
-               vertical: true,
-            }),
+      const requiredPages = Math.ceil(
+         this.notificationsMap.size /
+            options.controlCenter.maxNotificationsPerPage
+      );
 
-            notifications: new Map(),
-         };
-
-         newPage.notifications.set(notificationId, widget);
-         this.pages.set(this.pages.size + 1, newPage);
-      }
-   }
-
-   private delete(notificationId: number): void {
-      let foundedPage: null | [number, Page] = null;
-
-      for (const [id, page] of this.pages) {
-         if (page.notifications.has(notificationId)) {
-            foundedPage = [id, page];
-            break;
-         }
+      while (this.pagesMap.size > requiredPages) {
+         const lastPageIndex = this.pagesMap.size - 1;
+         this.pagesMap.delete(lastPageIndex);
       }
 
-      if (foundedPage === null) return;
-      foundedPage[1].notifications.delete(notificationId);
-
-      if (foundedPage[1].notifications.size !== 0) {
-         return;
-      }
-
-      this.pages.delete(foundedPage[0]);
+      const pages = Array.from(this.pagesMap.values());
+      this.variable.set(pages);
    }
 }

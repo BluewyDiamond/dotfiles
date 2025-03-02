@@ -116,62 +116,77 @@ function NotificationsBox3(): Gtk.Box {
                   notificationPagesMap.subscribe((list) => {
                      self.children = [];
 
-                     const idVariable = Variable(-1);
+                     for (let index = 0; index < list.length; index++) {
+                        self.append(
+                           Widget.Button({
+                              cssClasses: ["control-center-page-button"],
+                              child: Widget.Label({ label: `${index + 1}` }),
 
-                     const update = (): void => {
-                        const name = stack.get_visible_child_name();
-                        if (name === null) return;
-                        const id = parseInt(name);
-                        idVariable.set(id);
-                     };
-
-                     update();
-
-                     self.append(
-                        Widget.Button(
-                           {
                               onClicked: () => {
-                                 update();
-
-                                 if (idVariable.get() <= 0) {
-                                    return;
-                                 }
-
-                                 stack.set_visible_child_name(
-                                    (idVariable.get() - 1).toString()
-                                 );
+                                 stack.set_visible_child_name(`${index}`);
                               },
-                           },
-                           Widget.Label({ label: "<" })
-                        )
-                     );
+                           })
+                        );
+                     }
 
-                     self.append(
-                        Widget.Label({
-                           label: bind(idVariable).as(
-                              (value) => `1..${value + 1}..${list.length}`
-                           ),
-                        })
-                     );
-
-                     self.append(
-                        Widget.Button(
-                           {
-                              onClicked: () => {
-                                 update();
-
-                                 if (idVariable.get() >= list.length) {
-                                    return;
-                                 }
-
-                                 stack.set_visible_child_name(
-                                    (idVariable.get() + 1).toString()
-                                 );
-                              },
-                           },
-                           Widget.Label({ label: ">" })
-                        )
-                     );
+                     //self.children = [];
+                     //
+                     //const idVariable = Variable(-1);
+                     //
+                     //const update = (): void => {
+                     //   const name = stack.get_visible_child_name();
+                     //   if (name === null) return;
+                     //   const id = parseInt(name);
+                     //   idVariable.set(id);
+                     //};
+                     //
+                     //update();
+                     //
+                     //self.append(
+                     //   Widget.Button(
+                     //      {
+                     //         onClicked: () => {
+                     //            update();
+                     //
+                     //            if (idVariable.get() <= 0) {
+                     //               return;
+                     //            }
+                     //
+                     //            stack.set_visible_child_name(
+                     //               (idVariable.get() - 1).toString()
+                     //            );
+                     //         },
+                     //      },
+                     //      Widget.Label({ label: "<" })
+                     //   )
+                     //);
+                     //
+                     //self.append(
+                     //   Widget.Label({
+                     //      label: bind(idVariable).as(
+                     //         (value) => `1..${value + 1}..${list.length}`
+                     //      ),
+                     //   })
+                     //);
+                     //
+                     //self.append(
+                     //   Widget.Button(
+                     //      {
+                     //         onClicked: () => {
+                     //            update();
+                     //
+                     //            if (idVariable.get() >= list.length) {
+                     //               return;
+                     //            }
+                     //
+                     //            stack.set_visible_child_name(
+                     //               (idVariable.get() + 1).toString()
+                     //            );
+                     //         },
+                     //      },
+                     //      Widget.Label({ label: ">" })
+                     //   )
+                     //);
                   });
                },
             })
