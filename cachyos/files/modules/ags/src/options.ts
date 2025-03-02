@@ -43,6 +43,8 @@ export default {
          rows: 2,
          columns: 2,
       },
+
+      maxNotificationsPerPage: 3,
    },
 
    notification: {

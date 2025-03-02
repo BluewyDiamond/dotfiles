@@ -1,23 +1,21 @@
 .control-center-window {
    & .top-offset {
-      min-height: 100px;
    }
 
    & .right-offset {
-      min-width: 20px;
    }
 
    .main-box {
-      min-width: 100px;
-      min-height: 100px;
+      min-width: 500px;
+      min-height: 500px;
       padding: 50px;
       background: $color_surface;
    }
 }
 
 .control-center-actions-stack {
-  background: pink;
-  padding: 10px;
+   background: pink;
+   padding: 10px;
 }
 
 .control-center-first-half-button {
@@ -32,7 +30,7 @@
    background: $color_surface_container;
    border-radius: 4px;
    min-height: 40px;
-   min-width: 20px
+   min-width: 20px;
 }
 
 .control-center-page-button {
@@ -45,4 +43,15 @@
    &:last-child {
       margin-right: 0;
    }
+}
+
+.control-center-notifications-page { 
+   // background: pink;
+}
+
+.control-center-notifications-stack { 
+   min-width: 100px;
+   min-height: 100px;
+
+   background: pink;
 }

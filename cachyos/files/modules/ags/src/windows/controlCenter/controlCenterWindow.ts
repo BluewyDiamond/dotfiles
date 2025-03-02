@@ -2,6 +2,9 @@ import { type Astal, type Gdk, type Gtk, Widget } from "astal/gtk4";
 import PopupWindow, { Position } from "../composables/popupWindow";
 import options from "../../options";
 import { paginateBoxes } from "../../utils/widget";
+import { NotificationMap, NotificationPagesMap } from "./NotificationMap";
+import { bind, Variable } from "astal";
+import { Label } from "astal/gtk4/widget";
 
 function QuickSettingsBox(): Gtk.Box {
    const wifi = Widget.Box({
@@ -76,6 +79,107 @@ function QuickSettingsBox(): Gtk.Box {
    });
 }
 
+function NotificationsBox3(): Gtk.Box {
+   const notificationPagesMap = new NotificationPagesMap();
+
+   const stack = Widget.Stack({
+      cssClasses: ["control-center-notifications-stack"],
+   });
+
+   function onNotificationPagesChanged(list: Gtk.Widget[]): void {
+      list.forEach((item, index) => {
+         const x = stack.get_child_by_name(index.toString());
+
+         if (x !== null) {
+            stack.remove(x);
+         }
+
+         stack.add_named(item, index.toString());
+      });
+   }
+
+   onNotificationPagesChanged(notificationPagesMap.get());
+
+   notificationPagesMap.subscribe((list) => {
+      onNotificationPagesChanged(list);
+   });
+
+   return Widget.Box({
+      vertical: true,
+
+      setup: (self) => {
+         self.append(stack);
+
+         self.append(
+            Widget.Box({
+               setup: (self) => {
+                  notificationPagesMap.subscribe((list) => {
+                     self.children = [];
+
+                     const idVariable = Variable(-1);
+
+                     const update = (): void => {
+                        const name = stack.get_visible_child_name();
+                        if (name === null) return;
+                        const id = parseInt(name);
+                        idVariable.set(id);
+                     };
+
+                     update();
+
+                     self.append(
+                        Widget.Button(
+                           {
+                              onClicked: () => {
+                                 update();
+
+                                 if (idVariable.get() <= 0) {
+                                    return;
+                                 }
+
+                                 stack.set_visible_child_name(
+                                    (idVariable.get() - 1).toString()
+                                 );
+                              },
+                           },
+                           Widget.Label({ label: "<" })
+                        )
+                     );
+
+                     self.append(
+                        Widget.Label({
+                           label: bind(idVariable).as(
+                              (value) => `1..${value + 1}..${list.length}`
+                           ),
+                        })
+                     );
+
+                     self.append(
+                        Widget.Button(
+                           {
+                              onClicked: () => {
+                                 update();
+
+                                 if (idVariable.get() >= list.length) {
+                                    return;
+                                 }
+
+                                 stack.set_visible_child_name(
+                                    (idVariable.get() + 1).toString()
+                                 );
+                              },
+                           },
+                           Widget.Label({ label: ">" })
+                        )
+                     );
+                  });
+               },
+            })
+         );
+      },
+   });
+}
+
 export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
    return PopupWindow(
       {
@@ -89,7 +193,7 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
          cssClasses: ["main-box"],
          vertical: true,
 
-         children: [QuickSettingsBox()],
+         children: [QuickSettingsBox(), NotificationsBox3()],
       })
    );
 }
