@@ -2,7 +2,7 @@ import { Variable } from "astal";
 import type { Subscribable } from "astal/binding";
 import type { Gtk } from "astal/gtk4";
 import Notifd from "gi://AstalNotifd";
-import Notification from "../composables/notificationBox";
+import Notification from "../composables/notification";
 import Hookable from "../../libs/services/Hookable";
 import options from "../../options";
 
