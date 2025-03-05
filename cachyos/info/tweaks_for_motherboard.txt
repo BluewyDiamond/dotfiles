@@ -13,4 +13,5 @@ bios {
    csm = disabled
    secure_boot = disabled
    fan_profiles = custom
+   integrated_graphics = false
 }
