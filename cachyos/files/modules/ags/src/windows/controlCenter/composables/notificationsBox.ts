@@ -17,6 +17,8 @@ export function notificationsBox(): Astal.Box {
    const pagesVariable: Variable<Gtk.Widget[]> = Variable([]);
 
    const stack = Widget.Stack({
+      cssClasses: ["control-center-notifications-stack"],
+
       setup: (self) => {
          function onPagesVariableChanged(list: Gtk.Widget[]): void {
             list.forEach((item, index) => {
@@ -53,7 +55,11 @@ export function notificationsBox(): Astal.Box {
             currentPage = pagesMap.get(pageIndex);
 
             if (currentPage === undefined) {
-               currentPage = Widget.Box({ vertical: true });
+               currentPage = Widget.Box({
+                  cssClasses: ["control-center-notifications-page"],
+                  vertical: true,
+               });
+
                pagesMap.set(pageIndex, currentPage);
             }
          }

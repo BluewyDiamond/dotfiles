@@ -45,11 +45,21 @@
    }
 }
 
-.control-center-notifications-page { 
+.control-center-notifications-page {
    // background: pink;
+
+   & .notification {
+      margin-bottom: $space_medium;
+      background: $color_surface_container;
+      color: $color_on_surface;
+
+      &:last-child {
+         margin-bottom: 0;
+      }
+   }
 }
 
-.control-center-notifications-stack { 
+.control-center-notifications-stack {
    min-width: 100px;
    min-height: 100px;
 
