@@ -3,12 +3,12 @@ import type { Subscribable } from "astal/binding";
 import type { Gtk } from "astal/gtk4";
 import Notifd from "gi://AstalNotifd";
 import Notification from "../composables/notification";
-import Hookable from "../../libs/services/Hookable";
+import Trackable from "../../libs/services/Trackable";
 import options from "../../options";
 
 const notifd = Notifd.get_default();
 
-export class NotificationMap extends Hookable implements Subscribable {
+export class NotificationMap extends Trackable implements Subscribable {
    private readonly map: Map<number, Gtk.Widget> = new Map<
       number,
       Gtk.Widget

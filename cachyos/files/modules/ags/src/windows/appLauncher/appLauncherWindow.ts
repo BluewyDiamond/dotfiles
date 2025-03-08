@@ -1,6 +1,6 @@
 import { execAsync } from "astal";
 import { App, Astal, Gdk, type Gtk, Widget } from "astal/gtk4";
-import AppMap from "./AppMap";
+import AppMap from "./AppsEfficientRendering";
 import PopupWindow, { Position } from "../composables/popupWindow";
 import options from "../../options";
 import { IconWithLabelFallback } from "../composables/iconWithLabelFallback";

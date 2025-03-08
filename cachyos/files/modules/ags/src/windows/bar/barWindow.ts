@@ -5,7 +5,6 @@ import SystemTray from "./composables/tray/trayBox";
 import Datetime from "./composables/timeLabel";
 import NotificationsIndicator from "./composables/notificationsButton";
 import AppLauncher from "./composables/appLauncherButton";
-import Power from "./composables/powerButton";
 import Battery from "./composables/batteryBox";
 import Ram from "./composables/ramButton";
 import Cpu from "./composables/cpuButton";

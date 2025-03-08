@@ -1,8 +1,7 @@
-import Hookable from "../../../../libs/services/Hookable";
-import { Variable } from "astal";
-import type { Subscribable } from "astal/binding";
 import { type Gtk, hook, Widget } from "astal/gtk4";
 import Tray from "gi://AstalTray";
+import { EfficientRenderingMap } from "../../../../libs/efficientRendering";
+import Trackable from "../../../../libs/Trackable";
 
 const tray = Tray.get_default();
 
@@ -52,50 +51,50 @@ function TrayItemMenuButton(item: Tray.TrayItem): Gtk.MenuButton {
    );
 }
 
-export class TrayItemMap extends Hookable implements Subscribable {
-   private readonly map: Map<string, Gtk.Widget> = new Map<
-      string,
-      Gtk.Widget
-   >();
-
-   private readonly variable: Variable<Gtk.Widget[]> = new Variable<
-      Gtk.Widget[]
-   >([]);
+export class TrayItemsEfficientRendering extends EfficientRenderingMap<
+   string,
+   Gtk.Widget,
+   Gtk.Widget
+> {
+   private readonly trackable = new Trackable();
 
    constructor() {
       super();
+      this.init();
+   }
 
+   destroy(): void {
+      super.destroy();
+      this.trackable.destroy();
+   }
+
+   private init(): void {
       tray.get_items().forEach((item) => {
          this.map.set(item.get_item_id(), TrayItemMenuButton(item));
          this.notify();
       });
 
-      this.hook(tray, "item-added", (_, itemId: string) => {
-         const item = tray.get_item(itemId);
-         this.map.set(itemId, TrayItemMenuButton(item));
-         this.notify();
-      });
+      this.trackable.track([
+         tray.connect("item-added", (_, itemId: string) => {
+            const item = tray.get_item(itemId);
+            this.map.set(itemId, TrayItemMenuButton(item));
+            this.notify();
+         }),
 
-      this.hook(tray, "item-removed", (_, itemId: string) => {
-         this.map.delete(itemId);
-         this.notify();
-      });
+         tray,
+      ]);
+
+      this.trackable.track([
+         tray.connect("item-removed", (_, itemId: string) => {
+            this.map.delete(itemId);
+            this.notify();
+         }),
+
+         tray,
+      ]);
    }
 
-   get(): Gtk.Widget[] {
-      return this.variable.get();
-   }
-
-   subscribe(callback: (list: Gtk.Widget[]) => void): () => void {
-      return this.variable.subscribe(callback);
-   }
-
-   destroy(): void {
-      super.destroy();
-      this.variable.drop();
-   }
-
-   private notify(): void {
+   protected notify(): void {
       this.variable.set([...this.map.values()]);
    }
 }

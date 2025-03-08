@@ -2,7 +2,7 @@ import { Variable } from "astal";
 import { Widget, type Astal, type Gtk, hook } from "astal/gtk4";
 import Notifd from "gi://AstalNotifd";
 import Notification from "../../composables/notification";
-import Hookable from "../../../libs/services/Hookable";
+import Trackable from "../../../libs/services/Trackable";
 import options from "../../../options";
 
 const notifd = Notifd.get_default();
@@ -80,7 +80,7 @@ export function notificationsBox(): Astal.Box {
       pagesVariable.set(pages);
    };
 
-   const store = new Hookable();
+   const store = new Trackable();
 
    const init = (): void => {
       notifd.notifications.forEach((notification) => {

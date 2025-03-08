@@ -1,13 +1,14 @@
 import { Widget, Gtk } from "astal/gtk4";
-import { bind, type Subscribable } from "astal/binding";
+import { bind } from "astal/binding";
 import { Variable } from "astal";
 import PowerProfiles from "gi://AstalPowerProfiles";
 import icons, { Icon } from "../../../../libs/icons";
 import Wp from "gi://AstalWp";
 import { IconWithLabelFallback } from "../../../composables/iconWithLabelFallback";
-import Hookable from "../../../../libs/services/Hookable";
 import options from "../../../../options";
 import AstalPowerProfiles from "gi://AstalPowerProfiles?version=0.1";
+import Trackable from "../../../../libs/Trackable";
+import { EfficientRenderingMap } from "../../../../libs/efficientRendering";
 
 const powerProfiles =
    PowerProfiles.get_default() as AstalPowerProfiles.PowerProfiles | null;
@@ -25,13 +26,12 @@ enum Indicators {
    Speaker,
 }
 
-export class IndicatorMap extends Hookable implements Subscribable {
-   private readonly map: Map<Indicators, Gtk.Widget | null> = new Map<
-      Indicators,
-      Gtk.Widget | null
-   >();
-
-   private readonly var: Variable<Gtk.Widget[]> = Variable([]);
+export class IndicatorsEfficientRenderingMap extends EfficientRenderingMap<
+   Indicators,
+   Gtk.Widget | null,
+   Gtk.Widget
+> {
+   private readonly trackable = new Trackable();
 
    constructor() {
       super();
@@ -42,20 +42,12 @@ export class IndicatorMap extends Hookable implements Subscribable {
       this.setupSpeakerIndicator();
    }
 
-   get(): Gtk.Widget[] {
-      return this.var.get();
-   }
-
-   subscribe(callback: (list: Gtk.Widget[]) => void): () => void {
-      return this.var.subscribe(callback);
-   }
-
    destroy(): void {
       super.destroy();
-      this.var.drop();
+      this.trackable.destroy();
    }
 
-   private notify(): void {
+   protected notify(): void {
       const array = [];
 
       for (const widget of this.map.values()) {
@@ -66,7 +58,7 @@ export class IndicatorMap extends Hookable implements Subscribable {
          array.push(widget);
       }
 
-      this.var.set(array);
+      this.variable.set(array);
    }
 
    private setupPowerProfilesIndicator(): void {
@@ -111,8 +103,6 @@ export class IndicatorMap extends Hookable implements Subscribable {
 
             this.notify();
          } else {
-            console.error("Unrecognized powerprofile...");
-
             this.map.set(
                Indicators.PowerProfiles,
 
@@ -125,9 +115,13 @@ export class IndicatorMap extends Hookable implements Subscribable {
 
       onPowerProfileChanged();
 
-      this.hook(powerProfiles, "notify", () => {
-         onPowerProfileChanged();
-      });
+      this.trackable.track([
+         powerProfiles.connect("notify", () => {
+            onPowerProfileChanged();
+         }),
+
+         powerProfiles,
+      ]);
    }
 
    private setupMicrophoneRecordersIndicator(): void {
@@ -157,7 +151,7 @@ export class IndicatorMap extends Hookable implements Subscribable {
          return;
       }
 
-      this.derives.add(
+      this.trackable.track(
          Variable.derive(
             [bind(audio, "recorders"), bind(microphone, "volume")],
 
@@ -222,7 +216,7 @@ export class IndicatorMap extends Hookable implements Subscribable {
          return;
       }
 
-      this.derives.add(
+      this.trackable.track(
          Variable.derive([bind(speaker, "volume")], (volume) => {
             let icon: Icon | null = null;
 
@@ -259,7 +253,7 @@ export class IndicatorMap extends Hookable implements Subscribable {
          return;
       }
 
-      this.derives.add(
+      this.trackable.track(
          Variable.derive(
             [bind(video, "recorders")],
 

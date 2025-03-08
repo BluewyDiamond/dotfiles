@@ -24,7 +24,7 @@ App.start({
       const monitors = gdkDisplay.get_monitors();
 
       let barWindow: Astal.Window | null = null;
-      let notificationsOverviewWindow: Astal.Window | null = null;
+      //let notificationsOverviewWindow: Astal.Window | null = null;
       let notificationsPopupWindow: Astal.Window | null = null;
       let appLauncherWindow: Astal.Window | null = null;
       let powerMenuWindow: Astal.Window | null = null;
@@ -38,10 +38,10 @@ App.start({
 
          // no need to call destroy cause
          // of remove window method call
-         if (notificationsOverviewWindow !== null) {
-            App.remove_window(notificationsOverviewWindow);
-            notificationsOverviewWindow = null;
-         }
+         //if (notificationsOverviewWindow !== null) {
+         //   App.remove_window(notificationsOverviewWindow);
+         //   notificationsOverviewWindow = null;
+         //}
 
          if (notificationsPopupWindow !== null) {
             App.remove_window(notificationsPopupWindow);
@@ -71,13 +71,13 @@ App.start({
             if (!(monitor instanceof Gdk.Monitor)) continue;
 
             barWindow = Bar(monitor);
-            notificationsOverviewWindow = NotificationsOverview(monitor);
+            //notificationsOverviewWindow = NotificationsOverview(monitor);
             notificationsPopupWindow = NotificationsPopup(monitor);
             appLauncherWindow = AppLauncher(monitor);
             powerMenuWindow = PowerMenu(monitor);
             controlCenterWindow = ControlCenter(monitor);
 
-            App.add_window(notificationsOverviewWindow);
+            //App.add_window(notificationsOverviewWindow);
             App.add_window(notificationsPopupWindow);
             App.add_window(appLauncherWindow);
             App.add_window(powerMenuWindow);

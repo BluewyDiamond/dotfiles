@@ -1,11 +1,11 @@
 import { type Astal, type Gtk, Widget } from "astal/gtk4";
-import { ClientArray } from "./ClientArray";
+import { ClientsEfficientRenderingArray } from "./ClientsEfficientRenderingArray";
 
 export default function (): Astal.Box {
    // looks like the same widget can't be shared
    // in different boxes or other widgets
    // so each new instance needs their own instance of clientMap
-   const clientMap = new ClientArray();
+   const clientMap = new ClientsEfficientRenderingArray();
 
    return Widget.Box({
       cssClasses: ["bar-item-taskbar"],

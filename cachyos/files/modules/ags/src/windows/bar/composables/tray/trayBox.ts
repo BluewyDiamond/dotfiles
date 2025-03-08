@@ -1,10 +1,10 @@
 import { type Astal, type Gtk, Widget } from "astal/gtk4";
-import { TrayItemMap } from "./TrayItemMap";
+import { TrayItemsEfficientRendering } from "./TrayItemsEfficientRendering";
 
 // TODO: maybe fallback gicon?
 
 export default function (): Astal.Box {
-   const trayItemMap = new TrayItemMap();
+   const trayItemsEfficientRendering = new TrayItemsEfficientRendering();
 
    return Widget.Box({
       cssClasses: ["bar-item-tray"],
@@ -20,15 +20,15 @@ export default function (): Astal.Box {
             }
          };
 
-         onTrayItemsChanged(trayItemMap.get());
+         onTrayItemsChanged(trayItemsEfficientRendering.get());
 
-         trayItemMap.subscribe((list) => {
+         trayItemsEfficientRendering.subscribe((list) => {
             onTrayItemsChanged(list);
          });
       },
 
       onDestroy: () => {
-         trayItemMap.destroy();
+         trayItemsEfficientRendering.destroy();
       },
    });
 }

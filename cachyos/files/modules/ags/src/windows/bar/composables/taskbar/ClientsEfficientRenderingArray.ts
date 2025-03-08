@@ -1,10 +1,10 @@
 import { type Gtk, hook, Widget } from "astal/gtk4";
 import AstalHyprland from "gi://AstalHyprland";
 import type { Subscribable } from "astal/binding";
-import { Variable } from "astal";
 import { IconWithLabelFallback } from "../../../composables/iconWithLabelFallback";
 import icons, { createIcon } from "../../../../libs/icons";
-import Hookable from "../../../../libs/services/Hookable";
+import Trackable from "../../../../libs/Trackable";
+import { EfficientRenderingArray } from "../../../../libs/efficientRendering";
 
 const hyprland = AstalHyprland.get_default();
 
@@ -60,63 +60,28 @@ function ClientButton(client: AstalHyprland.Client): Gtk.Button {
    );
 }
 
-export class ClientArray extends Hookable implements Subscribable {
-   // have to sort, so using a map might not be optimal
-   private readonly array: Array<{ adress: string; widget: Gtk.Widget }> = [];
-   private readonly variable: Variable<Gtk.Widget[]> = Variable([]);
+export class ClientsEfficientRenderingArray
+   extends EfficientRenderingArray<string, Gtk.Widget, Gtk.Widget>
+   implements Subscribable
+{
+   private readonly trackable = new Trackable();
 
    constructor() {
       super();
-
-      hyprland.clients.forEach((client) => {
-         this.add(client);
-         this.notify();
-      });
-
-      this.hook(
-         hyprland,
-         "client-added",
-         (_, client: AstalHyprland.Client | null) => {
-            if (client === null) {
-               return;
-            }
-
-            this.add(client);
-            this.notify();
-         }
-      );
-
-      this.hook(hyprland, "client-removed", (_, address: string) => {
-         this.remove(address);
-         this.notify();
-      });
-
-      this.hook(hyprland, "client-moved", (_, client: AstalHyprland.Client) => {
-         this.move(client);
-         this.notify();
-      });
-   }
-
-   get(): Gtk.Widget[] {
-      return this.variable.get();
-   }
-
-   subscribe(callback: (list: Gtk.Widget[]) => void): () => void {
-      return this.variable.subscribe(callback);
+      this.init();
    }
 
    destroy(): void {
-      super.destroy();
-      this.variable.drop();
+      this.trackable.destroy();
    }
 
-   private notify(): void {
-      this.variable.set([...this.array.map((item) => item.widget)]);
+   protected notify(): void {
+      this.variable.set([...this.array.map((item) => item.value)]);
    }
 
    private add(client: AstalHyprland.Client): void {
       const index = this.array.findIndex((item) => {
-         const predicateClient = hyprland.get_client(item.adress);
+         const predicateClient = hyprland.get_client(item.key);
          if (predicateClient == null) return false;
          return client.workspace.id < predicateClient.workspace.id;
       });
@@ -124,17 +89,17 @@ export class ClientArray extends Hookable implements Subscribable {
       const widget = ClientButton(client);
 
       if (index === -1) {
-         this.array.push({ adress: client.address, widget });
+         this.array.push({ key: client.address, value: widget });
       } else {
          this.array.splice(index, 0, {
-            adress: client.address,
-            widget,
+            key: client.address,
+            value: widget,
          });
       }
    }
 
    private remove(address: string): void {
-      const index = this.array.findIndex((item) => item.adress === address);
+      const index = this.array.findIndex((item) => item.key === address);
 
       if (index === -1) {
          print("Client to be removed is not present in the array.");
@@ -146,5 +111,46 @@ export class ClientArray extends Hookable implements Subscribable {
    private move(client: AstalHyprland.Client): void {
       this.remove(client.address);
       this.add(client);
+   }
+
+   private init(): void {
+      hyprland.clients.forEach((client) => {
+         this.add(client);
+         this.notify();
+      });
+
+      this.trackable.track([
+         hyprland.connect(
+            "client-added",
+            (_, client: AstalHyprland.Client | null) => {
+               if (client === null) {
+                  return;
+               }
+
+               this.add(client);
+               this.notify();
+            }
+         ),
+
+         hyprland,
+      ]);
+
+      this.trackable.track([
+         hyprland.connect("client-removed", (_, address: string) => {
+            this.remove(address);
+            this.notify();
+         }),
+
+         hyprland,
+      ]);
+
+      this.trackable.track([
+         hyprland.connect("client-moved", (_, client: AstalHyprland.Client) => {
+            this.move(client);
+            this.notify();
+         }),
+
+         hyprland,
+      ]);
    }
 }

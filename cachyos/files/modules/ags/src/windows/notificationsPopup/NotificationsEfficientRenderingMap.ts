@@ -1,41 +1,32 @@
-import { timeout, Variable } from "astal";
+import { timeout } from "astal";
 import type { Subscribable } from "astal/binding";
 import type { Gtk } from "astal/gtk4";
 import Notifd from "gi://AstalNotifd";
 import Notification from "../composables/notification";
 import options from "../../options";
-import Hookable from "../../libs/services/Hookable";
+import { EfficientRenderingMap } from "../../libs/efficientRendering";
+import Trackable from "../../libs/Trackable";
 
 const notifd = Notifd.get_default();
 
-export class NotificationMap extends Hookable implements Subscribable {
-   private readonly map: Map<number, Gtk.Widget> = new Map<
-      number,
-      Gtk.Widget
-   >();
-
-   private readonly var: Variable<Gtk.Widget[]> = Variable([]);
+export class NotificationsEfficientRenderingMap
+   extends EfficientRenderingMap<number, Gtk.Widget, Gtk.Widget>
+   implements Subscribable
+{
+   private readonly trackable = new Trackable();
 
    constructor() {
       super();
       void this.init();
    }
 
-   get(): Gtk.Widget[] {
-      return this.var.get();
-   }
-
-   subscribe(callback: (list: Gtk.Widget[]) => void): () => void {
-      return this.var.subscribe(callback);
-   }
-
    destroy(): void {
       super.destroy();
-      this.var.drop();
+      this.trackable.destroy();
    }
 
-   private notify(): void {
-      this.var.set([...this.map.values()].reverse());
+   protected notify(): void {
+      this.variable.set([...this.map.values()].reverse());
    }
 
    private async init(): Promise<void> {
@@ -81,23 +72,31 @@ export class NotificationMap extends Hookable implements Subscribable {
          );
       }
 
-      this.hook(notifd, "notified", (_, id: number) => {
-         const notification = notifd.get_notification(
-            id
-         ) as Notifd.Notification | null;
+      this.trackable.track([
+         notifd.connect("notified", (_, id: number) => {
+            const notification = notifd.get_notification(
+               id
+            ) as Notifd.Notification | null;
 
-         if (notification === null) {
-            return;
-         }
+            if (notification === null) {
+               return;
+            }
 
-         capNotifications();
-         setNotification(notification);
-         this.notify();
-      });
+            capNotifications();
+            setNotification(notification);
+            this.notify();
+         }),
 
-      this.hook(notifd, "resolved", (_, id: number) => {
-         this.map.delete(id);
-         this.notify();
-      });
+         notifd,
+      ]);
+
+      this.trackable.track([
+         notifd.connect("resolved", (_, id: number) => {
+            this.map.delete(id);
+            this.notify();
+         }),
+
+         notifd,
+      ]);
    }
 }

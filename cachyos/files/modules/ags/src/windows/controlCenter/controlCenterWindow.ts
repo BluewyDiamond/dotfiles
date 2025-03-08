@@ -1,8 +1,8 @@
 import { type Astal, type Gdk, Widget } from "astal/gtk4";
 import PopupWindow, { Position } from "../composables/popupWindow";
 import options from "../../options";
-import { notificationsBox } from "./composables/notificationsBox";
 import { quickSettingsBox } from "./composables/quickSettingsBox";
+import notificationsBox from "./composables/notifications2/notificationsBox";
 
 export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
    return PopupWindow(

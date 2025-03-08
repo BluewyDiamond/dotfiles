@@ -1,8 +1,8 @@
 import { type Gtk, Widget } from "astal/gtk4";
-import { IndicatorMap } from "./IndicatorMap";
+import { IndicatorsEfficientRenderingMap } from "./IndicatorsEfficientRenderingMap";
 
 export default function (): Gtk.Button {
-   const indicatorsMap = new IndicatorMap();
+   const indicatorsMap = new IndicatorsEfficientRenderingMap();
 
    return Widget.Button({
       cssClasses: ["bar-item", "bar-item-indicators"],
