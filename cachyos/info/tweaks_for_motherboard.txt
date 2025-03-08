@@ -7,7 +7,7 @@ bios {
    curve_optimizer = -30
    cpu_platform_temperature_limit = 85
 
-   cpu_core_voltage = 1.0v // can be found as "soc"
+   cpu_core_voltage = 1.05v // can be found as "soc"
 
    smart_resizable_bar = on
    csm = disabled
