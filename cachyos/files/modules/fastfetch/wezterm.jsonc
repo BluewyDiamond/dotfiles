@@ -21,11 +21,6 @@
          "outputColor": "red",
       },
       {
-         "type": "title",
-         "key": "   PC       ",
-         "keyColor": "green",
-      },
-      {
          "type": "cpu",
          "key": "   CPU      ",
          "keyColor": "green",
@@ -61,6 +56,11 @@
          "type": "custom",
          "format": "────────────────────── Software ──────────────────────",
          "outputColor": "red",
+      },
+      {
+         "type": "title",
+         "key": "   HOSTNAME ",
+         "keyColor": "yellow",
       },
       {
          "type": "os",
