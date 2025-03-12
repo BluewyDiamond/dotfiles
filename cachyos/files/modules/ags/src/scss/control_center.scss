@@ -1,47 +1,65 @@
 .control-center-window {
    & .top-offset {
+      min-height: 12px;
    }
 
    & .right-offset {
+      min-width: 12px;
    }
 
    .main-box {
       min-width: 500px;
       min-height: 500px;
-      padding: 50px;
       background: $color_surface;
+      border: 4px solid $color_outline_variant;
    }
 }
 
-.control-center-actions-stack {
-   background: pink;
-   padding: 10px;
+.control-center-actions-quick-settings {
+   padding: $space_medium;
 }
 
-.control-center-first-half-button {
+.control-center-quick-settings-toggle-button {
    background: $color_surface_container;
    border-radius: 4px;
    min-height: 40px;
    min-width: 80px;
    margin-right: 4px;
+
+   > label {
+      color: $color_on_surface;
+   }
 }
 
-.control-center-second-half-button {
+.control-center-quick-settings-expand-button {
    background: $color_surface_container;
+   margin-right: $space_medium;
    border-radius: 4px;
    min-height: 40px;
    min-width: 20px;
+
+   > label {
+      color: $color_on_surface;
+   }
 }
 
-.control-center-page-button {
-   background: $color_on_surface;
+// .control-center-quick-settings-pages-buttons {
+// }
+
+.control-center-quick-settings-page-number-button {
+   background: $color_surface_container;
    border-radius: 4px;
-   min-width: 4px;
+   min-width: 20px;
    min-height: 4px;
+   margin-top: $space_medium;
    margin-right: 4px;
 
    &:last-child {
       margin-right: 0;
+   }
+
+   > label {
+      color: $color_on_surface;
    }
 }
 
@@ -72,7 +90,6 @@
    min-height: 500px;
    padding: $space_medium;
    background: $color_surface;
-   border: 4px solid $color_outline_variant;
 
    & > box {
       margin-bottom: $space_medium;

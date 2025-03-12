@@ -1,4 +1,4 @@
-import { type Astal, type Gdk, Widget } from "astal/gtk4";
+import { Astal, type Gdk, Widget } from "astal/gtk4";
 import PopupWindow, { Position } from "../composables/popupWindow";
 import options from "../../options";
 import { quickSettingsBox } from "./composables/quickSettingsBox";
@@ -10,6 +10,7 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
          gdkmonitor,
          name: options.controlCenter.name,
          cssClasses: ["control-center-window"],
+         exclusivity: Astal.Exclusivity.NORMAL,
          position: Position.TOP_RIGHT,
       },
 
