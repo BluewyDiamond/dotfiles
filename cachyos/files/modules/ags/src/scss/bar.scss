@@ -1,25 +1,4 @@
-.icon-with-label-fallback {
-   &.image {
-      -gtk-icon-size: 24px;
-   }
-
-   &.label {
-      min-width: 24px;
-      min-height: 24px;
-      line-height: 1;
-   }
-}
-
-.bar {
-   background: $color_surface;
-
-   & > .main-center-box {
-      padding: $space_medium;
-   }
-}
-
-.bar-item {
-   @include container_shape();
+@mixin bar_item {
    background: $color_surface_container;
    color: $color_on_surface;
    padding: $space_small;
@@ -33,7 +12,30 @@
    }
 }
 
+.icon-with-label-fallback {
+   &.image {
+      -gtk-icon-size: 24px;
+   }
+
+   &.label {
+      min-width: 24px;
+      min-height: 24px;
+      line-height: 1;
+      color: $color_on_surface;
+   }
+}
+
+.bar {
+   background: $color_surface;
+
+   & > .main-center-box {
+      padding: $space_medium;
+   }
+}
+
 .bar-item-app-launcher {
+   @include bar_item;
+   @include container_shape();
    margin-right: $space_medium;
 
    &:hover {
@@ -50,6 +52,8 @@
 }
 
 .bar-item-workspaces {
+   @include bar_item;
+   @include container_shape();
    margin-right: $space_medium;
 
    & > button {
@@ -94,6 +98,8 @@
 
 .bar-item-taskbar {
    & > button {
+      @include bar_item;
+      @include container_shape();
       margin-right: $space_medium;
 
       &:hover {
@@ -103,6 +109,8 @@
 }
 
 .bar-item-notifications {
+   @include bar_item;
+   @include container_shape();
    margin-right: $space_medium;
 
    &:hover {
@@ -111,11 +119,15 @@
 }
 
 .bar-item-time {
+   @include bar_item;
+   @include container_shape();
    margin-right: $space_medium;
 }
 
 .bar-item-tray {
    .tray-item {
+      @include bar_item;
+      @include container_shape();
       margin-left: $space_medium;
 
       &:hover {
@@ -155,6 +167,8 @@
 }
 
 .bar-item-ram {
+   @include bar_item;
+   @include container_shape();
    margin-left: $space_medium;
 
    & > .icon-with-label-fallback {
@@ -163,6 +177,8 @@
 }
 
 .bar-item-cpu {
+   @include bar_item;
+   @include container_shape();
    margin-left: $space_medium;
 
    & > .icon-with-label-fallback {
@@ -171,10 +187,14 @@
 }
 
 .bar-item-battery {
+   @include bar_item;
+   @include container_shape();
    margin-left: $space_medium;
 }
 
 .bar-item-indicators {
+   @include bar_item;
+   @include container_shape();
    margin-left: $space_medium;
 
    & > box {
@@ -189,6 +209,8 @@
 }
 
 .bar-item-power {
+   @include bar_item;
+   @include container_shape();
    margin-left: $space_medium;
 
    &:hover {
@@ -205,5 +227,7 @@
 }
 
 .bar-item-control-center {
+   @include bar_item;
+   @include container_shape();
    margin-left: $space_medium;
 }
