@@ -27,6 +27,7 @@
 
 .bar-window {
    & > .bar-center-box {
+      @include container_shape();
       margin-top: 12px;
       margin-right: 12px;
       margin-left: 12px;
