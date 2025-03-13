@@ -17,7 +17,7 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
       gdkmonitor,
       name: options.bar.name,
       namespace: options.bar.name,
-      cssClasses: ["bar"],
+      cssClasses: ["bar-window"],
       exclusivity: Astal.Exclusivity.EXCLUSIVE,
       visible: true,
 
@@ -27,7 +27,7 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
          Astal.WindowAnchor.RIGHT,
 
       child: Widget.CenterBox({
-         cssClasses: ["main-center-box"],
+         cssClasses: ["bar-center-box"],
 
          startWidget: Widget.Box({
             hexpand: true,
