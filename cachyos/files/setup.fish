@@ -1,12 +1,9 @@
 #!/usr/bin/env fish
 
-set SCRIPT_NAME (path basename (status filename))
+# global
+set script_name (path basename (status filename))
 
-if not which trash &>/dev/null
-    echo "ERROR: trash-cli is required."
-    exit 1
-end
-
+# utils
 function message
     set script_name (path basename (status filename))
 
@@ -25,6 +22,12 @@ function scan
     end
 
     echo $value
+end
+
+# main
+if not which trash &>/dev/null
+    message "ERROR: trash-cli is required."
+    exit 1
 end
 
 function manage

@@ -1,6 +1,12 @@
 {
+   "ignore": {
+      "std": ["linux-cachyos-nvidia", "linux-cachyos-nvidia-open"]
+   },
+
    "system": {
       "std": [
+         "linux-cachyos",
+
          "base",
          "base-devel",
          "linux-firmware",
@@ -23,9 +29,8 @@
       ]
    },
 
-   "neovim": {
-      "std": ["neovim", "stylua", "ripgrep", "fzf", "prettier", "eslint_d"],
-      "aur": ["fish-lsp-git"]
+   "system_extra": {
+      "std": ["paru", "pacman-contrib", "btrfs-assistant"]
    },
 
    "tty_session": {
@@ -81,7 +86,7 @@
    },
 
    "hyprland_widgets": {
-      "std": ["dart-sass", "fd", "bun", "gjs", "gtk4-layer-shell"],
+      "std": ["dart-sass", "fd", "bun-bin", "gjs", "gtk4-layer-shell"],
 
       "aur": [
          "libastal-io-git",
@@ -105,6 +110,7 @@
 
          "hyprlock",
          "hypridle",
+         "hyprpicker",
          "wayland-pipewire-idle-inhibit",
 
          "kwalletmanager",
@@ -124,25 +130,50 @@
          "pavucontrol",
          "gparted",
          "gnome-disk-utility",
+         "power-profiles-daemon",
 
          "cachy-browser",
-
-         "archlinux-xdg-menu",
-         "dolphin",
-         "ark",
+         "thunderbird",
 
          "vlc",
          "loupe",
          "evince",
+         "krita",
          "obs-studio",
 
          "mission-center",
-         "qpwgraph"
+         "qpwgraph",
+
+         "localsend"
       ]
    },
 
+   "production": {
+      "std": ["libreoffice-fresh", "hunspell-es_es", "kdenlive"]
+   },
+
+   "gaming": {
+      "std": [
+         "steam-native-runtime",
+         "heroic-games-launcher-bin",
+
+         "gamescope",
+         "protontricks",
+         "mangohud"
+      ]
+   },
+
+   "neovim": {
+      "std": ["neovim", "stylua", "ripgrep", "fzf", "prettier", "eslint_d"],
+      "aur": ["fish-lsp-git"]
+   },
+
+   "dolphin": {
+      "std": ["archlinux-xdg-menu", "dolphin", "ark"]
+   },
+
    "discord": {
-      "std": ["speech-dispatcher", "legcord"]
+      "std": ["speech-dispatcher", "legcord-bin"]
    },
 
    "amd_cpu": {
@@ -151,6 +182,10 @@
 
    "amd_gpu": {
       "std": ["lact"]
+   },
+
+   "laptop": {
+      "std": ["brightnessctl"]
    },
 
    "virtualization": {
