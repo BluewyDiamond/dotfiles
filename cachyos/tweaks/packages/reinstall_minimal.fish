@@ -29,7 +29,7 @@ set get_packages_to_remove (./lib/list_installed_packages_but_not_in_list.fish)
 message $get_packages_to_remove
 message "Remove the above? [y/N]"
 
-set choice scan N
+set choice (scan N)
 
 if not string match -q -i -- Y "$choice"
     exit 1
