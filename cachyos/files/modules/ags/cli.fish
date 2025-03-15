@@ -29,7 +29,7 @@ function build
     end
 
     mkdir -p $build_dir
-    bun build --target bun --external gi://\* --external system --external console --outdir=$build_dir -- $parent/src/main.ts
+    bun build --minify --target bun --external gi://\* --external system --external console --outdir=$build_dir -- $parent/src/main.ts
 end
 
 function types
