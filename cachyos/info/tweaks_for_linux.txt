@@ -1,9 +1,0 @@
-kernel {
-   parameters = ["quiet", "random.trust_cpu=on", "amdgpu.ppfeaturemask=0xffffffff"]
-}
-
-Other
-- Disable/Remove unnecessary startup services.
-
-Optional
-- Customize console colors.
