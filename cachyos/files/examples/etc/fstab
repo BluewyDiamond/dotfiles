@@ -12,5 +12,7 @@ UUID=ab06c198-6674-4f72-89ef-b1bec6ecb995 /srv           btrfs   subvol=/@srv,de
 UUID=ab06c198-6674-4f72-89ef-b1bec6ecb995 /var/cache     btrfs   subvol=/@cache,defaults,noatime,compress=zstd,commit=120 0 0
 UUID=ab06c198-6674-4f72-89ef-b1bec6ecb995 /var/tmp       btrfs   subvol=/@tmp,defaults,noatime,compress=zstd,commit=120 0 0
 UUID=ab06c198-6674-4f72-89ef-b1bec6ecb995 /var/log       btrfs   subvol=/@log,defaults,noatime,compress=zstd,commit=120 0 0
-UUID=e58f8698-dfc5-4118-9c18-3303110b0d3f /home          btrfs   defaults,noatime,compress=zstd,commit=120 0 0
+UUID=ab06c198-6674-4f72-89ef-b1bec6ecb995 /home          btrfs   subvol=/@home,defaults,noatime,compress=zstd,commit=120 0 0
 tmpfs                                     /tmp           tmpfs   defaults,noatime,mode=1777 0 0
+
+UUID=074b04c6-4d0d-4ef7-8ae5-ba7707b6d38f /mnt/hdd_1.0   btrfs   defaults,noatime,compress=zstd,commit=120 0 0
