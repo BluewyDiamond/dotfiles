@@ -1,57 +1,75 @@
-"1. Configure motherboard" {
-   motherboard {
-      ram_expo = expo_tweaked
-      memory_context_restore = enabled
-      power_down = enabled
+# System Configuration Guide
 
-      pbo_limits = disabled // as in don't draw extra power
-      curve_optimizer = -30
-      cpu_platform_temperature_limit = 85
+---
 
-      cpu_core_voltage = 1.075v // can be found as "soc"
+## 1. Configure Motherboard
 
-      smart_resizable_bar = on
-      csm = disabled
-      secure_boot = disabled
-      fan_profiles = custom
-      integrated_graphics = false
+### RAM Settings
+- **RAM EXPO**: `expo_tweaked`
+- **Memory Context Restore**: `enabled`
+- **Power Down**: `enabled`
 
-      tpm_2.0 = false
-   }
-}
+### CPU Settings
+- **PBO Limits**: `disabled` (to prevent extra power draw)
+- **Curve Optimizer**: `-30`
+- **CPU Platform Temperature Limit**: `85°C`
+- **CPU Core Voltage (SOC)**: `1.075v`
 
-"2. Setup dotfiles" {}
+### Boot Settings
+- **Smart Resizable BAR**: `on`
+- **CSM**: `disabled`
+- **Secure Boot**: `disabled`
 
-"3. Configure graphics card" {
-   gpu {
-      fan_tracking_temperature = junction
+### Other Settings
+- **Fan Profiles**: `custom`
+- **Integrated Graphics**: `disabled`
+- **TPM 2.0**: `disabled`
 
-      fan_profile = {
-         44 = 0,
-         45 = 0.13, // minimum required to spin the fans
-         49 = 0.13,
-         55 = 0.25,
-         70 = 0.5,
-         80 = 1
-      }
+---
 
-      spin_down_delay = 3000ms
-      speed_change_threshold = 3celcius
-      power_draw = allow_max
-      performance_profile = 3d_fullscreen
-   }
-}
+## 2. Setup Dotfiles
+- ...
 
-"4. Disable unwanted startup services"
+---
 
-"5. Setup optimizations" {
-   kernel {
-      parameters = ["quiet", "random.trust_cpu=on", "amdgpu.ppfeaturemask=0xffffffff", "vt_colors..."]
-   }
+## 3. Configure Graphics Card
 
-   initramfs = booster
-}
+### Fan Settings
+- **Fan Tracking Temperature**: `junction`
+- **Fan Profile**:
+  - `44°C`: `0%`
+  - `45°C`: `13%` (minimum required to spin fans)
+  - `49°C`: `13%`
+  - `55°C`: `25%`
+  - `70°C`: `50%`
+  - `80°C`: `100%`
+- **Spin Down Delay**: `3000ms`
+- **Speed Change Threshold**: `3°C`
 
-"6. Misc" {
-   comply_with_wireless_regulations
-}
+### Performance Settings
+- **Power Draw**: `allow_max`
+- **Performance Profile**: `3d_fullscreen`
+
+---
+
+## 4. Disable Unwanted Startup Services
+- ...
+
+---
+
+## 5. Setup Optimizations
+
+### Kernel Parameters
+Add the following parameters to your kernel configuration:
+- `quiet`
+- `random.trust_cpu=on`
+- `amdgpu.ppfeaturemask=0xffffffff`
+- `vt_colors...`
+
+### Initramfs
+- Use `booster` for initramfs.
+
+---
+
+## 6. Miscellaneous
+- Ensure compliance with wireless regulations.
