@@ -2,21 +2,17 @@ menuentry "CachyOS" {
     icon /EFI/refind/themes/rEFInd-minimal-gruvbox/icons_gruvbox/os_arch.png
     volume "system"
     loader @/boot/vmlinuz-linux-cachyos
-    initrd @/boot/initramfs-linux-cachyos.img
+    initrd @/boot/amd-ucode.img
+    initrd @/boot/booster-linux-cachyos.img
     options "rw quiet random.trust_cpu=on rootflags=subvol=/@ root=UUID=ab06c198-6674-4f72-89ef-b1bec6ecb995 amdgpu.ppfeaturemask=0xffffffff video=HDMI-A-2:1920x1080@240 vt.default_red=30,224,152,209,97,198,86,171,92,224,152,209,97,198,86,171 vt.default_grn=33,108,195,154,175,120,182,178,99,108,195,154,175,120,182,178 vt.default_blu=39,117,121,102,239,221,194,191,112,117,121,102,239,221,194,191"
 
+    submenuentry "CachyOS Initramfs" {
+        loader @/boot/vmlinuz-linux-cachyos
+        initrd @/boot/initramfs-linux-cachyos.img
+        options "rw quiet random.trust_cpu=on rootflags=subvol=/@ root=UUID=ab06c198-6674-4f72-89ef-b1bec6ecb995 amdgpu.ppfeaturemask=0xffffffff video=HDMI-A-2:1920x1080@240 vt.default_red=30,224,152,209,97,198,86,171,92,224,152,209,97,198,86,171 vt.default_grn=33,108,195,154,175,120,182,178,99,108,195,154,175,120,182,178 vt.default_blu=39,117,121,102,239,221,194,191,112,117,121,102,239,221,194,191"
+    }
 
-    submenuentry "Use fallback initramfs" {
+     submenuentry "CachyOs Initramfs Fallback" {
         initrd @/boot/initramfs-linux-cachyos-fallback.img
-    }
-
-    submenuentry "CachyOS LTS" {
-        loader @/boot/vmlinuz-linux-cachyos-lts
-        initrd @/boot/initramfs-linux-cachyos-lts.img
-        options "rw quiet random.trust_cpu=on rootflags=subvol=/@ root=UUID=ab06c198-6674-4f72-89ef-b1bec6ecb995 amdgpu.ppfeaturemask=0xffffffff"
-    }
-
-    submenuentry "CachyOS LTS fallback" {
-        initrd @/boot/initramfs-linux-cachyos-lts-fallback.img
     }
 }
