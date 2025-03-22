@@ -145,7 +145,9 @@
          "qpwgraph",
 
          "localsend"
-      ]
+      ],
+
+      "aur": ["obs-pipewire-audio-capture"]
    },
 
    "production": {
