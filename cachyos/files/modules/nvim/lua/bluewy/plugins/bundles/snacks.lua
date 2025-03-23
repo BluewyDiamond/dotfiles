@@ -6,7 +6,7 @@ return {
    ---@type snacks.Config
    opts = {
       bigfile = { enabled = true },
-      dashboard = { enabled = true },
+      dashboard = { enabled = false },
       indent = { enabled = true },
       input = { enabled = true },
       picker = { enabled = true },
@@ -19,6 +19,8 @@ return {
 
    config = function()
       local snacks = require("snacks")
+      snacks.setup({})
+      snacks.dashboard.setup()
 
       -- mappings
       --
