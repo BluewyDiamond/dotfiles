@@ -2,7 +2,9 @@ return {
    "stevearc/conform.nvim",
 
    config = function()
-      require("conform").setup({
+      local conform = require("conform")
+
+      conform.setup({
          formatters_by_ft = {
             -- common
             fish = { "fish_indent" },
@@ -28,5 +30,11 @@ return {
             html = { "prettier" },
          },
       })
+
+      -- mappings
+      --
+      vim.keymap.set("n", "<leader>fm", function()
+         conform.format({})
+      end, { desc = "format code" })
    end,
 }
