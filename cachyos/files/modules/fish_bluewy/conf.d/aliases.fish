@@ -1,32 +1,47 @@
 abbr dotfiles "cd $HOME/git/private/dotfiles"
-abbr plan "cd $HOME/git/local/plans"
 
 abbr snv "EDITOR=nvim sudoedit"
 
 abbr nv nvim
 abbr lg lazygit
 
-abbr c clear
-abbr e exit
-
 # might be useful
 alias fixpacman="sudo rm /var/lib/pacman/db.lck"
-alias cleanup='sudo pacman -Rns (pacman -Qtdq)'
+
+function cleanup
+    set -l packages (pacman -Qtdq)
+
+    if test $status -eq 1
+        return 1
+    end
+
+    sudo pacman -Rns $packages
+end
 
 # List all files and directories including hidden files.
-alias la="eza -la --color=always --icons"
+function la
+    eza -la --color=always --icons $argv
+end
 
 # List only hidden files.
-alias lh "eza -ld .* --color=always --icons"
+function lh
+    eza -ld .* --color=always --icons $argv
+end
 
-# List only non hidden files.
-alias ls "eza -l --color=always --icons"
+# List only non-hidden files.
+function ls
+    eza -l --color=always --icons $argv
+end
 
-# List in tree view non hidden files and directories.
-alias lt "eza -T --color=always --icons"
+# List in tree view non-hidden files and directories.
+function lt
+    eza -T --color=always --icons $argv
+end
 
 # List in tree view all files and directories including hidden files.
-alias lta "eza -aT --color=always --icons"
+function lta
+    eza -aT --color=always --icons $argv
+end
 
 function clear
     switch $TERM

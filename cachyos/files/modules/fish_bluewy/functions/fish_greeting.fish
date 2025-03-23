@@ -1,8 +1,4 @@
 function fish_greeting
-    # Fix the initial to end of the Hyprland popup animation
-    # which might affect how text is rendered.
-    sleep 0.1
-
     switch $TERM
         case xterm-256color
             prompt_to_bottom_line
