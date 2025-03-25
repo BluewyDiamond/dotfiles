@@ -1,7 +1,7 @@
 #!/usr/bin/env fish
 
-set config_dir (dirname (status filename))/./
-set config_path "$config_dir/packages.json"
+set current_dir (dirname (realpath (status --current-filename)))
+set config_path "$current_dir/lib/packages.json"
 set script_name (basename (status filename))
 
 function print
@@ -15,83 +15,33 @@ end
 function scan
     read -P (set_color magenta)"INPUT => "(set_color yellow) value
 
-    if test -z $value
+    if test -z "$value"
         scan $argv[1]
     end
 
     echo $value
 end
 
-function main
-    prerequisites
-    sudo pacman -S --needed jq
-    set top_level_keys (jq -r 'keys | .[]' $config_path)
-    print "Select configurations to install [1 2 3 ...]"
-
-    for i in (seq (count $top_level_keys))
-        echo "$i. $top_level_keys[$i]"
-    end
-
-    set config_choices (scan)
-
-    set chosen_configs (for choice in (string split " " $config_choices)
-        if test $choice -ge 1 -a $choice -le (count $top_level_keys)
-            echo $top_level_keys[$choice]
-        else
-            print "choice $choice is out of range, ignoring..."
-        end
-    end)
-
-    for config in $chosen_configs
-        set common_standard_repository $common_standard_repository (string split " " (print_chosen_repository_from_json_file $config std))
-        set common_arch_user_repository $common_arch_user_repository (string split " " (print_chosen_repository_from_json_file $config aur))
-    end
-
-    sudo pacman -Syy
-    sudo pacman -S --needed $common_standard_repository
-    sudo pacman -S --needed paru
-    paru -S --aur --needed $common_arch_user_repository
-end
-
-function prerequisites
-    if not which pacman >/dev/null
-        print "pacman package manager not found, exiting..."
-        exit 1
-    end
-
-    if not which paru >/dev/null
-        print "paru not found, exiting..."
-        exit 1
-    end
-
-    if not test -e $config_path
-        print "config file not found, exiting..."
-        return 1
-    end
-end
-
 function print_chosen_repository_from_json_file
+    set top_level_key $argv[1]
     set repository $argv[2]
-    set config $argv[1]
 
     if test -z (string trim $repository)
         print "string is empty or contains only spaces"
-        set function_name (status current-command)
-        print "@$function_name"
         return 1
     end
 
-    set raw (jq -r ".\"$config\" | .. | .$repository? | select(. != null) | join(\" \")" $config_path)
+    set packages (jq -r ".\"$top_level_key\".\"$repository\"? | select(. != null) | join(\" \")" $config_path)
 
-    if test -z (string trim "$raw")
+    if test -z (string trim "$packages")
         return 1
     end
 
-    echo $raw
+    echo $packages
 end
 
 # This section is for utils stuff.
-
+#
 function print_horizontal_line
     set width (tput cols)
 
@@ -102,5 +52,57 @@ function print_horizontal_line
     echo ""
 end
 
-# --------------------
-main $argv
+# main
+#
+if not which pacman 2&>/dev/null
+    print "pacman not found, exiting..."
+    exit 1
+end
+
+if not which paru 2&>/dev/null
+    print "paru not found... Attempting to obtain it through pacman."
+    sudo pacman -S --needed paru; or exit 1
+end
+
+if not test -e $config_path
+    print "config file not found, exiting..."
+    exit 1
+end
+
+if not which jq 2&>/dev/null
+    print "jq not found... Attempting to obtain it through pacman."
+    sudo pacman -S --needed jq; or exit 1
+end
+
+set top_level_keys (jq -r 'keys | .[]' $config_path)
+set top_level_keys_count (count $top_level_keys)
+print "Select configurations to install [1 2 3 ...]"
+
+for index in (seq $top_level_keys_count)
+    print "$index. $top_level_keys[$index]"
+end
+
+set choices (scan)
+
+for choice in (string split " " $choices)
+    if not string match -qr '^[0-9]+$' -- "$choice"
+        continue
+    end
+
+    if test "$choice" -le 0 -o "$choice" -gt $top_level_keys_count
+        continue
+    end
+
+    set -a curated_configs $top_level_keys[$choice]
+end
+
+for curated_config in $curated_configs
+    set -a common_standard_repository (string split " " (print_chosen_repository_from_json_file $curated_config std))
+    set -a common_arch_user_repository (string split " " (print_chosen_repository_from_json_file $curated_config aur))
+end
+
+echo $common_standard_repository
+
+#sudo pacman -Syy
+#sudo pacman -S --needed $common_standard_repository
+#paru -S --aur --needed $common_arch_user_repository
