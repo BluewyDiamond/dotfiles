@@ -103,6 +103,6 @@ end
 
 echo $common_standard_repository
 
-#sudo pacman -Syy
-#sudo pacman -S --needed $common_standard_repository
-#paru -S --aur --needed $common_arch_user_repository
+sudo pacman -Syy
+sudo pacman -S --needed $common_standard_repository
+paru -S --aur --needed $common_arch_user_repository
