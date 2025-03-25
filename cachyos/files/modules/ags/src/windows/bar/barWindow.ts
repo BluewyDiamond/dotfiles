@@ -1,16 +1,16 @@
-import HyprlandWorkspaces from "./composables/workspacesBox";
-import Indicators from "./composables/indicators/indicatorsButton";
-import HyprlandTaskbar from "./composables/taskbar/taskbarBox";
-import SystemTray from "./composables/tray/trayBox";
-import Datetime from "./composables/timeLabel";
-import NotificationsIndicator from "./composables/notificationsButton";
-import AppLauncher from "./composables/appLauncherButton";
-import Battery from "./composables/batteryBox";
-import Ram from "./composables/ramButton";
-import Cpu from "./composables/cpuButton";
+import workspacesBox from "./composables/workspacesBox";
+import indicatorsButton from "./composables/indicators/indicatorsButton";
+import taskbarBox from "./composables/taskbar/taskbarBox";
+import trayBox from "./composables/tray/trayBox";
+import timeLabel from "./composables/timeLabel";
+import notificationsButton from "./composables/notificationsButton";
+import appLauncherButton from "./composables/appLauncherButton";
+import batteryBox from "./composables/batteryBox";
+import ramButton from "./composables/ramButton";
+import cpuButton from "./composables/cpuButton";
 import { Astal, type Gdk, Gtk, Widget } from "astal/gtk4";
 import options from "../../options";
-import ControlCenter from "./composables/controlCenterButton";
+import powerButton from "./composables/powerButton";
 
 export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
    return Widget.Window({
@@ -36,9 +36,9 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
             children: [
                Widget.Box({
                   children: [
-                     AppLauncher(),
-                     HyprlandWorkspaces(),
-                     HyprlandTaskbar(),
+                     appLauncherButton(),
+                     workspacesBox(),
+                     taskbarBox(),
                   ],
                }),
             ],
@@ -48,7 +48,7 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
             halign: Gtk.Align.CENTER,
 
             centerWidget: Widget.Box({
-               children: [NotificationsIndicator(), Datetime()],
+               children: [notificationsButton(), timeLabel()],
             }),
          }),
 
@@ -57,12 +57,12 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
             halign: Gtk.Align.END,
 
             children: [
-               SystemTray(),
-               Indicators(),
-               Ram(),
-               Cpu(),
-               Battery(),
-               ControlCenter(),
+               trayBox(),
+               indicatorsButton(),
+               ramButton(),
+               cpuButton(),
+               batteryBox(),
+               powerButton(),
             ],
          }),
       }),

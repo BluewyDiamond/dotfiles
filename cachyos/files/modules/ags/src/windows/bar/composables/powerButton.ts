@@ -6,7 +6,7 @@ import { onWindowVisible } from "../../../utils/widget";
 export default (): Gtk.Button =>
    Widget.Button(
       {
-         cssClasses: ["power"],
+         cssClasses: ["bar-item-power"],
 
          onClicked: () => {
             App.toggle_window("astal-power-menu");

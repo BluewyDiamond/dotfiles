@@ -1,13 +1,25 @@
-import { type Gtk, Widget } from "astal/gtk4";
+import { App, type Gtk, Widget } from "astal/gtk4";
 import { IndicatorsEfficientRenderingMap } from "./IndicatorsEfficientRenderingMap";
+import options from "../../../../options";
+import { onWindowVisible } from "../../../../utils/widget";
 
 export default function (): Gtk.Button {
    const indicatorsMap = new IndicatorsEfficientRenderingMap();
 
-   return Widget.Button({
-      cssClasses: ["bar-item", "bar-item-indicators"],
+   return Widget.Button(
+      {
+         cssClasses: ["bar-item", "bar-item-indicators"],
 
-      child: Widget.Box({
+         onClicked: () => {
+            App.toggle_window(options.controlCenter.name);
+         },
+
+         setup: (self) => {
+            onWindowVisible(options.controlCenter.name, self);
+         },
+      },
+
+      Widget.Box({
          setup: (self) => {
             const onIndicatorsChanged = (list: Gtk.Widget[]): void => {
                if (list.length > 0) {
@@ -29,6 +41,6 @@ export default function (): Gtk.Button {
          onDestroy: () => {
             indicatorsMap.destroy();
          },
-      }),
-   });
+      })
+   );
 }
