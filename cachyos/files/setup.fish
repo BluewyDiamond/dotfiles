@@ -61,21 +61,21 @@ function manage
     end
 
     message "TASK: $operation $source to $target, super is $super."
-
     set do_it (test "true" = $super; and echo sudo)
+    set target_dir (dirname $target)
 
-    if not test -d (dirname $target)
-        if test -e (dirname $target)
-            message "INFO: (dirname $target) is not a folder, it will be trashed and recreated."
-            set -l -a wee $do_it trash (dirname $target)
+    if not test -d $target_dir
+        if not test -e $target_dir
+            message "INFO: (dirname $target) does not exist, it will be created."
+            set -l -a wee $do_it mkdir -p (dirname $target)
             $wee
-            set -l -a lol $do_it mkdir -p (dirname $target)
-            $lol
         else
-            message "INFO: (dirname $target) doesn't exist, it will be created."
+            message "INFO: (dirname $target) is not a folder, it will be trashed and recreated."
+            set -l -a lol $do_it trash $target_dir
+            $lol
+            set -l -a wee $do_it mkdir -p (dirname $target)
+            $wee
         end
-    else
-        set -l -a wee $do_it mkdir -p (dirname $target)
     end
 
     if test -e "$target" -o -L "$target"
