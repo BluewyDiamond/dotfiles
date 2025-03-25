@@ -101,8 +101,6 @@ for curated_config in $curated_configs
     set -a common_arch_user_repository (string split " " (print_chosen_repository_from_json_file $curated_config aur))
 end
 
-echo $common_standard_repository
-
 sudo pacman -Syy
 sudo pacman -S --needed $common_standard_repository
 paru -S --aur --needed $common_arch_user_repository
