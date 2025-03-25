@@ -2,6 +2,7 @@ import { App, type Gtk, hook, Widget } from "astal/gtk4";
 import Notifd from "gi://AstalNotifd";
 import { IconWithLabelFallback } from "../../composables/iconWithLabelFallback";
 import icons from "../../../libs/icons";
+import options from "../../../options";
 
 const notifd = Notifd.get_default();
 
@@ -11,7 +12,7 @@ export default function (): Gtk.Button {
          cssClasses: ["bar-item", "bar-item-notifications"],
 
          onClicked: () => {
-            App.toggle_window("astal-notifications-overview");
+            App.toggle_window(options.controlCenter.name);
          },
 
          setup: (self) => {

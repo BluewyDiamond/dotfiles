@@ -1,6 +1,17 @@
 export default {
-   theme: {
+   general: {
       icons: "candy-icons",
+      monochrome: false,
+      rapidTimeout: 100,
+
+      sh: {
+         cmd: ["fish", "-c"],
+      },
+
+      filler: {
+         width: 4000,
+         height: 4000,
+      },
    },
 
    bar: {
@@ -12,13 +23,9 @@ export default {
 
       indicators: {
          powerprofiles: {
-            symbolic: true,
+            monochrome: true,
          },
       },
-   },
-
-   notificationsOverview: {
-      name: "astal_notifications_overview",
    },
 
    notificationsPopup: {
@@ -43,28 +50,5 @@ export default {
          rows: 2,
          columns: 2,
       },
-
-      maxNotificationsPerPage: 3,
-   },
-
-   notification: {
-      closeIcon: {
-         symbolic: true,
-      },
-
-      fallbackIcon: {
-         symbolic: true,
-      },
-   },
-
-   rapidTimeout: 100,
-
-   sh: {
-      cmd: ["fish", "-c"],
-   },
-
-   filler: {
-      width: 4000,
-      height: 4000,
    },
 };

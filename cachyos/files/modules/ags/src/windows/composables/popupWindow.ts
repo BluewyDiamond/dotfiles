@@ -102,7 +102,7 @@ export default function (
          },
 
          Filler({
-            widthRequest: options.filler.width,
+            widthRequest: options.general.filler.width,
             hexpand: true,
             vexpand: true,
             onClicked: curatedCallback,
@@ -131,7 +131,7 @@ export default function (
          ),
 
          Filler({
-            widthRequest: options.filler.width,
+            widthRequest: options.general.filler.width,
             hexpand: true,
             vexpand: true,
             onClicked: curatedCallback,
@@ -147,7 +147,7 @@ export default function (
          },
 
          Filler({
-            widthRequest: options.filler.width,
+            widthRequest: options.general.filler.width,
             hexpand: true,
             vexpand: true,
             onClicked: curatedCallback,
@@ -176,7 +176,7 @@ export default function (
          ),
 
          Filler({
-            widthRequest: options.filler.width,
+            widthRequest: options.general.filler.width,
             hexpand: true,
             vexpand: true,
             onClicked: curatedCallback,
@@ -192,7 +192,7 @@ export default function (
          },
 
          Filler({
-            widthRequest: options.filler.width,
+            widthRequest: options.general.filler.width,
             hexpand: true,
             vexpand: true,
             onClicked: curatedCallback,
@@ -216,7 +216,7 @@ export default function (
             Filler({
                hexpand: true,
                vexpand: true,
-               heightRequest: options.filler.height,
+               heightRequest: options.general.filler.height,
                onClicked: curatedCallback,
             })
          ),

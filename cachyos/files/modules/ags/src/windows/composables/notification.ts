@@ -54,10 +54,7 @@ export default function (props: NotificationProps): Gtk.Box {
                      cssClasses: ["app-icon"],
                      icon: createIcon(foundedIcon),
                      fallbackIcon: icons.fallback.notification,
-
-                     fallbackIconIsSymbolic:
-                        options.notification.fallbackIcon.symbolic,
-
+                     fallbackIconIsSymbolic: options.general.monochrome,
                      fallbackLabel: ">",
                   }),
                ];
@@ -94,7 +91,7 @@ export default function (props: NotificationProps): Gtk.Box {
 
                      IconWithLabelFallback({
                         icon: icons.ui.close,
-                        symbolic: options.notification.closeIcon.symbolic,
+                        symbolic: options.general.monochrome,
                      })
                   ),
                ];

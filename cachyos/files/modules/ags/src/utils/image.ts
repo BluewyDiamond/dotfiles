@@ -4,7 +4,7 @@ import options from "../options";
 
 const gtkIconTheme = new Gtk.IconTheme();
 // without it it does not find the icons
-gtkIconTheme.set_theme_name(options.theme.icons);
+gtkIconTheme.set_theme_name(options.general.icons);
 
 export function getIcon(icon: string): string {
    icon = icon.toLowerCase();

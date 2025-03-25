@@ -24,7 +24,7 @@ export class NotificationsEfficientRenderingMap extends EfficientRenderingMap<
          notifd.get_notification(key).dismiss();
 
          await new Promise((resolve) => {
-            setTimeout(resolve, options.rapidTimeout);
+            setTimeout(resolve, options.general.rapidTimeout);
          });
       }
    }

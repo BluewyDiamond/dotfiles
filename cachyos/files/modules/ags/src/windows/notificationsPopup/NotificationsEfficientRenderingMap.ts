@@ -68,7 +68,7 @@ export class NotificationsEfficientRenderingMap
          setNotification(notification);
 
          await new Promise((resolve) =>
-            setTimeout(resolve, options.rapidTimeout)
+            setTimeout(resolve, options.general.rapidTimeout)
          );
       }
 

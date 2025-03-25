@@ -2,7 +2,6 @@ import { App, type Astal, Gdk } from "astal/gtk4";
 import Bar from "./windows/bar/barWindow";
 import { getCss } from "./utils/style";
 import AppLauncher from "./windows/appLauncher/appLauncherWindow";
-import NotificationsOverview from "./windows/notificationsOverview/notificationsOverviewWindow";
 import NotificationsPopup from "./windows/notificationsPopup/notificationsPopupWindow";
 import PowerMenu from "./windows/powerMenu/powerMenuWindow";
 import options from "./options";
@@ -11,7 +10,7 @@ import ControlCenter from "./windows/controlCenter/controlCenterWindow";
 App.start({
    css: getCss(),
    instanceName: "main",
-   iconTheme: options.theme.icons,
+   iconTheme: options.general.icons,
 
    main() {
       const gdkDisplay = Gdk.Display.get_default();

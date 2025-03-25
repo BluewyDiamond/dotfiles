@@ -1,7 +1,7 @@
 import { exec, writeFile } from "astal";
 import options from "../options";
 
-const homeDir = exec([...options.sh.cmd, "echo $HOME"]);
+const homeDir = exec([...options.general.sh.cmd, "echo $HOME"]);
 const buildDir = `${homeDir}/.config/ags/build`;
 
 const variables = () => [

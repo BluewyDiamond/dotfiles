@@ -86,7 +86,7 @@ export class IndicatorsEfficientRenderingMap extends EfficientRenderingMap<
 
                IconWithLabelFallback({
                   icon: icons.powerprofile.powerSaver,
-                  symbolic: options.bar.indicators.powerprofiles.symbolic,
+                  symbolic: options.bar.indicators.powerprofiles.monochrome,
                })
             );
 
@@ -97,7 +97,7 @@ export class IndicatorsEfficientRenderingMap extends EfficientRenderingMap<
 
                IconWithLabelFallback({
                   icon: icons.powerprofile.performance,
-                  symbolic: options.bar.indicators.powerprofiles.symbolic,
+                  symbolic: options.bar.indicators.powerprofiles.monochrome,
                })
             );
 
