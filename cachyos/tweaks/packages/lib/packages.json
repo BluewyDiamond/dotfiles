@@ -86,7 +86,14 @@
    },
 
    "hyprland_widgets": {
-      "std": ["dart-sass", "fd", "bun-bin", "gjs", "gtk4-layer-shell"],
+      "std": [
+         "dart-sass",
+         "fd",
+         "bun-bin",
+         "gjs",
+         "gtk4-layer-shell",
+         "libgtop"
+      ],
 
       "aur": [
          "libastal-io-git",
