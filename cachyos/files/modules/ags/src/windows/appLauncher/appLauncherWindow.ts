@@ -36,7 +36,7 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
 
          if (currentSearchQuery.startsWith(":sh")) {
             void execAsync([
-               ...options.sh.cmd,
+               ...options.general.sh.cmd,
                currentSearchQuery.slice(3).trim(),
             ]);
          } else if (currentSearchQuery.startsWith(":refresh")) {

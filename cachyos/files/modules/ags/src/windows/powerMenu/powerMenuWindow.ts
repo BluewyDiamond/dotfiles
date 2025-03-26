@@ -79,7 +79,7 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
                IconWithLabelFallback({ icon: icons.powermenu.sleep }),
 
                () => {
-                  void execAsync([...options.sh.cmd, "systemctl suspend"]);
+                  void execAsync([...options.general.sh.cmd, "systemctl suspend"]);
                }
             ),
 
@@ -87,7 +87,7 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
                IconWithLabelFallback({ icon: icons.powermenu.reboot }),
 
                () => {
-                  void execAsync([...options.sh.cmd, "systemctl reboot"]);
+                  void execAsync([...options.general.sh.cmd, "systemctl reboot"]);
                }
             ),
 
@@ -95,7 +95,7 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
                IconWithLabelFallback({ icon: icons.powermenu.shutdown }),
 
                () => {
-                  void execAsync([...options.sh.cmd, "systemctl poweroff"]);
+                  void execAsync([...options.general.sh.cmd, "systemctl poweroff"]);
                }
             ),
          ],
