@@ -1,5 +1,6 @@
 import { App, Gtk, hook, Widget } from "astal/gtk4";
 import cairo from "gi://cairo";
+import Pango from "gi://Pango?version=1.0";
 
 export function paginateBoxes(
    rows: number,
@@ -82,4 +83,25 @@ export function matchInputRegionOfWidget(
    cairoRegion.unionRectangle(rectangleInt);
 
    windowGdkSurface.set_input_region(cairoRegion);
+}
+
+export interface LabelWithOverheadProps {
+   cssClasses?: string[];
+   hexpand?: boolean;
+   vexpand?: boolean;
+   label?: string;
+}
+
+export function LabelWithOverhead(props: LabelWithOverheadProps): Gtk.TextView {
+   const { cssClasses, hexpand, vexpand, label } = props;
+
+   return new Gtk.TextView({
+      cssClasses: cssClasses ?? [],
+      hexpand: hexpand ?? false,
+      vexpand: vexpand ?? false,
+      editable: false,
+      cursor_visible: false,
+      wrapMode: Pango.WrapMode.WORD_CHAR,
+      buffer: new Gtk.TextBuffer({ text: label }),
+   });
 }
