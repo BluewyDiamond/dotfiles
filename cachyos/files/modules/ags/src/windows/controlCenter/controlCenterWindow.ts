@@ -1,7 +1,7 @@
 import { Astal, type Gdk, Widget } from "astal/gtk4";
 import PopupWindow, { Position } from "../composables/popupWindow";
 import options from "../../options";
-import { quickSettingsBox } from "./composables/quickSettingsBox";
+// import { quickSettingsBox } from "./composables/quickSettingsBox";
 import notificationsBox from "./composables/notifications2/notificationsBox";
 
 export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
@@ -18,7 +18,7 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
          cssClasses: ["main-box"],
          vertical: true,
 
-         children: [quickSettingsBox(), notificationsBox()],
+         children: [notificationsBox()],
       })
    );
 }

@@ -57,10 +57,6 @@ export default function (props: NotificationProps): Gtk.Box {
                      fallbackIconIsSymbolic: options.general.monochrome,
                      fallbackLabel: ">",
                   }),
-               ];
-
-               self.children = [
-                  ...self.children,
 
                   Widget.Label({
                      halign: Gtk.Align.START,
