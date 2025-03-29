@@ -12,17 +12,21 @@ vim.o.clipboard = "unnamedplus"
 vim.o.relativenumber = true
 vim.o.cursorline = true
 
--- whitespaces stuff
 vim.o.list = true
-
-local space = "·"
+local whitespace = "·"
 
 vim.opt.listchars:append({
    tab = "│─",
-   multispace = space,
-   lead = space,
-   trail = space,
-   nbsp = space,
+   multispace = whitespace,
+   lead = whitespace,
+   trail = whitespace,
+   nbsp = whitespace,
+})
+
+vim.diagnostic.config({
+   virtual_text = true, -- Show inline errors
+   signs = true, -- Gutter icons
+   underline = true, -- Squiggly lines
 })
 
 -- mappings: movement
