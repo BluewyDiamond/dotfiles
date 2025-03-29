@@ -24,35 +24,35 @@ return {
             --
             DiagnosticUnderlineError = {
                undercurl = true,
-               sp = "${red}", -- Red squiggly line
-               fg = "NONE", -- No text color change
+               sp = "${red}",
+               fg = "NONE",
             },
 
             DiagnosticUnderlineWarn = {
                undercurl = true,
-               sp = "${yellow}", -- Yellow squiggly line
+               sp = "${yellow}",
                fg = "NONE",
             },
 
             DiagnosticUnderlineInfo = {
                undercurl = true,
-               sp = "${blue}", -- Blue squiggly line
+               sp = "${green}", --
                fg = "NONE",
             },
 
             DiagnosticVirtualTextWarn = {
-               bg = "${yellow}", -- Yellow background
-               fg = "${black}", -- Text color (adjust if needed)
+               bg = "#5d4200", --
+               fg = "#ffdea4", --
             },
 
             DiagnosticVirtualTextError = {
-               bg = "${red}", -- Red background
-               fg = "${black}",
+               bg = "#733330",
+               fg = "#ffdad7",
             },
 
             DiagnosticVirtualTextInfo = {
-               bg = "${blue}", -- Blue background
-               fg = "${black}",
+               bg = "#2f4f1b",
+               fg = "#c7eea9",
             },
 
             -- rust (treesitter)
