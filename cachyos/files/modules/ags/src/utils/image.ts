@@ -55,15 +55,17 @@ export function hasIconInApps(icon: string, app: Apps.Application): boolean {
 }
 
 export function findIcon(icon: string): string {
-   if (!icon) return "";
+   if (icon === "") return "";
 
    const theIcon = getIcon(icon);
-   if (theIcon) return theIcon;
+   if (theIcon === "") return theIcon;
 
    const apps = new Apps.Apps();
    const foundedApp = apps.list.find((app) => hasIconInApps(icon, app));
 
-   if (foundedApp) if (getIcon(foundedApp.iconName)) return foundedApp.iconName;
+   if (foundedApp !== undefined) {
+      if (getIcon(foundedApp.iconName) !== "") return foundedApp.iconName;
+   }
 
    return "";
 }
