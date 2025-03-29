@@ -6,11 +6,13 @@ return {
 
       conform.setup({
          formatters_by_ft = {
-            -- common
+            -- default
+            --
             fish = { "fish_indent" },
             lua = { "stylua" },
 
-            -- programming langauges
+            -- programming languages
+            --
             csharp = { "dotnet tool run dotnet-csharpier ." },
             javascript = { "prettier" },
             python = { "black" },
@@ -19,15 +21,16 @@ return {
             typescript = { "prettier" },
             vala = { "uncrustify" },
 
-            -- data formats
-            json = { "prettier" },
-            jsonc = { "prettier" },
-            toml = { "taplo" },
-
-            -- other
+            -- markup languages
             css = { "prettier" },
             scss = { "prettier" },
             html = { "prettier" },
+
+            -- data formats
+            --
+            json = { "prettier" },
+            jsonc = { "prettier" },
+            toml = { "taplo" },
          },
       })
 
