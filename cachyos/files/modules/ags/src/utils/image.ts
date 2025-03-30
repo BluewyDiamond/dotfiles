@@ -17,7 +17,7 @@ export function getIcon(icon: string): string {
          return iconName;
       }
 
-      if (approximate === "" && iconInLowerCase.includes(icon)) {
+      if (approximate !== "" && iconInLowerCase.includes(icon)) {
          approximate = iconName;
       }
    }

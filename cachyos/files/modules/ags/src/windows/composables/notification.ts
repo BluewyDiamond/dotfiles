@@ -44,7 +44,11 @@ export default function (props: NotificationProps): Gtk.Box {
                let foundedIcon = findIcon(notification.app_icon);
 
                if (foundedIcon === "") {
-                  foundedIcon = findIcon(notification.desktop_entry);
+                  const desktopEntry: string | null = notification.desktopEntry;
+
+                  if (desktopEntry !== null) {
+                     foundedIcon = findIcon(desktopEntry);
+                  }
                }
 
                self.children = [
@@ -52,7 +56,7 @@ export default function (props: NotificationProps): Gtk.Box {
 
                   IconWithLabelFallback({
                      cssClasses: ["app-icon"],
-                     icon: createIcon(foundedIcon),
+                     icon: createIcon({ normal: foundedIcon }),
                      fallbackIcon: icons.fallback.notification,
                      fallbackIconIsSymbolic: options.general.monochrome,
                      fallbackLabel: ">",

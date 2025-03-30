@@ -57,7 +57,7 @@ function AppButton(
       Widget.Box({
          children: [
             IconWithLabelFallback({
-               icon: createIcon(app.iconName),
+               icon: createIcon({normal: app.iconName}),
             }),
 
             Widget.Box({
