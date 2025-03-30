@@ -17,7 +17,7 @@ export function getIcon(icon: string): string {
          return iconName;
       }
 
-      if (!approximate && iconInLowerCase.includes(icon)) {
+      if (approximate === "" && iconInLowerCase.includes(icon)) {
          approximate = iconName;
       }
    }
@@ -27,31 +27,27 @@ export function getIcon(icon: string): string {
 
 export function hasIconInApps(icon: string, app: Apps.Application): boolean {
    icon = icon.toLowerCase();
-   const name = app.get_name()?.toLowerCase();
-   const entry = app.get_entry()?.toLowerCase();
-   const executable = app.get_executable()?.toLowerCase();
-   const description = app.get_description()?.toLowerCase();
 
-   if (name && (name.includes(icon) || icon.includes(name))) {
-      return true;
-   }
+   const name: string | null | undefined = app.get_name();
+   const entry: string | null | undefined = app.get_entry();
+   const executable: string | null | undefined = app.get_executable();
+   const description: string | null | undefined = app.get_description();
 
-   if (entry && (entry.includes(icon) || icon.includes(entry))) {
-      return true;
-   }
+   const isMatch = (text: string | null | undefined): boolean => {
+      const textLowerCase = text?.toLowerCase() ?? "";
 
-   if (executable && (executable.includes(icon) || icon.includes(executable))) {
-      return true;
-   }
+      return (
+         textLowerCase !== "" &&
+         (textLowerCase.includes(icon) || icon.includes(textLowerCase))
+      );
+   };
 
-   if (
-      description &&
-      (description.includes(icon) || icon.includes(description))
-   ) {
-      return true;
-   }
-
-   return false;
+   return (
+      isMatch(name) ||
+      isMatch(entry) ||
+      isMatch(executable) ||
+      isMatch(description)
+   );
 }
 
 export function findIcon(icon: string): string {
