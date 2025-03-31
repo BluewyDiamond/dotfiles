@@ -28,7 +28,7 @@
 ---
 
 ## 2. Setup Dotfiles
-- ...
+- Run copy + link files script.
 
 ---
 
@@ -65,7 +65,8 @@ Add the following parameters to your kernel configuration:
 - Use `booster` for initramfs.
 
 ### Uninstall Unwanted Packages
-- ...
+- Run reinstall minimal packages script.
+- Run install packages script.
 
 ### Disable Unwanted Startup Services
 - ...
