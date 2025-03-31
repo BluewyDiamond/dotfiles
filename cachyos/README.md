@@ -52,12 +52,7 @@
 
 ---
 
-## 4. Disable Unwanted Startup Services
-- ...
-
----
-
-## 5. Setup Optimizations
+## 4. Setup Optimizations
 
 ### Kernel Parameters
 Add the following parameters to your kernel configuration:
@@ -68,6 +63,12 @@ Add the following parameters to your kernel configuration:
 
 ### Initramfs
 - Use `booster` for initramfs.
+
+### Uninstall Unwanted Packages
+- ...
+
+### Disable Unwanted Startup Services
+- ...
 
 ---
 

@@ -4,6 +4,11 @@ return {
    cmd = "Trouble",
 
    config = function()
+      local trouble = require("trouble")
+      trouble.setup({})
+
+      -- trouble.toggle({})
+
       -- mappings
       --
       vim.keymap.set(
