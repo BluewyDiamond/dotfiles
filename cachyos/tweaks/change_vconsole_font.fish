@@ -1,16 +1,15 @@
 #!/usr/bin/env fish
 
-set VCONSOLE_CONF "/etc/vconsole.conf"
-set FONT "FONT=ter-132b"
-
+set vconsole_conf_pathname "/etc/vconsole.conf"
+set font_line "FONT=ter-124n"
 sudo pacman --needed terminus-font
 
-if not test -f $VCONSOLE_CONF
-    sudo touch $VCONSOLE_CONF
+if not test -f $vconsole_conf_pathname
+    sudo touch $vconsole_conf_pathname
 end
 
-if grep -q "^FONT=" $VCONSOLE_CONF
-    sudo sed -i "s/^FONT=.*/$FONT/" $VCONSOLE_CONF
+if grep -q "^FONT=" $vconsole_conf_pathname
+    sudo sed -i "s/^FONT=.*/$font_line/" $vconsole_conf_pathname
 else
-    echo $FONT | sudo tee -a $VCONSOLE_CONF
+    echo $font_line | sudo tee -a $vconsole_conf_pathname
 end
