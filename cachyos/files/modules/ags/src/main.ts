@@ -1,11 +1,11 @@
 import { App, type Astal, Gdk } from "astal/gtk4";
-import Bar from "./windows/bar/barWindow";
 import { getCss } from "./utils/style";
-import AppLauncher from "./windows/appLauncher/appLauncherWindow";
-import NotificationsPopup from "./windows/notificationsPopup/notificationsPopupWindow";
-import PowerMenu from "./windows/powerMenu/powerMenuWindow";
 import options from "./options";
-import ControlCenter from "./windows/controlCenter/controlCenterWindow";
+import BarWindow from "./ui/windows/bar/BarWindow";
+import NotificationsPopupWindow from "./ui/windows/notificationsPopup/NotificationsPopupWindow";
+import AppLauncherWindow from "./ui/windows/appLauncher/AppLauncherWindow";
+import PowerMenuWindow from "./ui/windows/powerMenu/PowerMenuWindow";
+import ControlCenterWindow from "./ui/windows/controlCenter/ControlCenterWindow";
 
 App.start({
    css: getCss(),
@@ -61,11 +61,11 @@ App.start({
             if (monitor === null) continue;
             if (!(monitor instanceof Gdk.Monitor)) continue;
 
-            barWindow = Bar(monitor);
-            notificationsPopupWindow = NotificationsPopup(monitor);
-            appLauncherWindow = AppLauncher(monitor);
-            powerMenuWindow = PowerMenu(monitor);
-            controlCenterWindow = ControlCenter(monitor);
+            barWindow = BarWindow(monitor);
+            notificationsPopupWindow = NotificationsPopupWindow(monitor);
+            appLauncherWindow = AppLauncherWindow(monitor);
+            powerMenuWindow = PowerMenuWindow(monitor);
+            controlCenterWindow = ControlCenterWindow(monitor);
 
             App.add_window(notificationsPopupWindow);
             App.add_window(appLauncherWindow);
