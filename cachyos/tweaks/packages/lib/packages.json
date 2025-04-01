@@ -41,17 +41,17 @@
       "std": ["terminus-font", "figlet", "fastfetch"]
    },
 
-   "hyprland": {
+   "hyprland_session": {
       "std": [
-         "hyprland",
-         "hyprland-qtutils",
-         "hyprpolkitagent",
-
          "wireplumber",
          "pipewire",
          "pipewire-alsa",
          "pipewire-pulse",
          "pipewire-jack",
+
+         "hyprland",
+         "hyprland-qtutils",
+         "hyprpolkitagent",
 
          "xdg-desktop-portal-hyprland",
          "xdg-desktop-portal-gtk",
@@ -167,6 +167,7 @@
          "heroic-games-launcher-bin",
 
          "gamescope",
+         "proton-ge-custom-bin",
          "protontricks",
          "mangohud"
       ]
