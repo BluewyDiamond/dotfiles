@@ -29,6 +29,7 @@
 
 ## 2. Setup Dotfiles
 - Run copy + link files script.
+- Configure network (systemd-networkd or NetworkManager).
 
 ---
 
