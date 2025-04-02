@@ -17,7 +17,6 @@
 - **CPU Platform Temperature Limit**: `85°C`
 
 - **CPU Core Voltage (SOC)**: `1.075v`
-- **Core Performance Boost**: `disabled`
 
 ### Boot Settings
 - **Smart Resizable BAR**: `on`
