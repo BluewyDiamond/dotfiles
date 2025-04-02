@@ -5,15 +5,19 @@
 ## 1. Configure Motherboard
 
 ### RAM Settings
-- **RAM EXPO**: `expo_tweaked`
+- **RAM EXPO**: `expo_2`
 - **Memory Context Restore**: `enabled`
 - **Power Down**: `enabled`
 
 ### CPU Settings
+- **Medium Load Boostit**: `enabled`
 - **PBO Limits**: `disabled` (to prevent extra power draw)
+- **CPU Boost Clock Override**: `disabled`
 - **Curve Optimizer**: `-30`
 - **CPU Platform Temperature Limit**: `85°C`
+
 - **CPU Core Voltage (SOC)**: `1.075v`
+- **Core Performance Boost**: `disabled`
 
 ### Boot Settings
 - **Smart Resizable BAR**: `on`
