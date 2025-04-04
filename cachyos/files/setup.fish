@@ -30,35 +30,33 @@ if not which trash &>/dev/null
     exit 1
 end
 
-function manage
-    if test (count $argv) -lt 3
-        message "ERROR: source, target, and operation must be provided."
+function process
+    set super $argv[1]
+
+    if not contains "$super" true false
+        message "ERROR: super must be either 'true' or 'false'."
         return 1
     end
 
-    set source $argv[1]
-    set target $argv[2]
-    set operation $argv[3]
-    set super $argv[4]
-
-    if not test -e "$source"
-        message "ERROR: source '$source' is not a valid file."
-        return 1
-    end
+    set operation $argv[2]
 
     if not contains "$operation" copy link
         message "ERROR: operation must be either 'copy' or 'link'."
         return 1
     end
 
-    if test -z "$super"
-        set super false
-    end
+    set source $argv[3]
 
-    if not contains "$super" true false
-        message "ERROR: super must be either 'true' or 'false'."
+    if not test -e "$source"
+        message "ERROR: source '$source' is not a valid file."
         return 1
     end
+
+    set target $argv[4]
+
+    # TODO: Rather than checking if target_dir exists and then immediatly
+    # do stuff, store in a variable the state and then based of it do it.
+    # Maybe this way it is more readable.
 
     message "TASK: $operation $source to $target, super is $super."
     set do_it (test "true" = $super; and echo sudo)
@@ -95,18 +93,18 @@ end
 
 set current_dir (dirname (realpath (status --current-filename)))
 
-manage $current_dir/modules/MangoHud $HOME/.config/MangoHud link
-manage $current_dir/modules/ags $HOME/.config/ags link
+process false link $current_dir/modules/MangoHud $HOME/.config/MangoHud
+process false link $current_dir/modules/ags $HOME/.config/ags
 
 for file in $current_dir/modules/applications/*
-    manage $file $HOME/.local/share/applications/(basename $file) link
+    process false link $file $HOME/.local/share/applications/(basename $file)
 end
 
 for file in $current_dir/modules/bin/*
-    manage $file $HOME/.local/bin/(basename $file) link
+    process false link $file $HOME/.local/bin/(basename $file)
 end
 
-manage $current_dir/modules/cachy/cachy.overrides.cfg $HOME/.cachy/cachy.overrides.cfg link
+process $current_dir/modules/cachy/cachy.overrides.cfg $HOME/.cachy/cachy.overrides.cfg link
 
 set profile_dirs (find "$HOME/.cachy" -type d -name '*default-release' 2>/dev/null)
 for dir in $profile_dirs
@@ -116,29 +114,29 @@ for dir in $profile_dirs
         mkdir -p $chrome_dir
     end
 
-    manage $current_dir/modules/cachy/userChrome.css $chrome_dir/userChrome.css link
+    process false link $current_dir/modules/cachy/userChrome.css $chrome_dir/userChrome.css
 end
 
-manage $current_dir/modules/css $HOME/.config/css link
-manage $current_dir/modules/fastfetch $HOME/.config/fastfetch link
-manage $current_dir/modules/fish_bluewy $HOME/.config/fish_bluewy link
-manage $current_dir/modules/fuzzel $HOME/.config/fuzzel link
-manage $current_dir/modules/hypr $HOME/.config/hypr link
+process false link $current_dir/modules/css $HOME/.config/css
+process false link $current_dir/modules/fastfetch $HOME/.config/fastfetch
+process false link $current_dir/modules/fish_bluewy $HOME/.config/fish_bluewy
+process false link $current_dir/modules/fuzzel $HOME/.config/fuzzel
+process false link $current_dir/modules/hypr $HOME/.config/hypr
 
 for file in $current_dir/modules/kbd/*
-    manage $file /usr/share/kbd/keymaps/(basename $file) copy true
+    process true copy $file /usr/share/kbd/keymaps/(basename $file)
 end
 
-manage $current_dir/modules/nvim $HOME/.config/nvim link
-manage $current_dir/modules/pipewire $HOME/.config/pipewire link
-manage $current_dir/modules/speech-dispatcher $HOME/.config/speech-dispatcher link
-manage $current_dir/modules/wayland-pipewire-idle-inhibit $HOME/.config/wayland-pipewire-idle-inhibit link
-manage $current_dir/modules/wezterm $HOME/.config/wezterm link
-manage $current_dir/modules/xkb $HOME/.config/xkb link
+process false link $current_dir/modules/nvim $HOME/.config/nvim
+process false link $current_dir/modules/pipewire $HOME/.config/pipewire
+process false link $current_dir/modules/speech-dispatcher $HOME/.config/speech-dispatcher
+process false link $current_dir/modules/wayland-pipewire-idle-inhibit $HOME/.config/wayland-pipewire-idle-inhibit
+process false link $current_dir/modules/wezterm $HOME/.config/wezterm
+process false link $current_dir/modules/xkb $HOME/.config/xkb
 
 for file in $current_dir/modules/xkb/symbols/*
-    manage $file /usr/share/X11/xkb/symbols/(basename $file) copy true
+    process true copy $file /usr/share/X11/xkb/symbols/(basename $file)
 end
 
-manage $current_dir/modules/electron-flags.conf $HOME/.config/electron-flags.conf link
-manage $current_dir/modules/user-dirs.dirs $HOME/.config/user-dirs.dirs link
+process false link $current_dir/modules/electron-flags.conf $HOME/.config/electron-flags.conf
+process false link $current_dir/modules/user-dirs.dirs $HOME/.config/user-dirs.dirs
