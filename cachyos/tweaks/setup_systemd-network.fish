@@ -20,6 +20,13 @@ function scan
     echo $value
 end
 
+function append_to_file
+    set text $argv[1]
+    set file $argv[2]
+
+    echo $text | sudo tee -a $file >/dev/null
+end
+
 # main
 #
 # systemd-networkd
@@ -48,17 +55,17 @@ for adapter in $adapter_names
         sudo touch $target
         set counter (math $counter + 1)
 
-        echo "[Match]" | sudo tee -a $target
-        echo "Name=$adapter" | sudo tee -a $target
-        echo | sudo tee -a $target
-        echo "[Network]" | sudo tee -a $target
-        echo "DHCP=yes" | sudo tee -a $target
-        echo | sudo tee -a $target
-        echo "[DHCPv4]" | sudo tee -a $target
-        echo "RouteMetric=100" | sudo tee -a $target
-        echo | sudo tee -a $target
-        echo "[IPv6AcceptRA]" | sudo tee -a $target
-        echo "RouteMetric=100" | sudo tee -a $target
+        append_to_file "[Match]" $target
+        append_to_file "Name=$adapter" $target
+        append_to_file "" $target # Empty line
+        append_to_file "[Network]" $target
+        append_to_file "DHCP=yes" $target
+        append_to_file "" $target
+        append_to_file "[DHCPv4]" $target
+        append_to_file "RouteMetric=100" $target
+        append_to_file "" $target
+        append_to_file "[IPv6AcceptRA]" $target
+        append_to_file "RouteMetric=100" $target
     end
 
     if string match -q -i -r 'wl*' $adapter
@@ -67,17 +74,17 @@ for adapter in $adapter_names
         sudo touch $target
         set counter (math $counter + 1)
 
-        echo "[Match]" | sudo tee -a $target
-        echo "Name=$adapter" | sudo tee -a $target
-        echo | sudo tee -a $target
-        echo "[Network]" | sudo tee -a $target
-        echo "DHCP=yes" | sudo tee -a $target
-        echo | sudo tee -a $target
-        echo "[DHCPv4]" | sudo tee -a $target
-        echo "RouteMetric=600" | sudo tee -a $target
-        echo | sudo tee -a $target
-        echo "[IPv6AcceptRA]" | sudo tee -a $target
-        echo "RouteMetric=600" | sudo tee -a $target
+        append_to_file "[Match]" $target
+        append_to_file "Name=$adapter" $target
+        append_to_file "" $target
+        append_to_file "[Network]" $target
+        append_to_file "DHCP=yes" $target
+        append_to_file "" $target
+        append_to_file "[DHCPv4]" $target
+        append_to_file "RouteMetric=600" $target
+        append_to_file "" $target
+        append_to_file "[IPv6AcceptRA]" $target
+        append_to_file "RouteMetric=600" $target
     end
 end
 
@@ -88,9 +95,9 @@ set resolved_conf_path /etc/systemd/resolved.conf
 sudo rm $resolved_conf_path
 sudo touch $resolved_conf_path
 
-echo "[Resolved]" | sudo tee -a $resolved_conf_path
-echo "DNS=1.1.1.1" | sudo tee -a $resolved_conf_path
-echo "FallbackDNS=1.0.0.1" | sudo tee -a $resolved_conf_path
+append_to_file "[Resolved]" $resolved_conf_path
+append_to_file "DNS=1.1.1.1" $resolved_conf_path
+append_to_file "FallbackDNS=1.0.0.1" $resolved_conf_path
 
 # iwd
 #
@@ -106,8 +113,8 @@ if test -f $iwd_conf_path
     sudo rm $iwd_conf_path
 end
 
-echo "[General]" | sudo tee -a $iwd_conf_path
-echo "EnableNetworkConfiguration=true" | sudo tee -a $iwd_conf_path
+append_to_file "[General]" $iwd_conf_path
+append_to_file "EnableNetworkConfiguration=true" $iwd_conf_path
 
 systemctl enable iwd
 systemctl enable systemd-networkd
