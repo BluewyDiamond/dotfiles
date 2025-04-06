@@ -107,8 +107,9 @@ end
 process $current_dir/modules/cachy/cachy.overrides.cfg $HOME/.cachy/cachy.overrides.cfg link
 
 set profile_dirs (find "$HOME/.cachy" -type d -name '*default-release' 2>/dev/null)
-for dir in $profile_dirs
-    set chrome_dir $dir/chrome
+
+for profile_dir in $profile_dirs
+    set chrome_dir $profile_dir/chrome
 
     if not test -e $chrome_dir
         mkdir -p $chrome_dir
