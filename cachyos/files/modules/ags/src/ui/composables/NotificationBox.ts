@@ -160,6 +160,7 @@ export default function (props: NotificationProps): Gtk.Box {
                                  xalign: 0,
                                  wrap: true,
                                  wrapMode: Pango.WrapMode.WORD_CHAR,
+                                 // maxWidthChars: 30,
                                  useMarkup: true,
                                  label: notification.body,
                               }),

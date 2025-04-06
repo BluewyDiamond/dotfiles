@@ -128,6 +128,7 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
          gdkmonitor,
          name: options.appLauncher.name,
          cssClasses: ["app-launcher"],
+         clickThroughFiller: true,
          exclusivity: Astal.Exclusivity.IGNORE,
          layer: Astal.Layer.OVERLAY,
          position: Position.TOP_CENTER,

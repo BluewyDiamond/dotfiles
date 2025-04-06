@@ -45,7 +45,7 @@ export enum Position {
    CENTER,
 }
 
-interface PopupWindowProps {
+export interface PopupWindowProps {
    gdkmonitor?: Gdk.Monitor;
    name: string;
    cssClasses?: string[];
@@ -183,7 +183,11 @@ export default function (
          })
       );
    } else if (position === Position.TOP_RIGHT) {
-      anchor = Astal.WindowAnchor.TOP | Astal.WindowAnchor.RIGHT;
+      // important: it must always anchor to top and bottom for it to work properly
+      anchor =
+         Astal.WindowAnchor.TOP |
+         Astal.WindowAnchor.BOTTOM |
+         Astal.WindowAnchor.RIGHT;
 
       widget = Widget.Box(
          {
