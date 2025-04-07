@@ -1,42 +1,20 @@
 import { type Gtk, Widget } from "astal/gtk4";
-import type { Icon } from "../../libs/icons";
 import { findIcon } from "../../utils/image";
+import options from "../../options";
 
 interface IconWithLabelFallbackProps {
    cssClasses?: string[];
-   icon: Icon;
-   symbolic?: boolean;
-   fallbackIcon?: Icon;
-   fallbackIconIsSymbolic?: boolean;
+   iconName: string;
    fallbackLabel?: string;
 }
 
 export function IconWithLabelFallback(
    props: IconWithLabelFallbackProps
 ): Gtk.Image | Gtk.Label {
-   const {
-      cssClasses,
-      icon,
-      symbolic,
-      fallbackIcon,
-      fallbackIconIsSymbolic,
-      fallbackLabel,
-   } = props;
+   const { cssClasses, iconName, fallbackLabel } = props;
+
    let foundedIcon = "";
-
-   if (symbolic) {
-      foundedIcon = findIcon(icon.symbolic);
-   } else {
-      foundedIcon = findIcon(icon.normal);
-   }
-
-   if (foundedIcon === "") {
-      if (fallbackIconIsSymbolic) {
-         foundedIcon = findIcon(fallbackIcon?.symbolic ?? "");
-      } else {
-         foundedIcon = findIcon(fallbackIcon?.normal ?? "");
-      }
-   }
+   foundedIcon = findIcon(iconName);
 
    function setupClassName(): string[] {
       if (cssClasses === undefined) return ["icon-with-label-fallback"];
@@ -46,7 +24,7 @@ export function IconWithLabelFallback(
    if (foundedIcon === "") {
       return Widget.Label({
          cssClasses: [...setupClassName(), "label"],
-         label: fallbackLabel ?? "?",
+         label: fallbackLabel ?? options.general.fallbackLabel,
       });
    } else {
       return Widget.Image({

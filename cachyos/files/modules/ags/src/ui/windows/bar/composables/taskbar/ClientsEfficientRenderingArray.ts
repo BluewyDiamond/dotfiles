@@ -54,8 +54,7 @@ function ClientButton(client: AstalHyprland.Client): Gtk.Button {
       },
 
       IconWithLabelFallback({
-         icon: createIcon({normal: client.class}),
-         fallbackIcon: icons.fallback.executable,
+         iconName: client.class,
       })
    );
 }

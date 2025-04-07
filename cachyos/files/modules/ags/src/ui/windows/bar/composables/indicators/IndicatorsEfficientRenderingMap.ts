@@ -85,8 +85,7 @@ export class IndicatorsEfficientRenderingMap extends EfficientRenderingMap<
                Indicators.PowerProfiles,
 
                IconWithLabelFallback({
-                  icon: icons.powerprofile.powerSaver,
-                  symbolic: options.bar.indicators.powerprofiles.monochrome,
+                  iconName: icons.powerprofile.powerSaver.symbolic,
                })
             );
 
@@ -96,8 +95,7 @@ export class IndicatorsEfficientRenderingMap extends EfficientRenderingMap<
                Indicators.PowerProfiles,
 
                IconWithLabelFallback({
-                  icon: icons.powerprofile.performance,
-                  symbolic: options.bar.indicators.powerprofiles.monochrome,
+                  iconName: icons.powerprofile.performance.symbolic,
                })
             );
 
@@ -177,7 +175,7 @@ export class IndicatorsEfficientRenderingMap extends EfficientRenderingMap<
 
                   this.map.set(
                      Indicators.MicrophoneRecorders,
-                     IconWithLabelFallback({ icon })
+                     IconWithLabelFallback({ iconName: icon.symbolic })
                   );
                   this.notify();
                } else {
@@ -236,7 +234,10 @@ export class IndicatorsEfficientRenderingMap extends EfficientRenderingMap<
                icon = muted;
             }
 
-            this.map.set(Indicators.Speaker, IconWithLabelFallback({ icon }));
+            this.map.set(
+               Indicators.Speaker,
+               IconWithLabelFallback({ iconName: icon.symbolic })
+            );
             this.notify();
          })
       );
@@ -263,7 +264,7 @@ export class IndicatorsEfficientRenderingMap extends EfficientRenderingMap<
                      Indicators.ScreenRecorders,
 
                      IconWithLabelFallback({
-                        icon: icons.recorder.screencast,
+                        iconName: icons.recorder.screencast.symbolic,
                      })
                   );
 

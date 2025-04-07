@@ -20,7 +20,7 @@ export default function (): Gtk.Button {
       },
 
       IconWithLabelFallback({
-         icon: createIcon({ normal: GLib.get_os_info("LOGO") ?? "" }),
+         iconName: GLib.get_os_info("LOGO") ?? "",
       })
    );
 }

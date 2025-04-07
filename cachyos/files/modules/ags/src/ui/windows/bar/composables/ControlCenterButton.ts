@@ -18,6 +18,6 @@ export default function (): Gtk.Button {
          },
       },
 
-      IconWithLabelFallback({ icon: icons.ui.info })
+      IconWithLabelFallback({ iconName: icons.ui.info.symbolic })
    );
 }

@@ -31,7 +31,7 @@ const cpuUsage: Variable<number> = Variable(
    calculateCpuUsage(getGtopCpu(), lastCpuStats)
 );
 
-const updateCpuUsage = () => {
+const updateCpuUsage = (): void => {
    const gtopCpu = new GTop.glibtop_cpu();
    GTop.glibtop_get_cpu(gtopCpu);
    cpuUsage.set(calculateCpuUsage(gtopCpu, lastCpuStats));
@@ -55,7 +55,7 @@ export default function (): Gtk.Button {
       Widget.Box({
          children: [
             IconWithLabelFallback({
-               icon: icons.system.cpu,
+               iconName: icons.system.cpu.symbolic,
                fallbackLabel: "CPU ",
             }),
 

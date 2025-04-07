@@ -17,5 +17,5 @@ export default (): Gtk.Button =>
          },
       },
 
-      IconWithLabelFallback({ icon: icons.powermenu.shutdown })
+      IconWithLabelFallback({ iconName: icons.powermenu.shutdown.symbolic })
    );

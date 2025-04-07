@@ -33,7 +33,7 @@ export default function (): Gtk.Button {
       },
 
       IconWithLabelFallback({
-         icon: icons.notifications.noisy,
+         iconName: icons.notifications.noisy.symbolic,
       })
    );
 }
