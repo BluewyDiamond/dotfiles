@@ -1,10 +1,9 @@
 import { Gtk, Widget } from "astal/gtk4";
 import Notifd from "gi://AstalNotifd";
 import { GLib } from "astal";
-import icons, { createIcon } from "../../libs/icons";
+import icons from "../../libs/icons";
 import { IconWithLabelFallback } from "./IconWithLabelFallback";
 import Pango from "gi://Pango?version=1.0";
-import options from "../../options";
 import { findIcon } from "../../utils/image";
 
 function getUrgency(n: Notifd.Notification): string {
@@ -57,7 +56,6 @@ export default function (props: NotificationProps): Gtk.Box {
                   IconWithLabelFallback({
                      cssClasses: ["app-icon"],
                      iconName: foundedIcon,
-                     fallbackLabel: ">",
                   }),
 
                   Widget.Label({

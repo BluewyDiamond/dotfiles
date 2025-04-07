@@ -56,7 +56,6 @@ export default function (): Gtk.Button {
          children: [
             IconWithLabelFallback({
                iconName: icons.system.cpu.symbolic,
-               fallbackLabel: "CPU ",
             }),
 
             Widget.Label({
