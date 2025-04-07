@@ -69,7 +69,7 @@ for adapter in $adapter_names
     end
 
     if string match -q -i -r 'wl*' $adapter
-        set target /etc/systemd/network/$counter-wired.network
+        set target /etc/systemd/network/$counter-wireless.network
 
         sudo touch $target
         set counter (math $counter + 1)
