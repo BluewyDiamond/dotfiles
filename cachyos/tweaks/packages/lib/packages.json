@@ -10,6 +10,7 @@
          "base",
          "base-devel",
          "linux-firmware",
+         "booster",
          "refind",
          "fish",
          "bash",
@@ -71,7 +72,7 @@
 
          "nwg-look",
 
-         "font-manager",
+         "font-manager"
       ],
 
       "aur": [

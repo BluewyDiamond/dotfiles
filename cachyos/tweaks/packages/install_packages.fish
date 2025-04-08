@@ -16,7 +16,7 @@ function scan
     read -P (set_color magenta)"INPUT => "(set_color yellow) value
 
     if test -z "$value"
-        scan $argv[1]
+        set value $argv[1]
     end
 
     echo $value
@@ -94,6 +94,11 @@ for choice in (string split " " $choices)
     end
 
     set -a curated_configs $top_level_keys[$choice]
+end
+
+if not set -q curated_configs[1]
+    print "Invalid values..."
+    exit 1
 end
 
 for curated_config in $curated_configs
