@@ -33,7 +33,7 @@ export default {
    ui: {
       close: createIcon({ normal: "window-close" }),
       colorpicker: createIcon({ normal: "color-select" }),
-      info: createIcon({ normal: "info" }),
+      info: createIcon({ normal: "help-info" }),
       link: createIcon({ normal: "external-link" }),
       lock: createIcon({ normal: "system-lock-screen" }),
       menu: createIcon({ normal: "open-menu" }),

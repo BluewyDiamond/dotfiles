@@ -43,7 +43,9 @@ export default function (props: NotificationProps): Gtk.Box {
                let foundedIcon = findIcon(notification.app_icon);
 
                if (foundedIcon === "") {
-                  const desktopEntry: string | null = notification.desktopEntry;
+                  const desktopEntry = notification.desktopEntry as
+                     | string
+                     | null;
 
                   if (desktopEntry !== null) {
                      foundedIcon = findIcon(desktopEntry);

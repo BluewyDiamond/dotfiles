@@ -1,9 +1,11 @@
 #!/usr/bin/env fish
 
 # global
+#
 set script_name (path basename (status filename))
 
 # utils
+#
 function message
     set script_name (path basename (status filename))
 
@@ -24,12 +26,8 @@ function scan
     echo $value
 end
 
-# main
-if not which trash &>/dev/null
-    message "ERROR: trash-cli is required."
-    exit 1
-end
-
+# other
+#
 function process
     set super $argv[1]
 
@@ -59,36 +57,47 @@ function process
     # Maybe this way it is more readable.
 
     message "TASK: $operation $source to $target, super is $super."
-    set do_it (test "true" = $super; and echo sudo)
-    set target_dir (dirname $target)
 
-    if not test -d $target_dir
-        if not test -e $target_dir
+    if test true = $super
+        set ex_sudo sudo
+    end
+
+    set target_dirname (dirname $target)
+
+    if not test -d $target_dirname
+        if not test -e $target_dirname
             message "INFO: (dirname $target) does not exist, it will be created."
-            set -l -a wee $do_it mkdir -p (dirname $target)
-            $wee
+            set ex_prepare $ex_sudo mkdir -p $target_dirname
         else
             message "INFO: (dirname $target) is not a folder, it will be trashed and recreated."
-            set -l -a lol $do_it trash $target_dir
-            $lol
-            set -l -a wee $do_it mkdir -p (dirname $target)
-            $wee
+            set ex_prepare $ex_sudo trash $target_dirname \;
+            set ex_prepare -a $ex_sudo mkdir -p $target_dirname
         end
     end
 
     if test -e "$target" -o -L "$target"
         message "WARNING: $target already exists, it will be trashed."
-        set -l -a wee $do_it trash $target
+        set ex_prepare $ex_sudo trash $target
         $wee
     end
 
     if test copy = $operation
-        set -a do_it cp
+        set ex_command $ex_sudo cp
     else
-        set -a do_it ln -s
+        set ex_command $ex_sudo ln -s
     end
 
-    $do_it $source $target
+    set ex_execute $ex_sudo $ex_command $source $target
+
+    $ex_prepare
+    $ex_execute
+end
+
+# main
+#
+if not which trash &>/dev/null
+    message "ERROR: trash-cli is required."
+    exit 1
 end
 
 set current_dir (dirname (realpath (status --current-filename)))
