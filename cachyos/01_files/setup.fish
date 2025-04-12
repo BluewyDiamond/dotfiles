@@ -78,7 +78,6 @@ function process
     if test -e "$target" -o -L "$target"
         message "WARNING: $target already exists, it will be trashed."
         set ex_prepare $ex_sudo trash $target
-        $wee
     end
 
     if test copy = $operation
