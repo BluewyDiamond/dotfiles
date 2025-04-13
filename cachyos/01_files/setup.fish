@@ -67,29 +67,34 @@ function process
     if not test -d $target_dirname
         if not test -e $target_dirname
             message "INFO: (dirname $target) does not exist, it will be created."
-            set ex_prepare $ex_sudo mkdir -p $target_dirname
+            set ex_prepare "$ex_sudo mkdir -p $target_dirname"
         else
             message "INFO: (dirname $target) is not a folder, it will be trashed and recreated."
-            set ex_prepare $ex_sudo trash $target_dirname \;
-            set ex_prepare -a $ex_sudo mkdir -p $target_dirname
+            set ex_prepare "$ex_sudo trash $target_dirname"
+            set -a ex_prepare "$ex_sudo mkdir -p $target_dirname"
         end
     end
 
     if test -e "$target" -o -L "$target"
         message "WARNING: $target already exists, it will be trashed."
-        set ex_prepare $ex_sudo trash $target
+        set ex_prepare "$ex_sudo trash $target"
     end
 
     if test copy = $operation
-        set ex_command $ex_sudo cp
+        set ex_command "$ex_sudo cp"
     else
-        set ex_command $ex_sudo ln -s
+        set ex_command "$ex_sudo ln -s"
     end
 
     set ex_execute $ex_sudo $ex_command $source $target
 
-    $ex_prepare
-    $ex_execute
+    for line in $ex_prepare
+        $line
+    end
+
+    for line in $ex_execute
+        $line
+    end
 end
 
 # main
