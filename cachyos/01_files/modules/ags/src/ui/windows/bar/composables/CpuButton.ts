@@ -52,21 +52,25 @@ export default function (): Gtk.Button {
          cssClasses: ["bar-item", "bar-item-cpu"],
       },
 
-      Widget.Box({
-         children: [
-            IconWithLabelFallback({
-               iconName: icons.system.cpu.symbolic,
-            }),
+      Widget.Box(
+         {},
 
-            Widget.Label({
-               label: bind(cpuUsage).as(
-                  (cpuUsage) =>
-                     `${Math.ceil(cpuUsage * 100)
-                        .toString()
-                        .padStart(3, "_")}%`
-               ),
-            }),
-         ],
-      })
+         IconWithLabelFallback({
+            cssClasses: ["_1"],
+            iconName: icons.system.cpu.symbolic,
+            label: "",
+         }),
+
+         Widget.Label({
+            cssClasses: ["_2"],
+
+            label: bind(cpuUsage).as(
+               (cpuUsage) =>
+                  `${Math.ceil(cpuUsage * 100)
+                     .toString()
+                     .padStart(3, "_")}%`
+            ),
+         })
+      )
    );
 }

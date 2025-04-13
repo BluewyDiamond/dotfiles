@@ -12,6 +12,14 @@
    }
 }
 
+@mixin bar_item_button {
+   @include bar_item;
+
+   &:hover {
+      background: $color_primary_container;
+   }
+}
+
 .icon-with-label-fallback {
    &.image {
       -gtk-icon-size: 24px;
@@ -26,33 +34,19 @@
 }
 
 .bar-window {
-   & > .bar-center-box {
+   > box {
       @include container_shape();
-      margin-top: 12px;
-      margin-right: 12px;
-      margin-left: 12px;
-      border: 4px solid $color_outline_variant;
-      background: $color_surface;
+      margin: 12px 12px 0 12px;
       padding: $space_medium;
+      background: $color_surface;
+      border: 4px solid $color_outline_variant;
    }
 }
 
 .bar-item-app-launcher {
-   @include bar_item;
+   @include bar_item_button;
    @include container_shape();
    margin-right: $space_medium;
-
-   &:hover {
-      background: $color_primary_container;
-   }
-
-   &.active {
-      background: $color_primary_container;
-   }
-
-   &.urgent {
-      background: $color_tertiary_container;
-   }
 }
 
 .bar-item-workspaces {
@@ -60,11 +54,11 @@
    @include container_shape();
    margin-right: $space_medium;
 
-   & > button {
+   > button {
       @include container_shape();
+      min-width: 12px;
       margin-right: 4px;
       background: $color_surface;
-      min-width: 12px;
 
       &:hover {
          background: $color_primary_container;
@@ -94,21 +88,17 @@
          }
       }
 
-      & > label {
+      > label {
          font-size: 0;
       }
    }
 }
 
 .bar-item-taskbar {
-   & > button {
-      @include bar_item;
+   > button {
+      @include bar_item_button;
       @include container_shape();
       margin-right: $space_medium;
-
-      &:hover {
-         background: $color_primary_container;
-      }
    }
 }
 
@@ -130,13 +120,9 @@
 
 .bar-item-tray {
    .tray-item {
-      @include bar_item;
+      @include bar_item_button;
       @include container_shape();
       margin-left: $space_medium;
-
-      &:hover {
-         background: $color_primary_container;
-      }
 
       & image {
          -gtk-icon-size: 24px;
@@ -175,9 +161,14 @@
    @include container_shape();
    margin-left: $space_medium;
 
-   & > .icon-with-label-fallback {
+   ._1 {
+      font-family: "IosevkaTerm Nerd Font";
+      font-size: 18px;
+
       margin-right: $space_small;
    }
+
+   // ._2 {}
 }
 
 .bar-item-cpu {
@@ -185,9 +176,14 @@
    @include container_shape();
    margin-left: $space_medium;
 
-   & > .icon-with-label-fallback {
+   ._1 {
+      font-family: "IosevkaTerm Nerd Font";
+      font-size: 18px;
+
       margin-right: $space_small;
    }
+
+   // ._2 {}
 }
 
 .bar-item-battery {
@@ -201,8 +197,8 @@
    @include container_shape();
    margin-left: $space_medium;
 
-   & > box {
-      & > .icon-with-label-fallback {
+   > box {
+      > .icon-with-label-fallback {
          margin-left: $space_small;
 
          &:first-child {
@@ -213,21 +209,9 @@
 }
 
 .bar-item-power {
-   @include bar_item;
+   @include bar_item_button;
    @include container_shape();
    margin-left: $space_medium;
-
-   &:hover {
-      background: $color_primary_container;
-   }
-
-   & .active {
-      background: $color_primary_container;
-   }
-
-   & .urgent {
-      background: $color_tertiary_container;
-   }
 }
 
 .bar-item-control-center {

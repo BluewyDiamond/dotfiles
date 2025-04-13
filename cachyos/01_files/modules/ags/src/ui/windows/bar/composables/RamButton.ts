@@ -28,10 +28,14 @@ export default function (): Gtk.Button {
          {},
 
          IconWithLabelFallback({
+            cssClasses: ["_1"],
             iconName: icons.system.ram.symbolic,
+            label: "",
          }),
 
          Widget.Label({
+            cssClasses: ["_2"],
+
             label: bind(gtopMemVariable).as(
                (gtopMem) =>
                   `${Math.ceil(

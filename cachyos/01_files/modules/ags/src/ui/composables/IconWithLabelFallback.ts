@@ -5,12 +5,13 @@ import options from "../../options";
 interface IconWithLabelFallbackProps {
    cssClasses?: string[];
    iconName: string;
+   label?: string;
 }
 
 export function IconWithLabelFallback(
    props: IconWithLabelFallbackProps
 ): Gtk.Image | Gtk.Label {
-   const { cssClasses, iconName } = props;
+   const { cssClasses, iconName, label } = props;
 
    let foundedIcon = "";
    foundedIcon = findIcon(iconName);
@@ -23,7 +24,7 @@ export function IconWithLabelFallback(
    if (foundedIcon === "") {
       return Widget.Label({
          cssClasses: [...setupClassName(), "label"],
-         label: options.general.fallbackLabel,
+         label: label ?? options.general.fallbackLabel,
       });
    } else {
       return Widget.Image({
