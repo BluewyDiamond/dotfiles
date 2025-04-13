@@ -2,7 +2,7 @@
 
 set vconsole_conf_pathname "/etc/vconsole.conf"
 set font_line "FONT=ter-124n"
-sudo pacman --needed terminus-font
+sudo pacman -S --needed terminus-font
 
 if not test -f $vconsole_conf_pathname
     sudo touch $vconsole_conf_pathname

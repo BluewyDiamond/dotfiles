@@ -31,7 +31,13 @@
    },
 
    "system_extra": {
-      "std": ["paru", "pacman-contrib", "btrfs-assistant", "wireless-regdb"]
+      "std": [
+         "paru",
+         "pacman-contrib",
+         "btrfs-assistant",
+         "wireless-regdb",
+         "ufw"
+      ]
    },
 
    "tty_session": {
