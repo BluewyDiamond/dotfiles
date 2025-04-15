@@ -86,10 +86,12 @@ set choices (scan)
 
 for choice in (string split " " $choices)
     if not string match -qr '^[0-9]+$' -- "$choice"
+        print "IGNORING: value is not valid -> $choice"
         continue
     end
 
     if test "$choice" -le 0 -o "$choice" -gt $top_level_keys_count
+        print "IGNORING: value of range.."
         continue
     end
 
@@ -97,7 +99,7 @@ for choice in (string split " " $choices)
 end
 
 if not set -q curated_configs[1]
-    print "Invalid values..."
+    print "INFO: Nothing to do..."
     exit 1
 end
 
@@ -106,6 +108,5 @@ for curated_config in $curated_configs
     set -a common_arch_user_repository (string split " " (print_chosen_repository_from_json_file $curated_config aur))
 end
 
-sudo pacman -Syy
-sudo pacman -S --needed $common_standard_repository
+sudo pacman -Syy --needed $common_standard_repository
 paru -S --aur --needed $common_arch_user_repository
