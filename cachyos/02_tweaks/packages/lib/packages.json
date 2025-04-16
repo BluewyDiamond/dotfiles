@@ -187,7 +187,7 @@
    },
 
    "discord": {
-      "std": ["speech-dispatcher", "legcord-bin"]
+      "std": ["speech-dispatcher", "vesktop-bin"]
    },
 
    "amd_cpu": {
@@ -196,10 +196,6 @@
 
    "amd_gpu": {
       "std": ["lact"]
-   },
-
-   "laptop": {
-      "std": ["brightnessctl"]
    },
 
    "virtualization": {
