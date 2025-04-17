@@ -72,10 +72,10 @@ function aura
     set line $argv
 
     if string match -qr -- S $line
-        set rest (string replace -r -- '(-S|S )' '' $line)
+        set rest (string replace -r -- '(-S |S)' '' $line)
         paru -S --repo $rest
     else if string match -qr -- A $line
-        set rest (string replace -r -- '(-A|A )' '' $line)
+        set rest (string replace -r -- '(-A |A)' '' $line)
         paru -S --aur $rest
     end
 end
