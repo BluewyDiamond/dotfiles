@@ -2,7 +2,7 @@ abbr dotfiles "cd $HOME/git/private/dotfiles"
 abbr snv "EDITOR=nvim sudoedit"
 abbr nv nvim
 abbr lg lazygit
-abbr fixpacman="sudo rm /var/lib/pacman/db.lck"
+abbr fixpacman "sudo rm /var/lib/pacman/db.lck"
 
 function cleanup
     set -l packages (pacman -Qtdq)
@@ -41,15 +41,15 @@ function clear
     switch $TERM
         case xterm-256color
             command clear
-            prompt_to_bottom_line
+            tput cup $LINES
             fastfetch --load-config $HOME/.config/fastfetch/wezterm.jsonc
         case linux
             command clear
-            prompt_to_bottom_line
+            tput cup $LINES
             fastfetch
         case '*'
             command clear
-            prompt_to_bottom_line
+            tput cup $LINES
     end
 end
 
