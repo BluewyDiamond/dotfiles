@@ -1,12 +1,8 @@
 abbr dotfiles "cd $HOME/git/private/dotfiles"
-
 abbr snv "EDITOR=nvim sudoedit"
-
 abbr nv nvim
 abbr lg lazygit
-
-# might be useful
-alias fixpacman="sudo rm /var/lib/pacman/db.lck"
+abbr fixpacman="sudo rm /var/lib/pacman/db.lck"
 
 function cleanup
     set -l packages (pacman -Qtdq)
@@ -18,31 +14,29 @@ function cleanup
     sudo pacman -Rns $packages
 end
 
-# List all files and directories including hidden files.
+# Because eza is better overall.
+#
 function la
     eza -la --color=always --icons $argv
 end
 
-# List only hidden files.
 function lh
     eza -ld .* --color=always --icons $argv
 end
 
-# List only non-hidden files.
 function ls
     eza -l --color=always --icons $argv
 end
 
-# List in tree view non-hidden files and directories.
 function lt
     eza -T --color=always --icons $argv
 end
 
-# List in tree view all files and directories including hidden files.
 function lta
     eza -aT --color=always --icons $argv
 end
 
+# Part of making the prompt to be at the bottom of the terminal.
 function clear
     switch $TERM
         case xterm-256color
@@ -68,6 +62,8 @@ function git --wraps git
     end
 end
 
+# I like aura package manager but it has some bugs
+# so I wrap paru to simulate aura package manager.
 function aura
     set array $argv
     set cmd paru -S
