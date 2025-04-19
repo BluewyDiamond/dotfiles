@@ -1,64 +1,66 @@
 @mixin bar_item {
    background: $color_surface_container;
    color: $color_on_surface;
+
+   border-radius: 4px;
    padding: $space_small;
 
    &.active {
-      background: $color_primary_container;
-   }
-
-   &.urgent {
-      background: $color_warning_container;
+      background: $onedark_blue_rgb;
    }
 }
 
-@mixin bar_item_button {
-   @include bar_item;
+@mixin bar_button {
+   background: $color_surface_container;
+   color: $color_on_surface;
 
-   &:hover {
-      background: $color_primary_container;
-   }
-}
+   border-radius: 4px;
+   padding: $space_small;
 
-.icon-with-label-fallback {
-   &.image {
-      -gtk-icon-size: 24px;
-   }
-
-   &.label {
-      min-width: 24px;
-      min-height: 24px;
-      line-height: 1;
-      color: $color_on_surface;
+   &.active {
+      background: $onedark_blue_rgb;
    }
 }
 
 .bar-window {
+   .icon-with-label-fallback {
+      &.image {
+         -gtk-icon-size: 24px;
+      }
+
+      &.label {
+         min-width: 24px;
+         min-height: 24px;
+         color: $color_on_surface;
+      }
+   }
+
    > box {
-      @include container_shape();
-      margin: 12px 12px 0 12px;
-      padding: $space_medium;
       background: $color_surface;
+
+      padding: $space_medium;
+      margin: 12px 12px 0 12px;
+
       border: 4px solid $color_outline_variant;
+      border-radius: $border_radius;
    }
 }
 
 .bar-item-app-launcher {
-   @include bar_item_button;
-   @include container_shape();
+   @include bar_button;
    margin-right: $space_medium;
 }
 
 .bar-item-workspaces {
    @include bar_item;
-   @include container_shape();
    margin-right: $space_medium;
 
    > button {
-      @include container_shape();
+      background: $color_surface;
+
       min-width: 12px;
       margin-right: 4px;
-      background: $color_surface;
+      border-radius: $border_radius;
 
       &:hover {
          background: $color_primary_container;
@@ -96,15 +98,13 @@
 
 .bar-item-taskbar {
    > button {
-      @include bar_item_button;
-      @include container_shape();
+      @include bar_button;
       margin-right: $space_medium;
    }
 }
 
 .bar-item-notifications {
    @include bar_item;
-   @include container_shape();
    margin-right: $space_medium;
 
    &:hover {
@@ -114,14 +114,12 @@
 
 .bar-item-time {
    @include bar_item;
-   @include container_shape();
    margin-right: $space_medium;
 }
 
 .bar-item-tray {
    .tray-item {
-      @include bar_item_button;
-      @include container_shape();
+      @include bar_button;
       margin-left: $space_medium;
 
       & image {
@@ -158,7 +156,6 @@
 
 .bar-item-ram {
    @include bar_item;
-   @include container_shape();
    margin-left: $space_medium;
 
    ._1 {
@@ -173,7 +170,6 @@
 
 .bar-item-cpu {
    @include bar_item;
-   @include container_shape();
    margin-left: $space_medium;
 
    ._1 {
@@ -188,13 +184,11 @@
 
 .bar-item-battery {
    @include bar_item;
-   @include container_shape();
    margin-left: $space_medium;
 }
 
 .bar-item-indicators {
-   @include bar_item;
-   @include container_shape();
+   @include bar_button;
    margin-left: $space_medium;
 
    > box {
@@ -209,13 +203,11 @@
 }
 
 .bar-item-power {
-   @include bar_item_button;
-   @include container_shape();
+   @include bar_button;
    margin-left: $space_medium;
 }
 
 .bar-item-control-center {
    @include bar_item;
-   @include container_shape();
    margin-left: $space_medium;
 }
