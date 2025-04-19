@@ -69,13 +69,28 @@ function git --wraps git
 end
 
 function aura
-    set line $argv
+    set array $argv
+    set cmd paru -S
 
-    if string match -qr -- S "$line"
-        set rest (string replace -r -- '(-S |S)' '' "$line")
-        paru -S --repo $rest
-    else if string match -qr -- A "$line"
-        set rest (string replace -r -- '(-A |A)' '' "$line")
-        paru -S --aur $rest
+    for index in (seq (count $array) -1 1)
+        if string match -qr -- '^-S$' "$array[$index]"
+            set -e array[$index]
+            set -a cmd --repo
+        else if string match -qr -- '^-S.*$' "$array[$index]"
+            set array[$index] (string replace -r -- 'S' '' $array[$index])
+            set -a cmd --repo
+        else if string match -qr -- '^-A$' "$array[$index]"
+            set -e array[$index]
+            set -a cmd --aur
+        else if string match -qr -- '^-A.*$' "$array[$index]"
+            set array[$index] (string replace -r -- 'A' '' $array[$index])
+            set -a cmd --aur
+        else if string match -qr -- '^-W$' "$array[$index]"
+            set -e array[$index]
+        else if string match -qr -- '^-W.*$' "$array[$index]"
+            set array[$index] (string replace -r -- 'W' '' $array[$index])
+        end
     end
+
+    $cmd $array
 end
