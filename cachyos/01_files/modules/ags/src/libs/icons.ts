@@ -138,7 +138,7 @@ export default {
 
    recorder: {
       recording: createIcon({ normal: "media-record" }),
-      screencast: createIcon({ normal: "com.github.artemanufrij.screencast" }),
+      screencast: createIcon({ normal: "media-record" }),
    },
 
    notifications: {

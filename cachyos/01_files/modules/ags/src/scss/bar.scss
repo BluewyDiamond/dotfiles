@@ -18,7 +18,8 @@
    padding: $space_small;
 
    &.active {
-      background: $onedark_blue_rgb;
+      background: $color_primary;
+      color: $color_on_primary;
    }
 }
 
