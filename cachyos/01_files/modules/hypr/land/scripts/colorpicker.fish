@@ -1,12 +1,7 @@
 #!/usr/bin/env fish
 
-set SCRIPT_NAME (basename (status filename))
+set the_script (realpath (status --current-filename))
 
-if not which hyprpicker
-    notify-send "$SCRIPT_NAME" "hyprpicker not found..."
-end
-
-set rgb (hyprpicker)
-echo $rgb | wl-copy
-
-notify-send "$SCRIPT_NAME" "Copied $rgb to clipboard."
+set hyprpicker_output (hyprpicker; or notify-send "$the_script" "Failed, status code non zero!")
+wl-copy $hyprpicker_output
+notify-send "$the_script" "Copied $hyprpicker_output to clipboard."
