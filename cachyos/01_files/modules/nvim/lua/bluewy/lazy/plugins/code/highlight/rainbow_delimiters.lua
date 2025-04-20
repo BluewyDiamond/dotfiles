@@ -1,30 +1,28 @@
 return {
    "HiPhish/rainbow-delimiters.nvim",
 
-   config = function()
+   --- @type rainbow_delimiters.config
+   opts = {
+      query = {
+         [""] = "rainbow-delimiters",
+         lua = "rainbow-blocks",
+      },
+
+      priority = {
+         [""] = 110,
+         lua = 210,
+      },
+
+      highlight = {
+         "RainbowDelimiterOrange",
+         "RainbowDelimiterViolet",
+         "RainbowDelimiterCyan",
+      },
+   },
+
+   config = function(_, opts)
       local rainbow_delimiters = require("rainbow-delimiters")
-
-      require("rainbow-delimiters.setup").setup({
-         strategy = {
-            [""] = rainbow_delimiters.strategy["global"],
-         },
-
-         query = {
-            [""] = "rainbow-delimiters",
-            lua = "rainbow-blocks",
-         },
-
-         priority = {
-            [""] = 110,
-            lua = 210,
-         },
-
-         highlight = {
-            "RainbowDelimiterOrange",
-            "RainbowDelimiterViolet",
-            "RainbowDelimiterCyan",
-         },
-      })
+      require("rainbow-delimiters.setup").setup(opts)
 
       -- mappings
       --

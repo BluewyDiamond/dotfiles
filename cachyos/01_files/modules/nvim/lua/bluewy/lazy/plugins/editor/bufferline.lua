@@ -1,15 +1,16 @@
 return {
    "akinsho/bufferline.nvim",
-   dependencies = { "nvim-tree/nvim-web-devicons" },
 
-   config = function()
+   --- @type bufferline.UserConfig
+   opts = {
+      options = {
+         separator_style = "slant",
+      },
+   },
+
+   config = function(_, opts)
       local bufferline = require("bufferline")
-
-      bufferline.setup({
-         options = {
-            separator_style = "slant",
-         },
-      })
+      bufferline.setup(opts)
 
       -- mappings
       --
@@ -33,4 +34,6 @@ return {
          bufferline.close_with_pick()
       end, { noremap = true, silent = true, desc = "close buffer" })
    end,
+
+   dependencies = { "nvim-tree/nvim-web-devicons" },
 }

@@ -23,11 +23,14 @@ vim.opt.listchars:append({
    nbsp = whitespace,
 })
 
-vim.diagnostic.config({
-   virtual_text = true, -- Show inline errors
-   signs = true, -- Gutter icons
-   underline = true, -- Squiggly lines
-})
+vim.diagnostic.config(
+   --- @type vim.diagnostic.Opts
+   {
+      virtual_text = true,
+      signs = true,
+      underline = true,
+   }
+)
 
 -- mappings: movement
 --

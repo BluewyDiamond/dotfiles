@@ -1,9 +1,9 @@
 return {
    "mrcjkb/rustaceanvim",
-   version = "^5",
+   version = "^6",
    ft = { "rust" },
 
-   config = function()
+   init = function()
       vim.g.rust_recommended_style = false
    end,
 }

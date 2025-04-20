@@ -1,1 +1,1 @@
-require("bluewy2")
+require("bluewy")

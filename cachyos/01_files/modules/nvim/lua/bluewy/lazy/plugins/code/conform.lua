@@ -1,38 +1,40 @@
 return {
    "stevearc/conform.nvim",
 
-   config = function()
+   --- @type conform.setupOpts
+   opts = {
+      formatters_by_ft = {
+         -- default
+         --
+         fish = { "fish_indent" },
+         lua = { "stylua" },
+
+         -- programming languages
+         --
+         csharp = { "dotnet tool run dotnet-csharpier ." },
+         javascript = { "prettier" },
+         python = { "black" },
+         php = { "pretty-php" },
+         rust = { "rustfmt" },
+         typescript = { "prettier" },
+         vala = { "uncrustify" },
+
+         -- markup languages
+         css = { "prettier" },
+         scss = { "prettier" },
+         html = { "prettier" },
+
+         -- data formats
+         --
+         json = { "prettier" },
+         jsonc = { "prettier" },
+         toml = { "taplo" },
+      },
+   },
+
+   config = function(_, opts)
       local conform = require("conform")
-
-      conform.setup({
-         formatters_by_ft = {
-            -- default
-            --
-            fish = { "fish_indent" },
-            lua = { "stylua" },
-
-            -- programming languages
-            --
-            csharp = { "dotnet tool run dotnet-csharpier ." },
-            javascript = { "prettier" },
-            python = { "black" },
-            php = { "pretty-php" },
-            rust = { "rustfmt" },
-            typescript = { "prettier" },
-            vala = { "uncrustify" },
-
-            -- markup languages
-            css = { "prettier" },
-            scss = { "prettier" },
-            html = { "prettier" },
-
-            -- data formats
-            --
-            json = { "prettier" },
-            jsonc = { "prettier" },
-            toml = { "taplo" },
-         },
-      })
+      conform.setup(opts)
 
       -- mappings
       --

@@ -1,2 +1,2 @@
-require("bluewy.config.vim")
+require("bluewy.config")
 require("bluewy.lazy")
