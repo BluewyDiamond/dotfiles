@@ -1,4 +1,2 @@
-require("bluewy.vim")
+require("bluewy.config.vim")
 require("bluewy.lazy")
-
-require("snacks").dashboard.setup()
