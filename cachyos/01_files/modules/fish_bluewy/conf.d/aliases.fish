@@ -66,25 +66,27 @@ end
 # so I wrap paru to simulate aura package manager.
 function aura
     set array $argv
-    set cmd paru -S
+    set cmd paru
 
     for index in (seq (count $array) -1 1)
         if string match -qr -- '^-S$' "$array[$index]"
             set -e array[$index]
-            set -a cmd --repo
+            set -a cmd -S --repo
         else if string match -qr -- '^-S.*$' "$array[$index]"
             set array[$index] (string replace -r -- 'S' '' $array[$index])
-            set -a cmd --repo
+            set -a cmd -S --repo
         else if string match -qr -- '^-A$' "$array[$index]"
             set -e array[$index]
-            set -a cmd --aur
+            set -a cmd -S --aur
         else if string match -qr -- '^-A.*$' "$array[$index]"
             set array[$index] (string replace -r -- 'A' '' $array[$index])
-            set -a cmd --aur
+            set -a cmd -S --aur
         else if string match -qr -- '^-W$' "$array[$index]"
             set -e array[$index]
+            set -a cmd -S
         else if string match -qr -- '^-W.*$' "$array[$index]"
             set array[$index] (string replace -r -- 'W' '' $array[$index])
+            set -a cmd -S
         end
     end
 
