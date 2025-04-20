@@ -187,7 +187,8 @@
    },
 
    "discord": {
-      "std": ["speech-dispatcher", "vesktop-bin"]
+      "std": ["speech-dispatcher"],
+      "aur:": ["equibop-bin"]
    },
 
    "amd_cpu": {
