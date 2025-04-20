@@ -22,34 +22,12 @@ function scan
     echo $value
 end
 
-function print_chosen_repository_from_json_file
+function get_array_of_packages
     set top_level_key $argv[1]
     set repository $argv[2]
 
-    if test -z (string trim $repository)
-        print "string is empty or contains only spaces"
-        return 1
-    end
-
     set packages (jq -r ".\"$top_level_key\".\"$repository\"? | select(. != null) | join(\" \")" $config_path)
-
-    if test -z (string trim "$packages")
-        return 1
-    end
-
-    echo $packages
-end
-
-# This section is for utils stuff.
-#
-function print_horizontal_line
-    set width (tput cols)
-
-    for x in (seq 1 $width)
-        echo -n -
-    end
-
-    echo ""
+    string split ' ' $packages
 end
 
 # main
@@ -85,13 +63,13 @@ end
 set choices (scan)
 
 for choice in (string split " " $choices)
-    if not string match -qr '^[0-9]+$' -- "$choice"
-        print "IGNORING: value is not valid -> $choice"
+    if not string match -qr -- '^[0-9]+$' "$choice"
+        print "IGNORING: choice=$choice is not valid!"
         continue
     end
 
     if test "$choice" -le 0 -o "$choice" -gt $top_level_keys_count
-        print "IGNORING: value of range.."
+        print "IGNORING: choice=$choice is out of range..."
         continue
     end
 
@@ -104,9 +82,14 @@ if not set -q curated_configs[1]
 end
 
 for curated_config in $curated_configs
-    set -a common_standard_repository (string split " " (print_chosen_repository_from_json_file $curated_config std))
-    set -a common_arch_user_repository (string split " " (print_chosen_repository_from_json_file $curated_config aur))
+    set -a standard_packages (get_array_of_packages $curated_config std)
+    set -a aur_packages (get_array_of_packages $curated_config aur)
 end
 
-sudo pacman -Syy --needed $common_standard_repository
-paru -S --aur --needed $common_arch_user_repository
+if set -q standard_packages[1]
+    sudo pacman -Syy --needed $standard_packages
+end
+
+if set -q aur_packages[1]
+    paru -S --aur --needed $aur_packages
+end

@@ -1,10 +1,12 @@
 #!/usr/bin/env fish
 
 # global
+#
 set script_name (path basename (status filename))
 
 # utils
-function message
+#
+function print
     set_color magenta
     echo -n "$script_name => "
     set_color yellow
@@ -26,8 +28,8 @@ end
 set working_dir /tmp/$script_name
 set get_packages_to_remove (./lib/list_installed_packages_but_not_in_list.fish)
 
-message $get_packages_to_remove
-message "Remove the above? [y/N]"
+print $get_packages_to_remove
+print "Remove the above? [y/N]"
 
 set choice (scan N)
 
