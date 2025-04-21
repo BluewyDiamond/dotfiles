@@ -59,42 +59,44 @@ function process
     message "TASK: $operation $source to $target, super is $super."
 
     if test true = $super
-        set ex_sudo sudo
+        set sudo_command sudo
     end
 
     set target_dirname (dirname $target)
 
     if not test -d $target_dirname
         if not test -e $target_dirname
-            message "INFO: (dirname $target) does not exist, it will be created."
-            set ex_prepare "$ex_sudo mkdir -p $target_dirname"
+            set -a prepare_commands_as_strings "message \"INFO: target_dirname=$target_dirname does not exist, it will be created.\""
+            set -a prepare_commands_as_strings "$sudo_command mkdir -p $target_dirname"
         else
-            message "INFO: (dirname $target) is not a folder, it will be trashed and recreated."
-            set ex_prepare "$ex_sudo trash $target_dirname"
-            set -a ex_prepare "$ex_sudo mkdir -p $target_dirname"
+            set -a "message \"INFO: target_dirname=$target_dirname is not a folder, it will be trashed and recreated.\""
+            set -a prepare_commands_as_strings "$sudo_command trash $target_dirname"
+            set -a prepare_commands_as_strings "$sudo_command mkdir -p $target_dirname"
         end
     end
 
     if test -e "$target" -o -L "$target"
-        message "WARNING: $target already exists, it will be trashed."
-        set ex_prepare "$ex_sudo trash $target"
+        set -a prepare_commands_as_strings "message \"WARNING: target=$target already exists, it will be trashed.\""
+        set -a prepare_commands_as_strings "$sudo_command trash $target"
     end
 
     if test copy = $operation
-        set ex_command "$ex_sudo cp"
+        set -a action_command cp
     else
-        set ex_command "$ex_sudo ln -s"
+        set -a action_command ln -s
     end
 
-    set ex_execute $ex_sudo $ex_command $source $target
+    set execute_command $sudo_command $action_command $source $target
 
-    for line in $ex_prepare
-        $line
+    # calculated commands to run
+    #
+    for command_as_string in $prepare_commands_as_strings
+        set cmd (string split ' ' (string trim $command_as_string))
+        echo "debug: cmd=$cmd"
+        $cmd
     end
 
-    for line in $ex_execute
-        $line
-    end
+    $execute_command
 end
 
 # main
@@ -117,7 +119,7 @@ for file in $current_dir/modules/bin/*
     process false link $file $HOME/.local/bin/(basename $file)
 end
 
-process $current_dir/modules/cachy/cachy.overrides.cfg $HOME/.cachy/cachy.overrides.cfg link
+process false link $current_dir/modules/cachy/cachy.overrides.cfg $HOME/.cachy/cachy.overrides.cfg
 
 set profile_dirs (find "$HOME/.cachy" -type d -name '*default-release' 2>/dev/null)
 
