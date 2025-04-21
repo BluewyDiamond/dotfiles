@@ -66,17 +66,20 @@ function process
 
     if not test -d $target_dirname
         if not test -e $target_dirname
-            set -a prepare_commands_as_strings "message \"INFO: target_dirname=$target_dirname does not exist, it will be created.\""
+            set -l for_lsp print "INFO: target_dirname=$target_dirname does not exist, it will be created."
+            set -a prepare_commands_as_strings "$for_lsp"
             set -a prepare_commands_as_strings "$sudo_command mkdir -p $target_dirname"
         else
-            set -a "message \"INFO: target_dirname=$target_dirname is not a folder, it will be trashed and recreated.\""
+            set -l for_lsp print "INFO: target_dirname=$target_dirname is not a folder, it will be trashed and recreated."
+            set -a prepare_commands_as_strings "$for_lsp"
             set -a prepare_commands_as_strings "$sudo_command trash $target_dirname"
             set -a prepare_commands_as_strings "$sudo_command mkdir -p $target_dirname"
         end
     end
 
     if test -e "$target" -o -L "$target"
-        set -a prepare_commands_as_strings "message \"WARNING: target=$target already exists, it will be trashed.\""
+        set -l for_lsp print "WARNING: target=$target already exists, it will be trashed."
+        set -a prepare_commands_as_strings "$for_lsp"
         set -a prepare_commands_as_strings "$sudo_command trash $target"
     end
 
