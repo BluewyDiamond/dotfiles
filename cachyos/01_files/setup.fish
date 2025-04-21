@@ -95,7 +95,6 @@ function process
     #
     for command_as_string in $prepare_commands_as_strings
         set cmd (string split ' ' (string trim $command_as_string))
-        echo "debug: cmd=$cmd"
         $cmd
     end
 
