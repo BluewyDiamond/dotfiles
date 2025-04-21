@@ -6,7 +6,7 @@ set script_name (path basename (status filename))
 
 # utils
 #
-function message
+function print
     set script_name (path basename (status filename))
 
     set_color magenta
@@ -32,21 +32,21 @@ function process
     set super $argv[1]
 
     if not contains "$super" true false
-        message "ERROR: super must be either 'true' or 'false'."
+        print "ERROR: super must be either 'true' or 'false'."
         return 1
     end
 
     set operation $argv[2]
 
     if not contains "$operation" copy link
-        message "ERROR: operation must be either 'copy' or 'link'."
+        print "ERROR: operation must be either 'copy' or 'link'."
         return 1
     end
 
     set source $argv[3]
 
     if not test -e "$source"
-        message "ERROR: source '$source' is not a valid file."
+        print "ERROR: source '$source' is not a valid file."
         return 1
     end
 
@@ -56,7 +56,7 @@ function process
     # do stuff, store in a variable the state and then based of it do it.
     # Maybe this way it is more readable.
 
-    message "TASK: $operation $source to $target, super is $super."
+    print "TASK: $operation $source to $target, super is $super."
 
     if test true = $super
         set sudo_command sudo
@@ -102,7 +102,7 @@ end
 # main
 #
 if not which trash &>/dev/null
-    message "ERROR: trash-cli is required."
+    print "ERROR: trash-cli is required."
     exit 1
 end
 
@@ -121,12 +121,15 @@ end
 
 process false link $current_dir/modules/cachy/cachy.overrides.cfg $HOME/.cachy/cachy.overrides.cfg
 
-set profile_dirs (find "$HOME/.cachy" -type d -name '*default-release' 2>/dev/null)
-
-for profile_dir in $profile_dirs
+for profile_dir in (find "$HOME/.cachy" -type d -name '*default-release' 2>/dev/null)
     set chrome_dir $profile_dir/chrome
 
     if not test -e $chrome_dir
+        mkdir -p $chrome_dir
+    end
+
+    if not test -d
+        trash $chrome_dir
         mkdir -p $chrome_dir
     end
 
