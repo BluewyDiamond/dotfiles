@@ -5,7 +5,7 @@
 # disks are added and removed. See fstab(5).
 #
 # <file system>             <mount point>  <type>  <options>  <dump>  <pass>
-UUID=3002-C819                            /boot/efi      vfat    defaults   0 2
+UUID=3002-C819                            /boot      vfat    defaults   0 2
 UUID=ab06c198-6674-4f72-89ef-b1bec6ecb995 /              btrfs   subvol=/@,defaults,noatime,compress=zstd,commit=120 0 0
 UUID=ab06c198-6674-4f72-89ef-b1bec6ecb995 /root          btrfs   subvol=/@root,defaults,noatime,compress=zstd,commit=120 0 0
 UUID=ab06c198-6674-4f72-89ef-b1bec6ecb995 /srv           btrfs   subvol=/@srv,defaults,noatime,compress=zstd,commit=120 0 0
