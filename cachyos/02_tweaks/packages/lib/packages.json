@@ -61,9 +61,7 @@
          "hyprpolkitagent",
 
          "xdg-desktop-portal-hyprland",
-         "xdg-desktop-portal-gtk",
-
-         "xwaylandvideobridge"
+         "xdg-desktop-portal-gtk"
       ],
 
       "aur": ["wezterm-git"]
