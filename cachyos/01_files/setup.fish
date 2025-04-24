@@ -165,5 +165,5 @@ end
 process false link $current_dir/modules/electron-flags.conf $HOME/.config/electron-flags.conf
 process false link $current_dir/modules/user-dirs.dirs $HOME/.config/user-dirs.dirs
 
-process true copy $current_dir/modules/systemd_services/screen_off.service /etc/systemd/system/screen_off.service; and systemd enable screen_off.service
+process true copy $current_dir/modules/systemd_services/screen_off.service /etc/systemd/system/screen_off.service; and systemctl enable screen_off.service
 process true copy $current_dir/modules/systemd_services/screen_off.fish /usr/local/bin/screen_off.fish
