@@ -87,9 +87,9 @@ for curated_config in $curated_configs
 end
 
 if set -q standard_packages[1]
-    sudo pacman -Syy --needed $standard_packages
+    sudo pacman -Syy --needed -- $standard_packages
 end
 
 if set -q aur_packages[1]
-    paru -S --aur --needed $aur_packages
+    paru -S --aur --needed -- $aur_packages
 end
