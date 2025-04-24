@@ -140,7 +140,10 @@ end
 
 process false link $current_dir/modules/css $HOME/.config/css
 process false link $current_dir/modules/fastfetch $HOME/.config/fastfetch
+
 process false link $current_dir/modules/fish_bluewy $HOME/.config/fish_bluewy
+echo "source $HOME/.config/fish_bluewy/config.fish" >$HOME/.config/fish/conf.d/init_bluewy.fish
+
 process false link $current_dir/modules/fuzzel $HOME/.config/fuzzel
 process false link $current_dir/modules/hypr $HOME/.config/hypr
 
