@@ -9,4 +9,4 @@ TTYPath=/dev/console
 ExecStart=/usr/local/bin/screen_off.sh
 
 [Install]
-WantedBy=local.target
+WantedBy=multi-user.target
