@@ -1,6 +1,6 @@
 #!/usr/bin/env fish
 
-set get_all_packages_script (dirname (status filename))'/./get_all_packages.fish'
+set get_packages_script (dirname (status filename))'/./get_packages__arr.fish'
 
 function is_package_a_dependency
     set package $argv[1]
@@ -19,7 +19,7 @@ function is_package_a_dependency
     end
 end
 
-set all_packages ($get_all_packages_script)
+set packages ($get_packages_script)
 set installed_packages (pacman -Qqe)
 set aur_packages (pacman -Qqme)
 
@@ -28,7 +28,7 @@ for installed_package in $installed_packages
         continue
     end
 
-    if contains $installed_package $all_packages
+    if contains $installed_package $packages
         continue
     end
 
