@@ -88,6 +88,7 @@ function AppButton(
                            xalign: 0,
                            wrap: true,
                            wrapMode: Pango.WrapMode.WORD_CHAR,
+                           maxWidthChars: options.appLauncher.maxChars,
                            label: app.description,
                         })
                      );

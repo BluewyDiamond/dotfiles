@@ -5,6 +5,8 @@ import icons from "../../libs/icons";
 import { IconWithLabelFallback } from "./IconWithLabelFallback";
 import Pango from "gi://Pango?version=1.0";
 import { findIcon } from "../../utils/image";
+import { LabelWithOverhead } from "../../utils/widget";
+import options from "../../options";
 
 function getUrgency(n: Notifd.Notification): string {
    switch (n.urgency) {
@@ -153,11 +155,12 @@ export default function (props: NotificationProps): Gtk.Box {
 
                               Widget.Label({
                                  cssClasses: ["body"],
+                                 hexpand: true,
                                  halign: Gtk.Align.START,
                                  xalign: 0,
                                  wrap: true,
                                  wrapMode: Pango.WrapMode.WORD_CHAR,
-                                 // maxWidthChars: 30,
+                                 maxWidthChars: options.general.maxChars,
                                  useMarkup: true,
                                  label: notification.body,
                               }),

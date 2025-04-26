@@ -60,7 +60,7 @@ export interface PopupWindowProps {
    setup?: (self: Gtk.Window) => void;
 }
 
-// This implementation fixes label wrapping.
+// This implementation no longer fixes label wrapping.
 export default function (
    popupWindowProps: PopupWindowProps,
    child: Gtk.Widget
@@ -102,7 +102,6 @@ export default function (
          },
 
          Filler({
-            widthRequest: options.general.filler.width,
             hexpand: true,
             vexpand: true,
             onClicked: curatedCallback,
@@ -131,7 +130,6 @@ export default function (
          ),
 
          Filler({
-            widthRequest: options.general.filler.width,
             hexpand: true,
             vexpand: true,
             onClicked: curatedCallback,
@@ -147,7 +145,6 @@ export default function (
          },
 
          Filler({
-            widthRequest: options.general.filler.width,
             hexpand: true,
             vexpand: true,
             onClicked: curatedCallback,
@@ -176,7 +173,6 @@ export default function (
          ),
 
          Filler({
-            widthRequest: options.general.filler.width,
             hexpand: true,
             vexpand: true,
             onClicked: curatedCallback,
@@ -196,7 +192,6 @@ export default function (
          },
 
          Filler({
-            widthRequest: options.general.filler.width,
             hexpand: true,
             vexpand: true,
             onClicked: curatedCallback,
@@ -220,7 +215,6 @@ export default function (
             Filler({
                hexpand: true,
                vexpand: true,
-               heightRequest: options.general.filler.height,
                onClicked: curatedCallback,
             })
          ),

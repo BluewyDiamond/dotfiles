@@ -12,6 +12,8 @@ export default {
          width: 4000,
          height: 4000,
       },
+
+      maxChars: 30,
    },
 
    bar: {
@@ -26,6 +28,7 @@ export default {
       name: "astal_notifications_popup",
       timeout: 5000,
       maxItems: 5,
+      maxChars: 30,
    },
 
    appLauncher: {
@@ -35,6 +38,8 @@ export default {
       refresh: {
          symbolic: true,
       },
+
+      maxChars: 50,
    },
 
    controlCenter: {
