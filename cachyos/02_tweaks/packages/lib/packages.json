@@ -201,6 +201,10 @@
       "std": ["intel-ucode"]
    },
 
+   "nvidia_gpu": {
+      "std": ["nvidia-utils", "nvidia-prime"]
+   },
+
    "laptop": {
       "std": ["brightnessctl", "upower"]
    },
