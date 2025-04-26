@@ -1,4 +1,4 @@
-import { type Gtk, Widget } from "astal/gtk4";
+import { Gtk, Widget } from "astal/gtk4";
 import { findIcon } from "../../utils/image";
 import options from "../../options";
 

@@ -3,6 +3,7 @@ export default {
       icons: "candy-icons",
       rapidTimeout: 100,
       fallbackLabel: "⚠",
+      maxChars: 30,
 
       sh: {
          cmd: ["fish", "-c"],
@@ -12,8 +13,6 @@ export default {
          width: 4000,
          height: 4000,
       },
-
-      maxChars: 30,
    },
 
    bar: {
@@ -34,12 +33,12 @@ export default {
    appLauncher: {
       name: "astal_app_launcher",
       maxItems: 5,
+      maxChars: 45,
 
       refresh: {
          symbolic: true,
       },
 
-      maxChars: 50,
    },
 
    controlCenter: {

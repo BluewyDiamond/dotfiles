@@ -5,7 +5,6 @@ import icons from "../../libs/icons";
 import { IconWithLabelFallback } from "./IconWithLabelFallback";
 import Pango from "gi://Pango?version=1.0";
 import { findIcon } from "../../utils/image";
-import { LabelWithOverhead } from "../../utils/widget";
 import options from "../../options";
 
 function getUrgency(n: Notifd.Notification): string {

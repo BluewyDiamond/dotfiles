@@ -1,5 +1,4 @@
 import { App, Astal, Gdk, type Gtk, hook, Widget } from "astal/gtk4";
-import options from "../../options";
 import { type AstalIO, interval } from "astal";
 import { matchInputRegionOfWidget as makeClickThroughWindowWithExceptions } from "../../utils/widget";
 
