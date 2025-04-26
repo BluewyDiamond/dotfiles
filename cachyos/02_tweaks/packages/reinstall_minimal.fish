@@ -25,10 +25,8 @@ function scan
 end
 
 # main
-set working_dir /tmp/$script_name
-set get_packages_to_remove (./lib/list_installed_packages_but_not_in_list.fish)
-
-print $get_packages_to_remove
+set pkgs_to_remove (./lib/get_packages_unlisted__arr.fish)
+print $pkgs_to_remove
 print "Remove the above? [y/N]"
 
 set choice (scan N)
@@ -37,5 +35,5 @@ if not string match -q -i -- Y "$choice"
     exit 1
 end
 
-sudo pacman -Rns $get_packages_to_remove
+sudo pacman -Rns -- $pkgs_to_remove
 sudo chwd -a -f
