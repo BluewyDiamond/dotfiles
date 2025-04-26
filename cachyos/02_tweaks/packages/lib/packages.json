@@ -197,6 +197,14 @@
       "std": ["lact"]
    },
 
+   "intel_cpu": {
+      "std": ["intel-ucode"]
+   },
+
+   "laptop": {
+      "std": ["brightnessctl", "upower"]
+   },
+
    "virtualization": {
       "std": [
          "qemu-base",
