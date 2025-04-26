@@ -45,6 +45,7 @@ export class NotificationsEfficientRenderingMap
 
             Notification({
                notification: notifd.get_notification(notification.id),
+               maxChars: options.notificationsPopup.maxChars,
 
                setup: () => {
                   if (

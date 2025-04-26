@@ -5,7 +5,6 @@ import icons from "../../libs/icons";
 import { IconWithLabelFallback } from "./IconWithLabelFallback";
 import Pango from "gi://Pango?version=1.0";
 import { findIcon } from "../../utils/image";
-import options from "../../options";
 
 function getUrgency(n: Notifd.Notification): string {
    switch (n.urgency) {
@@ -25,11 +24,12 @@ function time(time: number, format = "%H:%M"): string {
 
 interface NotificationProps {
    notification: Notifd.Notification;
+   maxChars?: number;
    setup?: () => void;
 }
 
 export default function (props: NotificationProps): Gtk.Box {
-   const { notification, setup } = props;
+   const { notification, maxChars, setup } = props;
 
    return Widget.Box({
       cssClasses: ["notification", getUrgency(notification)],
@@ -65,6 +65,7 @@ export default function (props: NotificationProps): Gtk.Box {
                      halign: Gtk.Align.START,
                      cssClasses: ["app-name"],
                      ellipsize: Pango.EllipsizeMode.END,
+                     maxWidthChars: maxChars,
 
                      label:
                         notification.appName === "" ?
@@ -143,6 +144,7 @@ export default function (props: NotificationProps): Gtk.Box {
                                  wrap: true,
                                  wrapMode: Pango.WrapMode.WORD_CHAR,
                                  useMarkup: true,
+                                 maxWidthChars: maxChars,
                                  label: notification.summary,
                               }),
                            ];
@@ -159,7 +161,7 @@ export default function (props: NotificationProps): Gtk.Box {
                                  xalign: 0,
                                  wrap: true,
                                  wrapMode: Pango.WrapMode.WORD_CHAR,
-                                 maxWidthChars: options.general.maxChars,
+                                 maxWidthChars: maxChars,
                                  useMarkup: true,
                                  label: notification.body,
                               }),
@@ -199,9 +201,11 @@ export default function (props: NotificationProps): Gtk.Box {
                                  },
 
                                  Widget.Label({
-                                    label,
-                                    halign: Gtk.Align.CENTER,
                                     hexpand: true,
+                                    halign: Gtk.Align.CENTER,
+                                    ellipsize: Pango.EllipsizeMode.END,
+                                    maxWidthChars: maxChars,
+                                    label,
                                  })
                               ),
                            ];
