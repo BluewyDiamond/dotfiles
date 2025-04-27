@@ -8,11 +8,6 @@ export default {
       sh: {
          cmd: ["fish", "-c"],
       },
-
-      filler: {
-         width: 4000,
-         height: 4000,
-      },
    },
 
    bar: {
@@ -34,19 +29,9 @@ export default {
       name: "astal_app_launcher",
       maxItems: 5,
       maxChars: 45,
-
-      refresh: {
-         symbolic: true,
-      },
-
    },
 
    controlCenter: {
       name: "control_center",
-
-      actions: {
-         rows: 2,
-         columns: 2,
-      },
    },
 };

@@ -4,7 +4,7 @@ import AppLauncherButton from "./composables/AppLauncherButton";
 import WorkspacesBox from "./composables/WorkspacesBox";
 import TaskbarBox from "./composables/taskbar/TaskbarBox";
 import NotificationsButton from "./composables/NotificationsButton";
-import TimeLabel from "./composables/TimeLabel";
+import DateTimeLabel from "./composables/DateTimeLabel";
 import TrayBox from "./composables/tray/TrayBox";
 import IndicatorsButton from "./composables/indicators/IndicatorsButton";
 import BatteryBox from "./composables/BatteryBox";
@@ -45,8 +45,12 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
          centerWidget: Widget.CenterBox({
             halign: Gtk.Align.CENTER,
 
+            startWidget: Widget.Box({
+               children: [NotificationsButton()],
+            }),
+
             centerWidget: Widget.Box({
-               children: [NotificationsButton(), TimeLabel()],
+               children: [DateTimeLabel()],
             }),
          }),
 
