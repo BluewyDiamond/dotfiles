@@ -7,8 +7,6 @@ import NotificationsButton from "./composables/NotificationsButton";
 import TimeLabel from "./composables/TimeLabel";
 import TrayBox from "./composables/tray/TrayBox";
 import IndicatorsButton from "./composables/indicators/IndicatorsButton";
-import RamButton from "./composables/RamButton";
-import CpuButton from "./composables/CpuButton";
 import BatteryBox from "./composables/BatteryBox";
 import PowerButton from "./composables/PowerButton";
 
@@ -59,8 +57,6 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
             children: [
                TrayBox(),
                IndicatorsButton(),
-               RamButton(),
-               CpuButton(),
                BatteryBox(),
                PowerButton(),
             ],
