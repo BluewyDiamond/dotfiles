@@ -2,7 +2,7 @@
 
 set script_name (basename (status filename))
 
-function message
+function print
     set_color magenta
     echo -n "$script_name => "
     set_color yellow
@@ -30,14 +30,14 @@ end
 # main
 #
 # systemd-networkd
-message "WARNING: This will delete existing config files (Revise the script for more details). Continue? [y/N]"
+print "WARNING: This will delete existing config files (Revise the script for more details). Continue? [y/N]"
 set choice (scan N)
 
 if not string match -q -i -- Y "$choice"
     return
 end
 
-message "Are you sure? [y/N]"
+print "Are you sure? [y/N]"
 set choice (scan N)
 
 if not string match -q -i -- Y "$choice"
@@ -113,16 +113,13 @@ if test -f $iwd_conf_path
     sudo rm $iwd_conf_path
 end
 
-append_to_file "[General]" $iwd_conf_path
-append_to_file "EnableNetworkConfiguration=true" $iwd_conf_path
-
 systemctl enable iwd
 systemctl enable systemd-networkd
 systemctl enable systemd-resolved
 
 systemctl list-units --type=service | grep -i network
-message "Remember to disable/uninstall manually anything that can conflict with the following:"
-message "1. systemd-networkd"
-message "2. sysetmd-resolved"
-message "3. iwd"
-message "After manually resolving any conflicts, a reboot is recommended to ensure proper service initialization—unless you start them manually."
+print "Remember to disable/uninstall manually anything that can conflict with the following:"
+print "1. systemd-networkd"
+print "2. sysetmd-resolved"
+print "3. iwd"
+print "After manually resolving any conflicts, a reboot is recommended to ensure proper service initialization—unless you start them manually."
