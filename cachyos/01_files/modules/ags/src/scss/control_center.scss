@@ -1,10 +1,20 @@
 .control-center-window {
+   .test {
+      background: red;
+   }
+
+   .filler-button {
+      background: blue;
+   }
+
    & .top-offset {
       min-height: 12px;
+      background: pink;
    }
 
    & .right-offset {
       min-width: 12px;
+      background: green;
    }
 
    .main-box {
