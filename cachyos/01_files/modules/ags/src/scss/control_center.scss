@@ -1,20 +1,10 @@
 .control-center-window {
-   .test {
-      background: red;
-   }
-
-   .filler-button {
-      background: blue;
-   }
-
    & .top-offset {
       min-height: 12px;
-      background: pink;
    }
 
    & .right-offset {
       min-width: 12px;
-      background: green;
    }
 
    .main-box {
@@ -24,75 +14,6 @@
       background: $color_surface;
       border: 4px solid $color_outline_variant;
    }
-}
-
-.control-center-actions-quick-settings {
-   padding: $space_medium;
-}
-
-.control-center-quick-settings-toggle-button {
-   background: $color_surface_container;
-   border-radius: 4px;
-   min-height: 40px;
-   min-width: 80px;
-   margin-right: 4px;
-
-   > label {
-      color: $color_on_surface;
-   }
-}
-
-.control-center-quick-settings-expand-button {
-   background: $color_surface_container;
-   margin-right: $space_medium;
-   border-radius: 4px;
-   min-height: 40px;
-   min-width: 20px;
-
-   > label {
-      color: $color_on_surface;
-   }
-}
-
-// .control-center-quick-settings-pages-buttons {
-// }
-
-.control-center-quick-settings-page-number-button {
-   background: $color_surface_container;
-   border-radius: 4px;
-   min-width: 20px;
-   min-height: 4px;
-   margin-top: $space_medium;
-   margin-right: 4px;
-
-   &:last-child {
-      margin-right: 0;
-   }
-
-   > label {
-      color: $color_on_surface;
-   }
-}
-
-.control-center-notifications-page {
-   // background: pink;
-
-   & .notification {
-      margin-bottom: $space_medium;
-      background: $color_surface_container;
-      color: $color_on_surface;
-
-      &:last-child {
-         margin-bottom: 0;
-      }
-   }
-}
-
-.control-center-notifications-stack {
-   min-width: 100px;
-   min-height: 100px;
-
-   background: pink;
 }
 
 .control-center-notifications-box {
