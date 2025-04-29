@@ -17,6 +17,7 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
    const mainBox = Widget.Box({
       cssClasses: ["main-box"],
       hexpand: false,
+      vexpand: false,
       children: [notificationsBox],
    });
 

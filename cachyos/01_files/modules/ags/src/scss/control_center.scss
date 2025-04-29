@@ -3,7 +3,7 @@
       min-height: 12px;
    }
 
-   & .right-offset {
+   & .left-offset {
       min-width: 12px;
    }
 
@@ -18,7 +18,7 @@
 
 .control-center-notifications-box {
    @include container_shape();
-   min-width: 500px;
+   min-width: 100px;
    min-height: 500px;
    padding: $space_medium;
    background: $color_surface;

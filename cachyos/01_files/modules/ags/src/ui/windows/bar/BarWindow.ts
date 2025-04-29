@@ -9,6 +9,7 @@ import TrayBox from "./composables/tray/TrayBox";
 import IndicatorsButton from "./composables/indicators/IndicatorsButton";
 import BatteryBox from "./composables/BatteryBox";
 import PowerButton from "./composables/PowerButton";
+import ControlCenterButton from "./composables/ControlCenterButton";
 
 export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
    return Widget.Window({
@@ -34,6 +35,7 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
             children: [
                Widget.Box({
                   children: [
+                     ControlCenterButton(),
                      AppLauncherButton(),
                      WorkspacesBox(),
                      TaskbarBox(),

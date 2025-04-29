@@ -10,7 +10,7 @@ export default function (gdkmonitor: Gdk.Monitor): Astal.Window {
          name: options.controlCenter.name,
          cssClasses: ["control-center-window"],
          exclusivity: Astal.Exclusivity.NORMAL,
-         position: Position.TOP_RIGHT,
+         position: Position.TOP_LEFT,
       },
 
       Widget.Box({

@@ -47,6 +47,11 @@
    }
 }
 
+.bar-item-control-center {
+   @include bar_item;
+   margin-right: $space_medium;
+}
+
 .bar-item-app-launcher {
    @include bar_button;
    margin-right: $space_medium;
@@ -205,10 +210,5 @@
 
 .bar-item-power {
    @include bar_button;
-   margin-left: $space_medium;
-}
-
-.bar-item-control-center {
-   @include bar_item;
    margin-left: $space_medium;
 }
