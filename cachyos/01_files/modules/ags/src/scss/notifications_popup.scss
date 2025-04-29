@@ -1,12 +1,4 @@
 .notifications-popup {
-   button {
-      background: blue;
-   }
-
-   .left-offset {
-     background: green;
-   }
-
    & .top-offset {
       min-height: $space_from_other_layers;
    }

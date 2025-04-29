@@ -233,35 +233,6 @@ export default function (
                vertical: true,
 
                children: [
-                  Widget.Button({
-                     hexpand: true,
-                     vexpand: true,
-                     canFocus: false,
-                     onClicked: curatedCallback,
-                  }),
-
-                  Widget.Button({
-                     hexpand: true,
-                     vexpand: true,
-                     canFocus: false,
-                     onClicked: curatedCallback,
-                  }),
-
-                  Widget.Button({
-                     hexpand: true,
-                     vexpand: true,
-                     canFocus: false,
-                     onClicked: curatedCallback,
-                  }),
-               ],
-            }),
-
-            Widget.Box({
-               hexpand: true,
-               vexpand: true,
-               vertical: true,
-
-               children: [
                   Widget.Box({
                      hexpand: true,
                      vexpand: true,
@@ -300,13 +271,41 @@ export default function (
                         }),
 
                         Widget.Button({
-                           // cssClasses: ["right-offset"],
-                           hexpand: false,
+                           hexpand: true,
                            vexpand: true,
                            canFocus: false,
                            onClicked: curatedCallback,
                         }),
                      ],
+                  }),
+
+                  Widget.Button({
+                     hexpand: true,
+                     vexpand: true,
+                     canFocus: false,
+                     onClicked: curatedCallback,
+                  }),
+
+                  Widget.Button({
+                     hexpand: true,
+                     vexpand: true,
+                     canFocus: false,
+                     onClicked: curatedCallback,
+                  }),
+               ],
+            }),
+
+            Widget.Box({
+               hexpand: true,
+               vexpand: true,
+               vertical: true,
+
+               children: [
+                  Widget.Button({
+                     hexpand: true,
+                     vexpand: true,
+                     canFocus: false,
+                     onClicked: curatedCallback,
                   }),
 
                   Widget.Button({
@@ -325,118 +324,6 @@ export default function (
                ],
             }),
          ],
-      });
-   } else if (position === Position.CENTER) {
-      widget = Widget.CenterBox({
-         hexpand: true,
-         vexpand: true,
-
-         startWidget: Widget.CenterBox({
-            orientation: Gtk.Orientation.VERTICAL,
-
-            startWidget: Widget.Button({
-               hexpand: true,
-               vexpand: true,
-               canFocus: false,
-               onClicked: curatedCallback,
-            }),
-
-            centerWidget: Widget.Button({
-               hexpand: true,
-               vexpand: true,
-               canFocus: false,
-               onClicked: curatedCallback,
-            }),
-
-            endWidget: Widget.Button({
-               hexpand: true,
-               vexpand: true,
-               canFocus: false,
-               onClicked: curatedCallback,
-            }),
-         }),
-
-         centerWidget: Widget.CenterBox({
-            orientation: Gtk.Orientation.VERTICAL,
-
-            startWidget: Widget.Button({
-               hexpand: true,
-               vexpand: true,
-               canFocus: false,
-               onClicked: curatedCallback,
-            }),
-
-            centerWidget: Widget.Box({
-               children: [
-                  Widget.Button({
-                     hexpand: true,
-                     vexpand: true,
-                     canFocus: false,
-                     onClicked: curatedCallback,
-                  }),
-
-                  Widget.Box({
-                     vertical: true,
-
-                     children: [
-                        Widget.Button({
-                           hexpand: true,
-                           vexpand: true,
-                           canFocus: false,
-                           onClicked: curatedCallback,
-                        }),
-
-                        child,
-
-                        Widget.Button({
-                           hexpand: true,
-                           vexpand: true,
-                           canFocus: false,
-                           onClicked: curatedCallback,
-                        }),
-                     ],
-                  }),
-
-                  Widget.Button({
-                     hexpand: true,
-                     vexpand: true,
-                     canFocus: false,
-                     onClicked: curatedCallback,
-                  }),
-               ],
-            }),
-
-            endWidget: Widget.Button({
-               hexpand: true,
-               vexpand: true,
-               canFocus: false,
-               onClicked: curatedCallback,
-            }),
-         }),
-
-         endWidget: Widget.CenterBox({
-            orientation: Gtk.Orientation.VERTICAL,
-            startWidget: Widget.Button({
-               hexpand: true,
-               vexpand: true,
-               canFocus: false,
-               onClicked: curatedCallback,
-            }),
-
-            centerWidget: Widget.Button({
-               hexpand: true,
-               vexpand: true,
-               canFocus: false,
-               onClicked: curatedCallback,
-            }),
-
-            endWidget: Widget.Button({
-               hexpand: true,
-               vexpand: true,
-               canFocus: false,
-               onClicked: curatedCallback,
-            }),
-         }),
       });
    } else if (position === Position.TOP_RIGHT) {
       widget = Widget.Box({
