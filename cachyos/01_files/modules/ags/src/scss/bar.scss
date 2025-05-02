@@ -40,10 +40,13 @@
       background: $color_surface;
 
       padding: $space_medium;
-      margin: 12px 12px 0 12px;
+      margin: 0px 12px 0 12px;
 
-      border: 4px solid $color_outline_variant;
-      border-radius: $border_radius;
+      border-right: 4px solid $color_outline_variant;
+      border-left: 4px solid $color_outline_variant;
+      border-bottom: 4px solid $color_outline_variant;
+      border-bottom-right-radius: $border_radius;
+      border-bottom-left-radius: $border_radius;
    }
 }
 
