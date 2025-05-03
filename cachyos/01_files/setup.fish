@@ -158,6 +158,8 @@ process false link $current_dir/modules/wayland-pipewire-idle-inhibit $HOME/.con
 process false link $current_dir/modules/wezterm $HOME/.config/wezterm
 process false link $current_dir/modules/xkb $HOME/.config/xkb
 
+process false link $current_dir/modules/wireplumber $HOME/.config/wireplumber
+
 for file in $current_dir/modules/xkb/symbols/*
     process true copy $file /usr/share/X11/xkb/symbols/(basename $file)
 end
