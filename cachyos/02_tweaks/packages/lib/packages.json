@@ -1,6 +1,24 @@
 {
-   "ignore": {
-      "std": ["linux-cachyos-nvidia", "linux-cachyos-nvidia-open"]
+   "amd_cpu": {
+      "std": ["amd-ucode"]
+   },
+
+   "amd_gpu": {
+      "std": ["lact"]
+   },
+
+   "intel_cpu": {
+      "std": ["intel-ucode"]
+   },
+
+   "nvidia_gpu": {
+      "std": [
+         "nvidia-utils",
+         "nvidia-prime",
+
+         "linux-cachyos-nvidia",
+         "linux-cachyos-nvidia-open"
+      ]
    },
 
    "system": {
@@ -187,22 +205,6 @@
    "discord": {
       "std": ["speech-dispatcher"],
       "aur:": ["equibop-bin"]
-   },
-
-   "amd_cpu": {
-      "std": ["amd-ucode"]
-   },
-
-   "amd_gpu": {
-      "std": ["lact"]
-   },
-
-   "intel_cpu": {
-      "std": ["intel-ucode"]
-   },
-
-   "nvidia_gpu": {
-      "std": ["nvidia-utils", "nvidia-prime"]
    },
 
    "laptop": {
