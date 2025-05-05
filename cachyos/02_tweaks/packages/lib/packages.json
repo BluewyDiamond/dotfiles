@@ -12,13 +12,7 @@
    },
 
    "nvidia_gpu": {
-      "std": [
-         "nvidia-utils",
-         "nvidia-prime",
-
-         "linux-cachyos-nvidia",
-         "linux-cachyos-nvidia-open"
-      ]
+      "std": ["linux-cachyos-nvidia-open", "nvidia-utils", "nvidia-prime"]
    },
 
    "system": {
@@ -44,26 +38,26 @@
 
          "chwd",
          "neovim",
-         "iwd"
+
+         "iwd",
+         "wireless-regdb"
       ]
    },
 
    "system_extra": {
-      "std": [
-         "paru",
-         "pacman-contrib",
-         "btrfs-assistant",
-         "wireless-regdb",
-         "ufw"
-      ]
+      "std": ["paru", "pacman-contrib", "btrfs-assistant", "fisher", "ufw"]
    },
 
    "tty_session": {
-      "std": ["trash-cli", "zellij", "eza", "git", "fisher"]
+      "std": ["trash-cli", "zellij", "eza", "git"]
    },
 
    "tty_rice": {
       "std": ["terminus-font", "figlet", "fastfetch"]
+   },
+
+   "tty_extra": {
+      "std": ["bottom", "bandwhich", "fd"]
    },
 
    "hyprland_session": {
@@ -79,7 +73,10 @@
          "hyprpolkitagent",
 
          "xdg-desktop-portal-hyprland",
-         "xdg-desktop-portal-gtk"
+         "xdg-desktop-portal-gtk",
+
+         "hyprlock",
+         "hypridle"
       ],
 
       "aur": ["wezterm-git"]
@@ -87,14 +84,13 @@
 
    "hyprland_rice": {
       "std": [
+         "font-manager",
          "ttf-iosevkaterm-nerd",
 
          "kvantum",
          "kvantum-qt5",
 
-         "nwg-look",
-
-         "font-manager"
+         "nwg-look"
       ],
 
       "aur": [
@@ -106,14 +102,7 @@
    },
 
    "hyprland_widgets": {
-      "std": [
-         "dart-sass",
-         "fd",
-         "bun-bin",
-         "gjs",
-         "gtk4-layer-shell",
-         "libgtop"
-      ],
+      "std": ["dart-sass", "fd", "bun-bin", "gjs", "gtk4-layer-shell"],
 
       "aur": [
          "libastal-io-git",
@@ -132,11 +121,6 @@
 
    "hyprland_extras": {
       "std": [
-         "fuzzel",
-         "cliphist",
-
-         "hyprlock",
-         "hypridle",
          "hyprpicker",
          "wayland-pipewire-idle-inhibit",
 
@@ -145,8 +129,11 @@
          "kwallet-pam",
          "ksshaskpass",
 
+         "fuzzel",
          "slurp",
-         "satty"
+         "satty",
+
+         "cliphist"
       ],
 
       "aur": ["wayshot"]
