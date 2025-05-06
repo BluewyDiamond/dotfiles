@@ -25,7 +25,7 @@ export function getIcon(icon: string): string {
    return approximate;
 }
 
-export function hasIconInApps(icon: string, app: Apps.Application): boolean {
+function hasIconInApps(icon: string, app: Apps.Application): boolean {
    icon = icon.toLowerCase();
 
    const name: string | null | undefined = app.get_name();
