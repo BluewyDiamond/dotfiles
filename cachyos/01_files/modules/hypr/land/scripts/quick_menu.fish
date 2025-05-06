@@ -2,7 +2,8 @@
 
 set options "󰹑 Screenshot" \
     "󰆞 Screenshot (Region)" \
-    " Color Pick"
+    " Color Pick" \
+    " Clip"
 
 # expected to be a number or empty
 set fuzzel_output (string join \n $options | fuzzel --dmenu --index && sleep 0.5 ) # adds a delay to allow fuzzel to close
