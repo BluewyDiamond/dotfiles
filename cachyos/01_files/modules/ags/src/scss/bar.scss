@@ -6,7 +6,7 @@
    padding: $space_small;
 
    &.active {
-      background: $onedark_blue_rgb;
+      background: $color_primary_container;
    }
 }
 
@@ -18,8 +18,8 @@
    padding: $space_small;
 
    &.active {
-      background: $color_primary;
-      color: $color_on_primary;
+      color: $color_on_primary_container;
+      background: $color_primary_container;
    }
 }
 
