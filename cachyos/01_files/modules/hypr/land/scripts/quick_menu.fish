@@ -25,4 +25,6 @@ switch $selected_option
         $current_dir/screenshot.fish partial
     case 3
         $current_dir/colorpicker.fish
+     case 4
+        $current_dir/clip.fish
 end
