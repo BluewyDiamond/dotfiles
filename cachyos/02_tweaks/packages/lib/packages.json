@@ -12,7 +12,12 @@
    },
 
    "nvidia_gpu": {
-      "std": ["linux-cachyos-nvidia-open", "nvidia-utils", "nvidia-prime"]
+      "std": [
+         "linux-cachyos-nvidia-open",
+         "nvidia-utils",
+         "nvidia-prime",
+         "nvidia-settings"
+      ]
    },
 
    "system": {
