@@ -121,9 +121,9 @@ for file in $current_dir/modules/bin/*
     process false link $file $HOME/.local/bin/(basename $file)
 end
 
-process false link $current_dir/modules/cachy/cachy.overrides.cfg $HOME/.cachy/cachy.overrides.cfg
+process false link $current_dir/modules/librewolf/librewolf.overrides.cfg $HOME/.librewolf/librewolf.overrides.cfg
 
-for profile_dir in (find "$HOME/.cachy" -type d -name '*default-release' 2>/dev/null)
+for profile_dir in (find "$HOME/.librewolf" -type d -name '*default-default' 2>/dev/null)
     set chrome_dir $profile_dir/chrome
 
     if not test -e $chrome_dir
@@ -135,7 +135,7 @@ for profile_dir in (find "$HOME/.cachy" -type d -name '*default-release' 2>/dev/
         mkdir -p $chrome_dir
     end
 
-    process false link $current_dir/modules/cachy/userChrome.css $chrome_dir/userChrome.css
+    process false link $current_dir/modules/librewolf/userChrome.css $chrome_dir/userChrome.css
 end
 
 process false link $current_dir/modules/css $HOME/.config/css
