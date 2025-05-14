@@ -180,10 +180,11 @@
 
          "umu-launcher",
          "gamescope",
-         "proton-ge-custom-bin",
          "protontricks",
          "mangohud"
-      ]
+      ],
+
+      "aur": ["proton-ge-custom-bin"]
    },
 
    "neovim": {
