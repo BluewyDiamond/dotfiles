@@ -20,6 +20,10 @@
       ]
    },
 
+   "laptop": {
+      "std": ["brightnessctl", "upower"]
+   },
+
    "system": {
       "std": [
          "linux-cachyos",
@@ -53,8 +57,12 @@
       "std": ["paru", "pacman-contrib", "btrfs-assistant", "fisher", "ufw"]
    },
 
+   "replacements": {
+      "std": ["eza"]
+   },
+
    "tty_session": {
-      "std": ["trash-cli", "zellij", "eza", "git"]
+      "std": ["trash-cli", "zellij", "git"]
    },
 
    "tty_rice": {
@@ -199,10 +207,6 @@
    "discord": {
       "std": ["speech-dispatcher"],
       "aur:": ["equibop-bin"]
-   },
-
-   "laptop": {
-      "std": ["brightnessctl", "upower"]
    },
 
    "virtualization": {
