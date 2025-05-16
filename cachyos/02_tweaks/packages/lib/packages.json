@@ -187,12 +187,11 @@
          "heroic-games-launcher-bin",
 
          "umu-launcher",
+         "proton-ge-custom-bin",
          "gamescope",
          "protontricks",
          "mangohud"
       ],
-
-      "aur": ["proton-ge-custom-bin"]
    },
 
    "neovim": {
