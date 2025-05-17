@@ -6,7 +6,7 @@
       <configItem>
         <name>colemak_dh_wide_custom_eu_ansi</name>
         <shortDescription>en</shortDescription>
-        <description>English (Colemak-DH Wide EU ANSI)</description>
+        <description>English (Colemak-DH Wide Custom EU ANSI)</description>
         <languageList>
           <iso639Id>eng</iso639Id>
         </languageList>
@@ -16,7 +16,7 @@
       <configItem>
         <name>colemak_dh_wide_custom_eu_iso</name>
         <shortDescription>en</shortDescription>
-        <description>English (Colemak-DH Wide EU ISO)</description>
+        <description>English (Colemak-DH Wide Custom EU ISO)</description>
         <languageList>
           <iso639Id>eng</iso639Id>
         </languageList>
