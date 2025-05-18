@@ -27,7 +27,7 @@ xkb_symbols "colemak_dh_wide_custom_ansi" {
 
    key <CAPS> { [   Return,      Return,        Return,      Return    ] };
    key <RTRN> { [   BackSpace,   Delete,        BackSpace,   Delete    ] };
-   key <BKSP> { [   Caps_Lock,   Caps_Lock,     Caps_Lock,   Caps_Lock ] };
+   // key <BKSP> { [   Caps_Lock,   Caps_Lock,     Caps_Lock,   Caps_Lock ] };
 };
 
 xkb_symbols "colemak_dh_wide_custom_iso" {
@@ -44,7 +44,7 @@ xkb_symbols "colemak_dh_wide_custom_iso" {
 
    key <CAPS> { [   Return,       Return,        Return,         Return    ] };
    key <RTRN> { [   BackSpace,    Delete,        BackSpace,      Delete    ] };
-   key <BKSP> { [   Caps_Lock,    Caps_Lock,     Caps_Lock,      Caps_Lock ] };
+   // key <BKSP> { [   Caps_Lock,    Caps_Lock,     Caps_Lock,      Caps_Lock ] };
 };
 
 partial alphanumeric_keys modifier_keys
@@ -97,7 +97,7 @@ xkb_symbols "colemak_dh_wide_custom_eu_ansi" {
 
    key <CAPS> { [   Return,         Return,       Return,                 Return               ] };
    key <RTRN> { [   BackSpace,      Delete,       BackSpace,              Delete               ] };
-   key <BKSP> { [   Caps_Lock,      Caps_Lock,    Caps_Lock,              Caps_Lock            ] };
+   // key <BKSP> { [   Caps_Lock,      Caps_Lock,    Caps_Lock,              Caps_Lock            ] };
 };
 
 default
