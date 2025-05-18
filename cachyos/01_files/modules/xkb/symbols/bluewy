@@ -1,22 +1,37 @@
+xkb_symbols "vanilla_ansi" {
+    include "us(basic)"
+    name[Group1] = "English (Custom ANSI)";
+
+    key <CAPS> { [   Caps_Lock,     Caps_Lock,       Caps_Lock,        Caps_Lock ] };
+    key <RTRN> { [      Return,        Return,          Return,           Return ] };
+    key <BKSP> { [    BackSpace,       Delete,       BackSpace,           Delete ] };
+};
+
+xkb_symbols "vanilla_iso" {
+   include "us(basic)"
+   name[Group1] = "English (Custom ISO)";
+
+   key <BKSL> { [    backslash,             bar,              notsign,            brokenbar  ] };
+   key <CAPS> { [   Caps_Lock,     Caps_Lock,       Caps_Lock,        Caps_Lock ] };
+   key <RTRN> { [      Return,        Return,          Return,           Return ] };
+   key <BKSP> { [    BackSpace,       Delete,       BackSpace,           Delete ] };
+};
+
 xkb_symbols "colemak_dh_wide_custom_ansi" {
     include "us(colemak_dh_wide)"
     name[Group1] = "English (Colemak-DH Wide Custom ANSI)";
 
+    key <AE06> { [        equal,         plus,        multiply,         division ] };
+    key <AE07> { [            6,  asciicircum,         hstroke,          Hstroke ] };
+
     key <CAPS> { [      Return,        Return,          Return,           Return ] };
     key <RTRN> { [    BackSpace,       Delete,       BackSpace,           Delete ] };
     key <BKSP> { [   Caps_Lock,     Caps_Lock,       Caps_Lock,        Caps_Lock ] };
-
-    key <AE06> { [        equal,         plus,        multiply,         division ] };
-    key <AE07> { [            6,  asciicircum,         hstroke,          Hstroke ] };
 };
 
 xkb_symbols "colemak_dh_wide_custom_iso" {
     include "us(colemak_dh_wide_iso)"
     name[Group1] = "English (Colemak-DH Wide Custom ISO)";
-
-    key <CAPS> { [      Return,        Return,          Return,           Return ] };
-    key <RTRN> { [    BackSpace,       Delete,       BackSpace,           Delete ] };
-    key <BKSP> { [   Caps_Lock,     Caps_Lock,       Caps_Lock,        Caps_Lock ] };
 
     key <AB06> { [        slash,     question,    questiondown,       asciitilde ] };
 
@@ -25,6 +40,10 @@ xkb_symbols "colemak_dh_wide_custom_iso" {
 
     key <AE06> { [        equal,         plus,        multiply,         division ] };
     key <AE07> { [            6,  asciicircum,         hstroke,          Hstroke ] };
+
+    key <CAPS> { [      Return,        Return,          Return,           Return ] };
+    key <RTRN> { [    BackSpace,       Delete,       BackSpace,           Delete ] };
+    key <BKSP> { [   Caps_Lock,     Caps_Lock,       Caps_Lock,        Caps_Lock ] };
 };
 
 partial alphanumeric_keys modifier_keys
@@ -83,13 +102,13 @@ xkb_symbols "colemak_dh_wide_custom_eu_ansi"  {
 
 default partial alphanumeric_keys modifier_keys
 xkb_symbols "colemak_dh_wide_custom_eu_iso"  {
-        include "bluewy(colemak_dh_wide_custom_eu_ansi)"
-        name[Group1] = "English (Colemak-DH Wide Custom EU ANSI)";
+   include "bluewy(colemak_dh_wide_custom_eu_ansi)"
+   name[Group1] = "English (Colemak-DH Wide Custom EU ANSI)";
 
-        key <LSGT> { [              z,                 Z,               yacute,               Yacute ] };
-        key <AB05> {[    backslash,             bar,              notsign,            brokenbar  ]};
+   key <LSGT> { [        z,                     Z,                yacute,             Yacute    ] };
+   key <AB05> { [        backslash,             bar,              notsign,            brokenbar ] };
 
-        key <BKSL> { [        BackSpace,       Delete,       BackSpace,           Delete     ] };
-        key <CAPS> { [  Return,        Return,          Return,           Return] };
-        key <RTRN> { [     numbersign,        dead_tilde,              section,                tilde ] }; //change AB05 to LSGT
+   key <BKSL> { [        BackSpace,             Delete,           BackSpace,          Delete    ] };
+   key <CAPS> { [        Return,                Return,          Return,           Return] };
+   key <RTRN> { [        numbersign,        dead_tilde,              section,                tilde ] };
 };

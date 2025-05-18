@@ -22,5 +22,25 @@
         </languageList>
       </configItem>
     </layout>
+    <layout>
+      <configItem>
+        <name>vanilla_ansi</name>
+        <shortDescription>en</shortDescription>
+        <description>English (Custom ANSI)</description>
+        <languageList>
+          <iso639Id>eng</iso639Id>
+        </languageList>
+      </configItem>
+   </layout>
+   <layout>
+      <configItem>
+        <name>vanilla_iso</name>
+        <shortDescription>en</shortDescription>
+        <description>English (Custom ISO)</description>
+        <languageList>
+          <iso639Id>eng</iso639Id>
+        </languageList>
+      </configItem>
+   </layout>
   </layoutList>
 </xkbConfigRegistry>
