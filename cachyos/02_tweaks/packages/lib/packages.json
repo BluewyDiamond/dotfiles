@@ -54,11 +54,20 @@
    },
 
    "system_extra": {
-      "std": ["paru", "pacman-contrib", "btrfs-assistant", "fisher", "ufw"]
+      "std": [
+         "paru",
+         "pacman-contrib",
+         "btrfs-assistant",
+         "fisher",
+         "ufw",
+         "downgrade",
+         "mesa-utils",
+         "rustup"
+      ]
    },
 
    "replacements": {
-      "std": ["eza"]
+      "std": ["eza", "fd", "sudo-rs"]
    },
 
    "tty_session": {
@@ -70,7 +79,7 @@
    },
 
    "tty_extra": {
-      "std": ["bottom", "bandwhich", "fd"]
+      "std": ["bottom", "bandwhich", "dust"]
    },
 
    "hyprland_session": {
@@ -82,6 +91,7 @@
          "pipewire-jack",
 
          "hyprland",
+         "hyprland-protocols",
          "hyprland-qtutils",
          "hyprpolkitagent",
 
@@ -178,7 +188,7 @@
    },
 
    "production": {
-      "std": ["libreoffice-fresh", "hunspell-es_es", "kdenlive"]
+      "std": ["libreoffice-fresh", "hunspell-es_es", "kdenlive", "audacity"]
    },
 
    "gaming": {
@@ -191,7 +201,7 @@
          "gamescope",
          "protontricks",
          "mangohud"
-      ],
+      ]
    },
 
    "neovim": {
