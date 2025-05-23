@@ -25,7 +25,7 @@ function scan
 end
 
 # main
-set pkgs_to_remove (./lib/get_packages_unlisted__arr.fish)
+set pkgs_to_remove (./get_packages_unlisted__arr.fish)
 print $pkgs_to_remove
 print "Remove the above? [y/N]"
 

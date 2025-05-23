@@ -1,7 +1,7 @@
 #!/usr/bin/env fish
 
 set current_dir (dirname (realpath (status --current-filename)))
-set config_path "$current_dir/lib/packages.json"
+set config_path "$current_dir/packages.json"
 set script_name (basename (status filename))
 
 function print
