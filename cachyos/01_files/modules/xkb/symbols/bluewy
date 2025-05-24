@@ -1,3 +1,4 @@
+partial alphanumeric_keys modifier_keys
 xkb_symbols "vanilla_ansi" {
    include "us(basic)"
    name[Group1] = "English (Custom ANSI)";
@@ -5,8 +6,12 @@ xkb_symbols "vanilla_ansi" {
    key <CAPS> { [   Caps_Lock,   Caps_Lock,   Caps_Lock,   Caps_Lock ] };
    key <RTRN> { [   Return,      Return,      Return,      Return    ] };
    key <BKSP> { [   BackSpace,   Delete,      BackSpace,   Delete    ] };
+
+   // https://gitlab.freedesktop.org/xkeyboard-config/xkeyboard-config/-/issues/45
+   modifier_map None   { Caps_Lock };
 };
 
+partial alphanumeric_keys modifier_keys
 xkb_symbols "vanilla_iso" {
    include "us(basic)"
    name[Group1] = "English (Custom ISO)";
@@ -16,8 +21,12 @@ xkb_symbols "vanilla_iso" {
    key <CAPS> { [   Caps_Lock,   Caps_Lock ] };
    key <RTRN> { [   Return,      Return    ] };
    key <BKSP> { [   BackSpace,   Delete    ] };
+
+   // https://gitlab.freedesktop.org/xkeyboard-config/xkeyboard-config/-/issues/45
+   modifier_map None   { Caps_Lock };
 };
 
+partial alphanumeric_keys modifier_keys
 xkb_symbols "colemak_dh_wide_custom_ansi" {
    include "us(colemak_dh_wide)"
    name[Group1] = "English (Colemak-DH Wide Custom ANSI)";
@@ -28,8 +37,12 @@ xkb_symbols "colemak_dh_wide_custom_ansi" {
    key <CAPS> { [   Return,      Return,        Return,      Return    ] };
    key <RTRN> { [   BackSpace,   Delete,        BackSpace,   Delete    ] };
    key <BKSP> { [   Caps_Lock,   Caps_Lock,     Caps_Lock,   Caps_Lock ] };
+
+   // https://gitlab.freedesktop.org/xkeyboard-config/xkeyboard-config/-/issues/45
+   modifier_map None   { Caps_Lock };
 };
 
+partial alphanumeric_keys modifier_keys
 xkb_symbols "colemak_dh_wide_custom_iso" {
    include "us(colemak_dh_wide_iso)"
    name[Group1] = "English (Colemak-DH Wide Custom ISO)";
@@ -45,6 +58,9 @@ xkb_symbols "colemak_dh_wide_custom_iso" {
    key <CAPS> { [   Return,       Return,        Return,         Return    ] };
    key <RTRN> { [   BackSpace,    Delete,        BackSpace,      Delete    ] };
    key <BKSP> { [   Caps_Lock,    Caps_Lock,     Caps_Lock,      Caps_Lock ] };
+
+   // https://gitlab.freedesktop.org/xkeyboard-config/xkeyboard-config/-/issues/45
+   modifier_map None   { Caps_Lock };
 };
 
 partial alphanumeric_keys modifier_keys
@@ -98,9 +114,12 @@ xkb_symbols "colemak_dh_wide_custom_eu_ansi" {
    key <CAPS> { [   Return,         Return,       Return,                 Return               ] };
    key <RTRN> { [   BackSpace,      Delete,       BackSpace,              Delete               ] };
    key <BKSP> { [   Caps_Lock,      Caps_Lock,    Caps_Lock,              Caps_Lock            ] };
+
+   // https://gitlab.freedesktop.org/xkeyboard-config/xkeyboard-config/-/issues/45
+   modifier_map None   { Caps_Lock };
 };
 
-default
+default partial alphanumeric_keys modifier_keys
 xkb_symbols "colemak_dh_wide_custom_eu_iso" {
    include "bluewy(colemak_dh_wide_custom_eu_ansi)"
    name[Group1] = "English (Colemak-DH Wide Custom EU ANSI)";
