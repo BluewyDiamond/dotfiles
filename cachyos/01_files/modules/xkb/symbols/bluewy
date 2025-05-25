@@ -132,6 +132,7 @@ xkb_symbols "colemak_dh_wide_custom_eu_iso" {
    key <RTRN> { [   numbersign,  dead_tilde,   section,     tilde     ] };
 };
 
+partial alphanumeric_keys modifier_keys
 xkb_symbols "gralmak_wide_custom_eu_iso" {
    include "eu(basic)"
    name[Group1] = "English (Gralmak Wide Custom EU ISO)";
@@ -181,11 +182,10 @@ xkb_symbols "gralmak_wide_custom_eu_iso" {
    key <AB09> { [   comma,          less,         ograve,                 Ograve               ] };
    key <AB10> { [   period,         greater,      oacute,                 Oacute               ] };
 
-
-   key <CAPS> { [   Return,      Return,       Return,      Return    ] };
-   key <RTRN> { [   numbersign,  dead_tilde,   section,     tilde     ] };
+   key <CAPS> { [   Return,         Return,       Return,                 Return               ] };
+   key <RTRN> { [   numbersign,     dead_tilde,   section,                tilde                ] };
    key <BKSP> { [   Caps_Lock,      Caps_Lock,    Caps_Lock,              Caps_Lock            ] };
 
    // https://gitlab.freedesktop.org/xkeyboard-config/xkeyboard-config/-/issues/45
    modifier_map None   { Caps_Lock };
-}
+};
