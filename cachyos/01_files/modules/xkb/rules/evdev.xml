@@ -42,5 +42,15 @@
         </languageList>
       </configItem>
    </layout>
+   <layout>
+      <configItem>
+        <name>gralmak_wide_custom_eu_iso</name>
+        <shortDescription>en</shortDescription>
+        <description>English (Gralmak Wide Custom EU ISO)</description>
+        <languageList>
+          <iso639Id>eng</iso639Id>
+        </languageList>
+      </configItem>
+   </layout>
   </layoutList>
 </xkbConfigRegistry>
