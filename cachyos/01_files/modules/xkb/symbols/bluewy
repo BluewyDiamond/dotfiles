@@ -131,3 +131,61 @@ xkb_symbols "colemak_dh_wide_custom_eu_iso" {
    key <CAPS> { [   Return,      Return,       Return,      Return    ] };
    key <RTRN> { [   numbersign,  dead_tilde,   section,     tilde     ] };
 };
+
+xkb_symbols "gralmak_wide_custom_eu_iso" {
+   include "eu(basic)"
+   name[Group1] = "English (Gralmak Wide Custom EU ISO)";
+
+   key <AE07> { [   backslash,      bar,          notsign,                brokenbar            ] };
+   key <AE08> { [   7,              ampersand,    dead_abovering,         dead_macron          ] };
+   key <AE09> { [   8,              asterisk,     doublelowquotemark,     singlelowquotemark   ] };
+   key <AE10> { [   9,              parenleft,    leftdoublequotemark,    leftsinglequotemark  ] };
+   key <AE11> { [   0,              parenright,   rightdoublequotemark,   rightsinglequotemark ] };
+   key <AE12> { [   equal,          plus,         multiply,               division             ] };
+
+   key <AD01> { [   b,              B,            iacute,                 Iacute               ] };
+   key <AD02> { [   l,              L,            uacute,                 Uacute               ] };
+   key <AD03> { [   d,              D,            dstroke,                Dstroke              ] };
+   key <AD04> { [   w,              W,            aacute,                 Aacute               ] };
+   key <AD05> { [   q,              Q,            agrave,                 Agrave               ] };
+   key <AD06> { [   bracketleft,    braceleft,    guillemotleft,          U2039                ] }; // ‹
+   key <AD07> { [   j,              J,            ugrave,                 Ugrave               ] };
+   key <AD08> { [   f,              F,            U0133,                  U0132                ] };
+   key <AD09> { [   o,              O,            odiaeresis,             Odiaeresis           ] };
+   key <AD10> { [   u,              U,            udiaeresis,             Udiaeresis           ] };
+   key <AD11> { [   semicolon,      colon,        degree,                 periodcentered       ] };
+   key <AD12> { [   apostrophe,     quotedbl,     dead_acute,             dead_diaeresis       ] };
+
+   key <AC01> { [   n,              N,            ntilde,                 Ntilde               ] };
+   key <AC02> { [   r,              R,            aring,                  Aring                ] };
+   key <AC03> { [   t,              T,            thorn,                  Thorn                ] };
+   key <AC04> { [   s,              S,            ssharp,                 U1E9E                ] };
+   key <AC05> { [   g,              G,            egrave,                 Egrave               ] };
+   key <AC06> { [   bracketright,   braceright,   guillemotright,         U203A                ] }; // ›
+   key <AC07> { [   y,              Y,            ydiaeresis,             Ydiaeresis           ] };
+   key <AC08> { [   h,              H,            oslash,                 Oslash               ] };
+   key <AC09> { [   a,              A,            adiaeresis,             Adiaeresis           ] };
+   key <AC10> { [   e,              E,            ediaeresis,             Ediaeresis           ] };
+   key <AC11> { [   i,              I,            idiaeresis,             Idiaeresis           ] };
+   key <BKSL> { [   BackSpace,      Delete,       BackSpace,              Delete               ] };
+
+   key <LSGT> { [   z,              Z,            yacute,                 Yacute               ] };
+   key <AB01> { [   x,              X,            ae,                     AE                   ] };
+   key <AB02> { [   m,              M,            eacute,                 Eacute               ] };
+   key <AB03> { [   c,              C,            ccedilla,               Ccedilla             ] };
+   key <AB04> { [   v,              V,            oe,                     OE                   ] };
+   key <AB05> { [   minus,          underscore,   endash,                 emdash               ] };
+   key <AB06> { [   slash,          question,     questiondown,           U2026                ] };
+   key <AB07> { [   k,              K,            dead_greek,             squareroot           ] };
+   key <AB08> { [   p,              P,            igrave,                 Igrave               ] };
+   key <AB09> { [   comma,          less,         ograve,                 Ograve               ] };
+   key <AB10> { [   period,         greater,      oacute,                 Oacute               ] };
+
+
+   key <CAPS> { [   Return,      Return,       Return,      Return    ] };
+   key <RTRN> { [   numbersign,  dead_tilde,   section,     tilde     ] };
+   key <BKSP> { [   Caps_Lock,      Caps_Lock,    Caps_Lock,              Caps_Lock            ] };
+
+   // https://gitlab.freedesktop.org/xkeyboard-config/xkeyboard-config/-/issues/45
+   modifier_map None   { Caps_Lock };
+}
