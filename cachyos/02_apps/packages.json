@@ -67,7 +67,7 @@
    },
 
    "replacements": {
-      "std": ["eza", "fd", "sudo-rs"]
+      "std": ["sudo-rs", "uutils-coreutils"]
    },
 
    "tty_session": {
@@ -79,7 +79,7 @@
    },
 
    "tty_extra": {
-      "std": ["bottom", "bandwhich", "dust"]
+      "std": ["bottom", "bandwhich", "nvtop", "dust", "eza", "fd", "ripgrep"]
    },
 
    "hyprland_session": {
