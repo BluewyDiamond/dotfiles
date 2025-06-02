@@ -165,7 +165,7 @@ xkb_symbols "vanilla_ansi" {
    include "us(basic)"
    name[Group1] = "English (Custom ANSI)";
 
-   key <BKSP> { [   BackSpace,   Delete,      BackSpace,   Delete    ] };
+   key <BKSP> { [   BackSpace,   Delete,      BackSpace,   Delete    ], repeats = true };
 
    key <CAPS> { [   Caps_Lock,   Caps_Lock,   Caps_Lock,   Caps_Lock ] };
    key <RTRN> { [   Return,      Return,      Return,      Return    ] };
@@ -179,7 +179,7 @@ xkb_symbols "vanilla_iso" {
    include "us(basic)"
    name[Group1] = "English (Custom ISO)";
 
-   key <BKSP> { [   BackSpace,   Delete    ] };
+   key <BKSP> { [   BackSpace,   Delete    ], repeats = true };
 
    key <RTRN> { [   Return,      Return    ] };
 
