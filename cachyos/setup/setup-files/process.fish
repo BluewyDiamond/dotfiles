@@ -2,21 +2,21 @@ function process
     set super $argv[1]
 
     if not contains "$super" true false
-        print "ERROR: super must be either 'true' or 'false'."
+        echo (set_color red)"ERROR: "(set_color normal)"Unexpected value... |super=$super|"
         return 1
     end
 
     set operation $argv[2]
 
     if not contains "$operation" copy link
-        print "ERROR: operation must be either 'copy' or 'link'."
+        echo (set_color red)"ERROR: "(set_color normal)"Unexpected value... |operation=$operation|"
         return 1
     end
 
     set source $argv[3]
 
     if not test -e "$source"
-        print "ERROR: source '$source' is not a valid file."
+        echo (set_color red)"ERROR: "(set_color normal)"Invalid file... |source=$source|"
         return 1
     end
 
@@ -26,7 +26,7 @@ function process
     # do stuff, store in a variable the state and then based of it do it.
     # Maybe this way it is more readable.
 
-    print "TASK: $operation $source to $target, super is $super."
+    echo "TASK: $operation $source to $target, super is $super."
 
     if test true = $super
         set sudo_command sudo
@@ -36,11 +36,11 @@ function process
 
     if not test -d $target_dirname
         if not test -e $target_dirname
-            set -l for_lsp print "INFO: target_dirname=$target_dirname does not exist, it will be created."
+            set -l for_lsp echo "INFO: target_dirname=$target_dirname does not exist, it will be created."
             set -a prepare_commands_as_strings "$for_lsp"
             set -a prepare_commands_as_strings "$sudo_command mkdir -p $target_dirname"
         else
-            set -l for_lsp print "INFO: target_dirname=$target_dirname is not a folder, it will be trashed and recreated."
+            set -l for_lsp echo "INFO: target_dirname=$target_dirname is not a folder, it will be trashed and recreated."
             set -a prepare_commands_as_strings "$for_lsp"
             set -a prepare_commands_as_strings "$sudo_command trash $target_dirname"
             set -a prepare_commands_as_strings "$sudo_command mkdir -p $target_dirname"
@@ -48,7 +48,7 @@ function process
     end
 
     if test -e "$target" -o -L "$target"
-        set -l for_lsp print "WARNING: target=$target already exists, it will be trashed."
+        set -l for_lsp echo "WARNING: target=$target already exists, it will be trashed."
         set -a prepare_commands_as_strings "$for_lsp"
         set -a prepare_commands_as_strings "$sudo_command trash $target"
     end
