@@ -1,7 +1,8 @@
 #!/usr/bin/env fish
 
-set working_dir (./get_working_dir.fish)
+source ./process.fish
 
+set working_dir (./get_working_dir.fish)
 process false link (./get_working_dir.fish)/librewolf/librewolf.overrides.cfg $HOME/.librewolf/librewolf.overrides.cfg
 
 for profile_dir in (find "$HOME/.librewolf" -type d -name '*default-default' 2>/dev/null)

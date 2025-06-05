@@ -1,4 +1,6 @@
-#!/usr/bin/env
+#!/usr/bin/env fish
+
+source ./process.fish
 
 set working_dir (./get_working_dir.fish)
 
