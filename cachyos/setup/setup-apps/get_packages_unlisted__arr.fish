@@ -1,7 +1,5 @@
 #!/usr/bin/env fish
 
-set get_packages_script (dirname (status filename))'/./get_packages__arr.fish'
-
 function is_package_a_dependency
     set package $argv[1]
     set pactree_output (pactree -r $package)
@@ -19,7 +17,7 @@ function is_package_a_dependency
     end
 end
 
-set packages ($get_packages_script)
+set packages (./get_packages__arr.fish)
 set installed_packages (pacman -Qqe)
 set aur_packages (pacman -Qqme)
 
