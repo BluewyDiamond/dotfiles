@@ -20,10 +20,6 @@
       ]
    },
 
-   "laptop": {
-      "std": ["brightnessctl", "upower"]
-   },
-
    "system": {
       "std": [
          "linux-cachyos",
@@ -68,6 +64,14 @@
 
    "replacements": {
       "std": ["sudo-rs", "uutils-coreutils"]
+   },
+
+   "laptop": {
+      "std": ["brightnessctl", "upower"]
+   },
+
+   "acer_laptop": {
+      "aur": ["acer-wmi-battery"]
    },
 
    "tty_session": {
