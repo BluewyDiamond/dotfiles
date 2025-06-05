@@ -71,6 +71,7 @@
    },
 
    "acer_laptop": {
+      "std": ["linux-cachyos-headers"],
       "aur": ["acer-wmi-battery"]
    },
 
