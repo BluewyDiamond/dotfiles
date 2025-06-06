@@ -226,6 +226,10 @@
       "aur:": ["equibop-bin"]
    },
 
+   "plasma": {
+      "std": ["plasma-meta"]
+   },
+
    "virtualization": {
       "std": [
          "qemu-base",
