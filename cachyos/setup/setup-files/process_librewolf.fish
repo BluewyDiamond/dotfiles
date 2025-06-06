@@ -1,6 +1,6 @@
 #!/usr/bin/env fish
 
-source ./process.fish
+source (dirname (status filename))/process.fish
 
 set working_dir (./get_working_dir.fish)
 process false link (./get_working_dir.fish)/librewolf/librewolf.overrides.cfg $HOME/.librewolf/librewolf.overrides.cfg
