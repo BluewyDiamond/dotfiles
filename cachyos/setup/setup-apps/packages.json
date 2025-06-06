@@ -1,23 +1,26 @@
 {
-   "amd_cpu": {
+   "cpu_is_amd": {
       "std": ["amd-ucode"]
    },
 
-   "amd_gpu": {
-      "std": ["lact"]
-   },
-
-   "intel_cpu": {
+   "cpu_is_intel": {
       "std": ["intel-ucode"]
    },
 
-   "nvidia_gpu": {
-      "std": [
-         "linux-cachyos-nvidia-open",
-         "nvidia-utils",
-         "nvidia-prime",
-         "nvidia-settings"
-      ]
+   "gpu_is_amd": {
+      "std": ["lact"]
+   },
+
+   "gup_is_nvidia": {
+      "std": ["nvidia-utils", "nvidia-prime", "nvidia-settings"]
+   },
+
+   "gpu_is_nvidia_open": {
+      "std": ["linux-cachyos-nvidia-open"]
+   },
+
+   "gpu_is_nvidia_closed": {
+      "std": ["linux-cachyos-nvidia"]
    },
 
    "system": {
@@ -70,7 +73,7 @@
       "std": ["brightnessctl", "upower"]
    },
 
-   "acer_laptop": {
+   "laptop_is_acer": {
       "std": ["linux-cachyos-headers"],
       "aur": ["acer-wmi-battery"]
    },

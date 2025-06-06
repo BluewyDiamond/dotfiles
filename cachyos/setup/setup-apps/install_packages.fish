@@ -61,7 +61,7 @@ for choice in (string split " " $choices)
     end
 
     if test "$choice" -le 0 -o "$choice" -gt $top_level_keys_count
-        echo (set_color_ yellow)"IGNORING: "(set_color normal)"Out of range... |choice=$choice|"
+        echo (set_color yellow)"WARNING: "(set_color normal)"Out of range... |choice=$choice| Skipping..."
         continue
     end
 
