@@ -75,7 +75,7 @@
 
    "laptop_is_acer": {
       "std": ["linux-cachyos-headers"],
-      "aur": ["acer-wmi-battery"]
+      "aur": ["acer-wmi-battery-dkms"]
    },
 
    "tty_session": {
