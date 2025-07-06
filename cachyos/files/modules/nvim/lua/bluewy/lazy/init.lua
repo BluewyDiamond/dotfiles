@@ -15,12 +15,4 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
    { import = "bluewy.lazy.plugins" },
-   { import = "bluewy.lazy.plugins.code" },
-   { import = "bluewy.lazy.plugins.code.highlight" },
-   { import = "bluewy.lazy.plugins.code.lsp.setup_1" },
-   { import = "bluewy.lazy.plugins.code.lsp.lang.lua" },
-   { import = "bluewy.lazy.plugins.code.lsp.lang.rust" },
-   { import = "bluewy.lazy.plugins.code.lsp.lang.typescript" },
-   { import = "bluewy.lazy.plugins.editor" },
-   { import = "bluewy.lazy.plugins.ui" },
 })
