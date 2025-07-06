@@ -10,6 +10,7 @@
 ./process_fuzzel.fish
 ./process_hypr.fish
 ./process_kbd.fish
+./process_kdeglobals.fish
 ./process_librewolf.fish
 ./process_mangohud.fish
 ./process_nvim.fish
