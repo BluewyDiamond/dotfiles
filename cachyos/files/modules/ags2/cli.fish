@@ -31,32 +31,35 @@ function types
 end
 
 switch $argv[1]
-    case drun
-        LD_PRELOAD=/usr/lib/libgtk4-layer-shell.so gjs -m $build_dir/main.js & disown && exit
     case run
         LD_PRELOAD=/usr/lib/libgtk4-layer-shell.so gjs -m $build_dir/main.js
+    case drun
+        LD_PRELOAD=/usr/lib/libgtk4-layer-shell.so gjs -m $build_dir/main.js & disown && exit
     case build
-        bun run $parent_dir/build.ts
-    case build2
         if test -e $build_dir/main.js
             rm $build_dir/main.js
         end
 
         mkdir -p $build_dir
 
-        bun build \
-            --production \
-            --minify \
-            --target bun \
-            --external gi://\* \
-            --external file://\* \
-            --external resource://\* \
-            --external system \
-            --external console \
-            --external cairo \
-            --external gettext \
-            --outdir=$build_dir \
-            -- $parent_dir/src/main.ts
+        switch $argv[2]
+            case --with-bun # currently lacking as it isn't setup to use with scss
+                bun build \
+                    --production \
+                    --minify \
+                    --target bun \
+                    --external gi://\* \
+                    --external file://\* \
+                    --external resource://\* \
+                    --external system \
+                    --external console \
+                    --external cairo \
+                    --external gettext \
+                    --outdir=$build_dir \
+                    -- $parent_dir/src/main.ts
+            case '*'
+                bun run $parent_dir/build.ts
+        end
     case types
         echo 'TODO!'
     case '*'
