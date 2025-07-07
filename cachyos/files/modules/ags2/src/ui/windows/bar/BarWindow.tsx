@@ -3,9 +3,9 @@ import { Astal, Gtk, Gdk } from "ags/gtk4";
 import { execAsync } from "ags/process";
 import { createPoll } from "ags/time";
 import DateTimeButton from "./composables/DateTimeButton";
+import NotificationsIndicatorButton from "./composables/NotificationsIndicatorButton";
 
 export default function BarWindow(gdkmonitor: Gdk.Monitor) {
-   const time = createPoll("", 1000, "date");
    const { TOP, LEFT, RIGHT } = Astal.WindowAnchor;
 
    return (
@@ -20,7 +20,8 @@ export default function BarWindow(gdkmonitor: Gdk.Monitor) {
          application={app}
       >
          <centerbox cssClasses={["centerbox"]}>
-            <DateTimeButton $type="center" text="time" />
+            <NotificationsIndicatorButton $type="start" />
+            <DateTimeButton $type="center" />
             <label $type="end" cssClasses={["label"]} label="example text" />
          </centerbox>
       </window>

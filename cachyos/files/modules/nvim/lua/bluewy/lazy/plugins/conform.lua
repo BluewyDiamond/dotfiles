@@ -13,10 +13,12 @@ return {
          --
          csharp = { "dotnet tool run dotnet-csharpier ." },
          javascript = { "prettier" },
+         javascriptreact = { "prettier" },
          python = { "black" },
          php = { "pretty-php" },
          rust = { "rustfmt" },
          typescript = { "prettier" },
+         typescriptreact = { "prettier" },
          vala = { "uncrustify" },
 
          -- markup languages

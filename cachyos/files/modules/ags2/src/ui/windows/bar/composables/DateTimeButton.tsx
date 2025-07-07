@@ -1,9 +1,12 @@
 import { Gtk } from "ags/gtk4";
+import { createPoll } from "ags/time";
 
-export default function ({ text }: { text: string }) {
+export default function () {
+   const datetime = createPoll("", 1000, "date");
+
    return (
       <menubutton $type="end" hexpand halign={Gtk.Align.CENTER}>
-         <label cssClasses={["label"]} label={text} />
+         <label cssClasses={["label"]} label={datetime} />
 
          <popover>
             <Gtk.Calendar />
