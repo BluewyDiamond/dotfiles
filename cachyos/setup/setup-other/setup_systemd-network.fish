@@ -95,7 +95,7 @@ set resolved_conf_path /etc/systemd/resolved.conf
 sudo rm $resolved_conf_path
 sudo touch $resolved_conf_path
 
-append_to_file "[Resolved]" $resolved_conf_path
+append_to_file "[Resolve]" $resolved_conf_path
 append_to_file "DNS=1.1.1.1" $resolved_conf_path
 append_to_file "FallbackDNS=1.0.0.1" $resolved_conf_path
 
