@@ -1,6 +1,7 @@
 import Notifd from "gi://AstalNotifd";
-import { createBinding } from "../../../../../../../../../../../../../../usr/share/ags/js/gnim/src/jsx";
+import { createBinding } from "ags";
 import { Gtk } from "ags/gtk4";
+import icons from "../../../../icons";
 
 const notifd = Notifd.get_default();
 
@@ -13,7 +14,7 @@ export default function () {
          iconName={createBinding(notifd, "notifications").as(
             (notifications) => {
                if (notifications.length > 0) {
-                  return "image";
+                  return icons.notification.noisy;
                } else {
                   return "image";
                }

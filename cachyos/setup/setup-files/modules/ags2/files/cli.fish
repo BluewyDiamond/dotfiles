@@ -61,7 +61,12 @@ switch $argv[1]
                 bun run $parent_dir/build.ts
         end
     case types
-        echo 'TODO!'
+        bunx -y $ts_for_gir generate Gtk\* \
+            --ignoreVersionConflicts \
+            --outdir $parent_dir/@girs \
+            -g /usr/local/share/gir-1.0 \
+            -g /usr/share/gir-1.0 \
+            -g /usr/share/\*/gir-1.0 \
     case '*'
         echo "Unknown option..."
 end

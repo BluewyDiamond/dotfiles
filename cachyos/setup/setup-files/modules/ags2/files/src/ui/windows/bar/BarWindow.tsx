@@ -4,6 +4,7 @@ import { execAsync } from "ags/process";
 import { createPoll } from "ags/time";
 import DateTimeButton from "./composables/DateTimeButton";
 import NotificationsIndicatorButton from "./composables/NotificationsIndicatorButton";
+import WorkspacesButton from "./composables/WorkspacesButton";
 
 export default function BarWindow(gdkmonitor: Gdk.Monitor) {
    const { TOP, LEFT, RIGHT } = Astal.WindowAnchor;
@@ -20,7 +21,9 @@ export default function BarWindow(gdkmonitor: Gdk.Monitor) {
          application={app}
       >
          <centerbox cssClasses={["centerbox"]}>
-            <NotificationsIndicatorButton $type="start" />
+            <box $type="start">
+               <WorkspacesButton />
+            </box>
             <DateTimeButton $type="center" />
             <label $type="end" cssClasses={["label"]} label="example text" />
          </centerbox>

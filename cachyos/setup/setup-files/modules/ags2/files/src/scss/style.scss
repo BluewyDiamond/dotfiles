@@ -91,4 +91,32 @@ $space_from_other_layers: 20px;
 // start
 
 .window.BarWindow {
+   padding: $space_medium;
+   margin: 0px 12px 0 12px;
+
+   border-right: 4px solid $color_outline_variant;
+   border-left: 4px solid $color_outline_variant;
+   border-bottom: 4px solid $color_outline_variant;
+   border-bottom-right-radius: $border_radius;
+   border-bottom-left-radius: $border_radius;
+
+   .occupied {
+      color: $color_secondary_container;
+
+      &:hover {
+         color: $color_primary_container;
+      }
+   }
+
+   .active {
+      color: $color_primary_container;
+   }
+
+   .urgent {
+      color: $color_warning_container;
+
+      &:hover {
+         color: $color_primary_container;
+      }
+   }
 }

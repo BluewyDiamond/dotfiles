@@ -5,6 +5,7 @@ import BarWindow from "./ui/windows/bar/BarWindow.tsx";
 
 app.start({
    css: style,
+   // iconTheme: "candy-icons",
 
    main() {
       app.get_monitors().map(BarWindow);
