@@ -13,7 +13,11 @@ export default function () {
 
    return (
       <button cssClasses={["box", "Workspaces"]}>
-         <For each={workspaces}>{(i) => <WorkspaceLabel workspace={i} />}</For>
+         <box>
+            <For each={workspaces}>
+               {(i) => <WorkspaceLabel workspace={i} />}
+            </For>
+         </box>
       </button>
    );
 }
