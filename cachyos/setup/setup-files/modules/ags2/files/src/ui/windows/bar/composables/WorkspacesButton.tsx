@@ -1,36 +1,39 @@
 import AstalHyprland from "gi://AstalHyprland";
 import options from "../../../../options";
-import { Accessor, createBinding, createComputed, For } from "ags";
+import { Accessor, createBinding, createComputed } from "ags";
 
 const hyprland = AstalHyprland.get_default();
 
 export default function () {
-   const computedWorkspaces = createComputed([], () => {
-      return options.hyprland.workspaces.map((workspaceNumber) =>
-         hyprland.get_workspace(workspaceNumber)
-      );
-   });
-
    return (
       <button cssClasses={["button", "WorkspacesButton"]}>
          <box>
-            <For each={computedWorkspaces}>
-               {(i) => <WorkspaceLabel workspace={i} />}
-            </For>
+            {options.hyprland.workspaces.map((workspaceNumber) => (
+               <WorkspaceLabel workspaceNumber={workspaceNumber} />
+            ))}
          </box>
       </button>
    );
 }
 
-function WorkspaceLabel({ workspace }: { workspace: AstalHyprland.Workspace }) {
+function WorkspaceLabel({ workspaceNumber }: { workspaceNumber: number }) {
    const focusedWorkspaceBinding = createBinding(hyprland, "focusedWorkspace");
-   const workspaceClientsBinding = createBinding(workspace, "clients");
 
    const computedCssClasses = createComputed(
-      [workspaceClientsBinding, focusedWorkspaceBinding],
+      [focusedWorkspaceBinding],
 
-      (clients, focusedWorkspace) => {
+      (focusedWorkspace) => {
          const cssClasses = ["label", "WorkspaceLabel"];
+
+         const workspace = hyprland.get_workspace(
+            workspaceNumber
+         ) as AstalHyprland.Workspace | null;
+
+         if (workspace === null) {
+            return cssClasses;
+         }
+
+         const clients = workspace.get_clients();
 
          if (clients.length > 0) {
             cssClasses.push("occupied");
@@ -44,5 +47,7 @@ function WorkspaceLabel({ workspace }: { workspace: AstalHyprland.Workspace }) {
       }
    );
 
-   return <label cssClasses={computedCssClasses} label={`${workspace.id}`} />;
+   return (
+      <label cssClasses={computedCssClasses} label={`${workspaceNumber}`} />
+   );
 }
