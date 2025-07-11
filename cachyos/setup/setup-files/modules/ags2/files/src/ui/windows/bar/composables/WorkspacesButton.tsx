@@ -5,16 +5,16 @@ import { Accessor, createBinding, createComputed, For } from "ags";
 const hyprland = AstalHyprland.get_default();
 
 export default function () {
-   const workspaces = createComputed([], () => {
+   const computedWorkspaces = createComputed([], () => {
       return options.hyprland.workspaces.map((workspaceNumber) =>
          hyprland.get_workspace(workspaceNumber)
       );
    });
 
    return (
-      <button cssClasses={["box", "Workspaces"]}>
+      <button cssClasses={["button", "WorkspacesButton"]}>
          <box>
-            <For each={workspaces}>
+            <For each={computedWorkspaces}>
                {(i) => <WorkspaceLabel workspace={i} />}
             </For>
          </box>
@@ -26,24 +26,23 @@ function WorkspaceLabel({ workspace }: { workspace: AstalHyprland.Workspace }) {
    const focusedWorkspaceBinding = createBinding(hyprland, "focusedWorkspace");
    const workspaceClientsBinding = createBinding(workspace, "clients");
 
-   const labelCssClasses = createComputed(
+   const computedCssClasses = createComputed(
       [workspaceClientsBinding, focusedWorkspaceBinding],
+
       (clients, focusedWorkspace) => {
-         const labelCssClasses = [];
+         const cssClasses = ["label", "WorkspaceLabel"];
 
          if (clients.length > 0) {
-            labelCssClasses.push("ocuppied");
-         } else {
-            labelCssClasses.push("empty");
+            cssClasses.push("occupied");
          }
 
          if (focusedWorkspace.id === workspace.id) {
-            labelCssClasses.push("focused");
+            cssClasses.push("focused");
          }
 
-         return labelCssClasses;
+         return cssClasses;
       }
    );
 
-   return <label cssClasses={labelCssClasses} label={`${workspace.id}`} />;
+   return <label cssClasses={computedCssClasses} label={`${workspace.id}`} />;
 }

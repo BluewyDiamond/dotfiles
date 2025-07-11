@@ -1,7 +1,5 @@
 import app from "ags/gtk4/app";
-import { Astal, Gtk, Gdk } from "ags/gtk4";
-import { execAsync } from "ags/process";
-import { createPoll } from "ags/time";
+import { Astal, Gdk } from "ags/gtk4";
 import DateTimeButton from "./composables/DateTimeButton";
 import NotificationsIndicatorButton from "./composables/NotificationsIndicatorButton";
 import WorkspacesButton from "./composables/WorkspacesButton";
@@ -24,7 +22,19 @@ export default function BarWindow(gdkmonitor: Gdk.Monitor) {
             <box $type="start">
                <WorkspacesButton />
             </box>
-            <DateTimeButton $type="center" />
+
+            <centerbox $type="center">
+               <box $type="start">
+                  <NotificationsIndicatorButton />
+               </box>
+
+               <box $type="center">
+                  <DateTimeButton $type="center" />
+               </box>
+
+               <box $type="end"></box>
+            </centerbox>
+
             <label $type="end" cssClasses={["label"]} label="example text" />
          </centerbox>
       </window>

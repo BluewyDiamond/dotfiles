@@ -1,25 +1,22 @@
 import Notifd from "gi://AstalNotifd";
-import { createBinding } from "ags";
-import { Gtk } from "ags/gtk4";
+import { createBinding, createComputed } from "ags";
 import icons from "../../../../icons";
 
 const notifd = Notifd.get_default();
 
 export default function () {
-   let image: Gtk.Image;
+   const notificationsBinding = createBinding(notifd, "notifications");
 
-   return (
-      <image
-         $={(self) => (image = self)}
-         iconName={createBinding(notifd, "notifications").as(
-            (notifications) => {
-               if (notifications.length > 0) {
-                  return icons.notification.noisy;
-               } else {
-                  return "image";
-               }
-            }
-         )}
-      />
+   const iconNameComputed = createComputed(
+      [notificationsBinding],
+      (notifications) => {
+         if (notifications.length > 0) {
+            return icons.notification.noisy;
+         } else {
+            return icons.notification.normal;
+         }
+      }
    );
+
+   return <image iconName={iconNameComputed} />;
 }

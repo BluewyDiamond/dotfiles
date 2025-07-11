@@ -100,23 +100,21 @@ $space_from_other_layers: 20px;
    border-bottom-right-radius: $border_radius;
    border-bottom-left-radius: $border_radius;
 
-   .occupied {
-      color: $color_secondary_container;
+   .WorkspacesButton {
+      .WorkspaceLabel {
+         color: $color_surface;
 
-      &:hover {
-         color: $color_primary_container;
-      }
-   }
+         &.occupied {
+            color: $color_secondary_container;
+         }
 
-   .active {
-      color: $color_primary_container;
-   }
+         &.focused {
+            color: $color_primary_container;
+         }
 
-   .urgent {
-      color: $color_warning_container;
-
-      &:hover {
-         color: $color_primary_container;
+         &.urgent {
+            color: $color_warning_container;
+         }
       }
    }
 }
