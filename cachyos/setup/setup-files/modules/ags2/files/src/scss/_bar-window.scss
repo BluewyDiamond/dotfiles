@@ -3,7 +3,7 @@
 
 .window.bar-window {
    background: $surface;
-   padding: $padding-medium;
+   padding: $spacing-medium;
    margin: 0px 12px 0 12px;
    border-right: 4px solid $outline-variant;
    border-left: 4px solid $outline-variant;
@@ -13,12 +13,13 @@
 
    .workspaces-button {
       background: $surface-container;
-      padding: $padding-small;
+      padding: $spacing-small;
+      margin-right: $spacing-medium;
       border-radius: $border-radius;
 
       .workspace-label {
          background: $surface;
-         margin-right: $padding-small;
+         margin-right: $spacing-small;
          min-width: 12px;
          border-radius: $border-radius;
          font-size: 0;
@@ -41,16 +42,29 @@
       }
    }
 
+   .taskbar-box {
+      .client-button {
+         background: $surface-container;
+         padding: $spacing-small;
+         border-radius: $border-radius;
+         margin-right: $spacing-medium;
+
+         &:last-child {
+            margin-right: 0;
+         }
+      }
+   }
+
    .notifications-indicator-button {
       background: $surface-container;
-      padding: $padding-small;
-      margin-right: $padding-medium;
+      padding: $spacing-small;
+      margin-right: $spacing-medium;
       border-radius: $border-radius;
    }
 
    .date-time-menubutton {
       background: $surface-container;
-      padding: $padding-small;
+      padding: $spacing-small;
       border-radius: $border-radius;
    }
 }
