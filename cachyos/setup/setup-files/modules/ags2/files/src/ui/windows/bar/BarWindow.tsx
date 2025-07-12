@@ -9,16 +9,16 @@ export default function BarWindow(gdkmonitor: Gdk.Monitor) {
 
    return (
       <window
-         visible
-         name="bar"
-         namespace="name_to_be_changed"
-         cssClasses={["window", "BarWindow"]}
          gdkmonitor={gdkmonitor}
-         exclusivity={Astal.Exclusivity.EXCLUSIVE}
+         name="ags_bar"
+         namespace="ags_bar"
+         cssClasses={["window", "BarWindow"]}
          anchor={TOP | LEFT | RIGHT}
+         exclusivity={Astal.Exclusivity.EXCLUSIVE}
          application={app}
+         visible
       >
-         <centerbox cssClasses={["centerbox"]}>
+         <centerbox>
             <box $type="start">
                <WorkspacesButton />
             </box>
