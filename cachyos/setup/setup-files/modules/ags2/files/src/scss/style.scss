@@ -70,30 +70,12 @@ $space_from_other_layers: 20px;
    font-size: 18px;
 }
 
-// per individual widget defaults
-
-.window {
-   background: $color_surface;
-}
-
-.centerbox {
-   background: $color_surface_container;
-}
-
-.button {
-   background: $color_surface_container;
-}
-
-.label {
-   color: $color_on_surface;
-}
-
 // start
 
 .window.BarWindow {
+   background: $color_surface;
    padding: $space_medium;
    margin: 0px 12px 0 12px;
-
    border-right: 4px solid $color_outline_variant;
    border-left: 4px solid $color_outline_variant;
    border-bottom: 4px solid $color_outline_variant;
@@ -101,19 +83,31 @@ $space_from_other_layers: 20px;
    border-bottom-left-radius: $border_radius;
 
    .WorkspacesButton {
+      background: $color_surface_container;
+      padding: $space_small;
+      border-radius: $border_radius;
+
       .WorkspaceLabel {
-         color: $color_surface;
+         background: $color_surface;
+         margin-right: $space_medium;
+         min-width: 12px;
+         border-radius: $border_radius;
+         font-size: 0;
 
          &.occupied {
-            color: $color_secondary_container;
+            background: $color_secondary_container;
          }
 
          &.focused {
-            color: $color_primary_container;
+            background: $color_primary_container;
          }
 
          &.urgent {
-            color: $color_warning_container;
+            background: $color_warning_container;
+         }
+
+         &:last-child {
+            margin-right: 0;
          }
       }
    }
