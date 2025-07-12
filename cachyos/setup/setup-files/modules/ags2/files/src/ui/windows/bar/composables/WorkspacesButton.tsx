@@ -24,6 +24,7 @@ export default function () {
 
 function WorkspaceLabel({ workspaceNumber }: { workspaceNumber: number }) {
    const focusedWorkspaceBinding = createBinding(hyprland, "focusedWorkspace");
+   const focusedClientBinding = createBinding(hyprland, "focusedClient");
 
    const [urgentClientsState, setUrgentClientsState] = createState<
       AstalHyprland.Client[]
@@ -44,20 +45,27 @@ function WorkspaceLabel({ workspaceNumber }: { workspaceNumber: number }) {
       }
    );
 
-   const unsubscribeFocusedWorkspaceBinding = focusedWorkspaceBinding.subscribe(
-      () =>
+   const unsubscribeFocusedClientBinding = focusedClientBinding.subscribe(
+      () => {
+         const focusedClient =
+            hyprland.get_focused_client() as AstalHyprland.Client | null;
+
+         if (focusedClient === null) {
+            return;
+         }
+
          setUrgentClientsState((previousUrgentClients) =>
             previousUrgentClients.filter(
                (previousUrgentClient) =>
-                  previousUrgentClient.workspace.id !==
-                  hyprland.get_focused_workspace().id
+                  previousUrgentClient.pid !== focusedClient.pid
             )
-         )
+         );
+      }
    );
 
    onCleanup(() => {
       hyprland.disconnect(urgentClientSignalId);
-      unsubscribeFocusedWorkspaceBinding();
+      unsubscribeFocusedClientBinding();
    });
 
    const computedCssClasses = createComputed(

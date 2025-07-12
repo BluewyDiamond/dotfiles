@@ -43,7 +43,7 @@
    }
 
    .taskbar-box {
-      .client-button {
+      .taskbar-client-button {
          background: $surface-container;
          padding: $spacing-small;
          border-radius: $border-radius;
@@ -51,6 +51,14 @@
 
          &:last-child {
             margin-right: 0;
+         }
+
+         &.active {
+            background: $primary-container;
+         }
+
+         &.urgent {
+            background: $warning-container;
          }
       }
    }

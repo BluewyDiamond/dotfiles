@@ -1,4 +1,5 @@
 import {
+   Accessor,
    createBinding,
    createComputed,
    createState,
@@ -12,12 +13,10 @@ const hyprland = AstalHyprland.get_default();
 export default function () {
    const clientsBinding = createBinding(hyprland, "clients");
 
-   const clientsComputed = createComputed([clientsBinding], (clients) => {
-      return clients.sort(
-         (clientA, clientB) =>
-            clientA.get_workspace().id - clientB.get_workspace().id
-      );
-   });
+   const focusedClientBinding = createBinding(
+      hyprland,
+      "focusedClient"
+   ) as Accessor<AstalHyprland.Client | null>;
 
    const [urgentClientsState, setUrgentClientsState] = createState<
       AstalHyprland.Client[]
@@ -25,9 +24,11 @@ export default function () {
 
    const urgentClientSignalId = hyprland.connect(
       "urgent",
-      (client: AstalHyprland.Client) => {
-         const urgentClients: AstalHyprland.Client[] = [];
-         urgentClients.push(client);
+
+      (_, client: AstalHyprland.Client | null) => {
+         if (client === null) {
+            return;
+         }
 
          setUrgentClientsState((previousUrgentClients) => [
             ...previousUrgentClients,
@@ -36,7 +37,35 @@ export default function () {
       }
    );
 
-   onCleanup(() => hyprland.disconnect(urgentClientSignalId));
+   const unsubscribeFocusedClientBinding = focusedClientBinding.subscribe(
+      () => {
+         const focusedClient =
+            hyprland.get_focused_client() as AstalHyprland.Client | null;
+
+         if (focusedClient === null) {
+            return;
+         }
+
+         setUrgentClientsState((previousUrgentClients) =>
+            previousUrgentClients.filter(
+               (previousUrgentClient) =>
+                  previousUrgentClient.pid !== focusedClient.pid
+            )
+         );
+      }
+   );
+
+   onCleanup(() => {
+      hyprland.disconnect(urgentClientSignalId);
+      unsubscribeFocusedClientBinding();
+   });
+
+   const clientsComputed = createComputed([clientsBinding], (clients) => {
+      return clients.sort(
+         (clientA, clientB) =>
+            clientA.get_workspace().id - clientB.get_workspace().id
+      );
+   });
 
    return (
       <box cssClasses={["taskbar-box"]}>
@@ -44,18 +73,29 @@ export default function () {
             {(client) => (
                <button
                   cssClasses={createComputed(
-                     [urgentClientsState],
+                     [focusedClientBinding, urgentClientsState],
 
-                     (urgentClients) => {
+                     (focusedClient, urgentClients) => {
+                        const cssClasses = ["taskbar-client-button"];
+
+                        if (focusedClient === null) {
+                           return cssClasses;
+                        }
+
+                        if (focusedClient.pid === client.pid) {
+                           cssClasses.push("active");
+                        }
+
                         if (
                            urgentClients.find(
                               (urgentClient) => urgentClient.pid === client.pid
-                           )
+                           ) !== undefined
                         ) {
-                           return ["urgent"];
-                        } else {
-                           return [];
+                           console.log("true");
+                           cssClasses.push("urgent");
                         }
+
+                        return cssClasses;
                      }
                   )}
                   onClicked={() => client.focus()}
