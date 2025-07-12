@@ -5,7 +5,12 @@ export default function () {
    const datetime = createPoll("", 1000, "date");
 
    return (
-      <menubutton $type="end" hexpand halign={Gtk.Align.CENTER}>
+      <menubutton
+         $type="end"
+         cssClasses={["date-time-menubutton"]}
+         hexpand
+         halign={Gtk.Align.CENTER}
+      >
          <label cssClasses={["label"]} label={datetime} />
 
          <popover>

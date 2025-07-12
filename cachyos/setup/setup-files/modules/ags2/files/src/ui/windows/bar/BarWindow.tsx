@@ -1,8 +1,8 @@
 import app from "ags/gtk4/app";
 import { Astal, Gdk } from "ags/gtk4";
-import DateTimeButton from "./composables/DateTimeButton";
 import NotificationsIndicatorButton from "./composables/NotificationsIndicatorButton";
 import WorkspacesButton from "./composables/WorkspacesButton";
+import DateTimeMenuButton from "./composables/DateTimeMenubutton";
 
 export default function BarWindow(gdkmonitor: Gdk.Monitor) {
    const { TOP, LEFT, RIGHT } = Astal.WindowAnchor;
@@ -12,7 +12,7 @@ export default function BarWindow(gdkmonitor: Gdk.Monitor) {
          gdkmonitor={gdkmonitor}
          name="ags_bar"
          namespace="ags_bar"
-         cssClasses={["window", "BarWindow"]}
+         cssClasses={["window", "bar-window"]}
          anchor={TOP | LEFT | RIGHT}
          exclusivity={Astal.Exclusivity.EXCLUSIVE}
          application={app}
@@ -29,13 +29,11 @@ export default function BarWindow(gdkmonitor: Gdk.Monitor) {
                </box>
 
                <box $type="center">
-                  <DateTimeButton $type="center" />
+                  <DateTimeMenuButton $type="center" />
                </box>
 
                <box $type="end"></box>
             </centerbox>
-
-            <label $type="end" cssClasses={["label"]} label="example text" />
          </centerbox>
       </window>
    );

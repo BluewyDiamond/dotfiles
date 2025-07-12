@@ -18,5 +18,9 @@ export default function () {
       }
    );
 
-   return <image iconName={iconNameComputed} />;
+   return (
+      <button cssClasses={["notifications-indicator-button"]}>
+         <image iconName={iconNameComputed} />
+      </button>
+   );
 }

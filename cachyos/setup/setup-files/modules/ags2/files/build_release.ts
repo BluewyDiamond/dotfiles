@@ -6,6 +6,7 @@ await build({
    outdir: "./build",
 
    bundle: true,
+   minify: true,
    platform: "neutral",
    target: "ES2022",
    format: "esm",

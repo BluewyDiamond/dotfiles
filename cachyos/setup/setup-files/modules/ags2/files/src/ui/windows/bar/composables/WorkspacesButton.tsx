@@ -6,7 +6,7 @@ const hyprland = AstalHyprland.get_default();
 
 export default function () {
    return (
-      <button cssClasses={["button", "WorkspacesButton"]}>
+      <button cssClasses={["workspaces-button"]}>
          <box>
             {options.hyprland.workspaces.map((workspaceNumber) => (
                <WorkspaceLabel workspaceNumber={workspaceNumber} />
@@ -23,7 +23,7 @@ function WorkspaceLabel({ workspaceNumber }: { workspaceNumber: number }) {
       [focusedWorkspaceBinding],
 
       (focusedWorkspace) => {
-         const cssClasses = ["label", "WorkspaceLabel"];
+         const cssClasses = ["workspace-label"];
 
          const workspace = hyprland.get_workspace(
             workspaceNumber

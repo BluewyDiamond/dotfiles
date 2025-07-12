@@ -43,23 +43,30 @@ switch $argv[1]
         mkdir -p $build_dir
 
         switch $argv[2]
-            case --with-bun # currently lacking as it isn't setup to use with scss
-                bun build \
-                    --production \
-                    --minify \
-                    --target bun \
-                    --external gi://\* \
-                    --external file://\* \
-                    --external resource://\* \
-                    --external system \
-                    --external console \
-                    --external cairo \
-                    --external gettext \
-                    --outdir=$build_dir \
-                    -- $parent_dir/src/main.ts
+            case release
+                bun run $parent_dir/build_release.ts
             case '*'
                 bun run $parent_dir/build.ts
         end
+
+        # switch $argv[2]
+        #     case --with-bun # currently lacking as it isn't setup to use with scss
+        #         bun build \
+        #             --production \
+        #             --minify \
+        #             --target bun \
+        #             --external gi://\* \
+        #             --external file://\* \
+        #             --external resource://\* \
+        #             --external system \
+        #             --external console \
+        #             --external cairo \
+        #             --external gettext \
+        #             --outdir=$build_dir \
+        #             -- $parent_dir/src/main.ts
+        #     case '*'
+        #         bun run $parent_dir/build.ts
+        # end
     case types
         bunx -y $ts_for_gir generate Gtk\* \
             --ignoreVersionConflicts \
@@ -67,6 +74,6 @@ switch $argv[1]
             -g /usr/local/share/gir-1.0 \
             -g /usr/share/gir-1.0 \
             -g /usr/share/\*/gir-1.0 \
-    case '*'
+            case '*'
         echo "Unknown option..."
 end
