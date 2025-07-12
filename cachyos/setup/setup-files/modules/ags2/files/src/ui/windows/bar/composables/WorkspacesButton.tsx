@@ -1,6 +1,12 @@
 import AstalHyprland from "gi://AstalHyprland";
 import options from "../../../../options";
-import { Accessor, createBinding, createComputed } from "ags";
+import {
+   Accessor,
+   createBinding,
+   createComputed,
+   createState,
+   onCleanup,
+} from "ags";
 
 const hyprland = AstalHyprland.get_default();
 
@@ -19,10 +25,45 @@ export default function () {
 function WorkspaceLabel({ workspaceNumber }: { workspaceNumber: number }) {
    const focusedWorkspaceBinding = createBinding(hyprland, "focusedWorkspace");
 
-   const computedCssClasses = createComputed(
-      [focusedWorkspaceBinding],
+   const [urgentClientsState, setUrgentClientsState] = createState<
+      AstalHyprland.Client[]
+   >([]);
 
-      (focusedWorkspace) => {
+   const urgentClientSignalId = hyprland.connect(
+      "urgent",
+
+      (_, client: AstalHyprland.Client | null) => {
+         if (client === null) {
+            return;
+         }
+
+         setUrgentClientsState((previousUrgentClients) => [
+            ...previousUrgentClients,
+            client,
+         ]);
+      }
+   );
+
+   const unsubscribeFocusedWorkspaceBinding = focusedWorkspaceBinding.subscribe(
+      () =>
+         setUrgentClientsState((previousUrgentClients) =>
+            previousUrgentClients.filter(
+               (previousUrgentClient) =>
+                  previousUrgentClient.workspace.id !==
+                  hyprland.get_focused_workspace().id
+            )
+         )
+   );
+
+   onCleanup(() => {
+      hyprland.disconnect(urgentClientSignalId);
+      unsubscribeFocusedWorkspaceBinding();
+   });
+
+   const computedCssClasses = createComputed(
+      [focusedWorkspaceBinding, urgentClientsState],
+
+      (focusedWorkspace, urgentClients) => {
          const cssClasses = ["workspace-label"];
 
          const workspace = hyprland.get_workspace(
@@ -41,6 +82,21 @@ function WorkspaceLabel({ workspaceNumber }: { workspaceNumber: number }) {
 
          if (focusedWorkspace.id === workspace.id) {
             cssClasses.push("focused");
+         }
+
+         if (
+            urgentClients.find((urgentClient) => {
+               const urgentWorkspace =
+                  urgentClient.get_workspace() as AstalHyprland.Workspace | null;
+
+               if (urgentWorkspace === null) {
+                  return false;
+               }
+
+               return urgentWorkspace.id === workspace.id;
+            }) !== undefined
+         ) {
+            cssClasses.push("urgent");
          }
 
          return cssClasses;

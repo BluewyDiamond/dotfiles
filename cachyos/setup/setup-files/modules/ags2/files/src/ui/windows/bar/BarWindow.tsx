@@ -22,7 +22,6 @@ export default function BarWindow(gdkmonitor: Gdk.Monitor) {
          <centerbox>
             <box $type="start">
                <WorkspacesButton />
-               <TaskbarBox />
             </box>
 
             <centerbox $type="center">
