@@ -9,7 +9,13 @@ return {
       dashboard = { enabled = true },
       indent = { enabled = true },
       input = { enabled = true },
-      picker = { enabled = true },
+
+      picker = {
+         enabled = true,
+         hidden = true,
+         ignored = true,
+      },
+
       notifier = { enabled = true },
       quickfile = { enabled = true },
       scroll = { enabled = true },
