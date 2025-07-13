@@ -1,0 +1,29 @@
+# https://github.com/CachyOS/CachyOS-PKGBUILDS/tree/master/cachyos-firefox-settings
+# ported for Zen Browser
+pkgname=cachyos-zen-browser-settings
+pkgver=20250626
+pkgrel=1
+pkgdesc='CachyOS settings for Zen Browser'
+depends=('zen-browser' 'xdg-desktop-portal-impl')
+arch=('any')
+backup=('opt/zen-browser-bin/distribution/policies.json')
+conflicts=(cachyos-zen-browser-settings)
+replaces=(cachyos-zen-browser-settings)
+provides=(cachyos-zen-browser-settings)
+source=(
+    cachyos.js
+    policies.json
+)
+sha256sums=(
+    '705a39cef81c40ac37faf95f0114a3cf2abc4fca20c404e4ee01e854810ab624'
+    '1e4c43ef30b5952df184859dc97bcab5fc34dbcd977d4852851d45a236e2f45d'
+)
+
+pkgver() {
+    date +%Y%m%d
+}
+
+package() {
+    install -Dm644 cachyos.js "$pkgdir/opt/zen-browser-bin/defaults/pref/cachyos.js"
+    install -Dm644 policies.json "$pkgdir/opt/zen-browser-bin/distribution/policies.json"
+}
