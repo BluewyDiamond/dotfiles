@@ -2,7 +2,6 @@ pkgbase = cachyos-zen-browser-settings
 	pkgdesc = CachyOS settings for Zen Browser
 	pkgver = 20250626
 	pkgrel = 1
-	url = https://github.com/CachyOS/CachyOS-PKGBUILDS/tree/master/cachyos-zen-browser-settings
 	arch = any
 	depends = zen-browser
 	depends = xdg-desktop-portal-impl
