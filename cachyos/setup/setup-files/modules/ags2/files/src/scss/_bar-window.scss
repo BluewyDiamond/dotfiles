@@ -77,10 +77,11 @@
    }
 
    .indicators-box {
+      background: $surface-container;
+      padding: $spacing-small;
+      border-radius: $border-radius;
+
       image {
-         background: $surface-container;
-         padding: $spacing-small;
-         border-radius: $border-radius;
          margin-right: $spacing-medium;
 
          &:last-child {

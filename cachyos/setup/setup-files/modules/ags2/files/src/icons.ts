@@ -11,6 +11,14 @@ export default {
          medium: "microphone-sensitivy-medium",
          high: "microphone-sensitivy-high",
       },
+
+      volume: {
+         muted: "audio-volume-muted",
+         low: "audio-volume-low",
+         medium: "audio-volume-medium",
+         high: "audio-volume-high",
+         overamplified: "audio-volume-overamplified",
+      },
    },
 
    powerprofile: {

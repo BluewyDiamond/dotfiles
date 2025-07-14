@@ -1,16 +1,16 @@
 import { createBinding, createComputed, With } from "ags";
 import AstalPowerProfiles from "gi://AstalPowerProfiles";
-import AstalWp from "gi://AstalWp?version=0.1";
+import AstalWp from "gi://AstalWp";
 import icons from "../../../../icons";
 
 const powerprofiles = AstalPowerProfiles.get_default();
 const wp = AstalWp.get_default();
 
 export default function () {
-   // powerprofiles indicator state
+   // powerprofile indicator state
    const activeProfileBinding = createBinding(powerprofiles, "activeProfile");
 
-   // microphone indicator state
+   // microphone recorders indicator state
    if (wp === null) {
       return;
    }
@@ -38,6 +38,15 @@ export default function () {
    }
 
    const videoRecordersBinding = createBinding(video, "recorders");
+
+   // speaker indicator state
+   const speaker = wp.get_default_speaker();
+
+   if (speaker === null) {
+      return;
+   }
+
+   const speakerVolumeBinding = createBinding(speaker, "volume");
 
    return (
       <box cssClasses={["indicators-box"]}>
@@ -88,6 +97,26 @@ export default function () {
                }
 
                return <image iconName={icons.recorder.screencast} />;
+            }}
+         </With>
+
+         <With value={speakerVolumeBinding}>
+            {(speakerVolume) => {
+               let iconName = "";
+
+               if (speakerVolume <= 0) {
+                  iconName = icons.audio.volume.muted;
+               } else if (speakerVolume <= 0.34) {
+                  iconName = icons.audio.volume.low;
+               } else if (speakerVolume <= 0.67) {
+                  iconName = icons.audio.volume.medium;
+               } else if (speakerVolume <= 1) {
+                  iconName = icons.audio.volume.high;
+               } else {
+                  iconName = icons.audio.volume.overamplified;
+               }
+
+               return <image iconName={iconName} />;
             }}
          </With>
       </box>
