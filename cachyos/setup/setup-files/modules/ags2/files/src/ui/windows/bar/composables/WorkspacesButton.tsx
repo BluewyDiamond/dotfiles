@@ -23,7 +23,11 @@ export default function () {
 }
 
 function WorkspaceLabel({ workspaceNumber }: { workspaceNumber: number }) {
-   const focusedWorkspaceBinding = createBinding(hyprland, "focusedWorkspace");
+   const focusedWorkspaceBinding = createBinding(
+      hyprland,
+      "focusedWorkspace"
+   ) as Accessor<AstalHyprland.Workspace | null>;
+
    const focusedClientBinding = createBinding(hyprland, "focusedClient");
 
    const [urgentClientsState, setUrgentClientsState] = createState<
@@ -73,6 +77,10 @@ function WorkspaceLabel({ workspaceNumber }: { workspaceNumber: number }) {
 
       (focusedWorkspace, urgentClients) => {
          const cssClasses = ["workspace-label"];
+
+         if (focusedWorkspace === null) {
+            return cssClasses;
+         }
 
          const workspace = hyprland.get_workspace(
             workspaceNumber
