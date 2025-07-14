@@ -14,6 +14,13 @@ return {
          enabled = true,
          hidden = true,
          ignored = true,
+
+         sources = {
+            files = {
+               hidden = true,
+               ignored = true,
+            },
+         },
       },
 
       notifier = { enabled = true },
