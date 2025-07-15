@@ -49,7 +49,7 @@ export default function () {
          setUrgentClientsState((previousUrgentClients) =>
             previousUrgentClients.filter(
                (previousUrgentClient) =>
-                  previousUrgentClient.pid !== focusedClient.pid
+                  previousUrgentClient.address !== focusedClient.address
             )
          );
       }
@@ -82,13 +82,14 @@ export default function () {
                            return cssClasses;
                         }
 
-                        if (focusedClient.pid === client.pid) {
+                        if (focusedClient.address === client.address) {
                            cssClasses.push("active");
                         }
 
                         if (
                            urgentClients.find(
-                              (urgentClient) => urgentClient.pid === client.pid
+                              (urgentClient) =>
+                                 urgentClient.address === client.address
                            ) !== undefined
                         ) {
                            console.log("true");
