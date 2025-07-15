@@ -1,5 +1,6 @@
-@use "./_bar-window.scss";
 @use "./_theme.scss" as *;
+@use "./_bar-window.scss";
+@use "./_notification-toast-box.scss";
 
 * {
    all: unset;

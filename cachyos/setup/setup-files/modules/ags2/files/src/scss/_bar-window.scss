@@ -1,7 +1,7 @@
 @use "./_theme.scss" as *;
 @use "./_variables.scss" as *;
 
-.window.bar-window {
+window.bar-window {
    background: $surface;
    padding: $spacing-medium;
    margin: 0px 12px 0 12px;

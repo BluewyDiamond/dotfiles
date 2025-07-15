@@ -1,4 +1,29 @@
 export default {
+   ui: {
+      close: "window-close",
+      colorpicker: "color-select",
+      info: "help-info",
+      link: "external-link",
+      lock: "system-lock-screen",
+      menu: "open-menu",
+      refresh: "view-refresh",
+      search: "system-search",
+      settings: "emblem-system",
+      themes: "preferences-desktop-theme",
+      tick: "object-select",
+      time: "hourglass",
+      toolbars: "toolbars",
+      warning: "dialog-warning",
+      avatar: "avatar-default",
+
+      arrow: {
+         right: "pan-end",
+         left: "pan-start",
+         down: "pan-down",
+         up: "pan-up",
+      },
+   },
+
    notification: {
       normal: "notifications",
       noisy: "notification-active",

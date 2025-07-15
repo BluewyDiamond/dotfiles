@@ -15,7 +15,7 @@ export default function BarWindow(gdkmonitor: Gdk.Monitor) {
          gdkmonitor={gdkmonitor}
          name="ags_bar"
          namespace="ags_bar"
-         cssClasses={["window", "bar-window"]}
+         cssClasses={["bar-window"]}
          anchor={TOP | LEFT | RIGHT}
          exclusivity={Astal.Exclusivity.EXCLUSIVE}
          application={app}
