@@ -1,7 +1,7 @@
 import { createBinding, createComputed, With } from "ags";
 import AstalPowerProfiles from "gi://AstalPowerProfiles";
 import AstalWp from "gi://AstalWp";
-import icons from "../../../../icons";
+import options from "../../../../options";
 
 const powerprofiles = AstalPowerProfiles.get_default();
 const wp = AstalWp.get_default();
@@ -55,11 +55,13 @@ export default function () {
                let iconName = "image-missing";
 
                if (activeProfile === "powersaving") {
-                  iconName = icons.powerprofile.powerSaver;
+                  iconName =
+                     options.bar.indicators.powerprofile.icons.powerSaver;
                } else if (activeProfile === "balanced") {
-                  iconName = icons.powerprofile.balanced;
+                  iconName = options.bar.indicators.powerprofile.icons.balanced;
                } else if (activeProfile === "performance") {
-                  iconName = icons.powerprofile.performance;
+                  iconName =
+                     options.bar.indicators.powerprofile.icons.performance;
                }
 
                return <image iconName={iconName} />;
@@ -76,13 +78,17 @@ export default function () {
                   <image
                      iconName={createComputed([volumeBinding], (volume) => {
                         if (volume > 0.67) {
-                           return icons.audio.mic.high;
+                           return options.bar.indicators.microphoneRecorders
+                              .icons.microphoneHigh;
                         } else if (volume > 0.34) {
-                           return icons.audio.mic.medium;
+                           return options.bar.indicators.microphoneRecorders
+                              .icons.microphoneMedium;
                         } else if (volume > 0.1) {
-                           return icons.audio.mic.low;
+                           return options.bar.indicators.microphoneRecorders
+                              .icons.microphoneLow;
                         } else {
-                           return icons.audio.mic.muted;
+                           return options.bar.indicators.microphoneRecorders
+                              .icons.microphoneMuted;
                         }
                      })}
                   />
@@ -96,7 +102,9 @@ export default function () {
                   return;
                }
 
-               return <image iconName={icons.recorder.screencast} />;
+               return (
+                  <image iconName={options.bar.indicators.icons.screenshare} />
+               );
             }}
          </With>
 
@@ -105,15 +113,16 @@ export default function () {
                let iconName = "";
 
                if (speakerVolume <= 0) {
-                  iconName = icons.audio.volume.muted;
+                  iconName = options.bar.indicators.speaker.icons.speakerMuted;
                } else if (speakerVolume <= 0.34) {
-                  iconName = icons.audio.volume.low;
+                  iconName = options.bar.indicators.speaker.icons.speakerLow;
                } else if (speakerVolume <= 0.67) {
-                  iconName = icons.audio.volume.medium;
+                  iconName = options.bar.indicators.speaker.icons.speakerMedium;
                } else if (speakerVolume <= 1) {
-                  iconName = icons.audio.volume.high;
+                  iconName = options.bar.indicators.speaker.icons.speakerHigh;
                } else {
-                  iconName = icons.audio.volume.overamplified;
+                  iconName =
+                     options.bar.indicators.speaker.icons.speakerOveramplified;
                }
 
                return <image iconName={iconName} />;

@@ -1,6 +1,6 @@
 import Notifd from "gi://AstalNotifd";
 import { createBinding, createComputed } from "ags";
-import icons from "../../../../icons";
+import options from "../../../../options";
 
 const notifd = Notifd.get_default();
 
@@ -10,10 +10,10 @@ export default function () {
    const iconNameComputed = createComputed(
       [notificationsBinding],
       (notifications) => {
-         if (notifications.length > 0) {
-            return icons.notification.noisy;
+         if (notifications.length <= 0) {
+            return options.bar.notificationsIndicator.icons.notificationNormal;
          } else {
-            return icons.notification.normal;
+            return options.bar.notificationsIndicator.icons.notificationNoisy;
          }
       }
    );

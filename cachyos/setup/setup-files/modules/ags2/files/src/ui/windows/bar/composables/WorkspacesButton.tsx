@@ -14,7 +14,7 @@ export default function () {
    return (
       <button cssClasses={["workspaces-button"]}>
          <box>
-            {options.hyprland.workspaces.ids.map((workspaceNumber) => (
+            {options.bar.workspaces.ids.map((workspaceNumber) => (
                <WorkspaceLabel workspaceNumber={workspaceNumber} />
             ))}
          </box>

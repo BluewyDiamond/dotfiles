@@ -1,21 +1,49 @@
-import icons from "./icons";
+import icons from "./lib/icons";
 
 export default {
-   hyprland: {
+   bar: {
       workspaces: { ids: [1, 2, 3, 4, 8, 9, 10], flat: false },
-   },
 
-   indicators: {
-      powerprofile: {
-         powerSaverIcon: icons.powerprofile.powerSaver,
-         balancedIcon: icons.powerprofile.balanced,
-         performanceIcon: icons.powerprofile.performance,
+      indicators: {
+         powerprofile: {
+            icons: {
+               powerSaver: icons.powerprofile.powerSaver,
+               balanced: icons.powerprofile.balanced,
+               performance: icons.powerprofile.performance,
+            },
+         },
+
+         microphoneRecorders: {
+            icons: {
+               microphoneLow: icons.audio.mic.low,
+               microphoneMedium: icons.audio.mic.medium,
+               microphoneHigh: icons.audio.mic.high,
+               microphoneMuted: icons.audio.mic.muted,
+            },
+         },
+
+         speaker: {
+            icons: {
+               speakerMuted: icons.audio.volume.muted,
+               speakerLow: icons.audio.volume.low,
+               speakerMedium: icons.audio.volume.medium,
+               speakerHigh: icons.audio.volume.high,
+               speakerOveramplified: icons.audio.volume.overamplified,
+            },
+         },
+
+         icons: {
+            screenshare: icons.recorder.screencast,
+            notification: icons.notification.normal,
+         },
       },
 
-      microphoneIcon: "",
-      screenshareIcon: "",
-      speakerIcon: "",
-      notificationIcon: "",
+      notificationsIndicator: {
+         icons: {
+            notificationNormal: icons.notification.normal,
+            notificationNoisy: icons.notification.noisy,
+         },
+      },
    },
 
    notificationToasts: {
