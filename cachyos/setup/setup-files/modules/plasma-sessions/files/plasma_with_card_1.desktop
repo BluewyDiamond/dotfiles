@@ -1,0 +1,4 @@
+[Desktop Entry]
+Exec=/usr/local/bin/start_plasma_with_card_1.fish
+DesktopNames=KDE
+Name=Plasma (Wayland, Card 1)
