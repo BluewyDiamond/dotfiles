@@ -7,7 +7,7 @@ source $script_dir/../../lib.fish
 set source_01 $script_dir/files/start_plasma_with_card_0.fish
 set source_02 $script_dir/files/plasma_with_card_0.desktop
 set source_03 $script_dir/files/start_plasma_with_card_1.fish
-set source_04 $script_dir/files/plasma_with_card_1.fish
+set source_04 $script_dir/files/plasma_with_card_1.desktop
 set target_01 /usr/local/bin/(basename $source_01)
 set target_02 /usr/share/wayland-sessions/(basename $source_02)
 set target_03 /usr/local/bin/(basename $source_03)
