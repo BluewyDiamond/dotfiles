@@ -1,8 +1,0 @@
-@use "./_theme.scss" as *;
-@use "./_variables.scss" as *;
-
-window.notification-toasts-window {
-   .notification-toast-box {
-      background: $surface;
-   }
-}

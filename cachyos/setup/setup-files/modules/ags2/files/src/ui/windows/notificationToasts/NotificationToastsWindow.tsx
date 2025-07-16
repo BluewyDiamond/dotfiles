@@ -4,6 +4,7 @@ import app from "ags/gtk4/app";
 import { timeout } from "ags/time";
 import AstalNotifd from "gi://AstalNotifd";
 import options from "../../../options";
+import icons from "../../../lib/icons";
 
 const notifd = AstalNotifd.get_default();
 
@@ -93,17 +94,36 @@ function NotificationToastBox({
          orientation={Gtk.Orientation.VERTICAL}
       >
          <box>
-            <image iconName={notification.app_icon} />
-            <label label={notification.summary} />
+            <image
+               cssClasses={["notification-app-image"]}
+               iconName={notification.app_icon}
+            />
 
-            <button onClicked={() => nuke()}>
-               <image iconName={""} />
+            <label
+               cssClasses={["notification-summary-label"]}
+               label={notification.summary}
+            />
+
+            <button
+               cssClasses={["notification-close-button"]}
+               onClicked={() => nuke()}
+            >
+               <image iconName={icons.ui.close} />
             </button>
          </box>
 
          <box>
-            <image file={notification.get_image()} />
-            <label label={notification.body} />
+            {notification.get_image() && (
+               <image
+                  cssClasses={["notification-body-image"]}
+                  file={notification.get_image()}
+               />
+            )}
+
+            <label
+               cssClasses={["notification-body-label"]}
+               label={notification.body}
+            />
          </box>
       </box>
    );
