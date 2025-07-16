@@ -1,15 +1,17 @@
 #!/usr/bin/env fish
 
-source ../setup-utils/lib.fish
+set script_dir (realpath (dirname (status filename)))
+
+source $script_dir/../setup-utils/lib.fish
 
 set script_name (path basename (status filename))
 
-set unlisted_installed_std_packages_to_remove (./get_unlisted_installed_std_packages__arr.fish)
+set unlisted_installed_std_packages_to_remove ($script_dir/lib/get_unlisted_installed_std_packages__arr.fish)
 echo $unlisted_installed_std_packages_to_remove
 echo "Clean up the above? [y/N]"
 set should_remove_unlisted_installed_std_packages (scan N "INPUT: ")
 
-set unlisted_installed_aur_packages_to_remove (./get_unlisted_installed_aur_packages__arr.fish)
+set unlisted_installed_aur_packages_to_remove ($script_dir/lib/get_unlisted_installed_aur_packages__arr.fish)
 echo $unlisted_installed_aur_packages_to_remove
 echo "Do you wish to also clean up the AUR packages above? [y/N]"
 set should_remove_unlisted_installed_aur_packages (scan N "INPUT: ")

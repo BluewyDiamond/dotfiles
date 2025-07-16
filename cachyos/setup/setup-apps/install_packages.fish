@@ -2,9 +2,9 @@
 
 source ../setup-utils/lib.fish
 
-set script_name (basename (status filename))
-set script_dir (dirname (realpath (status --current-filename)))
+set script_dir (realpath (dirname (status filename)))
 set config_path $script_dir/lib/packages.json
+set script_name (basename (status filename))
 
 function print
     set_color magenta

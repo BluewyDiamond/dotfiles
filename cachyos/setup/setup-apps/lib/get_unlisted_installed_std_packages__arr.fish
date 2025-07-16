@@ -1,8 +1,10 @@
 #!/usr/bin/env fish
 
-source ./is_package_a_dependency__bool.fish
+set script_dir (realpath (dirname (status filename)))
 
-set any_target_packages (./get_any_target_packages__arr.fish)
+source $script_dir/is_package_a_dependency__bool.fish
+
+set any_target_packages ($script_dir/get_any_target_packages__arr.fish)
 set installed_any_packages (pacman -Qqe)
 set installed_aur_packages (pacman -Qqme)
 
