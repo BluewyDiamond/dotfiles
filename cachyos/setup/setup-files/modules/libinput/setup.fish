@@ -10,7 +10,7 @@ set target_dir /etc/libinput
 function install
     for source in $source_dir/*
         set source_filename (basename $source)
-        sudo_prepare $target_dir/$$source_filename
+        sudo_prepare $target_dir/$source_filename
         sudo cp $source $target_dir/(basename $source)
     end
 end

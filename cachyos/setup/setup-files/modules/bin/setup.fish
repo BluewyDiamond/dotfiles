@@ -7,6 +7,9 @@ source $script_dir/../../lib.fish
 set source_dir $script_dir/files
 set target_dir $HOME/.local/bin
 
-for file in $source_dir/*
-    process false link $file $target_dir/(basename $file)
+for source in $source_dir/*
+    set source_filename (basename $source)
+
+    prepare $target_dir/$source_filename
+    ln -s $target_dir/$source_filename
 end
