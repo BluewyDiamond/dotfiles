@@ -5,6 +5,9 @@ import { timeout } from "ags/time";
 import AstalNotifd from "gi://AstalNotifd";
 import options from "../../../options";
 import icons from "../../../lib/icons";
+import { checkIconExists } from "../../../utils";
+import Adw from "gi://Adw?version=1";
+import Pango from "gi://Pango?version=1.0";
 
 const notifd = AstalNotifd.get_default();
 
@@ -93,26 +96,31 @@ function NotificationToastBox({
          cssClasses={["notification-toast-box"]}
          orientation={Gtk.Orientation.VERTICAL}
       >
-         <box>
-            <image
-               cssClasses={["notification-app-image"]}
-               iconName={notification.app_icon}
-            />
+         <box hexpand>
+            {checkIconExists(notification.appIcon) && (
+               <image
+                  cssClasses={["notification-app-image"]}
+                  halign={Gtk.Align.START}
+                  iconName={notification.app_icon}
+               />
+            )}
 
             <label
                cssClasses={["notification-summary-label"]}
+               halign={Gtk.Align.CENTER}
                label={notification.summary}
             />
 
             <button
                cssClasses={["notification-close-button"]}
+               halign={Gtk.Align.END}
                onClicked={() => nuke()}
             >
                <image iconName={icons.ui.close} />
             </button>
          </box>
 
-         <box>
+         <box cssClasses={["debug"]}>
             {notification.get_image() && (
                <image
                   cssClasses={["notification-body-image"]}
@@ -120,11 +128,30 @@ function NotificationToastBox({
                />
             )}
 
-            <label
-               cssClasses={["notification-body-label"]}
-               label={notification.body}
-            />
+            <Adw.Clamp maximumSize={400}>
+               <label
+                  cssClasses={["notification-body-label"]}
+                  wrap
+                  wrapMode={Gtk.WrapMode.WORD_CHAR}
+                  ellipsize={Pango.EllipsizeMode.END}
+                  label={notification.body}
+               />
+            </Adw.Clamp>
          </box>
+
+         {notification.actions.length > 0 && (
+            <box hexpand>
+               {notification.actions.map((action) => (
+                  <button
+                     cssClasses={["notification-action-button"]}
+                     hexpand
+                     onClicked={() => notification.invoke(action.id)}
+                  >
+                     <label label={action.label} />
+                  </button>
+               ))}
+            </box>
+         )}
       </box>
    );
 }

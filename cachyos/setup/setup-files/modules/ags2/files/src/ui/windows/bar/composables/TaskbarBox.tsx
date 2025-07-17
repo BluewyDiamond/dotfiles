@@ -7,6 +7,7 @@ import {
    onCleanup,
 } from "ags";
 import AstalHyprland from "gi://AstalHyprland";
+import options from "../../../../options";
 
 const hyprland = AstalHyprland.get_default();
 
@@ -101,7 +102,13 @@ export default function () {
                   )}
                   onClicked={() => client.focus()}
                >
-                  <image iconName={client.class} />
+                  <image
+                     iconName={
+                        options.bar.taskbar.flat ?
+                           client.class + "symbolic"
+                        :  client.class
+                     }
+                  />
                </button>
             )}
          </For>

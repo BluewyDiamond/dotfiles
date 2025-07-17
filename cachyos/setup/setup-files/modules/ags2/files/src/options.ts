@@ -2,7 +2,11 @@ import icons from "./lib/icons";
 
 export default {
    bar: {
-      workspaces: { ids: [1, 2, 3, 4, 8, 9, 10], flat: false },
+      workspaces: { ids: [1, 2, 3, 4, 8, 9, 10] },
+
+      taskbar: {
+         flat: false,
+      },
 
       indicators: {
          powerprofile: {

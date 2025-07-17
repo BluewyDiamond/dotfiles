@@ -1,6 +1,6 @@
 import { Gdk, Gtk } from "ags/gtk4";
 
-function checkIconExists(icon: string): boolean {
+export function checkIconExists(icon: string): boolean {
    if (icon === "") {
       return false;
    }
