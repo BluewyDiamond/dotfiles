@@ -22,7 +22,6 @@ export default function (gdkmonitor: Gdk.Monitor) {
          }
          exclusivity={Astal.Exclusivity.EXCLUSIVE}
          application={app}
-         visible
       >
          <box>
             <box cssClasses={["quick-settings-box"]} hexpand>

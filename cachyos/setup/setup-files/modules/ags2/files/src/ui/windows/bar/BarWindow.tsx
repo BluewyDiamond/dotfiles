@@ -6,6 +6,7 @@ import DateTimeMenuButton from "./composables/DateTimeMenubutton";
 import TaskbarBox from "./composables/TaskbarBox";
 import IndicatorsBox from "./composables/IndicatorsBox";
 import TrayBox from "./composables/TrayBox";
+import ControlCenterButton from "./composables/ControlCenterButton";
 
 export default function BarWindow(gdkmonitor: Gdk.Monitor) {
    const { TOP, LEFT, RIGHT } = Astal.WindowAnchor;
@@ -42,6 +43,7 @@ export default function BarWindow(gdkmonitor: Gdk.Monitor) {
             <box $type="end">
                <TrayBox />
                <IndicatorsBox />
+               <ControlCenterButton />
             </box>
          </centerbox>
       </window>

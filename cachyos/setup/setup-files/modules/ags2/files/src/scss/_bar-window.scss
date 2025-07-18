@@ -99,4 +99,11 @@ window.bar-window {
          }
       }
    }
+
+   .control-center-button {
+      background: $surface-container;
+      padding: $spacing-small;
+      border-radius: $border-radius;
+      margin-left: $spacing-medium;
+   }
 }
