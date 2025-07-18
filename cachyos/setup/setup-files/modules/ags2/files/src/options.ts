@@ -55,6 +55,7 @@ export default {
 
       notification: {
          closeIcon: icons.ui.close,
+         maximumSize: 400,
       },
    },
 };
