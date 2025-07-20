@@ -1,0 +1,12 @@
+{
+   "std": [
+      "paru",
+      "pacman-contrib",
+      "btrfs-assistant",
+      "fisher",
+      "ufw",
+      "downgrade",
+      "mesa-utils",
+      "rustup"
+   ]
+}

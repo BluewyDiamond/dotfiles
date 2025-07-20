@@ -1,0 +1,24 @@
+{
+   "std": [
+      "pavucontrol",
+      "gparted",
+      "gnome-disk-utility",
+      "power-profiles-daemon",
+
+      "librewolf-bin",
+      "thunderbird",
+
+      "vlc",
+      "loupe",
+      "evince",
+      "krita",
+      "obs-studio",
+
+      "mission-center",
+      "qpwgraph",
+
+      "localsend"
+   ],
+
+   "aur": ["obs-pipewire-audio-capture"]
+}

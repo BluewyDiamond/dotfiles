@@ -1,0 +1,17 @@
+{
+   "std": ["dart-sass", "fd", "bun-bin", "gjs", "gtk4-layer-shell"],
+
+   "aur": [
+      "libastal-io-git",
+      "libastal-git",
+      "libastal-4-git",
+      "libastal-gjs-git",
+      "libastal-hyprland-git",
+      "libastal-battery-git",
+      "libastal-notifd-git",
+      "libastal-wireplumber-git",
+      "libastal-apps-git",
+      "libastal-powerprofiles-git",
+      "libastal-tray-git"
+   ]
+}

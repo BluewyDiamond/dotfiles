@@ -1,0 +1,22 @@
+{
+   "std": [
+      "wireplumber",
+      "pipewire",
+      "pipewire-alsa",
+      "pipewire-pulse",
+      "pipewire-jack",
+
+      "hyprland",
+      "hyprland-protocols",
+      "hyprland-qtutils",
+      "hyprpolkitagent",
+
+      "xdg-desktop-portal-hyprland",
+      "xdg-desktop-portal-gtk",
+
+      "hyprlock",
+      "hypridle"
+   ],
+
+   "aur": ["wezterm-git"]
+}

@@ -1,0 +1,12 @@
+{
+   "std": [
+      "steam-native-runtime",
+      "heroic-games-launcher-bin",
+
+      "umu-launcher",
+      "proton-ge-custom-bin",
+      "gamescope",
+      "protontricks",
+      "mangohud"
+   ]
+}

@@ -1,0 +1,15 @@
+{
+   "std": [
+      "qemu-base",
+      "virt-manager",
+      "virt-viewer",
+      "dnsmasq",
+      "vde2",
+      "bridge-utils",
+      "openbsd-netcat",
+      "spice",
+      "qemu-ui-spice-app",
+      "qemu-audio-spice",
+      "qemu-hw-usb-redirect"
+   ]
+}

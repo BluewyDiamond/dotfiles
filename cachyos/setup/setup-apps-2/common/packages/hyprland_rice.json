@@ -1,0 +1,18 @@
+{
+   "std": [
+      "font-manager",
+      "ttf-iosevkaterm-nerd",
+
+      "kvantum",
+      "kvantum-qt5",
+
+      "nwg-look"
+   ],
+
+   "aur": [
+      "qt6ct-kde",
+      "bibata-cursor-theme-bin",
+      "candy-icons-git",
+      "sweet-folders-icons-git"
+   ]
+}

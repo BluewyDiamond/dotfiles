@@ -1,18 +1,11 @@
 #!/usr/bin/env fish
 
-source ../setup-utils/lib.fish
-
 set script_dir (realpath (dirname (status filename)))
+
+source $script_dir/../setup-utils/lib.fish
+
 set config_path $script_dir/lib/packages.json
 set script_name (basename (status filename))
-
-function print
-    set_color magenta
-    echo -n "$script_name => "
-    set_color yellow
-    echo "$argv"
-    set_color normal
-end
 
 function get_array_of_packages
     set top_level_key $argv[1]
@@ -22,8 +15,6 @@ function get_array_of_packages
     string split ' ' $packages
 end
 
-# main
-#
 if not which pacman 2&>/dev/null
     echo (set_color red)"ERROR: "(set_color normal)"Missing dependency... |pacman|"
     exit 1
@@ -49,7 +40,7 @@ set top_level_keys_count (count $top_level_keys)
 echo "Select configurations to install. Example: [1 2 3 ...]"
 
 for index in (seq $top_level_keys_count)
-    print "$index. $top_level_keys[$index]"
+    echo "$index. $top_level_keys[$index]"
 end
 
 set choices (scan N "INPUT: ")

@@ -1,0 +1,19 @@
+{
+   "std": [
+      "hyprpicker",
+      "wayland-pipewire-idle-inhibit",
+
+      "kwalletmanager",
+      "kwallet",
+      "kwallet-pam",
+      "ksshaskpass",
+
+      "fuzzel",
+      "slurp",
+      "satty",
+
+      "cliphist"
+   ],
+
+   "aur": ["wayshot"]
+}
