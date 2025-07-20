@@ -11,7 +11,7 @@ for host_filepath in $hosts_filepaths
     set -a common_packages_filepaths (jq -r '.common_packages[] // []' $host_filepath)
     set -a std_packages (jq -r '.packages.std // [] | .[]' $host_filepath)
     set -a aur_packages (jq -r '.packages.aur // [] | .[]' $host_filepath)
-    set -a file_lines (jq -r '.files.files[] | "\(.operation) \(.source) \(.target)"')
+    set -a file_lines (jq -r '.files.files[] | "\(.operation) \(.source) \(.target)"' $host_filepath)
 end
 
 for common_package_filepath in $common_packages_filepaths
