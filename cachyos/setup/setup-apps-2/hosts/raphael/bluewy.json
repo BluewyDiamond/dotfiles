@@ -1,8 +1,5 @@
 {
    "common_packages": [
-      "common/packages/system.json",
-      "common/packages/system_extra.json",
-      "common/packages/system_rusty.json",
       "common/packages/tty_session.json",
       "common/packages/tty_extra.json",
       "common/packages/tty_rice.json",
@@ -16,21 +13,12 @@
       "common/packages/apps_dolphin.json",
       "common/packages/apps_production.json",
       "common/packages/apps_gaming.json",
-      "common/packages/apps_virtualization.json"
+      "common/packages/apps_virtualization.json",
+      "common/packages/programming_languajes.json"
    ],
 
    "packages": {
-      "std": ["amd-ucode", "lact"]
-   },
-
-   "files": {
-      "home": "/home/bluewy",
-
-      "files": [
-         {
-            "source": "example/userChrome.css",
-            "target": "/home/bluewy/.librewolf/.*\\.default-default$"
-         }
-      ]
+      "std": ["glibc-eac"],
+      "aur": ["overskride"]
    }
 }

@@ -1,0 +1,3 @@
+{
+   "std": ["rustup", "jdk21-openjdk"]
+}

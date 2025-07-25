@@ -1,0 +1,47 @@
+{
+   "common_packages": ["common/packages/system_cachyos.json"],
+
+   "packages": {
+      "std": ["amd-ucode", "lact", "iwd", "wireless-regdb", "networkmanager"],
+   },
+
+   "files": [
+      {
+         "owner": "root",
+         "operation": "cp",
+         "source": "common/files/acer_battery_limit/files/acer_battery_limit.service",
+         "target_dir": "/etc/systemd/system",
+      },
+      {
+         "owner": "root",
+         "operation": "cp",
+         "source": "common/files/acer_battery_limit/files/acer_battery_limit.fish",
+         "target_dir": "/usr/local/bin",
+      },
+   ],
+
+   // on install it needs the pathname to be available
+   // trash any conflicting file
+
+   // on uninstall only trash the file
+   // leaving the parent dir untouched
+
+   "spawn_files": [
+      {
+         "owner": "root",
+         "target": "/etc/NetworkManager/conf.d/wifi_backend.conf",
+         "content": "[device]\nwifi.backend=iwd",
+      },
+   ],
+
+   "services": {
+      "enable": [
+         "lenovo_battery_limit",
+         "NetworkManager",
+         "ananicy-cpp",
+         "sddm",
+         "getty",
+         "ufw",
+      ],
+   },
+}

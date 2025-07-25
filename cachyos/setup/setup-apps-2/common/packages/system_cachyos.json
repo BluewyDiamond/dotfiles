@@ -1,0 +1,27 @@
+{
+   "std": [
+      "linux-firmware",
+      "base",
+      "base-devel",
+      "uutils-coreutils",
+      "fish",
+      "bash",
+      "sudo-rs",
+      "booster",
+      "refind",
+
+      "cachyos-hooks",
+      "cachyos-keyring",
+      "cachyos-mirrorlist",
+      "cachyos-rate-mirrors",
+      "cachyos-v3-mirrorlist",
+      "cachyos-v4-mirrorlist",
+      "cachyos-settings",
+
+      "chwd",
+      "ufw",
+
+      "iwd",
+      "wireless-regdb"
+   ]
+}
