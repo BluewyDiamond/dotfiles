@@ -8,7 +8,7 @@ set required_packages jq paru trash-cli fd
 set required_packages_to_install
 
 for required_package_to_install in $required_packages
-    if not which $required_package_to_install 2&>/dev/null
+    if not pacman -Q $required_package_to_install 2&>/dev/null
         set -a required_packages_to_install $required_package_to_install
     end
 end
