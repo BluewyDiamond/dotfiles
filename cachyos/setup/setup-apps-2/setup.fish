@@ -5,17 +5,16 @@ set script_dir (realpath (dirname (status filename)))
 # some requirements
 
 set required_packages jq paru trash-cli fd
+set required_packages_to_install
 
-set need_to_install_packages
-
-for required_package in $required_packages
-    if not which $required_package 2&>/dev/null
-        set -a need_to_install_packages $required_package
+for required_package_to_install in $required_packages
+    if not which $required_package_to_install 2&>/dev/null
+        set -a required_packages_to_install $required_package_to_install
     end
 end
 
-if set -q $need_to_install_packages[1]
-   sudo pacman -S need_to_install_packages
+if set -q required_packages_to_install[1]
+   sudo pacman -S $required_packages_to_install
 end
 
 # declaration of variables for data to be obtained
@@ -135,14 +134,15 @@ switch $argv[1]
 
         for package in $std_packages $aur_packages
             if not pacman -Q $package 2&>/dev/null
-                set -a packages_not_found
+                set -a packages_not_found $package
             end
 
             continue
         end
 
-        if set -q $packages_not_found[1]
+        if set -q packages_not_found[1]
             echo "Missing packages: $packages_not_found"
+            exit 1
         end
 
         echo "All good, Nothing to do!"
