@@ -28,7 +28,7 @@ set services_to_enable
 # partial acquisition of data (acquisition of global data)
 
 for host_pathname in $hosts_pathnames
-    set -a common_packages_pathnames (jq -r '.common_packages[] // []' $host_pathname)
+    set -a common_packages_pathnames (jq -r '.common_packages[] // .[]' $host_pathname)
     set -a std_packages (jq -r '.packages.std // [] | .[]' $host_pathname)
     set -a aur_packages (jq -r '.packages.aur // [] | .[]' $host_pathname)
     set -a services_to_enable (jq -r ".services.enable // [] | .[]" $host_pathname)
@@ -101,7 +101,8 @@ end
 switch $argv[1]
     case install
         # sudo pacman -S --needed $std_packages && paru -S --aur $aur_packages
-        echo "debug: std_packages: $std_packages aur_packages: $aur_packages"
+        echo "debug: std_packages: $std_packages"
+        echo "debug: aur_packages: $aur_packages"
 
         for host_pathname in $hosts_pathnames
             set install_files_length (jq -r '.install_files // [] | length' $host_pathname)
