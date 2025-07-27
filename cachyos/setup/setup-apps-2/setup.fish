@@ -121,7 +121,7 @@ switch $argv[1]
                    end
                 )
 
-                set source (jq -r ".install_files[$install_file_index].source" $host_pathname)
+                set source $script_dir/(jq -r ".install_files[$install_file_index].source" $host_pathname)
                 set target_dir_use_regex (jq -r ".install_files[$install_file_index].target_dir_use_regex // false" $host_pathname)
                 set target_dir (jq -r ".install_files[$install_file_index].target_dir" $host_pathname)
 
@@ -147,7 +147,7 @@ switch $argv[1]
                 for target in $targets
                     echo "debug: install file: owner: $owner operation: $operation source: $source target: $target"
                     # TODO: ensure success
-                    sudo -iu $owner $operation $source $target
+                    sudo -iu $owner -- $operation $source $target
                 end
 
             end
