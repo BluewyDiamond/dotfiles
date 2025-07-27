@@ -9,13 +9,13 @@
       {
          "owner": "root",
          "operation": "copy",
-         "source": "common/files/lenovo_battery_limit/lenovo_battery_limit.service",
+         "source": "common/files/lenovo_battery_limit_service/lenovo_battery_limit.service",
          "target_dir": "/etc/systemd/system"
       },
       {
          "owner": "root",
          "operation": "copy",
-         "source": "common/files/lenovo_battery_limit/lenovo_battery_limit.fish",
+         "source": "common/files/lenovo_battery_limit_service/lenovo_battery_limit.fish",
          "target_dir": "/usr/local/bin"
       },
       {
