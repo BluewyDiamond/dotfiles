@@ -1,8 +1,16 @@
 {
-   "common_packages": ["common/packages/system_cachyos.json"],
+   "common_packages": ["common/packages/cachyos_env.json"],
 
    "packages": {
-      "std": ["amd-ucode", "lact", "iwd", "wireless-regdb", "networkmanager"]
+      "std": [
+         "amd-ucode",
+         "linux-firmware",
+         "linux-cachyos",
+         "wireless-regdb",
+         "iwd",
+         "networkmanager",
+         "lact"
+      ]
    },
 
    "install_files": [
