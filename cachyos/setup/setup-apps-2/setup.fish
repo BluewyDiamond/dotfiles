@@ -169,6 +169,8 @@ switch $argv[1]
         end
     case cleanup
         set unlisted_packages (get_unlisted_packages $std_packages $aur_packages)
+        echo "DELETE:"
+        echo $unlisted_packages
         sudo pacman -Rns $unlisted_packages
     case check
         set packages_not_found
