@@ -1,0 +1,41 @@
+{
+   "common_packages": ["common/packages/system_cachyos.json"],
+
+   "packages": {
+      "std": ["amd-ucode", "lact", "iwd", "wireless-regdb", "networkmanager"]
+   },
+
+   "install_files": [
+      {
+         "owner": "root",
+         "operation": "cp",
+         "source": "common/files/acer_battery_limit/files/lenovo_battery_limit.service",
+         "target_dir": "/etc/systemd/system"
+      },
+      {
+         "owner": "root",
+         "operation": "cp",
+         "source": "common/files/acer_battery_limit/files/lenovo_battery_limit.fish",
+         "target_dir": "/usr/local/bin"
+      }
+   ],
+
+   "spawn_files": [
+      {
+         "owner": "root",
+         "target": "/etc/NetworkManager/conf.d/wifi_backend.conf",
+         "content": "[device]\nwifi.backend=iwd"
+      }
+   ],
+
+   "services": {
+      "enable": [
+         "lenovo_battery_limit",
+         "NetworkManager",
+         "ananicy-cpp",
+         "sddm",
+         "getty",
+         "ufw"
+      ]
+   }
+}

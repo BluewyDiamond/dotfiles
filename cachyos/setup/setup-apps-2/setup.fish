@@ -14,7 +14,7 @@ for required_package_to_install in $required_packages
 end
 
 if set -q required_packages_to_install[1]
-   sudo pacman -S $required_packages_to_install
+    sudo pacman -S $required_packages_to_install
 end
 
 # declaration of variables for data to be obtained
@@ -23,16 +23,14 @@ set hosts_pathnames $argv[2..-1]
 set common_packages_pathnames
 set std_packages
 set aur_packages
-set file_lines
 set services_to_enable
 
-# acquisition of data
+# partial acquisition of data (acquisition of global data)
 
 for host_pathname in $hosts_pathnames
     set -a common_packages_pathnames (jq -r '.common_packages[] // []' $host_pathname)
     set -a std_packages (jq -r '.packages.std // [] | .[]' $host_pathname)
     set -a aur_packages (jq -r '.packages.aur // [] | .[]' $host_pathname)
-    set -a file_lines (jq -r '.files.files // [] | .[] | "\(.owner) \(.operation) \(.source) \(.target_dir)"' $host_pathname)
     set -a services_to_enable (jq -r ".services.enable // [] | .[]" $host_pathname)
 end
 
@@ -102,28 +100,72 @@ end
 
 switch $argv[1]
     case install
-        sudo pacman -S --needed $std_packages && paru -S --aur $aur_packages
+        # sudo pacman -S --needed $std_packages && paru -S --aur $aur_packages
+        echo "debug: std_packages: $std_packages aur_packages: $aur_packages"
 
-        for line in $file_lines
-            set splitted_line (string split ' ' $line)
-            set owner $splitted_line[1]
-            set operation $splitted_line[2]
-            set source $splitted_line[3]
-            set fd_results (fd --regex $splitted_line[3])
-            set targets
+        for host_pathname in $hosts_pathnames
+            set install_files_length (jq -r '.install_files // [] | length' $host_pathname)
+            set spawn_files_length (jq -r '.spawn_files // [] | length' $host_pathname)
 
-            for fd_result in $fd_results
-                set -a targets $fd_result/(basename $source)
+            echo "debug: install_files_length: $install_files_length spawn_files_length: $spawn_files_length"
+
+            for install_file_index in (seq 0 (math $install_files_length - 1))
+                set owner (jq -r ".install_files[$install_file_index].owner" $host_pathname)
+
+                set operation (switch (jq -r ".install_files[$install_file_index].operation" $host_pathname)
+                   case 'link'
+                      echo -e "ln\n-s"
+                   case 'copy'
+                      echo "cp"
+                   end
+                )
+
+                set source (jq -r ".install_files[$install_file_index].source" $host_pathname)
+                set target_dir_use_regex (jq -r ".install_files[$install_file_index].target_dir_use_regex // false" $host_pathname)
+                set target_dir (jq -r ".install_files[$install_file_index].target_dir" $host_pathname)
+
+                set fd_results
+
+                # echo "debug: target_dir_use_regex: $target_dir_use_regex"
+
+                switch $target_dir_use_regex
+                    case true
+                        set fd_results (fd --regex $target_dir)
+                    case false
+                        set fd_results $target_dir
+                end
+
+                # echo "debug: fd_results: $fd_results"
+
+                set targets
+
+                for fd_result in $fd_results
+                    set -a targets $fd_result/(basename $source)
+                end
+
+                for target in $targets
+                    # this might not work because the function probably does not exist for that user/shell session
+                    # sudo -iu $owner -- prepare $target
+                    # sudo -iu $owner $operation $source $target
+                    echo "debug: install file: owner: $owner operation: $operation source: $source target: $target"
+                end
+
             end
 
-            for target in $targets
-                sudo -iu $owner prepare $target
-                sudo -iu $owner $operation $source $target
+            for spawn_file_index in (seq 0 (math $spawn_files_length - 1))
+                # TODO: verify content
+                set owner (jq -r ".spawn_files[$spawn_file_index].owner" $host_pathname)
+                set target (jq -r ".spawn_files[$spawn_file_index].target" $host_pathname)
+                set content (jq -r ".spawn_files[$spawn_file_index].content" $host_pathname)
+
+                # sudo -iu $owner -- echo $content >$target
+                echo "debug: spawn file: owner: $owner target: $target content: $content"
             end
         end
 
         for service_to_enable in $services_to_enable
-            systemctl enable $service_to_enable
+            # systemctl enable $service_to_enable
+            echo "debug: enable service: service: $service_to_enable"
         end
     case cleanup
         # set unlisted_packages (get_unlisted_packages $std_packages $aur_packages)

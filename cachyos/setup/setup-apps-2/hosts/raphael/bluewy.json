@@ -20,5 +20,23 @@
    "packages": {
       "std": ["glibc-eac"],
       "aur": ["overskride"]
-   }
+   },
+
+   "install_files": [
+      {
+         "owner": "bluewy",
+         "operation": "link",
+         "source": "/home/bluewy/downloads/record.txt",
+         "target_dir_use_regex": false,
+         "target_dir": "/home/bluewy"
+      }
+   ],
+
+   "spawn_files": [
+      {
+         "owner": "root",
+         "target": "/home/bluewy/downloads/test.txt",
+         "content": "[device]\nwifi.backend=iwd"
+      }
+   ]
 }
