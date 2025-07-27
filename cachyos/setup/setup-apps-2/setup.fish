@@ -66,7 +66,7 @@ end
 
 function is_package_a_dependency
     set package $argv[1]
-    set pactree_noutput (pactree -r $package)
+    set pactree_output (pactree -r $package)
 
     if test $status -eq 1
         return 1
