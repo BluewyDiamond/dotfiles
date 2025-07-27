@@ -28,7 +28,7 @@ set services_to_enable
 # partial acquisition of data (acquisition of global data)
 
 for host_pathname in $hosts_pathnames
-    set -a common_packages_pathnames (jq -r '.common_packages[] // .[]' $host_pathname)
+    set -a common_packages_pathnames (jq -r '(.common_packages // [])[]' $host_pathname)
     set -a std_packages (jq -r '.packages.std // [] | .[]' $host_pathname)
     set -a aur_packages (jq -r '.packages.aur // [] | .[]' $host_pathname)
     set -a services_to_enable (jq -r ".services.enable // [] | .[]" $host_pathname)

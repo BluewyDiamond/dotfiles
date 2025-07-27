@@ -1,6 +1,4 @@
 {
-   "common_packages": [],
-
    "packages": {
       "std": ["plasma-meta", "cachyos-firefox-settings"]
    }
