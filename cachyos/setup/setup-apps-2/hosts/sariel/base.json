@@ -22,7 +22,7 @@
          "owner": "root",
          "operation": "copy",
          "source": "common/files/screen_off_service/screen_off.service",
-         "target_dir": "/etc/system/system"
+         "target_dir": "/etc/systemd/system"
       },
       {
          "owner": "root",
