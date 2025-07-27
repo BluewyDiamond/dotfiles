@@ -100,15 +100,15 @@ end
 
 switch $argv[1]
     case install
-        # sudo pacman -S --needed $std_packages && paru -S --aur $aur_packages
-        echo "debug: std_packages: $std_packages"
-        echo "debug: aur_packages: $aur_packages"
+        sudo pacman -S --needed $std_packages && paru -S --aur $aur_packages
+        # echo "debug: std_packages: $std_packages"
+        # echo "debug: aur_packages: $aur_packages"
 
         for host_pathname in $hosts_pathnames
             set install_files_length (jq -r '.install_files // [] | length' $host_pathname)
             set spawn_files_length (jq -r '.spawn_files // [] | length' $host_pathname)
 
-            echo "debug: install_files_length: $install_files_length spawn_files_length: $spawn_files_length"
+            # echo "debug: install_files_length: $install_files_length spawn_files_length: $spawn_files_length"
 
             for install_file_index in (seq 0 (math $install_files_length - 1))
                 set owner (jq -r ".install_files[$install_file_index].owner" $host_pathname)
@@ -145,10 +145,9 @@ switch $argv[1]
                 end
 
                 for target in $targets
-                    # this might not work because the function probably does not exist for that user/shell session
-                    # sudo -iu $owner -- prepare $target
-                    # sudo -iu $owner $operation $source $target
                     echo "debug: install file: owner: $owner operation: $operation source: $source target: $target"
+                    # TODO: ensure success
+                    sudo -iu $owner $operation $source $target
                 end
 
             end
@@ -159,19 +158,18 @@ switch $argv[1]
                 set target (jq -r ".spawn_files[$spawn_file_index].target" $host_pathname)
                 set content (jq -r ".spawn_files[$spawn_file_index].content" $host_pathname)
 
-                # sudo -iu $owner -- echo $content >$target
-                echo "debug: spawn file: owner: $owner target: $target content: $content"
+                sudo -iu $owner -- echo $content >$target
+                # echo "debug: spawn file: owner: $owner target: $target content: $content"
             end
         end
 
         for service_to_enable in $services_to_enable
-            # systemctl enable $service_to_enable
             echo "debug: enable service: service: $service_to_enable"
+            systemctl enable $service_to_enable
         end
     case cleanup
-        # set unlisted_packages (get_unlisted_packages $std_packages $aur_packages)
-        get_unlisted_packages $std_packages $aur_packages
-        # sudo pacman -Rns $unlisted_packages
+        set unlisted_packages (get_unlisted_packages $std_packages $aur_packages)
+        sudo pacman -Rns $unlisted_packages
     case check
         set packages_not_found
 
