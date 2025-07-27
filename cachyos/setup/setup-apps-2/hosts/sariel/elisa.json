@@ -1,5 +1,9 @@
 {
    "packages": {
-      "std": ["plasma-meta", "cachyos-firefox-settings"]
+      "std": [
+         "plasma-meta",
+         "kde-applications-meta",
+         "cachyos-firefox-settings"
+      ]
    }
 }
