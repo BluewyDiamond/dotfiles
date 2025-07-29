@@ -1,15 +1,23 @@
-[packages.progamming_languages]
-std = ["rustup", "jdk21-openjdk"]
+[packages.development_dependencies]
+std = [
+   "rustup",
+   "taplo-cli", # toml formatting
+
+   # separator
+   "jdk21-openjdk",
+]
 
 [packages.fix]
 std = [
    # fixes easy anticheat (bug introduced as a result of missing compile options)
    "glibc-eac",
+
+   # adds AMD Anti-Lag 2 support
+   "mesa-git",
 ]
 
 [packages.utilities]
 std = [
-   "git",
 
    #  monitoring
    "bottom",
@@ -20,6 +28,10 @@ std = [
    "eza",
    "fd",
    "ripgrep",
+
+   # other
+   "git",
+   "downgrade",
 ]
 
 [packages.utilities_nvim]
@@ -29,7 +41,7 @@ std = ["neovim", "stylua", "ripgrep", "fzf", "prettier", "eslint_d"]
 [packages.tty_session]
 std = [
    "zellij",
-   
+
    # ricing
    "terminus-font", # larger font size
    "figlet",
@@ -90,7 +102,7 @@ aur = [
    "libastal-tray-git",
 
    # gnim bindings are provided by the following package
-   "aylurs-gtk-shell",
+   "aylurs-gtk-shell-git",
 ]
 std = ["dart-sass", "fd", "bun-bin", "gjs", "gtk4-layer-shell"]
 
@@ -113,12 +125,17 @@ std = [
 ]
 
 [packages.apps]
+aur = [
+   # part of obs
+   "obs-pipewire-audio-capture",
+]
 std = [
    # hardware controllers
    "pavucontrol",
    "gparted",
    "gnome-disk-utility",
    "power-profiles-daemon",
+   "overskride",
 
    # browsing :3
    "librewolf-bin",
@@ -130,9 +147,12 @@ std = [
 
    # file viewers
    "vlc",
+   "vlc-plugins-all",
+
    "loupe",
    "evince",
    "ark",
+   "seahorse",
 
    # monitoring
    "mission-center",
@@ -158,8 +178,12 @@ std = [
    "protontricks",
    "mangohud",
 
+   # communication
+   "telegram-desktop",
+
    # other
    "localsend",
+   "zerotier-one",
 ]
 
 [packages.apps_discord]

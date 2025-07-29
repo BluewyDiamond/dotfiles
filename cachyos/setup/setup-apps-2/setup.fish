@@ -25,12 +25,15 @@ set std_packages
 set aur_packages
 set services_to_enable
 
+# ignore this packages
+set -a std_packages $required_packages
+
 # partial acquisition of data (acquisition of global data)
 
 for host_pathname in $hosts_pathnames
     set -a common_packages_pathnames (tomlq -r '(.common_packages // [])[]' $host_pathname)
-    set -a std_packages (tomlq -r '.packages.std // [] | .[]' $host_pathname)
-    set -a aur_packages (tomlq -r '.packages.aur // [] | .[]' $host_pathname)
+    set -a std_packages (tomlq -r '[.packages // {} | .. | objects | .std // []] | add | .[]' $host_pathname)
+    set -a aur_packages (tomlq -r '[.packages // {} | .. | objects | .aur // []] | add | .[]' $host_pathname)
     set -a services_to_enable (tomlq -r ".services.enable // [] | .[]" $host_pathname)
 end
 
