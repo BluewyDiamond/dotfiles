@@ -1,7 +1,0 @@
-{
-   "common_packages": ["common/packages/system_cachyos.json"],
-
-   "packages": {
-      "std": ["amd-ucode", "linux-cachyos", "lact", "bluez"]
-   }
-}
