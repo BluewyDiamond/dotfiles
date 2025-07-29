@@ -4,12 +4,12 @@ set script_dir (realpath (dirname (status filename)))
 
 # some requirements
 
-set required_packages jq paru trash-cli fd
+set required_packages yq paru trash-cli fd
 set required_packages_to_install
 
-for required_package_to_install in $required_packages
-    if not pacman -Q $required_package_to_install 2&>/dev/null
-        set -a required_packages_to_install $required_package_to_install
+for required_package in $required_packages
+    if not pacman -Q $required_package 2&>/dev/null
+        set -a required_packages_to_install $required_package
     end
 end
 
@@ -28,15 +28,15 @@ set services_to_enable
 # partial acquisition of data (acquisition of global data)
 
 for host_pathname in $hosts_pathnames
-    set -a common_packages_pathnames (jq -r '(.common_packages // [])[]' $host_pathname)
-    set -a std_packages (jq -r '.packages.std // [] | .[]' $host_pathname)
-    set -a aur_packages (jq -r '.packages.aur // [] | .[]' $host_pathname)
-    set -a services_to_enable (jq -r ".services.enable // [] | .[]" $host_pathname)
+    set -a common_packages_pathnames (tomlq -r '(.common_packages // [])[]' $host_pathname)
+    set -a std_packages (tomlq -r '.packages.std // [] | .[]' $host_pathname)
+    set -a aur_packages (tomlq -r '.packages.aur // [] | .[]' $host_pathname)
+    set -a services_to_enable (tomlq -r ".services.enable // [] | .[]" $host_pathname)
 end
 
 for common_package_filepath in $common_packages_pathnames
-    set -a std_packages (jq -r '.std // [] | .[]' $script_dir/$common_package_filepath)
-    set -a aur_packages (jq -r '.aur // [] | .[]' $script_dir/$common_package_filepath)
+    set -a std_packages (tomlq -r '.std // [] | .[]' $script_dir/$common_package_filepath)
+    set -a aur_packages (tomlq -r '.aur // [] | .[]' $script_dir/$common_package_filepath)
 end
 
 # action based on the data
@@ -105,15 +105,15 @@ switch $argv[1]
         # echo "debug: aur_packages: $aur_packages"
 
         for host_pathname in $hosts_pathnames
-            set install_files_length (jq -r '.install_files // [] | length' $host_pathname)
-            set spawn_files_length (jq -r '.spawn_files // [] | length' $host_pathname)
+            set install_files_length (tomlq -r '.install_files // [] | length' $host_pathname)
+            set spawn_files_length (tomlq -r '.spawn_files // [] | length' $host_pathname)
 
             # echo "debug: install_files_length: $install_files_length spawn_files_length: $spawn_files_length"
 
             for install_file_index in (seq 0 (math $install_files_length - 1))
-                set owner (jq -r ".install_files[$install_file_index].owner" $host_pathname)
+                set owner (tomlq -r ".install_files[$install_file_index].owner" $host_pathname)
 
-                set operation (switch (jq -r ".install_files[$install_file_index].operation" $host_pathname)
+                set operation (switch (tomlq -r ".install_files[$install_file_index].operation" $host_pathname)
                    case 'link'
                       echo -e "ln\n-s"
                    case 'copy'
@@ -121,9 +121,9 @@ switch $argv[1]
                    end
                 )
 
-                set source $script_dir/(jq -r ".install_files[$install_file_index].source" $host_pathname)
-                set target_dir_use_regex (jq -r ".install_files[$install_file_index].target_dir_use_regex // false" $host_pathname)
-                set target_dir (jq -r ".install_files[$install_file_index].target_dir" $host_pathname)
+                set source $script_dir/(tomlq -r ".install_files[$install_file_index].source" $host_pathname)
+                set target_dir_use_regex (tomlq -r ".install_files[$install_file_index].target_dir_use_regex // false" $host_pathname)
+                set target_dir (tomlq -r ".install_files[$install_file_index].target_dir" $host_pathname)
 
                 set fd_results
 
@@ -154,9 +154,9 @@ switch $argv[1]
 
             for spawn_file_index in (seq 0 (math $spawn_files_length - 1))
                 # TODO: verify content
-                set owner (jq -r ".spawn_files[$spawn_file_index].owner" $host_pathname)
-                set target (jq -r ".spawn_files[$spawn_file_index].target" $host_pathname)
-                set content (jq -r ".spawn_files[$spawn_file_index].content" $host_pathname)
+                set owner (tomlq -r ".spawn_files[$spawn_file_index].owner" $host_pathname)
+                set target (tomlq -r ".spawn_files[$spawn_file_index].target" $host_pathname)
+                set content (tomlq -r ".spawn_files[$spawn_file_index].content" $host_pathname)
 
                 sudo -iu $owner -- echo $content >$target
                 # echo "debug: spawn file: owner: $owner target: $target content: $content"

@@ -1,4 +1,0 @@
-{
-   "std": ["neovim", "stylua", "ripgrep", "fzf", "prettier", "eslint_d"],
-   "aur": ["fish-lsp-git"]
-}

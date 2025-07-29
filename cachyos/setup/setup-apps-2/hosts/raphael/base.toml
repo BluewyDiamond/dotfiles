@@ -1,4 +1,4 @@
-common_packages = [ "common/packages/system_cachyos.json" ]
+common_packages = [ "common/packages/cachyos_env.toml" ]
 
 [packages]
 std = [ "amd-ucode", "linux-cachyos", "lact", "bluez" ]
