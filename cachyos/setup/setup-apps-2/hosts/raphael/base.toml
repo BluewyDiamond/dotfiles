@@ -63,8 +63,8 @@ enable = [
    "systemd-networkd",
    "systemd-network-generator",
    "systemd-networkd-wait-online",
-
    "systemd-resolved",
+   "iwd",
 
    "lactd",
    "ufw",
