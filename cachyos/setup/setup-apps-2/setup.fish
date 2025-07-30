@@ -143,18 +143,34 @@ switch $argv[1]
 
             for install_file_index in (seq 0 (math $install_files_length - 1))
                 set owner (tomlq -r ".install_files[$install_file_index].owner" $host_pathname)
+                set operation_raw (tomlq -r ".install_files[$install_file_index].operation" $host_pathname)
+                set operation
 
-                set operation (switch (tomlq -r ".install_files[$install_file_index].operation" $host_pathname)
-                   case 'link'
-                      echo -e "ln\n-s"
-                   case 'copy'
-                      echo "cp"
-                   end
-                )
+                switch $operation_raw
+                    case copy
+                        set operation cp
+                    case link
+                        set operation ln -s
+                    case '*'
+                        echo "[ERROR] SKIP | INVALID VALUE | OPERATION_RAW={$operation_raw}"
+                        continue
+                end
 
-                set source $script_dir/(tomlq -r ".install_files[$install_file_index].source" $host_pathname)
+                set source_raw (tomlq -r ".install_files[$install_file_index].source" $host_pathname)
+                set source $script_dir/$source_raw
                 set target_dir_use_regex (tomlq -r ".install_files[$install_file_index].target_dir_use_regex // false" $host_pathname)
                 set target_dir (tomlq -r ".install_files[$install_file_index].target_dir" $host_pathname)
+
+                if test -z (string trim -- $source_raw)
+                    echo "[ERROR] SKIP | INVALID VALUE | SOURCE_RAW={$source_raw}"
+                    continue
+                end
+
+                if not test -e $source
+                    echo "[ERROR] SKIP | INVALID VALUE | SOURCE={$source}"
+                    continue
+                end
+
                 set fd_results
 
                 switch $target_dir_use_regex
