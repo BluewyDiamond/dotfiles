@@ -70,6 +70,7 @@ target_path = "/usr/local/bin"
 [services]
 enable = [
    "ananicy-cpp",
+
    "getty@tty1",
 
    "systemd-networkd",
@@ -80,4 +81,5 @@ enable = [
 
    "lactd",
    "ufw",
+   "screen_off",
 ]

@@ -53,9 +53,13 @@ target_path = "/usr/local/bin"
 [services]
 enable = [
    "ananicy-cpp",
+
    "getty@tty1",
    "acer_battery_limit",
+
    "NetworkManager",
    "ufw",
    "sddm",
+
+   "screen_off",
 ]
