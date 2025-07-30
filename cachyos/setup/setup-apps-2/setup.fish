@@ -175,7 +175,7 @@ switch $argv[1]
                 for target in $targets
                     echo "[INFO] TARGET={$target}"
 
-                    switch $operation
+                    switch "$operation"
                         case cp
                             if test -f $target
                                 if test "$content" = (cat $target | string collect)
@@ -207,7 +207,7 @@ switch $argv[1]
                 set target (tomlq -r ".spawn_files[$spawn_file_index].target" $host_pathname)
                 set content (tomlq -r ".spawn_files[$spawn_file_index].content" $host_pathname | string collect)
 
-                echo "[INFO] SPAWN FILE -> TARGET: $target"
+                echo "[INFO] SPAWN FILE | TARGET={$target}"
 
                 set target_content (cat $target | string collect)
 
@@ -237,9 +237,7 @@ switch $argv[1]
             end
         end
 
-        exit 1
-
-        set enabled_services (fd -e service . /etc/systemd/system/*.wants -x basename)
+        set enabled_services (fd -e service . /etc/systemd/system/*.wants -x basename | string replace -r '\.service$' '')
         set services_to_enable
 
         for target_service in $target_services
@@ -252,6 +250,7 @@ switch $argv[1]
         end
 
         for service_to_enable in $services_to_enable
+            echo "[INFO] ENABLE SERVICE | SERVICE={$service_to_enable}"
             sudo systemctl enable $service_to_enable
         end
     case cleanup
