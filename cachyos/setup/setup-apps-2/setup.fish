@@ -97,45 +97,43 @@ end
 function install_files
     argparse 'owner=' 'sources=' 'operation=' 'targets=' -- $argv or return
     set owner $_flag_owner
-    set source_paths (string split ' ' "$_flag_sources")
+    set source_pathnames (string split ' ' "$_flag_sources")
     set operation $_flag_operation
-    set target_paths (string split ' ' "$_flag_targets")
+    set target_pathnames (string split ' ' "$_flag_targets")
 
-    for source_path in $source_paths
-        if not test -e $source_path
-            echo "[ERROR] SKIP | INVALID VALUE | SOURCE={$source_path}"
+    for source_pathname in $source_pathnames
+        if not test -e $source_pathname
+            echo "[ERROR] SKIP | INVALID VALUE | SOURCE={$source_pathname}"
             continue
         end
 
-        echo "[INFO] INSTALL FILE | OWNER={$owner} OPERATION={$operation} SOURCE={$source_path}"
+        echo "[INFO] INSTALL FILE | OWNER={$owner} OPERATION={$operation} SOURCE={$source_pathname}"
 
-        for target_path in $target_paths
-            echo "[INFO] TARGET={$target_path}"
+        for target_pathname in $target_pathnames
+            echo "[INFO] TARGET={$target_pathname}"
 
             switch "$operation"
                 case copy
-                    if test -f $target_path
-                        if test "$content" = (cat $target_path | string collect)
+                    if test -f $target_pathname
+                        if test (cat $source_pathname | string collect) = (cat $target_pathname | string collect)
                             echo "[INFO] SKIP | MATCHING FILE FOUND"
                             continue
                         end
                     end
 
-                    prepare_target --owner $owner --target $target_path
-                    sudo -iu $owner -- cp $source_path $target_path
+                    prepare_target --owner $owner --target $target_pathname
+                    sudo -iu $owner -- cp $source_pathname $target_pathname
                 case link
-                    if test -L $target_path
-                        set x (readlink -f $target_path)
-
-                        if test "$x" = "$source_path"
+                    if test -L $target_pathname
+                        if test "$source_pathname" = (readlink -f $target_pathname)
                             echo "[INFO] SKIP | MATCHING LINK FOUND"
                             continue
                         end
 
                     end
 
-                    prepare_target --owner $owner --target $target_path
-                    sudo -iu $owner -- ln -s $source_path $target_path
+                    prepare_target --owner $owner --target $target_pathname
+                    sudo -iu $owner -- ln -s $source_pathname $target_pathname
                 case '*'
                     echo "[INFO] SKIP | UNIMPLEMENTED OPERATION | OPERATION={$operation}"
             end
