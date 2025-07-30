@@ -45,7 +45,7 @@ end
 # action based on the data
 
 function is_package_a_dependency
-    argsparse 'package=' -- $argv or return
+    argparse 'package=' -- $argv or return
     set package $_flag_package
     set pactree_output (pactree -r $package)
 
@@ -262,13 +262,13 @@ switch $argv[1]
         set enabled_services (fd -e service . /etc/systemd/system/*.wants -x basename | string replace -r '\.service$' '')
         set services_to_enable
 
-        for target_service in $services
-            if contains $target_service $enabled_services
-                echo "[INFO] SKIP | ALREADY ENABLED | SERVICE={$target_service}"
+        for service in $services
+            if contains $service $enabled_services
+                echo "[INFO] SKIP | ALREADY ENABLED | SERVICE={$service}"
                 continue
             end
 
-            set -a services_to_enable $target_service
+            set -a services_to_enable $service
         end
 
         for service_to_enable in $services_to_enable
@@ -276,10 +276,25 @@ switch $argv[1]
             sudo systemctl enable $service_to_enable
         end
     case cleanup
+        echo "[INFO] DELETING PACKAGES"
         set unlisted_packages (get_unlisted_packages --wanted-packages "$std_packages $aur_packages")
-        echo "DELETE:"
-        echo $unlisted_packages
         sudo pacman -Rns $unlisted_packages
+
+        set enabled_services (fd -e service . /etc/systemd/system/*.wants -x basename | string replace -r '\.service$' '')
+        set services_to_disable
+
+        for enabled_service in $enabled_services
+            if contains $enabled_service $services
+                continue
+            end
+
+            set -a services_to_disable $enabled_service
+        end
+
+        for service_to_disable in $services_to_disable
+            echo "[INFO] DISABLING SERVICE | SERVICE={$service_to_disable}"
+            sudo systemctl disable $service_to_disable
+        end
     case check
         set packages_not_found
 
