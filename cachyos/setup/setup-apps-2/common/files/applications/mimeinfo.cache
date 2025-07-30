@@ -1,0 +1,14 @@
+[MIME Cache]
+application/vnd.ms-htmlhelp=wine-extension-chm.desktop;
+application/winhlp=wine-extension-hlp.desktop;
+application/x-osu-beatmap-archive=osu-lazer.desktop;
+application/x-osu-replay=osu-lazer.desktop;
+application/x-osu-skin-archive=osu-lazer.desktop;
+application/x-wine-extension-msp=wine-extension-msp.desktop;
+inode/directory=org.kde.dolphin.desktop;
+text/vbscript=wine-extension-vbs.desktop;
+x-scheme-handler/discord-1216669957799018608=discord-1216669957799018608.desktop;
+x-scheme-handler/discord-589393213723246592=discord-589393213723246592.desktop;
+x-scheme-handler/heroic=heroic-wayland.desktop;
+x-scheme-handler/steam=steam-native.desktop;
+x-scheme-handler/steamlink=steam-native.desktop;

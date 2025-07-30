@@ -208,5 +208,11 @@ std = [
 [[install_files]]
 operation = "link"
 owner = "bluewy"
-source = ""
-target_dir = ""
+source = "common/files/ags"
+target_dir = "/home/bluewy/.config"
+
+[[install_files]]
+operation = "link"
+owner = "bluewy"
+source = "common/files/ags2"
+target_dir = "/home/bluewy/.config"

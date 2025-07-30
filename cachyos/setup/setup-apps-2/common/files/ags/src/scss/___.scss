@@ -1,0 +1,72 @@
+$onedark_red_deep_rgb: #be5046;
+$onedark_red_rgb: #e06c75;
+$onedark_orange_rgb: #d19a66;
+$onedark_yellow_rgb: #e5c07b;
+$onedark_green_rgb: #98c379;
+$onedark_cyan_rgb: #56b6c2;
+$onedark_blue_rgb: #61afef;
+$onedark_purple_rgb: #c678dd;
+
+$onedark_white_rgb: #abb2bf;
+
+$onedark_grey_rgb: #5c6370;
+$onedark_grey_lighter_rgb: #7f848e;
+
+$onedark_black_rgb: #21252b;
+$onedark_black_lighter_rgb: #282c34;
+
+$onedark_black_darker_rgb: #1e2127;
+$onedark_black_darker_2_rgb: #17191D;
+
+$onedark_error_rgb: #f44747;
+
+$color_primary: #9acbfa;
+$color_on_primary: #003352;
+$color_primary_container: #0b4a72;
+$color_on_primary_container: #cde5ff;
+
+$color_secondary: #b9c8da;
+$color_on_secondary: #233240;
+$color_secondary_container: #3a4857;
+$color_on_secondary_container: #d5e4f6;
+
+$color_tertiary: #e7b6f1;
+$color_on_tertiary: #462151;
+$color_tertiary_container: #5e3869;
+$color_on_tertiary_container: #fad7ff;
+
+$color_surface: $onedark_black_darker_rgb;
+$color_surface_container: $onedark_black_lighter_rgb;
+
+$color_on_surface: $onedark_white_rgb;
+$color_on_surface_variant: #c4c6cf;
+
+$color_outline: #8e9099;
+$color_outline_variant: #43474e;
+
+$color_error: #ffb3ae;
+$color_on_error: #571e1c;
+$color_error_container: #733330;
+$color_on_error_container: #ffdad7;
+
+$color_warning: #ecc06c;
+$color_on_warning: #412d00;
+$color_warning_container: #5d4200;
+$color_on_warning_container: #ffdea4;
+
+$color_inverse_surface: #e1e2e8;
+$color_inverse_on_surface: #2e3135;
+$color_inverse_primary: #2e628c;
+
+$border_radius: 4px;
+
+// other
+$space_medium: 10px; // ideal for spacing parent items, ex: widgets...
+$space_small: 4px; // ideal for spacing children items, ex: text in a label, icons that are next to each other...
+$space_from_other_layers: 20px;
+
+* {
+   all: unset;
+   font-family: "IosevkaTerm Nerd Font Mono";
+   font-size: 18px;
+}

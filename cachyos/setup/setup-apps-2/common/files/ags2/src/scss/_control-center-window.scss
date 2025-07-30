@@ -1,0 +1,10 @@
+@use "./_theme.scss" as *;
+@use "./_variables.scss" as *;
+
+window.control-center-window {
+   background: $surface;
+   
+   .notifications-box {
+     // background: pink;
+   }
+}

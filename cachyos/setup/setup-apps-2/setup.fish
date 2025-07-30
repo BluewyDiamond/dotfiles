@@ -205,13 +205,16 @@ switch $argv[1]
 
                             sudo -iu $owner -- $operation $source $target
                         case 'ln -s'
-                            if test (readlink -f $target) = $source
+                            set x (readlink -f $target)
+
+                            if test "$x" = "$source"
                                 echo "[INFO] SKIP | MATCHING LINK FOUND"
                                 continue
                             end
 
                             echo "[WARN] TRASH TARGET | CONFLICT FOUND | TARGET={$target}"
                             sudo -iu $owner -- trash $target
+                            sudo -iu $owner -- $operation $source $target
                         case '*'
                             echo "[INFO] SKIP | UNIMPLEMENTED OPERATION | OPERATION={$operation}"
                     end

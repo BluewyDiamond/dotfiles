@@ -1,0 +1,109 @@
+@use "./_theme.scss" as *;
+@use "./_variables.scss" as *;
+
+window.bar-window {
+   background: $surface;
+   padding: $spacing-medium;
+   margin: 0px 12px 0 12px;
+   border-right: 4px solid $outline-variant;
+   border-left: 4px solid $outline-variant;
+   border-bottom: 4px solid $outline-variant;
+   border-bottom-right-radius: $border-radius;
+   border-bottom-left-radius: $border-radius;
+
+   .workspaces-button {
+      background: $surface-container;
+      padding: $spacing-small;
+      margin-right: $spacing-medium;
+      border-radius: $border-radius;
+
+      .workspace-label {
+         background: $surface;
+         margin-right: $spacing-small;
+         min-width: 12px;
+         border-radius: $border-radius;
+         font-size: 0;
+
+         &:last-child {
+            margin-right: 0;
+         }
+
+         &.occupied {
+            background: $secondary-container;
+         }
+
+         &.focused {
+            background: $primary-container;
+         }
+
+         &.urgent {
+            background: $warning-container;
+         }
+      }
+   }
+
+   .taskbar-box {
+      .taskbar-client-button {
+         background: $surface-container;
+         padding: $spacing-small;
+         border-radius: $border-radius;
+         margin-right: $spacing-medium;
+
+         &:last-child {
+            margin-right: 0;
+         }
+
+         &.active {
+            background: $primary-container;
+         }
+
+         &.urgent {
+            background: $warning-container;
+         }
+      }
+   }
+
+   .notifications-indicator-button {
+      background: $surface-container;
+      padding: $spacing-small;
+      margin-right: $spacing-medium;
+      border-radius: $border-radius;
+   }
+
+   .date-time-menubutton {
+      background: $surface-container;
+      padding: $spacing-small;
+      border-radius: $border-radius;
+   }
+
+   .tray-box {
+      image {
+         background: $surface-container;
+         padding: $spacing-small;
+         border-radius: $border-radius;
+         margin-left: $spacing-medium;
+      }
+   }
+
+   .indicators-box {
+      background: $surface-container;
+      padding: $spacing-small;
+      border-radius: $border-radius;
+      margin-left: $spacing-medium;
+
+      image {
+         margin-right: $spacing-medium;
+
+         &:last-child {
+            margin-right: 0;
+         }
+      }
+   }
+
+   .control-center-button {
+      background: $surface-container;
+      padding: $spacing-small;
+      border-radius: $border-radius;
+      margin-left: $spacing-medium;
+   }
+}

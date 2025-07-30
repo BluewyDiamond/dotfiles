@@ -1,0 +1,217 @@
+@mixin bar_item {
+   background: $color_surface_container;
+   color: $color_on_surface;
+
+   border-radius: 4px;
+   padding: $space_small;
+
+   &.active {
+      background: $color_primary_container;
+   }
+}
+
+@mixin bar_button {
+   background: $color_surface_container;
+   color: $color_on_surface;
+
+   border-radius: 4px;
+   padding: $space_small;
+
+   &.active {
+      color: $color_on_primary_container;
+      background: $color_primary_container;
+   }
+}
+
+.bar-window {
+   .icon-with-label-fallback {
+      &.image {
+         -gtk-icon-size: 24px;
+      }
+
+      &.label {
+         min-width: 24px;
+         min-height: 24px;
+         color: $color_on_surface;
+      }
+   }
+
+   > box {
+      background: $color_surface;
+
+      padding: $space_medium;
+      margin: 0px 12px 0 12px;
+
+      border-right: 4px solid $color_outline_variant;
+      border-left: 4px solid $color_outline_variant;
+      border-bottom: 4px solid $color_outline_variant;
+      border-bottom-right-radius: $border_radius;
+      border-bottom-left-radius: $border_radius;
+   }
+}
+
+.bar-item-control-center {
+   @include bar_item;
+   margin-right: $space_medium;
+}
+
+.bar-item-app-launcher {
+   @include bar_button;
+   margin-right: $space_medium;
+}
+
+.bar-item-workspaces {
+   @include bar_item;
+   margin-right: $space_medium;
+
+   > button {
+      background: $color_surface;
+
+      min-width: 12px;
+      margin-right: 4px;
+      border-radius: $border_radius;
+
+      &:hover {
+         background: $color_primary_container;
+      }
+
+      &:last-child {
+         margin-right: 0;
+      }
+
+      &.occupied {
+         background: $color_secondary_container;
+
+         &:hover {
+            background: $color_primary_container;
+         }
+      }
+
+      &.active {
+         background: $color_primary_container;
+      }
+
+      &.urgent {
+         background: $color_warning_container;
+
+         &:hover {
+            background: $color_primary_container;
+         }
+      }
+
+      > label {
+         font-size: 0;
+      }
+   }
+}
+
+.bar-item-taskbar {
+   > button {
+      @include bar_button;
+      margin-right: $space_medium;
+   }
+}
+
+.bar-item-notifications {
+   @include bar_item;
+   margin-right: $space_medium;
+
+   &:hover {
+      background: $color_primary_container;
+   }
+}
+
+.bar-item-time {
+   @include bar_item;
+   margin-right: $space_medium;
+}
+
+.bar-item-tray {
+   .tray-item {
+      @include bar_button;
+      margin-left: $space_medium;
+
+      & image {
+         -gtk-icon-size: 24px;
+      }
+   }
+
+   popover {
+      all: unset;
+      background: $color_surface;
+      border: 4px solid $color_outline_variant;
+      border-radius: $border_radius;
+      padding: $space_medium;
+      padding-top: 0;
+      margin-top: 0;
+
+      modelbutton {
+         @include container-shape();
+         margin-top: $space_medium;
+         background: $color_surface_container;
+         padding: $space_small;
+         color: $color_on_surface;
+
+         &:first-child {
+            margin-bottom: 0;
+         }
+
+         &:hover {
+            background: $color_primary_container;
+         }
+      }
+   }
+}
+
+.bar-item-ram {
+   @include bar_item;
+   margin-left: $space_medium;
+
+   ._1 {
+      font-family: "IosevkaTerm Nerd Font";
+      font-size: 18px;
+
+      margin-right: $space_small;
+   }
+
+   // ._2 {}
+}
+
+.bar-item-cpu {
+   @include bar_item;
+   margin-left: $space_medium;
+
+   ._1 {
+      font-family: "IosevkaTerm Nerd Font";
+      font-size: 18px;
+
+      margin-right: $space_small;
+   }
+
+   // ._2 {}
+}
+
+.bar-item-battery {
+   @include bar_item;
+   margin-left: $space_medium;
+}
+
+.bar-item-indicators {
+   @include bar_button;
+   margin-left: $space_medium;
+
+   > box {
+      > .icon-with-label-fallback {
+         margin-left: $space_small;
+
+         &:first-child {
+            margin-left: 0;
+         }
+      }
+   }
+}
+
+.bar-item-power {
+   @include bar_button;
+   margin-left: $space_medium;
+}

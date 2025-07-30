@@ -1,0 +1,4 @@
+verbosity = "WARN"
+media_minimum_duration = 5
+sink_whitelist = [ ]
+node_blacklist = [ ]
