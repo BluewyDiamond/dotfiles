@@ -23,7 +23,7 @@ set hosts_pathnames $argv[2..-1]
 set common_packages_pathnames
 set std_packages
 set aur_packages
-set services_to_enable
+set target_services
 
 # ignore this packages
 set -a std_packages $required_packages
@@ -34,7 +34,7 @@ for host_pathname in $hosts_pathnames
     set -a common_packages_pathnames (tomlq -r '(.common_packages // [])[]' $host_pathname)
     set -a std_packages (tomlq -r '[.packages // {} | .. | objects | .std // []] | add | .[]' $host_pathname)
     set -a aur_packages (tomlq -r '[.packages // {} | .. | objects | .aur // []] | add | .[]' $host_pathname)
-    set -a services_to_enable (tomlq -r ".services.enable // [] | .[]" $host_pathname)
+    set -a target_services (tomlq -r ".services.enable // [] | .[]" $host_pathname)
 end
 
 for common_package_filepath in $common_packages_pathnames
@@ -103,15 +103,43 @@ end
 
 switch $argv[1]
     case install
-        sudo pacman -S --needed $std_packages && paru -S --aur $aur_packages
-        # echo "debug: std_packages: $std_packages"
-        # echo "debug: aur_packages: $aur_packages"
+        echo "[INFO] INSTALL STD PACKAGES"
+        set missing_std_packages
+
+        for std_package in $std_packages
+            if pacman -Q $std_package 2&>/dev/null
+                continue
+            end
+
+            set -a missing_std_packages $std_packages
+        end
+
+        if set -q missing_std_packages[1]
+            sudo pacman -S $std_packages
+        else
+            echo "[INFO] SKIP | ALREADY INSTALLED"
+        end
+
+        echo "[INFO] INSTALL AUR PACKAGES"
+        set missing_aur_packages
+
+        for aur_package in $aur_packages
+            if pacman -q $aur_package 2&>/dev/null
+                continue
+            end
+
+            set -a missing_aur_packages $aur_package
+        end
+
+        if set -q missing_aur_package[1]
+            paru -S --aur $aur_packages
+        else
+            echo "[INFO] SKIP | ALREADY INSTALLED"
+        end
 
         for host_pathname in $hosts_pathnames
             set install_files_length (tomlq -r '.install_files // [] | length' $host_pathname)
             set spawn_files_length (tomlq -r '.spawn_files // [] | length' $host_pathname)
-
-            # echo "debug: install_files_length: $install_files_length spawn_files_length: $spawn_files_length"
 
             for install_file_index in (seq 0 (math $install_files_length - 1))
                 set owner (tomlq -r ".install_files[$install_file_index].owner" $host_pathname)
@@ -127,10 +155,7 @@ switch $argv[1]
                 set source $script_dir/(tomlq -r ".install_files[$install_file_index].source" $host_pathname)
                 set target_dir_use_regex (tomlq -r ".install_files[$install_file_index].target_dir_use_regex // false" $host_pathname)
                 set target_dir (tomlq -r ".install_files[$install_file_index].target_dir" $host_pathname)
-
                 set fd_results
-
-                # echo "debug: target_dir_use_regex: $target_dir_use_regex"
 
                 switch $target_dir_use_regex
                     case true
@@ -139,36 +164,95 @@ switch $argv[1]
                         set fd_results $target_dir
                 end
 
-                # echo "debug: fd_results: $fd_results"
-
                 set targets
 
                 for fd_result in $fd_results
                     set -a targets $fd_result/(basename $source)
                 end
 
-                for target in $targets
-                    echo "debug: install file: owner: $owner operation: $operation source: $source target: $target"
-                    # TODO: ensure success
-                    sudo -iu $owner -- $operation $source $target
-                end
+                echo "[INFO] INSTALL FILE | OWNER={$owner} OPERATION={$operation} SOURCE={$source}"
 
+                for target in $targets
+                    echo "[INFO] TARGET={$target}"
+
+                    switch $operation
+                        case cp
+                            if test -f $target
+                                if test "$content" = (cat $target | string collect)
+                                    echo "[INFO] SKIP | MATCHING FILE FOUND"
+                                    continue
+                                end
+
+                                echo "[WARN] TRASH TARGET | CONFLICTING FILE FOUND | TARGET={$target}"
+                                sudo -iu $owner -- trash $target
+                            end
+
+                            sudo -iu $owner -- $operation $source $target
+                        case 'ln -s'
+                            if test (readlink -f $target) = $source
+                                echo "[INFO] SKIP | MATCHING LINK FOUND"
+                                continue
+                            end
+
+                            echo "[WARN] TRASH TARGET | CONFLICT FOUND | TARGET={$target}"
+                            sudo -iu $owner -- trash $target
+                        case '*'
+                            echo "[INFO] SKIP | UNIMPLEMENTED OPERATION | OPERATION={$operation}"
+                    end
+                end
             end
 
             for spawn_file_index in (seq 0 (math $spawn_files_length - 1))
-                # TODO: verify content
                 set owner (tomlq -r ".spawn_files[$spawn_file_index].owner" $host_pathname)
                 set target (tomlq -r ".spawn_files[$spawn_file_index].target" $host_pathname)
-                set content (tomlq -r ".spawn_files[$spawn_file_index].content" $host_pathname)
+                set content (tomlq -r ".spawn_files[$spawn_file_index].content" $host_pathname | string collect)
+
+                echo "[INFO] SPAWN FILE -> TARGET: $target"
+
+                set target_content (cat $target | string collect)
+
+                if test -f $target
+                    if test "$content" = "$target_content"
+                        echo "[INFO] SKIP | MATCHING FILE FOUND"
+                        continue
+                    end
+
+                    echo "[WARN] TRASH TARGET | CONFLICTING FILE FOUND | TARGET={$target}"
+                    sudo -iu $owner -- trash $target
+                end
+
+                if test -d $target
+                    echo "[WARN] TRASH TARGET | CONFLICTING DIRECTORY FOUND | TARGET={$target}"
+                    sudo -iu $owner -- trash (dirname $target)
+                    echo "[INFO] CREATE DIRECTORY | DIRECTORY={$target}"
+                    sudo -iu $owner -- mkdir -p (dirname $target)
+                end
+
+                if test -L $target
+                    echo "[WARN] TRASH TARGET | CONFLICTING LINK FOUND | TARGET={$target}"
+                    sudo -iu $owner -- trash $target
+                end
 
                 sudo -iu $owner -- echo $content >$target
-                # echo "debug: spawn file: owner: $owner target: $target content: $content"
             end
         end
 
+        exit 1
+
+        set enabled_services (fd -e service . /etc/systemd/system/*.wants -x basename)
+        set services_to_enable
+
+        for target_service in $target_services
+            if contains $target_service $enabled_services
+                echo "[INFO] SKIP | ALREADY ENABLED | SERVICE={$target_service}"
+                continue
+            end
+
+            set -a services_to_enable $target_service
+        end
+
         for service_to_enable in $services_to_enable
-            echo "debug: enable service: service: $service_to_enable"
-            systemctl enable $service_to_enable
+            sudo systemctl enable $service_to_enable
         end
     case cleanup
         set unlisted_packages (get_unlisted_packages $std_packages $aur_packages)

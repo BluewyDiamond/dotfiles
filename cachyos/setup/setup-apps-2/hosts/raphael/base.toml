@@ -22,35 +22,35 @@ owner = "root"
 target = "/etc/conf.d/wireless-regdom"
 
 [[spawn_files]]
-content = """\
-   [Match]
-   Name=eno1
+content = """
+[Match]
+Name=eno1
 
-   [Network]
-   DHCP=yes
+[Network]
+DHCP=yes
 
-   [DHCPv4]
-   RouteMetric=100
+[DHCPv4]
+RouteMetric=100
 
-   [IPv6AcceptRA]
-   RouteMetric=100
+[IPv6AcceptRA]
+RouteMetric=100
 """
 owner = "root"
 target = "/etc/systemd/network/20-wired.network"
 
 [[spawn_files]]
-content = """\
-   [Match]
-   Name=wlan0
+content = """
+[Match]
+Name=wlan0
 
-   [Network]
-   DHCP=yes
+[Network]
+DHCP=yes
 
-   [DHCPv4]
-   RouteMetric=600
+[DHCPv4]
+RouteMetric=600
 
-   [IPv6AcceptRA]
-   RouteMetric=600
+[IPv6AcceptRA]
+RouteMetric=600
 """
 owner = "root"
 target = "/etc/systemd/network/21-wireless.network"
@@ -59,7 +59,11 @@ target = "/etc/systemd/network/21-wireless.network"
 enable = [
    "ananicy-cpp",
    "getty@tty1",
+
    "systemd-networkd",
+   "systemd-network-generator",
+   "systemd-networkd-wait-online",
+
    "systemd-resolved",
    "ufw",
 ]
