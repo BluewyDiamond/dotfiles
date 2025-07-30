@@ -272,11 +272,17 @@ owner = "bluewy"
 source = "common/files/hypr"
 target_path = "/home/bluewy/.config"
 
-# [[install_files]]
-# operation = "cp"
-# owner = "root"
-# source = "common/files/kbd/*"
-# target_path = "/usr/share/kbd/keymaps"
+[[install_files]]
+operation = "cp"
+owner = "root"
+source = "common/files/kbd/colemak_dh_wide_eu_ansi.map"
+target_path = "/usr/share/kbd/keymaps"
+
+[[install_files]]
+operation = "cp"
+owner = "root"
+source = "common/files/kbd/colemak_dh_wide_eu_iso.map"
+target_path = "/usr/share/kbd/keymaps"
 
 [[install_files]]
 operation = "link"
@@ -284,11 +290,11 @@ owner = "bluewy"
 source = "common/files/kde/kdeglobals"
 target_path = "/home/bluewy/.config"
 
-# [[install_files]]
-# operation = "copy"
-# owner = "root"
-# source = "common/files/libinput/local-overrides.quirks"
-# target_path = "/etc/libinput"
+[[install_files]]
+operation = "copy"
+owner = "root"
+source = "common/files/libinput/local-overrides.quirks"
+target_path = "/etc/libinput"
 
 [[install_files]]
 operation = "link"
@@ -332,3 +338,9 @@ operation = "link"
 owner = "bluewy"
 source = "common/files/wezterm"
 target_path = "/home/bluewy/.config"
+
+[[install_files]]
+operation = "copy"
+owner = "root"
+source = "common/files/xkb/symbols/bluewy"
+target_path = "/usr/share/X11/xkb/symbols"
