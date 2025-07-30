@@ -209,96 +209,126 @@ std = [
 operation = "link"
 owner = "bluewy"
 source = "common/files/ags"
-target_dir = "/home/bluewy/.config"
+target_path = "/home/bluewy/.config"
 
 [[install_files]]
 operation = "link"
 owner = "bluewy"
 source = "common/files/ags2"
-target_dir = "/home/bluewy/.config"
+target_path = "/home/bluewy/.config"
 
-[[install_files]]
-operation = "link"
-owner = "bluewy"
-source = "common/files/applications/*"
-target_dir = "/home/bluewy/.local/share/applications"
-
-[[install_files]]
-operation = "link"
-owner = "bluewy"
-source = "common/files/bin/*"
-target_dir = "/home/bluewy/.local/bin"
+# [[install_files]]
+# operation = "link"
+# owner = "bluewy"
+# source = "common/files/applications/*"
+# target_path = "/home/bluewy/.local/share/applications"
+#
+# [[install_files]]
+# operation = "link"
+# owner = "bluewy"
+# source = "common/files/bin/*"
+# target_path = "/home/bluewy/.local/bin"
 
 [[install_files]]
 operation = "link"
 owner = "bluewy"
 source = "common/files/css"
-target_dir = "/home/bluewy/.config"
+target_path = "/home/bluewy/.config"
 
 [[install_files]]
 operation = "link"
 owner = "bluewy"
 source = "common/files/electron_flags/electron-flags.conf"
-target_dir = "/home/bluewy/.config"
+target_path = "/home/bluewy/.config"
 
 [[install_files]]
 operation = "link"
 owner = "bluewy"
 source = "common/files/fastfetch"
-target_dir = "/home/bluewy/.config"
+target_path = "/home/bluewy/.config"
 
 [[install_files]]
 operation = "link"
 owner = "bluewy"
 source = "common/files/fish_bluewy"
-target_dir = "/home/bluewy/.config"
+target_path = "/home/bluewy/.config"
 
 [[spawn_files]]
 content = """
 source /home/bluewy/.config/fish_bluewy/config.fish
 """
 owner = "bluewy"
-target = "/home/bluewy/.config/fish/conf.d"
+target = "/home/bluewy/.config/fish/conf.d/init_bluewy.fish"
 
 [[install_files]]
 operation = "link"
 owner = "bluewy"
 source = "common/files/fuzzel"
-target_dir = "/home/bluewy/.config"
+target_path = "/home/bluewy/.config"
 
 [[install_files]]
 operation = "link"
 owner = "bluewy"
 source = "common/files/hypr"
-target_dir = "/home/bluewy/.config"
+target_path = "/home/bluewy/.config"
 
-[[install_files]]
-operation = "link"
-owner = "root"
-source = "common/files/kbd/*"
-target_dir = "/usr/share/kbd/keymaps"
+# [[install_files]]
+# operation = "cp"
+# owner = "root"
+# source = "common/files/kbd/*"
+# target_path = "/usr/share/kbd/keymaps"
 
 [[install_files]]
 operation = "link"
 owner = "bluewy"
 source = "common/files/kde/kdeglobals"
-target_dir = "/home/bluewy/.config"
+target_path = "/home/bluewy/.config"
 
-[[install_files]]
-operation = "link"
-owner = "bluewy"
-source = "common/files/libinput/local-overrides.quirks"
-target_dir = "/etc/libinput"
+# [[install_files]]
+# operation = "copy"
+# owner = "root"
+# source = "common/files/libinput/local-overrides.quirks"
+# target_path = "/etc/libinput"
 
 [[install_files]]
 operation = "link"
 owner = "bluewy"
 source = "common/files/librewolf/librewolf.overrides.cfg"
-target_dir = "/home/bluewy/.librewolf"
+target_path = "/home/bluewy/.librewolf"
 
 [[install_files]]
 operation = "link"
 owner = "bluewy"
-source = "common/files/librewolf/userChrome.css"
-target_name = "userChrome.css"
-target_path_regex = "/home/bluewy/\\.librewolf/.*default-default$"
+source = "common/files/mangohud"
+target_name = "MangoHud"
+target_path = "/home/bluewy/.config"
+
+[[install_files]]
+operation = "link"
+owner = "bluewy"
+source = "common/files/nvim"
+target_path = "/home/bluewy/.config"
+
+[[install_files]]
+operation = "link"
+owner = "bluewy"
+source = "common/files/pipewire"
+target_path = "/home/bluewy/.config"
+
+[[install_files]]
+operation = "link"
+owner = "bluewy"
+source = "common/files/user-dirs.dirs/user-dirs.dirs"
+target_path = "/home/bluewy/.config"
+
+[[install_files]]
+operation = "link"
+owner = "bluewy"
+source = "common/files/wayland-pipewire-idle-inhibit"
+target_path = "/home/bluewy/.config"
+
+[[install_files]]
+operation = "link"
+owner = "bluewy"
+source = "common/files/wezterm"
+target_path = "/home/bluewy/.config"

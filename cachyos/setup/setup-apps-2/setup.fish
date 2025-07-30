@@ -44,29 +44,6 @@ end
 
 # action based on the data
 
-function prepare
-    set target $argv[1]
-    set target_dir (dirname $target)
-
-    # If target_dir exists but is not a directory, trash it
-    if test -f $target_dir; or test -L $target_dir
-        echo "WARNING: $target_dir is not a directory. Trashing it."
-        trash $target_dir
-    end
-
-    # Create target_dir if it doesn't exist
-    if not test -d $target_dir
-        echo "Creating directory: $target_dir"
-        mkdir -p $target_dir
-    end
-
-    # If target exists (file, link, etc.), trash it
-    if test -e $target; or test -L $target
-        echo "Trashing existing target: $target"
-        trash $target
-    end
-end
-
 function is_package_a_dependency
     set package $argv[1]
     set pactree_output (pactree -r $package)
@@ -101,11 +78,12 @@ function get_unlisted_packages
     end
 end
 
-function install_file
-    argparse sources targets owner -- $argv or return
-    set sources (string split ' ' $_flag_sources)
-    set targets (string split ' ' $_flag_targets)
+function install_files
+    argparse 'owner=' 'sources=' 'operation=' 'targets=' -- $argv or return
     set owner $_flag_owner
+    set sources (string split ' ' "$_flag_sources")
+    set operation $_flag_operation
+    set targets (string split ' ' "$_flag_targets")
 
     for source in $sources
         if not test -e $source
@@ -119,7 +97,7 @@ function install_file
             echo "[INFO] TARGET={$target}"
 
             switch "$operation"
-                case cp
+                case copy
                     if test -f $target
                         if test "$content" = (cat $target | string collect)
                             echo "[INFO] SKIP | MATCHING FILE FOUND"
@@ -130,8 +108,8 @@ function install_file
                         sudo -iu $owner -- trash $target
                     end
 
-                    sudo -iu $owner -- $operation $source $target
-                case 'ln -s'
+                    sudo -iu $owner -- cp $source $target
+                case link
                     if test -L $target
                         set x (readlink -f $target)
 
@@ -149,7 +127,7 @@ function install_file
                         sudo -iu $owner -- trash $target
                     end
 
-                    sudo -iu $owner -- $operation $source $target
+                    sudo -iu $owner -- ln -s $source $target
                 case '*'
                     echo "[INFO] SKIP | UNIMPLEMENTED OPERATION | OPERATION={$operation}"
             end
@@ -199,93 +177,86 @@ switch $argv[1]
 
             for install_file_index in (seq 0 (math $install_files_length - 1))
                 set owner (tomlq -r ".install_files[$install_file_index].owner" $host_pathname)
-                set operation_raw (tomlq -r ".install_files[$install_file_index].operation" $host_pathname)
-                set operation
+                set operation (tomlq -r ".install_files[$install_file_index].operation" $host_pathname)
+                set source_pathname $script_dir/(tomlq -r ".install_files[$install_file_index].source // \"\"" $host_pathname)
+                set target_name (tomlq -r ".install_files[$install_file_index].target_name // \"\"" $host_pathname)
+                set target_path (tomlq -r ".install_files[$install_file_index].target_path // \"\"" $host_pathname)
+                set target_path_regex (tomlq -r ".install_files[$install_file_index].target_path_regex // \"\"" $host_pathname)
 
-                switch $operation_raw
-                    case copy
-                        set operation cp
-                    case link
-                        set operation ln -s
-                    case '*'
-                        echo "[ERROR] SKIP | INVALID VALUE | OPERATION_RAW={$operation_raw}"
-                        continue
-                end
-
-                set source (tomlq -r ".install_files[$install_file_index].source // ''" $host_pathname)
-                set sources (tomlq -r ".install_files[$install_file_index].source // ''" $host_pathname)
-                set target_name (tomlq -r ".install_files[$install_file_index].target_name // ''" $host_pathname)
-                set target_path (tomlq -r ".install_files[$install_file_index].target_path // ''" $host_pathname)
-                set target_regex (tomlq -r ".install_files[$install_file_index].target_regex // ''" $host_pathname)
-
-                if test -z (string trim -- $sources); or test -z (string trim -- $source)
-                    echo "[ERROR] SKIP | INVALID VALUE | SOURCE_RAW={$source}"
+                if not test -e $source_pathname
+                    echo "[ERROR] INVALID VALUE | SOURCE={$source_pathname}"
                     continue
                 end
 
-                if test -z (string trim -- $target_dir_with_regex); or test -z (string trim -- $target_dir); or test -z (string trim -- $target)
-                    # echo "[ERROR] SKIP | INVALID VALUE | SOURCE_RAW={$source}"
+                if not test -z (string trim -- $target_path_regex)
+                    set found_target_path_array (fd --regex $target_path_regex $target_path)
+                    set found_target_proccessed_array
+
+                    for found_target_path in $found_target_path_array
+                        if not test -z (string trim -- $target_name)
+                            set -a found_target_proccessed_array $found_target_path/$target_name
+                        end
+
+                        set -a found_target_proccessed_array $found_target_path/(basename $source_pathname)
+                    end
+
+                    # echo "[DEBUG] found_target_proccessed_array={$found_target_proccessed_array}"
+
+                    echo "[WARN] NOT IMPLEMENTED"
+                    continue
+
+                    # install_files --owner $owner --sources "$source_pathname" --operation $operation --targets "$found_target_proccessed_array"
+                else if not test -z (string trim -- $target_path)
+                    set proccessed_target_pathname
+
+                    if not test -z (string trim -- $target_name)
+                        set proccessed_target_pathname $target_path/$target_name
+                    else
+                        set proccessed_target_pathname $target_path/(basename $source_pathname)
+                    end
+
+                    install_files --owner $owner --sources $source_pathname --operation $operation --targets $proccessed_target_pathname
+                else
+                    echo "[ERROR] INVALID VALUE | TARGET_REGEX={$target_path_regex} | TARGET={$target}"
                     continue
                 end
-
-                set processed_sources
-                set processed_targets
-
-
-                if not test -z (string trim -- $target_regex)
-                  fd --regex $target_path/$target_regex
-
-                end
-
-                set fd_results
-
-                switch $target_dir_use_regex
-                    case true
-                        set fd_results (fd --regex $target_dir)
-                    case false
-                        set fd_results $target_dir
-                end
-
-                set targets
-
-                for fd_result in $fd_results
-                    set -a targets $fd_result/(basename $source)
-                end
-
             end
 
             for spawn_file_index in (seq 0 (math $spawn_files_length - 1))
                 set owner (tomlq -r ".spawn_files[$spawn_file_index].owner" $host_pathname)
-                set target (tomlq -r ".spawn_files[$spawn_file_index].target" $host_pathname)
-                set content (tomlq -r ".spawn_files[$spawn_file_index].content" $host_pathname | string collect)
+                set target_pathname (tomlq -r ".spawn_files[$spawn_file_index].target" $host_pathname)
+                set target_path (dirname $target_pathname)
+                set target_content (tomlq -r ".spawn_files[$spawn_file_index].content" $host_pathname | string collect)
+                echo "[INFO] SPAWN FILE | TARGET={$target_pathname}"
 
-                echo "[INFO] SPAWN FILE | TARGET={$target}"
+                if test -f $target_pathname
+                    set existing_target_content (cat $target_pathname | string collect)
 
-                set target_content (cat $target | string collect)
-
-                if test -f $target
-                    if test "$content" = "$target_content"
+                    if test "$target_content" = "$existing_target_content"
                         echo "[INFO] SKIP | MATCHING FILE FOUND"
                         continue
                     end
 
-                    echo "[WARN] TRASH TARGET | CONFLICTING FILE FOUND | TARGET={$target}"
-                    sudo -iu $owner -- trash $target
+                    echo "[WARN] TRASH TARGET | CONFLICTING FILE FOUND | TARGET={$target_pathname}"
+                    sudo -iu $owner -- trash $target_pathname
                 end
 
-                if test -d $target
-                    echo "[WARN] TRASH TARGET | CONFLICTING DIRECTORY FOUND | TARGET={$target}"
-                    sudo -iu $owner -- trash (dirname $target)
-                    echo "[INFO] CREATE DIRECTORY | DIRECTORY={$target}"
-                    sudo -iu $owner -- mkdir -p (dirname $target)
+                if test -d $target_pathname
+                    echo "[WARN] TRASH TARGET | CONFLICTING DIRECTORY FOUND | TARGET={$target_pathname}"
+                    sudo -iu $owner -- trash $target_pathname
                 end
 
-                if test -L $target
-                    echo "[WARN] TRASH TARGET | CONFLICTING LINK FOUND | TARGET={$target}"
-                    sudo -iu $owner -- trash $target
+                if test -L $target_pathname
+                    echo "[WARN] TRASH TARGET | CONFLICTING LINK FOUND | TARGET={$target_pathname}"
+                    sudo -iu $owner -- trash $target_pathname
                 end
 
-                sudo -iu $owner -- echo $content >$target
+                if not test -d $target_path
+                    echo "[INFO] CREATE DIRECTORY | DIRECTORY={$target_path}"
+                    sudo -iu $owner -- mkdir -p (dirname $target_pathname)
+                end
+
+                sudo -iu $owner -- echo $target_content >$target_pathname
             end
         end
 
