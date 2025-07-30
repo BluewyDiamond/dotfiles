@@ -2,17 +2,13 @@ common_packages = ["common/packages/cachyos_env.toml"]
 
 [packages]
 std = [
-   "amd-ucode",
+   "intel-ucode",
    "linux-firmware",
 
-   "linux-cachyos",
-   "linux-cachyos-lts",
+   "linux-cachyos-nvidia-open",
+   "linux-cachyos-lts-nvidia-open",
    "wireless-regdb",
 
-   "lib32-opencl-mesa",
-   "xf86-video-amdgpu",
-
-   "lact",
    "bluez",
 ]
 
@@ -23,37 +19,23 @@ target = "/etc/conf.d/wireless-regdom"
 
 [[spawn_files]]
 content = """
-[Match]
-Name=eno1
-
-[Network]
-DHCP=yes
-
-[DHCPv4]
-RouteMetric=100
-
-[IPv6AcceptRA]
-RouteMetric=100
+[device]
+wifi.backend=iwd
 """
 owner = "root"
-target = "/etc/systemd/network/20-wired.network"
+target = "/etc/NetworkManager/conf.d/wifi_backend.conf"
 
-[[spawn_files]]
-content = """
-[Match]
-Name=wlan0
-
-[Network]
-DHCP=yes
-
-[DHCPv4]
-RouteMetric=600
-
-[IPv6AcceptRA]
-RouteMetric=600
-"""
+[[install_files]]
+operation = "copy"
 owner = "root"
-target = "/etc/systemd/network/21-wireless.network"
+source = "common/files/acer_battery_limit_service/acer_battery_limit.service"
+target_path = "/etc/systemd/system"
+
+[[install_files]]
+operation = "copy"
+owner = "root"
+source = "common/files/acer_battery_limit_service/acer_battery_limit.fish"
+target_path = "/usr/local/bin"
 
 [[install_files]]
 operation = "copy"
@@ -71,13 +53,8 @@ target_path = "/usr/local/bin"
 enable = [
    "ananicy-cpp",
    "getty@tty1",
-
-   "systemd-networkd",
-   "systemd-network-generator",
-   "systemd-networkd-wait-online",
-   "systemd-resolved",
-   "iwd",
-
-   "lactd",
+   "acer_battery_limit",
+   "NetworkManager",
    "ufw",
+   "sddm",
 ]
