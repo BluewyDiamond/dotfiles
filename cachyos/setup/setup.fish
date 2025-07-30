@@ -161,7 +161,7 @@ function spawn_file
     end
 
     prepare_target --owner $owner --target $target_pathname
-    echo $target_content | sudo -iu $owner -- tee $target_pathname >/dev/nul
+    echo $target_content | sudo -iu $owner -- tee $target_pathname >/dev/null
 end
 
 switch $argv[1]
