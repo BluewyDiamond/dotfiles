@@ -1,6 +1,6 @@
 #!/usr/bin/env fish
 
-set script_dir (realpath (dirname (status filename)))
+set script_path (realpath (dirname (status filename)))
 
 # some requirements
 
@@ -23,7 +23,7 @@ set hosts_pathnames $argv[2..-1]
 set common_packages_pathnames
 set std_packages
 set aur_packages
-set target_services
+set services
 
 # ignore this packages
 set -a std_packages $required_packages
@@ -34,18 +34,19 @@ for host_pathname in $hosts_pathnames
     set -a common_packages_pathnames (tomlq -r '(.common_packages // [])[]' $host_pathname)
     set -a std_packages (tomlq -r '[.packages // {} | .. | objects | .std // []] | add | .[]' $host_pathname)
     set -a aur_packages (tomlq -r '[.packages // {} | .. | objects | .aur // []] | add | .[]' $host_pathname)
-    set -a target_services (tomlq -r ".services.enable // [] | .[]" $host_pathname)
+    set -a services (tomlq -r ".services.enable // [] | .[]" $host_pathname)
 end
 
 for common_package_filepath in $common_packages_pathnames
-    set -a std_packages (tomlq -r '.std // [] | .[]' $script_dir/$common_package_filepath)
-    set -a aur_packages (tomlq -r '.aur // [] | .[]' $script_dir/$common_package_filepath)
+    set -a std_packages (tomlq -r '.std // [] | .[]' $script_path/$common_package_filepath)
+    set -a aur_packages (tomlq -r '.aur // [] | .[]' $script_path/$common_package_filepath)
 end
 
 # action based on the data
 
 function is_package_a_dependency
-    set package $argv[1]
+    argsparse 'package=' -- $argv or return
+    set package $_flag_package
     set pactree_output (pactree -r $package)
 
     if test $status -eq 1
@@ -62,7 +63,8 @@ function is_package_a_dependency
 end
 
 function get_unlisted_packages
-    set wanted_packages $argv
+    argparse 'wanted-packages=' -- $argv
+    set wanted_packages (string split ' ' $_flag_wanted_packages)
     set installed_packages (pacman -Qqe)
 
     for installed_package in $installed_packages
@@ -70,7 +72,7 @@ function get_unlisted_packages
             continue
         end
 
-        if is_package_a_dependency $installed_package
+        if is_package_a_dependency --package $installed_package
             continue
         end
 
@@ -203,7 +205,7 @@ switch $argv[1]
             for install_file_index in (seq 0 (math $install_files_length - 1))
                 set owner (tomlq -r ".install_files[$install_file_index].owner" $host_pathname)
                 set operation (tomlq -r ".install_files[$install_file_index].operation" $host_pathname)
-                set source_pathname $script_dir/(tomlq -r ".install_files[$install_file_index].source // \"\"" $host_pathname)
+                set source_pathname $script_path/(tomlq -r ".install_files[$install_file_index].source // \"\"" $host_pathname)
                 set target_name (tomlq -r ".install_files[$install_file_index].target_name // \"\"" $host_pathname)
                 set target_path (tomlq -r ".install_files[$install_file_index].target_path // \"\"" $host_pathname)
                 set target_path_regex (tomlq -r ".install_files[$install_file_index].target_path_regex // \"\"" $host_pathname)
@@ -214,15 +216,15 @@ switch $argv[1]
                 end
 
                 if not test -z (string trim -- $target_path_regex)
-                    set found_target_path_array (fd --regex $target_path_regex $target_path)
-                    set found_target_proccessed_array
+                    set found_target_paths (fd --regex $target_path_regex $target_path)
+                    set found_target_pathnames
 
-                    for found_target_path in $found_target_path_array
+                    for found_target_path in $found_target_paths
                         if not test -z (string trim -- $target_name)
-                            set -a found_target_proccessed_array $found_target_path/$target_name
+                            set -a found_target_pathnames $found_target_path/$target_name
                         end
 
-                        set -a found_target_proccessed_array $found_target_path/(basename $source_pathname)
+                        set -a found_target_pathnames $found_target_path/(basename $source_pathname)
                     end
 
                     # echo "[DEBUG] found_target_proccessed_array={$found_target_proccessed_array}"
@@ -232,15 +234,15 @@ switch $argv[1]
 
                     # install_files --owner $owner --sources "$source_pathname" --operation $operation --targets "$found_target_proccessed_array"
                 else if not test -z (string trim -- $target_path)
-                    set proccessed_target_pathname
+                    set target_pathname
 
                     if not test -z (string trim -- $target_name)
-                        set proccessed_target_pathname $target_path/$target_name
+                        set target_pathname $target_path/$target_name
                     else
-                        set proccessed_target_pathname $target_path/(basename $source_pathname)
+                        set target_pathname $target_path/(basename $source_pathname)
                     end
 
-                    install_files --owner $owner --sources $source_pathname --operation $operation --targets $proccessed_target_pathname
+                    install_files --owner $owner --sources $source_pathname --operation $operation --targets $target_pathname
                 else
                     echo "[ERROR] INVALID VALUE | TARGET_REGEX={$target_path_regex} | TARGET={$target}"
                     continue
@@ -260,7 +262,7 @@ switch $argv[1]
         set enabled_services (fd -e service . /etc/systemd/system/*.wants -x basename | string replace -r '\.service$' '')
         set services_to_enable
 
-        for target_service in $target_services
+        for target_service in $services
             if contains $target_service $enabled_services
                 echo "[INFO] SKIP | ALREADY ENABLED | SERVICE={$target_service}"
                 continue
@@ -274,7 +276,7 @@ switch $argv[1]
             sudo systemctl enable $service_to_enable
         end
     case cleanup
-        set unlisted_packages (get_unlisted_packages $std_packages $aur_packages)
+        set unlisted_packages (get_unlisted_packages --wanted-packages "$std_packages $aur_packages")
         echo "DELETE:"
         echo $unlisted_packages
         sudo pacman -Rns $unlisted_packages
