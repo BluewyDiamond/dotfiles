@@ -101,6 +101,62 @@ function get_unlisted_packages
     end
 end
 
+function install_file
+    argparse sources targets owner -- $argv or return
+    set sources (string split ' ' $_flag_sources)
+    set targets (string split ' ' $_flag_targets)
+    set owner $_flag_owner
+
+    for source in $sources
+        if not test -e $source
+            echo "[ERROR] SKIP | INVALID VALUE | SOURCE={$source}"
+            continue
+        end
+
+        echo "[INFO] INSTALL FILE | OWNER={$owner} OPERATION={$operation} SOURCE={$source}"
+
+        for target in $targets
+            echo "[INFO] TARGET={$target}"
+
+            switch "$operation"
+                case cp
+                    if test -f $target
+                        if test "$content" = (cat $target | string collect)
+                            echo "[INFO] SKIP | MATCHING FILE FOUND"
+                            continue
+                        end
+
+                        echo "[WARN] TRASH TARGET | CONFLICTING FILE FOUND | TARGET={$target}"
+                        sudo -iu $owner -- trash $target
+                    end
+
+                    sudo -iu $owner -- $operation $source $target
+                case 'ln -s'
+                    if test -L $target
+                        set x (readlink -f $target)
+
+                        if test "$x" = "$source"
+                            echo "[INFO] SKIP | MATCHING LINK FOUND"
+                            continue
+                        end
+
+                        echo "[WARN] TRASH TARGET | CONFLICTING LINK FOUND | TARGET={$target}"
+                        sudo -iu $owner -- trash $target
+                    end
+
+                    if test -f $target; or test -d $target
+                        echo "[WARN] TRASH TARGET | CONFLICT FOUND | TARGET={$target}"
+                        sudo -iu $owner -- trash $target
+                    end
+
+                    sudo -iu $owner -- $operation $source $target
+                case '*'
+                    echo "[INFO] SKIP | UNIMPLEMENTED OPERATION | OPERATION={$operation}"
+            end
+        end
+    end
+end
+
 switch $argv[1]
     case install
         echo "[INFO] INSTALL STD PACKAGES"
@@ -156,19 +212,29 @@ switch $argv[1]
                         continue
                 end
 
-                set source_raw (tomlq -r ".install_files[$install_file_index].source" $host_pathname)
-                set source $script_dir/$source_raw
-                set target_dir_use_regex (tomlq -r ".install_files[$install_file_index].target_dir_use_regex // false" $host_pathname)
-                set target_dir (tomlq -r ".install_files[$install_file_index].target_dir" $host_pathname)
+                set source (tomlq -r ".install_files[$install_file_index].source // ''" $host_pathname)
+                set sources (tomlq -r ".install_files[$install_file_index].source // ''" $host_pathname)
+                set target_name (tomlq -r ".install_files[$install_file_index].target_name // ''" $host_pathname)
+                set target_path (tomlq -r ".install_files[$install_file_index].target_path // ''" $host_pathname)
+                set target_regex (tomlq -r ".install_files[$install_file_index].target_regex // ''" $host_pathname)
 
-                if test -z (string trim -- $source_raw)
-                    echo "[ERROR] SKIP | INVALID VALUE | SOURCE_RAW={$source_raw}"
+                if test -z (string trim -- $sources); or test -z (string trim -- $source)
+                    echo "[ERROR] SKIP | INVALID VALUE | SOURCE_RAW={$source}"
                     continue
                 end
 
-                if not test -e $source
-                    echo "[ERROR] SKIP | INVALID VALUE | SOURCE={$source}"
+                if test -z (string trim -- $target_dir_with_regex); or test -z (string trim -- $target_dir); or test -z (string trim -- $target)
+                    # echo "[ERROR] SKIP | INVALID VALUE | SOURCE_RAW={$source}"
                     continue
+                end
+
+                set processed_sources
+                set processed_targets
+
+
+                if not test -z (string trim -- $target_regex)
+                  fd --regex $target_path/$target_regex
+
                 end
 
                 set fd_results
@@ -186,42 +252,6 @@ switch $argv[1]
                     set -a targets $fd_result/(basename $source)
                 end
 
-                echo "[INFO] INSTALL FILE | OWNER={$owner} OPERATION={$operation} SOURCE={$source}"
-
-                for target in $targets
-                    echo "[INFO] TARGET={$target}"
-
-                    switch "$operation"
-                        case cp
-                            if test -f $target
-                                if test "$content" = (cat $target | string collect)
-                                    echo "[INFO] SKIP | MATCHING FILE FOUND"
-                                    continue
-                                end
-
-                                echo "[WARN] TRASH TARGET | CONFLICTING FILE FOUND | TARGET={$target}"
-                                sudo -iu $owner -- trash $target
-                            end
-
-                            sudo -iu $owner -- $operation $source $target
-                        case 'ln -s'
-                            set x (readlink -f $target)
-
-                            if test "$x" = "$source"
-                                echo "[INFO] SKIP | MATCHING LINK FOUND"
-                                continue
-                            end
-
-                            if test -L $target; or test -f $target; or test -d $target
-                                echo "[WARN] TRASH TARGET | CONFLICT FOUND | TARGET={$target}"
-                                sudo -iu $owner -- trash $target
-                            end
-
-                            sudo -iu $owner -- $operation $source $target
-                        case '*'
-                            echo "[INFO] SKIP | UNIMPLEMENTED OPERATION | OPERATION={$operation}"
-                    end
-                end
             end
 
             for spawn_file_index in (seq 0 (math $spawn_files_length - 1))
