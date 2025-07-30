@@ -78,61 +78,88 @@ function get_unlisted_packages
     end
 end
 
+function prepare_target
+    argparse 'owner=' 'target=' -- $argv or return
+    set owner $_flag_owner
+    set target_pathname $_flag_target
+    set target_path (dirname $target_pathname)
+
+    if test -f $target_pathname; or test -L $target_pathname; or test -d $target_pathname
+        echo "[WARN] TRASH TARGET | CONFLICT FOUND | TARGET={$target_pathname}"
+        sudo -iu $owner -- trash $target_pathname
+    end
+
+    if not test -d $target_path
+        sudo -iu $owner -- mkdir -p $target_path
+    end
+end
+
 function install_files
     argparse 'owner=' 'sources=' 'operation=' 'targets=' -- $argv or return
     set owner $_flag_owner
-    set sources (string split ' ' "$_flag_sources")
+    set source_paths (string split ' ' "$_flag_sources")
     set operation $_flag_operation
-    set targets (string split ' ' "$_flag_targets")
+    set target_paths (string split ' ' "$_flag_targets")
 
-    for source in $sources
-        if not test -e $source
-            echo "[ERROR] SKIP | INVALID VALUE | SOURCE={$source}"
+    for source_path in $source_paths
+        if not test -e $source_path
+            echo "[ERROR] SKIP | INVALID VALUE | SOURCE={$source_path}"
             continue
         end
 
-        echo "[INFO] INSTALL FILE | OWNER={$owner} OPERATION={$operation} SOURCE={$source}"
+        echo "[INFO] INSTALL FILE | OWNER={$owner} OPERATION={$operation} SOURCE={$source_path}"
 
-        for target in $targets
-            echo "[INFO] TARGET={$target}"
+        for target_path in $target_paths
+            echo "[INFO] TARGET={$target_path}"
 
             switch "$operation"
                 case copy
-                    if test -f $target
-                        if test "$content" = (cat $target | string collect)
+                    if test -f $target_path
+                        if test "$content" = (cat $target_path | string collect)
                             echo "[INFO] SKIP | MATCHING FILE FOUND"
                             continue
                         end
-
-                        echo "[WARN] TRASH TARGET | CONFLICTING FILE FOUND | TARGET={$target}"
-                        sudo -iu $owner -- trash $target
                     end
 
-                    sudo -iu $owner -- cp $source $target
+                    prepare_target --owner $owner --target $target_path
+                    sudo -iu $owner -- cp $source_path $target_path
                 case link
-                    if test -L $target
-                        set x (readlink -f $target)
+                    if test -L $target_path
+                        set x (readlink -f $target_path)
 
-                        if test "$x" = "$source"
+                        if test "$x" = "$source_path"
                             echo "[INFO] SKIP | MATCHING LINK FOUND"
                             continue
                         end
 
-                        echo "[WARN] TRASH TARGET | CONFLICTING LINK FOUND | TARGET={$target}"
-                        sudo -iu $owner -- trash $target
                     end
 
-                    if test -f $target; or test -d $target
-                        echo "[WARN] TRASH TARGET | CONFLICT FOUND | TARGET={$target}"
-                        sudo -iu $owner -- trash $target
-                    end
-
-                    sudo -iu $owner -- ln -s $source $target
+                    prepare_target --owner $owner --target $target_path
+                    sudo -iu $owner -- ln -s $source_path $target_path
                 case '*'
                     echo "[INFO] SKIP | UNIMPLEMENTED OPERATION | OPERATION={$operation}"
             end
         end
     end
+end
+
+function spawn_file
+    argparse 'owner=' 'content=' 'target=' -- $argv or return
+    set owner $_flag_owner
+    set target_content $_flag_content
+    set target_pathname $_flag_target
+
+    if test -f $target_pathname
+        set existing_target_content (cat $target_pathname | string collect)
+
+        if test "$target_content" = "$existing_target_content"
+            echo "[INFO] SKIP | MATCHING FILE FOUND"
+            return
+        end
+    end
+
+    prepare_target --owner $owner --target $target_pathname
+    sudo -iu $owner -- echo $target_content >$target_pathname
 end
 
 switch $argv[1]
@@ -225,38 +252,10 @@ switch $argv[1]
             for spawn_file_index in (seq 0 (math $spawn_files_length - 1))
                 set owner (tomlq -r ".spawn_files[$spawn_file_index].owner" $host_pathname)
                 set target_pathname (tomlq -r ".spawn_files[$spawn_file_index].target" $host_pathname)
-                set target_path (dirname $target_pathname)
                 set target_content (tomlq -r ".spawn_files[$spawn_file_index].content" $host_pathname | string collect)
                 echo "[INFO] SPAWN FILE | TARGET={$target_pathname}"
 
-                if test -f $target_pathname
-                    set existing_target_content (cat $target_pathname | string collect)
-
-                    if test "$target_content" = "$existing_target_content"
-                        echo "[INFO] SKIP | MATCHING FILE FOUND"
-                        continue
-                    end
-
-                    echo "[WARN] TRASH TARGET | CONFLICTING FILE FOUND | TARGET={$target_pathname}"
-                    sudo -iu $owner -- trash $target_pathname
-                end
-
-                if test -d $target_pathname
-                    echo "[WARN] TRASH TARGET | CONFLICTING DIRECTORY FOUND | TARGET={$target_pathname}"
-                    sudo -iu $owner -- trash $target_pathname
-                end
-
-                if test -L $target_pathname
-                    echo "[WARN] TRASH TARGET | CONFLICTING LINK FOUND | TARGET={$target_pathname}"
-                    sudo -iu $owner -- trash $target_pathname
-                end
-
-                if not test -d $target_path
-                    echo "[INFO] CREATE DIRECTORY | DIRECTORY={$target_path}"
-                    sudo -iu $owner -- mkdir -p (dirname $target_pathname)
-                end
-
-                sudo -iu $owner -- echo $target_content >$target_pathname
+                spawn_file --owner $owner --target $target_pathname --content $target_content
             end
         end
 

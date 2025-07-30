@@ -275,13 +275,13 @@ target_path = "/home/bluewy/.config"
 [[install_files]]
 operation = "cp"
 owner = "root"
-source = "common/files/kbd/colemak_dh_wide_eu_ansi.map"
+source = "common/files/kbd/colemak_dh_wide_custom_eu_ansi.map"
 target_path = "/usr/share/kbd/keymaps"
 
 [[install_files]]
 operation = "cp"
 owner = "root"
-source = "common/files/kbd/colemak_dh_wide_eu_iso.map"
+source = "common/files/kbd/colemak_dh_wide_custom_eu_iso.map"
 target_path = "/usr/share/kbd/keymaps"
 
 [[install_files]]
