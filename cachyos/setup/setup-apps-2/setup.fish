@@ -212,8 +212,11 @@ switch $argv[1]
                                 continue
                             end
 
-                            echo "[WARN] TRASH TARGET | CONFLICT FOUND | TARGET={$target}"
-                            sudo -iu $owner -- trash $target
+                            if test -L $target; or test -f $target; or test -d $target
+                                echo "[WARN] TRASH TARGET | CONFLICT FOUND | TARGET={$target}"
+                                sudo -iu $owner -- trash $target
+                            end
+
                             sudo -iu $owner -- $operation $source $target
                         case '*'
                             echo "[INFO] SKIP | UNIMPLEMENTED OPERATION | OPERATION={$operation}"
