@@ -127,7 +127,9 @@ function install_files
                     sudo -iu $owner -- cp $source_pathname $target_pathname
                 case link
                     if test -L $target_pathname
-                        if test "$source_pathname" = (readlink -f $target_pathname)
+                        set existing_link_points_to (readlink -f $target_pathname)
+
+                        if test "$source_pathname" = "$existing_link_points_to"
                             echo "[INFO] SKIP | MATCHING LINK FOUND"
                             continue
                         end
