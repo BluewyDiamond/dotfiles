@@ -178,7 +178,7 @@ switch $argv[1]
         end
 
         if set -q missing_std_packages[1]
-            sudo pacman -S $std_packages
+            sudo pacman -S $missing_std_packages
         else
             echo "[INFO] SKIP | ALREADY INSTALLED"
         end
@@ -195,7 +195,7 @@ switch $argv[1]
         end
 
         if set -q missing_aur_package[1]
-            paru -S --aur $aur_packages
+            paru -S --aur $missing_aur_packages
         else
             echo "[INFO] SKIP | ALREADY INSTALLED"
         end
