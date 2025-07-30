@@ -174,7 +174,7 @@ switch $argv[1]
                 continue
             end
 
-            set -a missing_std_packages $std_packages
+            set -a missing_std_packages $std_package
         end
 
         if set -q missing_std_packages[1]
