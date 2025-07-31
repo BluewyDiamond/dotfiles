@@ -9,6 +9,7 @@ std = [
    "linux-cachyos-lts",
    "wireless-regdb",
 
+   # provided by chwd
    "lib32-opencl-mesa",
    "xf86-video-amdgpu",
 
@@ -69,8 +70,6 @@ target_path = "/usr/local/bin"
 
 [services]
 enable = [
-   "ananicy-cpp",
-
    "getty@tty1",
 
    "systemd-networkd",
@@ -84,4 +83,5 @@ enable = [
    "lactd",
    "ufw",
    "screen_off",
+   "ananicy-cpp",
 ]
