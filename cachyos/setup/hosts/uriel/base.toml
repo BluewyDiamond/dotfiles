@@ -11,6 +11,13 @@ std = [
    "linux-cachyos-lts-nvidia-open",
    "wireless-regdb",
 
+   "intel-gmmlib",
+   "intel-media-driver",
+   "lib32-opencl-nvidia",
+   "libva-nvidia-driver",
+   "opencl-nvidia",
+   "switcheroo-control",
+
    "nvidia-prime",
    "nvidia-settings",
 
