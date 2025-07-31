@@ -12,10 +12,6 @@ aur = [
    # fixes easy anticheat (bug introduced as a result of missing compile options)
    "glibc-eac",
 ]
-std = [
-   # adds AMD Anti-Lag 2 support
-   "mesa-git",
-]
 
 [packages.utilities]
 std = [
