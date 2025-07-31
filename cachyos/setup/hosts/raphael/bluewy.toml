@@ -185,7 +185,7 @@ std = [
 ]
 
 [packages.apps_discord]
-aur = ["equibop-bin"]
+aur = ["equibop-bin", "piper-tts-bin", "piper-voices-en-us"]
 std = ["speech-dispatcher"]
 
 [packages.virtualization]
