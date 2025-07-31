@@ -56,6 +56,15 @@ RouteMetric=600
 owner = "root"
 target = "/etc/systemd/network/21-wireless.network"
 
+[[spawn_files]]
+content = """
+[Resolve]
+DNS=1.1.1.1
+FallbackDNS=1.0.0.1
+"""
+owner = "root"
+target = "/etc/resolved.conf"
+
 [[install_files]]
 operation = "copy"
 owner = "root"
