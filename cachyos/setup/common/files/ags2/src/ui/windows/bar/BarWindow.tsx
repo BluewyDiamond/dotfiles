@@ -7,8 +7,9 @@ import TaskbarBox from "./composables/TaskbarBox";
 import IndicatorsBox from "./composables/IndicatorsBox";
 import TrayBox from "./composables/TrayBox";
 import ControlCenterButton from "./composables/ControlCenterButton";
+import { Accessor } from "ags";
 
-export default function BarWindow(gdkmonitor: Gdk.Monitor) {
+export default function BarWindow(gdkmonitor: Accessor<Gdk.Monitor>) {
    const { TOP, LEFT, RIGHT } = Astal.WindowAnchor;
 
    return (

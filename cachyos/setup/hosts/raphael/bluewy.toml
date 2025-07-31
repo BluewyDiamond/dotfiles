@@ -215,6 +215,18 @@ owner = "bluewy"
 source = "common/files/ags2"
 target_path = "/home/bluewy/.config"
 
+[[install_files]]
+operation="link"
+owner="bluewy"
+source = "common/files/applications/obs.desktop"
+target_path = "/home/bluewy/.local/share/applications"
+
+[[install_files]]
+operation="link"
+owner="bluewy"
+source = "common/files/applications/steam-native.desktop"
+target_path = "/home/bluewy/.local/share/applications"
+
 # [[install_files]]
 # operation = "link"
 # owner = "bluewy"

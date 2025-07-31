@@ -1,11 +1,11 @@
-import { createBinding, For } from "ags";
+import { Accessor, createBinding, For } from "ags";
 import { Astal, Gdk, Gtk } from "ags/gtk4";
 import app from "ags/gtk4/app";
 import AstalNotifd from "gi://AstalNotifd";
 
 const notifd = AstalNotifd.get_default();
 
-export default function (gdkmonitor: Gdk.Monitor) {
+export default function (gdkmonitor: Accessor<Gdk.Monitor>) {
    const notificationsBinding = createBinding(notifd, "notifications");
 
    return (

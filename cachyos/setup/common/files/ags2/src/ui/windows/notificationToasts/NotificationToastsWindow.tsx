@@ -1,4 +1,4 @@
-import { createComputed, createState, For, onCleanup } from "ags";
+import { Accessor, createComputed, createState, For, onCleanup } from "ags";
 import { Astal, Gdk, Gtk } from "ags/gtk4";
 import app from "ags/gtk4/app";
 import { timeout } from "ags/time";
@@ -10,7 +10,7 @@ import Adw from "gi://Adw";
 
 const notifd = AstalNotifd.get_default();
 
-export default function (gdkmonitor: Gdk.Monitor) {
+export default function (gdkmonitor: Accessor<Gdk.Monitor>) {
    const [notificationsState, setNotificationsState] = createState<
       AstalNotifd.Notification[]
    >([]);
