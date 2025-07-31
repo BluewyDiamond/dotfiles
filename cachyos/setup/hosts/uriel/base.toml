@@ -77,9 +77,10 @@ enable = [
    "nvidia-hibernate",
    "switcheroo-control",
 
+   "systemd-timesyncd",
    "NetworkManager",
+
    "ufw",
    "sddm",
-
    "screen_off",
 ]

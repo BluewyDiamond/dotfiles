@@ -79,6 +79,8 @@ enable = [
    "systemd-resolved",
    "iwd",
 
+   "systemd-timesyncd",
+
    "lactd",
    "ufw",
    "screen_off",
