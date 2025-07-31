@@ -11,6 +11,9 @@ std = [
    "linux-cachyos-lts-nvidia-open",
    "wireless-regdb",
 
+   "nvidia-prime",
+   "nvidia-settings",
+
    "iwd",
    "bluez",
 ]
@@ -58,6 +61,12 @@ enable = [
 
    "getty@tty1",
    "acer_battery_limit",
+
+   "nvidia-resume",
+   "nvidia-suspend",
+   "nvidia-powerd",
+   "nvidia-hibernate",
+   "switcheroo-control",
 
    "NetworkManager",
    "ufw",
