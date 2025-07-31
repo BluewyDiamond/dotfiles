@@ -5,7 +5,7 @@ import BarWindow from "./ui/windows/bar/BarWindow.tsx";
 import NotificationToastsWindow from "./ui/windows/notificationToasts/NotificationToastsWindow.tsx";
 import ControlCenterWindow from "./ui/windows/controlCenter/ControlCenterWindow.tsx";
 import AstalHyprland from "gi://AstalHyprland";
-import { Accessor, createBinding, createComputed } from "gnim";
+import { Accessor, createBinding, createComputed } from "ags";
 
 const hyprland = AstalHyprland.get_default();
 

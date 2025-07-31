@@ -13,13 +13,13 @@ std = [
    "linux-cachyos-lts-nvidia-open",
    "wireless-regdb",
 
+   # provide by chwd
    "intel-gmmlib",
    "intel-media-driver",
    "lib32-opencl-nvidia",
    "libva-nvidia-driver",
    "opencl-nvidia",
    "switcheroo-control",
-
    "nvidia-prime",
    "nvidia-settings",
 
@@ -66,21 +66,23 @@ target_path = "/usr/local/bin"
 
 [services]
 enable = [
-   "ananicy-cpp",
-
    "getty@tty1",
-   "acer_battery_limit",
 
+   # provided by chwd
    "nvidia-resume",
    "nvidia-suspend",
    "nvidia-powerd",
    "nvidia-hibernate",
    "switcheroo-control",
 
-   "systemd-timesyncd",
    "NetworkManager",
+   "systemd-resolved", # this or dnsmasq
+
+   "systemd-timesyncd",
 
    "ufw",
-   "sddm",
+   "acer_battery_limit",
    "screen_off",
+   "sddm",
+   "ananicy-cpp",
 ]
