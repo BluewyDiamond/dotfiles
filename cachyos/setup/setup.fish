@@ -187,14 +187,14 @@ switch $argv[1]
         set missing_aur_packages
 
         for aur_package in $aur_packages
-            if pacman -q $aur_package 2&>/dev/null
+            if pacman -Q $aur_package 2&>/dev/null
                 continue
             end
 
             set -a missing_aur_packages $aur_package
         end
 
-        if set -q missing_aur_package[1]
+        if set -q missing_aur_packages[1]
             paru -S --aur $missing_aur_packages
         else
             echo "[INFO] SKIP | ALREADY INSTALLED"
