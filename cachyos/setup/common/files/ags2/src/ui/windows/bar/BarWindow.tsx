@@ -9,7 +9,7 @@ import TrayBox from "./composables/TrayBox";
 import ControlCenterButton from "./composables/ControlCenterButton";
 import { Accessor } from "ags";
 
-export default function BarWindow(gdkmonitor: Accessor<Gdk.Monitor>) {
+export default function BarWindow({ gdkmonitor }: { gdkmonitor: Gdk.Monitor }) {
    const { TOP, LEFT, RIGHT } = Astal.WindowAnchor;
 
    return (

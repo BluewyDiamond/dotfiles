@@ -2,7 +2,7 @@ import { build } from "esbuild";
 import { sassPlugin } from "esbuild-sass-plugin";
 
 await build({
-   entryPoints: ["./src/main.ts"],
+   entryPoints: ["./src/main.tsx"],
    outdir: "./build",
 
    bundle: true,
