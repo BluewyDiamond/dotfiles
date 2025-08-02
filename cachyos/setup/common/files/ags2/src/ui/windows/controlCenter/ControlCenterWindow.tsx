@@ -1,4 +1,4 @@
-import { Accessor, createBinding, For } from "ags";
+import { Accessor, createBinding, For, onCleanup } from "ags";
 import { Astal, Gdk, Gtk } from "ags/gtk4";
 import app from "ags/gtk4/app";
 import AstalNotifd from "gi://AstalNotifd";
@@ -10,6 +10,7 @@ export default function ({ gdkmonitor }: { gdkmonitor: Gdk.Monitor }) {
 
    return (
       <window
+         $={(self) => onCleanup(() => self.destroy())}
          gdkmonitor={gdkmonitor}
          name="ags_control_center"
          namespace="ags_control_center"

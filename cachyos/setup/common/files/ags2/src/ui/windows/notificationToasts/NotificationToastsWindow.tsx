@@ -50,6 +50,7 @@ export default function ({ gdkmonitor }: { gdkmonitor: Gdk.Monitor }) {
 
    return (
       <window
+         $={(self) => onCleanup(() => self.destroy())}
          gdkmonitor={gdkmonitor}
          name="ags_notification_toasts"
          namespace="ags_notification_toasts"

@@ -7,13 +7,14 @@ import TaskbarBox from "./composables/TaskbarBox";
 import IndicatorsBox from "./composables/IndicatorsBox";
 import TrayBox from "./composables/TrayBox";
 import ControlCenterButton from "./composables/ControlCenterButton";
-import { Accessor } from "ags";
+import { Accessor, onCleanup } from "ags";
 
 export default function BarWindow({ gdkmonitor }: { gdkmonitor: Gdk.Monitor }) {
    const { TOP, LEFT, RIGHT } = Astal.WindowAnchor;
 
    return (
       <window
+         $={(self) => onCleanup(() => self.destroy())}
          gdkmonitor={gdkmonitor}
          name="ags_bar"
          namespace="ags_bar"

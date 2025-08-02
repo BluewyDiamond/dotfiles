@@ -5,7 +5,14 @@ import BarWindow from "./ui/windows/bar/BarWindow.tsx";
 import NotificationToastsWindow from "./ui/windows/notificationToasts/NotificationToastsWindow.tsx";
 import ControlCenterWindow from "./ui/windows/controlCenter/ControlCenterWindow.tsx";
 import AstalHyprland from "gi://AstalHyprland";
-import { createBinding, createExternal, createState, For, This } from "ags";
+import {
+   createBinding,
+   createExternal,
+   createState,
+   For,
+   onCleanup,
+   This,
+} from "ags";
 import { timeout } from "ags/time.ts";
 import Gtk from "gi://Gtk";
 import Gdk from "gi://Gdk";
@@ -220,10 +227,7 @@ function five() {
    });
 
    return (
-      <For
-         each={monitorsExternal}
-         cleanup={(window) => (window as Gtk.Window).destroy()}
-      >
+      <For each={monitorsExternal}>
          {(monitor) => (
             <This this={app}>
                <BarWindow gdkmonitor={monitor} />
