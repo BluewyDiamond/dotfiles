@@ -5,10 +5,17 @@ import BarWindow from "./ui/windows/bar/BarWindow.tsx";
 import NotificationToastsWindow from "./ui/windows/notificationToasts/NotificationToastsWindow.tsx";
 import ControlCenterWindow from "./ui/windows/controlCenter/ControlCenterWindow.tsx";
 import AstalHyprland from "gi://AstalHyprland";
-import { createBinding, createState, For } from "ags";
+import {
+   createBinding,
+   createConnection,
+   createContext,
+   createState,
+   For,
+} from "ags";
 import { timeout } from "ags/time.ts";
 import Gtk from "gi://Gtk";
 import Gdk from "gi://Gdk?version=4.0";
+import Adw from "gi://Adw?version=1";
 
 app.start({
    css: style,
@@ -93,30 +100,22 @@ function two() {
 
    const onMonitorsChanged = () => {
       const monitorsLength = monitors.get_n_items();
-      const monitors2: Gdk.Monitor[] = [];
+      const newMonitors: Gdk.Monitor[] = [];
 
       for (let i = 0; i < monitorsLength; i++) {
          const monitor = monitors.get_item(i);
+         if (monitor === null) continue;
+         if (!(monitor instanceof Gdk.Monitor)) continue;
 
-         if (monitor === null) {
-            console.log(`index: ${i} is invalid`);
-            continue;
-         }
-
-         if (!(monitor instanceof Gdk.Monitor)) {
-            console.log(`index: ${i} is not instace of Gdk.Monitor`);
-            continue;
-         }
-
-         monitors2.push(monitor);
+         newMonitors.push(monitor);
       }
 
       timeout(2000, () => {
-         setMonitorsState(monitors2);
+         setMonitorsState(newMonitors);
       });
    };
 
-   monitors.connect("items-changed", () => {
+   const itemsChangedSignalID = monitors.connect("items-changed", () => {
       onMonitorsChanged();
    });
 
