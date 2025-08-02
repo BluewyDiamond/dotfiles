@@ -1,0 +1,227 @@
+// [Inputs & Outputs]
+//
+input {
+   keyboard {
+      xkb {
+         layout "bluewy"
+         variant "colemak_dh_wide_custom_eu_iso"
+      }
+
+      numlock
+   }
+
+   touchpad {
+      tap
+      natural-scroll
+   }
+
+   mouse {
+      accel-profile "flat"
+      accel-speed -0.75
+   }
+}
+
+output "HDMI-A-2" {
+   mode "1920x1080@239.964"
+}
+
+// [Behaviours & Aesthetics]
+//
+overview {
+   backdrop-color "#1E2127"
+}
+
+window-rule {
+   geometry-corner-radius 4
+   clip-to-geometry true
+}
+
+
+layout {
+   background-color "#1E2127"
+
+   gaps 16
+
+   center-focused-column "never"
+
+   preset-column-widths {
+      proportion 0.33333
+      proportion 0.5
+      proportion 0.66667
+   }
+
+   default-column-width { proportion 0.5; }
+
+   focus-ring {
+      width 4
+      active-color "#7fc8ff"
+      inactive-color "#505050"
+   }
+
+   border {
+      off
+
+      width 4
+      active-color "#ffc87f"
+      inactive-color "#505050"
+      urgent-color "#9b0000"
+   }
+}
+
+screenshot-path "~/media/screenshots/%Y-%m-%d_%H-%M-%S.png"
+
+// static workspaces, lets go!
+workspace "one"
+workspace "two"
+workspace "three"
+workspace "four"
+workspace "eight"
+workspace "nine"
+workspace "zero"
+
+// [Binds]
+//
+binds {
+   Mod+Shift+Slash { show-hotkey-overlay; }
+
+   Mod+T hotkey-overlay-title="Open a Terminal: wezterm" { spawn "wezterm"; }
+   Mod+D hotkey-overlay-title="Open App Launcher: fuzzel" { spawn "fuzzel"; }
+   Super+Alt+L hotkey-overlay-title="Lock the Screen: TODO!" { spawn "swaylock"; }
+
+   XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"; }
+   XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"; }
+   XF86AudioMute        allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
+   XF86AudioMicMute     allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
+
+   Mod+O repeat=false { toggle-overview; }
+
+   Mod+Q { close-window; }
+
+   Mod+Left  { focus-column-left; }
+   Mod+Down  { focus-window-down; }
+   Mod+Up    { focus-window-up; }
+   Mod+Right { focus-column-right; }
+   Mod+N     { focus-column-left; }
+   Mod+E     { focus-window-down; }
+   Mod+U     { focus-window-up; }
+   Mod+I     { focus-column-right; }
+
+   Mod+Ctrl+Left  { move-column-left; }
+   Mod+Ctrl+Down  { move-window-down; }
+   Mod+Ctrl+Up    { move-window-up; }
+   Mod+Ctrl+Right { move-column-right; }
+   Mod+Ctrl+N     { move-column-left; }
+   Mod+Ctrl+E     { move-window-down; }
+   Mod+Ctrl+U     { move-window-up; }
+   Mod+Ctrl+I     { move-column-right; }
+
+   Mod+Home { focus-column-first; }
+   Mod+End  { focus-column-last; }
+   Mod+Ctrl+Home { move-column-to-first; }
+   Mod+Ctrl+End  { move-column-to-last; }
+
+   Mod+Shift+Left  { focus-monitor-left; }
+   Mod+Shift+Down  { focus-monitor-down; }
+   Mod+Shift+Up    { focus-monitor-up; }
+   Mod+Shift+Right { focus-monitor-right; }
+   Mod+Shift+N     { focus-monitor-left; }
+   Mod+Shift+E     { focus-monitor-down; }
+   Mod+Shift+U     { focus-monitor-up; }
+   Mod+Shift+I     { focus-monitor-right; }
+
+   Mod+Shift+Ctrl+Left  { move-column-to-monitor-left; }
+   Mod+Shift+Ctrl+Down  { move-column-to-monitor-down; }
+   Mod+Shift+Ctrl+Up    { move-column-to-monitor-up; }
+   Mod+Shift+Ctrl+Right { move-column-to-monitor-right; }
+   Mod+Shift+Ctrl+N     { move-column-to-monitor-left; }
+   Mod+Shift+Ctrl+E     { move-column-to-monitor-down; }
+   Mod+Shift+Ctrl+U     { move-column-to-monitor-up; }
+   Mod+Shift+Ctrl+I     { move-column-to-monitor-right; }
+
+   Mod+Page_Down      { focus-workspace-down; }
+   Mod+Page_Up        { focus-workspace-up; }
+   Mod+Y              { focus-workspace-down; }
+   Mod+L              { focus-workspace-up; }
+   Mod+Ctrl+Page_Down { move-column-to-workspace-down; }
+   Mod+Ctrl+Page_Up   { move-column-to-workspace-up; }
+   Mod+Ctrl+Y         { move-column-to-workspace-down; }
+   Mod+Ctrl+L         { move-column-to-workspace-up; }
+
+
+
+   Mod+Shift+Page_Down { move-workspace-down; }
+   Mod+Shift+Page_Up   { move-workspace-up; }
+   Mod+Shift+Y         { move-workspace-down; }
+   Mod+Shift+L         { move-workspace-up; }
+
+   Mod+WheelScrollDown      cooldown-ms=150 { focus-workspace-down; }
+   Mod+WheelScrollUp        cooldown-ms=150 { focus-workspace-up; }
+   Mod+Ctrl+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
+   Mod+Ctrl+WheelScrollUp   cooldown-ms=150 { move-column-to-workspace-up; }
+
+   Mod+WheelScrollRight      { focus-column-right; }
+   Mod+WheelScrollLeft       { focus-column-left; }
+   Mod+Ctrl+WheelScrollRight { move-column-right; }
+   Mod+Ctrl+WheelScrollLeft  { move-column-left; }
+
+   Mod+Shift+WheelScrollDown      { focus-column-right; }
+   Mod+Shift+WheelScrollUp        { focus-column-left; }
+   Mod+Ctrl+Shift+WheelScrollDown { move-column-right; }
+   Mod+Ctrl+Shift+WheelScrollUp   { move-column-left; }
+
+   Mod+1 { focus-workspace "one"; }
+   Mod+2 { focus-workspace "two"; }
+   Mod+3 { focus-workspace "three"; }
+   Mod+4 { focus-workspace "four"; }
+
+   Mod+8 { focus-workspace "eight"; }
+   Mod+9 { focus-workspace "nine"; }
+   Mod+0 { focus-workspace "zero"; }
+   Mod+Ctrl+1 { move-column-to-workspace "one"; }
+   Mod+Ctrl+2 { move-column-to-workspace "two"; }
+   Mod+Ctrl+3 { move-column-to-workspace "three"; }
+   Mod+Ctrl+4 { move-column-to-workspace "four"; }
+   Mod+Ctrl+8 { move-column-to-workspace "eight"; }
+   Mod+Ctrl+9 { move-column-to-workspace "nine"; }
+   Mod+Ctrl+0 { move-column-to-workspace "zero"; }
+
+   Mod+BracketLeft  { consume-or-expel-window-left; }
+   Mod+BracketRight { consume-or-expel-window-right; }
+
+   Mod+Comma  { consume-window-into-column; }
+   Mod+Period { expel-window-from-column; }
+
+   Mod+R { switch-preset-column-width; }
+   Mod+Shift+R { switch-preset-window-height; }
+   Mod+Ctrl+R { reset-window-height; }
+   Mod+F { maximize-column; }
+   Mod+Shift+F { fullscreen-window; }
+
+   Mod+Ctrl+F { expand-column-to-available-width; }
+
+   Mod+C { center-column; }
+
+   Mod+Ctrl+C { center-visible-columns; }
+
+   Mod+Minus { set-column-width "-10%"; }
+   Mod+Equal { set-column-width "+10%"; }
+
+   Mod+Shift+Minus { set-window-height "-10%"; }
+   Mod+Shift+Equal { set-window-height "+10%"; }
+
+   Mod+V       { toggle-window-floating; }
+   Mod+Shift+V { switch-focus-between-floating-and-tiling; }
+
+   Mod+W { toggle-column-tabbed-display; }
+
+   Print { screenshot; }
+   Ctrl+Print { screenshot-screen; }
+   Alt+Print { screenshot-window; }
+
+   Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
+
+   Mod+Shift+Escape { quit; }
+   Ctrl+Alt+Delete { quit; }
+
+   Mod+Shift+P { power-off-monitors; }
+}
