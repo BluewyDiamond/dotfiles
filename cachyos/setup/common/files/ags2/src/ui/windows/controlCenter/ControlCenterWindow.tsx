@@ -5,7 +5,7 @@ import AstalNotifd from "gi://AstalNotifd";
 
 const notifd = AstalNotifd.get_default();
 
-export default function (gdkmonitor: Accessor<Gdk.Monitor>) {
+export default function ({ gdkmonitor }: { gdkmonitor: Gdk.Monitor }) {
    const notificationsBinding = createBinding(notifd, "notifications");
 
    return (

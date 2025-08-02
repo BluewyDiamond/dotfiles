@@ -10,7 +10,7 @@ import Adw from "gi://Adw";
 
 const notifd = AstalNotifd.get_default();
 
-export default function (gdkmonitor: Accessor<Gdk.Monitor>) {
+export default function ({ gdkmonitor }: { gdkmonitor: Gdk.Monitor }) {
    const [notificationsState, setNotificationsState] = createState<
       AstalNotifd.Notification[]
    >([]);
