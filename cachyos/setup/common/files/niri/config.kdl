@@ -40,6 +40,8 @@ window-rule {
 layout {
    background-color "#1E2127"
 
+   // does not take in account the border width
+   // example: gaps = 16 border = 4, overall 16 - 4 = 12
    gaps 16
 
    center-focused-column "never"
@@ -54,18 +56,13 @@ layout {
 
    focus-ring {
       width 4
-      active-color "#7fc8ff"
-      inactive-color "#505050"
+      active-color "#9acbfa"
+      inactive-color "#8e9099"
    }
+}
 
-   border {
-      off
-
-      width 4
-      active-color "#ffc87f"
-      inactive-color "#505050"
-      urgent-color "#9b0000"
-   }
+hotkey-overlay {
+    skip-at-startup
 }
 
 screenshot-path "~/media/screenshots/%Y-%m-%d_%H-%M-%S.png"
@@ -225,3 +222,7 @@ binds {
 
    Mod+Shift+P { power-off-monitors; }
 }
+
+// [Autostart]
+//
+spawn-at-startup "$HOME/.config/ags2/cli.fish drun"
