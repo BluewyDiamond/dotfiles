@@ -11,11 +11,27 @@ import { NotificationToastBox } from "../composables/NotificationToastBox";
 const notifd = AstalNotifd.get_default();
 
 export default function ({ gdkmonitor }: { gdkmonitor: Gdk.Monitor }) {
+   let thisWindow: Astal.Window;
    const notificationsBinding = createBinding(notifd, "notifications");
+
+   function onKey(
+      _e: Gtk.EventControllerKey,
+      keyval: number,
+      _: number,
+      mod: number
+   ) {
+      if (keyval === Gdk.KEY_Escape) {
+         thisWindow.visible = false;
+         return;
+      }
+   }
 
    return (
       <window
-         $={(self) => onCleanup(() => self.destroy())}
+         $={(self) => {
+            thisWindow = self;
+            onCleanup(() => self.destroy());
+         }}
          gdkmonitor={gdkmonitor}
          name="ags_control_center"
          namespace="ags_control_center"
@@ -27,8 +43,11 @@ export default function ({ gdkmonitor }: { gdkmonitor: Gdk.Monitor }) {
             Astal.WindowAnchor.LEFT
          }
          exclusivity={Astal.Exclusivity.EXCLUSIVE}
+         keymode={Astal.Keymode.EXCLUSIVE}
          application={app}
       >
+         <Gtk.EventControllerKey onKeyPressed={onKey} />
+
          <box>
             <box cssClasses={["quick-settings-box"]} hexpand>
                <label label="placeholder" />
@@ -39,22 +58,32 @@ export default function ({ gdkmonitor }: { gdkmonitor: Gdk.Monitor }) {
                hexpand
                orientation={Gtk.Orientation.VERTICAL}
             >
-               <button
-                  onClicked={() =>
-                     notifd.notifications.forEach((notification) =>
-                        notification.dismiss()
-                     )
-                  }
-               >
-                  <label label="Clear" />
-               </button>
+               <box>
+                  <button
+                     cssClasses={["notifications-clear-button"]}
+                     hexpand
+                     halign={Gtk.Align.CENTER}
+                     onClicked={
+                        () =>
+                           notifd.notifications.forEach((notification) =>
+                              notification.dismiss()
+                           )
+
+                        // this wrapper box stops it from the button itself expanding
+                     }
+                  >
+                     <label label="Clear" />
+                  </button>
+               </box>
 
                <For each={notificationsBinding}>
                   {(notification) => (
                      <box orientation={Gtk.Orientation.VERTICAL}>
                         <NotificationToastBox
                            notification={notification}
-                           nuke={() => {}}
+                           nuke={() => {
+                              notification.dismiss();
+                           }}
                         />
                      </box>
                   )}

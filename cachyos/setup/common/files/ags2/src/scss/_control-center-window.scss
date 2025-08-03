@@ -3,44 +3,58 @@
 
 window.control-center-window {
    background: $surface;
+   margin: 12px;
+   border: 4px solid $outline;
+   border-radius: $border-radius;
 
-   .notification-toast-box {
+   .notifications-clear-button {
       background: $surface;
-      border: 4px solid $outline-variant;
       border-radius: $border-radius;
-
+      background: $surface_container;
+      padding: $spacing-small;
       margin-bottom: $spacing-medium;
+   }
 
-      .notification-header-box {
-         padding: $spacing-small;
+   .notifications-box {
+      background: $surface;
 
-         .notification-close-button {
-            min-width: 10px;
-            background: red;
+      .notification-toast-box {
+         background: $surface_container;
+         border-radius: $border-radius;
+
+         margin-bottom: $spacing-medium;
+
+         .notification-header-box {
+            padding: $spacing-small;
+
+            .notification-close-button {
+               min-width: 10px;
+               background: red;
+            }
          }
-      }
 
-      .notification-content-box {
-         padding: $spacing-small;
+         .notification-content-box {
+            padding: $spacing-small;
 
-         .notification-body-image {
-            -gtk-icon-size: 100px;
+            .notification-body-image {
+               -gtk-icon-size: 100px;
+            }
+
+            .notification-body-label {
+               background: $surface-container;
+            }
          }
 
-         .notification-body-label {
-            background: $surface-container;
-         }
-      }
+         .notification-action-area-box {
+            padding: $spacing-small;
 
-      .notification-action-area-box {
-         padding: $spacing-small;
+            .notification-action-button {
+               background: $surface-container;
+               margin-right: $spacing-medium;
 
-         .notification-action-button {
-            background: $surface-container;
-            margin-right: $spacing-medium;
-
-            &:last-child {
-               margin-right: 0;
+               &:last-child {
+                  margin-right: 0;
+               }
             }
          }
       }
