@@ -36,7 +36,6 @@ window-rule {
    clip-to-geometry true
 }
 
-
 layout {
    background-color "#1E2127"
 
@@ -193,6 +192,7 @@ binds {
    Mod+Ctrl+R { reset-window-height; }
    Mod+F { maximize-column; }
    Mod+Shift+F { fullscreen-window; }
+   Mod+Shift+Ctrl+F { toggle-windowed-fullscreen; }
 
    Mod+Ctrl+F { expand-column-to-available-width; }
 
