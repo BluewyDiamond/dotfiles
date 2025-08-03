@@ -38,13 +38,14 @@ window-rule {
    clip-to-geometry true
 }
 
+window-rule {
+    match app-id=".*"
+    open-fullscreen false
+}
+
 layout {
    background-color "#1E2127"
-
-   // does not take in account the border width
-   // example: gaps = 16 border = 4, overall 16 - 4 = 12
-   gaps 16
-
+   gaps 12
    center-focused-column "never"
 
    preset-column-widths {
@@ -56,9 +57,18 @@ layout {
    default-column-width { proportion 0.5; }
 
    focus-ring {
+      off
       width 4
       active-color "#9acbfa"
       inactive-color "#8e9099"
+   }
+
+   border {
+      // off
+      width 4
+      active-color "#9acbfa"
+      inactive-color "#8e9099"
+      urgent-color "#ecc06c"
    }
 }
 
@@ -223,6 +233,15 @@ binds {
    Ctrl+Alt+Delete { quit; }
 
    Mod+Shift+P { power-off-monitors; }
+}
+
+// [Environment Variables]
+//
+environment {
+   SDL_VIDEODRIVER "wayland,x11"
+   CLUTTER_BACKEND "wayland"
+   GDK_BACKEND "wayland,x11,*"
+   QT_QPA_PLATFORM "wayland;xcb"
 }
 
 // [Autostart]
