@@ -46,6 +46,7 @@ std = [
 ]
 
 [packages.niri_session]
+std = ["xdg-desktop-portal-gnome"]
 aur = ["niri-git", "xwayland-satellite-git"]
 
 [packages.hyprland_session]
