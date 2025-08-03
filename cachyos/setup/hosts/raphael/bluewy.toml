@@ -45,6 +45,9 @@ std = [
    "fastfetch",
 ]
 
+[packages.niri_session]
+aur = ["niri-git", "xwayland-satellite-git"]
+
 [packages.hyprland_session]
 aur = [
    # stable version is broken on arch linux
@@ -216,14 +219,14 @@ source = "common/files/ags2"
 target_path = "/home/bluewy/.config"
 
 [[install_files]]
-operation="link"
-owner="bluewy"
+operation = "link"
+owner = "bluewy"
 source = "common/files/applications/obs.desktop"
 target_path = "/home/bluewy/.local/share/applications"
 
 [[install_files]]
-operation="link"
-owner="bluewy"
+operation = "link"
+owner = "bluewy"
 source = "common/files/applications/steam-native.desktop"
 target_path = "/home/bluewy/.local/share/applications"
 
