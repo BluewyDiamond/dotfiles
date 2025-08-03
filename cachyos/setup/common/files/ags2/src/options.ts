@@ -40,12 +40,12 @@ export default {
             screenshare: icons.recorder.screencast,
             notification: icons.notification.normal,
          },
-      },
 
-      notificationsIndicator: {
-         icons: {
-            notificationNormal: icons.notification.normal,
-            notificationNoisy: icons.notification.noisy,
+         notifications: {
+            icons: {
+               notificationNormal: icons.notification.normal,
+               notificationNoisy: icons.notification.noisy,
+            },
          },
       },
    },

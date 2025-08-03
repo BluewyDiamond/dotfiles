@@ -2,9 +2,11 @@ import { createBinding, createComputed, With } from "ags";
 import AstalPowerProfiles from "gi://AstalPowerProfiles";
 import AstalWp from "gi://AstalWp";
 import options from "../../../../options";
+import AstalNotifd from "gi://AstalNotifd";
 
 const powerprofiles = AstalPowerProfiles.get_default();
 const wp = AstalWp.get_default();
+const notifd = AstalNotifd.get_default();
 
 export default function () {
    // powerprofile indicator state
@@ -47,6 +49,7 @@ export default function () {
    }
 
    const speakerVolumeBinding = createBinding(speaker, "volume");
+   const notificationsBinding = createBinding(notifd, "notifications");
 
    return (
       <box cssClasses={["indicators-box"]}>
@@ -126,6 +129,21 @@ export default function () {
                }
 
                return <image iconName={iconName} />;
+            }}
+         </With>
+
+         <With value={notificationsBinding}>
+            {(notifications) => {
+               if (notifications.length > 0) {
+                  return (
+                     <image
+                        iconName={
+                           options.bar.indicators.notifications.icons
+                              .notificationNoisy
+                        }
+                     />
+                  );
+               }
             }}
          </With>
       </box>
