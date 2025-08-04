@@ -36,11 +36,7 @@ overview {
 window-rule {
    geometry-corner-radius 4
    clip-to-geometry true
-}
-
-window-rule {
-    match app-id=".*"
-    open-fullscreen false
+   open-fullscreen false
 }
 
 layout {
@@ -280,3 +276,16 @@ spawn-at-startup  "fish" "-c" "$HOME/.config/ags2/cli.fish run & disown"
 // idle listeners
 spawn-at-startup "fish" "-c" "pidof hypridle || hypridle & disown"
 spawn-at-startup "fish" "-c" "pidof wayland-pipewire-idle-inhibit || wayland-pipewire-idle-inhibit & disown"
+
+// polkit
+spawn-at-startup "fish" "-c" "pidof polkit-gnome-authentication-agent-1 || /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 & disown"
+
+// clipboard
+spawn-at-startup "fish" "-c" "pidof wl-paste || wl-paste --type text --watch cliphist store && wl-paste --type image --watch cliphist store"
+
+// gtk4 rice
+spawn-at-startup "gsettings" "set" "org.gnome.desktop.interface" "gtk-theme" "one_dark_adwaita"
+spawn-at-startup "gsettings" "set" "org.gnome.desktop.interface" "icon-theme" "Sweet-Rainbow"
+spawn-at-startup "gsettings" "set" "org.gnome.desktop.interface" "cursor-theme" "Bibata-Modern-Classic"
+spawn-at-startup "gsettings" "set" "org.gnome.desktop.interface" "cursor-size" "24"
+spawn-at-startup "gsettings" "set" "org.gnome.desktop.interface" "color-scheme" "prefer-dark"
