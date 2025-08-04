@@ -253,10 +253,10 @@ environment {
 
    // XDG Paths
    //
-   XDG_CONFIG_HOME "$HOME/.config"
-   XDG_DATA_HOME "$HOME/.local/share"
-   XDG_STATE_HOME "$HOME/.local/state"
-   XDG_CACHE_HOME "$HOME/.cache"
+   XDG_CONFIG_HOME "/home/bluewy/.config"
+   XDG_DATA_HOME "/home/bluewy/.local/share"
+   XDG_STATE_HOME "/home/bluewy/.local/state"
+   XDG_CACHE_HOME "/home/bluewy/.cache"
 
    // rice
    //
@@ -271,4 +271,4 @@ environment {
 //
 spawn-at-startup  "fish" "-c" "$HOME/.config/ags2/cli.fish run & disown"
 spawn-at-startup "fish" "-c" "pidof hypridle || hypridle & disown"
-// spawn-at-startup "fish" "-c" "$HOME/.config/scripts/log_notifications.sh & disown"
+spawn-at-startup "fish" "-c" "pidof wayland-pipewire-idle-inhibit || wayland-pipewire-idle-inhibit & disown"
