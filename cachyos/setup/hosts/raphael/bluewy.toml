@@ -15,7 +15,6 @@ aur = [
 
 [packages.utilities]
 std = [
-
    #  monitoring
    "bottom",
    "bandwhich",
@@ -31,7 +30,7 @@ std = [
    "downgrade",
 ]
 
-[packages.utilities_nvim]
+[packages.neovim]
 aur = ["fish-lsp-git"]
 std = ["neovim", "stylua", "ripgrep", "fzf", "prettier", "eslint_d"]
 
