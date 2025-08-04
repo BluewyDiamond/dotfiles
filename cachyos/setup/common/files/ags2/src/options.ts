@@ -4,6 +4,10 @@ export default {
    bar: {
       workspaces: { ids: [1, 2, 3, 4, 8, 9, 10] },
 
+      niriWorkspaces: {
+         names: ["one", "two", "three", "four", "eight", "nine", "zero"],
+      },
+
       taskbar: {
          flat: false,
       },

@@ -5,6 +5,8 @@ import IndicatorsBox from "./composables/IndicatorsBox";
 import TrayBox from "./composables/TrayBox";
 import ControlCenterButton from "./composables/ControlCenterButton";
 import { Accessor, onCleanup } from "ags";
+import NiriStaticWorkspacesBox from "./composables/NiriStaticWorkspacesBox";
+import NiriTaskbarBox from "./composables/NiriTaskbarBox";
 
 export default function BarWindow({ gdkmonitor }: { gdkmonitor: Gdk.Monitor }) {
    const { TOP, LEFT, RIGHT } = Astal.WindowAnchor;
@@ -22,7 +24,10 @@ export default function BarWindow({ gdkmonitor }: { gdkmonitor: Gdk.Monitor }) {
          visible
       >
          <centerbox>
-            <box $type="start"></box>
+            <box $type="start">
+               <NiriStaticWorkspacesBox />
+               <NiriTaskbarBox />
+            </box>
 
             <centerbox $type="center">
                <box $type="start"></box>
