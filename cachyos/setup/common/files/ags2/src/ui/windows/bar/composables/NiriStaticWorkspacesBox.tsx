@@ -24,7 +24,8 @@ function WorkspaceLabel({ workspaceName }: { workspaceName: string }) {
       .get_workspaces()
       .find((workspace) => workspace.name === workspaceName);
 
-   if (workspace === undefined) return;
+   if (workspace === undefined)
+      return <label cssClasses={["workspace-label"]} label={workspaceName} />;
 
    const urgentWorkspaceBinding = createConnection(0, [
       workspace,
