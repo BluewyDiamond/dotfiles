@@ -272,6 +272,10 @@ environment {
    // other
    //
    EDITOR "nvim"
+
+   // fixes
+   //
+   _JAVA_AWT_WM_NONREPARENTING "1"
 }
 
 // [Autostart]
