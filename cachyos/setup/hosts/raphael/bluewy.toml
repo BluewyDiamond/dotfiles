@@ -45,41 +45,28 @@ std = [
    "fastfetch",
 ]
 
-[packages.niri_session]
-std = ["xdg-desktop-portal-gnome"]
-aur = ["niri-git", "xwayland-satellite-git"]
-
-[packages.hyprland_session]
-aur = [
-   # stable version is broken on arch linux
-   "wezterm-git",
-   "wayshot",
-]
+[packages.audio]
 std = [
    "wireplumber",
    "pipewire",
    "pipewire-alsa",
    "pipewire-pulse",
    "pipewire-jack",
+]
 
-   "hyprland",
-   "hyprland-protocols",
-   "hyprland-qtutils",
-   "hyprpolkitagent",
-
-   "xdg-desktop-portal-hyprland",
-   "xdg-desktop-portal-gtk",
-
+[packages.wayland]
+aur = [
+   # stable version is broken on arch linux
+   "wezterm-git",
+   "wayshot",
+]
+std = [
    "hyprlock",
    "hypridle",
-
    "hyprpicker",
    "wayland-pipewire-idle-inhibit",
 
-   "kwalletmanager",
-   "kwallet",
-   "kwallet-pam",
-   "ksshaskpass",
+   "polkit-gnome",
 
    "fuzzel",
    "slurp",
@@ -88,7 +75,7 @@ std = [
    "cliphist",
 ]
 
-[packages.hyprland_widgets]
+[packages.wayland.widgets]
 aur = [
    "libastal-io-git",
    "libastal-git",
@@ -107,7 +94,7 @@ aur = [
 ]
 std = ["dart-sass", "fd", "bun-bin", "gjs", "gtk4-layer-shell"]
 
-[packages.hyprland_rice]
+[packages.wayland.rice]
 aur = [
    "qt6ct-kde",
    "qt5ct-kde",
@@ -124,6 +111,22 @@ std = [
 
    "nwg-look",
 ]
+
+[packages.wayland.wm.niri]
+aur = ["niri-git", "xwayland-satellite-git"]
+std = ["xdg-desktop-portal-gnome"]
+
+[packages.wayland.wm.hyprland]
+
+std = [
+   "hyprland",
+   "hyprland-protocols",
+   "hyprland-qtutils",
+
+   "xdg-desktop-portal-hyprland",
+   "xdg-desktop-portal-gtk",
+]
+
 
 [packages.apps]
 aur = [
@@ -326,6 +329,12 @@ target_path = "/home/bluewy/.config"
 [[install_files]]
 operation = "link"
 owner = "bluewy"
+source = "common/files/niri"
+target_path = "/home/bluewy/.config"
+
+[[install_files]]
+operation = "link"
+owner = "bluewy"
 source = "common/files/nvim"
 target_path = "/home/bluewy/.config"
 
@@ -334,6 +343,12 @@ operation = "link"
 owner = "bluewy"
 source = "common/files/pipewire"
 target_path = "/home/bluewy/.config"
+
+[[install_files]]
+operation = "link"
+owner = "bluewy"
+source = "common/files/scripts"
+target_path = "/home/bluewy/.local/scripts"
 
 [[install_files]]
 operation = "link"

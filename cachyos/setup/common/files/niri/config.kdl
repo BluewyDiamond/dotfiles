@@ -244,12 +244,31 @@ binds {
 // [Environment Variables]
 //
 environment {
+   // tell toolkits to use wayland if available
+   //
    SDL_VIDEODRIVER "wayland,x11"
    CLUTTER_BACKEND "wayland"
    GDK_BACKEND "wayland,x11,*"
    QT_QPA_PLATFORM "wayland;xcb"
+
+   // XDG Paths
+   //
+   XDG_CONFIG_HOME "$HOME/.config"
+   XDG_DATA_HOME "$HOME/.local/share"
+   XDG_STATE_HOME "$HOME/.local/state"
+   XDG_CACHE_HOME "$HOME/.cache"
+
+   // rice
+   //
+   QTA_QPA_PLATFORMTHEME "qt6ct"
+
+   // other
+   //
+   EDITOR "nvim"
 }
 
 // [Autostart]
 //
-spawn-at-startup "/home/bluewy/.config/ags2/cli.fish" "drun"
+spawn-at-startup  "fish" "-c" "$HOME/.config/ags2/cli.fish run & disown"
+spawn-at-startup "fish" "-c" "pidof hypridle || hypridle & disown"
+// spawn-at-startup "fish" "-c" "$HOME/.config/scripts/log_notifications.sh & disown"
