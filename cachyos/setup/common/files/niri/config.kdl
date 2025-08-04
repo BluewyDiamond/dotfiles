@@ -90,19 +90,23 @@ workspace "zero"
 // [Binds]
 //
 binds {
+   // WM Binds
+   //
    Mod+Shift+Slash { show-hotkey-overlay; }
-
-   Mod+T hotkey-overlay-title="Open a Terminal: wezterm" { spawn "wezterm"; }
-   Mod+D hotkey-overlay-title="Open App Launcher: fuzzel" { spawn "fuzzel"; }
-   Super+Alt+L hotkey-overlay-title="Lock the Screen: TODO!" { spawn "swaylock"; }
-
-   XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"; }
-   XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"; }
-   XF86AudioMute        allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
-   XF86AudioMicMute     allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
-
    Mod+O repeat=false { toggle-overview; }
 
+   Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
+
+   Mod+Shift+Escape { quit; }
+   Ctrl+Alt+Delete { quit; }
+
+   Print { screenshot; }
+   Ctrl+Print { screenshot-screen; }
+   Alt+Print { screenshot-window; }
+   Mod+Shift+P { power-off-monitors; }
+
+   // Window Binds
+   //
    Mod+Q { close-window; }
 
    Mod+Left  { focus-column-left; }
@@ -128,6 +132,28 @@ binds {
    Mod+Ctrl+Home { move-column-to-first; }
    Mod+Ctrl+End  { move-column-to-last; }
 
+   Mod+Minus { set-column-width "-10%"; }
+   Mod+Equal { set-column-width "+10%"; }
+
+   Mod+Shift+Minus { set-window-height "-10%"; }
+   Mod+Shift+Equal { set-window-height "+10%"; }
+
+   Mod+M { maximize-column; }
+   Mod+F { fullscreen-window; }
+   Mod+Shift+F { toggle-windowed-fullscreen; }
+
+   Mod+Ctrl+F { expand-column-to-available-width; }
+
+   Mod+C { center-column; }
+   Mod+Ctrl+C { center-visible-columns; }
+
+   Mod+V       { toggle-window-floating; }
+   Mod+Shift+V { switch-focus-between-floating-and-tiling; }
+
+   Mod+W { toggle-column-tabbed-display; }
+
+   // Monitor Binds
+   //
    Mod+Shift+Left  { focus-monitor-left; }
    Mod+Shift+Down  { focus-monitor-down; }
    Mod+Shift+Up    { focus-monitor-up; }
@@ -146,6 +172,24 @@ binds {
    Mod+Shift+Ctrl+U     { move-column-to-monitor-up; }
    Mod+Shift+Ctrl+I     { move-column-to-monitor-right; }
 
+   // Workspace Binds
+   //
+   Mod+1 { focus-workspace "one"; }
+   Mod+2 { focus-workspace "two"; }
+   Mod+3 { focus-workspace "three"; }
+   Mod+4 { focus-workspace "four"; }
+   Mod+8 { focus-workspace "eight"; }
+   Mod+9 { focus-workspace "nine"; }
+   Mod+0 { focus-workspace "zero"; }
+
+   Mod+Ctrl+1 { move-column-to-workspace "one"; }
+   Mod+Ctrl+2 { move-column-to-workspace "two"; }
+   Mod+Ctrl+3 { move-column-to-workspace "three"; }
+   Mod+Ctrl+4 { move-column-to-workspace "four"; }
+   Mod+Ctrl+8 { move-column-to-workspace "eight"; }
+   Mod+Ctrl+9 { move-column-to-workspace "nine"; }
+   Mod+Ctrl+0 { move-column-to-workspace "zero"; }
+
    Mod+Page_Down      { focus-workspace-down; }
    Mod+Page_Up        { focus-workspace-up; }
    Mod+Y              { focus-workspace-down; }
@@ -154,8 +198,6 @@ binds {
    Mod+Ctrl+Page_Up   { move-column-to-workspace-up; }
    Mod+Ctrl+Y         { move-column-to-workspace-down; }
    Mod+Ctrl+L         { move-column-to-workspace-up; }
-
-
 
    Mod+Shift+Page_Down { move-workspace-down; }
    Mod+Shift+Page_Up   { move-workspace-up; }
@@ -177,22 +219,6 @@ binds {
    Mod+Ctrl+Shift+WheelScrollDown { move-column-right; }
    Mod+Ctrl+Shift+WheelScrollUp   { move-column-left; }
 
-   Mod+1 { focus-workspace "one"; }
-   Mod+2 { focus-workspace "two"; }
-   Mod+3 { focus-workspace "three"; }
-   Mod+4 { focus-workspace "four"; }
-
-   Mod+8 { focus-workspace "eight"; }
-   Mod+9 { focus-workspace "nine"; }
-   Mod+0 { focus-workspace "zero"; }
-   Mod+Ctrl+1 { move-column-to-workspace "one"; }
-   Mod+Ctrl+2 { move-column-to-workspace "two"; }
-   Mod+Ctrl+3 { move-column-to-workspace "three"; }
-   Mod+Ctrl+4 { move-column-to-workspace "four"; }
-   Mod+Ctrl+8 { move-column-to-workspace "eight"; }
-   Mod+Ctrl+9 { move-column-to-workspace "nine"; }
-   Mod+Ctrl+0 { move-column-to-workspace "zero"; }
-
    Mod+BracketLeft  { consume-or-expel-window-left; }
    Mod+BracketRight { consume-or-expel-window-right; }
 
@@ -202,37 +228,17 @@ binds {
    Mod+R { switch-preset-column-width; }
    Mod+Shift+R { switch-preset-window-height; }
    Mod+Ctrl+R { reset-window-height; }
-   Mod+M { maximize-column; }
-   Mod+F { fullscreen-window; }
-   Mod+Shift+F { toggle-windowed-fullscreen; }
 
-   Mod+Ctrl+F { expand-column-to-available-width; }
-
-   Mod+C { center-column; }
-
-   Mod+Ctrl+C { center-visible-columns; }
-
-   Mod+Minus { set-column-width "-10%"; }
-   Mod+Equal { set-column-width "+10%"; }
-
-   Mod+Shift+Minus { set-window-height "-10%"; }
-   Mod+Shift+Equal { set-window-height "+10%"; }
-
-   Mod+V       { toggle-window-floating; }
-   Mod+Shift+V { switch-focus-between-floating-and-tiling; }
-
-   Mod+W { toggle-column-tabbed-display; }
-
-   Print { screenshot; }
-   Ctrl+Print { screenshot-screen; }
-   Alt+Print { screenshot-window; }
-
-   Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
-
-   Mod+Shift+Escape { quit; }
-   Ctrl+Alt+Delete { quit; }
-
-   Mod+Shift+P { power-off-monitors; }
+   // Other
+   //
+   Mod+T hotkey-overlay-title="Open a Terminal: wezterm" { spawn "wezterm"; }
+   Mod+D hotkey-overlay-title="Open App Launcher: fuzzel" { spawn "fuzzel"; }
+   Super+Alt+L hotkey-overlay-title="Lock the Screen: TODO!" { spawn "swaylock"; }
+   Mod+A { spawn ""; }
+    XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"; }
+   XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"; }
+   XF86AudioMute        allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
+   XF86AudioMicMute     allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
 }
 
 // [Environment Variables]
