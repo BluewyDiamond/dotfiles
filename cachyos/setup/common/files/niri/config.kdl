@@ -73,7 +73,12 @@ layout {
 }
 
 hotkey-overlay {
-    skip-at-startup
+   skip-at-startup
+}
+
+cursor {
+   xcursor-theme "Bibata-Modern-Classic"
+   xcursor-size 24
 }
 
 screenshot-path "~/media/screenshots/%Y-%m-%d_%H-%M-%S.png"
@@ -269,6 +274,9 @@ environment {
 
 // [Autostart]
 //
+// widgets
 spawn-at-startup  "fish" "-c" "$HOME/.config/ags2/cli.fish run & disown"
+
+// idle listeners
 spawn-at-startup "fish" "-c" "pidof hypridle || hypridle & disown"
 spawn-at-startup "fish" "-c" "pidof wayland-pipewire-idle-inhibit || wayland-pipewire-idle-inhibit & disown"
