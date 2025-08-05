@@ -18,7 +18,12 @@ const windowsComputed = createComputed([windowsBinding], (windows) => {
       if (workspaceA === null) return -1;
       if (workspaceB === null) return 1;
 
-      return workspaceA.id - workspaceB.id;
+      if (workspaceA.id !== workspaceB.id) {
+         return workspaceA.id - workspaceB.id;
+      }
+
+      return windowA.id - windowB.id;
+      // Niri does not expose the order of the windows in the same workspace.
    });
 });
 
