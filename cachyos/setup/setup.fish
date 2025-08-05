@@ -66,6 +66,7 @@ function get_unlisted_packages
     argparse 'wanted-packages=' -- $argv
     set wanted_packages (string split ' ' $_flag_wanted_packages)
     set installed_packages (pacman -Qqe)
+    set unlisted_packages
 
     for installed_package in $installed_packages
         if contains $installed_package $wanted_packages
@@ -76,8 +77,10 @@ function get_unlisted_packages
             continue
         end
 
-        echo $installed_package
+        set -a unlisted_packages $installed_package
     end
+
+    echo -n $unlisted_packages
 end
 
 function prepare_target
@@ -162,6 +165,22 @@ function spawn_file
 
     prepare_target --owner $owner --target $target_pathname
     echo $target_content | sudo -iu $owner -- tee $target_pathname >/dev/null
+end
+
+function get_missing_packages
+    argparse "wanted-packages=" -- $argv or return
+    set wanted_packages (string split ' ' $_flag_wanted_packages)
+    set missing_packages
+
+    for package in $wanted_packages
+        if not pacman -Q $package 2&>/dev/null
+            set -a missing_packages $package
+        end
+
+        continue
+    end
+
+    echo -n $missing_packages
 end
 
 switch $argv[1]
@@ -298,22 +317,17 @@ switch $argv[1]
             sudo systemctl disable $service_to_disable
         end
     case check
-        set packages_not_found
+        set missing_packages (get_missing_packages --wanted-packages "$std_packages $aur_packages")
 
-        for package in $std_packages $aur_packages
-            if not pacman -Q $package 2&>/dev/null
-                set -a packages_not_found $package
-            end
-
-            continue
-        end
-
-        if set -q packages_not_found[1]
+        if set -q missing_packages[1]
             echo "Missing packages: $packages_not_found"
-            exit 1
         end
 
-        echo "All good, Nothing to do!"
+        set unlisted_packages (get_unlisted_packages --wanted-packages "$std_packages $aur_packages")
+
+        if set -q unlisted_packages[1]
+            echo "Packages not defined: $unlisted_packages"
+        end
     case help
         echo "USAGE: COMMAND HOST_PATHNAME_1 HOST_PATHNAME_2 ... HOST_PATHNAME_9"
         echo COMMANDS
