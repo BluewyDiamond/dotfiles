@@ -52,6 +52,11 @@ export default {
             },
          },
       },
+
+      controlCenterButton: {
+         arrowUp: icons.ui.arrow.up,
+         arrowDown: icons.ui.arrow.down,
+      },
    },
 
    notificationToasts: {
