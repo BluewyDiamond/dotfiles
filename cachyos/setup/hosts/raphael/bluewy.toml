@@ -1,3 +1,6 @@
+[ignore]
+packages = ["libastal-niri-git"]
+
 [packages.make]
 std = ["rustup", "jdk21-openjdk"]
 
@@ -125,6 +128,8 @@ std = [
    "protontricks",
    "mangohud",
 ]
+
+aur = ["atlauncher-bin", "r2modman-bin", "osu-lazer-bin"]
 
 
 [packages.wayland.apps.files]
