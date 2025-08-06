@@ -23,6 +23,7 @@ set hosts_pathnames $argv[2..-1]
 set common_packages_pathnames
 set std_packages
 set aur_packages
+set local_path_packages
 set services
 
 # ignore this packages
@@ -34,12 +35,14 @@ for host_pathname in $hosts_pathnames
     set -a common_packages_pathnames (tomlq -r '(.common_packages // [])[]' $host_pathname)
     set -a std_packages (tomlq -r '[.packages // {} | .. | objects | .std // []] | add | .[]' $host_pathname)
     set -a aur_packages (tomlq -r '[.packages // {} | .. | objects | .aur // []] | add | .[]' $host_pathname)
+    set -a local_path_packages (tomlq -r '[.packages // {} | .. | objects | .local_paths // []] | add | .[]' $host_pathname)
     set -a services (tomlq -r ".services.enable // [] | .[]" $host_pathname)
 end
 
 for common_package_filepath in $common_packages_pathnames
     set -a std_packages (tomlq -r '.std // [] | .[]' $script_path/$common_package_filepath)
     set -a aur_packages (tomlq -r '.aur // [] | .[]' $script_path/$common_package_filepath)
+    set -a local_path_packages (tomlq -r '.local_paths // [] | .[]' $script_path/$common_package_filepath)
 end
 
 # action based on the data
@@ -215,6 +218,25 @@ switch $argv[1]
 
         if set -q missing_aur_packages[1]
             paru -S --aur $missing_aur_packages
+        else
+            echo "[INFO] SKIP | ALREADY INSTALLED"
+        end
+
+        echo "[INFO] INSTALL LOCAL PACKAGES"
+        set missing_local_path_packages
+
+        for local_path_package in $local_path_packages
+            if pacman -Q (basename $local_path_package) 2&>/dev/null
+                continue
+            end
+
+            set -a missing_local_path_packages $local_path_package
+        end
+
+        if set -q missing_local_path_packages[1]
+            for missing_local_path_package in $missing_local_path_packages
+                makepkg -si $script_path/$missing_local_path_package
+            end
         else
             echo "[INFO] SKIP | ALREADY INSTALLED"
         end
