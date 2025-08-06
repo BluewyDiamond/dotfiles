@@ -72,7 +72,9 @@ std = [
    "wayland-pipewire-idle-inhibit",
 
    "polkit-gnome",
+   "gnome-keyring",
 
+   "uwsm",
    "fuzzel",
    "slurp",
    "satty",
