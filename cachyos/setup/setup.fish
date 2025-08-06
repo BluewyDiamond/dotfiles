@@ -235,7 +235,9 @@ switch $argv[1]
 
         if set -q missing_local_path_packages[1]
             for missing_local_path_package in $missing_local_path_packages
-                makepkg -si $script_path/$missing_local_path_package
+                pushd $script_path/$missing_local_path_package
+                makepkg -si
+                popd
             end
         else
             echo "[INFO] SKIP | ALREADY INSTALLED"
