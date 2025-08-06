@@ -102,6 +102,7 @@ binds {
    Mod+Shift+Escape { quit; }
    Ctrl+Alt+Delete { quit; }
 
+   Mod+B { spawn "fish" "-c" "$HOME/.local/share/scripts/quick_menu.fish"; }
    Print { screenshot; }
    Ctrl+Print { screenshot-screen; }
    Alt+Print { screenshot-window; }
