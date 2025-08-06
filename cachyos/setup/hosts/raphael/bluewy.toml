@@ -1,48 +1,8 @@
-[packages.development_dependencies]
-std = [
-   "rustup",
-   "taplo-cli", # toml formatting
-
-   # separator
-   "jdk21-openjdk",
-]
+[packages.make]
+std = ["rustup", "jdk21-openjdk"]
 
 [packages.fix]
-aur = [
-   # fixes easy anticheat (bug introduced as a result of missing compile options)
-   "glibc-eac",
-]
-
-[packages.utilities]
-std = [
-   #  monitoring
-   "bottom",
-   "bandwhich",
-   "nvtop",
-
-   # rust rewrites
-   "eza",
-   "fd",
-   "ripgrep",
-
-   # other
-   "git",
-   "downgrade",
-]
-
-[packages.neovim]
-aur = ["fish-lsp-git"]
-std = ["neovim", "stylua", "ripgrep", "fzf", "prettier", "eslint_d"]
-
-[packages.tty_session]
-std = [
-   "zellij",
-
-   # ricing
-   "terminus-font", # larger font size
-   "figlet",
-   "fastfetch",
-]
+aur = ["glibc-eac"]
 
 [packages.audio]
 std = [
@@ -53,12 +13,55 @@ std = [
    "pipewire-jack",
 ]
 
-[packages.wayland]
-aur = [
-   # stable version is broken on arch linux
-   "wezterm-git",
-   "wayshot",
+[packages.tty]
+std = ["zellij"]
+
+[packages.tty.rice]
+std = ["terminus-font", "figlet", "fastfetch"]
+
+[packages.tty.apps.rewrites]
+std = ["eza", "fd", "ripgrep"]
+
+[packages.tty.apps.controller]
+std = ["power-profiles-daemon"]
+
+[packages.tty.apps.network]
+std = ["zerotier-one"]
+
+[packages.tty.apps.monitoring]
+std = ["bottom", "bandwhich", "nvtop"]
+
+[packages.tty.apps.neovim]
+aur = ["fish-lsp-git"]
+std = [
+   "neovim",
+   "stylua",
+   "ripgrep",
+   "fzf",
+   "prettier",
+   "eslint_d",
+   "taplo-cli",
 ]
+
+[packages.tty.apps.other]
+std = ["git", "downgrade"]
+
+[packages.wayland.wm.niri]
+aur = ["niri-git", "xwayland-satellite-git"]
+std = ["xdg-desktop-portal-gnome"]
+
+[packages.wayland.wm.hyprland]
+std = [
+   "hyprland",
+   "hyprland-protocols",
+   "hyprland-qtutils",
+
+   "xdg-desktop-portal-hyprland",
+   "xdg-desktop-portal-gtk",
+]
+
+[packages.wayland.apps]
+aur = ["wezterm-git", "wayshot"]
 std = [
    "hyprlock",
    "hypridle",
@@ -74,7 +77,25 @@ std = [
    "cliphist",
 ]
 
-[packages.wayland.widgets]
+[packages.wayland.apps.rice]
+aur = [
+   "qt6ct-kde",
+   "qt5ct-kde",
+   "bibata-cursor-theme-bin",
+   "candy-icons-git",
+   "sweet-folders-icons-git",
+]
+std = [
+   "font-manager",
+   "ttf-iosevkaterm-nerd",
+
+   "kvantum",
+   "kvantum-qt5",
+
+   "nwg-look",
+]
+
+[packages.wayland.apps.widgets]
 aur = [
    "libastal-io-git",
    "libastal-git",
@@ -93,86 +114,8 @@ aur = [
 ]
 std = ["dart-sass", "fd", "bun-bin", "gjs", "gtk4-layer-shell"]
 
-[packages.wayland.rice]
-aur = [
-   "qt6ct-kde",
-   "qt5ct-kde",
-   "bibata-cursor-theme-bin",
-   "candy-icons-git",
-   "sweet-folders-icons-git",
-]
+[packages.wayland.apps.gaming]
 std = [
-   "font-manager",
-   "ttf-iosevkaterm-nerd",
-
-   "kvantum",
-   "kvantum-qt5",
-
-   "nwg-look",
-]
-
-[packages.wayland.wm.niri]
-aur = ["niri-git", "xwayland-satellite-git"]
-std = ["xdg-desktop-portal-gnome"]
-
-[packages.wayland.wm.hyprland]
-
-std = [
-   "hyprland",
-   "hyprland-protocols",
-   "hyprland-qtutils",
-
-   "xdg-desktop-portal-hyprland",
-   "xdg-desktop-portal-gtk",
-]
-
-
-[packages.apps]
-aur = [
-   # part of obs
-   "obs-pipewire-audio-capture",
-
-   # harware controllers
-   "overskride",
-]
-std = [
-   # hardware controllers
-   "pavucontrol",
-   "gparted",
-   "gnome-disk-utility",
-   "power-profiles-daemon",
-
-   # browsing :3
-   "librewolf-bin",
-   "thunderbird",
-
-   # file manager
-   "archlinux-xdg-menu",
-   "dolphin",
-
-   # file viewers
-   "vlc",
-   "vlc-plugins-all",
-
-   "loupe",
-   "evince",
-   "ark",
-   "seahorse",
-
-   # monitoring
-   "mission-center",
-   "qpwgraph",
-
-   # production
-   "krita",
-   "obs-studio",
-   "kdenlive",
-   "audacity",
-
-   "libreoffice-fresh",
-   "hunspell-es_es",
-
-   # gaming
    "steam-native-runtime",
    "heroic-games-launcher-bin",
 
@@ -181,20 +124,55 @@ std = [
    "gamescope",
    "protontricks",
    "mangohud",
-
-   # communication
-   "telegram-desktop",
-
-   # other
-   "localsend",
-   "zerotier-one",
 ]
 
-[packages.apps_discord]
+
+[packages.wayland.apps.files]
+std = [
+   "archlinux-xdg-menu",
+   "dolphin",
+
+   "vlc",
+   "vlc-plugins-all",
+
+   "loupe",
+   "evince",
+   "ark",
+   "seahorse",
+]
+
+[packages.wayland.apps.controllers]
+std = ["pavucontrol", "gparted", "gnome-disk-utility", "overskride"]
+
+[packages.wayland.apps.monitor]
+std = ["mission-center", "qpwgraph"]
+
+[packages.wayland.apps.network]
+std = ["localsend"]
+
+[packages.wayland.apps.browser]
+std = ["librewolf-bin", "thunderbird"]
+
+[packages.wayland.apps.production]
+aur = ["obs-pipewire-audio-capture"]
+std = [
+   "krita",
+   "obs-studio",
+   "kdenlive",
+   "audacity",
+
+   "libreoffice-fresh",
+   "hunspell-es_es",
+]
+
+[packages.wayland.apps.socialmedia]
+std = ["telegram-desktop"]
+
+[packages.wayland.apps.socialmedia.discord]
 aur = ["equibop-bin", "piper-tts-bin", "piper-voices-en-us"]
 std = ["speech-dispatcher"]
 
-[packages.virtualization]
+[packages.wayland.apps.virtualization]
 std = [
    "qemu-base",
    "virt-manager",
