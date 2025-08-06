@@ -225,10 +225,16 @@ binds {
 
    // Other
    //
-   Mod+T hotkey-overlay-title="Open a Terminal: wezterm" { spawn "wezterm"; }
-   Mod+D hotkey-overlay-title="Open App Launcher: fuzzel" { spawn "fuzzel"; }
-   Super+Alt+L hotkey-overlay-title="Lock the Screen: TODO!" { spawn "swaylock"; }
-   Mod+A { spawn ""; }
+   // in this setup prefers manual integration with systemd via uwsm
+   // this is done so that i can do logic in a shell
+   // without the shell itself being tracked by niri systemd integration as a scope
+   Mod+T hotkey-overlay-title="Open a Terminal: wezterm" { spawn "uwsm" "app" "--" "wezterm"; }
+   // if launched with niri without --session (systemd integration)
+   // spawn action automatically do the equivalent of `uswm app -- ...`
+   // when delegating said functionality to our app launcher
+   // we have to tell it to use `uwsm app -- ...` or alternative
+   Mod+D hotkey-overlay-title="Open App Launcher: fuzzel" { spawn "uwsm" "app" "--" "fuzzel" "--launch-prefix=uwsm app -- "; }
+
    XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"; }
    XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"; }
    XF86AudioMute        allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
@@ -268,17 +274,18 @@ environment {
 // [Autostart]
 //
 // widgets
-spawn-at-startup  "fish" "-c" "$HOME/.config/ags2/cli.fish run & disown"
+spawn-at-startup  "fish" "-c" "uwsm app -- $HOME/.config/ags2/cli.fish run"
 
 // idle listeners
-spawn-at-startup "fish" "-c" "pidof hypridle || hypridle & disown"
-spawn-at-startup "fish" "-c" "pidof wayland-pipewire-idle-inhibit || wayland-pipewire-idle-inhibit & disown"
+spawn-at-startup "fish" "-c" "pidof hypridle || uwsm app -- hypridle "
+spawn-at-startup "fish" "-c" "pidof wayland-pipewire-idle-inhibit || uwsm app -- wayland-pipewire-idle-inhibit"
 
 // polkit
-spawn-at-startup "fish" "-c" "pidof polkit-gnome-authentication-agent-1 || /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 & disown"
+spawn-at-startup "fish" "-c" "pidof polkit-gnome-authentication-agent-1 || uwsm app -- /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
 
 // clipboard
-spawn-at-startup "fish" "-c" "pidof wl-paste || wl-paste --type text --watch cliphist store && wl-paste --type image --watch cliphist store"
+// TODO: like the others, somehow check whether it is already running
+spawn-at-startup  "uwsm" "app" "--" "fish" "-c" "pidof wl-paste || wl-paste --type text --watch cliphist store && wl-paste --type image --watch cliphist store"
 
 // gtk4 rice
 spawn-at-startup "gsettings" "set" "org.gnome.desktop.interface" "gtk-theme" "one_dark_adwaita"
