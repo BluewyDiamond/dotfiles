@@ -23,10 +23,10 @@ export default {
 
          microphoneRecorders: {
             icons: {
-               microphoneLow: icons.audio.mic.low,
-               microphoneMedium: icons.audio.mic.medium,
-               microphoneHigh: icons.audio.mic.high,
-               microphoneMuted: icons.audio.mic.muted,
+               microphoneLow: icons.audio.mic.low + "-symbolic",
+               microphoneMedium: icons.audio.mic.medium + "-symbolic",
+               microphoneHigh: icons.audio.mic.high + "-symbolic",
+               microphoneMuted: icons.audio.mic.muted + "-symbolic",
             },
          },
 

@@ -1,4 +1,4 @@
-import { createBinding, createComputed, With } from "ags";
+import { createBinding, createComputed, createExternal, With } from "ags";
 import AstalPowerProfiles from "gi://AstalPowerProfiles";
 import AstalWp from "gi://AstalWp";
 import options from "../../../../options";
@@ -23,14 +23,38 @@ export default function () {
       return;
    }
 
-   const microphone = audio.get_default_microphone();
+   const defaultMicrophoneExternal = createExternal<null | AstalWp.Endpoint>(
+      null,
+      (set) => {
+         const onMicrophonesChanged = () => {
+            const microphones = audio.get_microphones();
+            if (microphones === null) return;
 
-   if (microphone === null) {
-      return;
-   }
+            const foundMicrophone = microphones.find(
+               (microphone) => microphone.isDefault
+            );
+
+            if (foundMicrophone === undefined) {
+               return;
+            }
+
+            set(foundMicrophone);
+         };
+
+         const microphonesConnectionId = audio.connect(
+            "notify::microphones",
+            (_) => {
+               onMicrophonesChanged();
+            }
+         );
+
+         onMicrophonesChanged();
+
+         return () => audio.disconnect(microphonesConnectionId);
+      }
+   );
 
    const audioRecordersBinding = createBinding(audio, "recorders");
-   const volumeBinding = createBinding(microphone, "volume");
 
    // screen recorder indicator state
    const video = wp.get_video();
@@ -71,31 +95,28 @@ export default function () {
             }}
          </With>
 
-         <With value={audioRecordersBinding}>
-            {(value) => {
-               if (value.length <= 0) {
-                  return;
-               }
+         <With value={defaultMicrophoneExternal}>
+            {(defaultMicrophone) => {
+               if (defaultMicrophone === null) return;
+               const volumeBinding = createBinding(defaultMicrophone, "volume");
 
-               return (
-                  <image
-                     iconName={createComputed([volumeBinding], (volume) => {
-                        if (volume > 0.67) {
-                           return options.bar.indicators.microphoneRecorders
-                              .icons.microphoneHigh;
-                        } else if (volume > 0.34) {
-                           return options.bar.indicators.microphoneRecorders
-                              .icons.microphoneMedium;
-                        } else if (volume > 0.1) {
-                           return options.bar.indicators.microphoneRecorders
-                              .icons.microphoneLow;
-                        } else {
-                           return options.bar.indicators.microphoneRecorders
-                              .icons.microphoneMuted;
-                        }
-                     })}
-                  />
-               );
+               const iconName = createComputed([volumeBinding], (volume) => {
+                  if (volume > 0.67) {
+                     return options.bar.indicators.microphoneRecorders.icons
+                        .microphoneHigh;
+                  } else if (volume > 0.34) {
+                     return options.bar.indicators.microphoneRecorders.icons
+                        .microphoneMedium;
+                  } else if (volume > 0.1) {
+                     return options.bar.indicators.microphoneRecorders.icons
+                        .microphoneLow;
+                  } else {
+                     return options.bar.indicators.microphoneRecorders.icons
+                        .microphoneMuted;
+                  }
+               });
+
+               return <image iconName={iconName} />;
             }}
          </With>
 
