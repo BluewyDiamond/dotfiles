@@ -54,7 +54,7 @@ export default function () {
       }
    );
 
-   const audioRecordersBinding = createBinding(audio, "recorders");
+   const microphoneRecordersBinding = createBinding(audio, "recorders");
 
    // screen recorder indicator state
    const video = wp.get_video();
@@ -74,6 +74,11 @@ export default function () {
 
    const speakerVolumeBinding = createBinding(speaker, "volume");
    const notificationsBinding = createBinding(notifd, "notifications");
+
+   const forMicrophoneImage = createComputed([
+      microphoneRecordersBinding,
+      defaultMicrophoneExternal,
+   ]);
 
    return (
       <box cssClasses={["indicators-box"]}>
@@ -95,9 +100,17 @@ export default function () {
             }}
          </With>
 
-         <With value={defaultMicrophoneExternal}>
-            {(defaultMicrophone) => {
-               if (defaultMicrophone === null) return;
+         <With value={forMicrophoneImage}>
+            {(forMicrophoneImage) => {
+               const [microphoneRecorders, defaultMicrophone] =
+                  forMicrophoneImage;
+
+               if (microphoneRecorders.length <= 0) return;
+
+               if (defaultMicrophone === null) {
+                  return <label label={"idk"} />;
+               }
+
                const volumeBinding = createBinding(defaultMicrophone, "volume");
 
                const iconName = createComputed([volumeBinding], (volume) => {
