@@ -7,6 +7,8 @@ import {
 } from "ags";
 import options from "../../../../options";
 import AstalNiri from "gi://AstalNiri";
+import icons from "../../../../lib/icons";
+import { checkIconExists } from "../../../../utils";
 
 const niri = AstalNiri.get_default();
 const windowsBinding = createBinding(niri, "windows");
@@ -69,16 +71,24 @@ function WindowButton({ window }: { window: AstalNiri.Window }) {
       }
    );
 
+   const iconName = () => {
+      const windowAppId = window.get_app_id();
+      const fallbackIcon = icons.fallback.executable;
+
+      if (!windowAppId)
+         return options.bar.taskbar.flat ?
+               `${fallbackIcon}-symbolic`
+            :  fallbackIcon;
+
+      const iconId =
+         options.bar.taskbar.flat ? `${windowAppId}-symbolic` : windowAppId;
+
+      return checkIconExists(iconId) ? iconId : fallbackIcon;
+   };
+
    return (
       <button cssClasses={cssClasses} onClicked={() => window.focus(window.id)}>
-         <image
-            iconName={
-               // TODO: handle null lol
-               options.bar.taskbar.flat ?
-                  window.get_app_id()! + "symbolic"
-               :  window.get_app_id()!
-            }
-         />
+         <image iconName={iconName()} />
       </button>
    );
 }

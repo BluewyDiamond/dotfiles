@@ -1,4 +1,11 @@
 export default {
+   fallback: {
+      executable: "application-x-executable",
+      notification: "dialog-information",
+      video: "video-x-generic",
+      audio: "audio-x-generic",
+   },
+
    ui: {
       close: "window-close",
       colorpicker: "color-select",
