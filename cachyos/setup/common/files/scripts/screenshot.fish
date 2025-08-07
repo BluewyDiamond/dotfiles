@@ -46,7 +46,7 @@ if string match -i -q -- $argv[1] partial
             satty -f $screenshot_pathname
     end
 else
-    if wayshot -f $screenshot_pathname
+    if not wayshot -f $screenshot_pathname
         echo "[ERROR] wayshot error"
         notify-send "$script_name" "Wayshot error..."
         exit 1
