@@ -322,7 +322,13 @@ switch $argv[1]
         end
     case cleanup
         echo "[INFO] DELETING PACKAGES"
-        set unlisted_packages (get_unlisted_packages --wanted-packages "$std_packages $aur_packages")
+        set local_packages
+
+        for local_path_package in $local_path_packages
+            set -a local_packages (basename $local_path_package)
+        end
+
+        set unlisted_packages (get_unlisted_packages --wanted-packages "$std_packages $aur_packages $local_packages")
         sudo pacman -Rns $unlisted_packages
 
         set enabled_services (fd -e service . /etc/systemd/system/*.wants -x basename | string replace -r '\.service$' '')
