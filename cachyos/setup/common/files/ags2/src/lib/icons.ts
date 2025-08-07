@@ -41,7 +41,7 @@ export default {
          muted: "microphone-disabled",
          low: "microphone-sensitivy-low",
          medium: "microphone-sensitivy-medium",
-         high: "microphone-sensitivy-high",
+         high: "microphone-sensitivity-high",
       },
 
       volume: {
