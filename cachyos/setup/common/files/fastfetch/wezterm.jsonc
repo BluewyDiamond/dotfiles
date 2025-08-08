@@ -21,13 +21,13 @@
       },
       {
          "type": "DateTime",
-         "format": "{weekday-short} {day-in-month} {month-name-short} {year} | {day-pretty}/{month-pretty}/{year}",
+         "format": "{weekday-short} {day-pretty} {month-name-short} {year} | {day-pretty}/{month-pretty}/{year}",
          "key": "   DATE     ",
          "keyColor": "magenta",
       },
       {
          "type": "DateTime",
-         "format": "               | {hour-pretty}:{minute-pretty}:{second-pretty}",
+         "format": "                | {hour-pretty}:{minute-pretty}:{second-pretty}",
          "key": "  󰥔 TIME     ",
          "keyColor": "magenta",
       },
