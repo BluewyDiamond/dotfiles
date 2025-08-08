@@ -1,56 +1,31 @@
-abbr dotfiles "cd $HOME/git/private/dotfiles"
-abbr snv "EDITOR=nvim sudoedit"
-abbr nv nvim
-abbr lg lazygit
-abbr fixpacman "sudo rm /var/lib/pacman/db.lck"
-
-function cleanup
-    set -l packages (pacman -Qtdq)
-
-    if test $status -eq 1
-        return 1
-    end
-
-    sudo pacman -Rns $packages
-end
-
-# Because eza is better overall.
-#
-function la
+function la # list all
     eza -la --color=always --icons $argv
 end
 
-function lh
+function lh # list only hidden
     eza -ld .* --color=always --icons $argv
 end
 
-function ls
+function ls # list non hidden
     eza -l --color=always --icons $argv
 end
 
-function lt
+function lt # tree view (non hidden)
     eza -T --color=always --icons $argv
 end
 
-function lta
+function lth
+    echo "not possible yet"
+end
+
+function lta # tree view (all)
     eza -aT --color=always --icons $argv
 end
 
-# Part of making the prompt to be at the bottom of the terminal.
+# pushes the prompt to the bottom
 function clear
-    switch $TERM
-        case xterm-256color
-            command clear
-            tput cup $LINES
-            fastfetch --load-config $HOME/.config/fastfetch/wezterm.jsonc
-        case linux
-            command clear
-            tput cup $LINES
-            fastfetch
-        case '*'
-            command clear
-            tput cup $LINES
-    end
+    command clear
+    tput cup $LINES
 end
 
 function git --wraps git
