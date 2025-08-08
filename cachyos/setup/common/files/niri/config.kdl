@@ -241,6 +241,7 @@ binds {
    XF86AudioMicMute     allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
 
    Mod+X { spawn "fish" "-c" "cliphist list | fuzzel --dmenu | cliphist decode | wl-copy"; }
+   Mod+Alt+L allow-when-locked=true { spawn "uwsm" "app" "--" "hyprlock"; }
 }
 
 // [Environment Variables]
