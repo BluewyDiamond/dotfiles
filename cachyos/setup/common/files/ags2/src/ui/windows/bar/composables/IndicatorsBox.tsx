@@ -90,7 +90,8 @@ export default function () {
                   iconName =
                      options.bar.indicators.powerprofile.icons.powerSaver;
                } else if (activeProfile === "balanced") {
-                  iconName = options.bar.indicators.powerprofile.icons.balanced;
+                  return;
+                  // iconName = options.bar.indicators.powerprofile.icons.balanced;
                } else if (activeProfile === "performance") {
                   iconName =
                      options.bar.indicators.powerprofile.icons.performance;
