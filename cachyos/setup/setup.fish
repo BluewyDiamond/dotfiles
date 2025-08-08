@@ -25,6 +25,7 @@ set std_packages
 set aur_packages
 set local_path_packages
 set services
+set ignored_packages
 
 # ignore this packages
 set -a std_packages $required_packages
@@ -37,12 +38,21 @@ for host_pathname in $hosts_pathnames
     set -a aur_packages (tomlq -r '[.packages // {} | .. | objects | .aur // []] | add | .[]' $host_pathname)
     set -a local_path_packages (tomlq -r '[.packages // {} | .. | objects | .local_paths // []] | add | .[]' $host_pathname)
     set -a services (tomlq -r ".services.enable // [] | .[]" $host_pathname)
+    set -a ignored_packages (tomlq -r '[.ignore // {} | .. | objects | .packages // []] | add | .[]' $host_pathname)
 end
 
 for common_package_filepath in $common_packages_pathnames
     set -a std_packages (tomlq -r '.std // [] | .[]' $script_path/$common_package_filepath)
     set -a aur_packages (tomlq -r '.aur // [] | .[]' $script_path/$common_package_filepath)
     set -a local_path_packages (tomlq -r '.local_paths // [] | .[]' $script_path/$common_package_filepath)
+    set -a ignored_packages (tomlq -r '.ignore.packages // [] | .[]' $script_path/$common_package_filepath)
+end
+
+# in the case that only the basename is needed
+set local_packages
+
+for local_path_package in $local_path_packages
+    set -a local_packages (basename $local_path_package)
 end
 
 # action based on the data
@@ -322,13 +332,8 @@ switch $argv[1]
         end
     case cleanup
         echo "[INFO] DELETING PACKAGES"
-        set local_packages
 
-        for local_path_package in $local_path_packages
-            set -a local_packages (basename $local_path_package)
-        end
-
-        set unlisted_packages (get_unlisted_packages --wanted-packages "$std_packages $aur_packages $local_packages")
+        set unlisted_packages (get_unlisted_packages --wanted-packages "$std_packages $aur_packages $local_packages $ignored_packages")
         sudo pacman -Rns $unlisted_packages
 
         set enabled_services (fd -e service . /etc/systemd/system/*.wants -x basename | string replace -r '\.service$' '')
@@ -347,13 +352,13 @@ switch $argv[1]
             sudo systemctl disable $service_to_disable
         end
     case check
-        set missing_packages (get_missing_packages --wanted-packages "$std_packages $aur_packages")
+        set missing_packages (get_missing_packages --wanted-packages "$std_packages $aur_packages $local_packages $ignored_packages")
 
         if set -q missing_packages[1]
             echo "Missing packages: $packages_not_found"
         end
 
-        set unlisted_packages (get_unlisted_packages --wanted-packages "$std_packages $aur_packages")
+        set unlisted_packages (get_unlisted_packages --wanted-packages "$std_packages $aur_packages $local_packages $ignored_packages")
 
         if set -q unlisted_packages[1]
             echo "Packages not defined: $unlisted_packages"

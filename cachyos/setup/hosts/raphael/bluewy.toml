@@ -1,5 +1,5 @@
 [ignore]
-packages = ["libastal-niri-git"]
+packages = ["less"]
 
 [packages.make]
 std = ["rustup", "jdk21-openjdk"]
@@ -119,6 +119,7 @@ aur = [
    # gnim bindings are provided by the following package
    "aylurs-gtk-shell-git",
 ]
+local_paths = ["common/aur/libastal-niri-git"]
 std = ["dart-sass", "fd", "bun-bin", "gjs", "gtk4-layer-shell"]
 
 [packages.wayland.apps.gaming]
