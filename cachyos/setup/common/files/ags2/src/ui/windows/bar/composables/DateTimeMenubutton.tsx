@@ -2,7 +2,7 @@ import { Gtk } from "ags/gtk4";
 import { createPoll } from "ags/time";
 
 export default function () {
-   const datetime = createPoll("", 1000, "date");
+   const datetime = createPoll("", 1000, 'date +"%a %d %b - %H:%M"');
 
    return (
       <menubutton
