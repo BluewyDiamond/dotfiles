@@ -1,3 +1,7 @@
 function fish_greeting
-   fastfetch -c $HOME/.config/fastfetch/wezterm.jsonc
+    if test $TERM != linux
+       sleep 0.2
+    end
+
+    fastfetch -c $HOME/.config/fastfetch/wezterm.jsonc
 end
