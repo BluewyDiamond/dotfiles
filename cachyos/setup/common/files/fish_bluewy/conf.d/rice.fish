@@ -9,6 +9,6 @@ function _tide_item_context
 end
 
 if status is-interactive
-    set -U tide_left_prompt_items time context pwd status git newline character
+    set -U tide_left_prompt_items time context pwd git status newline character
     set -U tide_right_prompt_items
 end
