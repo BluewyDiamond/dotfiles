@@ -76,11 +76,6 @@
          "outputColor": "red",
       },
       {
-         "type": "title",
-         "key": "   HOSTNAME ",
-         "keyColor": "yellow",
-      },
-      {
          "type": "os",
          "key": "   OS       ",
          "keyColor": "yellow",
@@ -89,6 +84,11 @@
       {
          "type": "kernel",
          "key": "   KERNEL   ",
+         "keyColor": "yellow",
+      },
+      {
+         "type": "title",
+         "key": "   HOSTNAME ",
          "keyColor": "yellow",
       },
       {
