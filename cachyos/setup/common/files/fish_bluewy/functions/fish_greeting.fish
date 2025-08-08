@@ -1,3 +1,3 @@
 function fish_greeting
-    clear
+   fastfetch -c $HOME/.config/fastfetch/wezterm.jsonc
 end

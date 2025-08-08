@@ -17,6 +17,24 @@
       "break",
       {
          "type": "custom",
+         "format": "────────────────────── DateTime ──────────────────────",
+         "outputColor": "red",
+      },
+      {
+         "type": "DateTime",
+         "format": "{weekday-short} {day-in-month} {month-name-short} {year} | {day-pretty}/{month-pretty}/{year}",
+         "key": "   DATE     ",
+         "keyColor": "magenta",
+      },
+      {
+         "type": "DateTime",
+         "format": "               | {hour-pretty}:{minute-pretty}:{second-pretty}",
+         "key": "  󰥔 TIME     ",
+         "keyColor": "magenta",
+      },
+      "break",
+      {
+         "type": "custom",
          "format": "────────────────────── Hardware ──────────────────────",
          "outputColor": "red",
       },
