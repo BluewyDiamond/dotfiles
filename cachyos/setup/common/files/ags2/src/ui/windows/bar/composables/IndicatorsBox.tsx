@@ -214,7 +214,7 @@ export default function () {
 
    return (
       <box cssClasses={["indicators-box"]}>
-         <Adw.Bin>
+         <Adw.Bin cssClasses={["indicator-widget"]}>
             <With value={forNotificationsIndicatorComputed}>
                {(forNotificationsIndicator) => {
                   const [visible, iconName] = forNotificationsIndicator;
@@ -232,7 +232,7 @@ export default function () {
             </With>
          </Adw.Bin>
 
-         <Adw.Bin>
+         <Adw.Bin cssClasses={["indicator-widget"]}>
             <With value={forPowerProfileIndicatorComputed}>
                {(forPowerProfileIndicator) => {
                   const [visible, iconName] = forPowerProfileIndicator;
@@ -250,7 +250,7 @@ export default function () {
             </With>
          </Adw.Bin>
 
-         <Adw.Bin>
+         <Adw.Bin cssClasses={["indicator-widget"]}>
             <With value={forVideoRecordersIndicatorComputed}>
                {(forVideoRecordersIndicator) => {
                   const [visible, iconName] = forVideoRecordersIndicator;
@@ -268,7 +268,7 @@ export default function () {
             </With>
          </Adw.Bin>
 
-         <Adw.Bin>
+         <Adw.Bin cssClasses={["indicator-widget"]}>
             <With value={forMicrophoneRecordersIndicatorComputed}>
                {(forMicrophoneRecordersIndicator) => {
                   const [visible, getDefaultMicrophoneVolumeComputed] =
@@ -289,7 +289,7 @@ export default function () {
             </With>
          </Adw.Bin>
 
-         <Adw.Bin>
+         <Adw.Bin cssClasses={["indicator-widget"]}>
             <With value={forSpeakerRecordersIndicatorComputed}>
                {(forSpeakerRecordersIndicator) => {
                   const [visible, getDefaultSpeakerVolumeIconComputed] =
@@ -310,7 +310,7 @@ export default function () {
             </With>
          </Adw.Bin>
 
-         <Adw.Bin>
+         <Adw.Bin cssClasses={["indicator-widget"]}>
             <With value={forFallbackIndicatorComputed}>
                {(forFallbackIndicator) => {
                   const invisible =
