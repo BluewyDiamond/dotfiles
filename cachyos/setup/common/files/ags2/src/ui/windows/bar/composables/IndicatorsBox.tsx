@@ -10,6 +10,7 @@ import AstalWp from "gi://AstalWp";
 import options from "../../../../options";
 import AstalNotifd from "gi://AstalNotifd";
 import Adw from "gi://Adw";
+import ControlCenterButton from "./ControlCenterButton";
 
 const powerprofiles = AstalPowerProfiles.get_default();
 const wp = AstalWp.get_default();
@@ -96,6 +97,22 @@ export default function () {
       }
    );
 
+   const forPowerProfileIndicatorComputed = createComputed<
+      [Accessor<string>],
+      [string],
+      [boolean, string | null]
+   >([createBinding(powerprofiles, "activeProfile")], (activePowerProfile) => {
+      if (activePowerProfile === "performance") {
+         return [true, options.bar.indicators.powerprofile.icons.performance];
+      } else if (activePowerProfile === "balanced") {
+         return [false, options.bar.indicators.powerprofile.icons.performance];
+      } else if (activePowerProfile === "powersaving") {
+         return [true, options.bar.indicators.powerprofile.icons.powerSaver];
+      } else {
+         return [false, null];
+      }
+   });
+
    const forVideoRecordersIndicatorComputed = createComputed<
       [Accessor<AstalWp.Stream[]>],
       [AstalWp.Stream[]],
@@ -149,22 +166,6 @@ export default function () {
       }
    );
 
-   const forPowerProfileIndicatorComputed = createComputed<
-      [Accessor<string>],
-      [string],
-      [boolean, string | null]
-   >([createBinding(powerprofiles, "activeProfile")], (activePowerProfile) => {
-      if (activePowerProfile === "performance") {
-         return [true, options.bar.indicators.powerprofile.icons.performance];
-      } else if (activePowerProfile === "balanced") {
-         return [false, options.bar.indicators.powerprofile.icons.performance];
-      } else if (activePowerProfile === "powersaving") {
-         return [true, options.bar.indicators.powerprofile.icons.powerSaver];
-      } else {
-         return [false, null];
-      }
-   });
-
    // TODO: the recorders part lol (the name will be misleading for now)
    // also forget about default since apps can connect to non default
    // we have to check for any connections to any speaker
@@ -203,12 +204,38 @@ export default function () {
       return [true, getDefaultVolumeIconComputed];
    });
 
+   const forFallbackIndicatorComputed = createComputed([
+      forNotificationsIndicatorComputed,
+      forPowerProfileIndicatorComputed,
+      forVideoRecordersIndicatorComputed,
+      forMicrophoneRecordersIndicatorComputed,
+      forSpeakerRecordersIndicatorComputed,
+   ]);
+
    return (
       <box cssClasses={["indicators-box"]}>
          <Adw.Bin>
             <With value={forNotificationsIndicatorComputed}>
                {(forNotificationsIndicator) => {
                   const [visible, iconName] = forNotificationsIndicator;
+
+                  if (!visible) {
+                     return;
+                  }
+
+                  if (iconName === null) {
+                     return;
+                  }
+
+                  return <image iconName={iconName} />;
+               }}
+            </With>
+         </Adw.Bin>
+
+         <Adw.Bin>
+            <With value={forPowerProfileIndicatorComputed}>
+               {(forPowerProfileIndicator) => {
+                  const [visible, iconName] = forPowerProfileIndicator;
 
                   if (!visible) {
                      return;
@@ -263,24 +290,6 @@ export default function () {
          </Adw.Bin>
 
          <Adw.Bin>
-            <With value={forPowerProfileIndicatorComputed}>
-               {(forPowerProfileIndicator) => {
-                  const [visible, iconName] = forPowerProfileIndicator;
-
-                  if (!visible) {
-                     return;
-                  }
-
-                  if (iconName === null) {
-                     return;
-                  }
-
-                  return <image iconName={iconName} />;
-               }}
-            </With>
-         </Adw.Bin>
-
-         <Adw.Bin>
             <With value={forSpeakerRecordersIndicatorComputed}>
                {(forSpeakerRecordersIndicator) => {
                   const [visible, getDefaultSpeakerVolumeIconComputed] =
@@ -297,6 +306,22 @@ export default function () {
                   return (
                      <image iconName={getDefaultSpeakerVolumeIconComputed()} />
                   );
+               }}
+            </With>
+         </Adw.Bin>
+
+         <Adw.Bin>
+            <With value={forFallbackIndicatorComputed}>
+               {(forFallbackIndicator) => {
+                  const invisible =
+                     forFallbackIndicator.some((item) => item[0] === true) ??
+                     false;
+
+                  if (invisible) {
+                     return;
+                  }
+
+                  return <ControlCenterButton />;
                }}
             </With>
          </Adw.Bin>
