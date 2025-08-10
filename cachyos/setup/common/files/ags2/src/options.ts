@@ -67,4 +67,8 @@ export default {
          maximumSize: 400,
       },
    },
+
+   controlCenter: {
+      name: "ags_control_center",
+   },
 };

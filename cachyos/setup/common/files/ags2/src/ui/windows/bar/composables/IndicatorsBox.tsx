@@ -11,6 +11,7 @@ import options from "../../../../options";
 import AstalNotifd from "gi://AstalNotifd";
 import Adw from "gi://Adw";
 import ControlCenterButton from "./ControlCenterButton";
+import app from "ags/gtk4/app";
 
 const powerprofiles = AstalPowerProfiles.get_default();
 const wp = AstalWp.get_default();
@@ -221,154 +222,195 @@ export default function () {
    );
 
    return (
-      <box cssClasses={["indicators-box"]}>
-         <Adw.Bin
-            cssClasses={["indicator-widget"]}
-            visible={createComputed(
-               [forNotificationsIndicatorComputed],
-               (forNotificationsIndicator) => forNotificationsIndicator[0]
-            )}
-         >
-            <With value={forNotificationsIndicatorComputed}>
-               {(forNotificationsIndicator) => {
-                  const [visible, iconName] = forNotificationsIndicator;
+      <button onClicked={() => app.toggle_window(options.controlCenter.name)}>
+         <box cssClasses={["indicators-box"]}>
+            <Adw.Bin
+               cssClasses={["indicator-widget"]}
+               visible={createComputed(
+                  [forNotificationsIndicatorComputed],
+                  (forNotificationsIndicator) => forNotificationsIndicator[0]
+               )}
+            >
+               <With value={forNotificationsIndicatorComputed}>
+                  {(forNotificationsIndicator) => {
+                     const [visible, iconName] = forNotificationsIndicator;
 
-                  if (!visible) {
-                     return;
-                  }
+                     if (!visible) {
+                        return;
+                     }
 
-                  if (iconName === null) {
-                     return;
-                  }
+                     if (iconName === null) {
+                        return;
+                     }
 
-                  return <image iconName={iconName} />;
-               }}
-            </With>
-         </Adw.Bin>
+                     return <image iconName={iconName} />;
+                  }}
+               </With>
+            </Adw.Bin>
 
-         <Adw.Bin
-            cssClasses={["indicator-widget"]}
-            visible={createComputed(
-               [forPowerProfileIndicatorComputed],
-               (forPowerProfileIndicator) => forPowerProfileIndicator[0]
-            )}
-         >
-            <With value={forPowerProfileIndicatorComputed}>
-               {(forPowerProfileIndicator) => {
-                  const [visible, iconName] = forPowerProfileIndicator;
+            <Adw.Bin
+               cssClasses={["indicator-widget"]}
+               visible={createComputed(
+                  [forPowerProfileIndicatorComputed],
+                  (forPowerProfileIndicator) => forPowerProfileIndicator[0]
+               )}
+            >
+               <With value={forPowerProfileIndicatorComputed}>
+                  {(forPowerProfileIndicator) => {
+                     const [visible, iconName] = forPowerProfileIndicator;
 
-                  if (!visible) {
-                     return;
-                  }
+                     if (!visible) {
+                        return;
+                     }
 
-                  if (iconName === null) {
-                     return;
-                  }
+                     if (iconName === null) {
+                        return;
+                     }
 
-                  return <image iconName={iconName} />;
-               }}
-            </With>
-         </Adw.Bin>
+                     return <image iconName={iconName} />;
+                  }}
+               </With>
+            </Adw.Bin>
 
-         <Adw.Bin
-            cssClasses={["indicator-widget"]}
-            visible={createComputed(
-               [forVideoRecordersIndicatorComputed],
-               (forVideoRecordersIndicator) => forVideoRecordersIndicator[0]
-            )}
-         >
-            <With value={forVideoRecordersIndicatorComputed}>
-               {(forVideoRecordersIndicator) => {
-                  const [visible, iconName] = forVideoRecordersIndicator;
+            <Adw.Bin
+               cssClasses={["indicator-widget"]}
+               visible={createComputed(
+                  [forVideoRecordersIndicatorComputed],
+                  (forVideoRecordersIndicator) => forVideoRecordersIndicator[0]
+               )}
+            >
+               <With value={forVideoRecordersIndicatorComputed}>
+                  {(forVideoRecordersIndicator) => {
+                     const [visible, iconName] = forVideoRecordersIndicator;
 
-                  if (!visible) {
-                     return;
-                  }
+                     if (!visible) {
+                        return;
+                     }
 
-                  if (iconName === null) {
-                     return;
-                  }
+                     if (iconName === null) {
+                        return;
+                     }
 
-                  return <image iconName={iconName} />;
-               }}
-            </With>
-         </Adw.Bin>
+                     return <image iconName={iconName} />;
+                  }}
+               </With>
+            </Adw.Bin>
 
-         <Adw.Bin
-            cssClasses={["indicator-widget"]}
-            visible={createComputed(
-               [forMicrophoneRecordersIndicatorComputed],
+            <Adw.Bin
+               cssClasses={["indicator-widget"]}
+               visible={createComputed(
+                  [forMicrophoneRecordersIndicatorComputed],
 
-               (forMicrophoneRecordersIndicator) =>
-                  forMicrophoneRecordersIndicator[0]
-            )}
-         >
-            <With value={forMicrophoneRecordersIndicatorComputed}>
-               {(forMicrophoneRecordersIndicator) => {
-                  const [visible, getDefaultMicrophoneVolumeComputed] =
-                     forMicrophoneRecordersIndicator;
+                  (forMicrophoneRecordersIndicator) =>
+                     forMicrophoneRecordersIndicator[0]
+               )}
+            >
+               <With value={forMicrophoneRecordersIndicatorComputed}>
+                  {(forMicrophoneRecordersIndicator) => {
+                     const [visible, getDefaultMicrophoneVolumeComputed] =
+                        forMicrophoneRecordersIndicator;
 
-                  if (!visible) {
-                     return;
-                  }
+                     if (!visible) {
+                        return;
+                     }
 
-                  if (getDefaultMicrophoneVolumeComputed === null) {
-                     return <label label="no default mic :3" />;
-                  }
+                     if (getDefaultMicrophoneVolumeComputed === null) {
+                        return <label label="no default mic :3" />;
+                     }
 
-                  return (
-                     <image iconName={getDefaultMicrophoneVolumeComputed()} />
-                  );
-               }}
-            </With>
-         </Adw.Bin>
+                     return (
+                        <image
+                           iconName={getDefaultMicrophoneVolumeComputed()}
+                        />
+                     );
+                  }}
+               </With>
+            </Adw.Bin>
 
-         <Adw.Bin
-            cssClasses={["indicator-widget"]}
-            visible={createComputed(
-               [forSpeakerRecordersIndicatorComputed],
-               (forSpeakerRecordersIndicator) => forSpeakerRecordersIndicator[0]
-            )}
-         >
-            <With value={forSpeakerRecordersIndicatorComputed}>
-               {(forSpeakerRecordersIndicator) => {
-                  const [visible, getDefaultSpeakerVolumeIconComputed] =
-                     forSpeakerRecordersIndicator;
+            <Adw.Bin
+               cssClasses={["indicator-widget"]}
+               visible={createComputed(
+                  [forSpeakerRecordersIndicatorComputed],
+                  (forSpeakerRecordersIndicator) =>
+                     forSpeakerRecordersIndicator[0]
+               )}
+            >
+               <With value={forSpeakerRecordersIndicatorComputed}>
+                  {(forSpeakerRecordersIndicator) => {
+                     const [visible, getDefaultSpeakerVolumeIconComputed] =
+                        forSpeakerRecordersIndicator;
 
-                  if (!visible) {
-                     return;
-                  }
+                     if (!visible) {
+                        return;
+                     }
 
-                  if (getDefaultSpeakerVolumeIconComputed === null) {
-                     return <label label="no default speaker :3" />;
-                  }
+                     if (getDefaultSpeakerVolumeIconComputed === null) {
+                        return <label label="no default speaker :3" />;
+                     }
 
-                  return (
-                     <image iconName={getDefaultSpeakerVolumeIconComputed()} />
-                  );
-               }}
-            </With>
-         </Adw.Bin>
+                     return (
+                        <image
+                           iconName={getDefaultSpeakerVolumeIconComputed()}
+                        />
+                     );
+                  }}
+               </With>
+            </Adw.Bin>
 
-         <Adw.Bin
-            cssClasses={["indicator-widget"]}
-            visible={createComputed(
-               [forFallbackIndicatorComputed],
-               (forFallbackIndicator) => forFallbackIndicator[0]
-            )}
-         >
-            <With value={forFallbackIndicatorComputed}>
-               {(forFallbackIndicator) => {
-                  const [visible] = forFallbackIndicator;
+            <Adw.Bin
+               cssClasses={["indicator-widget"]}
+               visible={createComputed(
+                  [forFallbackIndicatorComputed],
+                  (forFallbackIndicator) => forFallbackIndicator[0]
+               )}
+            >
+               <With value={forFallbackIndicatorComputed}>
+                  {(forFallbackIndicator) => {
+                     const [visible] = forFallbackIndicator;
 
-                  if (!visible) {
-                     return;
-                  }
+                     if (!visible) {
+                        return;
+                     }
 
-                  return <ControlCenterButton />;
-               }}
-            </With>
-         </Adw.Bin>
-      </box>
+                     return <ControlCenterIndicatorImage />;
+                  }}
+               </With>
+            </Adw.Bin>
+         </box>
+      </button>
    );
+}
+
+function ControlCenterIndicatorImage() {
+   const iconNameExternal = createExternal(
+      options.bar.controlCenterButton.arrowDown,
+      (set) => {
+         const onWindowToggled = () => {
+            const foundControlCenterWindow = app
+               .get_windows()
+               .find((window) => window.name === options.controlCenter.name);
+
+            if (foundControlCenterWindow === undefined) return;
+
+            if (foundControlCenterWindow.visible) {
+               set(options.bar.controlCenterButton.arrowUp);
+            } else {
+               set(options.bar.controlCenterButton.arrowDown);
+            }
+         };
+
+         const toggledWindowConnectionId = app.connect(
+            "window-toggled",
+            (_broken_value) => {
+               onWindowToggled();
+            }
+         );
+
+         onWindowToggled();
+
+         return () => app.disconnect(toggledWindowConnectionId);
+      }
+   );
+
+   return <image iconName={iconNameExternal} />;
 }
