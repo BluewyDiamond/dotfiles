@@ -84,8 +84,9 @@ window.bar-window {
       border-radius: $border-radius;
       margin-left: $spacing-medium;
 
-      image {
-         margin-right: $spacing-medium;
+      .indicator-widget {
+         // medium space looks way too big with new impl
+         margin-right: $spacing-small;
 
          &:last-child {
             margin-right: 0;

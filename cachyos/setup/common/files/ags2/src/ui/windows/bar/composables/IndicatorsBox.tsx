@@ -204,17 +204,31 @@ export default function () {
       return [true, getDefaultVolumeIconComputed];
    });
 
-   const forFallbackIndicatorComputed = createComputed([
-      forNotificationsIndicatorComputed,
-      forPowerProfileIndicatorComputed,
-      forVideoRecordersIndicatorComputed,
-      forMicrophoneRecordersIndicatorComputed,
-      forSpeakerRecordersIndicatorComputed,
-   ]);
+   const forFallbackIndicatorComputed = createComputed(
+      [
+         forNotificationsIndicatorComputed,
+         forPowerProfileIndicatorComputed,
+         forVideoRecordersIndicatorComputed,
+         forMicrophoneRecordersIndicatorComputed,
+         forSpeakerRecordersIndicatorComputed,
+      ],
+      (a, b, c, d, e) => {
+         const arr = [a, b, c, d, e];
+         const visible = !(arr.some((item) => item[0] === true) ?? false);
+
+         return [visible];
+      }
+   );
 
    return (
       <box cssClasses={["indicators-box"]}>
-         <Adw.Bin cssClasses={["indicator-widget"]}>
+         <Adw.Bin
+            cssClasses={["indicator-widget"]}
+            visible={createComputed(
+               [forNotificationsIndicatorComputed],
+               (forNotificationsIndicator) => forNotificationsIndicator[0]
+            )}
+         >
             <With value={forNotificationsIndicatorComputed}>
                {(forNotificationsIndicator) => {
                   const [visible, iconName] = forNotificationsIndicator;
@@ -232,7 +246,13 @@ export default function () {
             </With>
          </Adw.Bin>
 
-         <Adw.Bin cssClasses={["indicator-widget"]}>
+         <Adw.Bin
+            cssClasses={["indicator-widget"]}
+            visible={createComputed(
+               [forPowerProfileIndicatorComputed],
+               (forPowerProfileIndicator) => forPowerProfileIndicator[0]
+            )}
+         >
             <With value={forPowerProfileIndicatorComputed}>
                {(forPowerProfileIndicator) => {
                   const [visible, iconName] = forPowerProfileIndicator;
@@ -250,7 +270,13 @@ export default function () {
             </With>
          </Adw.Bin>
 
-         <Adw.Bin cssClasses={["indicator-widget"]}>
+         <Adw.Bin
+            cssClasses={["indicator-widget"]}
+            visible={createComputed(
+               [forVideoRecordersIndicatorComputed],
+               (forVideoRecordersIndicator) => forVideoRecordersIndicator[0]
+            )}
+         >
             <With value={forVideoRecordersIndicatorComputed}>
                {(forVideoRecordersIndicator) => {
                   const [visible, iconName] = forVideoRecordersIndicator;
@@ -268,7 +294,15 @@ export default function () {
             </With>
          </Adw.Bin>
 
-         <Adw.Bin cssClasses={["indicator-widget"]}>
+         <Adw.Bin
+            cssClasses={["indicator-widget"]}
+            visible={createComputed(
+               [forMicrophoneRecordersIndicatorComputed],
+
+               (forMicrophoneRecordersIndicator) =>
+                  forMicrophoneRecordersIndicator[0]
+            )}
+         >
             <With value={forMicrophoneRecordersIndicatorComputed}>
                {(forMicrophoneRecordersIndicator) => {
                   const [visible, getDefaultMicrophoneVolumeComputed] =
@@ -289,7 +323,13 @@ export default function () {
             </With>
          </Adw.Bin>
 
-         <Adw.Bin cssClasses={["indicator-widget"]}>
+         <Adw.Bin
+            cssClasses={["indicator-widget"]}
+            visible={createComputed(
+               [forSpeakerRecordersIndicatorComputed],
+               (forSpeakerRecordersIndicator) => forSpeakerRecordersIndicator[0]
+            )}
+         >
             <With value={forSpeakerRecordersIndicatorComputed}>
                {(forSpeakerRecordersIndicator) => {
                   const [visible, getDefaultSpeakerVolumeIconComputed] =
@@ -310,14 +350,18 @@ export default function () {
             </With>
          </Adw.Bin>
 
-         <Adw.Bin cssClasses={["indicator-widget"]}>
+         <Adw.Bin
+            cssClasses={["indicator-widget"]}
+            visible={createComputed(
+               [forFallbackIndicatorComputed],
+               (forFallbackIndicator) => forFallbackIndicator[0]
+            )}
+         >
             <With value={forFallbackIndicatorComputed}>
                {(forFallbackIndicator) => {
-                  const invisible =
-                     forFallbackIndicator.some((item) => item[0] === true) ??
-                     false;
+                  const [visible] = forFallbackIndicator;
 
-                  if (invisible) {
+                  if (!visible) {
                      return;
                   }
 
