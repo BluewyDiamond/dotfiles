@@ -284,7 +284,7 @@ spawn-at-startup "fish" "-c" "pidof hypridle || uwsm app -- hypridle "
 spawn-at-startup "fish" "-c" "pidof wayland-pipewire-idle-inhibit || uwsm app -- wayland-pipewire-idle-inhibit"
 
 // polkit
-spawn-at-startup "fish" "-c" "pidof polkit-gnome-authentication-agent-1 || uwsm app -- /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
+spawn-at-startup "fish" "-c" "pidof polkit-gnome-authentication-agent-1 || uwsm app -- /usr/lib/policykit-1-pantheon/io.elementary.desktop.agent-polkit"
 
 // clipboard
 // TODO: like the others, somehow check whether it is already running
