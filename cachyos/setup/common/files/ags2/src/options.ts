@@ -52,11 +52,13 @@ export default {
                notificationNoisy: icons.notification.noisy,
             },
          },
-      },
 
-      controlCenterButton: {
-         arrowUp: icons.ui.arrow.up,
-         arrowDown: icons.ui.arrow.down,
+         controlCenter: {
+            icons: {
+               arrowUp: icons.ui.arrow.up,
+               arrowDown: icons.ui.arrow.down,
+            },
+         },
       },
    },
 

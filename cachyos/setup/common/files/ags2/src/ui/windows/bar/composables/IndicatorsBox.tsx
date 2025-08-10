@@ -421,7 +421,8 @@ export default function () {
                         return (
                            <image
                               iconName={
-                                 options.bar.controlCenterButton.arrowDown
+                                 options.bar.indicators.controlCenter.icons
+                                    .arrowDown
                               }
                            />
                         );
@@ -429,7 +430,9 @@ export default function () {
 
                      return (
                         <image
-                           iconName={options.bar.controlCenterButton.arrowUp}
+                           iconName={
+                              options.bar.indicators.controlCenter.icons.arrowUp
+                           }
                         />
                      );
                   }}
