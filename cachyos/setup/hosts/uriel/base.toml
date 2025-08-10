@@ -23,8 +23,10 @@ std = [
    "nvidia-prime",
    "nvidia-settings",
 
+   "ufw",
    "iwd",
    "bluez",
+   "bluez-utils",
 ]
 
 [[spawn_files]]
@@ -92,6 +94,5 @@ enable = [
    "ufw",
    "acer_battery_limit",
    "screen_off",
-   "sddm",
    "ananicy-cpp",
 ]

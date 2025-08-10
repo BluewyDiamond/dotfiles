@@ -15,5 +15,4 @@ std = [
    "cachyos-v4-mirrorlist",
    "cachyos-settings",
    "chwd",
-   "ufw",
 ]

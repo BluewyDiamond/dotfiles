@@ -9,11 +9,13 @@ std = [
    "linux-cachyos-lts",
    "wireless-regdb",
 
-   # provided by chwd
-   "lib32-opencl-mesa",
-   "xf86-video-amdgpu",
+   # TODO: add packages provided chwd
+   # they might end up as being the same
+   # from the desktop
 
    "ufw",
+   "networkmanager",
+   "iwd",
    "lact",
    "bluez",
    "bluez-utils",
@@ -26,37 +28,11 @@ target = "/etc/conf.d/wireless-regdom"
 
 [[spawn_files]]
 content = """
-[Match]
-Name=eno1
-
-[Network]
-DHCP=yes
-
-[DHCPv4]
-RouteMetric=100
-
-[IPv6AcceptRA]
-RouteMetric=100
+[device]
+wifi.backend=iwd
 """
 owner = "root"
-target = "/etc/systemd/network/20-wired.network"
-
-[[spawn_files]]
-content = """
-[Match]
-Name=wlan0
-
-[Network]
-DHCP=yes
-
-[DHCPv4]
-RouteMetric=600
-
-[IPv6AcceptRA]
-RouteMetric=600
-"""
-owner = "root"
-target = "/etc/systemd/network/21-wireless.network"
+target = "/etc/NetworkManager/conf.d/wifi_backend.conf"
 
 [[spawn_files]]
 content = """
@@ -67,28 +43,17 @@ FallbackDNS=1.0.0.1
 owner = "root"
 target = "/etc/resolved.conf"
 
-[[spawn_files]]
-content = """
-LANG=en_IE.UTF-8
-LC_ADDRESS=en_IE.UTF-8
-LC_IDENTIFICATION=en_IE.UTF-8
-LC_MEASUREMENT=en_IE.UTF-8
-LC_MONETARY=en_IE.UTF-8
-LC_NAME=en_IE.UTF-8
-LC_NUMERIC=en_IE.UTF-8
-LC_PAPER=en_IE.UTF-8
-LC_TELEPHONE=en_IE.UTF-8
-LC_TIME=en_IE.UTF-8
-"""
+[[install_files]]
+operation = "copy"
 owner = "root"
-target = "/etc/locale.conf"
+source = "common/files/lenovo_battery_limit_service/lenovo_battery_limit.service"
+target_path = "/etc/systemd/system"
 
-[[spawn_files]]
-content = """
-en_IE.UTF-8 UTF-8
-"""
+[[install_files]]
+operation = "copy"
 owner = "root"
-target = "/etc/locale.gen"
+source = "common/files/lenovo_battery_limit_service/lenovo_battery_limit.fish"
+target_path = "/usr/local/bin"
 
 [[install_files]]
 operation = "copy"
@@ -106,16 +71,13 @@ target_path = "/usr/local/bin"
 enable = [
    "getty@tty1",
 
-   "systemd-networkd",
-   "systemd-network-generator",
-   "systemd-networkd-wait-online",
-   "systemd-resolved",
-   "iwd",
+   "NetworkManager",
+   "systemd-resolved", # this or dnsmasq
 
    "systemd-timesyncd",
 
-   "lactd",
    "ufw",
+   "lenovo_battery_limit",
    "screen_off",
    "ananicy-cpp",
 ]
