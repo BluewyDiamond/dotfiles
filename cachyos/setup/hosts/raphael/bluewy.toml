@@ -152,7 +152,8 @@ std = [
 ]
 
 [packages.wayland.apps.controllers]
-std = ["pavucontrol", "gparted", "gnome-disk-utility", "overskride"]
+aur = ["overskride"]
+std = ["pavucontrol", "gparted", "gnome-disk-utility"]
 
 [packages.wayland.apps.monitor]
 std = ["mission-center", "qpwgraph"]
