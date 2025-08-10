@@ -96,3 +96,6 @@ enable = [
    "screen_off",
    "ananicy-cpp",
 ]
+
+[ignore]
+packages = ["sbctl"]
