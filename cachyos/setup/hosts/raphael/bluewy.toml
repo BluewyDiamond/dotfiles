@@ -73,7 +73,7 @@ std = [
    "hyprpicker",
    "wayland-pipewire-idle-inhibit",
 
-   "polkit-gnome",
+   "pantheon-polkit-agent",
    "gnome-keyring",
 
    "uwsm",
