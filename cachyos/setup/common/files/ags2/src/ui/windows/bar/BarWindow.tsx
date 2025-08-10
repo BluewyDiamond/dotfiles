@@ -6,6 +6,7 @@ import TrayBox from "./composables/TrayBox";
 import { Accessor, onCleanup } from "ags";
 import NiriStaticWorkspacesBox from "./composables/NiriStaticWorkspacesBox";
 import NiriTaskbarBox from "./composables/NiriTaskbarBox";
+import options from "../../../options";
 
 export default function BarWindow({ gdkmonitor }: { gdkmonitor: Gdk.Monitor }) {
    const { TOP, LEFT, RIGHT } = Astal.WindowAnchor;
@@ -14,8 +15,8 @@ export default function BarWindow({ gdkmonitor }: { gdkmonitor: Gdk.Monitor }) {
       <window
          $={(self) => onCleanup(() => self.destroy())}
          gdkmonitor={gdkmonitor}
-         name="ags_bar"
-         namespace="ags_bar"
+         name={options.bar.name}
+         namespace={options.bar.name}
          cssClasses={["bar-window"]}
          anchor={TOP | LEFT | RIGHT}
          exclusivity={Astal.Exclusivity.EXCLUSIVE}

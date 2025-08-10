@@ -2,6 +2,7 @@ import icons from "./lib/icons";
 
 export default {
    bar: {
+      name: "ags_bar",
       workspaces: { ids: [1, 2, 3, 4, 8, 9, 10] },
 
       niriWorkspaces: {
