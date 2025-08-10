@@ -76,6 +76,8 @@ enable = [
 
    "systemd-timesyncd",
 
+   "bluetooth",
+
    "ufw",
    "lenovo_battery_limit",
    "screen_off",

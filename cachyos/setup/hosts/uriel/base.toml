@@ -91,6 +91,8 @@ enable = [
 
    "systemd-timesyncd",
 
+   "bluetooth",
+
    "ufw",
    "acer_battery_limit",
    "screen_off",

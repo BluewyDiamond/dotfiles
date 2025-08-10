@@ -114,6 +114,8 @@ enable = [
 
    "systemd-timesyncd",
 
+   "bluetooth",
+
    "lactd",
    "ufw",
    "screen_off",
