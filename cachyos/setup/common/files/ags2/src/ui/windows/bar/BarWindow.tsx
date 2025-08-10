@@ -3,7 +3,6 @@ import { Astal, Gdk } from "ags/gtk4";
 import DateTimeMenuButton from "./composables/DateTimeMenubutton";
 import IndicatorsBox from "./composables/IndicatorsBox";
 import TrayBox from "./composables/TrayBox";
-import ControlCenterButton from "./composables/ControlCenterButton";
 import { Accessor, onCleanup } from "ags";
 import NiriStaticWorkspacesBox from "./composables/NiriStaticWorkspacesBox";
 import NiriTaskbarBox from "./composables/NiriTaskbarBox";
@@ -42,7 +41,6 @@ export default function BarWindow({ gdkmonitor }: { gdkmonitor: Gdk.Monitor }) {
             <box $type="end">
                <TrayBox />
                <IndicatorsBox />
-               <ControlCenterButton />
             </box>
          </centerbox>
       </window>

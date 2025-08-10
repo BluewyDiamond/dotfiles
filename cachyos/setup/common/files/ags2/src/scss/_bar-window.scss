@@ -78,11 +78,15 @@ window.bar-window {
       }
    }
 
-   .indicators-box {
+   .indicators-button {
       background: $surface-container;
       padding: $spacing-small;
       border-radius: $border-radius;
       margin-left: $spacing-medium;
+
+      &.active {
+         background: $primary-container;
+      }
 
       .indicator-widget {
          // medium space looks way too big with new impl

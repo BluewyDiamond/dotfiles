@@ -10,7 +10,6 @@ import AstalWp from "gi://AstalWp";
 import options from "../../../../options";
 import AstalNotifd from "gi://AstalNotifd";
 import Adw from "gi://Adw";
-import ControlCenterButton from "./ControlCenterButton";
 import app from "ags/gtk4/app";
 
 const powerprofiles = AstalPowerProfiles.get_default();
@@ -79,46 +78,83 @@ export default function () {
       }
    );
 
-   const forNotificationsIndicatorComputed = createComputed<
-      [Accessor<AstalNotifd.Notification[]>],
-      [AstalNotifd.Notification[]],
-      [boolean, string | null]
-   >(
-      [createBinding(notifd, "notifications")],
+   const isControlCenterVisibleExternal = createExternal<boolean>(
+      false,
 
-      (notifications) => {
-         if (notifications.length <= 0) {
-            return [false, null];
-         }
+      (set) => {
+         const onWindowToggled = () => {
+            const foundControlCenterWindow = app
+               .get_windows()
+               .find((window) => window.name === options.controlCenter.name);
 
-         return [
-            true,
-            options.bar.indicators.notifications.icons.notificationNoisy,
-         ];
+            if (foundControlCenterWindow === undefined) return;
+
+            if (foundControlCenterWindow.visible) {
+               set(true);
+            } else {
+               set(false);
+            }
+         };
+
+         const toggledWindowConnectionId = app.connect(
+            "window-toggled",
+            (_broken_value) => {
+               onWindowToggled();
+            }
+         );
+
+         onWindowToggled();
+
+         return () => app.disconnect(toggledWindowConnectionId);
       }
    );
 
-   const forPowerProfileIndicatorComputed = createComputed<
-      [Accessor<string>],
-      [string],
-      [boolean, string | null]
-   >([createBinding(powerprofiles, "activeProfile")], (activePowerProfile) => {
-      if (activePowerProfile === "performance") {
-         return [true, options.bar.indicators.powerprofile.icons.performance];
-      } else if (activePowerProfile === "balanced") {
-         return [false, options.bar.indicators.powerprofile.icons.performance];
-      } else if (activePowerProfile === "powersaving") {
-         return [true, options.bar.indicators.powerprofile.icons.powerSaver];
-      } else {
-         return [false, null];
-      }
-   });
+   // // // // // // // // // // // // // // // // // // // // // // // // //
 
-   const forVideoRecordersIndicatorComputed = createComputed<
-      [Accessor<AstalWp.Stream[]>],
-      [AstalWp.Stream[]],
+   const forNotificationsIndicatorComputed: Accessor<[boolean, string | null]> =
+      createComputed(
+         [createBinding(notifd, "notifications")],
+
+         (notifications) => {
+            if (notifications.length <= 0) {
+               return [false, null];
+            }
+
+            return [
+               true,
+               options.bar.indicators.notifications.icons.notificationNoisy,
+            ];
+         }
+      );
+
+   const forPowerProfileIndicatorComputed: Accessor<[boolean, string | null]> =
+      createComputed(
+         [createBinding(powerprofiles, "activeProfile")],
+         (activePowerProfile) => {
+            if (activePowerProfile === "performance") {
+               return [
+                  true,
+                  options.bar.indicators.powerprofile.icons.performance,
+               ];
+            } else if (activePowerProfile === "balanced") {
+               return [
+                  false,
+                  options.bar.indicators.powerprofile.icons.performance,
+               ];
+            } else if (activePowerProfile === "powersaving") {
+               return [
+                  true,
+                  options.bar.indicators.powerprofile.icons.powerSaver,
+               ];
+            } else {
+               return [false, null];
+            }
+         }
+      );
+
+   const forVideoRecordersIndicatorComputed: Accessor<
       [boolean, string | null]
-   >([createBinding(video, "recorders")], (videoRecorders) => {
+   > = createComputed([createBinding(video, "recorders")], (videoRecorders) => {
       if (videoRecorders.length <= 0) {
          return [false, null];
       }
@@ -126,11 +162,9 @@ export default function () {
       return [true, options.bar.indicators.icons.screenshare];
    });
 
-   const forMicrophoneRecordersIndicatorComputed = createComputed<
-      [Accessor<AstalWp.Stream[]>, Accessor<AstalWp.Endpoint | null>],
-      [AstalWp.Stream[], AstalWp.Endpoint | null],
+   const forMicrophoneRecordersIndicatorComputed: Accessor<
       [boolean, (() => Accessor<string>) | null]
-   >(
+   > = createComputed(
       [createBinding(audio, "recorders"), defaultMicrophoneExternal],
 
       (microphoneRecorders, defaultMicrophone) => {
@@ -172,11 +206,9 @@ export default function () {
    // we have to check for any connections to any speaker
    // something akin to microphone speaker but for speaker
    // tldr: missing speakerRecorders parameter
-   const forSpeakerRecordersIndicatorComputed = createComputed<
-      [Accessor<AstalWp.Endpoint | null>],
-      [AstalWp.Endpoint | null],
+   const forSpeakerRecordersIndicatorComputed: Accessor<
       [boolean, (() => Accessor<string>) | null]
-   >([defaultSpeakerExternal], (defaultSpeaker) => {
+   > = createComputed([defaultSpeakerExternal], (defaultSpeaker) => {
       if (defaultSpeaker === null) {
          return [true, null];
       }
@@ -205,24 +237,41 @@ export default function () {
       return [true, getDefaultVolumeIconComputed];
    });
 
-   const forFallbackIndicatorComputed = createComputed(
-      [
-         forNotificationsIndicatorComputed,
-         forPowerProfileIndicatorComputed,
-         forVideoRecordersIndicatorComputed,
-         forMicrophoneRecordersIndicatorComputed,
-         forSpeakerRecordersIndicatorComputed,
-      ],
-      (a, b, c, d, e) => {
-         const arr = [a, b, c, d, e];
-         const visible = !(arr.some((item) => item[0] === true) ?? false);
+   const forControlCenterIndicatorComputed: Accessor<[boolean, boolean]> =
+      createComputed(
+         [
+            forNotificationsIndicatorComputed,
+            forPowerProfileIndicatorComputed,
+            forVideoRecordersIndicatorComputed,
+            forMicrophoneRecordersIndicatorComputed,
+            forSpeakerRecordersIndicatorComputed,
+            isControlCenterVisibleExternal,
+         ],
+         (a, b, c, d, e, f) => {
+            const arr = [a, b, c, d, e];
+            const visible = !(arr.some((item) => item[0] === true) ?? false);
 
-         return [visible];
-      }
-   );
+            return [visible, f];
+         }
+      );
 
    return (
-      <button onClicked={() => app.toggle_window(options.controlCenter.name)}>
+      <button
+         cssClasses={createComputed(
+            [isControlCenterVisibleExternal],
+
+            (isControlCenterVisible) => {
+               const cssClasses = ["indicators-button"];
+               if (!isControlCenterVisible) {
+                  return cssClasses;
+               }
+
+               cssClasses.push("active");
+               return cssClasses;
+            }
+         )}
+         onClicked={() => app.toggle_window(options.controlCenter.name)}
+      >
          <box cssClasses={["indicators-box"]}>
             <Adw.Bin
                cssClasses={["indicator-widget"]}
@@ -360,57 +409,33 @@ export default function () {
             <Adw.Bin
                cssClasses={["indicator-widget"]}
                visible={createComputed(
-                  [forFallbackIndicatorComputed],
-                  (forFallbackIndicator) => forFallbackIndicator[0]
+                  [forControlCenterIndicatorComputed],
+                  (forControlCenterIndicator) => forControlCenterIndicator[0]
                )}
             >
-               <With value={forFallbackIndicatorComputed}>
-                  {(forFallbackIndicator) => {
-                     const [visible] = forFallbackIndicator;
+               <With value={forControlCenterIndicatorComputed}>
+                  {(forControlCenterIndicator) => {
+                     const [_, visible] = forControlCenterIndicator;
 
                      if (!visible) {
-                        return;
+                        return (
+                           <image
+                              iconName={
+                                 options.bar.controlCenterButton.arrowDown
+                              }
+                           />
+                        );
                      }
 
-                     return <ControlCenterIndicatorImage />;
+                     return (
+                        <image
+                           iconName={options.bar.controlCenterButton.arrowUp}
+                        />
+                     );
                   }}
                </With>
             </Adw.Bin>
          </box>
       </button>
    );
-}
-
-function ControlCenterIndicatorImage() {
-   const iconNameExternal = createExternal(
-      options.bar.controlCenterButton.arrowDown,
-      (set) => {
-         const onWindowToggled = () => {
-            const foundControlCenterWindow = app
-               .get_windows()
-               .find((window) => window.name === options.controlCenter.name);
-
-            if (foundControlCenterWindow === undefined) return;
-
-            if (foundControlCenterWindow.visible) {
-               set(options.bar.controlCenterButton.arrowUp);
-            } else {
-               set(options.bar.controlCenterButton.arrowDown);
-            }
-         };
-
-         const toggledWindowConnectionId = app.connect(
-            "window-toggled",
-            (_broken_value) => {
-               onWindowToggled();
-            }
-         );
-
-         onWindowToggled();
-
-         return () => app.disconnect(toggledWindowConnectionId);
-      }
-   );
-
-   return <image iconName={iconNameExternal} />;
 }
