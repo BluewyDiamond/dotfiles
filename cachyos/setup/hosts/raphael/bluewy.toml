@@ -1,5 +1,5 @@
 [ignore]
-packages = ["less"]
+packages = ["less", "vscodium"]
 
 [packages.make]
 std = ["rustup", "jdk21-openjdk"]
@@ -17,7 +17,7 @@ std = [
 ]
 
 [packages.tty]
-std = ["zellij"]
+std = ["zellij", "fisher"]
 
 [packages.tty.rice]
 std = ["terminus-font", "figlet", "fastfetch"]
