@@ -92,7 +92,7 @@ workspace "zero"
 // [Binds]
 //
 binds {
-   // WM Binds
+   // [[WM Binds]]
    //
    Mod+Shift+Slash { show-hotkey-overlay; }
    Mod+O repeat=false { toggle-overview; }
@@ -108,7 +108,7 @@ binds {
    Alt+Print { screenshot-window; }
    Mod+Shift+P { power-off-monitors; }
 
-   // Window Binds
+   // [[Window Binds]]
    //
    Mod+Q { close-window; }
 
@@ -166,7 +166,7 @@ binds {
    Mod+Ctrl+R { reset-window-height; }
 
   
-   // Workspace Binds
+   // [[Workspace Binds]]
    //
    Mod+1 { focus-workspace "one"; }
    Mod+2 { focus-workspace "two"; }
@@ -203,7 +203,7 @@ binds {
    Mod+Ctrl+WheelScrollDown cooldown-ms=150 { move-window-to-workspace-down; }
    Mod+Ctrl+WheelScrollUp   cooldown-ms=150 { move-window-to-workspace-up; }
 
-   // Monitor Binds
+   // [[Monitor Binds]]
    //
    Mod+Shift+Left  { focus-monitor-left; }
    Mod+Shift+Down  { focus-monitor-down; }
@@ -223,16 +223,12 @@ binds {
    Mod+Shift+Ctrl+U     { move-window-to-monitor-up; }
    Mod+Shift+Ctrl+I     { move-window-to-monitor-right; }
 
-   // Other
+   // [[Other]]
    //
    // in this setup prefers manual integration with systemd via uwsm
    // this is done so that i can do logic in a shell
    // without the shell itself being tracked by niri systemd integration as a scope
    Mod+T hotkey-overlay-title="Open a Terminal: wezterm" { spawn "uwsm" "app" "--" "wezterm"; }
-   // if launched with niri without --session (systemd integration)
-   // spawn action automatically do the equivalent of `uswm app -- ...`
-   // when delegating said functionality to our app launcher
-   // we have to tell it to use `uwsm app -- ...` or alternative
    Mod+D hotkey-overlay-title="Open App Launcher: fuzzel" { spawn "uwsm" "app" "--" "fuzzel" "--launch-prefix=uwsm app -- "; }
 
    XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"; }
@@ -247,52 +243,58 @@ binds {
 // [Environment Variables]
 //
 environment {
-   // tell toolkits to use wayland if available
+   // [[Toolkits]]
    //
+   // tell toolkits to use wayland if available
    SDL_VIDEODRIVER "wayland,x11"
    CLUTTER_BACKEND "wayland"
    GDK_BACKEND "wayland,x11,*"
    QT_QPA_PLATFORM "wayland;xcb"
 
-   // XDG Paths
+   // [[XDG Paths]]
    //
    XDG_CONFIG_HOME "/home/bluewy/.config"
    XDG_DATA_HOME "/home/bluewy/.local/share"
    XDG_STATE_HOME "/home/bluewy/.local/state"
    XDG_CACHE_HOME "/home/bluewy/.cache"
 
-   // rice
+   // [[Rice]]
    //
    QT_QPA_PLATFORMTHEME "qt6ct"
 
-   // other
+   // [[Other]]
    //
    EDITOR "nvim"
 
-   // fixes
+   // [[Fixes]]
    //
    _JAVA_AWT_WM_NONREPARENTING "1"
 }
 
 // [Autostart]
 //
-// widgets
-spawn-at-startup  "fish" "-c" "uwsm app -- $HOME/.config/ags2/cli.fish run"
-
-// idle listeners
-spawn-at-startup "fish" "-c" "pidof hypridle || uwsm app -- hypridle "
-spawn-at-startup "fish" "-c" "pidof wayland-pipewire-idle-inhibit || uwsm app -- wayland-pipewire-idle-inhibit"
-
-// polkit
-spawn-at-startup "fish" "-c" "pidof polkit-gnome-authentication-agent-1 || uwsm app -- /usr/lib/policykit-1-pantheon/io.elementary.desktop.agent-polkit"
-
-// clipboard
-// TODO: like the others, somehow check whether it is already running
-spawn-at-startup  "uwsm" "app" "--" "fish" "-c" "pidof wl-paste || wl-paste --type text --watch cliphist store && wl-paste --type image --watch cliphist store"
-
-// gtk4 rice
+// [[Rice]]
+//
 spawn-at-startup "gsettings" "set" "org.gnome.desktop.interface" "gtk-theme" "one_dark_adwaita"
 spawn-at-startup "gsettings" "set" "org.gnome.desktop.interface" "icon-theme" "Sweet-Rainbow"
 spawn-at-startup "gsettings" "set" "org.gnome.desktop.interface" "cursor-theme" "Bibata-Modern-Classic"
 spawn-at-startup "gsettings" "set" "org.gnome.desktop.interface" "cursor-size" "24"
 spawn-at-startup "gsettings" "set" "org.gnome.desktop.interface" "color-scheme" "prefer-dark"
+
+// [[Polkit]]
+//
+spawn-at-startup "fish" "-c" "pidof polkit-gnome-authentication-agent-1 || uwsm app -- /usr/lib/policykit-1-pantheon/io.elementary.desktop.agent-polkit"
+
+// [[Idle Listeners]]
+//
+spawn-at-startup "fish" "-c" "pidof hypridle || uwsm app -- hypridle"
+spawn-at-startup "fish" "-c" "pidof wayland-pipewire-idle-inhibit || uwsm app -- wayland-pipewire-idle-inhibit"
+
+// [[Clipboard]]
+//
+spawn-at-startup "fish" "-c" "pgrep -fx 'wl-paste --type text --watch cliphist store'; or uwsm app -- wl-paste --type text --watch cliphist store"
+spawn-at-startup "fish" "-c" "pgrep -fx 'wl-paste --type image --watch cliphist store'; or uwsm app -- wl-paste --type image --watch cliphist store"
+
+// [[Widgets]]
+//
+spawn-at-startup "fish" "-c" "uwsm app -- $HOME/.config/ags2/cli.fish run"
