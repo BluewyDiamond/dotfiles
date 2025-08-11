@@ -5,7 +5,6 @@
       "strict": true,
       "module": "ES2022",
       "target": "ES2022",
-      "lib": ["ES2023"],
       "moduleResolution": "Bundler",
       "jsx": "react-jsx",
       "jsxImportSource": "ags/gtk4",
@@ -16,6 +15,8 @@
          "ags/*": ["/usr/share/ags/js/lib/*"],
          "ags/gtk4": ["/usr/share/ags/js/lib/gtk4"],
          "ags/gtk4/*": ["/usr/share/ags/js/lib/gtk4/*"]
-      }
+      },
+
+      "allowDefaultProject": ["*.js"]
    }
 }
