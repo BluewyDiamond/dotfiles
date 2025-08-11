@@ -97,9 +97,9 @@ function get_unlisted_packages
 end
 
 function prepare_target
-    argparse 'owner=' 'target=' -- $argv or return
+    argparse 'owner=' 'target-pathname=' -- $argv or return
     set owner $_flag_owner
-    set target_pathname $_flag_target
+    set target_pathname $_flag_target_pathname
     set target_path (dirname $target_pathname)
 
     if test -f $target_pathname; or test -L $target_pathname; or test -d $target_pathname
@@ -113,11 +113,11 @@ function prepare_target
 end
 
 function install_files
-    argparse 'owner=' 'sources=' 'operation=' 'targets=' -- $argv or return
+    argparse 'owner=' 'source-pathnames=' 'operation=' 'target-pathnames=' -- $argv or return
     set owner $_flag_owner
-    set source_pathnames (string split ' ' "$_flag_sources")
+    set source_pathnames (string split ' ' "$_flag_source_pathnames")
     set operation $_flag_operation
-    set target_pathnames (string split ' ' "$_flag_targets")
+    set target_pathnames (string split ' ' "$_flag_target_pathnames")
 
     for source_pathname in $source_pathnames
         if not test -e $source_pathname
@@ -139,7 +139,7 @@ function install_files
                         end
                     end
 
-                    prepare_target --owner $owner --target $target_pathname
+                    prepare_target --owner $owner --target-pathname $target_pathname
                     sudo -iu $owner -- cp $source_pathname $target_pathname
                 case link
                     if test -L $target_pathname
@@ -152,7 +152,7 @@ function install_files
 
                     end
 
-                    prepare_target --owner $owner --target $target_pathname
+                    prepare_target --owner $owner --target-pathname $target_pathname
                     sudo -iu $owner -- ln -s $source_pathname $target_pathname
                 case '*'
                     echo "[INFO] SKIP | UNIMPLEMENTED OPERATION | OPERATION={$operation}"
@@ -162,10 +162,10 @@ function install_files
 end
 
 function spawn_file
-    argparse 'owner=' 'content=' 'target=' -- $argv or return
+    argparse 'owner=' 'content=' 'target-pathname=' -- $argv or return
     set owner $_flag_owner
     set target_content $_flag_content
-    set target_pathname $_flag_target
+    set target_pathname $_flag_target_pathname
 
     if test -f $target_pathname
         set existing_target_content (cat $target_pathname | string collect)
@@ -176,7 +176,7 @@ function spawn_file
         end
     end
 
-    prepare_target --owner $owner --target $target_pathname
+    prepare_target --owner $owner --target-pathname $target_pathname
     echo $target_content | sudo -iu $owner -- tee $target_pathname >/dev/null
 end
 
@@ -297,7 +297,7 @@ switch $argv[1]
                         set target_pathname $target_path/(basename $source_pathname)
                     end
 
-                    install_files --owner $owner --sources $source_pathname --operation $operation --targets $target_pathname
+                    install_files --owner $owner --source-pathnames $source_pathname --operation $operation --target-pathnames $target_pathname
                 else
                     echo "[ERROR] INVALID VALUE | TARGET_REGEX={$target_path_regex} | TARGET={$target}"
                     continue
@@ -310,7 +310,7 @@ switch $argv[1]
                 set target_content (tomlq -r ".spawn_files[$spawn_file_index].content" $host_pathname | string collect)
                 echo "[INFO] SPAWN FILE | TARGET={$target_pathname}"
 
-                spawn_file --owner $owner --target $target_pathname --content $target_content
+                spawn_file --owner $owner --target-pathname $target_pathname --content $target_content
             end
         end
 
