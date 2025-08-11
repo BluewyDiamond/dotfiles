@@ -2,8 +2,8 @@
 
 set script_path (realpath (dirname (status filename)))
 
-# some requirements
-
+# [Requirements]
+#
 set required_packages yq paru trash-cli fd
 set required_packages_to_install
 
@@ -17,8 +17,11 @@ if set -q required_packages_to_install[1]
     sudo pacman -S $required_packages_to_install
 end
 
-# declaration of variables for data to be obtained
+# ignore this packages
+set -a std_packages $required_packages
 
+# [Extract Variables]
+#
 set hosts_pathnames $argv[2..-1]
 set common_packages_pathnames
 set std_packages
@@ -26,11 +29,6 @@ set aur_packages
 set local_path_packages
 set services
 set ignored_packages
-
-# ignore this packages
-set -a std_packages $required_packages
-
-# partial acquisition of data (acquisition of global data)
 
 for host_pathname in $hosts_pathnames
     set -a common_packages_pathnames (tomlq -r '(.common_packages // [])[]' $host_pathname)
@@ -55,8 +53,8 @@ for local_path_package in $local_path_packages
     set -a local_packages (basename $local_path_package)
 end
 
-# action based on the data
-
+# [Helper Functions]
+#
 function is_package_a_dependency
     argparse 'package=' -- $argv or return
     set package $_flag_package
@@ -96,6 +94,8 @@ function get_unlisted_packages
     echo -n $unlisted_packages
 end
 
+# [Util Functions]
+#
 function prepare_target
     argparse 'owner=' 'target-pathname=' -- $argv or return
     set owner $_flag_owner
@@ -112,53 +112,56 @@ function prepare_target
     end
 end
 
-function install_files
-    argparse 'owner=' 'source-pathnames=' 'operation=' 'target-pathnames=' -- $argv or return
+function install_file
+    argparse 'owner=' 'source-pathname=' 'operation=' 'target-pathname=' -- $argv or return
     set owner $_flag_owner
-    set source_pathnames (string split ' ' "$_flag_source_pathnames")
+    set source_pathname $_flag_source_pathname
     set operation $_flag_operation
-    set target_pathnames (string split ' ' "$_flag_target_pathnames")
+    set target_pathname $_flag_target_pathname
 
-    for source_pathname in $source_pathnames
-        if not test -e $source_pathname
-            echo "[ERROR] SKIP | INVALID VALUE | SOURCE={$source_pathname}"
-            continue
+    echo "[INFO] Installing file, owner={$owner} source_pathname={$source_pathname} operation={$operation} target_pathname={$target_pathname}"
+
+    if not test -e $source_pathname
+        echo "[ERROR] source_pathname={$source_pathname} does not exist"
+        return 1
+    end
+
+    set is_target_matched false
+
+    if test copy = "$operation"
+        if test -f $target_pathname; and test (cat $source_pathname | string collect) = (cat $target_pathname | string collect)
+            set is_target_matched true
         end
+    else if test link = "$operation"
+        if test -L $target_pathname
+            set existing_link_points_to (readlink -f $target_pathname)
 
-        echo "[INFO] INSTALL FILE | OWNER={$owner} OPERATION={$operation} SOURCE={$source_pathname}"
-
-        for target_pathname in $target_pathnames
-            echo "[INFO] TARGET={$target_pathname}"
-
-            switch "$operation"
-                case copy
-                    if test -f $target_pathname
-                        if test (cat $source_pathname | string collect) = (cat $target_pathname | string collect)
-                            echo "[INFO] SKIP | MATCHING FILE FOUND"
-                            continue
-                        end
-                    end
-
-                    prepare_target --owner $owner --target-pathname $target_pathname
-                    sudo -iu $owner -- cp $source_pathname $target_pathname
-                case link
-                    if test -L $target_pathname
-                        set existing_link_points_to (readlink -f $target_pathname)
-
-                        if test "$source_pathname" = "$existing_link_points_to"
-                            echo "[INFO] SKIP | MATCHING LINK FOUND"
-                            continue
-                        end
-
-                    end
-
-                    prepare_target --owner $owner --target-pathname $target_pathname
-                    sudo -iu $owner -- ln -s $source_pathname $target_pathname
-                case '*'
-                    echo "[INFO] SKIP | UNIMPLEMENTED OPERATION | OPERATION={$operation}"
+            if test "$source_pathname" = "$existing_link_points_to"
+                set is_target_matched true
             end
         end
+    else
+        echo "[ERROR] operation={$operation} is invalid"
+        return 1
     end
+
+    if test true = "$is_target_matched"
+        echo "[INFO] target_pathname={$target_pathname} contents are correct, skipping"
+        return 0
+    end
+
+    set operation_cmd
+
+    if test copy = "$operation"
+        set operation_cmd cp
+    else if test link = "$link"
+        set operation_cmd ln -s
+    else
+        echo "[ERROR] operation={$operation} is invalid"
+        return 1
+    end
+
+    sudo -iu $owner -- $operation_cmd $source_pathname $target_pathname
 end
 
 function spawn_file
@@ -171,7 +174,7 @@ function spawn_file
         set existing_target_content (cat $target_pathname | string collect)
 
         if test "$target_content" = "$existing_target_content"
-            echo "[INFO] SKIP | MATCHING FILE FOUND"
+            echo "[INFO] target_pathname={$target_pathname} contents are the same, skipping"
             return
         end
     end
@@ -196,182 +199,194 @@ function get_missing_packages
     echo -n $missing_packages
 end
 
-switch $argv[1]
-    case install
-        echo "[INFO] INSTALL STD PACKAGES"
-        set missing_std_packages
+# [Main]
+#
+function install_std_packages
+    echo "[INFO] on install std packages"
+    set missing_std_packages
 
-        for std_package in $std_packages
-            if pacman -Q $std_package 2&>/dev/null
+    for std_package in $std_packages
+        if pacman -Q $std_package 2&>/dev/null
+            continue
+        end
+
+        set -a missing_std_packages $std_package
+    end
+
+    if set -q missing_std_packages[1]
+        sudo pacman -S $missing_std_packages
+    else
+        echo "[INFO] std packages are already installed, skipping"
+    end
+end
+
+function install_aur_packages
+    echo "[INFO] on install aur packages"
+    set missing_aur_packages
+
+    for aur_package in $aur_packages
+        if pacman -Q $aur_package 2&>/dev/null
+            continue
+        end
+
+        set -a missing_aur_packages $aur_package
+    end
+
+    if set -q missing_aur_packages[1]
+        paru -S --aur $missing_aur_packages
+    else
+        echo "[INFO] aur packages are already installed, skipping"
+    end
+
+end
+
+function install_local_packages
+    echo "[INFO] on install local packages"
+    set missing_local_path_packages
+
+    for local_path_package in $local_path_packages
+        if pacman -Q (basename $local_path_package) 2&>/dev/null
+            continue
+        end
+
+        set -a missing_local_path_packages $local_path_package
+    end
+
+    if set -q missing_local_path_packages[1]
+        for missing_local_path_package in $missing_local_path_packages
+            pushd $script_path/$missing_local_path_package
+            makepkg -si
+            popd
+        end
+    else
+        echo "[INFO] local packages are already installed, skipping"
+    end
+end
+
+if test install = $argv[1]
+    install_std_packages
+    install_aur_packages
+    install_local_packages
+
+    for host_pathname in $hosts_pathnames
+        set install_files_length (tomlq -r '.install_files // [] | length' $host_pathname)
+        set spawn_files_length (tomlq -r '.spawn_files // [] | length' $host_pathname)
+
+        for install_file_index in (seq 0 (math $install_files_length - 1))
+            set owner (tomlq -r ".install_files[$install_file_index].owner" $host_pathname)
+            set operation (tomlq -r ".install_files[$install_file_index].operation" $host_pathname)
+            set source_pathname $script_path/(tomlq -r ".install_files[$install_file_index].source // \"\"" $host_pathname)
+            set target_name (tomlq -r ".install_files[$install_file_index].target_name // \"\"" $host_pathname)
+            set target_path (tomlq -r ".install_files[$install_file_index].target_path // \"\"" $host_pathname)
+            set target_path_regex (tomlq -r ".install_files[$install_file_index].target_path_regex // \"\"" $host_pathname)
+
+            if not test -e $source_pathname
+                echo "[ERROR] INVALID VALUE | SOURCE={$source_pathname}"
                 continue
             end
 
-            set -a missing_std_packages $std_package
-        end
+            if not test -z (string trim -- $target_path_regex)
+                set found_target_paths (fd --regex $target_path_regex $target_path)
+                set found_target_pathnames
 
-        if set -q missing_std_packages[1]
-            sudo pacman -S $missing_std_packages
-        else
-            echo "[INFO] SKIP | ALREADY INSTALLED"
-        end
-
-        echo "[INFO] INSTALL AUR PACKAGES"
-        set missing_aur_packages
-
-        for aur_package in $aur_packages
-            if pacman -Q $aur_package 2&>/dev/null
-                continue
-            end
-
-            set -a missing_aur_packages $aur_package
-        end
-
-        if set -q missing_aur_packages[1]
-            paru -S --aur $missing_aur_packages
-        else
-            echo "[INFO] SKIP | ALREADY INSTALLED"
-        end
-
-        echo "[INFO] INSTALL LOCAL PACKAGES"
-        set missing_local_path_packages
-
-        for local_path_package in $local_path_packages
-            if pacman -Q (basename $local_path_package) 2&>/dev/null
-                continue
-            end
-
-            set -a missing_local_path_packages $local_path_package
-        end
-
-        if set -q missing_local_path_packages[1]
-            for missing_local_path_package in $missing_local_path_packages
-                pushd $script_path/$missing_local_path_package
-                makepkg -si
-                popd
-            end
-        else
-            echo "[INFO] SKIP | ALREADY INSTALLED"
-        end
-
-        for host_pathname in $hosts_pathnames
-            set install_files_length (tomlq -r '.install_files // [] | length' $host_pathname)
-            set spawn_files_length (tomlq -r '.spawn_files // [] | length' $host_pathname)
-
-            for install_file_index in (seq 0 (math $install_files_length - 1))
-                set owner (tomlq -r ".install_files[$install_file_index].owner" $host_pathname)
-                set operation (tomlq -r ".install_files[$install_file_index].operation" $host_pathname)
-                set source_pathname $script_path/(tomlq -r ".install_files[$install_file_index].source // \"\"" $host_pathname)
-                set target_name (tomlq -r ".install_files[$install_file_index].target_name // \"\"" $host_pathname)
-                set target_path (tomlq -r ".install_files[$install_file_index].target_path // \"\"" $host_pathname)
-                set target_path_regex (tomlq -r ".install_files[$install_file_index].target_path_regex // \"\"" $host_pathname)
-
-                if not test -e $source_pathname
-                    echo "[ERROR] INVALID VALUE | SOURCE={$source_pathname}"
-                    continue
-                end
-
-                if not test -z (string trim -- $target_path_regex)
-                    set found_target_paths (fd --regex $target_path_regex $target_path)
-                    set found_target_pathnames
-
-                    for found_target_path in $found_target_paths
-                        if not test -z (string trim -- $target_name)
-                            set -a found_target_pathnames $found_target_path/$target_name
-                        end
-
-                        set -a found_target_pathnames $found_target_path/(basename $source_pathname)
-                    end
-
-                    # echo "[DEBUG] found_target_proccessed_array={$found_target_proccessed_array}"
-
-                    echo "[WARN] NOT IMPLEMENTED"
-                    continue
-
-                    # install_files --owner $owner --sources "$source_pathname" --operation $operation --targets "$found_target_proccessed_array"
-                else if not test -z (string trim -- $target_path)
-                    set target_pathname
-
+                for found_target_path in $found_target_paths
                     if not test -z (string trim -- $target_name)
-                        set target_pathname $target_path/$target_name
-                    else
-                        set target_pathname $target_path/(basename $source_pathname)
+                        set -a found_target_pathnames $found_target_path/$target_name
                     end
 
-                    install_files --owner $owner --source-pathnames $source_pathname --operation $operation --target-pathnames $target_pathname
-                else
-                    echo "[ERROR] INVALID VALUE | TARGET_REGEX={$target_path_regex} | TARGET={$target}"
-                    continue
+                    set -a found_target_pathnames $found_target_path/(basename $source_pathname)
                 end
-            end
 
-            for spawn_file_index in (seq 0 (math $spawn_files_length - 1))
-                set owner (tomlq -r ".spawn_files[$spawn_file_index].owner" $host_pathname)
-                set target_pathname (tomlq -r ".spawn_files[$spawn_file_index].target" $host_pathname)
-                set target_content (tomlq -r ".spawn_files[$spawn_file_index].content" $host_pathname | string collect)
-                echo "[INFO] SPAWN FILE | TARGET={$target_pathname}"
+                # echo "[DEBUG] found_target_proccessed_array={$found_target_proccessed_array}"
 
-                spawn_file --owner $owner --target-pathname $target_pathname --content $target_content
-            end
-        end
+                echo "[WARN] NOT IMPLEMENTED"
+                continue
 
-        set enabled_services (fd -e service . /etc/systemd/system/*.wants -x basename | string replace -r '\.service$' '')
-        set services_to_enable
+                # install_files --owner $owner --sources "$source_pathname" --operation $operation --targets "$found_target_proccessed_array"
+            else if not test -z (string trim -- $target_path)
+                set target_pathname
 
-        for service in $services
-            if contains $service $enabled_services
-                echo "[INFO] SKIP | ALREADY ENABLED | SERVICE={$service}"
+                if not test -z (string trim -- $target_name)
+                    set target_pathname $target_path/$target_name
+                else
+                    set target_pathname $target_path/(basename $source_pathname)
+                end
+
+                install_file --owner $owner --source-pathname $source_pathname --operation $operation --target-pathname $target_pathname
+            else
+                echo "[ERROR] INVALID VALUE | TARGET_REGEX={$target_path_regex} | TARGET={$target}"
                 continue
             end
-
-            set -a services_to_enable $service
         end
 
-        for service_to_enable in $services_to_enable
-            echo "[INFO] ENABLE SERVICE | SERVICE={$service_to_enable}"
-            sudo systemctl enable $service_to_enable
+        for spawn_file_index in (seq 0 (math $spawn_files_length - 1))
+            set owner (tomlq -r ".spawn_files[$spawn_file_index].owner" $host_pathname)
+            set target_pathname (tomlq -r ".spawn_files[$spawn_file_index].target" $host_pathname)
+            set target_content (tomlq -r ".spawn_files[$spawn_file_index].content" $host_pathname | string collect)
+            echo "[INFO] SPAWN FILE | TARGET={$target_pathname}"
+
+            spawn_file --owner $owner --target-pathname $target_pathname --content $target_content
         end
-    case cleanup
-        echo "[INFO] DELETING PACKAGES"
+    end
 
-        set unlisted_packages (get_unlisted_packages --wanted-packages "$std_packages $aur_packages $local_packages $ignored_packages")
-        sudo pacman -Rns $unlisted_packages
+    set enabled_services (fd -e service . /etc/systemd/system/*.wants -x basename | string replace -r '\.service$' '')
+    set services_to_enable
 
-        set enabled_services (fd -e service . /etc/systemd/system/*.wants -x basename | string replace -r '\.service$' '')
-        set services_to_disable
-
-        for enabled_service in $enabled_services
-            if contains $enabled_service $services
-                continue
-            end
-
-            set -a services_to_disable $enabled_service
+    for service in $services
+        if contains $service $enabled_services
+            echo "[INFO] SKIP | ALREADY ENABLED | SERVICE={$service}"
+            continue
         end
 
-        for service_to_disable in $services_to_disable
-            echo "[INFO] DISABLING SERVICE | SERVICE={$service_to_disable}"
-            sudo systemctl disable $service_to_disable
-        end
-    case check
-        set missing_packages (get_missing_packages --wanted-packages "$std_packages $aur_packages $local_packages $ignored_packages")
+        set -a services_to_enable $service
+    end
 
-        if set -q missing_packages[1]
-            echo "Missing packages: $packages_not_found"
+    for service_to_enable in $services_to_enable
+        echo "[INFO] ENABLE SERVICE | SERVICE={$service_to_enable}"
+        sudo systemctl enable $service_to_enable
+    end
+else if test cleanup = "$argv[1]"
+    echo "[INFO] DELETING PACKAGES"
+
+    set unlisted_packages (get_unlisted_packages --wanted-packages "$std_packages $aur_packages $local_packages $ignored_packages")
+    sudo pacman -Rns $unlisted_packages
+
+    set enabled_services (fd -e service . /etc/systemd/system/*.wants -x basename | string replace -r '\.service$' '')
+    set services_to_disable
+
+    for enabled_service in $enabled_services
+        if contains $enabled_service $services
+            continue
         end
 
-        set unlisted_packages (get_unlisted_packages --wanted-packages "$std_packages $aur_packages $local_packages $ignored_packages")
+        set -a services_to_disable $enabled_service
+    end
 
-        if set -q unlisted_packages[1]
-            echo "Packages not defined: $unlisted_packages"
-        end
-    case help
-        echo "USAGE: COMMAND HOST_PATHNAME_1 HOST_PATHNAME_2 ... HOST_PATHNAME_9"
-        echo COMMANDS
-        echo "-> install"
-        echo "In the following order it installs: packages, files and services."
-        echo "-> cleanup"
-        echo "Removes unlisted packages."
-        echo "-> uninstall"
-        echo "Removes files."
-        echo "-> check"
-        echo "Verifies the configuration is setup."
+    for service_to_disable in $services_to_disable
+        echo "[INFO] DISABLING SERVICE | SERVICE={$service_to_disable}"
+        sudo systemctl disable $service_to_disable
+    end
+else if test check = $argv[1]
+    set missing_packages (get_missing_packages --wanted-packages "$std_packages $aur_packages $local_packages $ignored_packages")
+
+    if set -q missing_packages[1]
+        echo "Missing packages: $packages_not_found"
+    end
+
+    set unlisted_packages (get_unlisted_packages --wanted-packages "$std_packages $aur_packages $local_packages $ignored_packages")
+
+    if set -q unlisted_packages[1]
+        echo "Packages not defined: $unlisted_packages"
+    end
+else if test help = $argv[1]
+    echo "USAGE: COMMAND HOST_PATHNAME_1 HOST_PATHNAME_2 ... HOST_PATHNAME_9"
+    echo COMMANDS
+    echo "-> install"
+    echo "In the following order it installs: packages, files and services."
+    echo "-> cleanup"
+    echo "Removes unlisted packages."
+    echo "-> uninstall"
+    echo "Removes files."
+    echo "-> check"
+    echo "Verifies the configuration is setup."
 end
