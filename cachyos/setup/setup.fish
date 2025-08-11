@@ -94,6 +94,33 @@ function get_unlisted_packages
     echo -n $unlisted_packages
 end
 
+function trace
+    argparse 'level=' 'context=' 'reason=' -- $argv or return
+    set level $_flag_level
+    set context $_flag_context
+    set reason $_flag_reason
+
+    set trace_line
+
+    if test error = $level
+        set -a trace_line (set_color red)ERROR(set_color normal)
+    else if test warn = $level
+        set -a trace_line (set_color yellow)WARN(set_color normal)
+    else if test info = $level
+        set -a trace_line (set_color blue)INFO(set_color normal)
+    end
+
+    if not test -z "$context"
+        set -a trace_line (set_color magenta)"@$context"(set_color normal)
+    end
+
+    if not test -z "$reason"
+        set -a trace_line $reason
+    end
+
+    echo $trace_line
+end
+
 # [Util Functions]
 #
 function prepare_target
@@ -103,7 +130,7 @@ function prepare_target
     set target_path (dirname $target_pathname)
 
     if test -f $target_pathname; or test -L $target_pathname; or test -d $target_pathname
-        echo "[WARN] TRASH TARGET | CONFLICT FOUND | TARGET={$target_pathname}"
+        trace --level warn --context (status function) --reason "file conflict found: '$target_pathname'"
         sudo -iu $owner -- trash $target_pathname
     end
 
@@ -119,10 +146,10 @@ function install_file
     set operation $_flag_operation
     set target_pathname $_flag_target_pathname
 
-    echo "[INFO] Installing file, owner={$owner} source_pathname={$source_pathname} operation={$operation} target_pathname={$target_pathname}"
+    trace --level info --context (status function) --reason "tracking, owner:'$owner' source_pathname:'$source_pathname' operation: '$operation' target_pathname: '$target_pathname'"
 
     if not test -e $source_pathname
-        echo "[ERROR] source_pathname={$source_pathname} does not exist"
+        trace --level error --context (status function) --reason "file does not exist, source_pathname: '$source_pathname'"
         return 1
     end
 
@@ -141,12 +168,12 @@ function install_file
             end
         end
     else
-        echo "[ERROR] operation={$operation} is invalid"
+        trace --level error --context (status function) --reason "invalid value, operation: '$operation'"
         return 1
     end
 
     if test true = "$is_target_matched"
-        echo "[INFO] target_pathname={$target_pathname} contents are correct, skipping"
+        trace --level info --context (status function) --reason "content match, target_pathname: '$target_pathname'"
         return 0
     end
 
@@ -154,13 +181,14 @@ function install_file
 
     if test copy = "$operation"
         set operation_cmd cp
-    else if test link = "$link"
+    else if test link = "$operation"
         set operation_cmd ln -s
     else
-        echo "[ERROR] operation={$operation} is invalid"
+        trace --level error --context (status function) --reason "invalid value, operation: '$operation'"
         return 1
     end
 
+    prepare_target --owner $owner --target-pathname $target_pathname
     sudo -iu $owner -- $operation_cmd $source_pathname $target_pathname
 end
 
@@ -170,12 +198,14 @@ function spawn_file
     set target_content $_flag_content
     set target_pathname $_flag_target_pathname
 
+    trace --level info --context (status function) --reason "tracking, target_pathname: '$target_pathname'"
+
     if test -f $target_pathname
         set existing_target_content (cat $target_pathname | string collect)
 
         if test "$target_content" = "$existing_target_content"
-            echo "[INFO] target_pathname={$target_pathname} contents are the same, skipping"
-            return
+            trace --level info --context (status function) --reason "content match, target: '$target_pathname'"
+            return 0
         end
     end
 
@@ -202,7 +232,7 @@ end
 # [Main]
 #
 function install_std_packages
-    echo "[INFO] on install std packages"
+    trace --level info --context (status function)
     set missing_std_packages
 
     for std_package in $std_packages
@@ -216,12 +246,12 @@ function install_std_packages
     if set -q missing_std_packages[1]
         sudo pacman -S $missing_std_packages
     else
-        echo "[INFO] std packages are already installed, skipping"
+        trace --level info --context (status function) --reason "skipped, std packages are already installed"
     end
 end
 
 function install_aur_packages
-    echo "[INFO] on install aur packages"
+    trace --level info --context (status function)
     set missing_aur_packages
 
     for aur_package in $aur_packages
@@ -235,13 +265,12 @@ function install_aur_packages
     if set -q missing_aur_packages[1]
         paru -S --aur $missing_aur_packages
     else
-        echo "[INFO] aur packages are already installed, skipping"
+        trace --level info --context (status function) --reason "skipped, aur packages are already installed"
     end
-
 end
 
 function install_local_packages
-    echo "[INFO] on install local packages"
+    trace --level info --context (status function)
     set missing_local_path_packages
 
     for local_path_package in $local_path_packages
@@ -259,7 +288,7 @@ function install_local_packages
             popd
         end
     else
-        echo "[INFO] local packages are already installed, skipping"
+        trace --level info --context (status function) --reason "skipped, local packages are already installed"
     end
 end
 
@@ -280,10 +309,7 @@ if test install = $argv[1]
             set target_path (tomlq -r ".install_files[$install_file_index].target_path // \"\"" $host_pathname)
             set target_path_regex (tomlq -r ".install_files[$install_file_index].target_path_regex // \"\"" $host_pathname)
 
-            if not test -e $source_pathname
-                echo "[ERROR] INVALID VALUE | SOURCE={$source_pathname}"
-                continue
-            end
+            set target_pathnames
 
             if not test -z (string trim -- $target_path_regex)
                 set found_target_paths (fd --regex $target_path_regex $target_path)
@@ -297,25 +323,18 @@ if test install = $argv[1]
                     set -a found_target_pathnames $found_target_path/(basename $source_pathname)
                 end
 
-                # echo "[DEBUG] found_target_proccessed_array={$found_target_proccessed_array}"
-
-                echo "[WARN] NOT IMPLEMENTED"
+                trace --level error --context (status function) --reason "not yet implemented"
                 continue
-
-                # install_files --owner $owner --sources "$source_pathname" --operation $operation --targets "$found_target_proccessed_array"
             else if not test -z (string trim -- $target_path)
-                set target_pathname
-
                 if not test -z (string trim -- $target_name)
-                    set target_pathname $target_path/$target_name
+                    set -a target_pathnames $target_path/$target_name
                 else
-                    set target_pathname $target_path/(basename $source_pathname)
+                    set -a target_pathnames $target_path/(basename $source_pathname)
                 end
+            end
 
+            for target_pathname in $target_pathnames
                 install_file --owner $owner --source-pathname $source_pathname --operation $operation --target-pathname $target_pathname
-            else
-                echo "[ERROR] INVALID VALUE | TARGET_REGEX={$target_path_regex} | TARGET={$target}"
-                continue
             end
         end
 
@@ -323,7 +342,6 @@ if test install = $argv[1]
             set owner (tomlq -r ".spawn_files[$spawn_file_index].owner" $host_pathname)
             set target_pathname (tomlq -r ".spawn_files[$spawn_file_index].target" $host_pathname)
             set target_content (tomlq -r ".spawn_files[$spawn_file_index].content" $host_pathname | string collect)
-            echo "[INFO] SPAWN FILE | TARGET={$target_pathname}"
 
             spawn_file --owner $owner --target-pathname $target_pathname --content $target_content
         end
@@ -334,7 +352,7 @@ if test install = $argv[1]
 
     for service in $services
         if contains $service $enabled_services
-            echo "[INFO] SKIP | ALREADY ENABLED | SERVICE={$service}"
+            trace --level info --context enable_service --reason "is already enabled, service: '$service'"
             continue
         end
 
@@ -342,11 +360,11 @@ if test install = $argv[1]
     end
 
     for service_to_enable in $services_to_enable
-        echo "[INFO] ENABLE SERVICE | SERVICE={$service_to_enable}"
+        trace --level info --context enable_service --reason "tracking, service: '$service_to_enable'"
         sudo systemctl enable $service_to_enable
     end
 else if test cleanup = "$argv[1]"
-    echo "[INFO] DELETING PACKAGES"
+    trace --level info --context cleanup
 
     set unlisted_packages (get_unlisted_packages --wanted-packages "$std_packages $aur_packages $local_packages $ignored_packages")
     sudo pacman -Rns $unlisted_packages
@@ -363,7 +381,7 @@ else if test cleanup = "$argv[1]"
     end
 
     for service_to_disable in $services_to_disable
-        echo "[INFO] DISABLING SERVICE | SERVICE={$service_to_disable}"
+        trace --level info --context disable_service --reason "tracking, service: '$service_to_disable'"
         sudo systemctl disable $service_to_disable
     end
 else if test check = $argv[1]
@@ -381,12 +399,12 @@ else if test check = $argv[1]
 else if test help = $argv[1]
     echo "USAGE: COMMAND HOST_PATHNAME_1 HOST_PATHNAME_2 ... HOST_PATHNAME_9"
     echo COMMANDS
-    echo "-> install"
+    echo "- > install"
     echo "In the following order it installs: packages, files and services."
-    echo "-> cleanup"
+    echo "- > cleanup"
     echo "Removes unlisted packages."
-    echo "-> uninstall"
+    echo "- > uninstall"
     echo "Removes files."
-    echo "-> check"
+    echo "- > check"
     echo "Verifies the configuration is setup."
 end
