@@ -367,7 +367,10 @@ else if test cleanup = "$argv[1]"
     trace --level info --context cleanup
 
     set unlisted_packages (get_unlisted_packages --wanted-packages "$std_packages $aur_packages $local_packages $ignored_packages")
-    sudo pacman -Rns $unlisted_packages
+
+    if set -q unlisted_packages[1]
+        sudo pacman -Rns $unlisted_packages
+    end
 
     trace --level info --context disable_services
 
