@@ -364,7 +364,7 @@ if test install = $argv[1]
         sudo systemctl enable $service_to_enable
     end
 else if test cleanup = "$argv[1]"
-    trace --level info --context cleanup
+    trace --level info --context "cleanup_packages"
 
     set unlisted_packages (get_unlisted_packages --wanted-packages "$std_packages $aur_packages $local_packages $ignored_packages")
 
@@ -372,7 +372,7 @@ else if test cleanup = "$argv[1]"
         sudo pacman -Rns $unlisted_packages
     end
 
-    trace --level info --context disable_services
+    trace --level info --context "cleanup_services"
 
     set enabled_services (fd -e service . /etc/systemd/system/*.wants -x basename | string replace -r '\.service$' '')
     set services_to_disable
