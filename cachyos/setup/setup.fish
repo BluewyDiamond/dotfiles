@@ -91,7 +91,7 @@ function get_unlisted_packages
         set -a unlisted_packages $installed_package
     end
 
-    echo -n $unlisted_packages
+    string join \n $unlisted_packages
 end
 
 function trace
