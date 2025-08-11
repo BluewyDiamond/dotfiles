@@ -364,7 +364,7 @@ if test install = $argv[1]
         sudo systemctl enable $service_to_enable
     end
 else if test cleanup = "$argv[1]"
-    trace --level info --context "cleanup_packages"
+    trace --level info --context cleanup_packages
 
     set unlisted_packages (get_unlisted_packages --wanted-packages "$std_packages $aur_packages $local_packages $ignored_packages")
 
@@ -372,7 +372,7 @@ else if test cleanup = "$argv[1]"
         sudo pacman -Rns $unlisted_packages
     end
 
-    trace --level info --context "cleanup_services"
+    trace --level info --context cleanup_services
 
     set enabled_services (fd -e service . /etc/systemd/system/*.wants -x basename | string replace -r '\.service$' '')
     set services_to_disable
@@ -390,16 +390,17 @@ else if test cleanup = "$argv[1]"
         sudo systemctl disable $service_to_disable
     end
 else if test check = $argv[1]
+    trace --level info --context check_packages
     set missing_packages (get_missing_packages --wanted-packages "$std_packages $aur_packages $local_packages $ignored_packages")
 
     if set -q missing_packages[1]
-        echo "Missing packages: $packages_not_found"
+        echo "packages_not_found: '$packages_not_found'"
     end
 
     set unlisted_packages (get_unlisted_packages --wanted-packages "$std_packages $aur_packages $local_packages $ignored_packages")
 
     if set -q unlisted_packages[1]
-        echo "Packages not defined: $unlisted_packages"
+        echo "unlisted_packages: '$unlisted_packages'"
     end
 else if test help = $argv[1]
     echo "USAGE: COMMAND HOST_PATHNAME_1 HOST_PATHNAME_2 ... HOST_PATHNAME_9"
