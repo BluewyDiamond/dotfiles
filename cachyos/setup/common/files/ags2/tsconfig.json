@@ -12,10 +12,10 @@
       "allowImportingTsExtensions": true,
 
       "paths": {
-         "ags": ["/usr/share/ags/js/src"],
-         "ags/*": ["/usr/share/ags/js/src/*"],
-         "ags/gtk4": ["/usr/share/ags/js/src/gtk4"],
-         "ags/gtk4/*": ["/usr/share/ags/js/src/gtk4/*"]
+         "ags": ["/usr/share/ags/js/lib"],
+         "ags/*": ["/usr/share/ags/js/lib/*"],
+         "ags/gtk4": ["/usr/share/ags/js/lib/gtk4"],
+         "ags/gtk4/*": ["/usr/share/ags/js/lib/gtk4/*"]
       }
    }
 }
