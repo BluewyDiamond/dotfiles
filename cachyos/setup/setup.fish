@@ -369,6 +369,8 @@ else if test cleanup = "$argv[1]"
     set unlisted_packages (get_unlisted_packages --wanted-packages "$std_packages $aur_packages $local_packages $ignored_packages")
     sudo pacman -Rns $unlisted_packages
 
+    trace --level info --context disable_services
+
     set enabled_services (fd -e service . /etc/systemd/system/*.wants -x basename | string replace -r '\.service$' '')
     set services_to_disable
 
