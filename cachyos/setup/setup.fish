@@ -17,9 +17,6 @@ if set -q required_packages_to_install[1]
     sudo pacman -S $required_packages_to_install
 end
 
-# ignore this packages
-set -a std_packages $required_packages
-
 # [Extract Variables]
 #
 set hosts_pathnames $argv[2..-1]
@@ -29,6 +26,9 @@ set aur_packages
 set local_path_packages
 set services
 set ignored_packages
+
+# ignore this packages
+set -a std_packages $required_packages
 
 for host_pathname in $hosts_pathnames
     set -a common_packages_pathnames (tomlq -r '(.common_packages // [])[]' $host_pathname)
