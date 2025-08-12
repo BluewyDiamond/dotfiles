@@ -230,6 +230,48 @@ function spawn_file
     run_as --owner $owner --cmd "echo $target_content | tee $target_pathname >/dev/null"
 end
 
+function check_file
+    argparse 'operation=' 'source-pathname=' 'content=' 'target-pathname=' -- $argv or return
+    set operation $_flag_operation
+    set content $_flag_content
+    set source_pathname $_flag_source_pathname
+    set target_pathname $_flag_target_pathname
+    set is_target_matched false
+
+    if test copy = "$operation"; or test -z "$operation"
+        set source_content
+
+        if test -z "$content"
+            set source_content (cat $source_pathname | string collect)
+        else
+            set source_content $content
+        end
+
+        if test -f $target_pathname; and test "$source_content" = (cat $target_pathname | string collect)
+            set is_target_matched true
+        end
+    else if test link = "$operation"
+        if test -L $target_pathname
+            set existing_link_points_to (readlink -f $target_pathname)
+
+            if test "$source_pathname" = "$existing_link_points_to"
+                set is_target_matched true
+            end
+        end
+    else
+        trace --level error --context (status function) --reason "invalid value, operation: '$operation'"
+        return 1
+    end
+
+    if test true = $is_target_matched
+        trace --level info --context (status function) --reason "content match, target_pathname: '$target_pathname'"
+        return 0
+    else
+        trace --level error --context (status function) --reason "content does not match, target_pathname: '$target_pathname'"
+        return 1
+    end
+end
+
 function get_missing_packages
     argparse "wanted-packages=" -- $argv or return
     set wanted_packages (string split ' ' $_flag_wanted_packages)
@@ -418,6 +460,56 @@ else if test check = $argv[1]
 
     if set -q unlisted_packages[1]
         echo "unlisted_packages: '$unlisted_packages'"
+    end
+
+    for host_pathname in $hosts_pathnames
+        set install_files_length (tomlq -r '.install_files // [] | length' $host_pathname)
+        set spawn_files_length (tomlq -r '.spawn_files // [] | length' $host_pathname)
+
+        for install_file_index in (seq 0 (math $install_files_length - 1))
+            set owner (tomlq -r ".install_files[$install_file_index].owner" $host_pathname)
+            set operation (tomlq -r ".install_files[$install_file_index].operation" $host_pathname)
+            set source_pathname $script_path/(tomlq -r ".install_files[$install_file_index].source // \"\"" $host_pathname)
+            set target_name (tomlq -r ".install_files[$install_file_index].target_name // \"\"" $host_pathname)
+            set target_path (tomlq -r ".install_files[$install_file_index].target_path // \"\"" $host_pathname)
+            set target_path_regex (tomlq -r ".install_files[$install_file_index].target_path_regex // \"\"" $host_pathname)
+
+            set target_pathnames
+
+            if not test -z (string trim -- $target_path_regex)
+                set found_target_paths (fd --regex $target_path_regex $target_path)
+                set found_target_pathnames
+
+                for found_target_path in $found_target_paths
+                    if not test -z (string trim -- $target_name)
+                        set -a found_target_pathnames $found_target_path/$target_name
+                    end
+
+                    set -a found_target_pathnames $found_target_path/(basename $source_pathname)
+                end
+
+                trace --level error --context (status function) --reason "not yet implemented"
+                continue
+            else if not test -z (string trim -- $target_path)
+                if not test -z (string trim -- $target_name)
+                    set -a target_pathnames $target_path/$target_name
+                else
+                    set -a target_pathnames $target_path/(basename $source_pathname)
+                end
+            end
+
+            for target_pathname in $target_pathnames
+                check_file --source-pathname $source_pathname --operation $operation --target-pathname $target_pathname
+            end
+        end
+
+        for spawn_file_index in (seq 0 (math $spawn_files_length - 1))
+            set owner (tomlq -r ".spawn_files[$spawn_file_index].owner" $host_pathname)
+            set target_pathname (tomlq -r ".spawn_files[$spawn_file_index].target" $host_pathname)
+            set target_content (tomlq -r ".spawn_files[$spawn_file_index].content" $host_pathname | string collect)
+
+            check_file --content $target_content --target-pathname $target_pathname
+        end
     end
 else if test help = $argv[1]
     echo "USAGE: COMMAND HOST_PATHNAME_1 HOST_PATHNAME_2 ... HOST_PATHNAME_9"
