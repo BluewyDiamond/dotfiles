@@ -121,6 +121,18 @@ function trace
     echo $trace_line
 end
 
+function run_as
+    argparse 'owner=' 'cmd=' -- $argv or return
+    set owner $_flag_owner
+    set cmd (string split ' ' $_flag_cmd)
+
+    if test (whoami) = "$owner"
+        $cmd
+    else
+        sudo -iu $owner -- $cmd
+    end
+end
+
 # [Util Functions]
 #
 function prepare_target
@@ -128,19 +140,14 @@ function prepare_target
     set owner $_flag_owner
     set target_pathname $_flag_target_pathname
     set target_path (dirname $target_pathname)
-    set run_as
-
-    if not test (whoami) = "$owner"
-        set run_as sudo -iu $owner --
-    end
 
     if test -f $target_pathname; or test -L $target_pathname; or test -d $target_pathname
         trace --level warn --context (status function) --reason "file conflict found: '$target_pathname'"
-        $run_as trash $target_pathname
+        run_as --owner $owner --cmd "trash $target_pathname"
     end
 
     if not test -d $target_path
-        $run_as mkdir -p $target_path
+        run_as --owner $owner --cmd "mkdir -p $target_path"
     end
 end
 
@@ -150,11 +157,6 @@ function install_file
     set source_pathname $_flag_source_pathname
     set operation $_flag_operation
     set target_pathname $_flag_target_pathname
-    set run_as
-
-    if not test (whoami) = "$owner"
-        set run_as sudo -iu $owner --
-    end
 
     trace --level info --context (status function) --reason "tracking, owner:'$owner' source_pathname:'$source_pathname' operation: '$operation' target_pathname: '$target_pathname'"
 
@@ -199,8 +201,7 @@ function install_file
     end
 
     prepare_target --owner $owner --target-pathname $target_pathname
-
-    $run_as $operation_cmd $source_pathname $target_pathname
+    run_as --owner $owner --cmd "$operation_cmd $source_pathname $target_pathname"
 end
 
 function spawn_file
@@ -226,7 +227,7 @@ function spawn_file
     end
 
     prepare_target --owner $owner --target-pathname $target_pathname
-    echo $target_content | $run_as tee $target_pathname >/dev/null
+    run_as --owner $owner --cmd "echo $target_content | tee $target_pathname >/dev/null"
 end
 
 function get_missing_packages
