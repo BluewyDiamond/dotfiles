@@ -127,9 +127,9 @@ function run_as
     set cmd (string split ' ' $_flag_cmd)
 
     if test (whoami) = "$owner"
-        $cmd
+        eval $cmd
     else
-        sudo -iu $owner -- $cmd
+        eval sudo -iu $owner -- $cmd
     end
 end
 
