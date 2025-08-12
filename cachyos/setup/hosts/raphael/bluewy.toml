@@ -222,18 +222,6 @@ owner = "bluewy"
 source = "common/files/applications/steam-native.desktop"
 target_path = "/home/bluewy/.local/share/applications"
 
-# [[install_files]]
-# operation = "link"
-# owner = "bluewy"
-# source = "common/files/applications/*"
-# target_path = "/home/bluewy/.local/share/applications"
-#
-# [[install_files]]
-# operation = "link"
-# owner = "bluewy"
-# source = "common/files/bin/*"
-# target_path = "/home/bluewy/.local/bin"
-
 [[install_files]]
 operation = "link"
 owner = "bluewy"
