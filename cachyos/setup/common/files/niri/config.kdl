@@ -252,13 +252,6 @@ environment {
    GDK_BACKEND "wayland,x11,*"
    QT_QPA_PLATFORM "wayland;xcb"
 
-   // [[XDG Paths]]
-   //
-   XDG_CONFIG_HOME "/home/bluewy/.config"
-   XDG_DATA_HOME "/home/bluewy/.local/share"
-   XDG_STATE_HOME "/home/bluewy/.local/state"
-   XDG_CACHE_HOME "/home/bluewy/.cache"
-
    // [[Rice]]
    //
    QT_QPA_PLATFORMTHEME "qt6ct"
