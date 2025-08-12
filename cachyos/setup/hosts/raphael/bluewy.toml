@@ -305,7 +305,7 @@ target_path = "/home/bluewy/.config"
 [[install_files]]
 operation = "link"
 owner = "bluewy"
-source = "common/files/niri"
+source = "hosts/raphael/files/niri"
 target_path = "/home/bluewy/.config"
 
 [[install_files]]
@@ -333,7 +333,7 @@ source = "common/files/speech-dispatcher"
 target_path = "/home/bluewy/.config"
 
 [[install_files]]
-operation = "link"
+operation = "copy"
 owner = "bluewy"
 source = "common/files/user-dirs.dirs/user-dirs.dirs"
 target_path = "/home/bluewy/.config"
