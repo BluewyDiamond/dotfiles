@@ -277,7 +277,7 @@ spawn-at-startup "gsettings" "set" "org.gnome.desktop.interface" "color-scheme" 
 
 // [[Polkit]]
 //
-spawn-at-startup "fish" "-c" "pidof polkit-gnome-authentication-agent-1 || uwsm app -- /usr/lib/policykit-1-pantheon/io.elementary.desktop.agent-polkit"
+spawn-at-startup "fish" "-c" "pidof io.elementary.desktop.agent-polkit || uwsm app -- /usr/lib/policykit-1-pantheon/io.elementary.desktop.agent-polkit"
 
 // [[Idle Listeners]]
 //
