@@ -1,5 +1,18 @@
 #!/usr/bin/env fish
 
+# TODO: ignore in checks if config does not specify it
+# handle perms correctly (unable to open file should not show up as some other error)
+# and futher improve messages for the above and more
+# ideas:
+# [INFO] -> should just tell that it is being processed
+# [SUCCESS] -> should tell me if expected
+# [FAIL] -> should tell me if unexpected
+# Futhermore, recurse configs_to_source
+# maybe calculate the configs_to_source first
+# and then do the rest
+# maybe also somehow store the actual values in variables to
+# detach logic
+
 set script_path (realpath (dirname (status filename)))
 
 # [Requirements]
