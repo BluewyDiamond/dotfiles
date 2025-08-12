@@ -189,7 +189,12 @@ function install_file
     end
 
     prepare_target --owner $owner --target-pathname $target_pathname
-    sudo -iu $owner -- $operation_cmd $source_pathname $target_pathname
+
+    if test (whoami) = $owner
+        $operation_cmd $source_pathname $target_pathname
+    else
+        sudo -iu $owner -- $operation_cmd $source_pathname $target_pathname
+    end
 end
 
 function spawn_file
@@ -210,7 +215,13 @@ function spawn_file
     end
 
     prepare_target --owner $owner --target-pathname $target_pathname
-    echo $target_content | sudo -iu $owner -- tee $target_pathname >/dev/null
+
+    if test (whoami) = "$owner"
+        echo $target_content | tee $target_pathname >/dev/null
+    else
+        echo $target_content | sudo -iu $owner -- tee $target_pathname >/dev/null
+    end
+
 end
 
 function get_missing_packages
