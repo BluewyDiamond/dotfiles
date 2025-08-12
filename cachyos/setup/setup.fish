@@ -19,31 +19,42 @@ end
 
 # [Extract Variables]
 #
-set hosts_pathnames $argv[2..-1]
-set common_packages_pathnames
+set configs_pathnames $argv[2..-1]
 set std_packages
 set aur_packages
 set local_path_packages
 set services
 set ignored_packages
+set configs_to_source_pathnames
+set configs_to_source_2_pathnames # im too dumb to recurse properly :3
 
 # ignore this packages
 set -a std_packages $required_packages
 
-for host_pathname in $hosts_pathnames
-    set -a common_packages_pathnames (tomlq -r '(.common_packages // [])[]' $host_pathname)
-    set -a std_packages (tomlq -r '[.packages // {} | .. | objects | .std // []] | add | .[]' $host_pathname)
-    set -a aur_packages (tomlq -r '[.packages // {} | .. | objects | .aur // []] | add | .[]' $host_pathname)
-    set -a local_path_packages (tomlq -r '[.packages // {} | .. | objects | .local_paths // []] | add | .[]' $host_pathname)
-    set -a services (tomlq -r ".services.enable // [] | .[]" $host_pathname)
-    set -a ignored_packages (tomlq -r '[.ignore // {} | .. | objects | .packages // []] | add | .[]' $host_pathname)
+for config_pathname in $configs_pathnames
+    set -a configs_to_source_pathnames (tomlq -r '(.configs_to_source // [])[]' $config_pathname)
+    set -a std_packages (tomlq -r '[.packages // {} | .. | objects | .std // []] | add | .[]' $config_pathname)
+    set -a aur_packages (tomlq -r '[.packages // {} | .. | objects | .aur // []] | add | .[]' $config_pathname)
+    set -a local_path_packages (tomlq -r '[.packages // {} | .. | objects | .local_paths // []] | add | .[]' $config_pathname)
+    set -a services (tomlq -r ".services.enable // [] | .[]" $config_pathname)
+    set -a ignored_packages (tomlq -r '[.ignore // {} | .. | objects | .packages // []] | add | .[]' $config_pathname)
 end
 
-for common_package_filepath in $common_packages_pathnames
-    set -a std_packages (tomlq -r '.std // [] | .[]' $script_path/$common_package_filepath)
-    set -a aur_packages (tomlq -r '.aur // [] | .[]' $script_path/$common_package_filepath)
-    set -a local_path_packages (tomlq -r '.local_paths // [] | .[]' $script_path/$common_package_filepath)
-    set -a ignored_packages (tomlq -r '.ignore.packages // [] | .[]' $script_path/$common_package_filepath)
+for config_to_source_pathname in $configs_to_source_pathnames
+    set -a configs_to_source_2_pathnames (tomlq -r '(.configs_to_source // [])[]' $config_to_source_pathname)
+    set -a std_packages (tomlq -r '[.packages // {} | .. | objects | .std // []] | add | .[]' $config_to_source_pathname)
+    set -a aur_packages (tomlq -r '[.packages // {} | .. | objects | .aur // []] | add | .[]' $config_to_source_pathname)
+    set -a local_path_packages (tomlq -r '[.packages // {} | .. | objects | .local_paths // []] | add | .[]' $config_to_source_pathname)
+    set -a services (tomlq -r ".services.enable // [] | .[]" $config_pathname)
+    set -a ignored_packages (tomlq -r '[.ignore // {} | .. | objects | .packages // []] | add | .[]' $config_to_source_pathname)
+end
+
+for config_to_source_2_pathname in $configs_to_source_2_pathnames
+    set -a std_packages (tomlq -r '[.packages // {} | .. | objects | .std // []] | add | .[]' $config_to_source_2_pathname)
+    set -a aur_packages (tomlq -r '[.packages // {} | .. | objects | .aur // []] | add | .[]' $config_to_source_2_pathname)
+    set -a local_path_packages (tomlq -r '[.packages // {} | .. | objects | .local_paths // []] | add | .[]' $config_to_source_2_pathname)
+    set -a services (tomlq -r ".services.enable // [] | .[]" $config_to_source_2_pathname)
+    set -a ignored_packages (tomlq -r '[.ignore // {} | .. | objects | .packages // []] | add | .[]' $config_to_source_2_pathname)
 end
 
 # in the case that only the basename is needed
@@ -356,17 +367,17 @@ if test install = $argv[1]
     install_aur_packages
     install_local_packages
 
-    for host_pathname in $hosts_pathnames
-        set install_files_length (tomlq -r '.install_files // [] | length' $host_pathname)
-        set spawn_files_length (tomlq -r '.spawn_files // [] | length' $host_pathname)
+    for config_pathname in $configs_pathnames $configs_to_source_pathnames $configs_to_source_2_pathnames
+        set install_files_length (tomlq -r '.install_files // [] | length' $config_pathname)
+        set spawn_files_length (tomlq -r '.spawn_files // [] | length' $config_pathname)
 
         for install_file_index in (seq 0 (math $install_files_length - 1))
-            set owner (tomlq -r ".install_files[$install_file_index].owner" $host_pathname)
-            set operation (tomlq -r ".install_files[$install_file_index].operation" $host_pathname)
-            set source_pathname $script_path/(tomlq -r ".install_files[$install_file_index].source // \"\"" $host_pathname)
-            set target_name (tomlq -r ".install_files[$install_file_index].target_name // \"\"" $host_pathname)
-            set target_path (tomlq -r ".install_files[$install_file_index].target_path // \"\"" $host_pathname)
-            set target_path_regex (tomlq -r ".install_files[$install_file_index].target_path_regex // \"\"" $host_pathname)
+            set owner (tomlq -r ".install_files[$install_file_index].owner" $config_pathname)
+            set operation (tomlq -r ".install_files[$install_file_index].operation" $config_pathname)
+            set source_pathname $script_path/(tomlq -r ".install_files[$install_file_index].source // \"\"" $config_pathname)
+            set target_name (tomlq -r ".install_files[$install_file_index].target_name // \"\"" $config_pathname)
+            set target_path (tomlq -r ".install_files[$install_file_index].target_path // \"\"" $config_pathname)
+            set target_path_regex (tomlq -r ".install_files[$install_file_index].target_path_regex // \"\"" $config_pathname)
 
             set target_pathnames
 
@@ -398,9 +409,9 @@ if test install = $argv[1]
         end
 
         for spawn_file_index in (seq 0 (math $spawn_files_length - 1))
-            set owner (tomlq -r ".spawn_files[$spawn_file_index].owner" $host_pathname)
-            set target_pathname (tomlq -r ".spawn_files[$spawn_file_index].target" $host_pathname)
-            set target_content (tomlq -r ".spawn_files[$spawn_file_index].content" $host_pathname | string collect)
+            set owner (tomlq -r ".spawn_files[$spawn_file_index].owner" $config_pathname)
+            set target_pathname (tomlq -r ".spawn_files[$spawn_file_index].target" $config_pathname)
+            set target_content (tomlq -r ".spawn_files[$spawn_file_index].content" $config_pathname | string collect)
 
             spawn_file --owner $owner --target-pathname $target_pathname --content $target_content
         end
@@ -462,17 +473,17 @@ else if test check = $argv[1]
         echo "unlisted_packages: '$unlisted_packages'"
     end
 
-    for host_pathname in $hosts_pathnames
-        set install_files_length (tomlq -r '.install_files // [] | length' $host_pathname)
-        set spawn_files_length (tomlq -r '.spawn_files // [] | length' $host_pathname)
+    for config_pathname in $configs_pathnames $configs_to_source_pathnames $configs_to_source_2_pathnames
+        set install_files_length (tomlq -r '.install_files // [] | length' $config_pathname)
+        set spawn_files_length (tomlq -r '.spawn_files // [] | length' $config_pathname)
 
         for install_file_index in (seq 0 (math $install_files_length - 1))
-            set owner (tomlq -r ".install_files[$install_file_index].owner" $host_pathname)
-            set operation (tomlq -r ".install_files[$install_file_index].operation" $host_pathname)
-            set source_pathname $script_path/(tomlq -r ".install_files[$install_file_index].source // \"\"" $host_pathname)
-            set target_name (tomlq -r ".install_files[$install_file_index].target_name // \"\"" $host_pathname)
-            set target_path (tomlq -r ".install_files[$install_file_index].target_path // \"\"" $host_pathname)
-            set target_path_regex (tomlq -r ".install_files[$install_file_index].target_path_regex // \"\"" $host_pathname)
+            set owner (tomlq -r ".install_files[$install_file_index].owner" $config_pathname)
+            set operation (tomlq -r ".install_files[$install_file_index].operation" $config_pathname)
+            set source_pathname $script_path/(tomlq -r ".install_files[$install_file_index].source // \"\"" $config_pathname)
+            set target_name (tomlq -r ".install_files[$install_file_index].target_name // \"\"" $config_pathname)
+            set target_path (tomlq -r ".install_files[$install_file_index].target_path // \"\"" $config_pathname)
+            set target_path_regex (tomlq -r ".install_files[$install_file_index].target_path_regex // \"\"" $config_pathname)
 
             set target_pathnames
 
@@ -504,9 +515,9 @@ else if test check = $argv[1]
         end
 
         for spawn_file_index in (seq 0 (math $spawn_files_length - 1))
-            set owner (tomlq -r ".spawn_files[$spawn_file_index].owner" $host_pathname)
-            set target_pathname (tomlq -r ".spawn_files[$spawn_file_index].target" $host_pathname)
-            set target_content (tomlq -r ".spawn_files[$spawn_file_index].content" $host_pathname | string collect)
+            set owner (tomlq -r ".spawn_files[$spawn_file_index].owner" $config_pathname)
+            set target_pathname (tomlq -r ".spawn_files[$spawn_file_index].target" $config_pathname)
+            set target_content (tomlq -r ".spawn_files[$spawn_file_index].content" $config_pathname | string collect)
 
             check_file --content $target_content --target-pathname $target_pathname
         end
