@@ -159,7 +159,7 @@ function get_services_to_enable
     set -l services_to_enable
 
     for config_pathname in $configs_pathnames
-        set -a services (tomlq -r ".services.enable // [] | .[]" $config_pathname)
+        set -a services_to_enable (tomlq -r ".services.enable // [] | .[]" $config_pathname)
     end
 
     string split \n $services_to_enable
@@ -356,12 +356,6 @@ function check_file
             set source_content $content
         end
 
-        echo ---
-        echo "$source_content"
-        echo ---------
-        echo (cat $target_pathname | string collect)
-        echo -------
-
         if test -f $target_pathname; and test "$source_content" = (cat $target_pathname | string collect)
             set is_target_matched true
         end
@@ -405,7 +399,10 @@ end
 
 function install_std_packages
     trace --level info --context (status function)
-    set missing_std_packages
+    argparse 'configs-pathnames=' -- $argv or return
+    set -l configs_pathnames (string split ' ' $_flag_configs_pathnames)
+    set -l std_packages (get_std_packages --configs-pathnames "$configs_pathnames")
+    set -l missing_std_packages
 
     for std_package in $std_packages
         if pacman -Q $std_package 2&>/dev/null
@@ -424,7 +421,10 @@ end
 
 function install_aur_packages
     trace --level info --context (status function)
-    set missing_aur_packages
+    argparse 'configs-pathnames=' -- $argv or return
+    set -l configs_pathnames (string split ' ' $_flag_configs_pathnames)
+    set -l aur_packages (get_aur_packages --configs-pathnames "$configs_pathnames")
+    set -l missing_aur_packages
 
     for aur_package in $aur_packages
         if pacman -Q $aur_package 2&>/dev/null
@@ -443,19 +443,22 @@ end
 
 function install_local_packages
     trace --level info --context (status function)
-    set missing_local_path_packages
+    argparse 'configs-pathnames=' -- $argv or return
+    set -l configs_pathnames (string split ' ' $_flag_configs_pathnames)
+    set -l local_packages_paths (get_local_packages_paths --configs-pathnames "$configs_pathnames")
+    set -l missing_local_packages_paths
 
-    for local_path_package in $local_path_packages
-        if pacman -Q (basename $local_path_package) 2&>/dev/null
+    for local_package_path in $local_packages_path
+        if pacman -Q (basename $local_package_path) 2&>/dev/null
             continue
         end
 
-        set -a missing_local_path_packages $local_path_package
+        set -a missing_local_packages_paths $local_package_path
     end
 
     if set -q missing_local_path_packages[1]
-        for missing_local_path_package in $missing_local_path_packages
-            pushd $script_path/$missing_local_path_package
+        for missing_local_package_path in $missing_local_packages_paths
+            pushd $script_path/$missing_local_package_path
             makepkg -si
             popd
         end
@@ -529,95 +532,40 @@ function spawn_files
     end
 end
 
-# [Main]
-#
-if test install = $argv[1]
-    install_std_packages
-    install_aur_packages
-    install_local_packages
+function enable_services
+    trace --level info --context (status function)
+    argparse 'configs-pathnames=' -- $argv or return
+    set -l configs_pathnames (string split ' ' $_flag_configs_pathnames)
 
-    for config_pathname in $configs_pathnames $configs_to_source_pathnames
-        set install_files_length (tomlq -r '.install_files // [] | length' $config_pathname)
-        set spawn_files_length (tomlq -r '.spawn_files // [] | length' $config_pathname)
+    set -l enabled_services (fd -e service . /etc/systemd/system/*.wants -x basename | string replace -r '\.service$' '')
+    set -l services_to_enable (get_services_to_enable --configs-pathnames "$conifgs_pathnames")
+    set -l missing_services_to_enable
 
-        for install_file_index in (seq 0 (math $install_files_length - 1))
-            set owner (tomlq -r ".install_files[$install_file_index].owner" $config_pathname)
-            set operation (tomlq -r ".install_files[$install_file_index].operation" $config_pathname)
-            set source_pathname $script_path/(tomlq -r ".install_files[$install_file_index].source // \"\"" $config_pathname)
-            set target_name (tomlq -r ".install_files[$install_file_index].target_name // \"\"" $config_pathname)
-            set target_path (tomlq -r ".install_files[$install_file_index].target_path // \"\"" $config_pathname)
-            set target_path_regex (tomlq -r ".install_files[$install_file_index].target_path_regex // \"\"" $config_pathname)
-
-            set target_pathnames
-
-            if not test -z (string trim -- $target_path_regex)
-                set found_target_paths (fd --regex $target_path_regex $target_path)
-                set found_target_pathnames
-
-                for found_target_path in $found_target_paths
-                    if not test -z (string trim -- $target_name)
-                        set -a found_target_pathnames $found_target_path/$target_name
-                    end
-
-                    set -a found_target_pathnames $found_target_path/(basename $source_pathname)
-                end
-
-                trace --level error --context (status function) --reason "not yet implemented"
-                continue
-            else if not test -z (string trim -- $target_path)
-                if not test -z (string trim -- $target_name)
-                    set -a target_pathnames $target_path/$target_name
-                else
-                    set -a target_pathnames $target_path/(basename $source_pathname)
-                end
-            end
-
-            for target_pathname in $target_pathnames
-                install_file --owner $owner --source-pathname $source_pathname --operation $operation --target-pathname $target_pathname
-            end
-        end
-
-        for spawn_file_index in (seq 0 (math $spawn_files_length - 1))
-            set owner (tomlq -r ".spawn_files[$spawn_file_index].owner" $config_pathname)
-            set target_pathname (tomlq -r ".spawn_files[$spawn_file_index].target" $config_pathname)
-            set target_content (tomlq -r ".spawn_files[$spawn_file_index].content" $config_pathname | string collect)
-
-            spawn_file --owner $owner --target-pathname $target_pathname --content $target_content
-        end
-    end
-
-    set enabled_services (fd -e service . /etc/systemd/system/*.wants -x basename | string replace -r '\.service$' '')
-    set services_to_enable
-
-    for service in $services
-        if contains $service $enabled_services
+    for service_to_enable in $services_to_enable
+        if contains $serivce_to_enable $enabled_services
             trace --level info --context enable_service --reason "is already enabled, service: '$service'"
             continue
         end
 
-        set -a services_to_enable $service
+        set -a missing_services_to_enable $service_to_enable
     end
 
-    for service_to_enable in $services_to_enable
+    for missing_service_to_enable in $missing_services_to_enable
         trace --level info --context enable_service --reason "tracking, service: '$service_to_enable'"
-        sudo systemctl enable $service_to_enable
+        sudo systemctl enable $missing_service_to_enable
     end
-else if test cleanup = "$argv[1]"
-    trace --level info --context cleanup_packages
+end
 
-    set unlisted_packages (get_unlisted_packages --wanted-packages "$std_packages $aur_packages $local_packages $ignored_packages")
-
-    if set -q unlisted_packages[1]
-        sudo pacman -Rns $unlisted_packages
-    end
-
-    trace --level info --context cleanup_services
-
-    set enabled_services (fd -e service . /etc/systemd/system/*.wants -x basename | string replace -r '\.service$' '')
-    set services_to_disable
+function disable_services
+    trace --level info --context (status function)
+    argparse 'configs-pathnames=' -- $argv or return
+    set -l configs_pathnames (string split ' ' $_flag_configs_pathnames)
+    set -l enabled_services (fd -e service . /etc/systemd/system/*.wants -x basename | string replace -r '\.service$' '')
+    set -l services_to_enable (get_services_to_enable --configs-pathnames "$conifgs_pathnames")
+    set -l services_to_disable
 
     for enabled_service in $enabled_services
-        if contains $enabled_service $services
+        if contains $enabled_service $services_to_enable
             continue
         end
 
@@ -628,6 +576,82 @@ else if test cleanup = "$argv[1]"
         trace --level info --context disable_service --reason "tracking, service: '$service_to_disable'"
         sudo systemctl disable $service_to_disable
     end
+end
+
+function check_services
+    trace --level info --context (status function)
+    argparse 'configs-pathnames=' -- $argv or return
+    set -l configs_pathnames (string split ' ' $_flag_configs_pathnames)
+    set -l enabled_services (fd -e service . /etc/systemd/system/*.wants -x basename | string replace -r '\.service$' '')
+    set -l services_to_enable (get_services_to_enable --configs-pathnames "$configs_pathnames")
+    set -l services_to_disable
+
+    for enabled_service in $enabled_services
+        if contains $enabled_service $services_to_enable
+            continue
+        end
+
+        set -a services_to_disable $enabled_service
+    end
+
+    for service_to_disable in $services_to_disable
+        trace --level info --context check_services --reason "needs to disable, service: '$service_to_disable'"
+    end
+
+    set -l missing_services_to_enable
+
+    for service_to_enable in $services_to_enable
+        if contains $service_to_enable $enabled_services
+            trace --level info --context enable_service --reason "is already enabled, service: '$service_to_service'"
+            continue
+        end
+
+        set -a missing_services_to_enable $service_to_enable
+    end
+
+    for missing_service_to_enable in $missing_services_to_enable
+        trace --level info --context check_services --reason "needs to enable, service: '$missing_service_to_enable'"
+    end
+end
+
+# [Main]
+#
+if test install = $argv[1]
+    set -l configs_pathnames (get_configs_pathnames $argv[2..-1])
+    set -l configs_to_source_pathnames
+
+    for config_pathname in $configs_pathnames
+        set -a configs_to_source_pathnames (get_configs_to_source_pathnames $config_pathname)
+    end
+
+    install_std_packages --configs-pathnames "$configs_pathnames $configs_to_source_pathnames"
+    install_aur_packages --configs-pathnames "$configs_pathnames $configs_to_source_pathnames"
+    install_local_packages --configs-pathnames "$configs_pathnames $configs_to_source_pathnames"
+
+    install_files --configs-pathnames "$configs_pathnames $configs_to_source_pathnames" \
+        --callback 'install_file --owner $owner --source-pathname $source_pathname --operation $operation --target-pathname $target_pathname'
+
+    spawn_files --configs-pathnames "$configs_pathnames $configs_to_source_pathnames" \
+        --callback 'spawn_file --owner $owner --target-pathname $target_pathname --content $target_content'
+
+    enable_services --configs-pathnames "$configs_pathnames $configs_to_source_pathnames"
+else if test cleanup = "$argv[1]"
+    trace --level info --context cleanup_packages
+
+    set -l configs_pathnames (get_configs_pathnames $argv[2..-1])
+    set -l configs_to_source_pathnames
+
+    for config_pathname in $configs_pathnames
+        set -a configs_to_source_pathnames (get_configs_to_source_pathnames $config_pathname)
+    end
+
+    set -l unlisted_packages (get_unlisted_packages --wanted-packages "$std_packages $aur_packages $local_packages $ignored_packages")
+
+    if set -q unlisted_packages[1]
+        sudo pacman -Rns $unlisted_packages
+    end
+
+    disable_services --configs-pathnames "$config_pathnames $config_to_source_pathnames"
 else if test check = $argv[1]
     trace --level info --context check_packages
 
@@ -659,6 +683,8 @@ else if test check = $argv[1]
 
     spawn_files --configs-pathnames "$configs_pathnames $configs_to_source_pathnames" \
         --callback 'check_file --content $target_content --target-pathname $target_pathname'
+
+    check_services --configs-pathnames "$configs_pathnames $configs_to_source_pathnames"
 else if test help = $argv[1]
     echo "USAGE: COMMAND HOST_PATHNAME_1 HOST_PATHNAME_2 ... HOST_PATHNAME_9"
     echo COMMANDS
