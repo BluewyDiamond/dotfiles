@@ -538,7 +538,7 @@ function enable_services
     set -l configs_pathnames (string split ' ' $_flag_configs_pathnames)
 
     set -l enabled_services (fd -e service . /etc/systemd/system/*.wants -x basename | string replace -r '\.service$' '')
-    set -l services_to_enable (get_services_to_enable --configs-pathnames "$conifgs_pathnames")
+    set -l services_to_enable (get_services_to_enable --configs-pathnames "$configs_pathnames")
     set -l missing_services_to_enable
 
     for service_to_enable in $services_to_enable
