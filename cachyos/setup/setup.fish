@@ -340,6 +340,7 @@ function spawn_file
 end
 
 function check_file
+    trace --level info --context (status function)
     argparse 'operation=' 'source-pathname=' 'content=' 'target-pathname=' -- $argv or return
     set operation $_flag_operation
     set content $_flag_content
@@ -602,7 +603,7 @@ function check_services
 
     for service_to_enable in $services_to_enable
         if contains $service_to_enable $enabled_services
-            trace --level info --context enable_service --reason "is already enabled, service: '$service_to_enable'"
+            trace --level info --context check_services --reason "is already enabled, service: '$service_to_enable'"
             continue
         end
 
