@@ -602,7 +602,7 @@ function check_services
 
     for service_to_enable in $services_to_enable
         if contains $service_to_enable $enabled_services
-            trace --level info --context enable_service --reason "is already enabled, service: '$service_to_service'"
+            trace --level info --context enable_service --reason "is already enabled, service: '$service_to_enable'"
             continue
         end
 
