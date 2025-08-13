@@ -7,11 +7,6 @@
 # [INFO] -> should just tell that it is being processed
 # [SUCCESS] -> should tell me if expected
 # [FAIL] -> should tell me if unexpected
-# Futhermore, recurse configs_to_source
-# maybe calculate the configs_to_source first
-# and then do the rest
-# maybe also somehow store the actual values in variables to
-# detach logic
 
 set script_path (realpath (dirname (status filename)))
 
@@ -30,44 +25,111 @@ if set -q required_packages_to_install[1]
     sudo pacman -S $required_packages_to_install
 end
 
+# [Functions]
+#
+function trace
+    argparse 'level=' 'context=' 'reason=' -- $argv or return
+    set level $_flag_level
+    set context $_flag_context
+    set reason $_flag_reason
+
+    set trace_line
+
+    if test critical = $level
+        set -a trace_line '['(set_color red)CRITICAL(set_color normal)']'
+    else if test error = $level
+        set -a trace_line '['(set_color red)ERROR(set_color normal)']'
+    else if test warn = $level
+        set -a trace_line '['(set_color yellow)WARN(set_color normal)']'
+    else if test info = $level
+        set -a trace_line '['(set_color blue)INFO(set_color normal)']'
+    end
+
+    if not test -z "$context"
+        set -a trace_line (set_color magenta)"@$context"(set_color normal)
+    end
+
+    if not test -z "$reason"
+        set -a trace_line $reason
+    end
+
+    set direction
+
+    if test critical = $level; or test error = $level
+        set direction >&2
+    else if test warn = $level; or test info = $level
+        set direction >&2
+    end
+
+    echo $trace_line $direction
+end
+
+function get_configs_to_source
+    set -l configs_to_process_pathnames $argv[1]
+    set -l configs_seen_pathnames
+    set -l configs_found_pathnames
+
+    while test (count $configs_to_process_pathnames) -gt 0
+        set -l config_to_process_pathname $configs_to_process_pathnames[1]
+        set configs_to_process_pathnames $configs_to_process_pathnames[2..-1]
+
+        if contains -- $config_to_process_pathname $configs_seen_pathnames
+            continue
+        end
+
+        set -a configs_seen_pathnames $config_to_process_pathname
+        set -l config_to_process_path (dirname $config_to_process_pathname)
+
+        for config_to_source_relative_pathname in (tomlq -r '.configs_to_source[]?' "$config_to_process_pathname" 2>/dev/null)
+            set -l config_to_source_pathname (realpath $config_to_process_path/$config_to_source_relative_pathname 2>/dev/null)
+
+            if not test -f $config_to_source_pathname
+                trace --level critical --context (status function) --reason "file not found, config_to_source_pathname: '$config_to_source_pathname'"
+                exit 1
+            end
+
+            set -a configs_found_pathnames $config_to_source_pathname
+            set -a configs_to_process_pathnames $config_to_source_pathname
+        end
+    end
+
+    string join \n $configs_found_pathnames
+end
+
 # [Extract Variables]
 #
-set configs_pathnames $argv[2..-1]
+set configs_pathnames
 set std_packages
 set aur_packages
 set local_path_packages
 set services
 set ignored_packages
 set configs_to_source_pathnames
-set configs_to_source_2_pathnames # im too dumb to recurse properly :3
 
 # ignore this packages
 set -a std_packages $required_packages
 
+for config_relative_pathname in $argv[2..-1]
+    set config_pathname (realpath $config_relative_pathname)
+
+    if not test -f $config_pathname
+        trace --level critical --context parse_arguments --reason "file does not exit, config_pathname: '$config_pathname'"
+        exit 1
+    end
+
+    set -a configs_pathnames $config_pathname
+end
+
 for config_pathname in $configs_pathnames
-    set -a configs_to_source_pathnames (tomlq -r '(.configs_to_source // [])[]' $config_pathname)
+    set -a configs_to_source_pathnames (get_configs_to_source $config_pathname)
+end
+
+for config_pathname in $configs_pathnames
     set -a std_packages (tomlq -r '[.packages // {} | .. | objects | .std // []] | add | .[]' $config_pathname)
     set -a aur_packages (tomlq -r '[.packages // {} | .. | objects | .aur // []] | add | .[]' $config_pathname)
     set -a local_path_packages (tomlq -r '[.packages // {} | .. | objects | .local_paths // []] | add | .[]' $config_pathname)
     set -a services (tomlq -r ".services.enable // [] | .[]" $config_pathname)
     set -a ignored_packages (tomlq -r '[.ignore // {} | .. | objects | .packages // []] | add | .[]' $config_pathname)
-end
-
-for config_to_source_pathname in $configs_to_source_pathnames
-    set -a configs_to_source_2_pathnames (tomlq -r '(.configs_to_source // [])[]' $config_to_source_pathname)
-    set -a std_packages (tomlq -r '[.packages // {} | .. | objects | .std // []] | add | .[]' $config_to_source_pathname)
-    set -a aur_packages (tomlq -r '[.packages // {} | .. | objects | .aur // []] | add | .[]' $config_to_source_pathname)
-    set -a local_path_packages (tomlq -r '[.packages // {} | .. | objects | .local_paths // []] | add | .[]' $config_to_source_pathname)
-    set -a services (tomlq -r ".services.enable // [] | .[]" $config_pathname)
-    set -a ignored_packages (tomlq -r '[.ignore // {} | .. | objects | .packages // []] | add | .[]' $config_to_source_pathname)
-end
-
-for config_to_source_2_pathname in $configs_to_source_2_pathnames
-    set -a std_packages (tomlq -r '[.packages // {} | .. | objects | .std // []] | add | .[]' $config_to_source_2_pathname)
-    set -a aur_packages (tomlq -r '[.packages // {} | .. | objects | .aur // []] | add | .[]' $config_to_source_2_pathname)
-    set -a local_path_packages (tomlq -r '[.packages // {} | .. | objects | .local_paths // []] | add | .[]' $config_to_source_2_pathname)
-    set -a services (tomlq -r ".services.enable // [] | .[]" $config_to_source_2_pathname)
-    set -a ignored_packages (tomlq -r '[.ignore // {} | .. | objects | .packages // []] | add | .[]' $config_to_source_2_pathname)
 end
 
 # in the case that only the basename is needed
@@ -77,7 +139,7 @@ for local_path_package in $local_path_packages
     set -a local_packages (basename $local_path_package)
 end
 
-# [Helper Functions]
+# [More Functions]
 #
 function is_package_a_dependency
     argparse 'package=' -- $argv or return
@@ -118,33 +180,6 @@ function get_unlisted_packages
     string join \n $unlisted_packages
 end
 
-function trace
-    argparse 'level=' 'context=' 'reason=' -- $argv or return
-    set level $_flag_level
-    set context $_flag_context
-    set reason $_flag_reason
-
-    set trace_line
-
-    if test error = $level
-        set -a trace_line (set_color red)ERROR(set_color normal)
-    else if test warn = $level
-        set -a trace_line (set_color yellow)WARN(set_color normal)
-    else if test info = $level
-        set -a trace_line (set_color blue)INFO(set_color normal)
-    end
-
-    if not test -z "$context"
-        set -a trace_line (set_color magenta)"@$context"(set_color normal)
-    end
-
-    if not test -z "$reason"
-        set -a trace_line $reason
-    end
-
-    echo $trace_line
-end
-
 function run_as
     argparse 'owner=' 'cmd=' -- $argv or return
     set owner $_flag_owner
@@ -157,8 +192,6 @@ function run_as
     end
 end
 
-# [Util Functions]
-#
 function prepare_target
     argparse 'owner=' 'target-pathname=' -- $argv or return
     set owner $_flag_owner
@@ -312,8 +345,6 @@ function get_missing_packages
     echo -n $missing_packages
 end
 
-# [Main]
-#
 function install_std_packages
     trace --level info --context (status function)
     set missing_std_packages
@@ -375,12 +406,14 @@ function install_local_packages
     end
 end
 
+# [Main]
+#
 if test install = $argv[1]
     install_std_packages
     install_aur_packages
     install_local_packages
 
-    for config_pathname in $configs_pathnames $configs_to_source_pathnames $configs_to_source_2_pathnames
+    for config_pathname in $configs_pathnames $configs_to_source_pathnames
         set install_files_length (tomlq -r '.install_files // [] | length' $config_pathname)
         set spawn_files_length (tomlq -r '.spawn_files // [] | length' $config_pathname)
 
@@ -486,12 +519,11 @@ else if test check = $argv[1]
         echo "unlisted_packages: '$unlisted_packages'"
     end
 
-    for config_pathname in $configs_pathnames $configs_to_source_pathnames $configs_to_source_2_pathnames
+    for config_pathname in $configs_pathnames $configs_to_source_pathnames
         set install_files_length (tomlq -r '.install_files // [] | length' $config_pathname)
         set spawn_files_length (tomlq -r '.spawn_files // [] | length' $config_pathname)
 
         for install_file_index in (seq 0 (math $install_files_length - 1))
-            set owner (tomlq -r ".install_files[$install_file_index].owner" $config_pathname)
             set operation (tomlq -r ".install_files[$install_file_index].operation" $config_pathname)
             set source_pathname $script_path/(tomlq -r ".install_files[$install_file_index].source // \"\"" $config_pathname)
             set target_name (tomlq -r ".install_files[$install_file_index].target_name // \"\"" $config_pathname)
@@ -528,7 +560,6 @@ else if test check = $argv[1]
         end
 
         for spawn_file_index in (seq 0 (math $spawn_files_length - 1))
-            set owner (tomlq -r ".spawn_files[$spawn_file_index].owner" $config_pathname)
             set target_pathname (tomlq -r ".spawn_files[$spawn_file_index].target" $config_pathname)
             set target_content (tomlq -r ".spawn_files[$spawn_file_index].content" $config_pathname | string collect)
 

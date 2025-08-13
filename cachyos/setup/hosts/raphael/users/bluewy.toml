@@ -1,4 +1,4 @@
-configs_to_source = ["hosts/raphael/users/base.toml"]
+configs_to_source = ["./base.toml"]
 
 [ignore]
 packages = ["less", "vscodium"]
