@@ -669,13 +669,13 @@ else if test check = $argv[1]
     set -l missing_packages (get_missing_packages --wanted-packages "$std_packages $aur_packages $local_packages $ignored_packages")
 
     if set -q missing_packages[1]
-        trace --level error --context check_packages "not found: packages: '$missing_packages'"
+        trace --level error --context check_packages --reason "not found: packages: '$missing_packages'"
     end
 
     set unlisted_packages (get_unlisted_packages --wanted-packages "$std_packages $aur_packages $local_packages $ignored_packages $required_packages")
 
     if set -q unlisted_packages[1]
-        trace --level error --context check_packages "not found: unlisted_packages: '$unlisted_packages'"
+        trace --level error --context check_packages --reason "not found: unlisted_packages: '$unlisted_packages'"
     end
 
     trace --level info --context check_files
