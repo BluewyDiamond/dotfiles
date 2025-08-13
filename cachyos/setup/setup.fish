@@ -628,9 +628,11 @@ if test install = $argv[1]
     install_aur_packages --configs-pathnames "$configs_pathnames $configs_to_source_pathnames"
     install_local_packages --configs-pathnames "$configs_pathnames $configs_to_source_pathnames"
 
+    trace --level info --context install_files
     install_files --configs-pathnames "$configs_pathnames $configs_to_source_pathnames" \
         --callback 'install_file --owner $owner --source-pathname $source_pathname --operation $operation --target-pathname $target_pathname'
 
+    trace --level info --context spawn_files
     spawn_files --configs-pathnames "$configs_pathnames $configs_to_source_pathnames" \
         --callback 'spawn_file --owner $owner --target-pathname $target_pathname --content $target_content'
 
