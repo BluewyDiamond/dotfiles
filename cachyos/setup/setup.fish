@@ -43,6 +43,10 @@ function trace
         set -a trace_line '['(set_color yellow)WARN(set_color normal)']'
     else if test info = $level
         set -a trace_line '['(set_color blue)INFO(set_color normal)']'
+    else if test success = $level
+        set -a trace_line '['(set_color green)SUCESS(set_color normal)']'
+    else if test success = $level
+        set -a trace_line '['(set_color green)FAIL(set_color normal)']'
     end
 
     if not test -z "$context"
@@ -64,7 +68,24 @@ function trace
     echo $trace_line $direction
 end
 
-function get_configs_to_source
+function get_configs_pathnames
+    set -l configs_pathnames
+
+    for config_relative_pathname in $argv
+        set config_pathname (realpath $config_relative_pathname)
+
+        if not test -f $config_pathname
+            trace --level critical --context parse_arguments --reason "file does not exit, config_pathname: '$config_pathname'"
+            exit 1
+        end
+
+        set -a configs_pathnames $config_pathname
+    end
+
+    string split \n $configs_pathnames
+end
+
+function get_configs_to_source_pathnames
     set -l configs_to_process_pathnames $argv[1]
     set -l configs_seen_pathnames
     set -l configs_found_pathnames
@@ -96,47 +117,78 @@ function get_configs_to_source
     string join \n $configs_found_pathnames
 end
 
-# [Extract Variables]
-#
-set configs_pathnames
-set std_packages
-set aur_packages
-set local_path_packages
-set services
-set ignored_packages
-set configs_to_source_pathnames
+function get_std_packages
+    argparse 'configs-pathnames=' -- $argv or return
+    set configs_pathnames (string split ' ' $_flag_configs_pathnames)
+    set -l std_packages
 
-# ignore this packages
-set -a std_packages $required_packages
-
-for config_relative_pathname in $argv[2..-1]
-    set config_pathname (realpath $config_relative_pathname)
-
-    if not test -f $config_pathname
-        trace --level critical --context parse_arguments --reason "file does not exit, config_pathname: '$config_pathname'"
-        exit 1
+    for config_pathname in $configs_pathnames
+        set -a std_packages (tomlq -r '[.packages // {} | .. | objects | .std // []] | add | .[]' $config_pathname)
     end
 
-    set -a configs_pathnames $config_pathname
+    string split \n $std_packages
 end
 
-for config_pathname in $configs_pathnames
-    set -a configs_to_source_pathnames (get_configs_to_source $config_pathname)
+function get_aur_packages
+    argparse 'configs-pathnames=' -- $argv or return
+    set configs_pathnames (string split ' ' $_flag_configs_pathnames)
+    set -l aur_packages
+
+    for config_pathname in $configs_pathnames
+        set -a aur_packages (tomlq -r '[.packages // {} | .. | objects | .aur // []] | add | .[]' $config_pathname)
+    end
+
+    string split \n $aur_packages
 end
 
-for config_pathname in $configs_pathnames
-    set -a std_packages (tomlq -r '[.packages // {} | .. | objects | .std // []] | add | .[]' $config_pathname)
-    set -a aur_packages (tomlq -r '[.packages // {} | .. | objects | .aur // []] | add | .[]' $config_pathname)
-    set -a local_path_packages (tomlq -r '[.packages // {} | .. | objects | .local_paths // []] | add | .[]' $config_pathname)
-    set -a services (tomlq -r ".services.enable // [] | .[]" $config_pathname)
-    set -a ignored_packages (tomlq -r '[.ignore // {} | .. | objects | .packages // []] | add | .[]' $config_pathname)
+function get_local_packages_paths
+    argparse 'configs-pathnames=' -- $argv or return
+    set configs_pathnames (string split ' ' $_flag_configs_pathnames)
+    set -l local_packages_paths
+
+    for config_pathname in $configs_pathnames
+        set -a local_packages_paths (tomlq -r '[.packages // {} | .. | objects | .local_paths // []] | add | .[]' $config_pathname)
+    end
+
+    string split \n $local_packages_paths
 end
 
-# in the case that only the basename is needed
-set local_packages
+function get_services_to_enable
+    argparse 'configs-pathnames=' -- $argv or return
+    set configs_pathnames (string split ' ' $_flag_configs_pathnames)
+    set -l services_to_enable
 
-for local_path_package in $local_path_packages
-    set -a local_packages (basename $local_path_package)
+    for config_pathname in $configs_pathnames
+        set -a services (tomlq -r ".services.enable // [] | .[]" $config_pathname)
+    end
+
+    string split \n $services_to_enable
+end
+
+function get_packages_to_ignore
+    argparse 'configs-pathnames=' -- $argv or return
+    set configs_pathnames (string split ' ' $_flag_configs_pathnames)
+
+    set -l packages_to_ignore
+
+    for config_pathname in $configs_pathnames
+        set -a packages_to_ignore (tomlq -r '[.ignore // {} | .. | objects | .packages // []] | add | .[]' $config_pathname)
+    end
+
+    string split \n $packages_to_ignore
+end
+
+function get_local_packages
+    argparse 'configs-pathnames=' -- $argv or return
+    set configs_pathnames (string split ' ' $_flag_configs_pathnames)
+    set local_packages_pathpaths (get_local_packages_paths --configs-pathnames "$configs_pathnames")
+    set -l local_packageslocal_packages_path
+
+    for local_package_path in $local_packages_paths
+        set -a local_packages (basename $local_package_path)
+    end
+
+    string split \n $local_packages
 end
 
 # [More Functions]
@@ -507,7 +559,21 @@ else if test cleanup = "$argv[1]"
     end
 else if test check = $argv[1]
     trace --level info --context check_packages
-    set missing_packages (get_missing_packages --wanted-packages "$std_packages $aur_packages $local_packages $ignored_packages")
+
+    set -l configs_pathnames (get_configs_pathnames $argv[2..-1])
+    set -l configs_to_source_pathnames
+
+    for config_pathname in $configs_pathnames
+        set -a configs_to_source_pathnames (get_configs_to_source_pathnames $config_pathname)
+    end
+
+    echo "debug: $configs_pathnames | $configs_to_source_pathnames"
+
+    set -l std_packages (get_std_packages --configs-pathnames "$configs_pathnames $configs_to_source_pathnames")
+    set -l aur_packages (get_aur_packages --configs-pathnames "$configs_pathnames $configs_to_source_pathnames")
+    set -l local_packages (get_local_packages --configs-pathnames "$configs_pathnames $configs_to_source_pathnames")
+    set -l ignored_packages (get_packages_to_ignore --configs-pathnames "$configs_pathnames $configs_to_source_pathnames")
+    set -l missing_packages (get_missing_packages --wanted-packages "$std_packages $aur_packages $local_packages $ignored_packages")
 
     if set -q missing_packages[1]
         echo "packages_not_found: '$packages_not_found'"
@@ -518,6 +584,8 @@ else if test check = $argv[1]
     if set -q unlisted_packages[1]
         echo "unlisted_packages: '$unlisted_packages'"
     end
+
+    exit 1
 
     for config_pathname in $configs_pathnames $configs_to_source_pathnames
         set install_files_length (tomlq -r '.install_files // [] | length' $config_pathname)
