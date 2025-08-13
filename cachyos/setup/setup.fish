@@ -543,7 +543,7 @@ function enable_services
 
     for service_to_enable in $services_to_enable
         if contains $service_to_enable $enabled_services
-            trace --level info --context enable_service --reason "is already enabled, service: '$service'"
+            trace --level info --context enable_service --reason "is already enabled, service: '$service_to_enable'"
             continue
         end
 
@@ -551,7 +551,7 @@ function enable_services
     end
 
     for missing_service_to_enable in $missing_services_to_enable
-        trace --level info --context enable_service --reason "tracking, service: '$service_to_enable'"
+        trace --level info --context enable_service --reason "tracking, service: '$missing_service_to_enable'"
         sudo systemctl enable $missing_service_to_enable
     end
 end
