@@ -340,7 +340,6 @@ function spawn_file
 end
 
 function check_file
-    trace --level info --context (status function)
     argparse 'operation=' 'source-pathname=' 'content=' 'target-pathname=' -- $argv or return
     set operation $_flag_operation
     set content $_flag_content
@@ -678,6 +677,9 @@ else if test check = $argv[1]
     if set -q unlisted_packages[1]
         echo "unlisted_packages: '$unlisted_packages'"
     end
+
+
+    trace --level info --context check_files
 
     install_files --configs-pathnames "$configs_pathnames $configs_to_source_pathnames" \
         --callback 'check_file --source-pathname $source_pathname --operation $operation --target-pathname $target_pathname'
