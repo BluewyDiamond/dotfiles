@@ -181,8 +181,8 @@ end
 function get_local_packages
     argparse 'configs-pathnames=' -- $argv or return
     set configs_pathnames (string split ' ' $_flag_configs_pathnames)
-    set local_packages_pathpaths (get_local_packages_paths --configs-pathnames "$configs_pathnames")
-    set -l local_packageslocal_packages_path
+    set local_packages_paths (get_local_packages_paths --configs-pathnames "$configs_pathnames")
+    set -l local_packages
 
     for local_package_path in $local_packages_paths
         set -a local_packages (basename $local_package_path)
@@ -356,6 +356,12 @@ function check_file
             set source_content $content
         end
 
+        echo ---
+        echo "$source_content"
+        echo ---------
+        echo (cat $target_pathname | string collect)
+        echo -------
+
         if test -f $target_pathname; and test "$source_content" = (cat $target_pathname | string collect)
             set is_target_matched true
         end
@@ -456,6 +462,66 @@ function install_local_packages
     else
         trace --level info --context (status function) --reason "skipped, local packages are already installed"
     end
+end
+
+function iter_install_files
+    argparse 'configs-pathnames=' 'callback=' -- $argv or return
+    set -l configs_pathnames (string split ' ' $_flag_configs_pathnames)
+    set -l callback $_flag_callback
+
+    for config_pathname in $configs_pathnames $configs_to_source_pathnames
+        set -l install_files_length (tomlq -r '.install_files // [] | length' $config_pathname)
+        set -l spawn_files_length (tomlq -r '.spawn_files // [] | length' $config_pathname)
+
+        for install_file_index in (seq 0 (math $install_files_length - 1))
+            set -l owner (tomlq -r ".install_files[$install_file_index].owner" $config_pathname)
+            set -l operation (tomlq -r ".install_files[$install_file_index].operation" $config_pathname)
+            set -l source_pathname $script_path/(tomlq -r ".install_files[$install_file_index].source // \"\"" $config_pathname)
+            set -l target_name (tomlq -r ".install_files[$install_file_index].target_name // \"\"" $config_pathname)
+            set -l target_path (tomlq -r ".install_files[$install_file_index].target_path // \"\"" $config_pathname)
+            set -l target_path_regex (tomlq -r ".install_files[$install_file_index].target_path_regex // \"\"" $config_pathname)
+
+            set -l target_pathnames
+
+            if not test -z (string trim -- $target_path_regex)
+                set -l found_target_paths (fd --regex $target_path_regex $target_path)
+                set -l found_target_pathnames
+
+                for found_target_path in $found_target_paths
+                    if not test -z (string trim -- $target_name)
+                        set -a found_target_pathnames $found_target_path/$target_name
+                    end
+
+                    set -a found_target_pathnames $found_target_path/(basename $source_pathname)
+                end
+
+                trace --level error --context (status function) --reason "not yet implemented"
+                continue
+            else if not test -z (string trim -- $target_path)
+                if not test -z (string trim -- $target_name)
+                    set -a target_pathnames $target_path/$target_name
+                else
+                    set -a target_pathnames $target_path/(basename $source_pathname)
+                end
+            end
+
+            for target_pathname in $target_pathnames
+                eval $callback
+            end
+        end
+
+        for spawn_file_index in (seq 0 (math $spawn_files_length - 1))
+
+            set -l owner (tomlq -r ".spawn_files[$spawn_file_index].owner" $config_pathname)
+            set -l target_pathname (tomlq -r ".spawn_files[$spawn_file_index].target" $config_pathname)
+            set -l target_content (tomlq -r ".spawn_files[$spawn_file_index].content" $config_pathname | string collect)
+
+            eval $callback
+        end
+    end
+end
+
+function iter_spawn_files
 end
 
 # [Main]
@@ -567,8 +633,6 @@ else if test check = $argv[1]
         set -a configs_to_source_pathnames (get_configs_to_source_pathnames $config_pathname)
     end
 
-    echo "debug: $configs_pathnames | $configs_to_source_pathnames"
-
     set -l std_packages (get_std_packages --configs-pathnames "$configs_pathnames $configs_to_source_pathnames")
     set -l aur_packages (get_aur_packages --configs-pathnames "$configs_pathnames $configs_to_source_pathnames")
     set -l local_packages (get_local_packages --configs-pathnames "$configs_pathnames $configs_to_source_pathnames")
@@ -579,61 +643,62 @@ else if test check = $argv[1]
         echo "packages_not_found: '$packages_not_found'"
     end
 
-    set unlisted_packages (get_unlisted_packages --wanted-packages "$std_packages $aur_packages $local_packages $ignored_packages")
+    set unlisted_packages (get_unlisted_packages --wanted-packages "$std_packages $aur_packages $local_packages $ignored_packages $required_packages")
 
     if set -q unlisted_packages[1]
         echo "unlisted_packages: '$unlisted_packages'"
     end
 
-    exit 1
+    iter_install_files --configs-pathnames "$configs_pathnames $configs_to_source_pathnames" \
+        --callback 'check_file --source-pathname $source_pathname --operation $operation --target-pathname $target_pathname'
 
-    for config_pathname in $configs_pathnames $configs_to_source_pathnames
-        set install_files_length (tomlq -r '.install_files // [] | length' $config_pathname)
-        set spawn_files_length (tomlq -r '.spawn_files // [] | length' $config_pathname)
-
-        for install_file_index in (seq 0 (math $install_files_length - 1))
-            set operation (tomlq -r ".install_files[$install_file_index].operation" $config_pathname)
-            set source_pathname $script_path/(tomlq -r ".install_files[$install_file_index].source // \"\"" $config_pathname)
-            set target_name (tomlq -r ".install_files[$install_file_index].target_name // \"\"" $config_pathname)
-            set target_path (tomlq -r ".install_files[$install_file_index].target_path // \"\"" $config_pathname)
-            set target_path_regex (tomlq -r ".install_files[$install_file_index].target_path_regex // \"\"" $config_pathname)
-
-            set target_pathnames
-
-            if not test -z (string trim -- $target_path_regex)
-                set found_target_paths (fd --regex $target_path_regex $target_path)
-                set found_target_pathnames
-
-                for found_target_path in $found_target_paths
-                    if not test -z (string trim -- $target_name)
-                        set -a found_target_pathnames $found_target_path/$target_name
-                    end
-
-                    set -a found_target_pathnames $found_target_path/(basename $source_pathname)
-                end
-
-                trace --level error --context (status function) --reason "not yet implemented"
-                continue
-            else if not test -z (string trim -- $target_path)
-                if not test -z (string trim -- $target_name)
-                    set -a target_pathnames $target_path/$target_name
-                else
-                    set -a target_pathnames $target_path/(basename $source_pathname)
-                end
-            end
-
-            for target_pathname in $target_pathnames
-                check_file --source-pathname $source_pathname --operation $operation --target-pathname $target_pathname
-            end
-        end
-
-        for spawn_file_index in (seq 0 (math $spawn_files_length - 1))
-            set target_pathname (tomlq -r ".spawn_files[$spawn_file_index].target" $config_pathname)
-            set target_content (tomlq -r ".spawn_files[$spawn_file_index].content" $config_pathname | string collect)
-
-            check_file --content $target_content --target-pathname $target_pathname
-        end
-    end
+    # for config_pathname in $configs_pathnames $configs_to_source_pathnames
+    #     set install_files_length (tomlq -r '.install_files // [] | length' $config_pathname)
+    #     set spawn_files_length (tomlq -r '.spawn_files // [] | length' $config_pathname)
+    #
+    #     for install_file_index in (seq 0 (math $install_files_length - 1))
+    #         set operation (tomlq -r ".install_files[$install_file_index].operation" $config_pathname)
+    #         set source_pathname $script_path/(tomlq -r ".install_files[$install_file_index].source // \"\"" $config_pathname)
+    #         set target_name (tomlq -r ".install_files[$install_file_index].target_name // \"\"" $config_pathname)
+    #         set target_path (tomlq -r ".install_files[$install_file_index].target_path // \"\"" $config_pathname)
+    #         set target_path_regex (tomlq -r ".install_files[$install_file_index].target_path_regex // \"\"" $config_pathname)
+    #
+    #         set target_pathnames
+    #
+    #         if not test -z (string trim -- $target_path_regex)
+    #             set found_target_paths (fd --regex $target_path_regex $target_path)
+    #             set found_target_pathnames
+    #
+    #             for found_target_path in $found_target_paths
+    #                 if not test -z (string trim -- $target_name)
+    #                     set -a found_target_pathnames $found_target_path/$target_name
+    #                 end
+    #
+    #                 set -a found_target_pathnames $found_target_path/(basename $source_pathname)
+    #             end
+    #
+    #             trace --level error --context (status function) --reason "not yet implemented"
+    #             continue
+    #         else if not test -z (string trim -- $target_path)
+    #             if not test -z (string trim -- $target_name)
+    #                 set -a target_pathnames $target_path/$target_name
+    #             else
+    #                 set -a target_pathnames $target_path/(basename $source_pathname)
+    #             end
+    #         end
+    #
+    #         for target_pathname in $target_pathnames
+    #             check_file --source-pathname $source_pathname --operation $operation --target-pathname $target_pathname
+    #         end
+    #     end
+    #
+    #     for spawn_file_index in (seq 0 (math $spawn_files_length - 1))
+    #         set target_pathname (tomlq -r ".spawn_files[$spawn_file_index].target" $config_pathname)
+    #         set target_content (tomlq -r ".spawn_files[$spawn_file_index].content" $config_pathname | string collect)
+    #
+    #         check_file --content $target_content --target-pathname $target_pathname
+    #     end
+    # end
 else if test help = $argv[1]
     echo "USAGE: COMMAND HOST_PATHNAME_1 HOST_PATHNAME_2 ... HOST_PATHNAME_9"
     echo COMMANDS
