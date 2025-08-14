@@ -7,6 +7,26 @@ $env.XDG_DATA_HOME = ($env.HOME | path join ".local" "share")
 $env.XDG_STATE_HOME = ($env.HOME | path join ".local" "state")
 $env.XDG_CACHE_HOME = ($env.HOME | path join ".cache")
 
+# [Helper Functions]
+#
+# def build-args [flags: list<record<flag: string, value: any>>] {
+#    print $"($flags)"
+#     $flags
+#     | where { |record|
+#         $record.value != null and (
+#             ($record.value | describe) != "bool" or
+#             $record.value == true
+#         )
+#     }
+#     | each { |record|
+#         if ($record.value | describe) == "bool" {
+#             $record.flag
+#         } else {
+#             $"($record.flag)=($record.value)"
+#         }
+#     }
+# }
+
 # [Aliases]
 #
 alias nu-clear = clear
@@ -15,11 +35,17 @@ def clear [
     --keep-scrollback (-k)
     --help (-h)
 ] {
+   let args = (build-args [
+      {flag: "--keep-scrollback", value: $keep_scrollback}
+      {flag: "--help", value: $help}
+   ])
+
    (nu-clear
       --keep-scrollback $keep_scrollback
       --help $help
    )
 
+   # nu-clear $args
    tput cup (term size | get rows)
 }
 
