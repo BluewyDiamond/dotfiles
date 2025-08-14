@@ -7,6 +7,13 @@ $env.XDG_DATA_HOME = ($env.HOME | path join ".local" "share")
 $env.XDG_STATE_HOME = ($env.HOME | path join ".local" "state")
 $env.XDG_CACHE_HOME = ($env.HOME | path join ".cache")
 
+# [Aliases]
+#
+def clear [] {
+   ^clear
+   tput cup (term size | get rows)
+}
+
 # [Autostart]
 #
 # starship
