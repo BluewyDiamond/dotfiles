@@ -3,7 +3,7 @@
 local wezterm = require("wezterm")
 local act = wezterm.action
 
-local fish_path = "/usr/bin/fish"
+local shell_command = {"/usr/bin/nu", "-l"}
 
 local config = {}
 
@@ -14,7 +14,7 @@ end
 --------------------
 -- Settings
 --------------------
-config.default_prog = { fish_path, "-l" }
+config.default_prog = shell_command
 config.color_scheme = "One Dark (Gogh)"
 config.font_size = 16
 
