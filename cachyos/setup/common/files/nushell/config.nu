@@ -9,8 +9,17 @@ $env.XDG_CACHE_HOME = ($env.HOME | path join ".cache")
 
 # [Aliases]
 #
-def clear [] {
-   ^clear
+alias nu-clear = clear
+
+def clear [
+    --keep-scrollback (-k)
+    --help (-h)
+] {
+   (nu-clear
+      --keep-scrollback $keep_scrollback
+      --help $help
+   )
+
    tput cup (term size | get rows)
 }
 
