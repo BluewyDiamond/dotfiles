@@ -35,14 +35,14 @@ def clear [
     --keep-scrollback (-k)
     --help (-h)
 ] {
-   let args = (build-args [
-      {flag: "--keep-scrollback", value: $keep_scrollback}
-      {flag: "--help", value: $help}
-   ])
+   # let args = (build-args [
+   #    {flag: "--keep-scrollback", value: $keep_scrollback}
+   #    {flag: "--help", value: $help}
+   # ])
 
    (nu-clear
-      --keep-scrollback $keep_scrollback
-      --help $help
+      --keep-scrollback=$keep_scrollback
+      --help=$help
    )
 
    # nu-clear $args
