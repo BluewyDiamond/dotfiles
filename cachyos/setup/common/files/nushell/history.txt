@@ -1,0 +1,357 @@
+echo hi
+ls
+ls aur
+lt aur
+ls aur/**
+ls */**
+ls **
+ls /home/bluewy/games/heroic_library/prefixes/default/Lawn Mowing Simulator/dosdevices/s:/blacky
+ls /home/bluewy/games/heroic_library/prefixes/default/Lawn Mowing Simulator/dosdevices/
+fastfetch
+fastfetch -c ~/.config/fastfetch/wezterm.jsonc
+eza -lt
+eza -t
+eza --help
+cd ~/.config/fish_bluewy
+nvim
+eza -at
+eza -aT
+eza -aT -j
+ls
+cd ~/git/private/dotfiles/ls
+cd ~/git/private/dotfiles/
+ls
+open taplo.toml
+cat taplo.toml
+ls
+cd cachyos
+ls
+cd setup
+ls
+eza
+eza -l
+cd hosts/
+ls
+git status
+ls
+cd raphael/
+ls
+cd users
+ls
+open bluewy.toml
+cd ~
+ls
+ls --help
+man ls
+ech hi
+echo hi
+let hi = (echo hi)
+echo $hi
+(eza<\n>-ls)
+(eza<\n>-l)
+ls
+cd ~/downloads/
+ls
+touch script.fish
+nvim script.fish
+clear
+ls
+chmod +x script.fish
+ls
+eza -ls
+eza -l
+./script.fish
+./script.fish | echo
+./script.fish | detect columns
+open ./script.fish
+start ./script.fish
+which start
+start --help
+start .
+xdg-open .
+command ls
+/usr/bin/ls
+echo $HOME
+encho $env.HOME
+echo $env.HOME
+echo $env
+env
+eza --help
+cd ~/.config/nushell/
+ls
+nvim
+config nu
+cat history.txt
+open history.txt
+open history.txt | detect columns
+clear
+ls
+fastfetch $env.HOME/.config/wezterm.jsonc<\n>
+fastfetch "$env.HOME"/.config/wezterm.jsonc<\n>
+fastfetch $HOME/.config/fastfetch/wezterm.jsonc
+fastfetch "$env.HOME"/.config/fastfetch/wezterm.jsonc<\n>
+fastfetch ($env.HOME)/.config/fastfetch/wezterm.jsonc<\n>
+fastfetch $"($env.HOME)/.config/fastfetch/wezterm.jsonc"<\n>
+fastfetch -c $"($env.HOME)/.config/fastfetch/wezterm.jsonc"<\n>
+fastfetch -c ($env.HOME)/.config/fastfetch/wezterm.jsonc<\n>
+fastfetch -c "($env.HOME)"/.config/fastfetch/wezterm.jsonc<\n>
+fastfetch -c ($env.HOME)/.config/fastfetch/wezterm.jsonc<\n>
+fastfetch -c $env.HOME/.config/fastfetch/wezterm.jsonc<\n>
+exit
+50; 60; 80
+50; 60; 80;
+exit
+'tnet'
+echo 'tn'
+let mut hi = (h)
+exit
+exit
+exit
+paru -Ss starship
+paru -S starship
+starship
+ls
+clear
+exit
+nvim config.nu
+exit
+config nu
+exit
+pacman -Qs nushell
+ls
+clear
+exit
+echo hi
+cd ~/.config/starship
+mkdir -p ~/.config/starship
+which mkdir
+which eza
+mkdir --help
+mkdir ~/.config/starship
+cd ~/.config/starship
+ls
+which touch
+ls
+touch config.toml
+starship --help
+starship prompt
+exit
+nvim config.toml
+clear
+ls
+exit
+ls ~/.config/nushell/
+mkdir ($nu.data-dir | path join "vendor/autoload")
+starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")
+cd ~/.local/share/nushell/
+ls
+cd vendor
+ls
+cd autoload/
+ls
+open starship.nu
+exit
+hi
+exit
+config nu
+cd ~/.local/share/nushell/
+ls
+cd vendor/
+ls
+cd autoload/
+ls
+ls
+nvim
+exit
+nu
+exit
+starship prompt
+clear
+ls
+starsphi
+starship
+echo hi
+exit
+exit
+clear
+starship
+$nu.config-path
+config nu
+ls
+nvim
+exit
+config nu
+ls
+cd ..
+ls
+cd ~/.local/share/nushell/
+ls
+export-env { $env.STARSHIP_SHELL = "nu"; load-env {<\n>    STARSHIP_SESSION_KEY: (random chars -l 16)<\n>    PROMPT_MULTILINE_INDICATOR: (<\n>        ^/usr/bin/starship prompt --continuation<\n>    )<\n><\n>    # Does not play well with default character module.<\n>    # TODO: Also Use starship vi mode indicators?<\n>    PROMPT_INDICATOR: ""<\n><\n>    PROMPT_COMMAND: {||<\n>        # jobs are not supported<\n>        (<\n>            ^/usr/bin/starship prompt<\n>                --cmd-duration $env.CMD_DURATION_MS<\n>                $"--status=($env.LAST_EXIT_CODE)"<\n>                --terminal-width (term size).columns<\n>        )<\n>    }<\n><\n>    config: ($env.config? | default {} | merge {<\n>        render_right_prompt_on_last_line: true<\n>    })<\n><\n>    PROMPT_COMMAND_RIGHT: {||<\n>        (<\n>            ^/usr/bin/starship prompt<\n>                --right<\n>                --cmd-duration $env.CMD_DURATION_MS<\n>                $"--status=($env.LAST_EXIT_CODE)"<\n>                --terminal-width (term size).columns<\n>        )<\n>    }<\n>}}<\n>
+clear
+ls
+starship prompt --continuation
+cd ~/.config/
+ls
+nvim
+clear
+ls
+clear
+echo hi
+trash ~/.config/starship
+clear
+exit
+nvim
+clear
+ls
+clear
+exit
+exit
+config nu
+claer
+ls
+clear
+which tput
+cd ~/.config/
+ls
+exit
+exit
+sleep 2
+sleep --help
+sleep 1s
+sleep 1sec
+sleep 3sec
+exit
+cd ~
+exit
+exit
+cd ~/git/private/dotfiles/ls
+cd ~/git/private/dotfiles/
+git status
+touch ten
+trash ten
+exit
+nu
+exit
+nu
+exit
+cd ~/git/private/dotfiles/
+sleep 3sec
+exit
+nu
+cd ~
+cd ..
+ls
+cd bluewy
+ls
+cd git/public/ags/ls
+cd git/public/ags/
+git status
+cd ..
+ls
+cd Hyprland
+ls
+git status
+git restore .
+trash *
+git switch main
+git status
+cd ..
+ls
+cd dotfiles
+ls
+git status
+which git
+git status
+cd ..
+ls
+cd ..
+ls
+cd private/
+ls
+cd dotfiles
+ls
+clear
+ls
+git status
+exit
+nu
+ls
+exit
+nu
+exit
+nu
+exit
+nu
+exit
+nu
+exit
+nu
+exit
+nu
+exit
+nu
+exit
+nvim
+sleep 3sec
+exit
+sleep 3sec
+exit
+cd ~/git/private/dotfiles/
+exit
+nu
+exit
+cd ~/git/private/dotfiles/
+ls
+ls -l
+ls
+cd ~/.config/wezterm
+ls
+nv
+nu --help
+nvim
+git diff ./
+git add .
+git status
+git commit -m "feat"
+git push
+exit
+exit
+nvim
+clear
+exit
+cd ~/.config/wezterm
+ls
+cd ~/.config/nushell/
+ls
+cd ~/.config/fish_bluewy
+env
+env | grep lines
+grep lines (env)
+echo $LINES
+echo $env.LINES
+term size
+term size | get height
+term size | get rows
+which tput
+exit
+exit
+exit
+exit
+nvim
+exit
+nvim
+cd ~/git/private/dotfiles
+ls
+git add .
+git status
+git commit -m "feat"
+git push
+git status
+ls
+cd cachyos
+ls
+cd setup/ls
+cd setup
+ls
+cd common/files
+ls
