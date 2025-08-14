@@ -17,10 +17,10 @@ std = [
 ]
 
 [packages.tty]
-std = ["zellij", "fisher"]
+std = ["zellij", "fisher", "nushell"]
 
 [packages.tty.rice]
-std = ["terminus-font", "figlet", "fastfetch"]
+std = ["terminus-font", "figlet", "fastfetch", "starship"]
 
 [packages.tty.apps.rewrites]
 std = ["eza", "fd", "ripgrep"]
