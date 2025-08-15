@@ -13,6 +13,7 @@ $directory\
 $git_branch\
 $git_status\
 $cmd_duration\
+$status\
 [ ](fg:surface_container)\
 $line_break\
 $character"""
@@ -62,7 +63,7 @@ format = """
 style = "bg:surface_container"
 format = """
 ([](bg:surface_container fg:on_surface_container)\
-[[ ($all_status$ahead_behind) ](bg:surface_container fg:yellow)]($style))\
+[[ ($all_status$ahead_behind)](bg:surface_container fg:yellow)]($style))\
 """
 ahead    = "⇡${count}"
 behind   = "⇣${count}"
@@ -85,6 +86,15 @@ style = "bg:surface_container"
 disabled = false
 show_notifications = true
 min_time_to_notify = 45000
+
+[status]
+disabled = false
+symbol = "E"
+style = "bg:surface_container fg:error"
+format = """
+[](bg:surface_container fg:on_surface_container)\
+[ $symbol$status]($style)\
+"""
 
 [character]
 disabled = false
