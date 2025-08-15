@@ -1,4 +1,4 @@
-configs_to_source = [
+source = [
    "../../../../common/packages/cachyos_env.toml",
 
    "./packages.toml",

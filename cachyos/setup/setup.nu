@@ -1,8 +1,7 @@
 #!/usr/bin/env nu
 
 def main [args: string] {
-   let index_path_list = collect-index-pathname-list $args
-   $index_path_list
+   collect-config-absolute-pathname-list (collect-index-absolute-pathname-list $args) | to json
 }
 
 # [Functions + Raw Data]
@@ -34,7 +33,7 @@ def get-config [
 
 # [Separator]
 #
-def collect-index-pathname-list [index_pathname: string]: nothing -> list<string> {
+def collect-index-absolute-pathname-list [index_pathname: string]: nothing -> list<string> {
    # normalise by expanding unknown path type
    mut index_absolute_pathname_list_to_process = [($index_pathname | path expand)]
    mut all_index_absolute_pathname_list = []
@@ -45,16 +44,47 @@ def collect-index-pathname-list [index_pathname: string]: nothing -> list<string
 
       $all_index_absolute_pathname_list = $all_index_absolute_pathname_list | append $current_index_absolute_pathname_to_process
 
-      # paths can be abs, rel or just path (meaning might be rel or abs)
+      # naming scheme for paths -> relative_path, absolute_path or path (can be either relative_path or absolute_path)
 
       let source_pathname_list = get-source-pathname-list $current_index_absolute_pathname_to_process
 
       let found_index_pathname_list = ($source_pathname_list
-      | where {|source_relative_pathname| $"($source_relative_pathname | path basename)" == "index.toml"} 
-      | each {|source_relative_pathname| $current_index_absolute_pathname_to_process | path dirname | path join $source_relative_pathname | path expand })
+      | where { |source_pathname| $"($source_pathname | path basename)" == "index.toml"} 
+      | each { |source_pathname|
+         if ($source_pathname | path exists) {
+            $source_pathname | path expand # handles if it is relative
+         } else {
+            $current_index_absolute_pathname_to_process
+            | path dirname
+            | path join $source_pathname
+            | path expand # in this scenario the path is correctly formed and path expand is used to prettify it
+            # example: /users/user1/../user2 -> /users/user2
+         }
+      })
 
       $all_index_absolute_pathname_list = $all_index_absolute_pathname_list | append $found_index_pathname_list
    }
 
    $all_index_absolute_pathname_list
+}
+
+def collect-config-absolute-pathname-list [index_absolute_pathname_list: list<string>]: nothing -> list<string> {
+   (
+      $index_absolute_pathname_list
+      | each {|index_absolute_pathname|
+         (get-source-pathname-list $index_absolute_pathname
+         | where { |source_pathname|
+            $"($source_pathname | path basename)" != "index.toml"
+         } | each {|source_pathname|
+            if ($source_pathname | path exists) {
+               $source_pathname | path expand
+            } else {
+               $index_absolute_pathname
+               | path dirname
+               | path join $source_pathname
+               | path expand
+            }
+         })
+      } | flatten
+   )
 }
