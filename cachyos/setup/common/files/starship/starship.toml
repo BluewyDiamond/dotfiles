@@ -55,15 +55,25 @@ symbol = ""
 style = "bg:surface_container"
 format = """
 [](bg:surface_container fg:on_surface_container)\
-[[$symbol $branch ](fg:on_surface_container bg:surface_container)]($style)\
+[[$symbol $branch ](bg:surface_container fg:green)]($style)\
 """
 
 [git_status]
 style = "bg:surface_container"
 format = """
 ([](bg:surface_container fg:on_surface_container)\
-[[ ($all_status$ahead_behind) ](bg:surface_container fg:on_surface_container)]($style))\
+[[ ($all_status$ahead_behind) ](bg:surface_container fg:yellow)]($style))\
 """
+ahead    = "⇡${count}"
+behind   = "⇣${count}"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+
+untracked = "?${count} "
+stashed   = "S${count} "
+modified  = "!${count} "
+staged    = "+${count} "
+renamed   = "R${count} "
+deleted   = "D${count} "
 
 [cmd_duration]
 show_milliseconds = true
