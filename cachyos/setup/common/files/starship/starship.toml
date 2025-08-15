@@ -56,14 +56,13 @@ symbol = ""
 style = "bg:surface_container"
 format = """
 [](bg:surface_container fg:on_surface_container)\
-[[$symbol $branch ](bg:surface_container fg:green)]($style)\
+[[$symbol $branch](bg:surface_container fg:green)]($style)\
 """
 
 [git_status]
 style = "bg:surface_container"
 format = """
-([](bg:surface_container fg:on_surface_container)\
-[[ ($all_status$ahead_behind)](bg:surface_container fg:yellow)]($style))\
+[[ ($stashed$deleted$renamed$typechanged$staged$modified$conflicted$untracked$ahead_behind)](bg:surface_container fg:yellow)]($style)\
 """
 ahead    = "⇡${count}"
 behind   = "⇣${count}"
@@ -80,12 +79,9 @@ deleted   = "D${count} "
 show_milliseconds = true
 format = """
 [](bg:surface_container fg:on_surface_container)\
-[ $duration ](bg:surface_container fg:green)\
+[ $duration](bg:surface_container fg:green)\
 """
 style = "bg:surface_container"
-disabled = false
-show_notifications = true
-min_time_to_notify = 45000
 
 [status]
 disabled = false
