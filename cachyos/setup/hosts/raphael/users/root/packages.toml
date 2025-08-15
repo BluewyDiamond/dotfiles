@@ -1,5 +1,5 @@
 [ignore]
-packages = ["sbctl"]
+packages = ["sbctl", "linux-cachyos-rc", "btrfs-assitant"]
 
 [packages]
 std = [

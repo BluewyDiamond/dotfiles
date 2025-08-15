@@ -256,10 +256,6 @@ environment {
    //
    QT_QPA_PLATFORMTHEME "qt6ct"
 
-   // [[Other]]
-   //
-   EDITOR "nvim"
-
    // [[Fixes]]
    //
    _JAVA_AWT_WM_NONREPARENTING "1"
