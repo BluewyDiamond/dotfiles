@@ -35,6 +35,7 @@ format = """
 """
 
 [hostname]
+ssh_only = false
 ssh_symbol = '\(ssh\)'
 style = 'bg:surface_container fg:yellow'
 format = '[$hostname $ssh_symbol]($style)'
