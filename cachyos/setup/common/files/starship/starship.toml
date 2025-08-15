@@ -1,9 +1,14 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
+palette = 'onedark'
+continuation_prompt = ':: '
+
 format = """
 [](fg:surface_container)\
 $time\
 $username\
+[@](bg:surface_container fg:yellow)\
+$hostname\
 $directory\
 $git_branch\
 $git_status\
@@ -12,28 +17,32 @@ $cmd_duration\
 $line_break\
 $character"""
 
-palette = 'onedark'
-
 [time]
 disabled = false
 time_format = "%R"
 style = "bg:surface_container"
 format = """
-[[ $time ](fg:on_surface_container bg:surface_container)]($style)\
+[[ $time ](fg:green bg:surface_container)]($style)\
 """
 
 [username]
 show_always = true
-style_user = "bg:surface_container fg:on_surface_container"
-style_root = "bg:surface_container fg:on_surface_container"
+style_user = "bg:surface_container fg:yellow"
+style_root = "bg:surface_container fg:yellow"
 format = """
 [](bg:surface_container fg:on_surface_container)\
-[ $user ]($style)\
+[ $user]($style)\
 """
 
+[hostname]
+ssh_symbol = '\(ssh\)'
+style = 'bg:surface_container fg:yellow'
+format = '[$hostname $ssh_symbol]($style)'
+
 [directory]
-style = "bg:surface_container fg:on_surface_container"
-truncation_length = 3
+style = "bg:surface_container fg:blue"
+truncation_length = 9
+truncate_to_repo = false
 truncation_symbol = "…/"
 format = """
 [](bg:surface_container fg:on_surface_container)\
@@ -52,14 +61,14 @@ format = """
 style = "bg:surface_container"
 format = """
 ([](bg:surface_container fg:on_surface_container)\
-[[ ($all_status$ahead_behind) ](fg:on_surface_container bg:surface_container)]($style))\
+[[ ($all_status$ahead_behind) ](bg:surface_container fg:on_surface_container)]($style))\
 """
 
 [cmd_duration]
 show_milliseconds = true
 format = """
 [](bg:surface_container fg:on_surface_container)\
-[ $duration ](bg:surface_container fg:on_surface_container)\
+[ $duration ](bg:surface_container fg:green)\
 """
 style = "bg:surface_container"
 disabled = false
@@ -78,5 +87,10 @@ vimcmd_symbol = '[❮](bold fg:green)'
 [palettes.onedark]
 surface_container = "#282C34"
 on_surface_container = "#ABB2BF"
+yellow = "#e5c07b"
+red = "#e06c75"
 green = "#98c379"
-red = "#f44747"
+cyan = "#56b6c2"
+error = "#f44747"
+purple = "#c678dd"
+orange = "#d19a66"
