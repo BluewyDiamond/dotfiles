@@ -6,6 +6,7 @@ return {
       formatters_by_ft = {
          -- default
          --
+         nu = { "topiary_nu" },
          fish = { "fish_indent" },
          lua = { "stylua" },
 
@@ -31,6 +32,12 @@ return {
          json = { "prettier" },
          jsonc = { "prettier" },
          toml = { "taplo" },
+      },
+
+      formatters = {
+         topiary_nu = {
+            command = "format.nu",
+         },
       },
    },
 
