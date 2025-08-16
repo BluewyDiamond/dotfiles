@@ -6,14 +6,14 @@ def main [args: string] {
 
 # [Functions + Raw Data]
 #
-def get-source-pathname-list [index_path: string]: nothing -> list<string> {
+def get-source-pathname-list [index_path: path]: nothing -> list<path> {
    let index = open $index_path
    $index.source
 }
 
 def get-config [
    config_path: string
-]: nothing -> record<spawn_files: list<record<owner: string, target: string, content: string>>, install_files: list<record<operation: string, owner: string, source: string, target_path: string, target_name?: string>>> {
+]: nothing -> record<spawn_files: list<record<owner: string, target: path, content: string>>, install_files: list<record<operation: string, owner: string, source: path, target_path: path, target_name?: string>>> {
    let config = open $config_path
 
    $config.install_files
@@ -33,7 +33,7 @@ def get-config [
 
 # [Separator]
 #
-def collect-index-absolute-pathname-list [index_pathname: string]: nothing -> list<string> {
+def collect-index-absolute-pathname-list [index_pathname: path]: nothing -> list<path> {
    # normalise by expanding unknown path type
    mut index_absolute_pathname_list_to_process = [($index_pathname | path expand)]
    mut all_index_absolute_pathname_list = []
@@ -70,7 +70,7 @@ def collect-index-absolute-pathname-list [index_pathname: string]: nothing -> li
    $all_index_absolute_pathname_list
 }
 
-def collect-config-absolute-pathname-list [index_absolute_pathname_list: list<string>]: nothing -> list<string> {
+def collect-config-absolute-pathname-list [index_absolute_pathname_list: list<path>]: nothing -> list<path> {
    (
       $index_absolute_pathname_list
       | each {|index_absolute_pathname|
