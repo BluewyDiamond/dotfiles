@@ -16,14 +16,14 @@
 - **CPU Core Voltage (SOC)**: `1.08v`
 
 ### Boot Settings
-- **Smart Resizable BAR**: `on`
 - **CSM**: `disabled`
 - **Fast Boot**: `disabled`
 
 ### Other Settings
-- **Fan Profiles**: `custom`
-- **Integrated Graphics**: `disabled`
 - **TPM 2.0**: `disabled`
+- **Integrated Graphics**: `disabled`
+- **Fan Profiles**: `custom`
+- **Smart Resizable BAR**: `on`
 - **Applications Stuff**: `disabled`
 
 ---
