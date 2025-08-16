@@ -9,30 +9,32 @@ def main [args: string] {
 # [Helper Functions]
 #
 export def cherry-pick [
-   selector: closure
-   list: list = []
-] {
+   on_record_or_table: closure
+   item_list: list = []
+]: any -> list<any> {
    let input = $in
-   mut selected_value_list = $list
-   mut queue = [$input]
+   mut found_item_list = $item_list
+   mut item_to_process_list = [$input]
 
-   while not ($queue | is-empty) {
-      let current_item = $queue | first
-      $queue = $queue | skip 1
+   while ($item_to_process_list | is-not-empty) {
+      let current_item = $item_to_process_list | first
+      $item_to_process_list = $item_to_process_list | skip 1
 
-      if ($current_item | describe) =~ "record|table" {
-         let selector_result = (do $selector $current_item)
-
-         if ($selector_result != null) {
-            $selected_value_list = $selected_value_list | append [$selector_result]
-         }
-
-         let current_item_values = $current_item | values
-         $queue = $queue | append $current_item_values
+      if (not (($current_item | describe) =~ "record|table")) {
+         continue
       }
+
+      let on_record_or_table_result = (do $on_record_or_table $current_item)
+
+      if ($on_record_or_table_result != null) {
+         $found_item_list = $found_item_list | append [$on_record_or_table_result]
+      }
+
+      let current_item_values = $current_item | values
+      $item_to_process_list = $item_to_process_list | append $current_item_values
    }
 
-   $selected_value_list | flatten
+   $found_item_list | flatten
 }
 
 # [Functions + Raw Data]
@@ -60,8 +62,8 @@ def get-config [
    }
 
    let packages = {
-      std: ($config_raw | cherry-pick {|x| $x.std? })
-      aur: ($config_raw | cherry-pick {|x| $x.aur? })
+      std: ($config_raw | cherry-pick {|record_or_table| $record_or_table.std? })
+      aur: ($config_raw | cherry-pick {|record_or_table| $record_or_table.aur? })
    }
 
    {
@@ -78,7 +80,7 @@ def collect-index-absolute-pathname-list [index_pathname: path]: nothing -> list
    mut index_absolute_pathname_list_to_process = [($index_pathname | path expand)]
    mut all_index_absolute_pathname_list = []
 
-   while ($index_absolute_pathname_list_to_process | length | $in > 0) {
+   while ($index_absolute_pathname_list_to_process | is-not-empty) {
       let current_index_absolute_pathname_to_process = $index_absolute_pathname_list_to_process | first
       $index_absolute_pathname_list_to_process = $index_absolute_pathname_list_to_process | skip 1
 
