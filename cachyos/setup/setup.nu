@@ -1,7 +1,38 @@
 #!/usr/bin/env nu
 
 def main [args: string] {
-   collect-config-absolute-pathname-list (collect-index-absolute-pathname-list $args) | to json
+   let config_absolute_pathname_list = (collect-config-absolute-pathname-list (collect-index-absolute-pathname-list $args))
+
+   get-config $config_absolute_pathname_list.0
+}
+
+# [Helper Functions]
+#
+export def cherry-pick [
+   selector: closure
+   list: list = []
+] {
+   let input = $in
+   mut selected_value_list = $list
+   mut queue = [$input]
+
+   while not ($queue | is-empty) {
+      let current_item = $queue | first
+      $queue = $queue | skip 1
+
+      if ($current_item | describe) =~ "record|table" {
+         let selector_result = (do $selector $current_item)
+
+         if ($selector_result != null) {
+            $selected_value_list = $selected_value_list | append [$selector_result]
+         }
+
+         let current_item_values = $current_item | values
+         $queue = $queue | append $current_item_values
+      }
+   }
+
+   $selected_value_list | flatten
 }
 
 # [Functions + Raw Data]
@@ -13,22 +44,31 @@ def get-source-pathname-list [index_path: path]: nothing -> list<path> {
 
 def get-config [
    config_path: string
-]: nothing -> record<spawn_files: list<record<owner: string, target: path, content: string>>, install_files: list<record<operation: string, owner: string, source: path, target_path: path, target_name?: string>>> {
-   let config = open $config_path
+]: nothing -> record<packages: record<std: list<string>, aur: list<string>>, spawn_files: list<record<owner: string, target: path, content: string>>, install_files: list<record<operation: string, owner: string, source: path, target_path: path, target_name?: string>>> {
+   let config_raw = open $config_path
 
-   $config.install_files
-   $config.install_files.owner
-   $config.install_files.operation
-   $config.install_files.source
-   $config.install_files.target_path
-   $config.install_files.target_name?
+   let install_files = if ($config_raw.install_files? != null) {
+      $config_raw.install_files
+   } else {
+      []
+   }
 
-   $config.spawn_files
-   $config.spawn_files.owner
-   $config.spawn_files.target
-   $config.spawn_files.content
+   let spawn_files = if ($config_raw.spawn_files? != null) {
+      $config_raw.spawn_files
+   } else {
+      []
+   }
 
-   $config
+   let packages = {
+      std: ($config_raw | cherry-pick {|x| $x.std? })
+      aur: ($config_raw | cherry-pick {|x| $x.aur? })
+   }
+
+   {
+      packages: $packages
+      install_files: $install_files
+      spawn_files: $spawn_files
+   }
 }
 
 # [Separator]
