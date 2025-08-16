@@ -2,11 +2,24 @@
 #
 $env.config.show_banner = false
 
+# [[Paths]]
+#
+let path_list = [
+    ($env.HOME | path join ".cargo" "bin"),
+    ($env.HOME | path join ".local" "bin")
+]
+
+$env.PATH = ($env.PATH | append $path_list)
+
+# [[XDG]]
+#
 $env.XDG_CONFIG_HOME = ($env.HOME | path join ".config")
 $env.XDG_DATA_HOME = ($env.HOME | path join ".local" "share")
 $env.XDG_STATE_HOME = ($env.HOME | path join ".local" "state")
 $env.XDG_CACHE_HOME = ($env.HOME | path join ".cache")
 
+# [[Other]]
+#
 $env.EDITOR = "nvim"
 
 # [Helper Functions]
