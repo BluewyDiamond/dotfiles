@@ -10,23 +10,21 @@
 - **Power Down**: `enabled`
 
 ### CPU Settings
-- **Medium Load Boostit**: `enabled`
 - **PBO Limits**: `disabled` (to prevent extra power draw)
-- **CPU Boost Clock Override**: `disabled`
-- **Curve Optimizer**: `-30`
-- **CPU Platform Temperature Limit**: `85°C`
-
-- **CPU Core Voltage (SOC)**: `1.075v`
+- **Curve Optimizer**: `-20`
+- **CPU Platform Temperature Limit**: `84°C`
+- **CPU Core Voltage (SOC)**: `1.08v`
 
 ### Boot Settings
 - **Smart Resizable BAR**: `on`
 - **CSM**: `disabled`
-- **Secure Boot**: `disabled`
+- **Fast Boot**: `disabled`
 
 ### Other Settings
 - **Fan Profiles**: `custom`
 - **Integrated Graphics**: `disabled`
 - **TPM 2.0**: `disabled`
+- **Applications Stuff**: `disabled`
 
 ---
 
