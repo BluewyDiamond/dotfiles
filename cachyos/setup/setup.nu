@@ -3,12 +3,13 @@
 def main [args: string] {
    let config_absolute_pathname_list = (collect-config-absolute-pathname-list (collect-index-absolute-pathname-list $args))
 
-   get-config $config_absolute_pathname_list.0
+   get-config $config_absolute_pathname_list.1
 }
 
 # [Helper Functions]
 #
-export def cherry-pick [
+# returns a value list of specified key
+def cherry-pick [
    on_record_or_table: closure
    item_list: list = []
 ]: any -> list<any> {
@@ -25,10 +26,7 @@ export def cherry-pick [
       }
 
       let on_record_or_table_result = (do $on_record_or_table $current_item)
-
-      if ($on_record_or_table_result != null) {
-         $found_item_list = $found_item_list | append [$on_record_or_table_result]
-      }
+      $found_item_list = $found_item_list | append [$on_record_or_table_result]
 
       let current_item_values = $current_item | values
       $item_to_process_list = $item_to_process_list | append $current_item_values
@@ -46,30 +44,58 @@ def get-source-pathname-list [index_path: path]: nothing -> list<path> {
 
 def get-config [
    config_path: string
-]: nothing -> record<packages: record<std: list<string>, aur: list<string>>, spawn_files: list<record<owner: string, target: path, content: string>>, install_files: list<record<operation: string, owner: string, source: path, target_path: path, target_name?: string>>> {
+]: nothing -> record<packages: record<ignore: list<string>, std: list<string>, aur: list<string>, local: list<path>>, spawn_files: list<record<owner: string, target: path, content: string>>, install_files: list<record<operation: string, owner: string, source: path, target_path: path, target_name?: string>>> {
    let config_raw = open $config_path
 
-   let install_files = if ($config_raw.install_files? != null) {
-      $config_raw.install_files
-   } else {
-      []
-   }
-
-   let spawn_files = if ($config_raw.spawn_files? != null) {
-      $config_raw.spawn_files
-   } else {
-      []
-   }
+   let install_files = $config_raw.install_files? | default []
+   let spawn_files = $config_raw.spawn_files? | default []
 
    let packages = {
-      std: ($config_raw | cherry-pick {|record_or_table| $record_or_table.std? })
-      aur: ($config_raw | cherry-pick {|record_or_table| $record_or_table.aur? })
+      ignore: (
+         $config_raw | cherry-pick {|record_or_table|
+            if ($record_or_table | columns | all {|col| $col != "ignore" }) {
+               return []
+            }
+
+            $record_or_table.ignore
+         }
+      )
+
+      std: (
+         $config_raw | cherry-pick {|record_or_table|
+            if ($record_or_table | columns | all {|col| $col != "std" }) {
+               return []
+            }
+
+            $record_or_table.std
+         }
+      )
+
+      aur: (
+         $config_raw | cherry-pick {|record_or_table|
+            if ($record_or_table | columns | all {|col| $col != "aur" }) {
+               return []
+            }
+
+            $record_or_table.aur
+         }
+      )
+
+      local: (
+         $config_raw | cherry-pick {|record_or_table|
+            if ($record_or_table | columns | all {|col| $col != "local" }) {
+               return []
+            }
+
+            $record_or_table.local
+         }
+      )
    }
 
    {
       packages: $packages
-      install_files: $install_files
       spawn_files: $spawn_files
+      install_files: $install_files
    }
 }
 
