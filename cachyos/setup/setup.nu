@@ -8,8 +8,7 @@ def main [args: string] {
 
 # [Helper Functions]
 #
-# returns a value list of specified key
-def cherry-pick [
+def collect-values-by-key [
    on_record_or_table: closure
    item_list: list = []
 ]: any -> list<any> {
@@ -52,7 +51,7 @@ def get-config [
 
    let packages = {
       ignore: (
-         $config_raw | cherry-pick {|record_or_table|
+         $config_raw | collect-values-by-key {|record_or_table|
             if ($record_or_table | columns | all {|col| $col != "ignore" }) {
                return []
             }
@@ -62,7 +61,7 @@ def get-config [
       )
 
       std: (
-         $config_raw | cherry-pick {|record_or_table|
+         $config_raw | collect-values-by-key {|record_or_table|
             if ($record_or_table | columns | all {|col| $col != "std" }) {
                return []
             }
@@ -72,7 +71,7 @@ def get-config [
       )
 
       aur: (
-         $config_raw | cherry-pick {|record_or_table|
+         $config_raw | collect-values-by-key {|record_or_table|
             if ($record_or_table | columns | all {|col| $col != "aur" }) {
                return []
             }
@@ -82,7 +81,7 @@ def get-config [
       )
 
       local: (
-         $config_raw | cherry-pick {|record_or_table|
+         $config_raw | collect-values-by-key {|record_or_table|
             if ($record_or_table | columns | all {|col| $col != "local" }) {
                return []
             }
