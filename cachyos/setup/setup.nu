@@ -2,8 +2,8 @@
 
 def main [args: string] {
    let config_absolute_pathname_list = (collect-config-absolute-pathname-list (collect-index-absolute-pathname-list $args))
-
-   get-config $config_absolute_pathname_list.1
+   let config_list = ($config_absolute_pathname_list | each {|config_absolute_pathname| get-config $config_absolute_pathname })
+   merge-config-list $config_list
 }
 
 # [Helper Functions]
@@ -158,4 +158,20 @@ def collect-config-absolute-pathname-list [index_absolute_pathname_list: list<pa
          )
       } | flatten
    )
+}
+
+def merge-config-list [
+   config_list: list<any> # turns out we lose the typing despite best efforts lol
+]: nothing -> record<packages: record<ignore: list<string>, std: list<string>, aur: list<string>, local: list<path>>, spawn_files: list<record<owner: string, target: path, content: string>>, install_files: list<record<operation: string, owner: string, source: path, target_path: path, target_name?: string>>> {
+   {
+      packages: {
+         ignore: ($config_list | get packages.ignore | flatten | uniq)
+         std: ($config_list | get packages.std | flatten | uniq)
+         aur: ($config_list | get packages.aur | flatten | uniq)
+         local: ($config_list | get packages.local | flatten | uniq)
+      }
+
+      spawn_files: ($config_list | get spawn_files | flatten)
+      install_files: ($config_list | get install_files | flatten)
+   }
 }
