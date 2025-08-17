@@ -6,6 +6,68 @@ def main [args: string] {
    merge-config-list $config_list
 }
 
+def "main install" [index_pathname: path] {
+   let config_absolute_pathname_list = (collect-config-absolute-pathname-list (collect-index-absolute-pathname-list $index_pathname))
+   let config_list = ($config_absolute_pathname_list | each {|config_absolute_pathname| get-config $config_absolute_pathname })
+   let config = merge-config-list $config_list
+
+   let check_and_install_packages = {|record: record<packages: list<string>, on_install: closure, on_check: oneof<closure, nothing>>|
+      let packages = $record.packages
+      let on_install = $record.on_install
+      let on_check = ($record | get on_check? | default null)
+
+      if ($packages | is-not-empty) {
+         let missing_packages = $packages | where {|package|
+            if ($on_check == null) {
+               (pacman -Q $package | complete | get exit_code) != 0
+            } else {
+               do $on_check $package
+            }
+         }
+
+         if ($missing_packages | is-not-empty) {
+            do $on_install $missing_packages
+         }
+      }
+   }
+
+   do $check_and_install_packages {
+      packages: $config.packages.std
+      on_check: null
+
+      on_install: {|missing_packages|
+         sudo pacman -S ...$missing_packages
+      }
+   }
+
+   do $check_and_install_packages {
+      packages: $config.packages.std
+      on_check: null
+
+      on_install: {|missing_packages|
+         paru -S --aur $missing_packages
+      }
+   }
+
+   do $check_and_install_packages {
+      packages: $config.packages.local
+      on_check: null
+
+      on_check: {|package|
+         pacman -Q ($package | path basename) | complete | get exit_code | $in != 0
+      }
+
+      on_install: {|missing_packages|
+         $missing_packages | each {|missing_package|
+            dirs add $missing_package
+            dirs
+            makepkg -si
+            dirs drop
+         }
+      }
+   }
+}
+
 # [Helper Functions]
 #
 def collect-values-by-key [
@@ -43,11 +105,8 @@ def get-source-pathname-list [index_path: path]: nothing -> list<path> {
 
 def get-config [
    config_path: string
-]: nothing -> record<packages: record<ignore: list<string>, std: list<string>, aur: list<string>, local: list<path>>, spawn_files: list<record<owner: string, target: path, content: string>>, install_files: list<record<operation: string, owner: string, source: path, target_path: path, target_name?: string>>> {
+]: nothing -> record<packages: record<ignore: list<string>, std: list<string>, aur: list<string>, local: list<path>>, spawn_files: list<record<owner: string, target: path, content: string>>, install_files: list<record<operation: string, owner: string, source: path, target_path: path, target_name?: string>>, services: record<enable: list<string>>> {
    let config_raw = open $config_path
-
-   let install_files = $config_raw.install_files? | default []
-   let spawn_files = $config_raw.spawn_files? | default []
 
    let packages = {
       ignore: (
@@ -88,13 +147,31 @@ def get-config [
 
             $record_or_table.local
          }
+         | each {|local_package_pathname|
+            let local_package_absolute_pathname = (
+               $config_path
+               | path dirname
+               | path join $local_package_pathname
+               | path expand
+            )
+
+            if not ($local_package_absolute_pathname | path exists) {
+               error make {msg: $"Invalid local path: ($local_package_absolute_pathname)"}
+            }
+
+            $local_package_absolute_pathname
+         }
       )
    }
 
    {
       packages: $packages
-      spawn_files: $spawn_files
-      install_files: $install_files
+      spawn_files: ($config_raw | get -o packages.install_files | default [])
+      install_files: ($config_raw | get -o packages.spawn_files | default [])
+
+      services: {
+         enable: ($config_raw | get -o services.enable | default [])
+      }
    }
 }
 
@@ -162,7 +239,10 @@ def collect-config-absolute-pathname-list [index_absolute_pathname_list: list<pa
 
 def merge-config-list [
    config_list: list<any> # turns out we lose the typing despite best efforts lol
-]: nothing -> record<packages: record<ignore: list<string>, std: list<string>, aur: list<string>, local: list<path>>, spawn_files: list<record<owner: string, target: path, content: string>>, install_files: list<record<operation: string, owner: string, source: path, target_path: path, target_name?: string>>> {
+]: nothing -> record<packages: record<ignore: list<string>, std: list<string>, aur: list<string>, local: list<path>>, spawn_files: list<record<owner: string, target: path, content: string>>, install_files: list<record<operation: string, owner: string, source: path, target_path: path, target_name?: string>>, services: record<enable: list<string>>> {
+   # not using get -o because it should be garanteed
+   # as long as we passing the value of the getter
+   # futhermore if typing was not lost we could have accessed the values directly
    {
       packages: {
          ignore: ($config_list | get packages.ignore | flatten | uniq)
@@ -173,5 +253,9 @@ def merge-config-list [
 
       spawn_files: ($config_list | get spawn_files | flatten)
       install_files: ($config_list | get install_files | flatten)
+
+      services: {
+         enable: ($config_list | get services.enable | flatten | uniq)
+      }
    }
 }
