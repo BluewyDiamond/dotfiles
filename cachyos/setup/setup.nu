@@ -1,9 +1,12 @@
 #!/usr/bin/env nu
 
+use std/log
+
 def main [args: string] {
    let config_absolute_pathname_list = (collect-config-absolute-pathname-list (collect-index-absolute-pathname-list $args))
    let config_list = ($config_absolute_pathname_list | each {|config_absolute_pathname| get-config $config_absolute_pathname })
-   merge-config-list $config_list
+   $config_list
+   merge-config-list $config_list | to json
 }
 
 def "main install" [index_pathname: path] {
@@ -63,6 +66,35 @@ def "main install" [index_pathname: path] {
             makepkg -si
             dirs drop
          }
+      }
+   }
+
+   $config.spawn_files | each {|spawn_file|
+      log debug $"spawn_file -> ($spawn_file | to text --no-newline | str replace "\n" ' ')"
+
+      let run_as = {|record: record<command: closure>|
+         let command = $record.command
+
+         if $spawn_file.owner != $env.LOGNAME {
+            # FIX ME
+            sudo -u $spawn_file.owner -- (do $command)
+         } else {
+            do $command
+         }
+      }
+
+      try {
+         if not ($spawn_file.target | path exists) {
+            do $run_as {
+               command: {|| $spawn_file.content | save $spawn_file.target }
+            }
+         } else if (open $spawn_file.target) != $spawn_file.content {
+            do $run_as {
+               command: {|| rm --trash $spawn_file.target }
+            }
+         }
+      } catch {|err|
+         print $err
       }
    }
 }
@@ -165,8 +197,33 @@ def get-config [
 
    {
       packages: $packages
-      spawn_files: ($config_raw | get -o packages.install_files | default [])
-      install_files: ($config_raw | get -o packages.spawn_files | default [])
+
+      spawn_files: (
+         $config_raw
+         | get -o spawn_files
+         | default []
+         | each {|sf|
+            {
+               owner: ($sf | get owner)
+               target: ($sf | get target)
+               content: ($sf | get content)
+            }
+         }
+      )
+      install_files: (
+         $config_raw
+         | get -o install_files
+         | default []
+         | each {|if|
+            {
+               operation: ($if | get operation)
+               owner: ($if | get owner)
+               source: ($if | get source)
+               target_path: ($if | get target_path)
+               target_name: ($if | get -o target_name | default null)
+            }
+         }
+      )
 
       services: {
          enable: ($config_raw | get -o services.enable | default [])
