@@ -44,11 +44,17 @@ def build-args [flags: list<record<flag: string, value: any>>] {
 
 # [Aliases]
 #
-# replacing built-in commands is so broken rn
+# replacing built-in commands kinda broken rn
 # while technically working,
 # the alias --help is calling the replacer --help
-def wipe [] {
-   clear
+# this only happens when replacing built-in commands
+alias nu-clear = clear
+
+# https://www.nushell.sh/commands/docs/clear.html
+def clear [
+   --keep-scrollback (-k)
+] {
+   nu-clear --keep-scrollback=$keep_scrollback
    tput cup (term size | get rows)
 }
 
