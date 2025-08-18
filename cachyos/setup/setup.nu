@@ -11,7 +11,7 @@ def "main install" [index_pathname: path] {
    let config_list = ($config_absolute_pathname_list | each {|config_absolute_pathname| get-config $config_absolute_pathname })
    let config = merge-config-list $config_list
 
-   let check_and_install_packages = {|record: record<packages: list<string>, on_install: closure, on_check: oneof<closure, nothing>>|
+   let check_and_install_packages = {|record: record<packages: list<string>, on_check: oneof<closure, nothing>, on_install: closure>|
       let packages = $record.packages
       let on_install = $record.on_install
       let on_check = ($record | get on_check? | default null)
@@ -51,7 +51,6 @@ def "main install" [index_pathname: path] {
 
    do $check_and_install_packages {
       packages: $config.packages.local
-      on_check: null
 
       on_check: {|package|
          pacman -Q ($package | path basename) | complete | get exit_code | $in != 0

@@ -5,8 +5,8 @@ $env.config.show_banner = false
 # [[Paths]]
 #
 let path_list = [
-    ($env.HOME | path join ".cargo" "bin"),
-    ($env.HOME | path join ".local" "bin")
+   ($env.HOME | path join ".cargo" "bin")
+   ($env.HOME | path join ".local" "bin")
 ]
 
 $env.PATH = ($env.PATH | append $path_list)
@@ -26,35 +26,29 @@ $env.EDITOR = "nvim"
 #
 def build-args [flags: list<record<flag: string, value: any>>] {
    print $"($flags)"
-    $flags
-    | where { |record|
-        $record.value != null and (
-            ($record.value | describe) != "bool" or
-            $record.value == true
-        )
-    }
-    | each { |record|
-        if ($record.value | describe) == "bool" {
-            $record.flag
-        } else {
-            $"($record.flag)=($record.value)"
-        }
-    }
+   $flags
+   | where {|record|
+      $record.value != null and (
+         ($record.value | describe) != "bool" or
+         $record.value == true
+      )
+   }
+   | each {|record|
+      if ($record.value | describe) == "bool" {
+         $record.flag
+      } else {
+         $"($record.flag)=($record.value)"
+      }
+   }
 }
 
 # [Aliases]
 #
-alias nu-clear = clear
-
-def clear [
-    --keep-scrollback (-k)
-    --help (-h)
-] {
-   (nu-clear
-      --keep-scrollback=$keep_scrollback
-      --help=$help
-   )
-
+# replacing built-in commands is so broken rn
+# while technically working,
+# the alias --help is calling the replacer --help
+def wipe [] {
+   clear
    tput cup (term size | get rows)
 }
 
@@ -66,4 +60,4 @@ starship init nu | save -f ($nu.data-dir | path join "vendor" "autoload" "starsh
 
 # [[Visuals]]
 tput cup (term size | get rows)
-fastfetch -c ($env.HOME)/.config/fastfetch/wezterm.jsonc
+fastfetch -c ($env.HOME | path join ".config" "fastfetch" "wezterm.jsonc")
