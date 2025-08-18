@@ -114,21 +114,20 @@ binds {
    Mod+Down  { focus-window-down; }
    Mod+Up    { focus-window-up; }
    Mod+Right { focus-column-right; }
-   Mod+N     { focus-column-left; }
-   Mod+E     { focus-window-down; }
    Mod+U     { focus-window-up; }
    Mod+I     { focus-column-right; }
+   Mod+E     { focus-window-down; }
+   Mod+N     { focus-column-left; }
 
    Mod+Home { focus-column-first; }
    Mod+End  { focus-column-last; }
    Mod+Ctrl+Home { move-column-to-first; }
    Mod+Ctrl+End  { move-column-to-last; }
 
-   Mod+Minus { set-column-width "-10%"; }
-   Mod+Equal { set-column-width "+10%"; }
-
-   Mod+Shift+Minus { set-window-height "-10%"; }
-   Mod+Shift+Equal { set-window-height "+10%"; }
+   Mod+Alt+U { set-window-height "+10%"; }
+   Mod+Alt+I { set-column-width "+10%"; }
+   Mod+Alt+E { set-window-height "-10%"; }
+   Mod+Alt+N { set-column-width "-10%"; }
 
    Mod+M { maximize-column; }
    Mod+F { fullscreen-window; }
