@@ -1,7 +1,7 @@
 # modified to change some compile options
 pkgname=niri-no-systemd-git
 _pkgname=niri
-pkgver=25.05.1.r89.g52c579d
+pkgver=r0.0000000
 pkgrel=1
 pkgdesc="Scrollable-tiling Wayland compositor (no systemd services)"
 arch=(x86_64 aarch64)
@@ -20,15 +20,15 @@ optdepends=('fuzzel: application launcher similar to rofi drun mode'
             'xdg-desktop-portal-gnome: screencasting support'
             'gnome-keyring: implements the secret portal, for certain apps to work'
             'polkit-gnome: when apps need to ask for root permissions')
-provides=($_pkgname=${pkgver})
-conflicts=($_pkgname-bin $_pkgname $_pkgname-git)
+provides=($_pkgname)
+conflicts=($_pkgname $_pkgname-bin $_pkgname-git)
 options=(!debug !lto !strip)
 source=($_pkgname::git-lfs+$url.git)
 b2sums=('SKIP')
 
 pkgver() {
   cd $_pkgname
-  git describe --long --tags --abbrev=7 | sed 's/\([^-]*-g\)/r\1/;s/-/./g;s/^v//'
+  printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short=7 HEAD)"
 }
 
 prepare() {
