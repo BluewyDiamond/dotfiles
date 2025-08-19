@@ -15,88 +15,90 @@ def "main install" [index_pathname: path] {
    let config_list = ($config_absolute_pathname_list | each {|config_absolute_pathname| get-config $config_absolute_pathname })
    let config = merge-config-list $config_list
 
-   let check_and_install_packages = {|record: record<packages: list<string>, on_check: oneof<closure, nothing>, on_install: closure>|
-      let packages = $record.packages
-      let on_install = $record.on_install
-      let on_check = ($record | get on_check? | default null)
-
-      if ($packages | is-not-empty) {
-         let missing_packages = $packages | where {|package|
-            if ($on_check == null) {
-               (pacman -Q $package | complete | get exit_code) != 0
-            } else {
-               do $on_check $package
-            }
-         }
-
-         if ($missing_packages | is-not-empty) {
-            do $on_install $missing_packages
-         }
-      }
-   }
-
-   do $check_and_install_packages {
-      packages: $config.packages.std
-      on_check: null
-
-      on_install: {|missing_packages|
-         sudo pacman -S ...$missing_packages
-      }
-   }
-
-   do $check_and_install_packages {
-      packages: $config.packages.std
-      on_check: null
-
-      on_install: {|missing_packages|
-         paru -S --aur $missing_packages
-      }
-   }
-
-   do $check_and_install_packages {
-      packages: $config.packages.local
-
-      on_check: {|package|
-         pacman -Q ($package | path basename) | complete | get exit_code | $in != 0
-      }
-
-      on_install: {|missing_packages|
-         $missing_packages | each {|missing_package|
-            dirs add $missing_package
-            dirs
-            makepkg -si
-            dirs drop
-         }
-      }
-   }
+   # let check_and_install_packages = {|record: record<packages: list<string>, on_check: oneof<closure, nothing>, on_install: closure>|
+   #    let packages = $record.packages
+   #    let on_install = $record.on_install
+   #    let on_check = ($record | get on_check? | default null)
+   #
+   #    if ($packages | is-not-empty) {
+   #       let missing_packages = $packages | where {|package|
+   #          if ($on_check == null) {
+   #             (pacman -Q $package | complete | get exit_code) != 0
+   #          } else {
+   #             do $on_check $package
+   #          }
+   #       }
+   #
+   #       if ($missing_packages | is-not-empty) {
+   #          do $on_install $missing_packages
+   #       }
+   #    }
+   # }
+   #
+   # do $check_and_install_packages {
+   #    packages: $config.packages.std
+   #    on_check: null
+   #
+   #    on_install: {|missing_packages|
+   #       sudo pacman -S ...$missing_packages
+   #    }
+   # }
+   #
+   # do $check_and_install_packages {
+   #    packages: $config.packages.std
+   #    on_check: null
+   #
+   #    on_install: {|missing_packages|
+   #       paru -S --aur $missing_packages
+   #    }
+   # }
+   #
+   # do $check_and_install_packages {
+   #    packages: $config.packages.local
+   #
+   #    on_check: {|package|
+   #       pacman -Q ($package | path basename) | complete | get exit_code | $in != 0
+   #    }
+   #
+   #    on_install: {|missing_packages|
+   #       $missing_packages | each {|missing_package|
+   #          dirs add $missing_package
+   #          dirs
+   #          makepkg -si
+   #          dirs drop
+   #       }
+   #    }
+   # }
 
    $config.spawn_files | each {|spawn_file|
       log debug $"spawn_file -> ($spawn_file | to text --no-newline | str replace "\n" ' ')"
 
-      let run_as = {|record: record<command: closure>|
-         let command = $record.command
+      let run_as = {|record: record<str_command: string>|
+         let str_command = $record.str_command
 
          if $spawn_file.owner != $env.LOGNAME {
-            # FIX ME
-            sudo -u $spawn_file.owner -- (do $command)
+            sudo -u $spawn_file.owner -- nu -c $"($str_command)"
          } else {
-            do $command
+            nu -c $"($str_command)"
          }
       }
 
       try {
          if not ($spawn_file.target | path exists) {
             do $run_as {
-               command: {|| $spawn_file.content | save $spawn_file.target }
+               str_command: $"($spawn_file.content) | save ($spawn_file.target)"
             }
          } else if (open $spawn_file.target) != $spawn_file.content {
             do $run_as {
-               command: {|| rm --trash $spawn_file.target }
+               command: $"rm --trash ($spawn_file.target)"
             }
          }
       } catch {|err|
          print $err
       }
+   }
+
+   $config.install_files | each {|install_file|
    }
 }
 
@@ -126,14 +128,6 @@ def collect-values-by-key [
    }
 
    $found_item_list | flatten
-}
-
-# from any
-# grabbing required and handling optional fields
-# then describing said variables, maybe in an each loop
-# where it needs to match the type we can do assert if that throws
-def type_config [] {
-
 }
 
 # [Functions + Raw Data]
@@ -188,18 +182,10 @@ def get-config [
             $record_or_table.local
          }
          | each {|local_package_pathname|
-            let local_package_absolute_pathname = (
-               $config_path
-               | path dirname
-               | path join $local_package_pathname
-               | path expand
-            )
-
-            if not ($local_package_absolute_pathname | path exists) {
-               error make {msg: $"Invalid local path: ($local_package_absolute_pathname)"}
-            }
-
-            $local_package_absolute_pathname
+            $config_path
+            | path dirname
+            | path join $local_package_pathname
+            | path expand
          }
       )
    }
