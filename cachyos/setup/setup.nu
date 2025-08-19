@@ -4,9 +4,10 @@ use std/log
 
 def main [args: string] {
    let config_absolute_pathname_list = (collect-config-absolute-pathname-list (collect-index-absolute-pathname-list $args))
-   let config_list = ($config_absolute_pathname_list | each {|config_absolute_pathname| get-config $config_absolute_pathname })
-   $config_list
-   merge-config-list $config_list | to json
+   let config_list = $config_absolute_pathname_list | each {|config_absolute_pathname| get-config $config_absolute_pathname }
+   $config_list | describe
+   # merge-config-list ($config_list | into value)
+   $config_list | into record | describe
 }
 
 def "main install" [index_pathname: path] {
@@ -127,6 +128,14 @@ def collect-values-by-key [
    $found_item_list | flatten
 }
 
+# from any
+# grabbing required and handling optional fields
+# then describing said variables, maybe in an each loop
+# where it needs to match the type we can do assert if that throws
+def type_config [] {
+
+}
+
 # [Functions + Raw Data]
 #
 def get-source-pathname-list [index_path: path]: nothing -> list<path> {
@@ -202,25 +211,26 @@ def get-config [
          $config_raw
          | get -o spawn_files
          | default []
-         | each {|sf|
+         | each {|spawn_file|
             {
-               owner: ($sf | get owner)
-               target: ($sf | get target)
-               content: ($sf | get content)
+               owner: ($spawn_file | get owner)
+               target: ($spawn_file | get target)
+               content: ($spawn_file | get content)
             }
          }
       )
+
       install_files: (
          $config_raw
          | get -o install_files
          | default []
-         | each {|if|
+         | each {|install_file|
             {
-               operation: ($if | get operation)
-               owner: ($if | get owner)
-               source: ($if | get source)
-               target_path: ($if | get target_path)
-               target_name: ($if | get -o target_name | default null)
+               operation: ($install_file | get operation)
+               owner: ($install_file | get owner)
+               source: ($install_file | get source)
+               target_path: ($install_file | get target_path)
+               target_name: ($install_file | get -o target_name | default null)
             }
          }
       )
@@ -294,7 +304,7 @@ def collect-config-absolute-pathname-list [index_absolute_pathname_list: list<pa
 }
 
 def merge-config-list [
-   config_list: list<any> # turns out we lose the typing despite best efforts lol
+   config_list: any
 ]: nothing -> record<packages: record<ignore: list<string>, std: list<string>, aur: list<string>, local: list<path>>, spawn_files: list<record<owner: string, target: path, content: string>>, install_files: list<record<operation: string, owner: string, source: path, target_path: path, target_name?: string>>, services: record<enable: list<string>>> {
    # not using get -o because it should be garanteed
    # as long as we passing the value of the getter
