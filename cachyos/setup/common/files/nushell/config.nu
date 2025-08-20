@@ -58,6 +58,25 @@ def clear [
    tput cup (term size | get rows)
 }
 
+def --wrapped aura [
+   -S
+   -A
+   ...rest
+] {
+   mut command = ["paru"]
+
+   if $A == true {
+      $command = $command | append "-S"
+      $command = $command | append "--aur"
+   } else if $S == true {
+      $command = $command | append "-S"
+      $command = $command | append "--repo"
+   }
+
+   $command = $command | append $rest
+   run-external ...$command
+}
+
 # [Autostart]
 #
 # starship
