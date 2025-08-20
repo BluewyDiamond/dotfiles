@@ -1,49 +1,49 @@
 [[install_files]]
 operation = "link"
 owner = "bluewy"
-source = "common/files/ags"
+source = "../../../../common/files/ags"
 target_path = "/home/bluewy/.config"
 
 [[install_files]]
 operation = "link"
 owner = "bluewy"
-source = "common/files/ags2"
+source = "../../../../common/files/ags2"
 target_path = "/home/bluewy/.config"
 
 [[install_files]]
 operation = "link"
 owner = "bluewy"
-source = "common/files/applications/obs.desktop"
+source = "../../../../common/files/applications/obs.desktop"
 target_path = "/home/bluewy/.local/share/applications"
 
 [[install_files]]
 operation = "link"
 owner = "bluewy"
-source = "common/files/applications/steam-native.desktop"
+source = "../../../../common/files/applications/steam-native.desktop"
 target_path = "/home/bluewy/.local/share/applications"
 
 [[install_files]]
 operation = "link"
 owner = "bluewy"
-source = "common/files/css"
+source = "../../../../common/files/css"
 target_path = "/home/bluewy/.config"
 
 [[install_files]]
 operation = "link"
 owner = "bluewy"
-source = "common/files/electron_flags/electron-flags.conf"
+source = "../../../../common/files/electron_flags/electron-flags.conf"
 target_path = "/home/bluewy/.config"
 
 [[install_files]]
 operation = "link"
 owner = "bluewy"
-source = "common/files/fastfetch"
+source = "../../../../common/files/fastfetch"
 target_path = "/home/bluewy/.config"
 
 [[install_files]]
 operation = "link"
 owner = "bluewy"
-source = "common/files/fish_bluewy"
+source = "../../../../common/files/fish_bluewy"
 target_path = "/home/bluewy/.config"
 
 [[spawn_files]]
@@ -56,102 +56,102 @@ target = "/home/bluewy/.config/fish/conf.d/init_bluewy.fish"
 [[install_files]]
 operation = "link"
 owner = "bluewy"
-source = "common/files/fuzzel"
+source = "../../../../common/files/fuzzel"
 target_path = "/home/bluewy/.config"
 
 [[install_files]]
 operation = "link"
 owner = "bluewy"
-source = "common/files/hypr"
+source = "../../../../common/files/hypr"
 target_path = "/home/bluewy/.config"
 
 [[install_files]]
 operation = "copy"
 owner = "root"
-source = "common/files/kbd/colemak_dh_wide_custom_eu_ansi.map"
+source = "../../../../common/files/kbd/colemak_dh_wide_custom_eu_ansi.map"
 target_path = "/usr/share/kbd/keymaps"
 
 [[install_files]]
 operation = "copy"
 owner = "root"
-source = "common/files/kbd/colemak_dh_wide_custom_eu_iso.map"
+source = "../../../../common/files/kbd/colemak_dh_wide_custom_eu_iso.map"
 target_path = "/usr/share/kbd/keymaps"
 
 [[install_files]]
 operation = "link"
 owner = "bluewy"
-source = "common/files/kde/kdeglobals"
+source = "../../../../common/files/kde/kdeglobals"
 target_path = "/home/bluewy/.config"
 
 [[install_files]]
 operation = "copy"
 owner = "root"
-source = "common/files/libinput/local-overrides.quirks"
+source = "../../../../common/files/libinput/local-overrides.quirks"
 target_path = "/etc/libinput"
 
 [[install_files]]
 operation = "link"
 owner = "bluewy"
-source = "common/files/librewolf/librewolf.overrides.cfg"
+source = "../../../../common/files/librewolf/librewolf.overrides.cfg"
 target_path = "/home/bluewy/.librewolf"
 
 [[install_files]]
 operation = "link"
 owner = "bluewy"
-source = "common/files/mangohud"
+source = "../../../../common/files/mangohud"
 target_name = "MangoHud"
 target_path = "/home/bluewy/.config"
 
 [[install_files]]
 operation = "link"
 owner = "bluewy"
-source = "hosts/raphael/files/niri"
+source = "../../files/niri"
 target_path = "/home/bluewy/.config"
 
 [[install_files]]
 operation = "link"
 owner = "bluewy"
-source = "common/files/nvim"
+source = "../../../../common/files/nvim"
 target_path = "/home/bluewy/.config"
 
 [[install_files]]
 operation = "link"
 owner = "bluewy"
-source = "common/files/pipewire"
+source = "../../../../common/files/pipewire"
 target_path = "/home/bluewy/.config"
 
 [[install_files]]
 operation = "link"
 owner = "bluewy"
-source = "common/files/scripts"
+source = "../../../../common/files/scripts"
 target_path = "/home/bluewy/.local/scripts"
 
 [[install_files]]
 operation = "link"
 owner = "bluewy"
-source = "common/files/speech-dispatcher"
+source = "../../../../common/files/speech-dispatcher"
 target_path = "/home/bluewy/.config"
 
 [[install_files]]
 operation = "copy"
 owner = "bluewy"
-source = "common/files/user-dirs.dirs/user-dirs.dirs"
+source = "../../../../common/files/user-dirs.dirs/user-dirs.dirs"
 target_path = "/home/bluewy/.config"
 
 [[install_files]]
 operation = "link"
 owner = "bluewy"
-source = "common/files/wayland-pipewire-idle-inhibit"
+source = "../../../../common/files/wayland-pipewire-idle-inhibit"
 target_path = "/home/bluewy/.config"
 
 [[install_files]]
 operation = "link"
 owner = "bluewy"
-source = "common/files/wezterm"
+source = "../../../../common/files/wezterm"
 target_path = "/home/bluewy/.config"
 
 [[install_files]]
 operation = "copy"
 owner = "root"
-source = "common/files/xkb/symbols/bluewy"
+source = "../../../../common/files/xkb/symbols/bluewy"
 target_path = "/usr/share/X11/xkb/symbols"

@@ -13,13 +13,13 @@ def "main install" [index_pathname: path]: nothing -> nothing {
    let config_list = ($config_absolute_pathname_list | each {|config_absolute_pathname| get-config $config_absolute_pathname })
    let config = merge-config-list $config_list
 
-   let check_and_install_packages = {|record: record<packages: list<string>, on_check: oneof<closure, nothing>, on_install: closure>|
-      let packages = $record.packages
+   let check_and_install_package_list = {|record: record<package_list: list<string>, on_check: oneof<closure, nothing>, on_install: closure>|
+      let package_list = $record.package_list
       let on_install = $record.on_install
       let on_check = ($record | get on_check? | default null)
 
-      if ($packages | is-not-empty) {
-         let missing_packages = $packages | where {|package|
+      if ($package_list | is-not-empty) {
+         let missing_package_list = $package_list | where {|package|
             if ($on_check == null) {
                (pacman -Q $package | complete | get exit_code) != 0
             } else {
@@ -27,40 +27,40 @@ def "main install" [index_pathname: path]: nothing -> nothing {
             }
          }
 
-         if ($missing_packages | is-not-empty) {
-            do $on_install $missing_packages
+         if ($missing_package_list | is-not-empty) {
+            do $on_install $missing_package_list
          }
       }
    }
 
-   do $check_and_install_packages {
-      packages: $config.packages.std
+   do $check_and_install_package_list {
+      package_list: $config.package.std_list
       on_check: null
 
-      on_install: {|missing_packages|
-         sudo pacman -S ...$missing_packages
+      on_install: {|missing_package_list|
+         sudo pacman -S ...$missing_package_list
       }
    }
 
-   do $check_and_install_packages {
-      packages: $config.packages.std
+   do $check_and_install_package_list {
+      package_list: $config.package.aur_list
       on_check: null
 
-      on_install: {|missing_packages|
-         paru -S --aur $missing_packages
+      on_install: {|missing_package_list|
+         paru -S --aur $missing_package_list
       }
    }
 
-   do $check_and_install_packages {
-      packages: $config.packages.local
+   do $check_and_install_package_list {
+      package_list: $config.package.local_path_list
 
       on_check: {|package|
          pacman -Q ($package | path basename) | complete | get exit_code | $in != 0
       }
 
-      on_install: {|missing_packages|
-         $missing_packages | each {|missing_package|
-            dirs add $missing_package
+      on_install: {|missing_package_list|
+         $missing_package_list | each {|missing_package_list|
+            dirs add $missing_package_list
             dirs
             makepkg -si
             dirs drop
@@ -70,9 +70,9 @@ def "main install" [index_pathname: path]: nothing -> nothing {
 
    $config.file_spawn_list | each {|file_spawn|
       try {
-         if ($file_spawn.target | path exists) {
+         if ($file_spawn.target_pathname | path exists) {
             if (open $file_spawn.target_pathname) != $file_spawn.content {
-               run-as $file_spawn.owner $"rm --trash ($file_spawn.target)"
+               run-as $file_spawn.owner $"rm --trash ($file_spawn.target_pathname)"
                run-as $file_spawn.owner $"'($file_spawn.content)' | save ($file_spawn.target_pathname)"
             } else {
                print "MATCHES"
@@ -85,11 +85,13 @@ def "main install" [index_pathname: path]: nothing -> nothing {
       }
    } | ignore
 
-   $config.file_install | each {|file_install|
+   $config.file_install_list | each {|file_install|
       try {
          let target_pathname = $"($file_install.target_path)/($file_install.source_pathname | path basename)"
 
-         if ($target_pathname | path exists) {
+         # TODO: FIX ME
+         # if ($target_pathname | path exists) {
+         if (true) {
             match $file_install.operation {
                "copy" => {
                   if ((open $target_pathname) != (open $file_install.source_pathname)) {
@@ -129,7 +131,7 @@ def "main install" [index_pathname: path]: nothing -> nothing {
             }
          }
       } catch {|err|
-         print $err
+         print $err.rendered
       }
    } | ignore
 }
@@ -256,13 +258,18 @@ def get-config [
             | path join ($install_file | get source)
             | path expand
 
-            print $source_pathname
-
             {
                operation: ($install_file | get operation)
                owner: ($install_file | get owner)
-               source_pathname: $source_pathname
+               source_pathname: (
+                  $config_pathname
+                  | path dirname
+                  | path join ($install_file | get source)
+                  | path expand
+               )
+
                target_path: ($install_file | get target_path)
+
                target_name: ($install_file | get -o target_name | default null)
             }
          }
