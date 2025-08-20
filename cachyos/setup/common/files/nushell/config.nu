@@ -58,23 +58,29 @@ def clear [
    tput cup (term size | get rows)
 }
 
-def --wrapped aura [
-   -S
-   -A
-   ...rest
-] {
-   mut command = ["paru"]
+def --wrapped aura [...args] {
+   let cmd = $args | reduce --fold ["paru"] {|arg acc|
+      match ($arg | str starts-with "-") {
+         true => {
+            $arg | split chars | skip 1 | reduce --fold $acc {|flag inner_acc|
+               $inner_acc | append (
+                  match $flag {
+                     "S" => ["-S" "--repo"]
+                     "A" => ["-S" "--aur"]
+                     "W" => ["-S"]
+                     _ => [$"-($flag)"]
+                  }
+               )
+            }
+         }
 
-   if $A == true {
-      $command = $command | append "-S"
-      $command = $command | append "--aur"
-   } else if $S == true {
-      $command = $command | append "-S"
-      $command = $command | append "--repo"
+         false => {
+            $acc | append $arg
+         }
+      }
    }
 
-   $command = $command | append $rest
-   run-external ...$command
+   run-external ...$cmd
 }
 
 # [Autostart]
