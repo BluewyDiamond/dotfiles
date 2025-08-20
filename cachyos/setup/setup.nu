@@ -5,12 +5,10 @@ use std/log
 def main [args: string] {
    let config_absolute_pathname_list = (collect-config-absolute-pathname-list (collect-index-absolute-pathname-list $args))
    let config_list = $config_absolute_pathname_list | each {|config_absolute_pathname| get-config $config_absolute_pathname }
-   $config_list | describe
-   # merge-config-list ($config_list | into value)
-   $config_list | into record | describe
+   merge-config-list ($config_list)
 }
 
-def "main install" [index_pathname: path] {
+def "main install" [index_pathname: path]: nothing -> nothing {
    let config_absolute_pathname_list = (collect-config-absolute-pathname-list (collect-index-absolute-pathname-list $index_pathname))
    let config_list = ($config_absolute_pathname_list | each {|config_absolute_pathname| get-config $config_absolute_pathname })
    let config = merge-config-list $config_list
@@ -71,34 +69,63 @@ def "main install" [index_pathname: path] {
    # }
 
    $config.spawn_files | each {|spawn_file|
-      log debug $"spawn_file -> ($spawn_file | to text --no-newline | str replace "\n" ' ')"
-
-      let run_as = {|record: record<str_command: string>|
-         let str_command = $record.str_command
-
-         if $spawn_file.owner != $env.LOGNAME {
-            sudo -u $spawn_file.owner -- nu -c $"($str_command)"
-         } else {
-            nu -c $"($str_command)"
-         }
-      }
-
       try {
-         if not ($spawn_file.target | path exists) {
-            do $run_as {
-               str_command: $"($spawn_file.content) | save ($spawn_file.target)"
+         if ($spawn_file.target | path exists) {
+            if (open $spawn_file.target) != $spawn_file.content {
+               run-as $spawn_file.owner $"rm --trash ($spawn_file.target)"
+               run-as $spawn_file.owner $"'($spawn_file.content)' | save ($spawn_file.target)"
+            } else {
+               print "MATCHES"
             }
-         } else if (open $spawn_file.target) != $spawn_file.content {
-            do $run_as {
-               command: $"rm --trash ($spawn_file.target)"
-            }
+         } else {
+            run-as $spawn_file.owner $"'($spawn_file.content)' | save ($spawn_file.target)"
          }
       } catch {|err|
          print $err
       }
-   }
+   } | ignore
 
    $config.install_files | each {|install_file|
+      try {
+         let target_pathname = $"($install_file.target_path)/($install_file.source | path basename)"
+
+         if ($target_pathname | path exists) {
+            match $install_file.operation {
+               "copy" => {
+                  if ((open $target_pathname) != (open $install_file.source)) {
+                     run-as $install_file.owner $"rm --trash ($target_pathname)"
+                     run-as $install_file.owner $"cp ($install_file.source) ($target_pathname)"
+                  } else {
+                     print "COPY MATCHES"
+                  }
+               }
+
+               "link" => {
+                  if (($target_pathname | path expand) != $install_file.source) {
+                     run-as $install_file.owner $"rm --trash ($target_pathname)"
+                     run-as $install_file.owner $"ln -s ($install_file.source) ($target_pathname)"
+                  } else {
+                     print "LN MATCHES"
+                  }
+               }
+
+               _ => {
+                  log error "OPERATION NOT VALID"
+               }
+            }
+         } else {
+         }
+      } catch {|err|
+         print $err
+      }
+   } | ignore
+}
+
+def run-as [owner: string nu_cmd: string] {
+   if $owner != $env.LOGNAME {
+      run-external ...["sudo" "-u" $owner "--" $nu.current-exe "-c" $nu_cmd]
+   } else {
+      run-external ...[$nu.current-exe "-c" $nu_cmd]
    }
 }
 
@@ -138,9 +165,9 @@ def get-source-pathname-list [index_path: path]: nothing -> list<path> {
 }
 
 def get-config [
-   config_path: string
+   config_pathname: string
 ]: nothing -> record<packages: record<ignore: list<string>, std: list<string>, aur: list<string>, local: list<path>>, spawn_files: list<record<owner: string, target: path, content: string>>, install_files: list<record<operation: string, owner: string, source: path, target_path: path, target_name?: string>>, services: record<enable: list<string>>> {
-   let config_raw = open $config_path
+   let config_raw = open $config_pathname
 
    let packages = {
       ignore: (
@@ -182,7 +209,7 @@ def get-config [
             $record_or_table.local
          }
          | each {|local_package_pathname|
-            $config_path
+            $config_pathname
             | path dirname
             | path join $local_package_pathname
             | path expand
@@ -211,10 +238,17 @@ def get-config [
          | get -o install_files
          | default []
          | each {|install_file|
+            let source_pathname = $config_pathname
+            | path dirname
+            | path join ($install_file | get source)
+            | path expand
+
+            print $source_pathname
+
             {
                operation: ($install_file | get operation)
                owner: ($install_file | get owner)
-               source: ($install_file | get source)
+               source: $source_pathname
                target_path: ($install_file | get target_path)
                target_name: ($install_file | get -o target_name | default null)
             }
