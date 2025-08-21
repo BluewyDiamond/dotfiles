@@ -3,14 +3,14 @@
 use std/log
 
 def main [args: string] {
-   let config_absolute_pathname_list = (collect-config-absolute-pathname-list (collect-index-absolute-pathname-list $args))
-   let config_list = $config_absolute_pathname_list | each {|config_absolute_pathname| get-config $config_absolute_pathname }
+   let config_abs_pathname_list = (collect-config-abs-pathname-list (collect-index-abs-pathname-list $args))
+   let config_list = $config_abs_pathname_list | each {|config_abs_pathname| get-config $config_abs_pathname }
    merge-config-list ($config_list)
 }
 
-def "main install" [index_pathname: path]: nothing -> nothing {
-   let config_absolute_pathname_list = (collect-config-absolute-pathname-list (collect-index-absolute-pathname-list $index_pathname))
-   let config_list = ($config_absolute_pathname_list | each {|config_absolute_pathname| get-config $config_absolute_pathname })
+def "main install" [index_rel_pathname: path] {
+   let config_abs_pathname_list = (collect-config-abs-pathname-list (collect-index-abs-pathname-list $index_rel_pathname))
+   let config_list = ($config_abs_pathname_list | each {|config_abs_pathname| get-config $config_abs_pathname })
    let config = merge-config-list $config_list
 
    let check_and_install_package_list = {|record: record<package_list: list<string>, on_check: oneof<closure, nothing>, on_install: closure>|
@@ -92,32 +92,32 @@ def "main install" [index_pathname: path]: nothing -> nothing {
       try {
          let target_abs_pathname = $"($file_install.target_abs_path)/($file_install.source_abs_pathname | path basename)"
          print $"INSTALL FILE => target=($target_abs_pathname)"
-         let target_pathname_exists = (ls $target_abs_pathname | is-not-empty)
+         let target_abs_pathname_exists = (ls $target_abs_pathname | is-not-empty)
 
          match $file_install.operation {
             "copy" => {
-               if $target_pathname_exists {
+               if $target_abs_pathname_exists {
                   if ((open $target_abs_pathname) != (open $file_install.source_abs_pathname)) {
                      run-as $file_install.owner $"rm --trash ($target_abs_pathname)"
-                     run-as $file_install.owner $"cp ($file_install.source_pathname) ($target_abs_pathname)"
+                     run-as $file_install.owner $"cp ($file_install.source_abs_pathname) ($target_abs_pathname)"
                   } else {
                      print "COPY MATCHES"
                   }
                } else {
-                  run-as $file_install.owner $"cp ($file_install.source_pathname) ($target_abs_pathname)"
+                  run-as $file_install.owner $"cp ($file_install.source_abs_pathname) ($target_abs_pathname)"
                }
             }
 
             "link" => {
-               if $target_pathname_exists {
+               if $target_abs_pathname_exists {
                   if (($target_abs_pathname | path expand) != $file_install.source_abs_pathname) {
                      run-as $file_install.owner $"rm --trash ($target_abs_pathname)"
-                     run-as $file_install.owner $"ln -s ($file_install.source_pathname) ($target_abs_pathname)"
+                     run-as $file_install.owner $"ln -s ($file_install.source_abs_pathname) ($target_abs_pathname)"
                   } else {
                      print "LN MATCHES"
                   }
                } else {
-                  run-as $file_install.owner $"ln -s ($file_install.source_pathname) ($target_abs_pathname)"
+                  run-as $file_install.owner $"ln -s ($file_install.source_abs_pathname) ($target_abs_pathname)"
                }
             }
 
@@ -167,8 +167,8 @@ def collect-values-by-key [
 
 # [Functions + Raw Data]
 #
-def get-source-pathname-list [index_path: path]: nothing -> list<path> {
-   let index = open $index_path
+def get-source-rel-pathname-list [index_rel_path: path]: nothing -> list<path> {
+   let index = open $index_rel_path
    $index.source
 }
 
@@ -276,56 +276,47 @@ def get-config [
 
 # [Separator]
 #
-def collect-index-absolute-pathname-list [index_pathname: path]: nothing -> list<path> {
-   # normalise by expanding unknown path type
-   mut index_absolute_pathname_list_to_process = [($index_pathname | path expand)]
-   mut all_index_absolute_pathname_list = []
+def collect-index-abs-pathname-list [index_rel_pathname: path]: nothing -> list<path> {
+   mut index_abs_pathname_list_to_process = [($index_rel_pathname | path expand)]
+   mut all_index_abs_pathname_list = []
 
-   while ($index_absolute_pathname_list_to_process | is-not-empty) {
-      let current_index_absolute_pathname_to_process = $index_absolute_pathname_list_to_process | first
-      $index_absolute_pathname_list_to_process = $index_absolute_pathname_list_to_process | skip 1
+   while ($index_abs_pathname_list_to_process | is-not-empty) {
+      let current_index_abs_pathname_to_process = $index_abs_pathname_list_to_process | first
+      $index_abs_pathname_list_to_process = $index_abs_pathname_list_to_process | skip 1
+      $all_index_abs_pathname_list = $all_index_abs_pathname_list | append $current_index_abs_pathname_to_process
+      let source_rel_pathname_list = get-source-rel-pathname-list $current_index_abs_pathname_to_process
 
-      $all_index_absolute_pathname_list = $all_index_absolute_pathname_list | append $current_index_absolute_pathname_to_process
-
-      # naming scheme for paths -> relative_path, absolute_path or path (can be either relative_path or absolute_path)
-
-      let source_pathname_list = get-source-pathname-list $current_index_absolute_pathname_to_process
-
-      let found_index_pathname_list = (
-         $source_pathname_list
-         | where {|source_pathname| $"($source_pathname | path basename)" == "index.toml" }
-         | each {|source_pathname|
-            if ($source_pathname | path exists) {
-               $source_pathname | path expand # handles if it is relative
-            } else {
-               $current_index_absolute_pathname_to_process
-               | path dirname
-               | path join $source_pathname
-               | path expand # in this scenario the path is correctly formed and path expand is used to prettify it
-               # example: /users/user1/../user2 -> /users/user2
-            }
+      let found_index_abs_pathname_list = (
+         $source_rel_pathname_list
+         | where {|source_rel_pathname| $"($source_rel_pathname | path basename)" == "index.toml" }
+         | each {|source_rel_pathname|
+            $current_index_abs_pathname_to_process
+            | path dirname
+            | path join $source_rel_pathname
+            | path expand # in this scenario the path is correctly formed and path expand is used to prettify it
+            # example: /users/user1/../user2 -> /users/user2
          }
       )
 
-      $all_index_absolute_pathname_list = $all_index_absolute_pathname_list | append $found_index_pathname_list
+      $all_index_abs_pathname_list = $all_index_abs_pathname_list | append $found_index_abs_pathname_list
    }
 
-   $all_index_absolute_pathname_list
+   $all_index_abs_pathname_list
 }
 
-def collect-config-absolute-pathname-list [index_absolute_pathname_list: list<path>]: nothing -> list<path> {
+def collect-config-abs-pathname-list [index_abs_pathname_list: list<path>]: nothing -> list<path> {
    (
-      $index_absolute_pathname_list
-      | each {|index_absolute_pathname|
+      $index_abs_pathname_list
+      | each {|index_abs_pathname|
          (
-            get-source-pathname-list $index_absolute_pathname
+            get-source-rel-pathname-list $index_abs_pathname
             | where {|source_pathname|
                $"($source_pathname | path basename)" != "index.toml"
             } | each {|source_pathname|
                if ($source_pathname | path exists) {
                   $source_pathname | path expand
                } else {
-                  $index_absolute_pathname
+                  $index_abs_pathname
                   | path dirname
                   | path join $source_pathname
                   | path expand
