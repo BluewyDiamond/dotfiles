@@ -47,7 +47,7 @@ def "main install" [index_pathname: path]: nothing -> nothing {
       on_check: null
 
       on_install: {|missing_package_list|
-         paru -S --aur $missing_package_list
+         paru -S --aur ...$missing_package_list
       }
    }
 
@@ -70,6 +70,8 @@ def "main install" [index_pathname: path]: nothing -> nothing {
 
    $config.file_spawn_list | each {|file_spawn|
       try {
+         print $"SPAWN FILE => target=($file_spawn.target_pathname)"
+
          if ($file_spawn.target_pathname | path exists) {
             if (open $file_spawn.target_pathname) != $file_spawn.content {
                run-as $file_spawn.owner $"rm --trash ($file_spawn.target_pathname)"
@@ -88,6 +90,7 @@ def "main install" [index_pathname: path]: nothing -> nothing {
    $config.file_install_list | each {|file_install|
       try {
          let target_pathname = $"($file_install.target_path)/($file_install.source_pathname | path basename)"
+         print $"INSTALL FILE => target=($target_pathname)"
          let target_pathname_exists = (ls $target_pathname | is-not-empty)
 
          match $file_install.operation {
