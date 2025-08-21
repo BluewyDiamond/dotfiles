@@ -59,11 +59,11 @@ def clear [
 }
 
 def --wrapped aura [...args] {
-   let cmd = $args | reduce --fold ["paru"] {|arg acc|
-      match ($arg | str starts-with "-") {
+   let cmd = $args | reduce --fold ["paru"] {|arg arg_acc|
+      match ($arg =~ "^-[a-zA-Z]+$") {
          true => {
-            $arg | split chars | skip 1 | reduce --fold $acc {|flag inner_acc|
-               $inner_acc | append (
+            $arg | split chars | skip 1 | reduce --fold $arg_acc {|flag flag_acc|
+               $flag_acc | append (
                   match $flag {
                      "S" => ["-S" "--repo"]
                      "A" => ["-S" "--aur"]
@@ -75,7 +75,7 @@ def --wrapped aura [...args] {
          }
 
          false => {
-            $acc | append $arg
+            $arg_acc | append $arg
          }
       }
    }
