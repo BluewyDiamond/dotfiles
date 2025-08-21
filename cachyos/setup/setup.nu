@@ -19,12 +19,11 @@ def "main install" [index_pathname: path]: nothing -> nothing {
       let on_check = ($record | get on_check? | default null)
 
       if ($package_list | is-not-empty) {
-         let missing_package_list = $package_list | where {|package|
-            if ($on_check == null) {
-               (pacman -Q $package | complete | get exit_code) != 0
-            } else {
-               do $on_check $package
-            }
+         let missing_package_list = if $on_check == null {
+            let package_installed_list = pacman -Qq ...$package_list | complete | get stdout | lines
+            $package_list | where {|package| $package not-in $package_installed_list }
+         } else {
+            do $on_check $package_list
          }
 
          if ($missing_package_list | is-not-empty) {
@@ -54,8 +53,10 @@ def "main install" [index_pathname: path]: nothing -> nothing {
    do $check_and_install_package_list {
       package_list: $config.package.local_path_list
 
-      on_check: {|package|
-         pacman -Q ($package | path basename) | complete | get exit_code | $in != 0
+      on_check: {|package_list|
+         let package_list = $package_list | each {|package| $package | path basename }
+         let package_installed_list = pacman -Qq ...$package_list | complete | get stdout | lines
+         $package_list | where {|package| $package not-in $package_installed_list }
       }
 
       on_install: {|missing_package_list|
