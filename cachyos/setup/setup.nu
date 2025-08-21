@@ -88,47 +88,36 @@ def "main install" [index_pathname: path]: nothing -> nothing {
    $config.file_install_list | each {|file_install|
       try {
          let target_pathname = $"($file_install.target_path)/($file_install.source_pathname | path basename)"
+         let target_pathname_exists = (ls $target_pathname | is-not-empty)
 
-         # TODO: FIX ME
-         # if ($target_pathname | path exists) {
-         if (true) {
-            match $file_install.operation {
-               "copy" => {
+         match $file_install.operation {
+            "copy" => {
+               if $target_pathname_exists {
                   if ((open $target_pathname) != (open $file_install.source_pathname)) {
                      run-as $file_install.owner $"rm --trash ($target_pathname)"
                      run-as $file_install.owner $"cp ($file_install.source_pathname) ($target_pathname)"
                   } else {
                      print "COPY MATCHES"
                   }
+               } else {
+                  run-as $file_install.owner $"cp ($file_install.source_pathname) ($target_pathname)"
                }
+            }
 
-               "link" => {
+            "link" => {
+               if $target_pathname_exists {
                   if (($target_pathname | path expand) != $file_install.source_pathname) {
                      run-as $file_install.owner $"rm --trash ($target_pathname)"
                      run-as $file_install.owner $"ln -s ($file_install.source_pathname) ($target_pathname)"
                   } else {
                      print "LN MATCHES"
                   }
-               }
-
-               _ => {
-                  log error "OPERATION NOT VALID"
-               }
-            }
-         } else {
-            match $file_install.operation {
-               "copy" => {
-                  run-as $file_install.owner $"cp ($file_install.source_pathname) ($target_pathname)"
-               }
-
-               "link" => {
+               } else {
                   run-as $file_install.owner $"ln -s ($file_install.source_pathname) ($target_pathname)"
                }
-
-               _ => {
-                  log error "OPERATION NOT VALID"
-               }
             }
+
+            _ => { log error "OPERATION NOT VALID" }
          }
       } catch {|err|
          print $err.rendered
