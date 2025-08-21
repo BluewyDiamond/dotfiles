@@ -51,7 +51,7 @@ def "main install" [index_pathname: path]: nothing -> nothing {
    }
 
    do $check_and_install_package_list {
-      package_list: $config.package.local_path_list
+      package_list: $config.package.local_abs_path_list
 
       on_check: {|package_list|
          let package_list = $package_list | each {|package| $package | path basename }
@@ -71,17 +71,17 @@ def "main install" [index_pathname: path]: nothing -> nothing {
 
    $config.file_spawn_list | each {|file_spawn|
       try {
-         print $"SPAWN FILE => target=($file_spawn.target_pathname)"
+         print $"SPAWN FILE => target=($file_spawn.target_abs_pathname)"
 
-         if ($file_spawn.target_pathname | path exists) {
-            if (open $file_spawn.target_pathname) != $file_spawn.content {
-               run-as $file_spawn.owner $"rm --trash ($file_spawn.target_pathname)"
-               run-as $file_spawn.owner $"'($file_spawn.content)' | save ($file_spawn.target_pathname)"
+         if ($file_spawn.target_abs_pathname | path exists) {
+            if (open $file_spawn.target_abs_pathname) != $file_spawn.content {
+               run-as $file_spawn.owner $"rm --trash ($file_spawn.target_abs_pathname)"
+               run-as $file_spawn.owner $"'($file_spawn.content)' | save ($file_spawn.target_abs_pathname)"
             } else {
                print "MATCHES"
             }
          } else {
-            run-as $file_spawn.owner $"'($file_spawn.content)' | save ($file_spawn.target_pathname)"
+            run-as $file_spawn.owner $"'($file_spawn.content)' | save ($file_spawn.target_abs_pathname)"
          }
       } catch {|err|
          print $err
@@ -90,34 +90,34 @@ def "main install" [index_pathname: path]: nothing -> nothing {
 
    $config.file_install_list | each {|file_install|
       try {
-         let target_pathname = $"($file_install.target_path)/($file_install.source_pathname | path basename)"
-         print $"INSTALL FILE => target=($target_pathname)"
-         let target_pathname_exists = (ls $target_pathname | is-not-empty)
+         let target_abs_pathname = $"($file_install.target_abs_path)/($file_install.source_abs_pathname | path basename)"
+         print $"INSTALL FILE => target=($target_abs_pathname)"
+         let target_pathname_exists = (ls $target_abs_pathname | is-not-empty)
 
          match $file_install.operation {
             "copy" => {
                if $target_pathname_exists {
-                  if ((open $target_pathname) != (open $file_install.source_pathname)) {
-                     run-as $file_install.owner $"rm --trash ($target_pathname)"
-                     run-as $file_install.owner $"cp ($file_install.source_pathname) ($target_pathname)"
+                  if ((open $target_abs_pathname) != (open $file_install.source_abs_pathname)) {
+                     run-as $file_install.owner $"rm --trash ($target_abs_pathname)"
+                     run-as $file_install.owner $"cp ($file_install.source_pathname) ($target_abs_pathname)"
                   } else {
                      print "COPY MATCHES"
                   }
                } else {
-                  run-as $file_install.owner $"cp ($file_install.source_pathname) ($target_pathname)"
+                  run-as $file_install.owner $"cp ($file_install.source_pathname) ($target_abs_pathname)"
                }
             }
 
             "link" => {
                if $target_pathname_exists {
-                  if (($target_pathname | path expand) != $file_install.source_pathname) {
-                     run-as $file_install.owner $"rm --trash ($target_pathname)"
-                     run-as $file_install.owner $"ln -s ($file_install.source_pathname) ($target_pathname)"
+                  if (($target_abs_pathname | path expand) != $file_install.source_abs_pathname) {
+                     run-as $file_install.owner $"rm --trash ($target_abs_pathname)"
+                     run-as $file_install.owner $"ln -s ($file_install.source_pathname) ($target_abs_pathname)"
                   } else {
                      print "LN MATCHES"
                   }
                } else {
-                  run-as $file_install.owner $"ln -s ($file_install.source_pathname) ($target_pathname)"
+                  run-as $file_install.owner $"ln -s ($file_install.source_pathname) ($target_abs_pathname)"
                }
             }
 
@@ -173,9 +173,9 @@ def get-source-pathname-list [index_path: path]: nothing -> list<path> {
 }
 
 def get-config [
-   config_pathname: string
-]: nothing -> record<package: record<ignore_list: list<string>, std_list: list<string>, aur_list: list<string>, local_path_list: list<path>>, file_spawn_list: list<record<owner: string, target_pathname: path, content: string>>, file_install_list: list<record<operation: string, owner: string, source_pathname: path, target_path: path, target_name?: string>>, service: record<enable_list: list<string>>> {
-   let config_raw = open $config_pathname
+   config_rel_pathname: string
+]: nothing -> record<package: record<ignore_list: list<string>, std_list: list<string>, aur_list: list<string>, local_abs_path_list: list<path>>, file_spawn_list: list<record<owner: string, target_abs_pathname: path, content: string>>, file_install_list: list<record<operation: string, owner: string, source_abs_pathname: path, target_abs_path: path, target_name?: string>>, service: record<enable_list: list<string>>> {
+   let config_raw = open $config_rel_pathname
 
    let package = {
       ignore_list: (
@@ -208,7 +208,7 @@ def get-config [
          }
       )
 
-      local_path_list: (
+      local_abs_path_list: (
          $config_raw | collect-values-by-key {|record_or_table|
             if ($record_or_table | columns | all {|col| $col != "local" }) {
                return []
@@ -216,10 +216,10 @@ def get-config [
 
             $record_or_table.local
          }
-         | each {|local_package_pathname|
-            $config_pathname
+         | each {|local_package_rel_pathname|
+            $config_rel_pathname
             | path dirname
-            | path join $local_package_pathname
+            | path join $local_package_rel_pathname
             | path expand
          }
       )
@@ -235,7 +235,7 @@ def get-config [
          | each {|spawn_file|
             {
                owner: ($spawn_file | get owner)
-               target_pathname: ($spawn_file | get target)
+               target_abs_pathname: ($spawn_file | get target)
                content: ($spawn_file | get content)
             }
          }
@@ -246,7 +246,7 @@ def get-config [
          | get -o install_files
          | default []
          | each {|install_file|
-            let source_pathname = $config_pathname
+            let source_abs_pathname = $config_rel_pathname
             | path dirname
             | path join ($install_file | get source)
             | path expand
@@ -254,15 +254,15 @@ def get-config [
             {
                operation: ($install_file | get operation)
                owner: ($install_file | get owner)
-               source_pathname: (
-                  $config_pathname
+
+               source_abs_pathname: (
+                  $config_rel_pathname
                   | path dirname
                   | path join ($install_file | get source)
                   | path expand
                )
 
-               target_path: ($install_file | get target_path)
-
+               target_abs_path: ($install_file | get target_path)
                target_name: ($install_file | get -o target_name | default null)
             }
          }
@@ -338,7 +338,7 @@ def collect-config-absolute-pathname-list [index_absolute_pathname_list: list<pa
 
 def merge-config-list [
    config_list: any
-]: nothing -> record<package: record<ignore_list: list<string>, std_list: list<string>, aur_list: list<string>, local_path_list: list<path>>, file_spawn_list: list<record<owner: string, target_pathname: path, content: string>>, file_install_list: list<record<operation: string, owner: string, source_pathname: path, target_path: path, target_name?: string>>, service: record<enable_list: list<string>>> {
+]: nothing -> record<package: record<ignore_list: list<string>, std_list: list<string>, aur_list: list<string>, local_abs_path_list: list<path>>, file_spawn_list: list<record<owner: string, target_abs_pathname: path, content: string>>, file_install_list: list<record<operation: string, owner: string, source_abs_pathname: path, target_abs_path: path, target_name?: string>>, service: record<enable_list: list<string>>> {
    # not using get -o because it should be garanteed
    # as long as we passing the value of the getter
    # futhermore if typing was not lost we could have accessed the values directly
@@ -347,7 +347,7 @@ def merge-config-list [
          ignore_list: ($config_list | get package.ignore_list | flatten | uniq)
          std_list: ($config_list | get package.std_list | flatten | uniq)
          aur_list: ($config_list | get package.aur_list | flatten | uniq)
-         local_path_list: ($config_list | get package.local_path_list | flatten | uniq)
+         local_abs_path_list: ($config_list | get package.local_abs_path_list | flatten | uniq)
       }
 
       file_spawn_list: ($config_list | get file_spawn_list | flatten)
