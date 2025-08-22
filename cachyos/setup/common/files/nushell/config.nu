@@ -1,3 +1,23 @@
+# [Helper Functions]
+#
+def build-args [flags: list<record<flag: string, value: any>>] {
+   print $"($flags)"
+   $flags
+   | where {|record|
+      $record.value != null and (
+         ($record.value | describe) != "bool" or
+         $record.value == true
+      )
+   }
+   | each {|record|
+      if ($record.value | describe) == "bool" {
+         $record.flag
+      } else {
+         $"($record.flag)=($record.value)"
+      }
+   }
+}
+
 # [Env]
 #
 $env.config.show_banner = false
@@ -22,26 +42,6 @@ $env.XDG_CACHE_HOME = ($env.HOME | path join ".cache")
 #
 $env.EDITOR = "nvim"
 
-# [Helper Functions]
-#
-def build-args [flags: list<record<flag: string, value: any>>] {
-   print $"($flags)"
-   $flags
-   | where {|record|
-      $record.value != null and (
-         ($record.value | describe) != "bool" or
-         $record.value == true
-      )
-   }
-   | each {|record|
-      if ($record.value | describe) == "bool" {
-         $record.flag
-      } else {
-         $"($record.flag)=($record.value)"
-      }
-   }
-}
-
 # [Aliases]
 #
 # replacing built-in commands kinda broken rn
@@ -59,24 +59,20 @@ def clear [
 }
 
 def --wrapped aura [...args] {
-   let cmd = $args | reduce --fold ["paru"] {|arg arg_acc|
-      match ($arg =~ "^-[a-zA-Z]+$") {
-         true => {
-            $arg | split chars | skip 1 | reduce --fold $arg_acc {|flag flag_acc|
-               $flag_acc | append (
-                  match $flag {
-                     "S" => ["-S" "--repo"]
-                     "A" => ["-S" "--aur"]
-                     "W" => ["-S"]
-                     _ => [$"-($flag)"]
-                  }
-               )
-            }
+   let cmd = $args | reduce --fold ["paru"] {|arg acc|
+      if ($arg =~ "^-[a-zA-Z]+$") {
+         $arg | split chars | skip 1 | reduce --fold $acc {|flag acc2|
+            $acc2 | append (
+               match $flag {
+                  "S" => ["-S" "--repo"]
+                  "A" => ["-S" "--aur"]
+                  "W" => ["-S"]
+                  _ => [$"-($flag)"]
+               }
+            )
          }
-
-         false => {
-            $arg_acc | append $arg
-         }
+      } else {
+         $acc | append $arg
       }
    }
 
