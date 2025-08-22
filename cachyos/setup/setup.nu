@@ -112,6 +112,26 @@ def "main install" [index_rel_pathname: path] {
    } | ignore
 }
 
+def "main cleanup" [index_rel_pathname: path] {
+   let config_abs_pathname_list = (collect-config-abs-pathname-list (collect-index-abs-pathname-list $index_rel_pathname))
+   let config_list = ($config_abs_pathname_list | each {|config_abs_pathname| get-config $config_abs_pathname })
+   let config = merge-config-list $config_list
+
+   let package_local_list = $config.package.local_abs_path_list | each {|package_local_abs_path| $package_local_abs_path | path basename }
+   let package_wanted_all_list = [$config.package.std_list $config.package.aur_list $package_local_list $config.package.ignore_list] | flatten
+   let package_all_installed_list = pacman -Qqee | lines
+
+   let package_unlisted_list = $package_all_installed_list | where {|package_installed|
+      if ($package_installed | is-package-a-dependency) {
+         false
+      } else {
+         $package_installed not-in $package_wanted_all_list
+      }
+   }
+
+   $package_unlisted_list
+}
+
 def check-install-package-list [
    record: record<package_list: list<string>, on_check: oneof<closure, nothing>, on_install: closure>
 ] {
@@ -130,6 +150,17 @@ def check-install-package-list [
       do $record.on_install $missing_package_list
    } else {
       print "PACKAGES ARE INSTALLED"
+   }
+}
+
+def is-package-a-dependency []: string -> bool {
+   let package = $in
+   let pactree_complete = pactree -rl $package | complete
+
+   if ($pactree_complete | get exit_code | $in == 0) {
+      $pactree_complete | get stdout | lines | length | $in > 1
+   } else {
+      false
    }
 }
 
