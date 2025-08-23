@@ -7,7 +7,7 @@ use std/log
 def main [args: string] {
    let config_abs_pathname_list = (collect-config-abs-pathname-list (collect-index-abs-pathname-list $args))
    let config_list = $config_abs_pathname_list | each {|config_abs_pathname| get-config $config_abs_pathname }
-   merge-config-list ($config_list)
+   merge-config-list $config_list
 }
 
 def "main install" [index_rel_pathname: path] {
@@ -129,7 +129,20 @@ def "main cleanup" [index_rel_pathname: path] {
       }
    }
 
-   $package_unlisted_list
+   $package_unlisted_list | wrap package | print
+   ["The above packages are target for cleanup." "Do you want to proceed? [y/N]"] | wrap message | table | print
+   let user_input = input "INPUT =>"
+
+   match $user_input {
+      "Y" => {
+         sudo pacman -Rns ...$package_unlisted_list
+      }
+
+      _ => {
+         ["Invalid Input"] | wrap message | print
+         return
+      }
+   }
 }
 
 def check-install-package-list [
@@ -153,6 +166,8 @@ def check-install-package-list [
    }
 }
 
+# utils.nu
+#
 def is-package-a-dependency []: string -> bool {
    let package = $in
    let pactree_complete = pactree -rl $package | complete
@@ -164,8 +179,6 @@ def is-package-a-dependency []: string -> bool {
    }
 }
 
-# utils.nu
-#
 def run-as [owner: string nu_cmd: string] {
    if $owner != $env.LOGNAME {
       run-external ...["sudo" "-u" $owner "--" $nu.current-exe "-c" $nu_cmd]
