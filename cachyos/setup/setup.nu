@@ -145,18 +145,22 @@ def "main cleanup" [index_rel_pathname: path] {
       }
    }
 
-   $package_unlisted_list | wrap package | print
-   ["The above packages are target for cleanup." "Do you want to proceed? [y/N]"] | wrap message | table | print
-   let user_input = input "INPUT =>"
+   if ($package_unlisted_list | is-not-empty) {
+      $package_unlisted_list | wrap package | print
+      ["The above packages are target for cleanup." "Do you want to proceed? [y/N]"] | wrap message | table | print
+      let user_input = input "INPUT =>"
 
-   match $user_input {
-      "Y" => {
-         sudo pacman -Rns ...$package_unlisted_list
-      }
+      match $user_input {
+         "Y" => {
+            sudo pacman -Rns ...$package_unlisted_list
+         }
 
-      _ => {
-         ["Invalid Input" "Skipping"] | wrap message | print
+         _ => {
+            log error "input is invalid"
+         }
       }
+   } else {
+      log warning "no packages to cleanup"
    }
 
    let service_enabled_list = ls /etc/systemd/system/*.wants/*.service | get name | each {|x| $x | path basename | path parse | get stem }
@@ -167,7 +171,7 @@ def "main cleanup" [index_rel_pathname: path] {
          systemctl disable --now $service_disable
       } | ignore
    } else {
-      ["No service to disable"] | wrap message | print
+      log warning "no services to disable"
    }
 }
 
