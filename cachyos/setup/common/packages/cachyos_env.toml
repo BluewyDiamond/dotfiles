@@ -3,11 +3,15 @@ std = [
    "base",
    "base-devel",
    "uutils-coreutils",
+
+   "booster",
+   "refind",
+
+   "nushell",
    "fish",
    "bash",
    "sudo-rs",
-   "booster",
-   "refind",
+
    "cachyos-hooks",
    "cachyos-keyring",
    "cachyos-mirrorlist",

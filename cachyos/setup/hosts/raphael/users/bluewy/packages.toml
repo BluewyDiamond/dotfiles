@@ -14,7 +14,7 @@ std = [
 ]
 
 [packages.tty]
-std = ["zellij", "nushell"]
+std = ["zellij", "paru", "trash-cli"]
 
 [packages.tty.rice]
 std = ["terminus-font", "fastfetch", "starship"]
