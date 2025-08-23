@@ -1,7 +1,7 @@
 # modified to change some compile options
 pkgname=niri-no-systemd-git
 _pkgname=niri
-pkgver=r2284.6dc4f6a
+pkgver=r2310.2865ec3
 pkgrel=1
 pkgdesc="Scrollable-tiling Wayland compositor (no systemd services)"
 arch=(x86_64 aarch64)

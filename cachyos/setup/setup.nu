@@ -54,27 +54,27 @@ def "main install" [index_rel_pathname: path] {
 
    $config.file_spawn_list | each {|file_spawn|
       try {
-         print $"SPAWN FILE => target=($file_spawn.target_abs_pathname)"
+         log info $"file to spawn at ($file_spawn.target_abs_pathname)"
 
          if ($file_spawn.target_abs_pathname | path exists) {
             if (open $file_spawn.target_abs_pathname) != $file_spawn.content {
                run-as $file_spawn.owner $"rm --trash ($file_spawn.target_abs_pathname)"
                run-as $file_spawn.owner $"'($file_spawn.content)' | save ($file_spawn.target_abs_pathname)"
             } else {
-               print "MATCHES"
+               log warning $"a match was found for ($file_spawn.target_abs_pathname)"
             }
          } else {
             run-as $file_spawn.owner $"'($file_spawn.content)' | save ($file_spawn.target_abs_pathname)"
          }
       } catch {|err|
-         print $err
+         print $err.rendered
       }
    } | ignore
 
    $config.file_install_list | each {|file_install|
       try {
          let target_abs_pathname = $"($file_install.target_abs_path)/($file_install.source_abs_pathname | path basename)"
-         print $"INSTALL FILE => target=($target_abs_pathname)"
+         log info $"file to install at ($target_abs_pathname)"
          let target_abs_pathname_exists = (ls $target_abs_pathname | is-not-empty)
 
          match $file_install.operation {
@@ -84,7 +84,7 @@ def "main install" [index_rel_pathname: path] {
                      run-as $file_install.owner $"rm --trash ($target_abs_pathname)"
                      run-as $file_install.owner $"cp ($file_install.source_abs_pathname) ($target_abs_pathname)"
                   } else {
-                     print "COPY MATCHES"
+                     log warning $"a match was found at ($target_abs_pathname)"
                   }
                } else {
                   run-as $file_install.owner $"cp ($file_install.source_abs_pathname) ($target_abs_pathname)"
@@ -97,17 +97,33 @@ def "main install" [index_rel_pathname: path] {
                      run-as $file_install.owner $"rm --trash ($target_abs_pathname)"
                      run-as $file_install.owner $"ln -s ($file_install.source_abs_pathname) ($target_abs_pathname)"
                   } else {
-                     print "LN MATCHES"
+                     log warning $"a match was found at ($target_abs_pathname)"
                   }
                } else {
                   run-as $file_install.owner $"ln -s ($file_install.source_abs_pathname) ($target_abs_pathname)"
                }
             }
 
-            _ => { log error "OPERATION NOT VALID" }
+            _ => { log error "the operation, ($file_install.operation), is not valid" }
          }
       } catch {|err|
          print $err.rendered
+      }
+   } | ignore
+
+   let service_enabled_list = ls /etc/systemd/system/*.wants/*.service | get name | each {|x| $x | path basename | path parse | get stem }
+
+   $config.service.enable_list | each {|service_enable|
+      try {
+         log info $"service to enable ($service_enable)"
+
+         if ($service_enable not-in $service_enabled_list) {
+            systemctl enable --now $service_enable
+         } else {
+            log warning $"service, ($service_enable), is already enabled"
+         }
+      } catch {|error|
+         print $error.rendered
       }
    } | ignore
 }
@@ -139,9 +155,19 @@ def "main cleanup" [index_rel_pathname: path] {
       }
 
       _ => {
-         ["Invalid Input"] | wrap message | print
-         return
+         ["Invalid Input" "Skipping"] | wrap message | print
       }
+   }
+
+   let service_enabled_list = ls /etc/systemd/system/*.wants/*.service | get name | each {|x| $x | path basename | path parse | get stem }
+   let service_disable_list = $service_enabled_list | where {|service_enable| $service_enable not-in $config.service.enable_list }
+
+   if ($service_disable_list | is-not-empty) {
+      $service_disable_list | each {|service_disable|
+         systemctl disable --now $service_disable
+      } | ignore
+   } else {
+      ["No service to disable"] | wrap message | print
    }
 }
 
@@ -162,7 +188,7 @@ def check-install-package-list [
    if ($missing_package_list | is-not-empty) {
       do $record.on_install $missing_package_list
    } else {
-      print "PACKAGES ARE INSTALLED"
+      log warning "packages are already installed"
    }
 }
 
