@@ -2,6 +2,7 @@
 
 def main --wrapped [...args: string] {
    with-env {
+      LD_PRELOAD: ""
       PROTON_ENABLE_WAYLAND: "1"
       PROTON_USE_NTSYNC: "1"
    } {
