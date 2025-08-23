@@ -1,11 +1,8 @@
 [packages]
-ignore = ["less", "vscodium"]
+ignore = ["less", "vscodium", "glibc-eac"]
 
 [packages.make]
 std = ["rustup", "jdk21-openjdk"]
-
-[packages.fix]
-aur = ["glibc-eac"]
 
 [packages.audio]
 std = [
@@ -17,10 +14,10 @@ std = [
 ]
 
 [packages.tty]
-std = ["zellij", "fisher", "nushell"]
+std = ["zellij", "nushell"]
 
 [packages.tty.rice]
-std = ["terminus-font", "figlet", "fastfetch", "starship"]
+std = ["terminus-font", "fastfetch", "starship"]
 
 [packages.tty.apps.rewrites]
 std = ["eza", "fd", "ripgrep"]
@@ -53,7 +50,7 @@ std = ["git", "downgrade"]
 aur = ["xwayland-satellite-git"]
 # path of PKBUILD futhermore path will be the name of said package
 local = ["../../../../common/aur/niri-no-systemd-git"]
-std = ["xdg-desktop-portal-gnome"]
+std = ["xdg-desktop-portal-gnome", "xdg-desktop-portal-gtk"]
 
 [packages.wayland.wm.hyprland]
 std = [
@@ -123,6 +120,7 @@ local = ["../../../../common/aur/libastal-niri-git"]
 std = ["dart-sass", "fd", "bun-bin", "gjs", "gtk4-layer-shell"]
 
 [packages.wayland.apps.gaming]
+aur = ["atlauncher-bin", "r2modman-bin", "osu-lazer-bin"]
 std = [
    "steam-native-runtime",
    "heroic-games-launcher-bin",
@@ -134,13 +132,10 @@ std = [
    "mangohud",
 ]
 
-aur = ["atlauncher-bin", "r2modman-bin", "osu-lazer-bin"]
-
-
 [packages.wayland.apps.files]
 std = [
    "archlinux-xdg-menu",
-   "dolphin",
+   "nautilus",
 
    "vlc",
    "vlc-plugins-all",
