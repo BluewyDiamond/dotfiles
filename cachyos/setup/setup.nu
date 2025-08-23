@@ -151,7 +151,7 @@ def "main cleanup" [index_rel_pathname: path] {
       let user_input = input "INPUT =>"
 
       match $user_input {
-         "Y" => {
+         "Y"|"y" => {
             sudo pacman -Rns ...$package_unlisted_list
          }
 
