@@ -126,9 +126,11 @@ std = [
    "heroic-games-launcher-bin",
 
    "umu-launcher",
+   "proton-cachyos",
    "proton-ge-custom-bin",
-   "gamescope",
    "protontricks",
+
+   "gamescope",
    "mangohud",
 ]
 
