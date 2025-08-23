@@ -75,7 +75,14 @@ def "main install" [index_rel_pathname: path] {
       try {
          let target_abs_pathname = $"($file_install.target_abs_path)/($file_install.source_abs_pathname | path basename)"
          log info $"file to install at ($target_abs_pathname)"
-         let target_abs_pathname_exists = (ls $target_abs_pathname | is-not-empty)
+
+         let target_abs_pathname_exists = (
+            try {
+               ls $target_abs_pathname | is-not-empty
+            } catch {
+               false
+            }
+         )
 
          match $file_install.operation {
             "copy" => {

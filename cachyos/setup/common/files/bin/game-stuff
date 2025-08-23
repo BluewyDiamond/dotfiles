@@ -1,0 +1,10 @@
+#!/usr/bin/env nu
+
+def main --wrapped [...args: string] {
+   with-env {
+      PROTON_ENABLE_WAYLAND: "1"
+      PROTON_USE_NTSYNC: "1"
+   } {
+      run-external ...$args
+   }
+}

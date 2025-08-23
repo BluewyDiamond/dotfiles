@@ -25,6 +25,12 @@ target_path = "/home/bluewy/.local/share/applications"
 [[install_files]]
 operation = "link"
 owner = "bluewy"
+source = "../../../../common/files/bin/game-stuff"
+target_path = "/home/bluewy/.local/bin"
+
+[[install_files]]
+operation = "link"
+owner = "bluewy"
 source = "../../../../common/files/css"
 target_path = "/home/bluewy/.config"
 
