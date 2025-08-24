@@ -64,16 +64,16 @@ style = "bg:surface_container"
 format = """
 [[ ($stashed$deleted$renamed$typechanged$staged$modified$conflicted$untracked$ahead_behind)](bg:surface_container fg:yellow)]($style)\
 """
-ahead    = "⇡${count}"
-behind   = "⇣${count}"
+ahead = "⇡${count}(bg:surface_container fg:green)"
+behind = "⇣${count}"
 diverged = "⇕⇡${ahead_count}⇣${behind_count}"
 
 untracked = "?${count} "
-stashed   = "S${count} "
-modified  = "!${count} "
-staged    = "+${count} "
-renamed   = "R${count} "
-deleted   = "D${count} "
+stashed = "S${count} "
+modified = "!${count} "
+staged = "+${count} "
+renamed = "R${count} "
+deleted = "D${count} "
 
 [cmd_duration]
 show_milliseconds = true
