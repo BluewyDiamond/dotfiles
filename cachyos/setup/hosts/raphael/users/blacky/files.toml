@@ -1,157 +1,83 @@
 [[install_files]]
 operation = "link"
 owner = "blacky"
-source = "common/files/ags"
+source = "../../../../common/files/ags2"
 target_path = "/home/blacky/.config"
 
 [[install_files]]
 operation = "link"
 owner = "blacky"
-source = "common/files/ags2"
+source = "../../../../common/files/electron_flags/electron-flags.conf"
 target_path = "/home/blacky/.config"
 
 [[install_files]]
 operation = "link"
 owner = "blacky"
-source = "common/files/applications/obs.desktop"
-target_path = "/home/blacky/.local/share/applications"
-
-[[install_files]]
-operation = "link"
-owner = "blacky"
-source = "common/files/applications/steam-native.desktop"
-target_path = "/home/blacky/.local/share/applications"
-
-[[install_files]]
-operation = "link"
-owner = "blacky"
-source = "common/files/css"
+source = "../../../../common/files/fastfetch"
 target_path = "/home/blacky/.config"
 
 [[install_files]]
 operation = "link"
 owner = "blacky"
-source = "common/files/electron_flags/electron-flags.conf"
-target_path = "/home/blacky/.config"
-
-[[install_files]]
-operation = "link"
-owner = "blacky"
-source = "common/files/fastfetch"
-target_path = "/home/blacky/.config"
-
-[[install_files]]
-operation = "link"
-owner = "blacky"
-source = "common/files/fish_bluewy"
-target_path = "/home/blacky/.config"
-
-[[spawn_files]]
-content = """
-source /home/blacky/.config/fish_bluewy/config.fish
-"""
-owner = "blacky"
-target = "/home/blacky/.config/fish/conf.d/init_bluewy.fish"
-
-[[install_files]]
-operation = "link"
-owner = "blacky"
-source = "common/files/fuzzel"
-target_path = "/home/blacky/.config"
-
-[[install_files]]
-operation = "link"
-owner = "blacky"
-source = "common/files/hypr"
+source = "../../../../common/files/fuzzel"
 target_path = "/home/blacky/.config"
 
 [[install_files]]
 operation = "copy"
 owner = "root"
-source = "common/files/kbd/colemak_dh_wide_custom_eu_ansi.map"
+source = "../../../../common/files/kbd/colemak_dh_wide_custom_eu_ansi.map"
 target_path = "/usr/share/kbd/keymaps"
 
 [[install_files]]
 operation = "copy"
 owner = "root"
-source = "common/files/kbd/colemak_dh_wide_custom_eu_iso.map"
+source = "../../../../common/files/kbd/colemak_dh_wide_custom_eu_iso.map"
 target_path = "/usr/share/kbd/keymaps"
 
 [[install_files]]
 operation = "link"
 owner = "blacky"
-source = "common/files/kde/kdeglobals"
-target_path = "/home/blacky/.config"
-
-[[install_files]]
-operation = "copy"
-owner = "root"
-source = "common/files/libinput/local-overrides.quirks"
-target_path = "/etc/libinput"
-
-[[install_files]]
-operation = "link"
-owner = "blacky"
-source = "common/files/librewolf/librewolf.overrides.cfg"
+source = "../../../../common/files/librewolf/librewolf.overrides.cfg"
 target_path = "/home/blacky/.librewolf"
 
 [[install_files]]
 operation = "link"
 owner = "blacky"
-source = "common/files/mangohud"
-target_name = "MangoHud"
+source = "../../files/niri"
 target_path = "/home/blacky/.config"
 
 [[install_files]]
 operation = "link"
 owner = "blacky"
-source = "hosts/raphael/files/niri"
+source = "../../../../common/files/nvim"
 target_path = "/home/blacky/.config"
 
 [[install_files]]
 operation = "link"
 owner = "blacky"
-source = "common/files/nvim"
-target_path = "/home/blacky/.config"
-
-[[install_files]]
-operation = "link"
-owner = "blacky"
-source = "common/files/pipewire"
-target_path = "/home/blacky/.config"
-
-[[install_files]]
-operation = "link"
-owner = "blacky"
-source = "common/files/scripts"
+source = "../../../../common/files/scripts"
 target_path = "/home/blacky/.local/scripts"
 
 [[install_files]]
-operation = "link"
-owner = "blacky"
-source = "common/files/speech-dispatcher"
-target_path = "/home/blacky/.config"
-
-[[install_files]]
 operation = "copy"
 owner = "blacky"
-source = "common/files/user-dirs.dirs/user-dirs.dirs"
+source = "../../../../common/files/user-dirs.dirs/user-dirs.dirs"
 target_path = "/home/blacky/.config"
 
 [[install_files]]
 operation = "link"
 owner = "blacky"
-source = "common/files/wayland-pipewire-idle-inhibit"
+source = "../../../../common/files/wayland-pipewire-idle-inhibit"
 target_path = "/home/blacky/.config"
 
 [[install_files]]
 operation = "link"
 owner = "blacky"
-source = "common/files/wezterm"
+source = "../../../../common/files/wezterm"
 target_path = "/home/blacky/.config"
 
 [[install_files]]
-operation = "copy"
-owner = "root"
-source = "common/files/xkb/symbols/bluewy"
-target_path = "/usr/share/X11/xkb/symbols"
+operation = "link"
+owner = "blacky"
+source = "../../../../common/files/xkb/symbols/bluewy"
+target_path = "/home/blacky/.config/xkb/symbols"
