@@ -76,6 +76,10 @@ def "main install" [index_rel_pathname: path] {
                log warning $"a match was found for ($file_spawn.target_abs_pathname)"
             }
          } else {
+            if (not ($file_spawn.target_abs_pathname | path dirname | path exists)) {
+               run-as $file_spawn.owner $"mkdir ($file_spawn.target_abs_pathname)"
+            }
+
             run-as $file_spawn.owner $"'($file_spawn.content)' | save ($file_spawn.target_abs_pathname)"
          }
       } catch {|err|
