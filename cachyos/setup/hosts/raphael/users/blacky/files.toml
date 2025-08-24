@@ -65,6 +65,12 @@ source = "../../../../common/files/scripts"
 target_path = "/home/blacky/.local/scripts"
 
 [[install_files]]
+operation = "link"
+owner = "blacky"
+source = "../../../../common/files/starship/starship.toml"
+target_path = "/home/blacky/.config"
+
+[[install_files]]
 operation = "copy"
 owner = "blacky"
 source = "../../../../common/files/user-dirs.dirs/user-dirs.dirs"

@@ -157,6 +157,12 @@ source = "../../../../common/files/speech-dispatcher"
 target_path = "/home/bluewy/.config"
 
 [[install_files]]
+operation = "link"
+owner = "bluewy"
+source = "../../../../common/files/starship/starship.toml"
+target_path = "/home/bluewy/.config"
+
+[[install_files]]
 operation = "copy"
 owner = "bluewy"
 source = "../../../../common/files/user-dirs.dirs/user-dirs.dirs"
