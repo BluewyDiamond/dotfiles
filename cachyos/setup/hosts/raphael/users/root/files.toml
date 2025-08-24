@@ -82,6 +82,3 @@ operation = "copy"
 owner = "root"
 source = "../../../../common/files/screen_off_service/screen_off.fish"
 target_path = "/usr/local/bin"
-
-
-
