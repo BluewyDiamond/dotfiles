@@ -4,6 +4,6 @@ def --wrapped main [...args: string] {
    with-env {
       LD_PRELOAD: ""
    } {
-      run-external ...$args
+      exec ...$args
    }
 }
