@@ -336,7 +336,7 @@ def merge-config-list [
 #
 def get-source-rel-pathname-list [index_rel_path: path]: nothing -> list<path> {
    let index = open $index_rel_path
-   $index.source
+   $index | get source
 }
 
 def get-config [
