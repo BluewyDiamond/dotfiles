@@ -129,6 +129,12 @@ target_path = "/home/bluewy/.config"
 [[install_files]]
 operation = "link"
 owner = "bluewy"
+source "../../../../common/files/nushell"
+target_path = "/home/bluewy/.config"
+
+[[install_files]]
+operation = "link"
+owner = "bluewy"
 source = "../../../../common/files/nvim"
 target_path = "/home/bluewy/.config"
 
