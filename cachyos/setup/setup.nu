@@ -76,8 +76,10 @@ def "main install" [index_rel_pathname: path] {
                log warning $"a match was found for ($file_spawn.target_abs_pathname)"
             }
          } else {
-            if (not ($file_spawn.target_abs_pathname | path dirname | path exists)) {
-               run-as $file_spawn.owner $"mkdir ($file_spawn.target_abs_pathname)"
+            let target_abs_path = $file_spawn.target_abs_pathname | path dirname
+
+            if (not ($target_abs_path | path exists)) {
+               run-as $file_spawn.owner $"mkdir ($target_abs_path)"
             }
 
             run-as $file_spawn.owner $"'($file_spawn.content)' | save ($file_spawn.target_abs_pathname)"
@@ -110,8 +112,8 @@ def "main install" [index_rel_pathname: path] {
                      log warning $"a match was found at ($target_abs_pathname)"
                   }
                } else {
-                  if (not ($target_abs_pathname | path dirname | path exists)) {
-                     run-as $file_install.owner $"mkdir ($target_abs_pathname)"
+                  if (not ($file_install.target_abs_path | path exists)) {
+                     run-as $file_install.owner $"mkdir ($file_install.target_abs_path)"
                   }
 
                   run-as $file_install.owner $"cp ($file_install.source_abs_pathname) ($target_abs_pathname)"
@@ -127,8 +129,8 @@ def "main install" [index_rel_pathname: path] {
                      log warning $"a match was found at ($target_abs_pathname)"
                   }
                } else {
-                  if (not ($target_abs_pathname | path dirname | path exists)) {
-                     run-as $file_install.owner $"mkdir ($target_abs_pathname)"
+                  if (not ($file_install.target_abs_path | path exists)) {
+                     run-as $file_install.owner $"mkdir ($file_install.target_abs_path)"
                   }
 
                   run-as $file_install.owner $"ln -s ($file_install.source_abs_pathname) ($target_abs_pathname)"
