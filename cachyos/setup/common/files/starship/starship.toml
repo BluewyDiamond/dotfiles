@@ -61,9 +61,8 @@ format = """
 
 [git_status]
 style = "bg:surface_container"
-# $renamed$typechanged$deleted
 format = """
-[[ ($stashed$staged$modified$conflicted$untracked$ahead_behind)](bg:surface_container fg:yellow)]($style)\
+[[ ($stashed$deleted$renamed$typechanged$staged$modified$conflicted$untracked$ahead_behind)](bg:surface_container fg:yellow)]($style)\
 """
 ahead = "[⇡$count](bg:surface_container fg:green)"
 behind = "⇣${count}"
