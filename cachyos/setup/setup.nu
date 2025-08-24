@@ -110,6 +110,10 @@ def "main install" [index_rel_pathname: path] {
                      log warning $"a match was found at ($target_abs_pathname)"
                   }
                } else {
+                  if (not ($target_abs_pathname | path dirname | path exists)) {
+                     run-as $file_install.owner $"mkdir ($target_abs_pathname)"
+                  }
+
                   run-as $file_install.owner $"cp ($file_install.source_abs_pathname) ($target_abs_pathname)"
                }
             }
@@ -123,6 +127,10 @@ def "main install" [index_rel_pathname: path] {
                      log warning $"a match was found at ($target_abs_pathname)"
                   }
                } else {
+                  if (not ($target_abs_pathname | path dirname | path exists)) {
+                     run-as $file_install.owner $"mkdir ($target_abs_pathname)"
+                  }
+
                   run-as $file_install.owner $"ln -s ($file_install.source_abs_pathname) ($target_abs_pathname)"
                }
             }
