@@ -49,7 +49,7 @@ target_path = "/home/blacky/.config"
 [[install_files]]
 operation = "link"
 owner = "blacky"
-source "../../../../common/files/nushell"
+source = "../../../../common/files/nushell"
 target_path = "/home/blacky/.config"
 
 [[install_files]]

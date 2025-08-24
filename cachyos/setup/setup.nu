@@ -305,22 +305,18 @@ def collect-index-abs-pathname-list [index_rel_pathname: path]: nothing -> list<
 }
 
 def collect-config-abs-pathname-list [index_abs_pathname_list: list<path>]: nothing -> list<path> {
-   (
-      $index_abs_pathname_list
-      | each {|index_abs_pathname|
-         (
-            get-source-rel-pathname-list $index_abs_pathname
-            | where {|source_rel_pathname|
-               $"($source_rel_pathname | path basename)" != "index.toml"
-            } | each {|source_rel_pathname|
-               $index_abs_pathname
-               | path dirname
-               | path join $source_rel_pathname
-               | path expand
-            }
-         )
-      } | flatten
-   )
+   $index_abs_pathname_list
+   | each {|index_abs_pathname|
+      get-source-rel-pathname-list $index_abs_pathname
+      | where {|source_rel_pathname|
+         $"($source_rel_pathname | path basename)" != "index.toml"
+      } | each {|source_rel_pathname|
+         $index_abs_pathname
+         | path dirname
+         | path join $source_rel_pathname
+         | path expand
+      }
+   } | flatten
 }
 
 def merge-config-list [

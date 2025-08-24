@@ -23,7 +23,7 @@ source = "../../../../common/files/applications/steam-native.desktop"
 target_path = "/home/bluewy/.local/share/applications"
 
 [[install_files]]
-opertion = "link"
+operation = "link"
 owner = "bluewy"
 source = "../../../../common/files/bin/gamescope-stuff"
 target_path = "/home/bluewy/.local/bin"
@@ -129,7 +129,7 @@ target_path = "/home/bluewy/.config"
 [[install_files]]
 operation = "link"
 owner = "bluewy"
-source "../../../../common/files/nushell"
+source = "../../../../common/files/nushell"
 target_path = "/home/bluewy/.config"
 
 [[install_files]]
