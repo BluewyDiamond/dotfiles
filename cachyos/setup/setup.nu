@@ -70,7 +70,7 @@ def "main install" [index_rel_pathname: path] {
 
          if ($file_spawn.target_abs_pathname | path exists) {
             if (open $file_spawn.target_abs_pathname) != $file_spawn.content {
-               run-as $file_spawn.owner $"rm --trash ($file_spawn.target_abs_pathname)"
+               run-as $file_spawn.owner $"rm -r --trash ($file_spawn.target_abs_pathname)"
                run-as $file_spawn.owner $"'($file_spawn.content)' | save ($file_spawn.target_abs_pathname)"
             } else {
                log warning $"a match was found for ($file_spawn.target_abs_pathname)"
@@ -106,7 +106,7 @@ def "main install" [index_rel_pathname: path] {
             "copy" => {
                if $target_abs_pathname_exists {
                   if ((open $target_abs_pathname) != (open $file_install.source_abs_pathname)) {
-                     run-as $file_install.owner $"rm --trash ($target_abs_pathname)"
+                     run-as $file_install.owner $"rm -r --trash ($target_abs_pathname)"
                      run-as $file_install.owner $"cp ($file_install.source_abs_pathname) ($target_abs_pathname)"
                   } else {
                      log warning $"a match was found at ($target_abs_pathname)"
@@ -123,7 +123,7 @@ def "main install" [index_rel_pathname: path] {
             "link" => {
                if $target_abs_pathname_exists {
                   if (($target_abs_pathname | path expand) != $file_install.source_abs_pathname) {
-                     run-as $file_install.owner $"rm --trash ($target_abs_pathname)"
+                     run-as $file_install.owner $"rm -r --trash ($target_abs_pathname)"
                      run-as $file_install.owner $"ln -s ($file_install.source_abs_pathname) ($target_abs_pathname)"
                   } else {
                      log warning $"a match was found at ($target_abs_pathname)"
