@@ -20,7 +20,11 @@ def "main install" [index_rel_pathname: path] {
       on_check: null
 
       on_install: {|missing_package_list|
-         sudo pacman -S ...$missing_package_list
+         try {
+            sudo pacman -S ...$missing_package_list
+         } catch {|error|
+            $error.rendered | print
+         }
       }
    }
 
@@ -29,7 +33,11 @@ def "main install" [index_rel_pathname: path] {
       on_check: null
 
       on_install: {|missing_package_list|
-         paru -S --aur ...$missing_package_list
+         try {
+            paru -S --aur ...$missing_package_list
+         } catch {|error|
+            $error.rendered | print
+         }
       }
    }
 
@@ -44,10 +52,14 @@ def "main install" [index_rel_pathname: path] {
 
       on_install: {|missing_package_list|
          $missing_package_list | each {|missing_package_list|
-            dirs add $missing_package_list
-            dirs
-            makepkg -si
-            dirs drop
+            try {
+               dirs add $missing_package_list
+               dirs
+               makepkg -si
+               dirs drop
+            } catch {|error|
+               $error.rendered | print
+            }
          }
       }
    }
