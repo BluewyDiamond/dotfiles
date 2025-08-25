@@ -2,4 +2,5 @@ source = [
    "../../../../common/packages/cachyos_env.toml",
    "./packages.toml",
    "./files.toml",
+   "./services.toml",
 ]

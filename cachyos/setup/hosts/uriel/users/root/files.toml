@@ -23,24 +23,24 @@ target = "/etc/resolved.conf"
 [[install_files]]
 operation = "copy"
 owner = "root"
-source = "common/files/acer_battery_limit_service/acer_battery_limit.service"
+source = "../../../../common/files/acer_battery_limit_service/acer_battery_limit.service"
 target_path = "/etc/systemd/system"
 
 [[install_files]]
 operation = "copy"
 owner = "root"
-source = "common/files/acer_battery_limit_service/acer_battery_limit.fish"
+source = "../../../../common/files/acer_battery_limit_service/acer_battery_limit.fish"
 target_path = "/usr/local/bin"
 
 [[install_files]]
 operation = "copy"
 owner = "root"
-source = "common/files/screen_off_service/screen_off.service"
+source = "../../../../common/files/screen_off_service/screen_off.service"
 target_path = "/etc/systemd/system"
 
 [[install_files]]
 operation = "copy"
 owner = "root"
-source = "common/files/screen_off_service/screen_off.fish"
+source = "../../../../common/files/screen_off_service/screen_off.fish"
 target_path = "/usr/local/bin"
 
