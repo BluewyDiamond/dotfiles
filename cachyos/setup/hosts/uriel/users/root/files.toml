@@ -1,34 +1,3 @@
-common_packages = ["common/packages/cachyos_env.toml"]
-
-[packages.hardware]
-aur = ["acer-wmi-battery-dkms"]
-std = [
-   "intel-ucode",
-   "linux-firmware",
-   "sof-firmware",
-
-   "linux-cachyos-headers",
-   "linux-cachyos-nvidia-open",
-   "linux-cachyos-lts-headers",
-   "linux-cachyos-lts-nvidia-open",
-   "wireless-regdb",
-
-   # provide by chwd
-   "intel-gmmlib",
-   "intel-media-driver",
-   "lib32-opencl-nvidia",
-   "libva-nvidia-driver",
-   "opencl-nvidia",
-   "switcheroo-control",
-   "nvidia-prime",
-   "nvidia-settings",
-
-   "ufw",
-   "iwd",
-   "bluez",
-   "bluez-utils",
-]
-
 [[spawn_files]]
 content = "WIRELESS_REGDOM=\"ES\""
 owner = "root"
@@ -75,29 +44,3 @@ owner = "root"
 source = "common/files/screen_off_service/screen_off.fish"
 target_path = "/usr/local/bin"
 
-[services]
-enable = [
-   "getty@tty1",
-
-   # provided by chwd
-   "nvidia-resume",
-   "nvidia-suspend",
-   "nvidia-powerd",
-   "nvidia-hibernate",
-   "switcheroo-control",
-
-   "NetworkManager",
-   "systemd-resolved", # this or dnsmasq
-
-   "systemd-timesyncd",
-
-   "bluetooth",
-
-   "ufw",
-   "acer_battery_limit",
-   "screen_off",
-   "ananicy-cpp",
-]
-
-[ignore]
-packages = ["sbctl"]

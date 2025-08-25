@@ -1,0 +1,23 @@
+[services]
+enable = [
+   "getty@tty1",
+
+   # provided by chwd
+   "nvidia-resume",
+   "nvidia-suspend",
+   "nvidia-powerd",
+   "nvidia-hibernate",
+   "switcheroo-control",
+
+   "NetworkManager",
+   "systemd-resolved", # this or dnsmasq
+
+   "systemd-timesyncd",
+
+   "bluetooth",
+
+   "ufw",
+   "acer_battery_limit",
+   "screen_off",
+   "ananicy-cpp",
+]
