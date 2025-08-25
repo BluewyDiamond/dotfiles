@@ -69,7 +69,7 @@ def "main install" [index_rel_pathname: path] {
          log info $"file to spawn at ($file_spawn.target_abs_pathname)"
 
          if ($file_spawn.target_abs_pathname | path exists) {
-            if (open $file_spawn.target_abs_pathname) != $file_spawn.content {
+            if (open --raw $file_spawn.target_abs_pathname) != $file_spawn.content {
                run-as $file_spawn.owner $"rm -r --trash ($file_spawn.target_abs_pathname)"
                run-as $file_spawn.owner $"'($file_spawn.content)' | save ($file_spawn.target_abs_pathname)"
             } else {
@@ -105,7 +105,7 @@ def "main install" [index_rel_pathname: path] {
          match $file_install.operation {
             "copy" => {
                if $target_abs_pathname_exists {
-                  if ((open $target_abs_pathname) != (open $file_install.source_abs_pathname)) {
+                  if ((open --raw $target_abs_pathname) != (open --raw $file_install.source_abs_pathname)) {
                      run-as $file_install.owner $"rm -r --trash ($target_abs_pathname)"
                      run-as $file_install.owner $"cp ($file_install.source_abs_pathname) ($target_abs_pathname)"
                   } else {
