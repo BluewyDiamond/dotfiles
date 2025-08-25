@@ -2,7 +2,6 @@ import {
    Accessor,
    createBinding,
    createComputed,
-   createConnection,
    For,
 } from "ags";
 import options from "../../../../options";
@@ -45,14 +44,10 @@ export default function () {
 }
 
 function WindowButton({ window }: { window: AstalNiri.Window }) {
-   const urgentConnection = createConnection(0, [
-      window,
-      "notify::is-urgent",
-      () => 0,
-   ]);
+   const urgentBinding = createBinding(window, "isUrgent");
 
    const cssClasses = createComputed(
-      [focusedWindowBinding, urgentConnection],
+      [focusedWindowBinding, urgentBinding],
 
       (focusedWindow, _) => {
          const cssClasses = ["taskbar-client-button"];
@@ -80,10 +75,10 @@ function WindowButton({ window }: { window: AstalNiri.Window }) {
                `${fallbackIcon}-symbolic`
             :  fallbackIcon;
 
-      const iconId =
+      const icon =
          options.bar.taskbar.flat ? `${windowAppId}-symbolic` : windowAppId;
 
-      return checkIconExists(iconId) ? iconId : fallbackIcon;
+      return checkIconExists(icon) ? icon : fallbackIcon;
    };
 
    return (
