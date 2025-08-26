@@ -1,5 +1,0 @@
-[packages]
-std = ["plasma-meta", "kde-applications-meta", "cachyos-firefox-settings"]
-
-[services]
-enable = ["sddm"]

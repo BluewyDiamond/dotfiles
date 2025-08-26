@@ -1,0 +1,5 @@
+[[install_files]]
+operation = "link"
+owner = "elisa"
+source = "../../files/applications-any@any/steam-native.desktop"
+target = "/home/elisa/.local/share/applications/steam-native.desktop"

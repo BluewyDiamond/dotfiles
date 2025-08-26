@@ -1,0 +1,1 @@
+./setup/src/main.nu

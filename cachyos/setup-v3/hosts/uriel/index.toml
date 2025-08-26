@@ -1,0 +1,13 @@
+source = [
+   "../../modules/cachyos.toml",
+
+   "./packages.toml",
+   "./files.toml",
+   "./services.toml",
+
+   "../../home/bluewy/packages.toml",
+   "../../home/bluewy/files.toml",
+
+   "../../home/elisa/packages.toml",
+   "../../home/elisa/files.toml",
+]

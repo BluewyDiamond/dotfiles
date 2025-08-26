@@ -1,0 +1,57 @@
+[[spawn_files]]
+content = "WIRELESS_REGDOM=\"ES\""
+owner = "root"
+target = "/etc/conf.d/wireless-regdom"
+
+[[spawn_files]]
+content = """
+[device]
+wifi.backend=iwd
+"""
+owner = "root"
+target = "/etc/NetworkManager/conf.d/wifi_backend.conf"
+
+[[spawn_files]]
+content = """
+[Resolve]
+DNS=1.1.1.1
+FallbackDNS=1.0.0.1
+"""
+owner = "root"
+target = "/etc/resolved.conf"
+
+[[install_files]]
+operation = "copy"
+owner = "root"
+source = "../../files/acer-battery-limit-service-any@uriel/acer-battery-limit.service"
+target = "/etc/systemd/system/acer-battery-limit.service"
+
+[[install_files]]
+operation = "copy"
+owner = "root"
+source = "../../files/acer-battery-limit-service-any@uriel/acer-battery-limit.fish"
+target = "/usr/local/bin/acer-battery-limit.fish"
+
+[[install_files]]
+operation = "copy"
+owner = "root"
+source = "../../files/screen-off-service-any@any/screen-off.service"
+target = "/etc/systemd/system/screen-off.service"
+
+[[install_files]]
+operation = "copy"
+owner = "root"
+source = "../../files/screen-off-service-any@any/screen-off.fish"
+target = "/usr/local/bin/screen-off.fish"
+
+[[install_files]]
+operation = "copy"
+owner = "root"
+source = "../../files/libinput-any@any/local-overrides.quirks"
+target = "/etc/libinput/local-overrides.quirks"
+
+[[install_files]]
+operation = "copy"
+owner = "root"
+source = "../../files/xkb-any@any/symbols/bluewy"
+target = "/usr/share/X11/xkb/symbols/bluewy"
