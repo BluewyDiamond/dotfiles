@@ -25,7 +25,7 @@ target_path = "/home/bluewy/.local/share/applications"
 [[install_files]]
 operation = "link"
 owner = "bluewy"
-source = "../../../../common/files/bin/gamescope-stuff"
+source = "../../files/bin/gamescope-stuff"
 target_path = "/home/bluewy/.local/bin"
 
 [[install_files]]
@@ -83,17 +83,6 @@ owner = "bluewy"
 source = "../../../../common/files/hypr"
 target_path = "/home/bluewy/.config"
 
-[[install_files]]
-operation = "copy"
-owner = "root"
-source = "../../../../common/files/kbd/colemak_dh_wide_custom_eu_ansi.map"
-target_path = "/usr/share/kbd/keymaps"
-
-[[install_files]]
-operation = "copy"
-owner = "root"
-source = "../../../../common/files/kbd/colemak_dh_wide_custom_eu_iso.map"
-target_path = "/usr/share/kbd/keymaps"
 
 [[install_files]]
 operation = "link"
@@ -181,7 +170,13 @@ source = "../../../../common/files/wezterm"
 target_path = "/home/bluewy/.config"
 
 [[install_files]]
-operation = "copy"
-owner = "root"
+operation = "link"
+owner = "bluewy"
 source = "../../../../common/files/xkb/symbols/bluewy"
-target_path = "/usr/share/X11/xkb/symbols"
+target_path = "/home/bluewy/.config/xkb/symbols"
+
+[[install_files]]
+operation = "link"
+owner = "bluewy"
+source = "../../../../common/files/xkb/rules/evdev.xml"
+target_path = "/home/bluewy/.config/xkb/rules"

@@ -82,3 +82,15 @@ operation = "copy"
 owner = "root"
 source = "../../../../common/files/screen_off_service/screen_off.fish"
 target_path = "/usr/local/bin"
+
+[[install_files]]
+operation = "copy"
+owner = "root"
+source = "../../../../common/files/kbd/colemak_dh_wide_custom_eu_ansi.map"
+target_path = "/usr/share/kbd/keymaps"
+
+[[install_files]]
+operation = "copy"
+owner = "root"
+source = "../../../../common/files/kbd/colemak_dh_wide_custom_eu_iso.map"
+target_path = "/usr/share/kbd/keymaps"
