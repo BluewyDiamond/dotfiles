@@ -288,4 +288,4 @@ spawn-at-startup "fish" "-c" "pgrep -fx 'wl-paste --type image --watch cliphist 
 
 // [[Widgets]]
 //
-spawn-at-startup "fish" "-c" "uwsm app -- $HOME/.config/ags2/cli.fish run"
+spawn-at-startup "fish" "-c" "uwsm app -- $HOME/.config/ags/cli.fish run"
