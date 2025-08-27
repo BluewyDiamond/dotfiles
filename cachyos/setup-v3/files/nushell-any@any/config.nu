@@ -87,4 +87,4 @@ starship init nu | save -f ($nu.data-dir | path join "vendor" "autoload" "starsh
 
 # [[Visuals]]
 tput cup (term size | get rows)
-fastfetch -c ($env.HOME | path join ".config" "fastfetch" "wezterm.jsonc")
+sleep 0.1sec; fastfetch -c ($env.HOME | path join ".config" "fastfetch" "wezterm.jsonc")
