@@ -32,7 +32,6 @@ std = ["zerotier-one"]
 std = ["bottom", "bandwhich", "nvtop"]
 
 [packages.tty.apps.neovim]
-aur = ["fish-lsp-git"]
 std = [
    "neovim",
    "stylua",
@@ -136,7 +135,6 @@ std = [
 
 [packages.wayland.apps.files]
 std = [
-   "archlinux-xdg-menu",
    "nautilus",
 
    "vlc",
