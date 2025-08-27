@@ -1,9 +1,9 @@
 #!/usr/bin/env nu
 
-def --wrapped main [...args: string] {
-   with-env {
+def --wrapped main [...rest] {
+   load-env {
       LD_PRELOAD: ""
-   } {
-      exec ...$args
    }
+
+   exec ...$rest
 }

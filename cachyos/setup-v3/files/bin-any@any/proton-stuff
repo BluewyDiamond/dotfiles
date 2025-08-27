@@ -1,10 +1,10 @@
 #!/usr/bin/env nu
 
-def --wrapped main [...args: string] {
-   with-env {
+def --wrapped main [...rest] {
+   load-env {
       PROTON_ENABLE_WAYLAND: "1"
       PROTON_USE_NTSYNC: "1"
-   } {
-      exec ...$args
    }
+
+   exec ...$rest
 }
