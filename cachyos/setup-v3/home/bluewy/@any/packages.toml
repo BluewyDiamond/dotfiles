@@ -48,7 +48,7 @@ std = ["git", "downgrade"]
 [packages.wayland.wm.niri]
 aur = ["xwayland-satellite-git"]
 # path of PKBUILD futhermore path will be the name of said package
-local = ["../../aur/libastal-niri-git"]
+local = ["../../../aur/niri-no-systemd-git"]
 std = ["xdg-desktop-portal-gnome", "xdg-desktop-portal-gtk"]
 
 [packages.wayland.wm.hyprland]
@@ -115,7 +115,7 @@ aur = [
    # gnim bindings are provided by the following package
    "aylurs-gtk-shell-git",
 ]
-local = ["../../aur/libastal-niri-git"]
+local = ["../../../aur/libastal-niri-git"]
 std = ["dart-sass", "fd", "bun-bin", "gjs", "gtk4-layer-shell"]
 
 [packages.wayland.apps.gaming]
