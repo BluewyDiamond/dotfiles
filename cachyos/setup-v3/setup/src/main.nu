@@ -145,7 +145,11 @@ def "main cleanup" [index_rel_pathname: path] {
 
    if ($service_disable_list | is-not-empty) {
       $service_disable_list | each {|service_disable|
-         systemctl disable --now $service_disable
+         try {
+            systemctl disable --now $service_disable
+         } catch {|error|
+            $error.rendered | print
+         }
       } | ignore
    } else {
       log warning "no services to disable"
