@@ -55,12 +55,6 @@ target = "/home/bluewy/.config/fuzzel"
 [[install_files]]
 operation = "link"
 owner = "bluewy"
-source = "../../files/hypr-any@raphael"
-target = "/home/bluewy/.config/hypr"
-
-[[install_files]]
-operation = "link"
-owner = "bluewy"
 source = "../../files/librewolf-any@any/librewolf.overrides.cfg"
 target = "/home/bluewy/.librewolf/librewolf.overrides.cfg"
 
@@ -69,12 +63,6 @@ operation = "link"
 owner = "bluewy"
 source = "../../files/mangohud-any@any"
 target = "/home/bluewy/.config/MangoHud"
-
-[[install_files]]
-operation = "link"
-owner = "bluewy"
-source = "../../files/niri-any@raphael"
-target = "/home/bluewy/.config/niri"
 
 [[install_files]]
 operation = "link"
