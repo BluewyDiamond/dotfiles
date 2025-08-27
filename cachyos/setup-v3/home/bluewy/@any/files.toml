@@ -1,125 +1,125 @@
 [[install_files]]
 operation = "link"
 owner = "bluewy"
-source = "../../files/ags-any@any"
+source = "../../../files/ags-any@any"
 target = "/home/bluewy/.config/ags"
 
 [[install_files]]
 operation = "link"
 owner = "bluewy"
-source = "../../files/applications-any@any/obs.desktop"
+source = "../../../files/applications-any@any/obs.desktop"
 target = "/home/bluewy/.local/share/applications/obs.desktop"
 
 [[install_files]]
 operation = "link"
 owner = "bluewy"
-source = "../../files/applications-any@any/steam-native.desktop"
+source = "../../../files/applications-any@any/steam-native.desktop"
 target = "/home/bluewy/.local/share/applications/steam-native.desktop"
 
 [[install_files]]
 operation = "link"
 owner = "bluewy"
-source = "../../files/bin-any@raphael/gamescope-stuff"
+source = "../../../files/bin-any@raphael/gamescope-stuff"
 target = "/home/bluewy/.local/bin/gamescope-stuff"
 
 [[install_files]]
 operation = "link"
 owner = "bluewy"
-source = "../../files/bin-any@any/steam-stuff"
+source = "../../../files/bin-any@any/steam-stuff"
 target = "/home/bluewy/.local/bin/steam-stuff"
 
 [[install_files]]
 operation = "link"
 owner = "bluewy"
-source = "../../files/bin-any@any/proton-stuff"
+source = "../../../files/bin-any@any/proton-stuff"
 target = "/home/bluewy/.local/bin/proton-stuff"
 
 [[install_files]]
 operation = "link"
 owner = "bluewy"
-source = "../../files/electron-any@any/electron-flags.conf"
+source = "../../../files/electron-any@any/electron-flags.conf"
 target = "/home/bluewy/.config/electron-flags.conf"
 
 [[install_files]]
 operation = "link"
 owner = "bluewy"
-source = "../../files/fastfetch-any@any"
+source = "../../../files/fastfetch-any@any"
 target = "/home/bluewy/.config/fastfetch"
 
 [[install_files]]
 operation = "link"
 owner = "bluewy"
-source = "../../files/fuzzel-any@any"
+source = "../../../files/fuzzel-any@any"
 target = "/home/bluewy/.config/fuzzel"
 
 [[install_files]]
 operation = "link"
 owner = "bluewy"
-source = "../../files/librewolf-any@any/librewolf.overrides.cfg"
+source = "../../../files/librewolf-any@any/librewolf.overrides.cfg"
 target = "/home/bluewy/.librewolf/librewolf.overrides.cfg"
 
 [[install_files]]
 operation = "link"
 owner = "bluewy"
-source = "../../files/mangohud-any@any"
+source = "../../../files/mangohud-any@any"
 target = "/home/bluewy/.config/MangoHud"
 
 [[install_files]]
 operation = "link"
 owner = "bluewy"
-source = "../../files/nushell-any@any"
+source = "../../../files/nushell-any@any"
 target = "/home/bluewy/.config/nushell"
 
 [[install_files]]
 operation = "link"
 owner = "bluewy"
-source = "../../files/nvim-any@any"
+source = "../../../files/nvim-any@any"
 target = "/home/bluewy/.config/nvim"
 
 [[install_files]]
 operation = "link"
 owner = "bluewy"
-source = "../../files/pipewire-any@any"
+source = "../../../files/pipewire-any@any"
 target = "/home/bluewy/.config/pipewire"
 
 [[install_files]]
 operation = "link"
 owner = "bluewy"
-source = "../../files/scripts-any@any"
+source = "../../../files/scripts-any@any"
 target = "/home/bluewy/.local/scripts"
 
 [[install_files]]
 operation = "link"
 owner = "bluewy"
-source = "../../files/speech-dispatcher-any@any"
+source = "../../../files/speech-dispatcher-any@any"
 target = "/home/bluewy/.config/speech-dispatcher"
 
 [[install_files]]
 operation = "link"
 owner = "bluewy"
-source = "../../files/starship-any@any/starship.toml"
+source = "../../../files/starship-any@any/starship.toml"
 target = "/home/bluewy/.config/starship.toml"
 
 [[install_files]]
 operation = "copy"
 owner = "bluewy"
-source = "../../files/user-dirs-any@any/user-dirs.dirs"
+source = "../../../files/user-dirs-any@any/user-dirs.dirs"
 target = "/home/bluewy/.config/user-dirs.dirs"
 
 [[install_files]]
 operation = "link"
 owner = "bluewy"
-source = "../../files/wayland-pipewire-idle-inhibit-any@any"
+source = "../../../files/wayland-pipewire-idle-inhibit-any@any"
 target = "/home/bluewy/.config/wayland-pipewire-idle-inhibit"
 
 [[install_files]]
 operation = "link"
 owner = "bluewy"
-source = "../../files/wezterm-any@any"
+source = "../../../files/wezterm-any@any"
 target = "/home/bluewy/.config/wezterm"
 
 [[install_files]]
 operation = "link"
 owner = "bluewy"
-source = "../../files/xkb-any@any"
+source = "../../../files/xkb-any@any"
 target = "/home/bluewy/.config/xkb"
