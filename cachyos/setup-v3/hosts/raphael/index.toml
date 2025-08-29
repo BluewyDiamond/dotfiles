@@ -1,5 +1,5 @@
 source = [
-   "../../modules/cachyos.toml",
+   "../../modules/cachyos/packages.toml",
 
    "./packages.toml",
    "./files.toml",

@@ -86,7 +86,7 @@ target = "/home/bluewy/.config/pipewire"
 operation = "link"
 owner = "bluewy"
 source = "../../../files/scripts-any@any"
-target = "/home/bluewy/.local/scripts"
+target = "/home/bluewy/.local/share/scripts"
 
 [[install_files]]
 operation = "link"
