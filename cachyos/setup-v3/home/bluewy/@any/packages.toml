@@ -194,4 +194,4 @@ std = [
 ]
 
 [packages.services]
-std = ["profiles-sync-daemon"]
+std = ["profile-sync-daemon"]
