@@ -1,4 +1,4 @@
-[services]
+[[services]]
 enable = [
    "getty@tty1",
 
@@ -17,4 +17,4 @@ enable = [
    "screen-off",
    "ananicy-cpp",
 ]
-
+user = "root"

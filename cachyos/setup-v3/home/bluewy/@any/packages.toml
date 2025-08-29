@@ -192,3 +192,6 @@ std = [
    "qemu-audio-spice",
    "qemu-hw-usb-redirect",
 ]
+
+[packages.services]
+std = ["profiles-sync-daemon"]

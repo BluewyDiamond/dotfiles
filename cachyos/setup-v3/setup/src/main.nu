@@ -90,17 +90,19 @@ def "main install" [index_rel_pathname: path] {
 
    let service_enabled_list = ls /etc/systemd/system/*.wants/*.service | get name | each {|x| $x | path basename | path parse | get stem }
 
-   $config.service.enable_list | each {|service_enable|
+   $config.service_list | each {|service|
       try {
-         log info $"service to enable ($service_enable)"
+         $service.enable_list | each {|service_enable|
+            log info $"service to enable ($service_enable)"
 
-         if ($service_enable not-in $service_enabled_list) {
-            systemctl enable --now $service_enable
-         } else {
-            log warning $"service, ($service_enable), is already enabled"
+            if ($service_enable not-in $service_enabled_list) {
+               machinectl shell $"($service.user)"@ /bin/bash -c $""systemctl --user enable ($service_enable)""
+            } else {
+               log warning $"service, ($service_enable), is already enabled"
+            }
          }
       } catch {|error|
-         print $error.rendered
+         $error | print
       }
    } | ignore
 }
@@ -269,7 +271,7 @@ def collect-config-abs-pathname-list [index_abs_pathname_list: list<path>]: noth
 
 def merge-config-list [
    config_list: any
-]: nothing -> record<package: record<ignore_list: list<string>, std_list: list<string>, aur_list: list<string>, local_abs_path_list: list<path>>, file_spawn_list: list<record<owner: string, target_abs_pathname: path, content: string>>, file_install_list: list<record<operation: string, owner: string, source_abs_pathname: path, target_abs_path: path, target_name?: string>>, service: record<enable_list: list<string>>> {
+]: nothing -> record<package: record<ignore_list: list<string>, std_list: list<string>, aur_list: list<string>, local_abs_path_list: list<path>>, file_spawn_list: list<record<owner: string, target_abs_pathname: path, content: string>>, file_install_list: list<record<operation: string, owner: string, source_abs_pathname: path, target_abs_pathname: path>>, service_list: list<record<user: string, enable_list: list<string>>>> {
    # not using get -o because it should be garanteed
    # as long as we passing the value of the getter
    # futhermore if typing was not lost we could have accessed the values directly
@@ -284,9 +286,7 @@ def merge-config-list [
       file_spawn_list: ($config_list | get file_spawn_list | flatten)
       file_install_list: ($config_list | get file_install_list | flatten)
 
-      service: {
-         enable_list: ($config_list | get service.enable_list | flatten | uniq)
-      }
+      service_list: ($config_list | get service_list | flatten | uniq)
    }
 }
 
@@ -299,7 +299,7 @@ def get-source-rel-pathname-list [index_rel_path: path]: nothing -> list<path> {
 
 def get-config [
    config_rel_pathname: string
-]: nothing -> record<package: record<ignore_list: list<string>, std_list: list<string>, aur_list: list<string>, local_abs_path_list: list<path>>, file_spawn_list: list<record<owner: string, target_abs_pathname: path, content: string>>, file_install_list: list<record<operation: string, owner: string, source_abs_pathname: path, target_abs_pathname: path>>, service: record<enable_list: list<string>>> {
+]: nothing -> record<package: record<ignore_list: list<string>, std_list: list<string>, aur_list: list<string>, local_abs_path_list: list<path>>, file_spawn_list: list<record<owner: string, target_abs_pathname: path, content: string>>, file_install_list: list<record<operation: string, owner: string, source_abs_pathname: path, target_abs_pathname: path>>, service_list: list<record<user: string, enable_list: list<string>>>> {
    let config_raw = open $config_rel_pathname
 
    let package = {
@@ -392,8 +392,16 @@ def get-config [
          }
       )
 
-      service: {
-         enable_list: ($config_raw | get -o services.enable | default [])
-      }
+      service_list: (
+         $config_raw
+         | get -o services
+         | default []
+         | each {|service|
+            {
+               user: ($service | get user)
+               enable_list: ($service | get enable)
+            }
+         }
+      )
    }
 }
