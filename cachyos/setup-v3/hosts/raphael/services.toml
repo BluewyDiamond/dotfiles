@@ -17,4 +17,5 @@ enable = [
    "screen-off",
    "ananicy-cpp",
 ]
+path = "/etc/systemd/system"
 user = "root"

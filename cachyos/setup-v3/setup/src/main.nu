@@ -79,24 +79,24 @@ def "main install" [index_rel_pathname: path] {
    $config.file_install_list | each {|file_install|
       try {
          if $file_install.owner != $env.LOGNAME {
-            sudo -u $file_install.owner -- ./../deps/install_file.nu $"(($file_install | to nuon) | str trim)"
+            sudo -u $file_install.owner -- ./../deps/install_file.nu $"($file_install | to nuon)"
          } else {
-            ./../deps/install_file.nu $"($file_install)"
+            ./../deps/install_file.nu $"($file_install | to nuon)"
          }
       } catch {|err|
          print $err.rendered
       }
    } | ignore
 
-   let service_enabled_list = ls /etc/systemd/system/*.wants/*.service | get name | each {|x| $x | path basename | path parse | get stem }
-
    $config.service_list | each {|service|
       try {
+         let service_enabled_list = ls ($"($service.path)/*.wants/*.service" | into glob) | get name | each {|x| $x | path basename | path parse | get stem }
+
          $service.enable_list | each {|service_enable|
             log info $"service to enable ($service_enable)"
 
             if ($service_enable not-in $service_enabled_list) {
-               machinectl shell $"($service.user)"@ /bin/bash -c $""systemctl --user enable ($service_enable)""
+               sudo systemctl -M $"($service.user)@" --user enable $service_enable
             } else {
                log warning $"service, ($service_enable), is already enabled"
             }
@@ -142,19 +142,26 @@ def "main cleanup" [index_rel_pathname: path] {
       log warning "no packages to cleanup"
    }
 
-   let service_enabled_list = ls /etc/systemd/system/*.wants/*.service | get name | each {|x| $x | path basename | path parse | get stem }
-   let service_disable_list = $service_enabled_list | where {|service_enable| $service_enable not-in $config.service.enable_list }
+   # TODO: modify path custom cause no other way, otherwise it is assuming /home/username and im not sure if that is okay because root does not work
 
-   if ($service_disable_list | is-not-empty) {
-      $service_disable_list | each {|service_disable|
-         try {
-            systemctl disable --now $service_disable
-         } catch {|error|
-            $error.rendered | print
+   let service_enabled_list = ls /etc/systemd/system/*.wants/*.service | get name | each {|x| $x | path basename | path parse | get stem }
+
+   $config.service_list | each {|service|
+      try {
+         let service_disable_list = $service_enabled_list | where {|service_enabled|
+            $service_enabled not-in $service.enabled_list
          }
-      } | ignore
-   } else {
-      log warning "no services to disable"
+
+         if ($service_disable_list | is-not-empty) {
+            $service_disable_list | each {|service_disable|
+               systemctl disable --now $service_disable
+            } | ignore
+         } else {
+            log warning "no services to disable"
+         }
+      } catch {|error|
+         $error.rendered | print
+      }
    }
 }
 
@@ -299,7 +306,7 @@ def get-source-rel-pathname-list [index_rel_path: path]: nothing -> list<path> {
 
 def get-config [
    config_rel_pathname: string
-]: nothing -> record<package: record<ignore_list: list<string>, std_list: list<string>, aur_list: list<string>, local_abs_path_list: list<path>>, file_spawn_list: list<record<owner: string, target_abs_pathname: path, content: string>>, file_install_list: list<record<operation: string, owner: string, source_abs_pathname: path, target_abs_pathname: path>>, service_list: list<record<user: string, enable_list: list<string>>>> {
+]: nothing -> record<package: record<ignore_list: list<string>, std_list: list<string>, aur_list: list<string>, local_abs_path_list: list<path>>, file_spawn_list: list<record<owner: string, target_abs_pathname: path, content: string>>, file_install_list: list<record<operation: string, owner: string, source_abs_pathname: path, target_abs_pathname: path>>, service_list: list<record<user: string, path: string, enable_list: list<string>>>> {
    let config_raw = open $config_rel_pathname
 
    let package = {
@@ -400,6 +407,7 @@ def get-config [
             {
                user: ($service | get user)
                enable_list: ($service | get enable)
+               path: ($service | get path)
             }
          }
       )

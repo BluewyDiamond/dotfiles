@@ -1,3 +1,4 @@
 [[services]]
 enable = ["psd"]
+path = "/home/bluewy/.config/systemd/user"
 user = "bluewy"

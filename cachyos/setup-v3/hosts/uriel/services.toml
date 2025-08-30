@@ -1,4 +1,4 @@
-[services]
+[[services]]
 enable = [
    "getty@tty1",
 
@@ -21,3 +21,5 @@ enable = [
    "screen-off",
    "ananicy-cpp",
 ]
+path = "/home/elisa/.config/systemd/user"
+user = "elisa"
