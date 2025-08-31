@@ -35,7 +35,6 @@ def main [file_install: any] {
       }
 
       "link" => {
-
          if $target_abs_pathname_exists {
             if (($file_install.target_abs_pathname | path expand) != $file_install.source_abs_pathname) {
                rm -r --trash ($file_install.target_abs_pathname)
@@ -52,6 +51,6 @@ def main [file_install: any] {
          }
       }
 
-      _ => { log error "the operation, ($file_install.operation), is not valid" }
+      _ => { log error $"the operation, ($file_install.operation), is not valid" }
    }
 }

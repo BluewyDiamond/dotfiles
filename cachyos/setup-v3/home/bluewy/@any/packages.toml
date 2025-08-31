@@ -46,10 +46,12 @@ std = [
 std = ["git", "downgrade"]
 
 [packages.wayland.wm.niri]
-aur = ["xwayland-satellite-git"]
-# path of PKBUILD futhermore path will be the name of said package
 local = ["../../../aur/niri-no-systemd-git"]
-std = ["xdg-desktop-portal-gnome", "xdg-desktop-portal-gtk"]
+std = [
+   "xwayland-satellite",
+   "xdg-desktop-portal-gnome",
+   "xdg-desktop-portal-gtk",
+]
 
 [packages.wayland.wm.hyprland]
 std = [

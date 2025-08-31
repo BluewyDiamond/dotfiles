@@ -1,0 +1,2 @@
+maybe actually run the script as root, for user level only stuff well  probably needs an impl, check user is current and do only the current user stuff
++ i need more path testing
