@@ -1,9 +1,8 @@
-# modified to change some compile options
 pkgname=niri-no-systemd-git
 _pkgname=niri
 pkgver=r2362.01be0e6
 pkgrel=1
-pkgdesc="Scrollable-tiling Wayland compositor (no systemd services)"
+pkgdesc="Scrollable-tiling Wayland compositor"
 arch=(x86_64 aarch64)
 url="https://github.com/YaLTeR/$_pkgname"
 license=(GPL-3.0-or-later)
