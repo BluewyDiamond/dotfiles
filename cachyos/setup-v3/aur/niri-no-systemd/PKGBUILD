@@ -40,7 +40,7 @@ optdepends=(
 provides=($_pkgname)
 conflicts=($_pkgname $_pkgname-bin $_pkgname-git)
 options=(!lto)
-source=("$_pkgname::git-lfs+${url}.git#tag=${_tag}")  # Changed to git-lfs+
+source=("$_pkgname::git-lfs+${url}.git#tag=${_tag}")
 sha256sums=('SKIP')
 
 prepare() {
