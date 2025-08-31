@@ -46,7 +46,7 @@ std = [
 std = ["git", "downgrade"]
 
 [packages.wayland.wm.niri]
-local = ["../../../aur/niri-no-systemd-git"]
+local = ["../../../aur/niri-no-systemd"]
 std = [
    "xwayland-satellite",
    "xdg-desktop-portal-gnome",
