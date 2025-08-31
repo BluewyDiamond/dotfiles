@@ -1,7 +1,6 @@
-# modified to change some compile options
 pkgname=niri-no-systemd-git
 _pkgname=niri
-pkgver=r2362.01be0e6
+pkgver=25.08
 pkgrel=1
 pkgdesc="Scrollable-tiling Wayland compositor (no systemd services)"
 arch=(x86_64 aarch64)
@@ -10,16 +9,18 @@ license=(GPL-3.0-or-later)
 depends=(cairo glib2 libdisplay-info libinput libpipewire libxkbcommon mesa pango pixman seatd)
 makedepends=(clang rust git makepkg-git-lfs-proto)
 [[ -n ${_sccache} ]] && makedepends+=(sccache)
-optdepends=('fuzzel: application launcher similar to rofi drun mode'
-            'waybar: highly customizable Wayland bar'
-            'alacritty: a cross-platform OpenGL terminal emulator'
-            'mako: notification daemon for Wayland'
-            'swaybg: wallpaper tool for Wayland compositors'
-            'swaylock: screen locker for Wayland'
-            'xdg-desktop-portal-gtk: implements most of the basic functionality'
-            'xdg-desktop-portal-gnome: screencasting support'
-            'gnome-keyring: implements the secret portal, for certain apps to work'
-            'polkit-gnome: when apps need to ask for root permissions')
+optdepends=(
+   'fuzzel: application launcher similar to rofi drun mode'
+   'waybar: highly customizable Wayland bar'
+   'alacritty: a cross-platform OpenGL terminal emulator'
+   'mako: notification daemon for Wayland'
+   'swaybg: wallpaper tool for Wayland compositors'
+   'swaylock: screen locker for Wayland'
+   'xdg-desktop-portal-gtk: implements most of the basic functionality'
+   'xdg-desktop-portal-gnome: screencasting support'
+   'gnome-keyring: implements the secret portal, for certain apps to work'
+   'polkit-gnome: when apps need to ask for root permissions'
+)
 provides=($_pkgname)
 conflicts=($_pkgname $_pkgname-bin $_pkgname-git)
 options=(!debug !lto !strip)

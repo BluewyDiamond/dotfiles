@@ -114,10 +114,11 @@ aur = [
    "libastal-powerprofiles-git",
    "libastal-tray-git",
 
+   "libastal-niri-git",
+
    # gnim bindings are provided by the following package
    "aylurs-gtk-shell-git",
 ]
-local = ["../../../aur/libastal-niri-git"]
 std = ["dart-sass", "fd", "bun-bin", "gjs", "gtk4-layer-shell"]
 
 [packages.wayland.apps.gaming]
