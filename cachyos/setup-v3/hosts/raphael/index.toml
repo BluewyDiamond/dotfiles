@@ -5,7 +5,8 @@ source = [
    "./files.toml",
    "./services.toml",
 
-   "../../home/bluewy/@any/packages.toml",
-   "../../home/bluewy/@any/files.toml",
-   "../../home/bluewy/@raphael/files.toml",
+   "../../users/bluewy/@any/packages.toml",
+   "../../users/bluewy/@any/files.toml",
+
+   "../../users/bluewy/@raphael/files.toml",
 ]
