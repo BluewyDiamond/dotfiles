@@ -278,18 +278,18 @@ spawn-at-startup "gsettings" "set" "org.gnome.desktop.interface" "color-scheme" 
 
 // [[Polkit]]
 //
-spawn-at-startup "fish" "-c" "pidof io.elementary.desktop.agent-polkit || uwsm app -- /usr/lib/policykit-1-pantheon/io.elementary.desktop.agent-polkit"
+spawn-at-startup "fish" "-c" "pidof io.elementary.desktop.agent-polkit || exec uwsm app -- /usr/lib/policykit-1-pantheon/io.elementary.desktop.agent-polkit"
 
 // [[Idle Listeners]]
 //
 spawn-at-startup "fish" "-c" "pidof hypridle || uwsm app -- hypridle"
-spawn-at-startup "fish" "-c" "pidof wayland-pipewire-idle-inhibit || uwsm app -- wayland-pipewire-idle-inhibit"
+spawn-at-startup "fish" "-c" "pidof wayland-pipewire-idle-inhibit || exec uwsm app -- wayland-pipewire-idle-inhibit"
 
 // [[Clipboard]]
 //
-spawn-at-startup "fish" "-c" "pgrep -fx 'wl-paste --type text --watch cliphist store'; or uwsm app -- wl-paste --type text --watch cliphist store"
-spawn-at-startup "fish" "-c" "pgrep -fx 'wl-paste --type image --watch cliphist store'; or uwsm app -- wl-paste --type image --watch cliphist store"
+spawn-at-startup "fish" "-c" "pgrep -fx 'wl-paste --type text --watch cliphist store'; or exec uwsm app -- wl-paste --type text --watch cliphist store"
+spawn-at-startup "fish" "-c" "pgrep -fx 'wl-paste --type image --watch cliphist store'; or exec uwsm app -- wl-paste --type image --watch cliphist store"
 
 // [[Widgets]]
 //
-spawn-at-startup "fish" "-c" "uwsm app -- $HOME/.config/ags/cli.fish run"
+spawn-at-startup "fish" "-c" "exec uwsm app -- $HOME/.config/ags/cli.fish run"
