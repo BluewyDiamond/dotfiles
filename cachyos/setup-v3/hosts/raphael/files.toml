@@ -74,6 +74,12 @@ target = "/etc/locale.gen"
 [[install_files]]
 operation = "copy"
 owner = "root"
+source = "../../files/booster-any@any/booster.yaml"
+target = "/etc/booster.yaml"
+
+[[install_files]]
+operation = "copy"
+owner = "root"
 source = "../../files/screen-off-service-any@any/screen-off.service"
 target = "/etc/systemd/system/screen-off.service"
 
