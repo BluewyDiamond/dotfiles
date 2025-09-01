@@ -1,4 +1,3 @@
-
 export def is-package-a-dependency []: string -> bool {
    let package = $in
    let pactree_complete = pactree -rl $package | complete

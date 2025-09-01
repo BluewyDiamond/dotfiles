@@ -40,3 +40,19 @@ def "main install" [index_rel_pathname: path] {
    install-file-list $config
    enable-service-list $config
 }
+
+def "main cleanup" [index_rel_pathname: path] {
+   let index_abs_pathname_list = collect-index-abs-pathname-list $index_rel_pathname
+   let config_abs_pathname_list = collect-config-abs-pathname-list $index_abs_pathname_list
+
+   let config_list = (
+      $config_abs_pathname_list | each {|config_abs_pathname|
+         extract-config $config_abs_pathname
+      }
+   )
+
+   let config = merge-config-list $config_list
+
+   cleanup-package-list $config
+   cleanup-service-list $config
+}

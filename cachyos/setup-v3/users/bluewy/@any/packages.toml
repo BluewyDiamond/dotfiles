@@ -122,7 +122,12 @@ aur = [
 std = ["dart-sass", "fd", "bun-bin", "gjs", "gtk4-layer-shell"]
 
 [packages.wayland.apps.gaming]
-aur = ["atlauncher-bin", "r2modman-bin", "osu-lazer-bin"]
+ignore = [
+   "atlauncher-bin",
+   "r2modman-bin",
+   "osu-lazer-bin",
+   "bettercrewlink-bin",
+]
 std = [
    "steam-native-runtime",
    "heroic-games-launcher-bin",

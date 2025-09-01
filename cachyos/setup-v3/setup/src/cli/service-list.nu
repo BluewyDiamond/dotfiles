@@ -24,23 +24,34 @@ export def enable-service-list [config] {
    } | ignore
 }
 
-# TODO: FIX ME
-# def cleanup-service-list [config] {
-#    $config.service_list | each {|service|
-#       try {
-#          let service_disable_list = $service_enabled_list | where {|service_enabled|
-#             $service_enabled not-in $service.enabled_list
-#          }
-#
-#          if ($service_disable_list | is-not-empty) {
-#             $service_disable_list | each {|service_disable|
-#                systemctl disable --now $service_disable
-#             } | ignore
-#          } else {
-#             log warning "no services to disable"
-#          }
-#       } catch {|error|
-#          $error.rendered | print
-#       }
-#    }
-# }
+export def cleanup-service-list [config] {
+   $config.service_list | each {|service|
+      let service_enabled_list = if $service.user != $env.LOGNAME {
+         try {
+            (sudo -u $service.user -- ./../deps/get-enabled-service-list.nu $"($service | to nuon)") | from nuon
+         } catch {
+            return
+         }
+      } else {
+         try {
+            (./../deps/get-enabled-service-list.nu $"($service | to nuon)") | from nuon
+         } catch {
+            return
+         }
+      }
+
+      $service_enabled_list | each {|service_enabled|
+         if ($service_enabled not-in $service_enabled_list) {
+            log info $"service to disable ($service_enabled)"
+
+            try {
+               sudo systemctl -M $"($service.user)@" --user disable $service_enabled
+            } catch {|error|
+               $error.rendered | print
+            }
+         } else {
+            log warning $"service, ($service_enabled), is in enable list"
+         }
+      }
+   } | ignore
+}

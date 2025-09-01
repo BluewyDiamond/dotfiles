@@ -1,3 +1,5 @@
+use ../utils *
+
 export def install-package-list [config] {
    let package_all_installed_list = pacman -Qq | complete | get stdout | lines
 
@@ -18,7 +20,11 @@ def install-std-package-list [
       return
    }
 
-   sudo pacman -S ...$package_std_missing_list
+   try {
+      sudo pacman -S ...$package_std_missing_list
+   } catch {|error|
+      $error.rendered | print
+   }
 }
 
 def install-aur-package-list [
@@ -33,7 +39,11 @@ def install-aur-package-list [
       return
    }
 
-   paru -S --aur ...$package_aur_missing_list
+   try {
+      paru -S --aur ...$package_aur_missing_list
+   } catch {|error|
+      $error.rendered | print
+   }
 }
 
 def install-local-package-list [
@@ -48,11 +58,18 @@ def install-local-package-list [
       return
    }
 
-   paru -Bi ...$package_local_abs_path_missing_list
+   try {
+      paru -Bi ...$package_local_abs_path_missing_list
+   } catch {|error|
+      $error.rendered | print
+   }
 }
 
-export def cleanup-packages-list [config] {
-   let package_local_list = $config.package.local_abs_path_list | each {|package_local_abs_path| $package_local_abs_path | path basename }
+export def cleanup-package-list [config] {
+   let package_local_list = $config.package.local_abs_path_list | each {|package_local_abs_path|
+      $package_local_abs_path | path basename
+   }
+
    let package_wanted_all_list = [$config.package.std_list $config.package.aur_list $package_local_list $config.package.ignore_list] | flatten
    let package_all_installed_list = pacman -Qqee | lines
 
@@ -65,19 +82,7 @@ export def cleanup-packages-list [config] {
    }
 
    if ($package_unlisted_list | is-not-empty) {
-      $package_unlisted_list | wrap package | print
-      ["The above packages are target for cleanup." "Do you want to proceed? [y/N]"] | wrap message | table | print
-      let user_input = input "INPUT =>"
-
-      match $user_input {
-         "Y"|"y" => {
-            sudo pacman -Rns ...$package_unlisted_list
-         }
-
-         _ => {
-            log error "input is invalid"
-         }
-      }
+      sudo pacman -Rns ...$package_unlisted_list
    } else {
       log warning "no packages to cleanup"
    }

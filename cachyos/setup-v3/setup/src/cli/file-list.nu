@@ -6,7 +6,7 @@ export def spawn-file-list [config] {
          if $file_spawn.owner != $env.LOGNAME {
             sudo -u $file_spawn.owner -- ./../deps/spawn-file.nu $"($file_spawn | to nuon)"
          } else {
-            ./../deps/spawn-file.nu $"($file_spawn)"
+            ./../deps/spawn-file.nu $"($file_spawn | to nuon)"
          }
       } catch {|error|
          $error.rendered | print
