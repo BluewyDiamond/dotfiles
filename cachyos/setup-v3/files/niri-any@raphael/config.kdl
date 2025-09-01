@@ -3,8 +3,8 @@
 input {
    keyboard {
       xkb {
-         layout "bluewy"
-         variant "colemak_dh_wide_custom_eu_iso"
+         layout "bluewy,us"
+         variant "colemak_dh_wide_custom_eu_iso,us"
       }
 
       numlock
@@ -107,6 +107,9 @@ binds {
    Ctrl+Print { screenshot-screen; }
    Alt+Print { screenshot-window; }
    Mod+Shift+P { power-off-monitors; }
+
+   Mod+Space { switch-layout "next"; }
+   Mod+Shift+Space { switch-layout "prev"; }
 
    // [[Window Binds]]
    //
