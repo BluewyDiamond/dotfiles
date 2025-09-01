@@ -3,8 +3,9 @@
 input {
    keyboard {
       xkb {
-         layout "bluewy,us"
-         variant "colemak_dh_wide_custom_eu_iso,us"
+         layout "bluewy,bluewy"
+         variant "colemak_dh_wide_custom_eu_iso,vanilla_iso"
+         // options "grp:win_space_toggle" // or through binds
       }
 
       numlock
