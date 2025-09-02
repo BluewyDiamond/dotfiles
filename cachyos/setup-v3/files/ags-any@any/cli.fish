@@ -24,9 +24,7 @@ end
 #
 switch $argv[1]
     case run
-        LD_PRELOAD=/usr/lib/libgtk4-layer-shell.so gjs -m $build_pathname/main.js
-    case drun
-        LD_PRELOAD=/usr/lib/libgtk4-layer-shell.so gjs -m $build_pathname/main.js & disown && exit
+        LD_PRELOAD=/usr/lib/libgtk4-layer-shell.so exec gjs -m $build_pathname/main.js
     case build
         if not test -d $build_pathname
             mkdir -p $build_pathname
