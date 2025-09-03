@@ -302,4 +302,4 @@ spawn-at-startup "nu" "-c" "try { pgrep -fx 'wl-paste --type image --watch cliph
 
 // [[Widgets]]
 //
-spawn-at-startup "nu" "-c" r#"exec uwsm app -- $"($env.HOME)/.config/ags/cli.fish" run"#
+spawn-at-startup "nu" "-c" r#"exec uwsm app -- $"($env.HOME)/.config/ags/cli.nu" run"#
