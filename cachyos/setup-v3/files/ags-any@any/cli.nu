@@ -15,7 +15,7 @@ def "main run" [] {
       LD_PRELOAD: /usr/lib/libgtk4-layer-shell.so
    }
 
-   gjs -m ($script_path)/build/main.js
+   exec gjs -m ($script_path)/build/main.js
 }
 
 def "main types" [] {
