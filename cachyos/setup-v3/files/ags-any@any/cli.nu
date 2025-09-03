@@ -5,10 +5,14 @@
 def main [] { }
 
 def "main build" [] {
-   bun ./scripts/build.ts
+   bun scripts/build.ts
 }
 
 def "main run" [] {
+   load-env {
+      LD_PRELOAD: /usr/lib/libgtk4-layer-shell.so
+   }
+
    gjs -m build/main.js
 }
 
