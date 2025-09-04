@@ -186,20 +186,5 @@ std = ["telegram-desktop"]
 aur = ["equibop-bin", "piper-tts-bin", "piper-voices-en-us"]
 std = ["speech-dispatcher"]
 
-[packages.wayland.apps.virtualization]
-std = [
-   "qemu-base",
-   "virt-manager",
-   "virt-viewer",
-   "dnsmasq",
-   "vde2",
-   "bridge-utils",
-   "openbsd-netcat",
-   "spice",
-   "qemu-ui-spice-app",
-   "qemu-audio-spice",
-   "qemu-hw-usb-redirect",
-]
-
 [packages.services]
 std = ["profile-sync-daemon"]

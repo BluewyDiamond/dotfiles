@@ -1,14 +1,16 @@
 source = [
    "../../modules/cachyos/packages.toml",
-   "../../modules/cachyos-bluewy/packages.toml",
-   "../../modules/language-bluewy/files.toml",
 
-   "./packages.toml",
+   "../../modules/bluewy/files/language.toml",
+   "../../modules/bluewy/packages/cachyos.toml",
+   "../../modules/bluewy/packages/virtualization.toml",
+
    "./files.toml",
+   "./packages.toml",
    "./services.toml",
 
-   "../../users/bluewy/@any/packages.toml",
    "../../users/bluewy/@any/files.toml",
+   "../../users/bluewy/@any/packages.toml",
    "../../users/bluewy/@any/services.toml",
 
    "../../users/bluewy/@raphael/files.toml",
