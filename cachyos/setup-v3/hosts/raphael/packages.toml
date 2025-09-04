@@ -6,7 +6,6 @@ std = [
 
    "linux-cachyos",
    "linux-cachyos-lts",
-   "wireless-regdb",
 
    # provided by chwd
    "lib32-opencl-mesa",
@@ -14,7 +13,6 @@ std = [
 
    "btrfs-progs",
 
-   "ufw",
    "lact",
    "bluez",
    "bluez-utils",

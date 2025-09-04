@@ -1,0 +1,5 @@
+[packages]
+std = [
+   "wireless-regdb",
+   "ufw",
+]

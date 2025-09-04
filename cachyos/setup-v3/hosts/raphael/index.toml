@@ -1,5 +1,7 @@
 source = [
    "../../modules/cachyos/packages.toml",
+   "../../modules/cachyos-bluewy/packages.toml",
+   "../../modules/language-bluewy/files.toml",
 
    "./packages.toml",
    "./files.toml",
@@ -7,6 +9,7 @@ source = [
 
    "../../users/bluewy/@any/packages.toml",
    "../../users/bluewy/@any/files.toml",
+   "../../users/bluewy/@any/services.toml",
 
    "../../users/bluewy/@raphael/files.toml",
 ]
