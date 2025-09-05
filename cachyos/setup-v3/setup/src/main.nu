@@ -37,6 +37,7 @@ def "main install" [index_rel_pathname: path] {
    let config = merge-config-list $config_list
 
    install-package-list $config
+   spawn-file-list $config
    install-file-list $config
    enable-service-list $config
 }

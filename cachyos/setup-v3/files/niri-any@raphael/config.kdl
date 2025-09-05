@@ -27,6 +27,7 @@ input {
 output "HDMI-A-2" {
    mode "1920x1080@239.964"
    focus-at-startup
+   variable-refresh-rate
 }
 
 // [Behaviours & Aesthetics]
@@ -48,6 +49,39 @@ window-rule {
    open-maximized true
 }
 
+window-rule {
+   match is-window-cast-target=true
+
+   border {
+      inactive-gradient from="#8e9099" to="#7d0d2d" angle=90
+   }
+
+   tab-indicator {
+      inactive-gradient from="#8e9099" to="#7d0d2d" angle=90
+   }
+}
+
+window-rule {
+   match is-active=true is-window-cast-target=true
+
+   border {
+      active-gradient from="#80c8ff" to="#f38ba8" angle=90
+      inactive-gradient from="#8e9099" to="#7d0d2d" angle=90
+   }
+
+   tab-indicator {
+      active-gradient from="#80c8ff" to="#f38ba8" angle=90
+      inactive-gradient from="#8e9099" to="#7d0d2d" angle=90
+   }
+}
+
+window-rule {
+   match at-startup=true app-id="org.keepassxc.KeePassXC"
+   open-on-workspace "scratchpad"
+   block-out-from "screencast"
+   open-focused true
+}
+
 layout {
    background-color "#1E2127"
    gaps 12
@@ -63,9 +97,6 @@ layout {
 
    focus-ring {
       off
-      width 4
-      active-color "#9acbfa"
-      inactive-color "#8e9099"
    }
 
    border {
@@ -101,6 +132,9 @@ workspace "four"
 workspace "eight"
 workspace "nine"
 workspace "zero"
+
+// scratchpad workspaces
+workspace "scratchpad"
 
 // [Binds]
 //
@@ -303,3 +337,7 @@ spawn-at-startup "nu" "-c" "try { pgrep -fx 'wl-paste --type image --watch cliph
 // [[Widgets]]
 //
 spawn-at-startup "nu" "-c" r#"exec uwsm app -- $"($env.HOME)/.config/ags/cli.nu" run"#
+
+// [[Other]]
+//
+spawn-at-startup "nu" "-c" "try { pidof keepassxc } catch { exec uwsm app -- keepassxc }"
