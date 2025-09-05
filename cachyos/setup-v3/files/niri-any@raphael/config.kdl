@@ -78,8 +78,12 @@ window-rule {
 window-rule {
    match at-startup=true app-id="org.keepassxc.KeePassXC"
    open-on-workspace "scratchpad"
-   block-out-from "screencast"
    open-focused true
+}
+
+window-rule {
+   match app-id="org.keepassxc.KeePassXC"
+   block-out-from "screencast"
 }
 
 layout {
