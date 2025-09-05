@@ -28,7 +28,7 @@ content = """
 XKBLAYOUT=bluewy
 FONT=ter-124n
 XKBMODEL=colemak-dh-wide-custom-eu-iso
-KEYMAP=colemak-dh-wide-custom-iso-eu
+KEYMAP=colemak-dh-wide-custom-eu-iso
 """
 owner = "root"
 target = "/etc/vconsole.conf"

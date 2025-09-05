@@ -296,23 +296,7 @@ binds {
 
 // [Environment Variables]
 //
-environment {
-   // [[Toolkits]]
-   //
-   // tell toolkits to use wayland if available
-   SDL_VIDEODRIVER "wayland,x11"
-   CLUTTER_BACKEND "wayland"
-   GDK_BACKEND "wayland,x11,*"
-   QT_QPA_PLATFORM "wayland;xcb"
-
-   // [[Rice]]
-   //
-   QT_QPA_PLATFORMTHEME "qt6ct"
-
-   // [[Fixes]]
-   //
-   _JAVA_AWT_WM_NONREPARENTING "1"
-}
+// externally managed with uwsm
 
 // [Autostart]
 //

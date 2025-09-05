@@ -118,6 +118,12 @@ target = "/home/bluewy/.config/user-dirs.dirs"
 [[install_files]]
 operation = "link"
 owner = "bluewy"
+source = "../../../files/uwsm-any@any"
+target = "/home/bluewy/.config/uwsm"
+
+[[install_files]]
+operation = "link"
+owner = "bluewy"
 source = "../../../files/wayland-pipewire-idle-inhibit-any@any"
 target = "/home/bluewy/.config/wayland-pipewire-idle-inhibit"
 
