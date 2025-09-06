@@ -1,68 +1,57 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
-palette = 'onedark'
 continuation_prompt = ':: '
 
 format = """
-[](fg:surface_container)\
 $time\
 $username\
-[@](bg:surface_container fg:yellow)\
+[@](fg:yellow)\
 $hostname\
 $directory\
 $git_branch\
 $git_status\
 $cmd_duration\
 $status\
-[ ](fg:surface_container)\
 $line_break\
 $character"""
 
 [time]
 disabled = false
 time_format = "%R"
-style = "bg:surface_container"
 format = """
-[[ $time ](fg:green bg:surface_container)]($style)\
+[ $time ](fg:cyan)\
 """
 
 [username]
 show_always = true
-style_user = "bg:surface_container fg:yellow"
-style_root = "bg:surface_container fg:yellow"
+style_user = "fg:yellow"
+style_root = "fg:yellow"
 format = """
-[](bg:surface_container fg:on_surface_container)\
 [ $user]($style)\
 """
 
 [hostname]
 ssh_only = false
 ssh_symbol = '\(ssh\)'
-style = 'bg:surface_container fg:yellow'
-format = '[$hostname $ssh_symbol]($style)'
+format = '[$hostname $ssh_symbol](fg:yellow)'
 
 [directory]
-style = "bg:surface_container fg:blue"
 truncation_length = 9
 truncate_to_repo = false
 truncation_symbol = "…/"
 format = """
-[](bg:surface_container fg:on_surface_container)\
-[ $path ]($style)\
+[ $path ](fg:blue)\
 """
 
 [git_branch]
 symbol = ""
-style = "bg:surface_container"
 format = """
-[](bg:surface_container fg:on_surface_container)\
-[[$symbol $branch](bg:surface_container fg:green)]($style)\
+[$symbol $branch](fg:green)\
 """
 
 [git_status]
-style = "bg:surface_container"
 format = """
-[[ ($stashed$deleted$renamed$typechanged$staged$modified$conflicted$untracked$ahead_behind)](bg:surface_container fg:yellow)]($style)\
+[ $stashed$deleted$renamed$typechanged$staged$modified$conflicted$untracked$ahead_behind](bg:surface_container fg:yellow)($style)\
 """
 ahead = "[⇡$count](bg:surface_container fg:green)"
 behind = "⇣${count}"
@@ -78,18 +67,15 @@ deleted = "D${count} "
 [cmd_duration]
 show_milliseconds = true
 format = """
-[](bg:surface_container fg:on_surface_container)\
-[ $duration](bg:surface_container fg:green)\
+[ $duration](fg:green)\
 """
 style = "bg:surface_container"
 
 [status]
 disabled = false
 symbol = "E"
-style = "bg:surface_container fg:error"
 format = """
-[](bg:surface_container fg:on_surface_container)\
-[ $symbol$status]($style)\
+[ $symbol$status](fg:red)\
 """
 
 [character]
@@ -97,17 +83,3 @@ disabled = false
 success_symbol = '[❯](bold fg:green)'
 error_symbol = '[❯](bold fg:red)'
 vimcmd_symbol = '[❮](bold fg:green)'
-# vimcmd_replace_one_symbol = '[❮](bold fg:lavender)'
-# vimcmd_replace_symbol = '[❮](bold fg:lavender)'
-# vimcmd_visual_symbol = '[❮](bold fg:yellow)'
-
-[palettes.onedark]
-surface_container = "#282C34"
-on_surface_container = "#ABB2BF"
-yellow = "#e5c07b"
-red = "#e06c75"
-green = "#98c379"
-cyan = "#56b6c2"
-error = "#f44747"
-purple = "#c678dd"
-orange = "#d19a66"

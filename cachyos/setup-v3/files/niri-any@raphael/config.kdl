@@ -87,7 +87,7 @@ window-rule {
 }
 
 layout {
-   background-color "#1E2127"
+   background-color "#21252B"
    gaps 12
    center-focused-column "never"
 
