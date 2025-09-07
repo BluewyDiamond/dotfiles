@@ -19,7 +19,7 @@ $character"""
 disabled = false
 time_format = "%R"
 format = """
-[ $time ](fg:cyan)\
+[ $time](fg:cyan)\
 """
 
 [username]
@@ -33,14 +33,14 @@ format = """
 [hostname]
 ssh_only = false
 ssh_symbol = '\(ssh\)'
-format = '[$hostname $ssh_symbol](fg:yellow)'
+format = '[$hostname($ssh_symbol)](fg:yellow)'
 
 [directory]
 truncation_length = 9
 truncate_to_repo = false
 truncation_symbol = "…/"
 format = """
-[ $path ](fg:blue)\
+[ $path](fg:blue)\
 """
 
 [git_branch]
@@ -65,7 +65,6 @@ renamed = "R${count} "
 deleted = "D${count} "
 
 [cmd_duration]
-show_milliseconds = true
 format = """
 [ $duration](fg:green)\
 """
@@ -80,6 +79,6 @@ format = """
 
 [character]
 disabled = false
-success_symbol = '[❯](bold fg:green)'
-error_symbol = '[❯](bold fg:red)'
+success_symbol = '[ ➜](bold fg:green)'
+error_symbol = '[ ➜](bold fg:red)'
 vimcmd_symbol = '[❮](bold fg:green)'
