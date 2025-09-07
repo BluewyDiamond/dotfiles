@@ -46,12 +46,12 @@ format = """
 [git_branch]
 symbol = ""
 format = """
-[$symbol $branch](fg:green)\
+[ ($symbol)($branch)](fg:green)\
 """
 
 [git_status]
 format = """
-[ $stashed$deleted$renamed$typechanged$staged$modified$conflicted$untracked$ahead_behind](bg:surface_container fg:yellow)($style)\
+[ ($stashed$deleted$renamed$typechanged$staged$modified$conflicted$untracked$ahead_behind)](bg:surface_container fg:yellow)($style)\
 """
 ahead = "[⇡$count](bg:surface_container fg:green)"
 behind = "⇣${count}"
@@ -66,7 +66,7 @@ deleted = "D${count} "
 
 [cmd_duration]
 format = """
-[ $duration](fg:green)\
+[( $duration)](fg:green)\
 """
 style = "bg:surface_container"
 
@@ -74,7 +74,7 @@ style = "bg:surface_container"
 disabled = false
 symbol = "E"
 format = """
-[ $symbol$status](fg:red)\
+[( $symbol$status)](fg:red)\
 """
 
 [character]
