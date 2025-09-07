@@ -6,7 +6,7 @@ export def collect-index-file-abs-path-list [index_file_rel_path: path]: nothing
 
    while ($index_file_abs_path_list_to_process | is-not-empty) {
       let index_file_abs_path_to_process = $index_file_abs_path_list_to_process | first
-      $index_file_abs_path_list_to_process = $index_file_abs_path_to_process | skip 1
+      $index_file_abs_path_list_to_process = $index_file_abs_path_list_to_process | skip 1
       $index_file_abs_path_list_collected = $index_file_abs_path_list_collected | append $index_file_abs_path_to_process
       let index_file_rel_path_list = extract-index-rel-path-list $index_file_abs_path_to_process
 
@@ -56,7 +56,7 @@ export def merge-config-list [
          ignore_list: ($config_list | get package.ignore_list | flatten | uniq)
          std_list: ($config_list | get package.std_list | flatten | uniq)
          aur_list: ($config_list | get package.aur_list | flatten | uniq)
-         local_abs_path_list: ($config_list | get package.local_abs_path_list | flatten | uniq)
+         local_abs_path_list: ($config_list | get package.local_dir_abs_path_list | flatten | uniq)
       }
 
       file_spawn_list: ($config_list | get file_spawn_list | flatten)
