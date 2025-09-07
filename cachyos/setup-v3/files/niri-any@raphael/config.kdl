@@ -1,4 +1,4 @@
-// [Inputs & Outputs]
+// [ Inputs & Outputs ]
 //
 input {
    keyboard {
@@ -30,7 +30,7 @@ output "HDMI-A-2" {
    variable-refresh-rate
 }
 
-// [Behaviours & Aesthetics]
+// [ Behaviours & Aesthetics ]
 //
 prefer-no-csd
 
@@ -140,10 +140,10 @@ workspace "zero"
 // scratchpad workspaces
 workspace "scratchpad"
 
-// [Binds]
+// [ Binds ]
 //
 binds {
-   // [[WM Binds]]
+   // [[ WM ]]
    //
    Mod+Shift+Slash { show-hotkey-overlay; }
    Mod+O repeat=false { toggle-overview; }
@@ -160,7 +160,7 @@ binds {
    Mod+Space { switch-layout "next"; }
    Mod+Shift+Space { switch-layout "prev"; }
 
-   // [[Window Binds]]
+   // [[ Window ]]
    //
    Mod+Q { close-window; }
 
@@ -217,7 +217,7 @@ binds {
    Mod+Ctrl+R { reset-window-height; }
 
   
-   // [[Workspace Binds]]
+   // [[ Workspace ]]
    //
    Mod+1 { focus-workspace "one"; }
    Mod+2 { focus-workspace "two"; }
@@ -254,7 +254,7 @@ binds {
    Mod+Ctrl+WheelScrollDown cooldown-ms=150 { move-window-to-workspace-down; }
    Mod+Ctrl+WheelScrollUp   cooldown-ms=150 { move-window-to-workspace-up; }
 
-   // [[Monitor Binds]]
+   // [[ Monitor Binds ]]
    //
    Mod+Shift+Left  { focus-monitor-left; }
    Mod+Shift+Down  { focus-monitor-down; }
@@ -274,7 +274,7 @@ binds {
    Mod+Shift+Ctrl+U     { move-window-to-monitor-up; }
    Mod+Shift+Ctrl+I     { move-window-to-monitor-right; }
 
-   // [[Other]]
+   // [[ Other ]]
    //
    Mod+Shift+Escape { spawn "uwsm" "stop"; }
    // in this setup prefers manual integration with systemd via uwsm
@@ -294,13 +294,13 @@ binds {
    XF86AudioMicMute     allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
 }
 
-// [Environment Variables]
+// [ Environment ]
 //
 // externally managed with uwsm
 
-// [Autostart]
+// [ Autostart ]
 //
-// [[Rice]]
+// [[ Rice ]]
 //
 spawn-at-startup "gsettings" "set" "org.gnome.desktop.interface" "gtk-theme" "one_dark_adwaita"
 spawn-at-startup "gsettings" "set" "org.gnome.desktop.interface" "icon-theme" "Sweet-Rainbow"
@@ -308,24 +308,24 @@ spawn-at-startup "gsettings" "set" "org.gnome.desktop.interface" "cursor-theme" 
 spawn-at-startup "gsettings" "set" "org.gnome.desktop.interface" "cursor-size" "24"
 spawn-at-startup "gsettings" "set" "org.gnome.desktop.interface" "color-scheme" "prefer-dark"
 
-// [[Polkit]]
+// [[ Polkit ]]
 //
 spawn-at-startup "nu" "-c" "try { pidof io.elementary.desktop.agent-polkit } catch { exec uwsm app -- /usr/lib/policykit-1-pantheon/io.elementary.desktop.agent-polkit }"
 
-// [[Idle Listeners]]
+// [[ Idle Listener ]]
 //
 spawn-at-startup "nu" "-c" "try { pidof hypridle } catch { exec uwsm app -- hypridle }"
 spawn-at-startup "nu" "-c" "try { pidof wayland-pipewire-idle-inhibit } catch { exec uwsm app -- wayland-pipewire-idle-inhibit }"
 
-// [[Clipboard]]
+// [[ Clipboard ]]
 //
 spawn-at-startup "nu" "-c" "try { pgrep -fx 'wl-paste --type text --watch cliphist store' } catch { exec uwsm app -- wl-paste --type text --watch cliphist store }"
 spawn-at-startup "nu" "-c" "try { pgrep -fx 'wl-paste --type image --watch cliphist store'} catch { exec uwsm app -- wl-paste --type image --watch cliphist store }"
 
-// [[Widgets]]
+// [[ Widget ]]
 //
 spawn-at-startup "nu" "-c" r#"exec uwsm app -- $"($env.HOME)/.config/ags/cli.nu" run"#
 
-// [[Other]]
+// [[ Other ]]
 //
 spawn-at-startup "nu" "-c" "try { pidof keepassxc } catch { exec uwsm app -- keepassxc }"
