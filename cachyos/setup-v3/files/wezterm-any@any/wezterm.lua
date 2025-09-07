@@ -14,7 +14,7 @@ end
 -- [ Settings ]
 --
 config.default_prog = shell_command
-config.font_size = 16
+config.font_size = 18
 
 config.font = wezterm.font_with_fallback({
    { family = "IosevkaTerm Nerd Font Mono", scale = 1.0 },
@@ -26,7 +26,7 @@ config.scrollback_lines = 3000
 config.default_workspace = "main"
 
 config.inactive_pane_hsb = {
-   saturation = 0.24,
+   saturation = 0.5,
    brightness = 0.5,
 }
 
@@ -254,10 +254,10 @@ wezterm.on("update-status", function(window, pane)
 end)
 
 config.window_padding = {
-   left = "0cell",
-   right = "0cell",
-   top = "0cell",
-   bottom = "0cell",
+   top = "0.5cell",
+   right = "1cell",
+   left = "1cell",
+   bottom = "0.5cell",
 }
 
 config.warn_about_missing_glyphs = false
