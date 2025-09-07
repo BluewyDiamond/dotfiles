@@ -14,15 +14,15 @@ export def spawn-file-list [config] {
    } | ignore
 }
 
-export def install-file-list [config] {
+export def install-item-list [config] {
    log info "start of install file list"
 
-   $config.file_install_list | each {|file_install|
+   $config.item_install_list | each {|item_install|
       try {
-         if $file_install.owner != $env.LOGNAME {
-            sudo -u $file_install.owner -- ./../deps/install-file.nu $"($file_install | to nuon)"
+         if $item_install.owner != $env.LOGNAME {
+            sudo -u $item_install.owner -- ./../deps/install-item.nu $"($item_install | to nuon)"
          } else {
-            ./../deps/install-file.nu $"($file_install | to nuon)"
+            ./../deps/install-item.nu $"($item_install | to nuon)"
          }
       } catch {|error|
          $error.rendered | print

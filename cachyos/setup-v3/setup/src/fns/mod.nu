@@ -47,7 +47,7 @@ export def collect-config-file-abs-path-list [index_file_abs_path: list<path>]: 
 
 export def merge-config-list [
    config_list: any
-]: nothing -> record<package: record<ignore_list: list<string>, std_list: list<string>, aur_list: list<string>, local_abs_path_list: list<path>>, file_spawn_list: list<record<owner: string, target_abs_pathname: path, content: string>>, file_install_list: list<record<operation: string, owner: string, source_abs_pathname: path, target_abs_pathname: path>>, service_list: list<record<user: string, enable_list: list<string>>>> {
+] {
    # not using get -o because it should be garanteed
    # as long as we passing the value of the getter
    # futhermore if typing was not lost we could have accessed the values directly
@@ -60,7 +60,7 @@ export def merge-config-list [
       }
 
       file_spawn_list: ($config_list | get file_spawn_list | flatten)
-      file_install_list: ($config_list | get file_install_list | flatten)
+      item_install_list: ($config_list | get item_install_list | flatten)
 
       service_list: ($config_list | get service_list | flatten | uniq)
    }

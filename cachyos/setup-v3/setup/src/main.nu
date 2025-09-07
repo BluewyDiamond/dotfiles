@@ -38,7 +38,7 @@ def "main install" [index_file_rel_path: path] {
 
    install-package-list $config
    spawn-file-list $config
-   install-file-list $config
+   install-item-list $config
    enable-service-list $config
 }
 
