@@ -1,5 +1,5 @@
-[packages]
-ignore = ["less", "vscodium", "glibc-eac"]
+[packages.lib]
+ignore = ["glibc-eac"]
 
 [packages.make]
 std = ["rustup", "jdk21-openjdk"]
@@ -13,10 +13,11 @@ std = [
    "pipewire-jack",
 ]
 
-[packages.tty]
+[packages.tty.apps]
+ignore = ["less", "xdg-ninja-git"]
 std = ["zellij", "paru", "trash-cli"]
 
-[packages.tty.rice]
+[packages.tty.apps.rice]
 std = ["terminus-font", "fastfetch", "starship"]
 
 [packages.tty.apps.rewrites]
@@ -142,16 +143,7 @@ std = [
 ]
 
 [packages.wayland.apps.files]
-std = [
-   "nautilus",
-
-   "vlc",
-   "vlc-plugins-all",
-
-   "loupe",
-   "evince",
-   "ark",
-]
+std = ["nautilus", "vlc", "vlc-plugins-all", "loupe", "evince", "ark"]
 
 [packages.wayland.apps.controllers]
 aur = ["overskride"]
@@ -168,6 +160,7 @@ std = ["librewolf-bin", "thunderbird"]
 
 [packages.wayland.apps.production]
 aur = ["obs-pipewire-audio-capture"]
+ignore = ["vscodium"]
 std = [
    "krita",
    "obs-studio",
