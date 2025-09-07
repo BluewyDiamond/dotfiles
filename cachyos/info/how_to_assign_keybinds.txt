@@ -1,6 +1,5 @@
 1st Level (Desktop Environment)
--> SUPER + non modifier keys
--> SUPER + SHIFT / CTRL / ALT + non modifier keys
+Use MOD with anything.
 
 2nd Level (Application)
 -> CTRL + non modifier keys
