@@ -1,43 +1,45 @@
 use ../extractors/index.nu *
 
-export def collect-index-abs-pathname-list [index_rel_pathname: path]: nothing -> list<path> {
-   mut index_abs_pathname_list_to_process = [($index_rel_pathname | path expand)]
-   mut all_index_abs_pathname_list = []
+export def collect-index-file-abs-path-list [index_file_rel_path: path]: nothing -> list<path> {
+   mut index_file_abs_path_list_to_process = [($index_file_rel_path | path expand)]
+   mut index_file_abs_path_list_collected = []
 
-   while ($index_abs_pathname_list_to_process | is-not-empty) {
-      let current_index_abs_pathname_to_process = $index_abs_pathname_list_to_process | first
-      $index_abs_pathname_list_to_process = $index_abs_pathname_list_to_process | skip 1
-      $all_index_abs_pathname_list = $all_index_abs_pathname_list | append $current_index_abs_pathname_to_process
-      let source_rel_pathname_list = extract-source-rel-pathname-list $current_index_abs_pathname_to_process
+   while ($index_file_abs_path_list_to_process | is-not-empty) {
+      let index_file_abs_path_to_process = $index_file_abs_path_list_to_process | first
+      $index_file_abs_path_list_to_process = $index_file_abs_path_to_process | skip 1
+      $index_file_abs_path_list_collected = $index_file_abs_path_list_collected | append $index_file_abs_path_to_process
+      let index_file_rel_path_list = extract-index-rel-path-list $index_file_abs_path_to_process
 
-      let found_index_abs_pathname_list = (
-         $source_rel_pathname_list
-         | where {|source_rel_pathname| $"($source_rel_pathname | path basename)" == "index.toml" }
-         | each {|source_rel_pathname|
-            $current_index_abs_pathname_to_process
+      let index_file_abs_path_list_found = (
+         $index_file_rel_path_list
+         | where {|index_file_rel_path|
+            $"($index_file_rel_path | path basename)" == "index.toml"
+         }
+         | each {|index_file_rel_path|
+            $index_file_abs_path_to_process
             | path dirname
-            | path join $source_rel_pathname
+            | path join $index_file_rel_path
             | path expand # in this scenario the path is correctly formed and path expand is used to prettify it
             # example: /users/user1/../user2 -> /users/user2
          }
       )
 
-      $all_index_abs_pathname_list = $all_index_abs_pathname_list | append $found_index_abs_pathname_list
+      $index_file_abs_path_list_collected = $index_file_abs_path_list_collected | append $index_file_abs_path_list_found
    }
 
-   $all_index_abs_pathname_list
+   $index_file_abs_path_list_collected
 }
 
-export def collect-config-abs-pathname-list [index_abs_pathname_list: list<path>]: nothing -> list<path> {
-   $index_abs_pathname_list
-   | each {|index_abs_pathname|
-      extract-source-rel-pathname-list $index_abs_pathname
-      | where {|source_rel_pathname|
-         $"($source_rel_pathname | path basename)" != "index.toml"
-      } | each {|source_rel_pathname|
-         $index_abs_pathname
+export def collect-config-file-abs-path-list [index_file_abs_path: list<path>]: nothing -> list<path> {
+   $index_file_abs_path
+   | each {|index_file_abs_path|
+      extract-index-rel-path-list $index_file_abs_path
+      | where {|index_file_rel_path|
+         $"($index_file_rel_path | path basename)" != "index.toml"
+      } | each {|index_file_rel_path|
+         $index_file_abs_path
          | path dirname
-         | path join $source_rel_pathname
+         | path join $index_file_rel_path
          | path expand
       }
    } | flatten

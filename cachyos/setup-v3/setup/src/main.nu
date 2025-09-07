@@ -10,13 +10,13 @@ use ./fns *
 
 # main.nu
 #
-def main [index_rel_pathname: path] {
-   let index_abs_pathname_list = collect-index-abs-pathname-list $index_rel_pathname
-   let config_abs_pathname_list = collect-config-abs-pathname-list $index_abs_pathname_list
+def main [index_file_rel_path: path] {
+   let index_file_abs_path_list = collect-index-file-abs-path-list $index_file_rel_path
+   let config_file_abs_path_list = collect-config-file-abs-path-list $index_file_abs_path_list
 
    let config_list = (
-      $config_abs_pathname_list | each {|config_abs_pathname|
-         extract-config $config_abs_pathname
+      $config_file_abs_path_list | each {|config_file_abs_path|
+         extract-config $config_file_abs_path
       }
    )
 
@@ -24,13 +24,13 @@ def main [index_rel_pathname: path] {
    $config
 }
 
-def "main install" [index_rel_pathname: path] {
-   let index_abs_pathname_list = collect-index-abs-pathname-list $index_rel_pathname
-   let config_abs_pathname_list = collect-config-abs-pathname-list $index_abs_pathname_list
+def "main install" [index_file_rel_path: path] {
+   let index_file_abs_path_list = collect-index-file-abs-path-list $index_file_rel_path
+   let config_file_abs_path_list = collect-config-file-abs-path-list $index_file_abs_path_list
 
    let config_list = (
-      $config_abs_pathname_list | each {|config_abs_pathname|
-         extract-config $config_abs_pathname
+      $config_file_abs_path_list | each {|config_file_abs_path|
+         extract-config $config_file_abs_path
       }
    )
 
@@ -42,13 +42,13 @@ def "main install" [index_rel_pathname: path] {
    enable-service-list $config
 }
 
-def "main cleanup" [index_rel_pathname: path] {
-   let index_abs_pathname_list = collect-index-abs-pathname-list $index_rel_pathname
-   let config_abs_pathname_list = collect-config-abs-pathname-list $index_abs_pathname_list
+def "main cleanup" [index_file_rel_path: path] {
+   let index_file_abs_path_list = collect-index-file-abs-path-list $index_file_rel_path
+   let config_file_abs_path_list = collect-config-file-abs-path-list $index_file_abs_path_list
 
    let config_list = (
-      $config_abs_pathname_list | each {|config_abs_pathname|
-         extract-config $config_abs_pathname
+      $config_file_abs_path_list | each {|config_file_abs_path|
+         extract-config $config_file_abs_path
       }
    )
 

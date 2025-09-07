@@ -1,9 +1,9 @@
 use ../utils *
 
 export def extract-config [
-   config_rel_pathname: string
-]: nothing -> record<package: record<ignore_list: list<string>, std_list: list<string>, aur_list: list<string>, local_abs_path_list: list<path>>, file_spawn_list: list<record<owner: string, target_abs_pathname: path, content: string>>, file_install_list: list<record<operation: string, owner: string, source_abs_pathname: path, target_abs_pathname: path>>, service_list: list<record<user: string, path: string, enable_list: list<string>>>> {
-   let config_raw = open $config_rel_pathname
+   config_file_rel_path: string
+]: nothing -> record<package: record<ignore_list: list<string>, std_list: list<string>, aur_list: list<string>, local_dir_abs_path_list: list<path>>, file_spawn_list: list<record<owner: string, target_file_abs_path: path, content: string>>, file_install_list: list<record<operation: string, owner: string, source_file_abs_path: path, target_file_abs_path: path>>, service_list: list<record<user: string, path: string, enable_list: list<string>>>> {
+   let config_raw = open $config_file_rel_path
 
    let package = {
       ignore_list: (
@@ -36,7 +36,7 @@ export def extract-config [
          }
       )
 
-      local_abs_path_list: (
+      local_dir_abs_path_list: (
          $config_raw | collect-values-by-key {|record_or_table|
             if ($record_or_table | columns | all {|col| $col != "local" }) {
                return []
@@ -44,10 +44,10 @@ export def extract-config [
 
             $record_or_table.local
          }
-         | each {|local_package_rel_pathname|
-            $config_rel_pathname
+         | each {|local_package_dir_rel_path|
+            $config_file_rel_path
             | path dirname
-            | path join $local_package_rel_pathname
+            | path join $local_package_dir_rel_path
             | path expand
          }
       )
@@ -63,7 +63,7 @@ export def extract-config [
          | each {|spawn_file|
             {
                owner: ($spawn_file | get owner)
-               target_abs_pathname: ($spawn_file | get target)
+               target_file_abs_path: ($spawn_file | get target)
                content: ($spawn_file | get content)
             }
          }
@@ -74,7 +74,7 @@ export def extract-config [
          | get -o install_files
          | default []
          | each {|install_file|
-            let source_abs_pathname = $config_rel_pathname
+            let source_file_abs_path = $config_file_rel_path
             | path dirname
             | path join ($install_file | get source)
             | path expand
@@ -83,14 +83,14 @@ export def extract-config [
                operation: ($install_file | get operation)
                owner: ($install_file | get owner)
 
-               source_abs_pathname: (
-                  $config_rel_pathname
+               source_file_abs_path: (
+                  $config_file_rel_path
                   | path dirname
                   | path join ($install_file | get source)
                   | path expand
                )
 
-               target_abs_pathname: ($install_file | get target)
+               target_file_abs_path: ($install_file | get target)
             }
          }
       )
