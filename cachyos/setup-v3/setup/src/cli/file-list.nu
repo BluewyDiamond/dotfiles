@@ -4,9 +4,9 @@ export def spawn-file-list [config] {
    $config.file_spawn_list | each {|file_spawn|
       try {
          if $file_spawn.owner != $env.LOGNAME {
-            sudo -u $file_spawn.owner -- ./../deps/spawn-file.nu $"($file_spawn | to nuon)"
+            $file_spawn | sudo -u $file_spawn.owner -- ./../deps/spawn-file.nu
          } else {
-            ./../deps/spawn-file.nu $"($file_spawn | to nuon)"
+            $file_spawn | ./../deps/spawn-file.nu
          }
       } catch {|error|
          $error.rendered | print

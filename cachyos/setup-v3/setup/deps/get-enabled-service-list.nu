@@ -1,7 +1,7 @@
-#!/usr/bin/env nu
+#!/usr/bin/env -S nu --stdin
 
-def main [service: any] {
-   let service = $service | from nuon
+def main [] {
+   let service = $in
 
    ls ($"($service.path)/*.wants/*.service" | into glob) | get name | each {|item|
       $item | path basename | path parse | get stem
