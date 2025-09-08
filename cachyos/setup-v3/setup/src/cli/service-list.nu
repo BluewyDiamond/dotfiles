@@ -1,24 +1,23 @@
 export def enable-service-list [config] {
    $config.service_list | each {|service|
-      let service_enabled_list = try {
-         ls ($"($service.path)/*.wants/*.service" | into glob) | get name | each {|item|
-            $item | path basename | path parse | get stem
-         }
-      } catch {
-         []
+      let service_enabled_list = if $service.user != $env.LOGNAME {
+         $service | to nuon | sudo -u $service.user -- ./../deps/get-enabled-service-list.nu | from nuon
+      } else {
+         $service | to nuon | ./../deps/get-enabled-service-list.nu | from nuon
       }
 
       $service.enable_list | each {|service_enable|
-         log info $"service to enable ($service_enable)"
+         try {
+            log info $"checking service=($service_enable)"
 
-         if ($service_enable not-in $service_enabled_list) {
-            try {
+            if ($service_enable not-in $service_enabled_list) {
+               log info $"attempting to enable service=($service_enable)"
                sudo systemctl -M $"($service.user)@" --user enable $service_enable
-            } catch {|error|
-               $error.rendered | print
+            } else {
+               log info $"nothing to do with service=($service_enable)"
             }
-         } else {
-            log warning $"service, ($service_enable), is already enabled"
+         } catch {|error|
+            $error.rendered | print
          }
       }
    } | ignore
@@ -27,30 +26,23 @@ export def enable-service-list [config] {
 export def cleanup-service-list [config] {
    $config.service_list | each {|service|
       let service_enabled_list = if $service.user != $env.LOGNAME {
-         try {
-            $service | to nuon | sudo -u $service.user -- ./../deps/get-enabled-service-list.nu | from nuon
-         } catch {
-            return
-         }
+         $service | to nuon | sudo -u $service.user -- ./../deps/get-enabled-service-list.nu | from nuon
       } else {
-         try {
-            $service | to nuon | ./../deps/get-enabled-service-list.nu | from nuon
-         } catch {
-            return
-         }
+         $service | to nuon | ./../deps/get-enabled-service-list.nu | from nuon
       }
 
       $service_enabled_list | each {|service_enabled|
-         if ($service_enabled not-in $service_enabled_list) {
-            log info $"service to disable ($service_enabled)"
+         try {
+            log info $"checking service=($service_enabled)"
 
-            try {
+            if ($service_enabled not-in $service_enabled_list) {
+               log info $"attempting to disable service=($service_enabled)"
                sudo systemctl -M $"($service.user)@" --user disable $service_enabled
-            } catch {|error|
-               $error.rendered | print
+            } else {
+               log info $"nothing to do with service=($service_enabled)"
             }
-         } else {
-            log warning $"service, ($service_enabled), is in enable list"
+         } catch {|error|
+            $error.rendered | print
          }
       }
    } | ignore
