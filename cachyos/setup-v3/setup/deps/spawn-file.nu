@@ -3,7 +3,7 @@
 use std/log
 
 def main [] {
-   let file_spawn = $in;
+   let file_spawn = $in | from nuon
    log info $"file to spawn at ($file_spawn.target_file_abs_path)"
 
    let target_item_abs_path_existing_type_or_null = try {

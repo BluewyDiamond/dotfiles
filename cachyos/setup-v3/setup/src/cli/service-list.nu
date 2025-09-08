@@ -28,13 +28,13 @@ export def cleanup-service-list [config] {
    $config.service_list | each {|service|
       let service_enabled_list = if $service.user != $env.LOGNAME {
          try {
-            ($service | sudo -u $service.user -- ./../deps/get-enabled-service-list.nu) | from nuon
+            $service | to nuon | sudo -u $service.user -- ./../deps/get-enabled-service-list.nu | from nuon
          } catch {
             return
          }
       } else {
          try {
-            ($service | ./../deps/get-enabled-service-list.nu) | from nuon
+            $service | to nuon | ./../deps/get-enabled-service-list.nu | from nuon
          } catch {
             return
          }
