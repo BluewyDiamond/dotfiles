@@ -2,7 +2,7 @@ use ../utils *
 
 export def extract-config [
    config_file_rel_path: string
-]: nothing -> record<package: record<ignore_list: list<string>, std_list: list<string>, aur_list: list<string>, local_dir_abs_path_list: list<path>>, file_spawn_list: list<record<owner: string, target_item_abs_path: path, content: string>>, item_install_list: list<record<operation: string, owner: string, source_item_abs_path: path, target_item_abs_path: path>>, service_list: list<record<user: string, path: string, enable_list: list<string>>>> {
+]: nothing -> record<package: record<ignore_list: list<string>, std_list: list<string>, aur_list: list<string>, local_dir_abs_path_list: list<path>>, file_spawn_list: list<record<owner: string, target_file_abs_path: path, content: string>>, item_install_list: list<record<operation: string, owner: string, source_item_abs_path: path, target_item_abs_path: path>>, service_list: list<record<user: string, path: string, enable_list: list<string>>>> {
    let config_raw = open $config_file_rel_path
 
    let package = {
@@ -63,7 +63,7 @@ export def extract-config [
          | each {|spawn_file|
             {
                owner: ($spawn_file | get owner)
-               target_item_abs_path: ($spawn_file | get target)
+               target_file_abs_path: ($spawn_file | get target)
                content: ($spawn_file | get content)
             }
          }

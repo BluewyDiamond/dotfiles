@@ -4,16 +4,11 @@ use std/log
 
 def main [] {
    let file_spawn = $in | from nuon
-   log info $"file to spawn at ($file_spawn.target_file_abs_path)"
-
-   let target_item_abs_path_existing_type_or_null = try {
-      ls $file_spawn.target_file_abs_path | get type | get 0
-   } catch {
-      null
-   }
+   let target_item_abs_path_existing_type_or_null = $file_spawn.target_file_abs_path | path type
 
    match $target_item_abs_path_existing_type_or_null {
       dir => {
+         log info $"spawning file at target=($file_spawn.target_file_abs_path)"
          rm -r $file_spawn.target_file_abs_path
          $file_spawn.content | save $file_spawn.target_file_abs_path
       }
@@ -21,15 +16,18 @@ def main [] {
       file => {
          let target_file = open --raw $file_spawn.target_file_abs_path
 
-         if ($target_file != $file_spawn.content) {
+         if ($target_file == $file_spawn.content) {
+            log info $"skipping as target=($file_spawn.target_file_abs_path) matches with content"
             return
          }
 
+         log info $"spawning file at target=($file_spawn.target_file_abs_path)"
          rm $file_spawn.target_file_abs_path
          $file_spawn.content | save $file_spawn.target_file_abs_path
       }
 
       symlink => {
+         log info $"spawning file at target=($file_spawn.target_file_abs_path)"
          unlink $file_spawn.target_file_abs_path
          $file_spawn.content | save $file_spawn.target_file_abs_path
       }
@@ -41,6 +39,7 @@ def main [] {
             mkdir $target_parent_dir_abs_path
          }
 
+         log info $"spawning file at target=($file_spawn.target_file_abs_path)"
          $file_spawn.content | save $file_spawn.target_file_abs_path
       }
 

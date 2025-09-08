@@ -14,7 +14,7 @@ export def enable-service-list [config] {
                log info $"attempting to enable service=($service_enable)"
                sudo systemctl -M $"($service.user)@" --user enable $service_enable
             } else {
-               log info $"nothing to do with service=($service_enable)"
+               log info $"skipping as service=($service_enable) is already enabled"
             }
          } catch {|error|
             $error.rendered | print
@@ -39,7 +39,7 @@ export def cleanup-service-list [config] {
                log info $"attempting to disable service=($service_enabled)"
                sudo systemctl -M $"($service.user)@" --user disable $service_enabled
             } else {
-               log info $"nothing to do with service=($service_enabled)"
+               log info $"skipping as service=($service_enabled) is already disabled"
             }
          } catch {|error|
             $error.rendered | print
