@@ -20,9 +20,9 @@ export def install-item-list [config] {
    $config.item_install_list | each {|item_install|
       try {
          if $item_install.owner != $env.LOGNAME {
-            sudo -u $item_install.owner -- ./../deps/install-item.nu $"($item_install | to nuon)"
+            $item_install | sudo -u $item_install.owner -- ./../deps/install-item.nu
          } else {
-            ./../deps/install-item.nu $"($item_install | to nuon)"
+            $item_install | ./../deps/install-item.nu
          }
       } catch {|error|
          $error.rendered | print
