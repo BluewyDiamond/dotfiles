@@ -6,7 +6,7 @@ def --wrapped main [...rest] {
       ...[
          gamescope
          --backend
-         sdl
+         wayland
          -W
          1920
          -H
