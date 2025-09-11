@@ -70,21 +70,20 @@ def clear [
 }
 
 def --wrapped aura [...args] {
-   let cmd = $args | reduce --fold ["paru"] {|arg acc|
+   let cmd = $args | reduce --fold ["paru"] {|arg cmd|
       if not ($arg =~ "^-[a-zA-Z]+$") {
-         $acc | append $arg
-         return
-      }
-
-      $arg | split chars | skip 1 | reduce --fold $acc {|char flag|
-         $flag | append (
-            match $char {
-               "S" => ["-S" "--repo"]
-               "A" => ["-S" "--aur"]
-               "W" => ["-S"]
-               _ => [$"-($char)"]
-            }
-         )
+         $cmd | append $arg
+      } else {
+         $arg | split chars | skip 1 | reduce --fold $cmd {|char flag|
+            $flag | append (
+               match $char {
+                  "S" => ["-S" "--repo"]
+                  "A" => ["-S" "--aur"]
+                  "W" => ["-S"]
+                  _ => [$"-($char)"]
+               }
+            )
+         }
       }
    }
 
