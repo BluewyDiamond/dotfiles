@@ -1,7 +1,6 @@
 source = [
-   "../../modules/cachyos/packages.toml",
-
    "../../modules/bluewy/files/language.toml",
+   "../../modules/bluewy/files/systemd-services.toml",
    "../../modules/bluewy/packages/cachyos.toml",
    "../../modules/bluewy/packages/virtualization.toml",
 

@@ -22,12 +22,6 @@ target = "/home/bluewy/.local/share/applications/obs.desktop"
 [[install_files]]
 operation = "link"
 owner = "bluewy"
-source = "../../../files/applications-any@any/steam-native.desktop"
-target = "/home/bluewy/.local/share/applications/steam-native.desktop"
-
-[[install_files]]
-operation = "link"
-owner = "bluewy"
 source = "../../../files/bin-any@raphael/gamescope-stuff"
 target = "/home/bluewy/.local/bin/gamescope-stuff"
 
