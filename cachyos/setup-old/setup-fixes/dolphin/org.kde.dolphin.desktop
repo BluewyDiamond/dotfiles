@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=Dolphin
-Exec=env XDG_MENU_PREFIX=arch- kbuildsycoca6 && dolphin --platformtheme qt6ct %u
-Icon=org.kde.dolphin
-Type=Application
-Categories=Qt;KDE;System;FileTools;FileManager;
-GenericName=File Manager
-MimeType=inode/directory;

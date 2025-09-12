@@ -1,12 +1,8 @@
 - problem -> solution
 
 - Godot misbehaving on right click -> run "godot-mono --single-window"
-- QT apps not following breeze dark theme... -> cp /usr/share/color-schemes to ~/.config/kdeglobals
 - Unable to over/under clock/volt? -> append "amdgpu.ppfeaturemask=0xffffffff" as a kernel parameter
-- Dolphin not opening terminal -> ~/.config/kdeglobals << [General] \n TerminalApplication=kitty
-- no scaling option -> add to .desktop env GDK_SCALE=1.4 (might work)
 - android studio emulator slow -> "QuickbootFileBacked = off" >> ~/.android/advancedFeatures.ini
-- vscode / vscodium not working in wayland -> "window.titleBarStyle": "native"
 - vscode / vscodium keys are not being interpreted correctly ->"keyboard.dispatch": "keyCode"
 - libreoffice spell check not worky worky -> install hunspell-es_es
 - fps capped? -> https://www.reddit.com/r/linux_gaming/comments/1ce9sc8/having_issues_trying_to_uncap_my_fps_in_fallout_76/ && Create a "dxvk.conf" with "dxgi.syncInterval = 0" at the same level of ".exe".

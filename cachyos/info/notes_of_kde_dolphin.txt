@@ -1,8 +1,0 @@
-more stuff -> https://wiki.archlinux.org/title/Dolphin
-
-(To change icon theme) {
-   ```
-   [Icons]
-   Theme=Sweet-Mars
-   ```
-}

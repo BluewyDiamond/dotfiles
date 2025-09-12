@@ -1,2 +1,0 @@
-1. Follow proper sentence format if it is a sentence. everything else that is not
-a sentence should be in all lowercase with possibly no punctuation.
