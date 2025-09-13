@@ -13,6 +13,18 @@ target = "/boot/EFI/refind/extra.conf"
 [[install_files]]
 operation = "copy"
 owner = "root"
+source = "../../files/lenovo-battery-limit-service-any@sariel/limit-lenovo-battery"
+target = "/usr/local/bin/lenovo-battery-limit"
+
+[[install_files]]
+operation = "copy"
+owner = "root"
+source = "../../files/lenovo-battery-limit-service-any@sariel/lenovo-battery-limiter.service"
+target = "/etc/systemd/system/lenovo-battery-limiter.service"
+
+[[install_files]]
+operation = "copy"
+owner = "root"
 source = "../../files/screen-off-service-any@any/screen-off.service"
 target = "/etc/systemd/system/screen-off.service"
 

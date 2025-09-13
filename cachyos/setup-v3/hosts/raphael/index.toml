@@ -9,8 +9,6 @@ source = [
    "../../modules/bluewy/wireless-regdb-es-region/files.toml",
    "../../modules/bluewy/bluetooth/packages.toml",
    "../../modules/bluewy/bluetooth/services.toml",
-   "../../modules/bluewy/lemurs/files.toml",
-   "../../modules/bluewy/lemurs/packages.toml",
 
    "./files.toml",
    "./packages.toml",

@@ -1,14 +1,14 @@
 [[install_files]]
 operation = "copy"
 owner = "root"
-source = "../../files/acer-battery-limit-service-any@uriel/acer-battery-limit.service"
-target = "/etc/systemd/system/acer-battery-limit.service"
+source = "../../files/acer-battery-limit-service-any@uriel/acer-battery-limiter.service"
+target = "/etc/systemd/system/acer-battery-limiter.service"
 
 [[install_files]]
 operation = "copy"
 owner = "root"
-source = "../../files/acer-battery-limit-service-any@uriel/acer-battery-limit.fish"
-target = "/usr/local/bin/acer-battery-limit.fish"
+source = "../../files/acer-battery-limit-service-any@uriel/limit-acer-battery"
+target = "/usr/local/bin/limit-acer-battery"
 
 [[install_files]]
 operation = "copy"
