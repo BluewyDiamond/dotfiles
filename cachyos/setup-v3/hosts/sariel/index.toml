@@ -1,6 +1,6 @@
 source = [
    "../../modules/bluewy/cachyos/packages.toml",
-   "../../modules/bluewy/cachyos/packages-ignore.toml"
+   "../../modules/bluewy/cachyos/packages-ignore.toml",
    "../../modules/bluewy/locale/files.toml",
    "../../modules/bluewy/locale/packages.toml",
    "../../modules/bluewy/systemd-xdg-autostart-generator-disable/files.toml",
