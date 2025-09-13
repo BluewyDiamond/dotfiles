@@ -1,0 +1,5 @@
+[[install_files]]
+operation = "copy"
+owner = "root"
+source = "../../files/booster-any@any/booster.yaml"
+target = "/etc/booster.yaml"

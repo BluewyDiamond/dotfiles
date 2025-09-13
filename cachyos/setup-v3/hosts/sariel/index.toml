@@ -1,4 +1,5 @@
 source = [
+   "../../modules/bluewy/cachyos/files.toml",
    "../../modules/bluewy/cachyos/packages.toml",
    "../../modules/bluewy/cachyos/packages-ignore.toml",
    "../../modules/bluewy/locale/files.toml",
