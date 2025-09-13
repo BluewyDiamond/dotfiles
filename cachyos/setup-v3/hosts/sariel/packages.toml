@@ -1,5 +1,4 @@
 [packages]
-ignore = ["sbctl", "linux-cachyos-rc", "btrfs-assitant"]
 std = [
    "amd-ucode",
    "linux-firmware",
