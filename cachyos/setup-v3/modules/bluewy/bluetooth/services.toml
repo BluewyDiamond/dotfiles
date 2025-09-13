@@ -1,4 +1,4 @@
 [[services]]
-enable = ["systemd-timesyncd", "screen-off"]
+enable = ["bluetooth"]
 path = "/etc/systemd/system"
 user = "root"

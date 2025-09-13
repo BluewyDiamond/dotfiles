@@ -10,12 +10,8 @@ enable = [
 
    "systemd-timesyncd",
 
-   "bluetooth",
-
    "lactd",
-   "ufw",
    "screen-off",
-   "ananicy-cpp",
 ]
 path = "/etc/systemd/system"
 user = "root"

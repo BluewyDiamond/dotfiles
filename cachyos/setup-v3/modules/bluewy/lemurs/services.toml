@@ -1,4 +1,4 @@
 [[services]]
-enable = ["systemd-timesyncd", "screen-off"]
+enable = ["lemurs-es-keymap"]
 path = "/etc/systemd/system"
 user = "root"

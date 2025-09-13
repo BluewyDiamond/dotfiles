@@ -1,4 +1,7 @@
 [[services]]
-enable = ["systemd-timesyncd", "screen-off"]
+enable = [
+   "ufw",
+   "ananicy-cpp",
+]
 path = "/etc/systemd/system"
 user = "root"

@@ -11,11 +11,6 @@ source = "../../files/refind-any@raphael/extra.conf"
 target = "/boot/efi/refind/extra.conf"
 
 [[spawn_files]]
-content = "WIRELESS_REGDOM=\"ES\""
-owner = "root"
-target = "/etc/conf.d/wireless-regdom"
-
-[[spawn_files]]
 content = """
 [Match]
 Name=eno1
@@ -61,12 +56,6 @@ target = "/etc/resolved.conf"
 [[install_files]]
 operation = "copy"
 owner = "root"
-source = "../../files/booster-any@any/booster.yaml"
-target = "/etc/booster.yaml"
-
-[[install_files]]
-operation = "copy"
-owner = "root"
 source = "../../files/screen-off-service-any@any/screen-off.service"
 target = "/etc/systemd/system/screen-off.service"
 
@@ -76,26 +65,4 @@ owner = "root"
 source = "../../files/screen-off-service-any@any/screen-off.fish"
 target = "/usr/local/bin/screen-off.fish"
 
-[[install_files]]
-operation = "copy"
-owner = "root"
-source = "../../files/kbd-any@any/colemak-dh-wide-custom-eu-ansi.map"
-target = "/usr/share/kbd/keymaps/colemak-dh-wide-custom-eu-ansi.map"
 
-[[install_files]]
-operation = "copy"
-owner = "root"
-source = "../../files/kbd-any@any/colemak-dh-wide-custom-eu-iso.map"
-target = "/usr/share/kbd/keymaps/colemak-dh-wide-custom-eu-iso.map"
-
-[[install_files]]
-operation = "copy"
-owner = "root"
-source = "../../files/xkb-any@any/symbols/bluewy"
-target = "/usr/share/X11/xkb/symbols/bluewy"
-
-[[install_files]]
-operation = "copy"
-owner = "root"
-source = "../../files/libinput-any@any/local-overrides.quirks"
-target = "/etc/libinput/local-overrides.quirks"

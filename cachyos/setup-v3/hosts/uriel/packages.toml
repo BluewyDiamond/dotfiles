@@ -1,6 +1,5 @@
 [packages]
 aur = ["acer-wmi-battery-dkms"]
-ignore = ["sbctl", "linux-cachyos-rc", "btrfs-assitant"]
 std = [
    "intel-ucode",
    "linux-firmware",
@@ -20,8 +19,4 @@ std = [
    "switcheroo-control",
    "nvidia-prime",
    "nvidia-settings",
-
-   "iwd",
-   "bluez",
-   "bluez-utils",
 ]

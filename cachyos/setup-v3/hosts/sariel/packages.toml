@@ -13,6 +13,4 @@ std = [
    "btrfs-progs",
 
    "lact",
-   "bluez",
-   "bluez-utils",
 ]

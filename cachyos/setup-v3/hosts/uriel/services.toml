@@ -1,7 +1,5 @@
 [[services]]
 enable = [
-   "getty@tty1",
-
    # provided by chwd
    "nvidia-resume",
    "nvidia-suspend",
@@ -9,17 +7,10 @@ enable = [
    "nvidia-hibernate",
    "switcheroo-control",
 
-   "NetworkManager",
-   "systemd-resolved", # this or dnsmasq
-
    "systemd-timesyncd",
 
-   "bluetooth",
-
-   "ufw",
    "acer-battery-limit",
    "screen-off",
-   "ananicy-cpp",
 ]
 path = "/etc/systemd/system"
 user = "root"

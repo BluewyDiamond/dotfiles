@@ -1,0 +1,2 @@
+[packages]
+std = ["bluez", "bluez-utils"]

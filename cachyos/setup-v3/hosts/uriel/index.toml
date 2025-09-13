@@ -1,12 +1,19 @@
 source = [
    "../../modules/bluewy/cachyos/packages.toml",
-   "../../modules/bluewy/cachyos/packages-ignore.toml"
+   "../../modules/bluewy/cachyos/packages-ignore.toml",
+   "../../modules/bluewy/cachyos/services.toml",
    "../../modules/bluewy/locale/files.toml",
    "../../modules/bluewy/locale/packages.toml",
    "../../modules/bluewy/systemd-xdg-autostart-generator-disable/files.toml",
    "../../modules/bluewy/wireless-regdb-es-region/files.toml",
    "../../modules/bluewy/networkmanager/files.toml",
    "../../modules/bluewy/networkmanager/packages.toml",
+   "../../modules/bluewy/networkmanager/services.toml",
+   "../../modules/bluewy/bluetooth/packages.toml",
+   "../../modules/bluewy/bluetooth/services.toml",
+   "../../modules/bluewy/lemurs/files.toml",
+   "../../modules/bluewy/lemurs/packages.toml",
+   "../../modules/bluewy/lemurs/services.toml",
 
    "./files.toml",
    "./packages.toml",
@@ -15,10 +22,8 @@ source = [
    "../../users/bluewy/@any/files.toml",
    "../../users/bluewy/@any/packages.toml",
    "../../users/bluewy/@any/services.toml",
-
    "../../users/bluewy/@raphael/files.toml",
 
-   "../../users/elisa/files.toml",
    "../../users/elisa/packages.toml",
    "../../users/elisa/services.toml",
 ]
