@@ -1,12 +1,12 @@
 [[install_files]]
 operation = "copy"
-owner = "bluewy"
+owner = "root"
 source = "../../files/refind-any@sariel/refind.conf"
 target = "/boot/efi/refind/refind.conf"
 
 [[install_files]]
 operation = "copy"
-owner = "bluewy"
+owner = "root"
 source = "../../files/refind-any@sariel/extra.conf"
 target = "/boot/efi/refind/extra.conf"
 

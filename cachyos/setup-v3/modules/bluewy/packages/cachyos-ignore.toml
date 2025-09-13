@@ -1,2 +1,0 @@
-[packages]
-ignore = ["sbctl", "linux-cachyos-rc", "btrfs-assitant"]

@@ -32,3 +32,9 @@ KEYMAP=colemak-dh-wide-custom-eu-iso
 """
 owner = "root"
 target = "/etc/vconsole.conf"
+
+[[install_files]]
+operation = "copy"
+owner = "root"
+source = "../../files/xkb-any@any/symbols/bluewy"
+target = "/usr/share/X11/xkb/symbols/bluewy"

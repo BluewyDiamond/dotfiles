@@ -1,0 +1,16 @@
+[[spawn_files]]
+content = """
+[device]
+wifi.backend=iwd
+"""
+owner = "root"
+target = "/etc/NetworkManager/conf.d/wifi_backend.conf"
+
+[[spawn_files]]
+content = """
+[Resolve]
+DNS=1.1.1.1
+FallbackDNS=1.0.0.1
+"""
+owner = "root"
+target = "/etc/resolved.conf"
