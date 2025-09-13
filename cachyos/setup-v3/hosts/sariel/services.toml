@@ -1,0 +1,21 @@
+[[services]]
+enable = [
+   "getty@tty1",
+
+   "systemd-networkd",
+   "systemd-network-generator",
+   "systemd-networkd-wait-online",
+   "systemd-resolved",
+   "iwd",
+
+   "systemd-timesyncd",
+
+   "bluetooth",
+
+   "lactd",
+   "ufw",
+   "screen-off",
+   "ananicy-cpp",
+]
+path = "/etc/systemd/system"
+user = "root"

@@ -1,0 +1,18 @@
+source = [
+   "../../modules/bluewy/files/language.toml",
+   "../../modules/bluewy/files/systemd-services.toml",
+   "../../modules/bluewy/packages/cachyos.toml",
+
+   "./files.toml",
+   "./packages.toml",
+   "./services.toml",
+
+   "../../users/bluewy/@any/files.toml",
+   "../../users/bluewy/@any/packages.toml",
+   "../../users/bluewy/@any/services.toml",
+
+   "../../users/bluewy/@raphael/files.toml",
+
+   "../../users/elisa/packages.toml",
+   "../../users/elisa/services.toml",
+]
