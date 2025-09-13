@@ -1,0 +1,11 @@
+[[install_files]]
+operation = "copy"
+owner = "root"
+source = "../../files/lemurs-any@sariel/config.toml"
+target = "/etc/lemurs/config.toml"
+
+[[install_files]]
+operation = "copy"
+owner = "root"
+source = "../../files/lemurs-any@sariel/lemurs-es-keymap.service"
+target = "/etc/systemd/system/lemurs-es-keymap.service"
