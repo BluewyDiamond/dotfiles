@@ -174,14 +174,14 @@ def operate-item-install [item_install] {
 }
 
 def apply-ownership [owner: string target_item_abs_path: path] {
-   if (owner == $env.LOGNAME) {
+   if ($owner == $env.LOGNAME) {
       return
    }
 
    let i = ls -lD target_item_abs_path
    let u = $i | get 0 | get user
 
-   if ($u == owner) {
+   if ($u == $owner) {
       return
    }
 
