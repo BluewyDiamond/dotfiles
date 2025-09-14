@@ -1,7 +1,7 @@
 export def enable-service-list [config] {
    $config.service_list | each {|service|
       try {
-         let service_enabled_list = i ($"($service.path)/*.wants/*.service" | into glob)
+         let service_enabled_list = get-service-enabled-list $service.dir_abs_path
 
          $service.enable_list | each {|service_enable|
             log info $"checking service=($service_enable)"
@@ -32,7 +32,7 @@ export def enable-service-list [config] {
 export def cleanup-service-list [config] {
    $config.service_list | each {|service|
       try {
-         let service_enabled_list = i ($"($service.path)/*.wants/*.service" | into glob)
+         let service_enabled_list = get-service-enabled-list $service.dir_abs_path
 
          $service_enabled_list | each {|service_enabled|
             log info $"checking service=($service_enabled)"
@@ -60,16 +60,12 @@ export def cleanup-service-list [config] {
    } | ignore
 }
 
-def i [service_path: glob] {
-   # try {
-      ls $service_path | get name | each {|item|
-         $item | path basename | path parse | get stem
-      }
-   # } catch {|error|
-   #    if ($error.msg == "Not Found") {
-   #       return []
-   #    }
-   #
-   #    error make {msg: $error.msg}
-   # }
+def get-service-enabled-list [service_dir_abs_path: string] {
+   if not ($service_dir_abs_path | path exists) {
+      return []
+   }
+
+   ls $"($service_dir_abs_path)/*.wants/*.service" | into glob | get name | each {|item|
+      $item | path basename | path parse | get stem
+   }
 }
