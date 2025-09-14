@@ -61,15 +61,15 @@ export def cleanup-service-list [config] {
 }
 
 def i [service_path: glob] {
-   try {
+   # try {
       ls $service_path | get name | each {|item|
          $item | path basename | path parse | get stem
       }
-   } catch {|error|
-      if ($error.msg == "Not Found") {
-         return []
-      }
-
-      error make {msg: $error.msg}
-   }
+   # } catch {|error|
+   #    if ($error.msg == "Not Found") {
+   #       return []
+   #    }
+   #
+   #    error make {msg: $error.msg}
+   # }
 }
