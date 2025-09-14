@@ -32,8 +32,10 @@ format = """
 
 [hostname]
 ssh_only = false
-ssh_symbol = '\(ssh\)'
-format = '[$hostname($ssh_symbol)](fg:yellow)'
+ssh_symbol= "+ssh"
+format = """
+[$hostname$ssh_symbol](fg:yellow)\
+"""
 
 [directory]
 truncation_length = 9
