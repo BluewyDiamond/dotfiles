@@ -213,12 +213,12 @@ def apply-ownership [owner: string target_item_abs_path: path] {
       return
    }
 
-   let i = ls -lD target_item_abs_path
+   let i = ls -lD $target_item_abs_path
    let u = $i | get 0 | get user
 
    if ($u == $owner) {
       return
    }
 
-   chown -R $"($owner):($owner)" target_item_abs_path
+   chown -R $"($owner):($owner)" $target_item_abs_path
 }
