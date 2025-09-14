@@ -14,10 +14,13 @@ export def enable-service-list [config] {
             log info $"attempting to enable service=($service_enable)"
 
             if ($service.user == $env.LOGNAME) {
+               print "->1"
                systemctl --user enable $service_enable
             } else if (is-admin) and ($service.user == root) {
+               print "->2"
                systemctl enable $service_enable
             } else if (is-admin) {
+               print "->3"
                systemctl -M --user $"($service.user)@" enable $service_enable
             } else {
                log error "skipped as conditions are not fufilled"
