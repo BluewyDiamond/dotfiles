@@ -2,8 +2,7 @@
 std = ["rustup", "jdk21-openjdk"]
 
 [packages.tty.apps]
-ignore = ["less", "xdg-ninja-git"]
-std = ["zellij", "paru", "trash-cli"]
+std = ["zellij", "paru", "trash-cli", "git", "less", "ssh", "man-db"]
 
 [packages.tty.apps.rice]
 std = ["terminus-font", "fastfetch", "starship"]
