@@ -37,7 +37,7 @@ export def cleanup-service-list [config] {
          $service_enabled_list | each {|service_enabled|
             log info $"checking service=($service_enabled)"
 
-            if ($service_enabled in $service_enabled_list) {
+            if ($service_enabled in $service.enable_list) {
                log info $"skipping as service=($service_enabled) is already disabled"
                return
             }
