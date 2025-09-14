@@ -65,7 +65,7 @@ def get-service-enabled-list [service_dir_abs_path: string] {
       return []
    }
 
-   ls $"($service_dir_abs_path)/*.wants/*.service" | into glob | get name | each {|item|
+   ls ($"($service_dir_abs_path)/*.wants/*.service" | into glob) | get name | each {|item|
       $item | path basename | path parse | get stem
    }
 }
