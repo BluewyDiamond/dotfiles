@@ -1,12 +1,12 @@
 export def is-package-a-dependency []: string -> bool {
    let package = $in
-   let pactree_complete = pactree -rl $package | complete
+   let pactree_output_complete = pactree -rl $package | complete
 
-   if ($pactree_complete | get exit_code | $in == 0) {
-      $pactree_complete | get stdout | lines | length | $in > 1
-   } else {
-      false
+   if ($pactree_output_complete | get exit_code | $in != 0) {
+      return false
    }
+
+   $pactree_output_complete | get stdout | lines | length | $in > 1
 }
 
 export def collect-values-by-key [
