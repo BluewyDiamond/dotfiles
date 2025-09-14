@@ -1,0 +1,6 @@
+[packages.wayland.apps.socialmedia]
+std = ["telegram-desktop"]
+
+[packages.wayland.apps.socialmedia.discord]
+aur = ["equibop-bin", "piper-tts-bin", "piper-voices-en-us"]
+std = ["speech-dispatcher"]

@@ -1,0 +1,20 @@
+[[spawn_files]]
+content = """
+[D-BUS Service]
+Name=org.freedesktop.secrets
+Exec=/usr/bin/keepassxc
+"""
+owner = "bluewy"
+target = "/home/bluewy/.local/share/dbus-1/services/org.freedesktop.secrets.service"
+
+[[install_files]]
+operation = "link"
+owner = "bluewy"
+source = "../../../../files/applications-any@any/obs.desktop"
+target = "/home/bluewy/.local/share/applications/obs.desktop"
+
+[[install_files]]
+operation = "link"
+owner = "bluewy"
+source = "../../../../files/librewolf-any@any/librewolf.overrides.cfg"
+target = "/home/bluewy/.librewolf/librewolf.overrides.cfg"

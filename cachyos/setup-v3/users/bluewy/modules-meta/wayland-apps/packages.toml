@@ -1,0 +1,31 @@
+[packages]
+std = ["keepassxc"]
+
+[packages.wayland.apps.files]
+std = ["nautilus", "vlc", "vlc-plugins-all", "loupe", "evince", "ark"]
+
+[packages.wayland.apps.controllers]
+aur = ["overskride"]
+std = ["pavucontrol", "gparted", "gnome-disk-utility"]
+
+[packages.wayland.apps.monitor]
+std = ["mission-center", "qpwgraph"]
+
+[packages.wayland.apps.network]
+std = ["localsend"]
+
+[packages.wayland.apps.browser]
+std = ["librewolf-bin", "profile-sync-daemon", "thunderbird"]
+
+[packages.wayland.apps.production]
+aur = ["obs-pipewire-audio-capture"]
+ignore = ["vscodium"]
+std = [
+   "krita",
+   "obs-studio",
+   "kdenlive",
+   "audacity",
+
+   "libreoffice-fresh",
+   "hunspell-es_es",
+]

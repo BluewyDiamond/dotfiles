@@ -1,0 +1,19 @@
+[packages.wayland.apps.gaming]
+ignore = [
+   "atlauncher-bin",
+   "r2modman-bin",
+   "osu-lazer-bin",
+   "bettercrewlink-bin",
+]
+std = [
+   "steam-native-runtime",
+   "heroic-games-launcher-bin",
+
+   "umu-launcher",
+   "proton-cachyos",
+   "proton-ge-custom-bin",
+   "protontricks",
+
+   "gamescope",
+   "mangohud",
+]

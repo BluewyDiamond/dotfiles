@@ -1,0 +1,5 @@
+[[install_files]]
+operation = "link"
+owner = "bluewy"
+source = "../../../../files/nushell-any@any"
+target = "/home/bluewy/.config/nushell"

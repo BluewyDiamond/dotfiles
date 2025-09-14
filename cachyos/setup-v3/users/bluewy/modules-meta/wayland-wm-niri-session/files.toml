@@ -1,11 +1,11 @@
 [[install_files]]
 operation = "link"
 owner = "bluewy"
-source = "../../../files/niri-any@raphael"
+source = "../../../../files/niri-any@raphael"
 target = "/home/bluewy/.config/niri"
 
 [[install_files]]
 operation = "link"
 owner = "bluewy"
-source = "../../../files/hypr-any@raphael"
-target = "/home/bluewy/.config/hypr"
+source = "../../../../files/fuzzel-any@any"
+target = "/home/bluewy/.config/fuzzel"

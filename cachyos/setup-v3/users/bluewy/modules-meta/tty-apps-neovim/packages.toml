@@ -1,0 +1,10 @@
+[packages]
+std = [
+   "neovim",
+   "stylua",
+   "ripgrep",
+   "fzf",
+   "prettier",
+   "eslint_d",
+   "taplo-cli",
+]

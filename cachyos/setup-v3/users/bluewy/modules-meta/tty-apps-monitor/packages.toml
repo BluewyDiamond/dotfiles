@@ -1,0 +1,2 @@
+[packages]
+std = ["bottom", "bandwhich", "nvtop"]

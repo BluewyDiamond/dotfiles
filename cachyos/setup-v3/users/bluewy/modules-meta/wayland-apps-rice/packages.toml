@@ -1,0 +1,17 @@
+[packages]
+aur = [
+   "qt6ct-kde",
+   "qt5ct-kde",
+   "bibata-cursor-theme-bin",
+   "candy-icons-git",
+   "sweet-folders-icons-git",
+]
+std = [
+   "font-manager",
+   "ttf-iosevkaterm-nerd",
+
+   "kvantum",
+   "kvantum-qt5",
+
+   "nwg-look",
+]

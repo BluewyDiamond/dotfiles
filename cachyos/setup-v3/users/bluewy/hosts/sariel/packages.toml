@@ -1,8 +1,6 @@
 [packages.make]
 std = ["rustup", "jdk21-openjdk"]
 
-[packages.tty.apps]
-std = ["zellij", "paru", "trash-cli", "git", "less", "ssh", "man-db"]
 
 [packages.tty.apps.rice]
 std = ["terminus-font", "fastfetch", "starship"]

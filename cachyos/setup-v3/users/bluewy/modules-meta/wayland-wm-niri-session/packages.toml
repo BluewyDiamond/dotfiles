@@ -1,0 +1,26 @@
+[packages.wayland.wm.niri]
+local = ["../../../aur/niri-no-systemd"]
+std = [
+   "xwayland-satellite",
+   "xdg-desktop-portal-gnome",
+   "xdg-desktop-portal-gtk",
+]
+
+[packages.wayland.apps]
+aur = ["wezterm-git", "wayshot"]
+std = [
+   "hyprlock",
+   "hypridle",
+   "hyprpicker",
+   "wayland-pipewire-idle-inhibit",
+
+   "pantheon-polkit-agent",
+   "keepassxc",
+
+   "uwsm",
+   "fuzzel",
+   "slurp",
+   "satty",
+
+   "cliphist",
+]

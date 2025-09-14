@@ -26,19 +26,19 @@ target = "/etc/locale.conf"
 [[install_files]]
 operation = "copy"
 owner = "root"
-source = "../../../files/kbd-any@any/colemak-dh-wide-custom-eu-ansi.map"
+source = "../../files/kbd-any@any/colemak-dh-wide-custom-eu-ansi.map"
 target = "/usr/share/kbd/keymaps/colemak-dh-wide-custom-eu-ansi.map"
 
 [[install_files]]
 operation = "copy"
 owner = "root"
-source = "../../../files/kbd-any@any/colemak-dh-wide-custom-eu-iso.map"
+source = "../../files/kbd-any@any/colemak-dh-wide-custom-eu-iso.map"
 target = "/usr/share/kbd/keymaps/colemak-dh-wide-custom-eu-iso.map"
 
 [[install_files]]
 operation = "copy"
 owner = "root"
-source = "../../../files/xkb-any@any/symbols/bluewy"
+source = "../../files/xkb-any@any/symbols/bluewy"
 target = "/usr/share/X11/xkb/symbols/bluewy"
 
 [[spawn_files]]

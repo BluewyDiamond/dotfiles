@@ -1,0 +1,2 @@
+[packages]
+std = ["terminus-font", "fastfetch", "starship"]

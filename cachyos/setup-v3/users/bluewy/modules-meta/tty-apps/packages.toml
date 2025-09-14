@@ -1,0 +1,2 @@
+[packages]
+std = ["nushell", "zellij", "paru", "downgrade", "git", "less", "ssh", "man-db"]

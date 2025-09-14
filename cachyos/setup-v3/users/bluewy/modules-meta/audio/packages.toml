@@ -1,0 +1,8 @@
+[packages]
+std = [
+   "wireplumber",
+   "pipewire",
+   "pipewire-alsa",
+   "pipewire-pulse",
+   "pipewire-jack",
+]

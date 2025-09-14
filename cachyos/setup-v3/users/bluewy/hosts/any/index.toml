@@ -1,0 +1,26 @@
+source = [
+   "./files.toml",
+   "./packages.toml",
+   "./services.toml",
+
+   "../../modules-meta/audio/files.toml",
+   "../../modules-meta/audio/packages.toml",
+   "../../modules-meta/lib/packages.toml",
+   "../../modules-meta/make/packages.toml",
+   "../../modules-meta/network/packages.toml",
+   "../../modules-meta/tty-apps/files.toml",
+   "../../modules-meta/tty-apps/packages.toml",
+   "../../modules-meta/tty-apps-monitor/packages.toml",
+   "../../modules-meta/tty-apps-neovim/files.toml",            # this should belong to modules i think
+   "../../modules-meta/tty-apps-neovim/packages.toml",
+   "../../modules-meta/tty-apps-rice/files.toml",
+   "../../modules-meta/tty-apps-rice/packages.toml",
+   "../../modules-meta/wayland-apps/files.toml",
+   "../../modules-meta/wayland-apps/packages.toml",
+   "../../modules-meta/wayland-apps-gaming/files.toml",
+   "../../modules-meta/wayland-apps-gaming/packages.toml",
+   "../../modules-meta/wayland-apps-rice/packages.toml",
+   "../../modules-meta/wayland-apps-widgets/files.toml",
+   "../../modules-meta/wayland-wm-niri-session/files.toml",
+   "../../modules-meta/wayland-wm-niri-session/packages.toml",
+]

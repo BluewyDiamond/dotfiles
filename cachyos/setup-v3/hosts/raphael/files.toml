@@ -64,5 +64,3 @@ operation = "copy"
 owner = "root"
 source = "../../files/screen-off-service-any@any/screen-off.fish"
 target = "/usr/local/bin/screen-off.fish"
-
-

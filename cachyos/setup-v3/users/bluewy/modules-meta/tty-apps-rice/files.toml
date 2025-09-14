@@ -1,0 +1,11 @@
+[[install_files]]
+operation = "link"
+owner = "bluewy"
+source = "../../../../files/fastfetch-any@any"
+target = "/home/bluewy/.config/fastfetch"
+
+[[install_files]]
+operation = "link"
+owner = "bluewy"
+source = "../../../../files/starship-any@any/starship.toml"
+target = "/home/bluewy/.config/starship.toml"

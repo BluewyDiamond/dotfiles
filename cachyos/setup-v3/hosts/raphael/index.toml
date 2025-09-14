@@ -1,21 +1,20 @@
 source = [
-   "../../modules/bluewy/cachyos/files.toml",
-   "../../modules/bluewy/cachyos/packages.toml",
-   "../../modules/bluewy/cachyos/packages-ignore.toml",
-   "../../modules/bluewy/cachyos/services.toml",
-   "../../modules/bluewy/locale/files.toml",
-   "../../modules/bluewy/locale/packages.toml",
-   "../../modules/bluewy/systemd-xdg-autostart-generator-disable/files.toml",
-   "../../modules/bluewy/wireless-regdb-es-region/files.toml",
-   "../../modules/bluewy/bluetooth/packages.toml",
-   "../../modules/bluewy/bluetooth/services.toml",
-
    "./files.toml",
    "./packages.toml",
    "./services.toml",
 
-   "../../users/bluewy/@any/files.toml",
-   "../../users/bluewy/@any/packages.toml",
-   "../../users/bluewy/@any/services.toml",
-   "../../users/bluewy/@raphael/files.toml",
+   "../../modules/cachyos/files.toml",
+   "../../modules/cachyos/packages.toml",
+   "../../modules/cachyos/packages-ignore.toml",
+   "../../modules/cachyos/services.toml",
+   "../../modules/locale/files.toml",
+   "../../modules/locale/packages.toml",
+   "../../modules/systemd-xdg-autostart-generator-disable/files.toml",
+   "../../modules/wireless-regdb-es-region/files.toml",
+   "../../modules/bluetooth/packages.toml",
+   "../../modules/bluetooth/services.toml",
+
+
+   "../../users/bluewy/hosts/any/index.toml",
+   "../../users/bluewy/hosts/raphael/files.toml",
 ]
