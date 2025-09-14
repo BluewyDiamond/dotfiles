@@ -2,7 +2,7 @@
 std = ["rustup", "jdk21-openjdk"]
 
 [packages.tty.apps]
-std = ["zellij", "paru", "trash-cli", "git", "less", "ssh", "man-db"]
+std = ["zellij", "paru", "downgrade", "git", "less", "ssh", "man-db"]
 
 [packages.tty.apps.rice]
 std = ["terminus-font", "fastfetch", "starship"]
@@ -23,6 +23,3 @@ std = [
    "eslint_d",
    "taplo-cli",
 ]
-
-[packages.tty.apps.other]
-std = ["git", "downgrade"]

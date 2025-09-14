@@ -14,14 +14,11 @@ std = [
 ]
 
 [packages.tty.apps]
-ignore = ["less", "xdg-ninja-git"]
-std = ["zellij", "paru", "trash-cli"]
+ignore = ["xdg-ninja-git"]
+std = ["zellij", "paru", "downgrade", "git", "less", "ssh", "man-db"]
 
 [packages.tty.apps.rice]
 std = ["terminus-font", "fastfetch", "starship"]
-
-[packages.tty.apps.rewrites]
-std = ["eza", "fd", "ripgrep"]
 
 [packages.tty.apps.controller]
 std = ["power-profiles-daemon"]
@@ -43,9 +40,6 @@ std = [
    "taplo-cli",
 ]
 
-[packages.tty.apps.other]
-std = ["git", "downgrade"]
-
 [packages.wayland.wm.niri]
 local = ["../../../aur/niri-no-systemd"]
 std = [
@@ -54,17 +48,7 @@ std = [
    "xdg-desktop-portal-gtk",
 ]
 
-[packages.wayland.wm.hyprland]
-std = [
-   "hyprland",
-   "hyprland-protocols",
-   "hyprland-qtutils",
-
-   "xdg-desktop-portal-hyprland",
-   "xdg-desktop-portal-gtk",
-]
-
-[packages.wayland.apps]
+[packages.wayland.niri-session]
 aur = ["wezterm-git", "wayshot"]
 std = [
    "hyprlock",
@@ -156,7 +140,7 @@ std = ["mission-center", "qpwgraph"]
 std = ["localsend"]
 
 [packages.wayland.apps.browser]
-std = ["librewolf-bin", "thunderbird"]
+std = ["librewolf-bin", "profile-sync-daemon", "thunderbird"]
 
 [packages.wayland.apps.production]
 aur = ["obs-pipewire-audio-capture"]
@@ -177,6 +161,3 @@ std = ["telegram-desktop"]
 [packages.wayland.apps.socialmedia.discord]
 aur = ["equibop-bin", "piper-tts-bin", "piper-voices-en-us"]
 std = ["speech-dispatcher"]
-
-[packages.services]
-std = ["profile-sync-daemon"]
