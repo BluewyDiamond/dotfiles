@@ -15,6 +15,8 @@ export def enable-service-list [config] {
 
             if ($service.user == $env.LOGNAME) {
                systemctl --user enable $service_enable
+            } else if (is-admin) and ($service.user == root) {
+               systemctl enable $service_enable
             } else if (is-admin) {
                systemctl -M $"($service.user)@" --user enable $service_enable
             } else {
@@ -44,6 +46,8 @@ export def cleanup-service-list [config] {
 
             if ($service.user == $env.LOGNAME) {
                systemctl --user disable $service_enabled
+            } else if (is-admin) and ($service.user == root) {
+               systemctl disable $service_enabled
             } else if (is-admin) {
                sudo systemctl -M $"($service.user)@" --user disable $service_enabled
             } else {
