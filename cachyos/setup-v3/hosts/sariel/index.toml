@@ -20,6 +20,9 @@ source = [
    "./packages.toml",
    "./services.toml",
 
+   "../../users/bluewy/@sariel/files.toml",
+   "../../users/bluewy/@sariel/packages.toml",
+
    "../../users/elisa/packages.toml",
    "../../users/elisa/services.toml",
 ]

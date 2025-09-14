@@ -1,0 +1,29 @@
+[packages.make]
+std = ["rustup", "jdk21-openjdk"]
+
+[packages.tty.apps]
+ignore = ["less", "xdg-ninja-git"]
+std = ["zellij", "paru", "trash-cli"]
+
+[packages.tty.apps.rice]
+std = ["terminus-font", "fastfetch", "starship"]
+
+[packages.tty.apps.controller]
+std = ["power-profiles-daemon"]
+
+[packages.tty.apps.monitoring]
+std = ["bottom", "bandwhich", "nvtop"]
+
+[packages.tty.apps.neovim]
+std = [
+   "neovim",
+   "stylua",
+   "ripgrep",
+   "fzf",
+   "prettier",
+   "eslint_d",
+   "taplo-cli",
+]
+
+[packages.tty.apps.other]
+std = ["git", "downgrade"]
