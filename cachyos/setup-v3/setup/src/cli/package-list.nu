@@ -1,7 +1,7 @@
 use ../utils *
 
 export def install-package-list [config] {
-   let package_all_installed_list = pacman -Qq | complete | get stdout | lines
+   let package_all_installed_list = pacman -Qq | lines
 
    install-std-package-list $config.package.std_list $package_all_installed_list
    install-aur-package-list $config.package.aur_list $package_all_installed_list

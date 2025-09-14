@@ -9,7 +9,7 @@ use ./extractors/config.nu *
 use ./fns *
 
 # TODO: fix requirements
-# currently -> pactree, chown
+# currently -> pactree, chown, diff, unlink, ln
 
 def main [index_file_rel_path: path] {
    let index_file_abs_path_list = collect-index-file-abs-path-list $index_file_rel_path
