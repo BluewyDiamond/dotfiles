@@ -13,15 +13,12 @@ export def enable-service-list [config] {
 
             log info $"attempting to enable service=($service_enable)"
 
-            if ($service.user == $env.LOGNAME) {
-               print "->1"
-               systemctl --user enable $service_enable
-            } else if (is-admin) and ($service.user == root) {
-               print "->2"
+            if (is-admin) and ($service.user == root) {
                systemctl enable $service_enable
             } else if (is-admin) {
-               print "->3"
                systemctl -M --user $"($service.user)@" enable $service_enable
+            } else if ($service.user == $env.LOGNAME) {
+               systemctl --user enable $service_enable
             } else {
                log error "skipped as conditions are not fufilled"
             }
@@ -47,12 +44,12 @@ export def cleanup-service-list [config] {
 
             log info $"attempting to disable service=($service_enabled)"
 
-            if ($service.user == $env.LOGNAME) {
-               systemctl --user disable $service_enabled
-            } else if (is-admin) and ($service.user == root) {
+            if (is-admin) and ($service.user == root) {
                systemctl disable $service_enabled
             } else if (is-admin) {
                sudo systemctl --user -M $"($service.user)@" disable $service_enabled
+            } else if ($service.user == $env.LOGNAME) {
+               systemctl --user disable $service_enabled
             } else {
                log error "skipped as conditions are not fufilled"
             }
