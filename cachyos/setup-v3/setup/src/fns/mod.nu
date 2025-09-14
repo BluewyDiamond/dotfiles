@@ -7,24 +7,28 @@ export def collect-index-file-abs-path-list [index_file_rel_path: path]: nothing
    while ($index_file_abs_path_list_to_process | is-not-empty) {
       let index_file_abs_path_to_process = $index_file_abs_path_list_to_process | first
       $index_file_abs_path_list_to_process = $index_file_abs_path_list_to_process | skip 1
-      $index_file_abs_path_list_collected = $index_file_abs_path_list_collected | append $index_file_abs_path_to_process
-      let index_file_rel_path_list = extract-index-rel-path-list $index_file_abs_path_to_process
 
-      let index_file_abs_path_list_found = (
-         $index_file_rel_path_list
-         | where {|index_file_rel_path|
-            $"($index_file_rel_path | path basename)" == "index.toml"
-         }
-         | each {|index_file_rel_path|
-            $index_file_abs_path_to_process
-            | path dirname
-            | path join $index_file_rel_path
-            | path expand # in this scenario the path is correctly formed and path expand is used to prettify it
-            # example: /users/user1/../user2 -> /users/user2
-         }
+      $index_file_abs_path_list_collected = (
+         $index_file_abs_path_list_collected | append $index_file_abs_path_to_process
       )
 
-      $index_file_abs_path_list_collected = $index_file_abs_path_list_collected | append $index_file_abs_path_list_found
+      let index_file_rel_path_list = extract-index-rel-path-list $index_file_abs_path_to_process
+
+      let index_file_abs_path_list_found = $index_file_rel_path_list
+      | where {|index_file_rel_path|
+         $"($index_file_rel_path | path basename)" == "index.toml"
+      }
+      | each {|index_file_rel_path|
+         $index_file_abs_path_to_process
+         | path dirname
+         | path join $index_file_rel_path
+         | path expand # in this scenario the path is correctly formed and path expand is used to prettify it
+         # example: /users/user1/../user2 -> /users/user2
+      }
+
+      $index_file_abs_path_list_collected = (
+         $index_file_abs_path_list_collected | append $index_file_abs_path_list_found
+      )
    }
 
    $index_file_abs_path_list_collected
@@ -36,13 +40,15 @@ export def collect-config-file-abs-path-list [index_file_abs_path: list<path>]: 
       extract-index-rel-path-list $index_file_abs_path
       | where {|index_file_rel_path|
          $"($index_file_rel_path | path basename)" != "index.toml"
-      } | each {|index_file_rel_path|
+      }
+      | each {|index_file_rel_path|
          $index_file_abs_path
          | path dirname
          | path join $index_file_rel_path
          | path expand
       }
-   } | flatten
+   }
+   | flatten
 }
 
 export def merge-config-list [

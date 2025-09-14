@@ -7,7 +7,8 @@ export def extract-config [
 
    let package = {
       ignore_list: (
-         $config_raw | collect-values-by-key {|record_or_table|
+         $config_raw
+         | collect-values-by-key {|record_or_table|
             if ($record_or_table | columns | all {|col| $col != "ignore" }) {
                return []
             }
@@ -17,7 +18,8 @@ export def extract-config [
       )
 
       std_list: (
-         $config_raw | collect-values-by-key {|record_or_table|
+         $config_raw
+         | collect-values-by-key {|record_or_table|
             if ($record_or_table | columns | all {|col| $col != "std" }) {
                return []
             }
@@ -27,7 +29,8 @@ export def extract-config [
       )
 
       aur_list: (
-         $config_raw | collect-values-by-key {|record_or_table|
+         $config_raw
+         | collect-values-by-key {|record_or_table|
             if ($record_or_table | columns | all {|col| $col != "aur" }) {
                return []
             }
@@ -37,7 +40,8 @@ export def extract-config [
       )
 
       local_dir_abs_path_list: (
-         $config_raw | collect-values-by-key {|record_or_table|
+         $config_raw
+         | collect-values-by-key {|record_or_table|
             if ($record_or_table | columns | all {|col| $col != "local" }) {
                return []
             }

@@ -8,8 +8,9 @@ use ./cli/service-list.nu *
 use ./extractors/config.nu *
 use ./fns *
 
-# main.nu
-#
+# TODO: fix requirements
+# currently -> pactree, chown
+
 def main [index_file_rel_path: path] {
    let index_file_abs_path_list = collect-index-file-abs-path-list $index_file_rel_path
    let config_file_abs_path_list = collect-config-file-abs-path-list $index_file_abs_path_list

@@ -60,7 +60,8 @@ def install-local-package-list [
 ] {
    log info 'checking local packages to install'
 
-   let package_local_abs_path_missing_list = $package_local_abs_path_wanted_list | where {|package_local_abs_wanted|
+   let package_local_abs_path_missing_list = $package_local_abs_path_wanted_list
+   | where {|package_local_abs_wanted|
       ($package_local_abs_wanted | path basename) not-in $package_installed_list
    }
 
@@ -84,7 +85,14 @@ export def cleanup-package-list [config] {
       $package_local_abs_path | path basename
    }
 
-   let package_wanted_all_list = [$config.package.std_list $config.package.aur_list $package_local_list $config.package.ignore_list] | flatten
+   let package_wanted_all_list = [
+      $config.package.std_list
+      $config.package.aur_list
+      $package_local_list
+      $config.package.ignore_list
+   ]
+   | flatten
+
    let package_all_installed_list = pacman -Qqee | lines
 
    let package_unlisted_list = $package_all_installed_list | par-each {|package_installed|
