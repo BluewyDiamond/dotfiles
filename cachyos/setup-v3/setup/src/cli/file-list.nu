@@ -1,6 +1,7 @@
 export def spawn-file-list [config] {
    $config.file_spawn_list | each {|file_spawn|
       try {
+         log info $"checking file to spawn as user=($file_spawn.owner) with target=($file_spawn.target_file_abs_path)"
          let target_item_abs_path_existing_type_or_null = $file_spawn.target_file_abs_path | path type
 
          match $target_item_abs_path_existing_type_or_null {
@@ -55,6 +56,7 @@ export def spawn-file-list [config] {
 export def install-item-list [config] {
    $config.item_install_list | each {|item_install|
       try {
+         log info $"checking file to install as user=($item_install.owner) with target=($item_install.target_item_abs_path)"
          operate-item-install $item_install
       } catch {|error|
          $error.rendered | print
