@@ -1,49 +1,71 @@
 export def enable-service-list [config] {
    $config.service_list | each {|service|
-      let service_enabled_list = if $service.user != $env.LOGNAME {
-         $service | to nuon | sudo -u $service.user -- ./../deps/get-enabled-service-list.nu | from nuon
-      } else {
-         $service | to nuon | ./../deps/get-enabled-service-list.nu | from nuon
-      }
+      try {
+         let service_enabled_list = i ($"($service.path)/*.wants/*.service" | into glob)
 
-      $service.enable_list | each {|service_enable|
-         try {
+         $service.enable_list | each {|service_enable|
             log info $"checking service=($service_enable)"
 
-            if ($service_enable not-in $service_enabled_list) {
-               log info $"attempting to enable service=($service_enable)"
-               sudo systemctl -M $"($service.user)@" --user enable $service_enable
-            } else {
+            if ($service_enable in $service_enabled_list) {
                log info $"skipping as service=($service_enable) is already enabled"
+               return
             }
-         } catch {|error|
-            $error.rendered | print
+
+            log info $"attempting to enable service=($service_enable)"
+
+            if ($service.user == $env.LOGNAME) {
+               systemctl --user enable $service_enable
+            } else if (is-admin) {
+               systemctl -M $"($service.user)@" --user enable $service_enable
+            } else {
+               log error "skipped as conditions are not fufilled"
+            }
          }
+      } catch {|error|
+         $error | print
       }
    } | ignore
 }
 
 export def cleanup-service-list [config] {
    $config.service_list | each {|service|
-      let service_enabled_list = if $service.user != $env.LOGNAME {
-         $service | to nuon | sudo -u $service.user -- ./../deps/get-enabled-service-list.nu | from nuon
-      } else {
-         $service | to nuon | ./../deps/get-enabled-service-list.nu | from nuon
-      }
+      try {
+         let service_enabled_list = i ($"($service.path)/*.wants/*.service" | into glob)
 
-      $service_enabled_list | each {|service_enabled|
-         try {
+         $service_enabled_list | each {|service_enabled|
             log info $"checking service=($service_enabled)"
 
-            if ($service_enabled not-in $service_enabled_list) {
-               log info $"attempting to disable service=($service_enabled)"
+            if ($service_enabled in $service_enabled_list) {
+               log info $"skipping as service=($service_enabled) is already disabled"
+               return
+            }
+
+            log info $"attempting to disable service=($service_enabled)"
+
+            if ($service.user == $env.LOGNAME) {
+               systemctl --user disable $service_enabled
+            } else if (is-admin) {
                sudo systemctl -M $"($service.user)@" --user disable $service_enabled
             } else {
-               log info $"skipping as service=($service_enabled) is already disabled"
+               log error "skipped as conditions are not fufilled"
             }
-         } catch {|error|
-            $error.rendered | print
          }
+      } catch {|error|
+         $error | print
       }
    } | ignore
+}
+
+def i [service_path: glob] {
+   try {
+      ls $service_path | get name | each {|item|
+         $item | path basename | path parse | get stem
+      }
+   } catch {|error|
+      if ($error.msg == "Not Found") {
+         return []
+      }
+
+      error make {msg: $error.msg}
+   }
 }
