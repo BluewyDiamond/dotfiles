@@ -18,7 +18,7 @@ export def enable-service-list [config] {
             } else if (is-admin) and ($service.user == root) {
                systemctl enable $service_enable
             } else if (is-admin) {
-               systemctl -M $"($service.user)@" --user enable $service_enable
+               systemctl -M --user $"($service.user)@" enable $service_enable
             } else {
                log error "skipped as conditions are not fufilled"
             }
@@ -49,7 +49,7 @@ export def cleanup-service-list [config] {
             } else if (is-admin) and ($service.user == root) {
                systemctl disable $service_enabled
             } else if (is-admin) {
-               sudo systemctl -M $"($service.user)@" --user disable $service_enabled
+               sudo systemctl --user -M $"($service.user)@" disable $service_enabled
             } else {
                log error "skipped as conditions are not fufilled"
             }
