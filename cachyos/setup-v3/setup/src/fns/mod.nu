@@ -76,11 +76,11 @@ export def merge-config-list [
             $"($row.user):($row.dir_abs_path)"
          }
          | values
-         | each {|g|
+         | each {|group|
             {
-               user: $g.0.user
-               dir_abs_path: $g.0.dir_abs_path
-               enable_list: ($g | get enable_list | flatten | uniq)
+               user: $group.0.user
+               dir_abs_path: $group.0.dir_abs_path
+               enable_list: ($group | get enable_list | flatten | uniq)
             }
          }
       )
