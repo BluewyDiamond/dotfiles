@@ -1,4 +1,8 @@
 source = [
+   "./files.toml",
+   "./packages.toml",
+   "./services.toml",
+
    "../../modules/for-bluewy/cachyos/files.toml",
    "../../modules/for-bluewy/cachyos/packages.toml",
    "../../modules/for-bluewy/cachyos/packages-ignore.toml",
@@ -15,10 +19,6 @@ source = [
    "../../modules/for-bluewy/lemurs/files.toml",
    "../../modules/for-bluewy/lemurs/packages.toml",
    "../../modules/for-bluewy/lemurs/services.toml",
-
-   "./files.toml",
-   "./packages.toml",
-   "./services.toml",
 
    "../../users/bluewy/@any/files.toml",
    "../../users/bluewy/@any/packages.toml",
