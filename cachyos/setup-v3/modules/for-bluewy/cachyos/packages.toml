@@ -20,5 +20,4 @@ std = [
 
    "wireless-regdb",
    "ufw",
-   "man",
 ]

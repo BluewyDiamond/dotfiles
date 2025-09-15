@@ -68,6 +68,21 @@ export def merge-config-list [
       file_spawn_list: ($config_list | get file_spawn_list | flatten)
       item_install_list: ($config_list | get item_install_list | flatten)
 
-      service_list: ($config_list | get service_list | flatten | uniq)
+      service_list: (
+         $config_list
+         | get service_list
+         | flatten
+         | group-by {|row|
+            $"($row.user):($row.dir_abs_path)"
+         }
+         | values
+         | each {|g|
+            {
+               user: $g.0.user
+               dir_abs_path: $g.0.dir_abs_path
+               enable_list: ($g | get enable_list | flatten | uniq)
+            }
+         }
+      )
    }
 }

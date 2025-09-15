@@ -1,22 +1,25 @@
 export def enable-service-list [config] {
    $config.service_list | each {|service|
       try {
+         log info $"checking services with user=($service.user) and dir_abs_path=($service.dir_abs_path)"
          let service_enabled_list = get-service-enabled-list $service.dir_abs_path
 
-         $service.enable_list | each {|service_enable|
-            log info $"checking service=($service_enable)"
+         let service_enable_list = $service.enable_list | where {|service_enable|
+            $service_enable not-in $service_enabled_list
+         }
 
-            if ($service_enable in $service_enabled_list) {
-               log info $"skipping as service=($service_enable) is already enabled"
-               return
-            }
+         if ($service_enable_list | is-empty) {
+            log info $"skipping as there is no services to enable"
+            return
+         }
 
-            log info $"attempting to enable service=($service_enable)"
+         $service_enable_list | each {|service_enable|
+            log info $"attempting to enable service=($service_enable) with user=($service.user)"
 
             if (is-admin) and ($service.user == root) {
                systemctl enable $service_enable
             } else if (is-admin) {
-               systemctl -M --user $"($service.user)@" enable $service_enable
+               systemctl --user -M $"($service.user)@" enable $service_enable
             } else if ($service.user == $env.LOGNAME) {
                systemctl --user enable $service_enable
             } else {
@@ -32,24 +35,27 @@ export def enable-service-list [config] {
 export def cleanup-service-list [config] {
    $config.service_list | each {|service|
       try {
+         log info $"checking services with user=($service.user) and dir_abs_path=($service.dir_abs_path)"
          let service_enabled_list = get-service-enabled-list $service.dir_abs_path
 
-         $service_enabled_list | each {|service_enabled|
-            log info $"checking service=($service_enabled)"
+         let service_disable_list = $service_enabled_list | where {|service_enabled|
+            $service_enabled not-in $service.enable_list
+         }
 
-            if ($service_enabled in $service.enable_list) {
-               log info $"skipping as service=($service_enabled) is already disabled"
-               return
-            }
+         if ($service_disable_list | is-empty) {
+            log info $"skipping as there is no services to cleanup"
+            return
+         }
 
-            log info $"attempting to disable service=($service_enabled)"
+         $service_disable_list | each {|service_disable|
+            log info $"attempting to disable service=($service_disable) with user=($service.user)"
 
             if (is-admin) and ($service.user == root) {
-               systemctl disable $service_enabled
+               systemctl disable $service_disable
             } else if (is-admin) {
-               sudo systemctl --user -M $"($service.user)@" disable $service_enabled
+               sudo systemctl --user -M $"($service.user)@" disable $service_disable
             } else if ($service.user == $env.LOGNAME) {
-               systemctl --user disable $service_enabled
+               systemctl --user disable $service_disable
             } else {
                log error "skipped as conditions are not fufilled"
             }

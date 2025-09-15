@@ -15,7 +15,7 @@ std = [
 
 [packages.tty.apps]
 ignore = ["xdg-ninja-git"]
-std = ["zellij", "paru", "downgrade", "git", "less", "ssh", "man-db"]
+std = ["zellij", "paru", "downgrade", "git", "less", "openssh"]
 
 [packages.tty.apps.rice]
 std = ["terminus-font", "fastfetch", "starship"]
@@ -48,8 +48,12 @@ std = [
    "xdg-desktop-portal-gtk",
 ]
 
+[packages.wayland.apps.wezterm]
+aur = ["wezterm-git"]
+std = ["libgit2"]
+
 [packages.wayland.niri-session]
-aur = ["wezterm-git", "wayshot"]
+aur = ["wayshot"]
 std = [
    "hyprlock",
    "hypridle",

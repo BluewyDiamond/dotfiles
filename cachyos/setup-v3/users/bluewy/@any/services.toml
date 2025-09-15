@@ -1,4 +1,4 @@
 [[services]]
-enable = ["psd"]
+enable = ["psd", "pipewire", "wireplumber"]
 path = "/home/bluewy/.config/systemd/user"
 user = "bluewy"
