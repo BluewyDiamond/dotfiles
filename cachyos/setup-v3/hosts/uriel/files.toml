@@ -27,4 +27,3 @@ operation = "copy"
 owner = "root"
 source = "../../files/libinput-any@any/local-overrides.quirks"
 target = "/etc/libinput/local-overrides.quirks"
-

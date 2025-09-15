@@ -1,4 +1,4 @@
 [[services]]
-enable = ["psd"]
+enable = ["wireplumber", "pipewire", "psd"]
 path = "/home/elisa/.config/systemd/user"
 user = "elisa"
