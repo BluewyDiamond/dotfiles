@@ -11,6 +11,7 @@ source = [
    "../../modules/for-bluewy/locale/packages.toml",
    "../../modules/for-bluewy/systemd-xdg-autostart-generator-disable/files.toml",
    "../../modules/for-bluewy/wireless-regdb-es-region/files.toml",
+   "../../modules/for-bluewy/wireless-regdb-es-region/packages.toml",
    "../../modules/for-bluewy/networkmanager/files.toml",
    "../../modules/for-bluewy/networkmanager/packages.toml",
    "../../modules/for-bluewy/networkmanager/services.toml",

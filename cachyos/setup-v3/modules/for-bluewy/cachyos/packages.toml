@@ -18,6 +18,5 @@ std = [
    "cachyos-settings",
    "chwd",
 
-   "wireless-regdb",
    "ufw",
 ]
