@@ -1,8 +1,44 @@
 import options from "../../../../options";
-import { Accessor, createBinding, createComputed, createConnection } from "ags";
+import { Accessor, createBinding, createComputed } from "ags";
 import AstalNiri from "gi://AstalNiri";
 
 const niri = AstalNiri.get_default();
+
+function WorkspaceLabel({ workspaceName }: { workspaceName: string }) {
+   const workspace = niri
+      .get_workspaces()
+      .find((workspace) => workspace.name === workspaceName);
+
+   if (workspace === undefined)
+      return <label cssClasses={["workspace-label"]} label={workspaceName} />;
+
+   const isWorkspaceFocusedBinding = createBinding(workspace, "isFocused");
+   const isWorkspaceUrgentBinding = createBinding(workspace, "isUrgent");
+   const workspaceWindows = createBinding(workspace, "windows");
+
+   const computedCssClasses = createComputed(
+      [isWorkspaceFocusedBinding, isWorkspaceUrgentBinding, workspaceWindows],
+      (isWorkspaceFocused, isWorkspaceUrgent, workspaceWindows) => {
+         const cssClasses = ["workspace-label"];
+
+         if (workspaceWindows.length > 0) {
+            cssClasses.push("occupied");
+         }
+
+         if (isWorkspaceUrgent) {
+            cssClasses.push("urgent");
+         }
+
+         if (isWorkspaceFocused) {
+            cssClasses.push("focused");
+         }
+
+         return cssClasses;
+      }
+   );
+
+   return <label cssClasses={computedCssClasses} label={`${workspaceName}`} />;
+}
 
 export default function () {
    return (
@@ -14,46 +50,4 @@ export default function () {
          </box>
       </button>
    );
-}
-
-// TODO: pass real workspace
-function WorkspaceLabel({ workspaceName }: { workspaceName: string }) {
-   const focusedWorkspaceBinding = createBinding(niri, "focusedWorkspace");
-
-   const workspace = niri
-      .get_workspaces()
-      .find((workspace) => workspace.name === workspaceName);
-
-   if (workspace === undefined)
-      return <label cssClasses={["workspace-label"]} label={workspaceName} />;
-
-   const urgentWorkspaceBinding = createConnection(0, [
-      workspace,
-      "notify::is-urgent",
-      () => 0,
-   ]);
-
-   const computedCssClasses = createComputed(
-      [focusedWorkspaceBinding, urgentWorkspaceBinding],
-
-      (_, __) => {
-         const cssClasses = ["workspace-label"];
-
-         if (workspace.get_windows().length > 0) {
-            cssClasses.push("occupied");
-         }
-
-         if (workspace.isUrgent) {
-            cssClasses.push("urgent");
-         }
-
-         if (workspace.isFocused) {
-            cssClasses.push("focused");
-         }
-
-         return cssClasses;
-      }
-   );
-
-   return <label cssClasses={computedCssClasses} label={`${workspaceName}`} />;
 }

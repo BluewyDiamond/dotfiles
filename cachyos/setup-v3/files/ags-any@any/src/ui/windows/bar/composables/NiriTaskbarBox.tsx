@@ -1,9 +1,4 @@
-import {
-   Accessor,
-   createBinding,
-   createComputed,
-   For,
-} from "ags";
+import { Accessor, createBinding, createComputed, For } from "ags";
 import options from "../../../../options";
 import AstalNiri from "gi://AstalNiri";
 import icons from "../../../../lib/icons";
@@ -33,33 +28,24 @@ const focusedWindowBinding = createBinding(
    "focusedWindow"
 ) as Accessor<AstalNiri.Window | null>;
 
-export default function () {
-   return (
-      <box cssClasses={["taskbar-box"]}>
-         <For each={windowsComputed}>
-            {(window) => <WindowButton window={window} />}
-         </For>
-      </box>
-   );
-}
-
 function WindowButton({ window }: { window: AstalNiri.Window }) {
-   const urgentBinding = createBinding(window, "isUrgent");
+   const isWindowUrgentBinding = createBinding(window, "isUrgent");
 
    const cssClasses = createComputed(
-      [focusedWindowBinding, urgentBinding],
-
-      (focusedWindow, _) => {
+      [focusedWindowBinding, isWindowUrgentBinding],
+      (focusedWindow, isWindowUrgent) => {
          const cssClasses = ["taskbar-client-button"];
 
-         if (window.isUrgent) {
+         if (isWindowUrgent) {
             cssClasses.push("urgent");
          }
 
-         if (focusedWindow !== null) {
-            if (focusedWindow.id === window.id) {
-               cssClasses.push("active");
-            }
+         if (focusedWindow === null) {
+            return cssClasses;
+         }
+
+         if (focusedWindow.id === window.id) {
+            cssClasses.push("active");
          }
 
          return cssClasses;
@@ -85,5 +71,15 @@ function WindowButton({ window }: { window: AstalNiri.Window }) {
       <button cssClasses={cssClasses} onClicked={() => window.focus(window.id)}>
          <image iconName={iconName()} />
       </button>
+   );
+}
+
+export default function () {
+   return (
+      <box cssClasses={["taskbar-box"]}>
+         <For each={windowsComputed}>
+            {(window) => <WindowButton window={window} />}
+         </For>
+      </box>
    );
 }
