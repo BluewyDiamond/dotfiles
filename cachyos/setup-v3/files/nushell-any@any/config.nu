@@ -62,6 +62,7 @@ $env.EDITOR = "nvim"
 alias nu-clear = clear
 
 # https://www.nushell.sh/commands/docs/clear.html
+# Clear the terminal.
 def clear [
    --keep-scrollback (-k)
 ] {
@@ -88,6 +89,43 @@ def --wrapped aura [...args] {
    }
 
    run-external ...$cmd
+}
+
+alias nu-ls = ls
+
+# https://www.nushell.sh/commands/docs/ls.html
+# List the filenames, sizes, and modification times of items in a directory.
+def ls [
+   --all (-a) # Show hidden files
+   --long (-l) # Get all available columns for each entry (slower; columns are platform-dependent)
+   --short-names (-s) # Only print the file names, and not the path
+   --full-paths (-f) # display paths as absolute paths
+   --du (-d) # Display the apparent directory size ("disk usage") in place of the directory metadata size
+   --directory (-D) # List the specified directory itself instead of its contents
+   --mime-type (-m) # Show mime-type in type column instead of 'file' (based on filenames only; files' contents are not examined)
+   --threads (-t) # Use multiple threads to list contents. Output will be non-deterministic.
+   ...pattern: oneof<glob, string> # The glob pattern to use.
+]: [nothing -> table] {
+   let pattern = if ($pattern | is-empty) { ['.'] } else { $pattern }
+
+   let nu_ls_output = (
+      nu-ls
+      --all=$all
+      --long=true
+      --short-names=$short_names
+      --full-paths=$full_paths
+      --du=$du
+      --directory=$directory
+      --mime-type=$mime_type
+      --threads=$threads
+      ...$pattern
+   )
+
+   if $long {
+      $nu_ls_output
+   } else {
+      $nu_ls_output | select name type mode user group size modified
+   }
 }
 
 # [ Autostart ]
