@@ -61,7 +61,9 @@ $env.EDITOR = "nvim"
 # this only happens when replacing built-in commands
 alias nu-clear = clear
 
+# This is an alias. More help available at the link below.
 # https://www.nushell.sh/commands/docs/clear.html
+#
 # Clear the terminal.
 def clear [
    --keep-scrollback (-k)
@@ -93,7 +95,9 @@ def --wrapped aura [...args] {
 
 alias nu-ls = ls
 
+# This is an alias. More help available at the link below.
 # https://www.nushell.sh/commands/docs/ls.html
+#
 # List the filenames, sizes, and modification times of items in a directory.
 def ls [
    --all (-a) # Show hidden files
@@ -108,23 +112,25 @@ def ls [
 ]: [nothing -> table] {
    let pattern = if ($pattern | is-empty) { ['.'] } else { $pattern }
 
-   let nu_ls_output = (
-      nu-ls
-      --all=$all
-      --long=true
-      --short-names=$short_names
-      --full-paths=$full_paths
-      --du=$du
-      --directory=$directory
-      --mime-type=$mime_type
-      --threads=$threads
-      ...$pattern
-   )
+   let cmd = {||
+      (
+         nu-ls
+         --all=$all
+         --long=true
+         --short-names=$short_names
+         --full-paths=$full_paths
+         --du=$du
+         --directory=$directory
+         --mime-type=$mime_type
+         --threads=$threads
+         ...$pattern
+      )
+   }
 
    if $long {
-      $nu_ls_output
+      do $cmd
    } else {
-      $nu_ls_output | select name type mode user group size modified
+      do $cmd | select name type mode user group size modified
    }
 }
 
