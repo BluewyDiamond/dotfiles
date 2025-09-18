@@ -15,8 +15,8 @@ source = [
    "./packages.toml",
    "./services.toml",
 
-   "../../users/bluewy/@any/files.toml",
-   "../../users/bluewy/@any/packages.toml",
-   "../../users/bluewy/@any/services.toml",
+   "../../users/bluewy/+base/files.toml",
+   "../../users/bluewy/+base/packages.toml",
+   "../../users/bluewy/+base/services.toml",
    "../../users/bluewy/@raphael/files.toml",
 ]
