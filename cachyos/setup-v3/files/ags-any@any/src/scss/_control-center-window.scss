@@ -11,8 +11,8 @@ window.control-center-window {
       background: $surface;
       border-radius: $border-radius;
       background: $surface_container;
-      padding: $spacing-small;
-      margin-bottom: $spacing-medium;
+      padding: $spacing;
+      margin-bottom: $spacing;
    }
 
    .notifications-box {
@@ -22,10 +22,10 @@ window.control-center-window {
          background: $surface_container;
          border-radius: $border-radius;
 
-         margin-bottom: $spacing-medium;
+         margin-bottom: $spacing;
 
          .notification-header-box {
-            padding: $spacing-small;
+            padding: $spacing;
 
             .notification-close-button {
                min-width: 10px;
@@ -34,7 +34,7 @@ window.control-center-window {
          }
 
          .notification-content-box {
-            padding: $spacing-small;
+            padding: $spacing;
 
             .notification-body-image {
                -gtk-icon-size: 100px;
@@ -46,11 +46,11 @@ window.control-center-window {
          }
 
          .notification-action-area-box {
-            padding: $spacing-small;
+            padding: $spacing;
 
             .notification-action-button {
                background: $surface-container;
-               margin-right: $spacing-medium;
+               margin-right: $spacing;
 
                &:last-child {
                   margin-right: 0;

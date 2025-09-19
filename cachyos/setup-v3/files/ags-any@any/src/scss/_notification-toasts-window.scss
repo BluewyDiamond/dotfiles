@@ -32,11 +32,11 @@ window.notification-toasts-window {
       }
 
       .notification-action-area-box {
-         padding: $spacing-small;
+         padding: $spacing;
 
          .notification-action-button {
             background: $surface-container;
-            margin-right: $spacing-medium;
+            margin-right: $spacing;
 
             &:last-child {
                margin-right: 0;
