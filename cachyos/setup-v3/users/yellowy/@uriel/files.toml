@@ -1,0 +1,29 @@
+[[install_files]]
+operation = "link"
+owner = "yellowy"
+source = "../../../files/fastfetch-any@any"
+target = "/home/yellowy/.config/fastfetch"
+
+[[install_files]]
+operation = "link"
+owner = "yellowy"
+source = "../../../files/nushell-any@any"
+target = "/home/yellowy/.config/nushell"
+
+[[install_files]]
+operation = "link"
+owner = "yellowy"
+source = "../../../files/nvim-any@any"
+target = "/home/yellowy/.config/nvim"
+
+[[install_files]]
+operation = "link"
+owner = "yellowy"
+source = "../../../files/starship-any@any/starship.toml"
+target = "/home/yellowy/.config/starship.toml"
+
+[[install_files]]
+operation = "copy"
+owner = "yellowy"
+source = "../../../files/user-dirs-any@any/user-dirs.dirs"
+target = "/home/yellowy/.config/user-dirs.dirs"

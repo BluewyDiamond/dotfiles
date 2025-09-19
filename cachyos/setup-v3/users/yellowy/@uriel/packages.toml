@@ -1,0 +1,25 @@
+[packages.make]
+std = ["rustup", "jdk21-openjdk"]
+
+[packages.tty]
+std = ["zellij", "paru", "downgrade", "git", "less", "openssh"]
+
+[packages.tty.rice]
+std = ["terminus-font", "fastfetch", "starship"]
+
+[packages.tty.hardware-controller]
+std = ["power-profiles-daemon"]
+
+[packages.tty.monitoring]
+std = ["bottom", "bandwhich", "nvtop"]
+
+[packages.tty.neovim]
+std = [
+   "neovim",
+   "stylua",
+   "ripgrep",
+   "fzf",
+   "prettier",
+   "eslint_d",
+   "taplo-cli",
+]

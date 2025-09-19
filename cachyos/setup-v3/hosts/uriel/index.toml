@@ -28,4 +28,7 @@ source = [
 
    "../../users/elisa/packages.toml",
    "../../users/elisa/services.toml",
+
+   "../../users/yellowy/@uriel/files.toml",
+   "../../users/yellowy/@uriel/packages.toml",
 ]
