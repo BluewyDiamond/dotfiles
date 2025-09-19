@@ -4,12 +4,11 @@
 window.bar-window {
    background: $surface;
    padding: $spacing-medium;
-   margin: 0px 12px 0 12px;
-   border-right: 4px solid $outline-variant;
-   border-left: 4px solid $outline-variant;
-   border-bottom: 4px solid $outline-variant;
-   border-bottom-right-radius: $border-radius;
-   border-bottom-left-radius: $border-radius;
+   margin: 16px 16px 0 16px;
+   border-top: 2px solid $outline-variant;
+   border-right: 2px solid $outline-variant;
+   border-left: 2px solid $outline-variant;
+   border-bottom: 2px solid $outline-variant;
 
    .workspaces-button {
       background: $surface-container;

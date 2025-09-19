@@ -43,7 +43,7 @@ overview {
 }
 
 window-rule {
-   geometry-corner-radius 4
+   geometry-corner-radius 0
    clip-to-geometry true
    open-fullscreen false
    open-maximized true
@@ -88,7 +88,7 @@ window-rule {
 
 layout {
    background-color "#21252B"
-   gaps 12
+   gaps 16
    center-focused-column "never"
 
    preset-column-widths {
@@ -104,16 +104,18 @@ layout {
    }
 
    border {
-      width 4
+      width 2
       active-color "#9acbfa"
       inactive-color "#8e9099"
       urgent-color "#ecc06c"
    }
 
    tab-indicator {
-      gap 4
-      gaps-between-tabs 12
-      width 4
+      length total-proportion=1.0
+      place-within-column
+      gap 0
+      gaps-between-tabs 16
+      width 16
    }
 }
 
