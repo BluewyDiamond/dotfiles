@@ -50,6 +50,12 @@ std = ["openssh"]
 
 # gui
 #
+[packages.flatpak.text-gui]
+std = ["flatpak"]
+
+[packages.waydroid.service-text-gui]
+ignore = ["waydroid-image-gapps", "waydroid"]
+
 [packages.fix.lib]
 ignore = ["glibc-eac"]
 
