@@ -2,13 +2,13 @@
 operation = "copy"
 owner = "bluewy"
 source = "../../files/refind-any@belphegor/refind.conf"
-target = "/boot/efi/Microsoft/Boot/refind.conf"
+target = "/boot/efi/refind/refind.conf"
 
 [[install_files]]
 operation = "copy"
 owner = "bluewy"
 source = "../../files/refind-any@belphegor/extra.conf"
-target = "/boot/efi/Microsoft/Boot/extra.conf"
+target = "/boot/efi/refind/extra.conf"
 
 [[install_files]]
 operation = "copy"
