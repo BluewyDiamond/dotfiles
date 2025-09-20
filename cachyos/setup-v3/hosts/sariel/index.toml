@@ -21,8 +21,8 @@ source = [
    "../../modules/for-bluewy/lemurs/packages.toml",
    "../../modules/for-bluewy/lemurs/services.toml",
 
-   "../../users/bluewy/@sariel/files.toml",
-   "../../users/bluewy/@sariel/packages.toml",
+   "../../users/bluewy/+base-minimal/files.toml",
+   "../../users/bluewy/+base-minimal/packages.toml",
 
    "../../users/elisa/packages.toml",
    "../../users/elisa/services.toml",

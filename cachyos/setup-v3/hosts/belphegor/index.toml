@@ -18,8 +18,8 @@ source = [
    "../../modules/for-bluewy/bluetooth/packages.toml",
    "../../modules/for-bluewy/bluetooth/services.toml",
 
-   "../../users/bluewy/@sariel/files.toml",
-   "../../users/bluewy/@sariel/packages.toml",
+   "../../users/bluewy/+base-minimal/files.toml",
+   "../../users/bluewy/+base-minimal/packages.toml",
 
    "../../users/yellowy/@uriel/files.toml",
    "../../users/yellowy/@uriel/packages.toml",
