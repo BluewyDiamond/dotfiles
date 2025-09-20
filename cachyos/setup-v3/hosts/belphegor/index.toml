@@ -1,0 +1,26 @@
+source = [
+   "./files.toml",
+   "./packages.toml",
+   "./services.toml",
+
+   "../../modules/for-bluewy/cachyos/files.toml",
+   "../../modules/for-bluewy/cachyos/packages.toml",
+   "../../modules/for-bluewy/cachyos/packages-ignore.toml",
+   "../../modules/for-bluewy/cachyos/services.toml",
+   "../../modules/for-bluewy/locale/files.toml",
+   "../../modules/for-bluewy/locale/packages.toml",
+   "../../modules/for-bluewy/systemd-xdg-autostart-generator-disable/files.toml",
+   "../../modules/for-bluewy/wireless-regdb-es-region/files.toml",
+   "../../modules/for-bluewy/wireless-regdb-es-region/packages.toml",
+   "../../modules/for-bluewy/networkmanager/files.toml",
+   "../../modules/for-bluewy/networkmanager/packages.toml",
+   "../../modules/for-bluewy/networkmanager/services.toml",
+   "../../modules/for-bluewy/bluetooth/packages.toml",
+   "../../modules/for-bluewy/bluetooth/services.toml",
+
+   "../../users/bluewy/@sariel/files.toml",
+   "../../users/bluewy/@sariel/packages.toml",
+
+   "../../users/yellowy/@uriel/files.toml",
+   "../../users/yellowy/@uriel/packages.toml",
+]

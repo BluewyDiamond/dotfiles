@@ -1,0 +1,8 @@
+[[services]]
+enable = [
+   "systemd-timesyncd",
+
+   "screen-off",
+]
+path = "/etc/systemd/system"
+user = "root"

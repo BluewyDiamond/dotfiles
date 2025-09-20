@@ -82,10 +82,10 @@ window.bar-window {
       margin: $spacing;
 
       .indicator-widget {
-         margin-right: $spacing;
+         margin-left: $spacing;
 
          &:last-child {
-            margin-right: 0;
+            margin-left: 0;
          }
       }
    }
