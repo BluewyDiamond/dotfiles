@@ -22,8 +22,8 @@ std = ["zellij", "paru", "downgrade", "git", "less"]
 [packages.main-rice.text]
 std = ["terminus-font", "fastfetch", "starship"]
 
-[packages.hardware.service-text]
-std = ["power-profiles-daemon"]
+[packages.hardware.lib-service-text]
+std = ["power-profiles-daemon", "python-gobject"]
 
 [packages.hardware.text]
 std = ["wiremix", "bluetui"]
