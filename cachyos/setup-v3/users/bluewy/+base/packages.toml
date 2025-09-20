@@ -1,10 +1,9 @@
-[packages.lib]
-ignore = ["glibc-eac"]
+# [packages.domain.env]
+# :3
 
-[packages.make]
-std = ["rustup", "jdk21-openjdk"]
-
-[packages.audio]
+# tty
+#
+[packages.audio.service-text]
 std = [
    "wireplumber",
    "pipewire",
@@ -13,23 +12,29 @@ std = [
    "pipewire-jack",
 ]
 
-[packages.tty]
-ignore = ["xdg-ninja-git"]
-std = ["zellij", "paru", "downgrade", "git", "less", "openssh"]
+[packages.dev.lib-text]
+std = ["rustup", "jdk21-openjdk"]
 
-[packages.tty.rice]
+[packages.main.text]
+ignore = ["xdg-ninja-git"]
+std = ["zellij", "paru", "downgrade", "git", "less"]
+
+[packages.main-rice.text]
 std = ["terminus-font", "fastfetch", "starship"]
 
-[packages.tty.hardware-controller]
+[packages.hardware.service-text]
 std = ["power-profiles-daemon"]
 
-[packages.tty.network]
-std = ["zerotier-one"]
+[packages.hardware.text]
+std = ["wiremix", "bluetui"]
 
-[packages.tty.monitoring]
+[packages.hardware-monitor.text]
 std = ["bottom", "bandwhich", "nvtop"]
 
-[packages.tty.neovim]
+[packages.network.service-text]
+std = ["zerotier-one"]
+
+[packages.neovim.text]
 std = [
    "neovim",
    "stylua",
@@ -40,8 +45,15 @@ std = [
    "taplo-cli",
 ]
 
+[packages.other.service-text]
+std = ["openssh"]
 
-[packages.wayland.wm.niri]
+# gui
+#
+[packages.fix.lib]
+ignore = ["glibc-eac"]
+
+[packages.niri-base.gui]
 local = ["../../../aur/niri-no-systemd"]
 std = [
    "xwayland-satellite",
@@ -49,11 +61,7 @@ std = [
    "xdg-desktop-portal-gtk",
 ]
 
-[packages.wayland.wm.niri.wezterm]
-aur = ["wezterm-git"]
-std = ["libgit2"]
-
-[packages.wayland.wm.niri.extra]
+[packages.niri-extra.service-text-gui]
 aur = ["wayshot"]
 std = [
    "hyprlock",
@@ -72,7 +80,11 @@ std = [
    "cliphist",
 ]
 
-[packages.wayland.rice]
+[packages.wezterm.lib-gui]
+aur = ["wezterm-git"]
+std = ["libgit2"]
+
+[packages.rice.gui]
 aur = [
    "qt6ct-kde",
    "qt5ct-kde",
@@ -90,7 +102,7 @@ std = [
    "nwg-look",
 ]
 
-[packages.wayland.widgets]
+[packages.ags.lib-text-gui]
 aur = [
    "libastal-io-git",
    "libastal-git",
@@ -111,17 +123,17 @@ aur = [
 ]
 std = ["dart-sass", "fd", "bun-bin", "gjs", "gtk4-layer-shell"]
 
-[packages.wayland.gaming]
+[packages.gaming.gui]
 ignore = [
    "atlauncher-bin",
    "r2modman-bin",
    "osu-lazer-bin",
    "bettercrewlink-bin",
 ]
-std = [
-   "steam-native-runtime",
-   "heroic-games-launcher-bin",
+std = ["steam-native-runtime", "heroic-games-launcher-bin"]
 
+[packages.gaming.lib-text-gui]
+std = [
    "umu-launcher",
    "proton-cachyos",
    "proton-ge-custom-bin",
@@ -131,33 +143,32 @@ std = [
    "mangohud",
 ]
 
-[packages.wayland.files]
+[packages.file-viewer.lib-gui]
 std = ["nautilus", "vlc", "vlc-plugins-all", "loupe", "evince", "ark"]
 
-[packages.wayland.controllers]
-aur = ["overskride"]
-std = ["pavucontrol", "gparted", "gnome-disk-utility"]
+[packages.hardware-controller.gui]
+std = ["gparted"]
 
-[packages.wayland.monitor]
+[packages.monitor.gui]
 std = ["mission-center", "qpwgraph"]
 
-[packages.wayland.network]
+[packages.share.gui]
 std = ["localsend"]
 
-[packages.wayland.browse]
+[packages.browse.gui]
 std = ["librewolf-bin", "profile-sync-daemon", "thunderbird"]
 
-[packages.wayland.production]
+[packages.production.gui]
 aur = ["obs-pipewire-audio-capture"]
 ignore = ["vscodium"]
 std = ["krita", "obs-studio", "kdenlive", "audacity"]
 
-[packages.wayland.production.libreoffice]
+[packages.production-libreoffice.lib-gui]
 std = ["libreoffice-fresh", "hunspell-es_es"]
 
-[packages.wayland.socialmedia]
+[packages.socialmedia.gui]
 std = ["telegram-desktop"]
 
-[packages.wayland.socialmedia.discord]
+[packages.socialmedia-discord.lib-service-gui]
 aur = ["equibop-bin", "piper-tts-bin", "piper-voices-en-us"]
 std = ["speech-dispatcher"]
