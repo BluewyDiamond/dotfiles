@@ -4,7 +4,6 @@
 @mixin bar-button {
    background: $surface-container;
    padding: $spacing;
-   border-radius: $border-radius;
 }
 
 $states: (
@@ -39,7 +38,6 @@ window.bar-window {
          background: $surface;
          margin-right: $spacing;
          min-width: 12px;
-         border-radius: $border-radius;
          font-size: 0;
 
          &:last-child {
@@ -84,7 +82,7 @@ window.bar-window {
       .indicator-widget {
          margin-left: $spacing;
 
-         &:last-child {
+         &:first-child {
             margin-left: 0;
          }
       }

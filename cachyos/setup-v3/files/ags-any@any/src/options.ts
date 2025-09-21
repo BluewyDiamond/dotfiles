@@ -2,7 +2,7 @@ import icons from "./lib/icons";
 
 export default {
    bar: {
-      name: "ags_bar",
+      name: "mshell-bar",
       workspaces: { ids: [1, 2, 3, 4, 8, 9, 10] },
 
       niriWorkspaces: {
@@ -72,6 +72,6 @@ export default {
    },
 
    controlCenter: {
-      name: "ags_control_center",
+      name: "mshell-control-center",
    },
 };
