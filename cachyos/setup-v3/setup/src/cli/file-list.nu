@@ -238,9 +238,9 @@ def operate-item-install [item_install] {
 
       [_ _ _] => {
          log error (
-            $"not implemented for following operation=($item_install.operation)" +
-            $"source=($source_item_abs_path_existing_type_or_null)" +
-            $"target=($target_item_abs_path_existing_type_or_null)"
+            $"skipped as not implemented for following operation=($item_install.operation)" +
+            $" source=($source_item_abs_path_existing_type_or_null)" +
+            $" target=($target_item_abs_path_existing_type_or_null)"
          )
       }
    }
