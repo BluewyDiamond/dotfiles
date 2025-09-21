@@ -53,8 +53,8 @@ export default function ({ gdkmonitor }: { gdkmonitor: Gdk.Monitor }) {
       <window
          $={(self) => onCleanup(() => self.destroy())}
          gdkmonitor={gdkmonitor}
-         name="ags_notification_toasts"
-         namespace="ags_notification_toasts"
+         name={options.notificationToasts.name}
+         namespace={options.notificationToasts.name}
          cssClasses={["notification-toasts-window"]}
          anchor={Astal.WindowAnchor.TOP | Astal.WindowAnchor.RIGHT}
          exclusivity={Astal.Exclusivity.EXCLUSIVE}
@@ -84,5 +84,3 @@ export default function ({ gdkmonitor }: { gdkmonitor: Gdk.Monitor }) {
       </window>
    );
 }
-
-

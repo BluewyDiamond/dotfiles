@@ -33,8 +33,8 @@ export default function ({ gdkmonitor }: { gdkmonitor: Gdk.Monitor }) {
             onCleanup(() => self.destroy());
          }}
          gdkmonitor={gdkmonitor}
-         name="ags_control_center"
-         namespace="ags_control_center"
+         name={options.controlCenter.name}
+         namespace={options.controlCenter.name}
          cssClasses={["control-center-window"]}
          anchor={
             Astal.WindowAnchor.TOP |

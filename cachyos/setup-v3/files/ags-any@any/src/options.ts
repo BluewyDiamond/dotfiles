@@ -63,6 +63,7 @@ export default {
    },
 
    notificationToasts: {
+      name: "mshell-notification-toats",
       timeout: 5000,
 
       notification: {
