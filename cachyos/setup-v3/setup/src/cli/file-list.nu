@@ -165,6 +165,14 @@ def operate-item-install [item_install] {
       }
 
       [link _ null] => {
+         if not (should-link $item_install) {
+            log warning (
+               $"skipping as source=($item_install.source_item_abs_path) is not owned by ($item_install.owner)"
+            )
+
+            return
+         }
+
          let target_parent_dir_abs_path = $item_install.target_item_abs_path | path dirname
 
          if not ($target_parent_dir_abs_path | path exists) {
@@ -176,18 +184,42 @@ def operate-item-install [item_install] {
       }
 
       [link _ dir] => {
+         if not (should-link $item_install) {
+            log warning (
+               $"skipping as source=($item_install.source_item_abs_path) is not owned by ($item_install.owner)"
+            )
+
+            return
+         }
+
          log info $"installing to target=($item_install.target_item_abs_path)"
          rm -r $item_install.target_item_abs_path
          ln -s $item_install.source_item_abs_path $item_install.target_item_abs_path
       }
 
       [link _ file] => {
+         if not (should-link $item_install) {
+            log warning (
+               $"skipping as source=($item_install.source_item_abs_path) is not owned by ($item_install.owner)"
+            )
+
+            return
+         }
+
          log info $"installing to target=($item_install.target_item_abs_path)"
          rm $item_install.target_item_abs_path
          ln -s $item_install.source_item_abs_path $item_install.target_item_abs_path
       }
 
       [link _ symlink] => {
+         if not (should-link $item_install) {
+            log warning (
+               $"skipping as source=($item_install.source_item_abs_path) is not owned by ($item_install.owner)"
+            )
+
+            return
+         }
+
          if (
             ($item_install.target_item_abs_path | path expand) ==
             $item_install.source_item_abs_path
@@ -204,7 +236,13 @@ def operate-item-install [item_install] {
          ln -s $item_install.source_item_abs_path $item_install.target_item_abs_path
       }
 
-      [_ _ _] => { error make {msg: 'Not all patterns has been exhausted'} }
+      [_ _ _] => {
+         log error (
+            $"not implemented for following operation=($item_install.operation)" +
+            $"source=($source_item_abs_path_existing_type_or_null)" +
+            $"target=($target_item_abs_path_existing_type_or_null)"
+         )
+      }
    }
 }
 
@@ -220,4 +258,11 @@ def apply-ownership [owner: string target_item_abs_path: path] {
    }
 
    chown -R $"($owner):($owner)" $target_item_abs_path
+}
+
+# This is needed because it does not make sense for a user to have a symlink that they can not
+# access.
+def should-link [item_install] {
+   let source_owner = (ls -lD $item_install.source_item_abs_path | get 0 | get user)
+   $source_owner == $item_install.owner
 }
