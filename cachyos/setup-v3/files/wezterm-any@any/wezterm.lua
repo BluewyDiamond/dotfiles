@@ -142,11 +142,11 @@ config.colors = {
 
    selection_bg = "#404859",
 
-   scrollbar_thumb = "#282C34",
+   scrollbar_thumb = "#373C47",
    split = "#282C34",
 
    ansi = {
-      "#7f848e",
+      "#282C34",
       "#e06c75",
       "#98c379",
       "#e5c07b",
