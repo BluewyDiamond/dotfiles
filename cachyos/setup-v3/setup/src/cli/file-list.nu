@@ -73,7 +73,10 @@ def spawn-file [file_spawn] {
       }
 
       _ => {
-         error make {msg: 'Not all patterns has been exhausted'}
+         log error (
+            $"skipped as not implemeted for" +
+            " target_type=($target_item_abs_path_existing_type_or_null)"
+         )
       }
    }
 }
@@ -167,7 +170,7 @@ def operate-item-install [item_install] {
       [link _ null] => {
          if not (should-link $item_install) {
             log warning (
-               $"skipping as source=($item_install.source_item_abs_path) is not owned by ($item_install.owner)"
+               $"skipping operation=($item_install.operation) as source=($item_install.source_item_abs_path) is not owned by ($item_install.owner)"
             )
 
             return
@@ -186,7 +189,7 @@ def operate-item-install [item_install] {
       [link _ dir] => {
          if not (should-link $item_install) {
             log warning (
-               $"skipping as source=($item_install.source_item_abs_path) is not owned by ($item_install.owner)"
+               $"skipping operation=($item_install.operation) as source=($item_install.source_item_abs_path) is not owned by ($item_install.owner)"
             )
 
             return
@@ -200,7 +203,7 @@ def operate-item-install [item_install] {
       [link _ file] => {
          if not (should-link $item_install) {
             log warning (
-               $"skipping as source=($item_install.source_item_abs_path) is not owned by ($item_install.owner)"
+               $"skipping operation=($item_install.operation) as source=($item_install.source_item_abs_path) is not owned by ($item_install.owner)"
             )
 
             return
@@ -214,7 +217,7 @@ def operate-item-install [item_install] {
       [link _ symlink] => {
          if not (should-link $item_install) {
             log warning (
-               $"skipping as source=($item_install.source_item_abs_path) is not owned by ($item_install.owner)"
+               $"skipping operation=($item_install.operation) as source=($item_install.source_item_abs_path) is not owned by ($item_install.owner)"
             )
 
             return
