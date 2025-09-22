@@ -1,4 +1,4 @@
 [[services]]
-enable = ["getty@tty1", "systemd-timesyncd", "screen-off", "sshd"]
+enable = ["getty@tty1", "systemd-timesyncd", "sshd"]
 path = "/etc/systemd/system"
 user = "root"

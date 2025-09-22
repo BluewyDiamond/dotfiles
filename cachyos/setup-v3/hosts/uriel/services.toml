@@ -10,7 +10,6 @@ enable = [
    "systemd-timesyncd",
 
    "acer-battery-limiter",
-   "screen-off",
 ]
 path = "/etc/systemd/system"
 user = "root"

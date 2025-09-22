@@ -9,15 +9,3 @@ operation = "copy"
 owner = "bluewy"
 source = "../../files/refind-any@belphegor/extra.conf"
 target = "/boot/efi/refind/extra.conf"
-
-[[install_files]]
-operation = "copy"
-owner = "root"
-source = "../../files/screen-off-service-any@any/screen-off.service"
-target = "/etc/systemd/system/screen-off.service"
-
-[[install_files]]
-operation = "copy"
-owner = "root"
-source = "../../files/screen-off-service-any@any/screen-off.fish"
-target = "/usr/local/bin/screen-off.fish"

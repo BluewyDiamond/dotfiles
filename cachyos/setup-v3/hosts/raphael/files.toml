@@ -52,17 +52,3 @@ FallbackDNS=1.0.0.1
 """
 owner = "root"
 target = "/etc/resolved.conf"
-
-[[install_files]]
-operation = "copy"
-owner = "root"
-source = "../../files/screen-off-service-any@any/screen-off.service"
-target = "/etc/systemd/system/screen-off.service"
-
-[[install_files]]
-operation = "copy"
-owner = "root"
-source = "../../files/screen-off-service-any@any/screen-off.fish"
-target = "/usr/local/bin/screen-off.fish"
-
-
