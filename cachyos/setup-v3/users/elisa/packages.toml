@@ -1,3 +1,14 @@
+[packages.audio.service-text]
+std = [
+   "wireplumber",
+   "pipewire",
+   "pipewire-alsa",
+   "pipewire-pulse",
+   "pipewire-jack",
+]
+
+# the main thing
+#
 [packages]
 std = [
    "plasma-meta",
