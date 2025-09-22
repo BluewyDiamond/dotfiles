@@ -38,8 +38,35 @@ export def cleanup-service-list [config] {
          log info $"checking units with user=($service.user) and dir_abs_path=($service.dir_abs_path)"
          let service_enabled_list = get-service-enabled-list $service.dir_abs_path
 
+         let units_ignore_list = $service.enable_list | each {|service_enable|
+            if (is-admin) and ($service.user == root) {
+               systemctl list-dependencies --plain --no-pager $service_enable
+               | lines
+               | str trim
+               | where $it =~ '\.service$|\.socket$|\.timer$'
+            } else if (is-admin) {
+               systemctl --user -M $"($service.user)@" list-dependencies --plain --no-pager $service_enable
+               | lines
+               | str trim
+               | where $it =~ '\.service$|\.socket$|\.timer$'
+            } else if ($service.user == $env.LOGNAME) {
+               systemctl --user list-dependencies --plain --no-pager $service_enable
+               | lines
+               | str trim
+               | where $it =~ '\.service$|\.socket$|\.timer$'
+            } else {
+               log error "skipped as conditions are not fufilled"
+               error make {msg: "i cant have this fail atm"}
+            }
+         }
+         | flatten
+         | uniq
+
          let service_disable_list = $service_enabled_list | where {|service_enabled|
-            $service_enabled not-in $service.enable_list
+            (
+               ($service_enabled not-in $service.enable_list) and
+               ($service_enabled not-in $units_ignore_list)
+            )
          }
 
          if ($service_disable_list | is-empty) {
@@ -53,7 +80,7 @@ export def cleanup-service-list [config] {
             if (is-admin) and ($service.user == root) {
                systemctl disable $service_disable
             } else if (is-admin) {
-               sudo systemctl --user -M $"($service.user)@" disable $service_disable
+               systemctl --user -M $"($service.user)@" disable $service_disable
             } else if ($service.user == $env.LOGNAME) {
                systemctl --user disable $service_disable
             } else {
@@ -67,11 +94,13 @@ export def cleanup-service-list [config] {
 }
 
 def get-service-enabled-list [service_dir_abs_path: string] {
-   if not ($service_dir_abs_path | path exists) {
+   let g = $"($service_dir_abs_path)/*.wants/*"
+
+   if (glob $g | is-empty) {
       return []
    }
 
-   ls ($"($service_dir_abs_path)/*.wants/*" | into glob) | get name | each {|item|
-      $item | path basename | path parse | get stem
+   ls ($g | into glob) | get name | each {|item|
+      $item | path basename
    }
 }

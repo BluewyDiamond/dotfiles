@@ -12,5 +12,7 @@ std = [
 
    "btrfs-progs",
 
+   "iwd",
+
    "lact",
 ]
