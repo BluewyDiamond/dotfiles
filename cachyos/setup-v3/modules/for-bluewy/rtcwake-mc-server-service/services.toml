@@ -1,0 +1,4 @@
+[[services]]
+enable = ["rtcwake-mc-server"]
+path = "/etc/systemd/system"
+user = "root"

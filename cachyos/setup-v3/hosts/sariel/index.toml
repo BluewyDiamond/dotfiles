@@ -20,6 +20,8 @@ source = [
    "../../modules/for-bluewy/lemurs/files.toml",
    "../../modules/for-bluewy/lemurs/packages.toml",
    "../../modules/for-bluewy/lemurs/services.toml",
+   "../../modules/for-bluewy/rtcwake-mc-server-service/files.toml",
+   "../../modules/for-bluewy/rtcwake-mc-server-service/services.toml",
 
    "../../users/bluewy/+base-minimal/files.toml",
    "../../users/bluewy/+base-minimal/packages.toml",
