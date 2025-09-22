@@ -1,14 +1,5 @@
 # tty
 #
-[packages.audio.service-text]
-std = [
-   "wireplumber",
-   "pipewire",
-   "pipewire-alsa",
-   "pipewire-pulse",
-   "pipewire-jack",
-]
-
 [packages.dev.lib-text]
 std = ["rustup", "jdk21-openjdk"]
 

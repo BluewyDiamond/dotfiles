@@ -1,7 +1,7 @@
 [[services]]
 enable = [
-   "NetworkManager",
-   "systemd-resolved", # this or dnsmasq
+   "NetworkManager.service",
+   "systemd-resolved.service", # this or dnsmasq
 ]
 path = "/etc/systemd/system"
 user = "root"

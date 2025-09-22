@@ -1,4 +1,4 @@
 [[services]]
-enable = ["systemd-timesyncd"]
+enable = ["systemd-timesyncd.service"]
 path = "/etc/systemd/system"
 user = "root"

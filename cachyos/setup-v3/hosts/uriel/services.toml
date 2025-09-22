@@ -7,7 +7,7 @@ enable = [
    "nvidia-hibernate",
    "switcheroo-control",
 
-   "systemd-timesyncd",
+   "systemd-timesyncd.service",
 
    "acer-battery-limiter",
 ]

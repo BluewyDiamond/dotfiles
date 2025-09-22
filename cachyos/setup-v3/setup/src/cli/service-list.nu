@@ -35,7 +35,7 @@ export def enable-service-list [config] {
 export def cleanup-service-list [config] {
    $config.service_list | each {|service|
       try {
-         log info $"checking services with user=($service.user) and dir_abs_path=($service.dir_abs_path)"
+         log info $"checking units with user=($service.user) and dir_abs_path=($service.dir_abs_path)"
          let service_enabled_list = get-service-enabled-list $service.dir_abs_path
 
          let service_disable_list = $service_enabled_list | where {|service_enabled|
@@ -48,7 +48,7 @@ export def cleanup-service-list [config] {
          }
 
          $service_disable_list | each {|service_disable|
-            log info $"attempting to disable service=($service_disable) with user=($service.user)"
+            log info $"attempting to disable unit=($service_disable) with user=($service.user)"
 
             if (is-admin) and ($service.user == root) {
                systemctl disable $service_disable
@@ -71,7 +71,7 @@ def get-service-enabled-list [service_dir_abs_path: string] {
       return []
    }
 
-   ls ($"($service_dir_abs_path)/*.wants/*.service" | into glob) | get name | each {|item|
+   ls ($"($service_dir_abs_path)/*.wants/*" | into glob) | get name | each {|item|
       $item | path basename | path parse | get stem
    }
 }

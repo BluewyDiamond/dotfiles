@@ -1,16 +1,16 @@
 [[services]]
 enable = [
-   "getty@tty1",
+   "getty@tty1.service",
 
-   "systemd-networkd",
-   "systemd-network-generator",
-   "systemd-networkd-wait-online",
-   "systemd-resolved",
-   "iwd",
+   "systemd-networkd.service",
+   "systemd-network-generator.service",
+   "systemd-networkd-wait-online.service",
+   "systemd-resolved.service",
+   "iwd.service",
 
-   "systemd-timesyncd",
+   "systemd-timesyncd.service",
 
-   "lactd",
+   "lactd.service",
 ]
 path = "/etc/systemd/system"
 user = "root"
