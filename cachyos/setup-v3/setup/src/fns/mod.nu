@@ -11,11 +11,7 @@ export def collect-config-file-abs-path-list [config_file_abs_path: path]: nothi
             $config_file_abs_path_collected == $config_file_abs_path_to_process
          }
       ) {
-
-         error make {
-            msg: "Circular dependency detected."
-            help: $"The configuration file is part of a circular dependency: ($config_file_abs_path_to_process)"
-         }
+         continue
       }
 
       $config_file_abs_path_collected_list = (
