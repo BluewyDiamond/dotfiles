@@ -1,7 +1,0 @@
-include = [
-   "../../../users-modules/for-bluewy/+base/files.toml",
-   "../../../users-modules/for-any/+base/packages.toml",
-   "../../../users-modules/for-bluewy/+base/services.toml",
-
-   "./files.toml",
-]

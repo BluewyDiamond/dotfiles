@@ -1,22 +1,18 @@
-source = [
-   "../../modules/for-bluewy/cachyos/files.toml",
-   "../../modules/for-bluewy/cachyos/packages.toml",
-   "../../modules/for-bluewy/cachyos/packages-ignore.toml",
-   "../../modules/for-bluewy/cachyos/services.toml",
-   "../../modules/for-bluewy/locale-iso/files.toml",
-   "../../modules/for-bluewy/locale-iso/packages.toml",
-   "../../modules/for-bluewy/systemd-xdg-autostart-generator-disable/files.toml",
-   "../../modules/for-bluewy/wireless-regdb-es-region/files.toml",
-   "../../modules/for-bluewy/wireless-regdb-es-region/packages.toml",
-   "../../modules/for-bluewy/bluetooth/packages.toml",
-   "../../modules/for-bluewy/bluetooth/services.toml",
-
+include = [
    "./files.toml",
    "./packages.toml",
    "./services.toml",
 
-   "../../users/bluewy/+base/files.toml",
-   "../../users/bluewy/+base/packages.toml",
-   "../../users/bluewy/+base/services.toml",
-   "../../users/bluewy/@raphael/files.toml",
+   "../../hosts-modules/for-any/system/files.toml",
+   "../../hosts-modules/for-any/system/packages.toml",
+   "../../hosts-modules/for-any/system/services.toml",
+   "../../hosts-modules/for-any/locale-iso/files.toml",
+   "../../hosts-modules/for-any/locale-iso/packages.toml",
+   "../../hosts-modules/for-any/systemd-xdg-autostart-generator-disable/files.toml",
+   "../../hosts-modules/for-any/wireless-regdb-es-region/files.toml",
+   "../../hosts-modules/for-any/wireless-regdb-es-region/packages.toml",
+   "../../hosts-modules/for-any/bluetooth/packages.toml",
+   "../../hosts-modules/for-any/bluetooth/services.toml",
+
+   "../../users/bluewy/@any/index.toml",
 ]

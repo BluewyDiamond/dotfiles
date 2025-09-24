@@ -1,0 +1,4 @@
+include = [
+   "../../../users-modules/for-bluewy/+base-minimal/files.toml",
+   "../../../users-modules/for-any/+base-minimal/packages.toml",
+]

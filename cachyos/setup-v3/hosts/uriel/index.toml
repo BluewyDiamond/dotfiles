@@ -20,7 +20,7 @@ include = [
    "../../hosts-modules/for-any/lemurs/packages.toml",
    "../../hosts-modules/for-any/lemurs/services.toml",
 
-   "../../users/bluewy/@uriel/index.toml",
-   "../../users/yellowy/@any/index.toml",
+   "../../users/bluewy/@any/index.toml",
+   "../../users/yellowy/#server/index.toml",
    "../../users/elisa/@any/index.toml",
 ]

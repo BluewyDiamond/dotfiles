@@ -1,10 +1,10 @@
-[[install_files]]
+[[items-install]]
 operation = "copy"
 owner = "bluewy"
 source = "../../files/refind-any@belphegor/refind.conf"
 target = "/boot/efi/refind/refind.conf"
 
-[[install_files]]
+[[items-install]]
 operation = "copy"
 owner = "bluewy"
 source = "../../files/refind-any@belphegor/extra.conf"
