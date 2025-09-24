@@ -1,4 +1,0 @@
-include = [
-   "../../users-modules/for-yellowy/+base-minimal/files.toml",
-   "../../users-modules/for-any/+base-minimal/packages.toml",
-]

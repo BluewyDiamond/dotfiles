@@ -21,11 +21,6 @@ include = [
    "../../hosts-modules/for-any/lemurs/services.toml",
 
    "../../users/bluewy/@uriel/index.toml",
-
-   #
-   # "../../users/elisa/packages.toml",
-   # "../../users/elisa/services.toml",
-   #
-   # "../../users/yellowy/+base-minimal/files.toml",
-   # "../../users/yellowy/+base-minimal/packages.toml",
+   "../../users/yellowy/@any/index.toml",
+   "../../users/elisa/@any/index.toml",
 ]
