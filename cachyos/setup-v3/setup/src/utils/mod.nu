@@ -34,3 +34,9 @@ export def collect-values-by-key [
 
    $found_item_list | flatten
 }
+
+export def check-what-error [error label_text_list: list<string>] {
+   $error.json | from json | get labels | where {|label|
+      $label.text in $label_text_list
+   }
+}

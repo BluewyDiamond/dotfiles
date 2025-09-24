@@ -40,7 +40,7 @@ def "main install" [index_file_rel_path: path] {
    install-package-list $config
    spawn-file-list $config
    install-item-list $config
-   enable-service-list $config
+   enable-unit-list $config
 }
 
 def "main cleanup" [index_file_rel_path: path] {

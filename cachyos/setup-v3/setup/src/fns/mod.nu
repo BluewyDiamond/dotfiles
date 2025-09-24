@@ -68,9 +68,9 @@ export def merge-config-list [
       file_spawn_list: ($config_list | get file_spawn_list | flatten)
       item_install_list: ($config_list | get item_install_list | flatten)
 
-      service_list: (
+      unit_group_list: (
          $config_list
-         | get service_list
+         | get unit_group_list
          | flatten
          | group-by {|row|
             $"($row.user):($row.dir_abs_path)"
