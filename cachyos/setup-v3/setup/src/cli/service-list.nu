@@ -48,7 +48,17 @@ export def cleanup-service-list [config] {
    $config.unit_group_list | each {|unit_group|
       try {
          log info $"checking units with user=($unit_group.user) and dir_abs_path=($unit_group.dir_abs_path)"
-         let unit_enabled_list = get-unit-enabled-list-or-null $unit_group.dir_abs_path
+
+         let unit_enabled_list = (
+            let unit_enabled_list_or_null = get-unit-enabled-list-or-null $unit_group.dir_abs_path;
+
+            if $unit_enabled_list_or_null == null {
+               log error $"skipping as most likely permissions are insufficient"
+               return
+            } else {
+               $unit_enabled_list_or_null
+            }
+         )
 
          let units_ignore_list = $unit_group.enable_list | each {|unit_enable|
             if (is-admin) and ($unit_group.user == root) {
@@ -74,27 +84,27 @@ export def cleanup-service-list [config] {
          | flatten
          | uniq
 
-         let service_disable_list = $unit_enabled_list | where {|unit_enabled|
+         let unit_disable_list = $unit_enabled_list | where {|unit_enabled|
             (
                ($unit_enabled not-in $unit_group.enable_list) and
                ($unit_enabled not-in $units_ignore_list)
             )
          }
 
-         if ($service_disable_list | is-empty) {
+         if ($unit_disable_list | is-empty) {
             log info $"skipping as there is no services to cleanup"
             return
          }
 
-         $service_disable_list | each {|service_disable|
-            log info $"attempting to disable unit=($service_disable) with user=($unit_group.user)"
+         $unit_disable_list | each {|unit_disable|
+            log info $"attempting to disable unit=($unit_disable) with user=($unit_group.user)"
 
             if (is-admin) and ($unit_group.user == root) {
-               systemctl disable $service_disable
+               systemctl disable $unit_disable
             } else if (is-admin) {
-               systemctl --user -M $"($unit_group.user)@" disable $service_disable
+               systemctl --user -M $"($unit_group.user)@" disable $unit_disable
             } else if ($unit_group.user == $env.LOGNAME) {
-               systemctl --user disable $service_disable
+               systemctl --user disable $unit_disable
             } else {
                log error "skipped as conditions are not fufilled"
             }
