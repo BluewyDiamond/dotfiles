@@ -1,12 +1,12 @@
 [[items-install]]
 operation = "copy"
-owner = "bluewy"
+owner = "root"
 source = "../../files/refind-any@raphael/refind.conf"
 target = "/boot/efi/refind/refind.conf"
 
 [[items-install]]
 operation = "copy"
-owner = "bluewy"
+owner = "root"
 source = "../../files/refind-any@raphael/extra.conf"
 target = "/boot/efi/refind/extra.conf"
 
