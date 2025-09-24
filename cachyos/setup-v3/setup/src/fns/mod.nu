@@ -13,17 +13,17 @@ export def collect-config-file-abs-path-list [config_file_abs_path: path]: nothi
       )
 
       let config_file_rel_path_list = open $config_file_abs_path_to_process | get include
+      let config_file_dir_path_to_process = $config_file_abs_path_to_process | path dirname
 
-      let index_file_abs_path_list_found = $config_file_rel_path_list
-      | each {|index_file_rel_path|
-         $config_file_abs_path_to_process
-         | path dirname
-         | path join $index_file_rel_path
+      let config_file_abs_path_found_list = $config_file_rel_path_list
+      | each {|config_file_rel_path|
+         $config_file_dir_path_to_process
+         | path join $config_file_rel_path
          | path expand
       }
 
       $config_file_abs_path_collected_list = (
-         $config_file_abs_path_collected_list | append $index_file_abs_path_list_found
+         $config_file_abs_path_collected_list | append $config_file_abs_path_found_list
       )
    }
 
