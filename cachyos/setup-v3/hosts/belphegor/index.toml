@@ -5,7 +5,6 @@ source = [
 
    "../../modules/for-bluewy/cachyos/files.toml",
    "../../modules/for-bluewy/cachyos/packages.toml",
-   "../../modules/for-bluewy/cachyos/packages-ignore.toml",
    "../../modules/for-bluewy/cachyos/services.toml",
    "../../modules/for-bluewy/locale-ansi/files.toml",
    "../../modules/for-bluewy/locale-ansi/packages.toml",

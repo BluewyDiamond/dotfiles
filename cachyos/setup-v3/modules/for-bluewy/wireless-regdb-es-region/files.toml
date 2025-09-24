@@ -1,4 +1,0 @@
-[[spawn_files]]
-content = "WIRELESS_REGDOM=\"ES\""
-owner = "root"
-target = "/etc/conf.d/wireless-regdom"

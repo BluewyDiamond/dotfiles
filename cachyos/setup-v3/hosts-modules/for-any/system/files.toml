@@ -1,0 +1,11 @@
+[[items-install]]
+operation = "copy"
+owner = "root"
+source = "../../../files/booster-any@any/booster.yaml"
+target = "/etc/booster.yaml"
+
+[[items-install]]
+operation = "copy"
+owner = "root"
+source = "../../../files/libinput-any@any/local-overrides.quirks"
+target = "/etc/libinput/local-overrides.quirks"

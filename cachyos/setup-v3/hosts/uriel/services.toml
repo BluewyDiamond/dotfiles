@@ -1,4 +1,4 @@
-[[services]]
+[[units]]
 enable = [
    "systemd-timesyncd.service",
    "acer-battery-limiter.service",

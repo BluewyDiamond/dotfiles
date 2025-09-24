@@ -5,7 +5,6 @@ use std/log
 use ./cli/file-list.nu *
 use ./cli/package-list.nu *
 use ./cli/service-list.nu *
-use ./extractors/config.nu *
 use ./fns *
 
 # TODO: fix requirements

@@ -1,0 +1,147 @@
+packages = [
+   { from = "std", name = "pipewire" },
+   { from = "std", name = "pipewire-alsa" },
+   { from = "std", name = "pipewire-pulse" },
+   { from = "std", name = "pipewire-jack" },
+   { from = "std", name = "wireplumber" },
+
+   { from = "std", name = "rustup" },
+   { from = "std", name = "jdk21-openjdk" },
+
+   { from = "std", name = "zellij" },
+   { from = "std", name = "paru" },
+   { from = "std", name = "downgrade" },
+   { from = "std", name = "git" },
+   { from = "std", name = "less" },
+   { from = "std", name = "terminus-font" },
+   { from = "std", name = "fastfetch" },
+   { from = "std", name = "starship" },
+
+   { from = "std", name = "power-profiles-daemon" },
+   { from = "std", name = "python-gobject" },
+
+   { from = "std", name = "wiremix" },
+   { from = "std", name = "bluetui" },
+
+   { from = "std", name = "bottom" },
+   { from = "std", name = "bandwhich" },
+   { from = "std", name = "nvtop" },
+
+   { from = "std", name = "zerotier-one" },
+
+   { from = "std", name = "neovim" },
+   { from = "std", name = "stylua" },
+   { from = "std", name = "ripgrep" },
+   { from = "std", name = "fzf" },
+   { from = "std", name = "prettier" },
+   { from = "std", name = "eslint_d" },
+   { from = "std", name = "taplo-cli" },
+
+   { from = "std", name = "openssh" },
+
+   { from = "std", name = "flatpak" },
+
+   { from = "aur", name = "waydroid-image-gapps", ignore = true },
+   { from = "std", name = "waydroid", ignore = true },
+   { from = "aur", name = "glibc-eac", ignore = true },
+
+   { from = "lcl", name = "niri-no-systemd", path = "../../../aur/niri-no-systemd" },
+   { from = "std", name = "xwayland-satellite" },
+   { from = "std", name = "xdg-desktop-portal-gnome" },
+   { from = "std", name = "xdg-desktop-portal-gtk" },
+
+   { from = "aur", name = "wayshot" },
+   { from = "std", name = "hyprlock" },
+   { from = "std", name = "hypridle" },
+   { from = "std", name = "hyprpicker" },
+   { from = "std", name = "wayland-pipewire-idle-inhibit" },
+   { from = "std", name = "pantheon-polkit-agent" },
+   { from = "std", name = "keepassxc" },
+   { from = "std", name = "uwsm" },
+   { from = "std", name = "fuzzel" },
+   { from = "std", name = "slurp" },
+   { from = "std", name = "satty" },
+   { from = "std", name = "cliphist" },
+
+   { from = "aur", name = "wezterm-git" },
+   { from = "std", name = "libgit2" },
+
+   { from = "aur", name = "qt6ct-kde" },
+   { from = "aur", name = "qt5ct-kde" },
+   { from = "aur", name = "bibata-cursor-theme-bin" },
+   { from = "aur", name = "candy-icons-git" },
+   { from = "aur", name = "sweet-folders-icons-git" },
+   { from = "std", name = "font-manager" },
+   { from = "std", name = "ttf-iosevkaterm-nerd" },
+   { from = "std", name = "kvantum" },
+   { from = "std", name = "kvantum-qt5" },
+   { from = "std", name = "nwg-look" },
+
+   { from = "aur", name = "libastal-io-git" },
+   { from = "aur", name = "libastal-git" },
+   { from = "aur", name = "libastal-4-git" },
+   { from = "aur", name = "libastal-gjs-git" },
+   { from = "aur", name = "libastal-hyprland-git" },
+   { from = "aur", name = "libastal-battery-git" },
+   { from = "aur", name = "libastal-notifd-git" },
+   { from = "aur", name = "libastal-wireplumber-git" },
+   { from = "aur", name = "libastal-apps-git" },
+   { from = "aur", name = "libastal-powerprofiles-git" },
+   { from = "aur", name = "libastal-tray-git" },
+   { from = "aur", name = "libastal-niri-git" },
+   { from = "aur", name = "aylurs-gtk-shell-git" },
+   { from = "std", name = "dart-sass" },
+   { from = "std", name = "fd" },
+   { from = "std", name = "bun-bin" },
+   { from = "std", name = "gjs" },
+   { from = "std", name = "gtk4-layer-shell" },
+
+   { from = "aur", name = "atlauncher-bin", ignore = true },
+   { from = "aur", name = "r2modman-bin", ignore = true },
+   { from = "aur", name = "osu-lazer-bin", ignore = true },
+   { from = "aur", name = "bettercrewlink-bin", ignore = true },
+   { from = "std", name = "steam-native-runtime" },
+   { from = "std", name = "heroic-games-launcher-bin" },
+
+   { from = "std", name = "umu-launcher" },
+   { from = "std", name = "proton-cachyos" },
+   { from = "std", name = "proton-ge-custom-bin" },
+   { from = "std", name = "protontricks" },
+   { from = "std", name = "gamescope" },
+   { from = "std", name = "mangohud" },
+
+   { from = "std", name = "nautilus" },
+   { from = "std", name = "vlc" },
+   { from = "std", name = "vlc-plugins-all" },
+   { from = "std", name = "loupe" },
+   { from = "std", name = "evince" },
+   { from = "std", name = "ark" },
+
+   { from = "std", name = "gparted" },
+
+   { from = "std", name = "mission-center" },
+   { from = "std", name = "qpwgraph" },
+
+   { from = "std", name = "localsend" },
+
+   { from = "std", name = "librewolf-bin" },
+   { from = "std", name = "profile-sync-daemon" },
+   { from = "std", name = "thunderbird" },
+
+   { from = "std", name = "vscodium", ignore = true },
+   { from = "aur", name = "obs-pipewire-audio-capture" },
+   { from = "std", name = "obs-studio" },
+   { from = "std", name = "audacity" },
+   { from = "std", name = "krita" },
+   { from = "std", name = "kdenlive" },
+
+   { from = "std", name = "libreoffice-fresh" },
+   { from = "std", name = "hunspell-es_es" },
+
+   { from = "std", name = "telegram-desktop" },
+
+   { from = "aur", name = "equibop-bin" },
+   { from = "aur", name = "piper-tts-bin" },
+   { from = "aur", name = "piper-voices-en-us" },
+   { from = "std", name = "speech-dispatcher" },
+]
