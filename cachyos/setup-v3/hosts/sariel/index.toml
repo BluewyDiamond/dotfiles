@@ -5,7 +5,6 @@ include = [
 
    "../../hosts-modules/for-any/system/files.toml",
    "../../hosts-modules/for-any/system/packages.toml",
-   "../../hosts-modules/for-any/system/packages-ignore.toml",
    "../../hosts-modules/for-any/system/services.toml",
    "../../hosts-modules/for-any/locale-iso/files.toml",
    "../../hosts-modules/for-any/locale-iso/packages.toml",
