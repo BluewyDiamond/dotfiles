@@ -8,11 +8,23 @@ export def collect-config-file-abs-path-list [config_file_abs_path: path]: nothi
       let config_file_abs_path_to_process = $config_file_abs_path_to_process_list | first
       $config_file_abs_path_to_process_list = $config_file_abs_path_to_process_list | skip 1
 
+      if (
+         $config_file_abs_path_collected_list | any {|config_file_abs_path_collected|
+            $config_file_abs_path_collected == $config_file_abs_path_to_process
+         }
+      ) {
+
+         error make {
+            msg: "Circular dependency detected."
+            help: $"The configuration file is part of a circular dependency: ($config_file_abs_path_to_process)"
+         }
+      }
+
       $config_file_abs_path_collected_list = (
          $config_file_abs_path_collected_list | append $config_file_abs_path_to_process
       )
 
-      let config_file_rel_path_list = open $config_file_abs_path_to_process | get include
+      let config_file_rel_path_list = open $config_file_abs_path_to_process | get -o include | default []
       let config_file_dir_path_to_process = $config_file_abs_path_to_process | path dirname
 
       let config_file_abs_path_found_list = $config_file_rel_path_list
@@ -22,8 +34,8 @@ export def collect-config-file-abs-path-list [config_file_abs_path: path]: nothi
          | path expand
       }
 
-      $config_file_abs_path_collected_list = (
-         $config_file_abs_path_collected_list | append $config_file_abs_path_found_list
+      $config_file_abs_path_to_process_list = (
+         $config_file_abs_path_to_process_list | append $config_file_abs_path_found_list
       )
    }
 
