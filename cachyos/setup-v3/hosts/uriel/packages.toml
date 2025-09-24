@@ -1,22 +1,25 @@
-[packages]
-aur = ["acer-wmi-battery-dkms"]
-std = [
-   "intel-ucode",
-   "linux-firmware",
-   "sof-firmware",
+packages = [
+   { from = "std", name = "linux-firmware" },
+   { from = "std", name = "sof-firmware" },
+   { from = "std", name = "intel-ucode" },
+   { from = "std", name = "linux-cachyos-headers" },     # needed for acer-battery-limit
+   { from = "std", name = "linux-cachyos-nvidia-open" },
+   { from = "std", name = "linux-cachyos-lts-headers" },
+   { from = "std", name = "linux-cachyos-nvidia-lts-open" },
+   { from = "aur", name = "acer-wmi-battery-dkms" },
 
-   "linux-cachyos-headers",
-   "linux-cachyos-nvidia-open",
-   "linux-cachyos-lts-headers",
-   "linux-cachyos-lts-nvidia-open",
+   # by chwd
+   #
+   { from = "std", name = "intel-gmmlib" },
+   { from = "std", name = "intel-media-driver" },
+   { from = "std", name = "lib32-opencl-nvidia" },
+   { from = "std", name = "opencl-nvidia" },
+   { from = "std", name = "switcheroo-control" },
+   { from = "std", name = "nvidia-prime" },
+   { from = "std", name = "nvidia-settings" },
 
-   # provide by chwd
-   "intel-gmmlib",
-   "intel-media-driver",
-   "lib32-opencl-nvidia",
-   "libva-nvidia-driver",
-   "opencl-nvidia",
-   "switcheroo-control",
-   "nvidia-prime",
-   "nvidia-settings",
+   # other
+   #
+   { from = "std", name = "hello", ignore = true },
+   { from = "local", name = "goodbye", path = "../../aur/x" },
 ]

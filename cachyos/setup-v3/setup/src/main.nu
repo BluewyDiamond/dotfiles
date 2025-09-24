@@ -11,31 +11,12 @@ use ./fns *
 # TODO: fix requirements
 # currently -> pactree, chown, diff, unlink, ln
 
-def main [index_file_rel_path: path] {
-   let index_file_abs_path_list = collect-index-file-abs-path-list $index_file_rel_path
-   let config_file_abs_path_list = collect-config-file-abs-path-list $index_file_abs_path_list
-
-   let config_list = (
-      $config_file_abs_path_list | each {|config_file_abs_path|
-         extract-config $config_file_abs_path
-      }
-   )
-
-   let config = merge-config-list $config_list
-   $config
+def main [config_file_rel_path: path] {
+   build-config ($config_file_rel_path | path expand)
 }
 
-def "main install" [index_file_rel_path: path] {
-   let index_file_abs_path_list = collect-index-file-abs-path-list $index_file_rel_path
-   let config_file_abs_path_list = collect-config-file-abs-path-list $index_file_abs_path_list
-
-   let config_list = (
-      $config_file_abs_path_list | each {|config_file_abs_path|
-         extract-config $config_file_abs_path
-      }
-   )
-
-   let config = merge-config-list $config_list
+def "main install" [config_file_rel_path: path] {
+   let config = build-config ($config_file_rel_path | path expand)
 
    install-package-list $config
    spawn-file-list $config
@@ -43,17 +24,8 @@ def "main install" [index_file_rel_path: path] {
    enable-unit-list $config
 }
 
-def "main cleanup" [index_file_rel_path: path] {
-   let index_file_abs_path_list = collect-index-file-abs-path-list $index_file_rel_path
-   let config_file_abs_path_list = collect-config-file-abs-path-list $index_file_abs_path_list
-
-   let config_list = (
-      $config_file_abs_path_list | each {|config_file_abs_path|
-         extract-config $config_file_abs_path
-      }
-   )
-
-   let config = merge-config-list $config_list
+def "main cleanup" [config_file_rel_path: path] {
+   let config = build-config ($config_file_rel_path | path expand)
 
    cleanup-package-list $config
    cleanup-service-list $config

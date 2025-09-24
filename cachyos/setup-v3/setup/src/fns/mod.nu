@@ -1,88 +1,126 @@
 use ../extractors/index.nu *
 
-export def collect-index-file-abs-path-list [index_file_rel_path: path]: nothing -> list<path> {
-   mut index_file_abs_path_list_to_process = [($index_file_rel_path | path expand)]
-   mut index_file_abs_path_list_collected = []
+export def collect-config-file-abs-path-list [config_file_abs_path: path]: nothing -> list<path> {
+   mut config_file_abs_path_to_process_list = [$config_file_abs_path]
+   mut config_file_abs_path_collected_list = []
 
-   while ($index_file_abs_path_list_to_process | is-not-empty) {
-      let index_file_abs_path_to_process = $index_file_abs_path_list_to_process | first
-      $index_file_abs_path_list_to_process = $index_file_abs_path_list_to_process | skip 1
+   while ($config_file_abs_path_to_process_list | is-not-empty) {
+      let config_file_abs_path_to_process = $config_file_abs_path_to_process_list | first
+      $config_file_abs_path_to_process_list = $config_file_abs_path_to_process_list | skip 1
 
-      $index_file_abs_path_list_collected = (
-         $index_file_abs_path_list_collected | append $index_file_abs_path_to_process
+      $config_file_abs_path_collected_list = (
+         $config_file_abs_path_collected_list | append $config_file_abs_path_to_process
       )
 
-      let index_file_rel_path_list = extract-index-rel-path-list $index_file_abs_path_to_process
+      let config_file_rel_path_list = open $config_file_abs_path_to_process | get include
 
-      let index_file_abs_path_list_found = $index_file_rel_path_list
-      | where {|index_file_rel_path|
-         $"($index_file_rel_path | path basename)" == "index.toml"
-      }
+      let index_file_abs_path_list_found = $config_file_rel_path_list
       | each {|index_file_rel_path|
-         $index_file_abs_path_to_process
-         | path dirname
-         | path join $index_file_rel_path
-         | path expand # in this scenario the path is correctly formed and path expand is used to prettify it
-         # example: /users/user1/../user2 -> /users/user2
-      }
-
-      $index_file_abs_path_list_collected = (
-         $index_file_abs_path_list_collected | append $index_file_abs_path_list_found
-      )
-   }
-
-   $index_file_abs_path_list_collected
-}
-
-export def collect-config-file-abs-path-list [index_file_abs_path: list<path>]: nothing -> list<path> {
-   $index_file_abs_path
-   | each {|index_file_abs_path|
-      extract-index-rel-path-list $index_file_abs_path
-      | where {|index_file_rel_path|
-         $"($index_file_rel_path | path basename)" != "index.toml"
-      }
-      | each {|index_file_rel_path|
-         $index_file_abs_path
+         $config_file_abs_path_to_process
          | path dirname
          | path join $index_file_rel_path
          | path expand
       }
+
+      $config_file_abs_path_collected_list = (
+         $config_file_abs_path_collected_list | append $index_file_abs_path_list_found
+      )
    }
-   | flatten
+
+   $config_file_abs_path_collected_list
 }
 
-export def merge-config-list [
-   config_list: any
-] {
-   # not using get -o because it should be garanteed
-   # as long as we passing the value of the getter
-   # futhermore if typing was not lost we could have accessed the values directly
-   {
-      package: {
-         ignore_list: ($config_list | get package.ignore_list | flatten | uniq)
-         std_list: ($config_list | get package.std_list | flatten | uniq)
-         aur_list: ($config_list | get package.aur_list | flatten | uniq)
-         local_abs_path_list: ($config_list | get package.local_dir_abs_path_list | flatten | uniq)
+export def build-config [
+   config_file_rel_path: path
+]: nothing -> record<package_list: list<record<from: string, name: string, ignore: bool>>, file_spawn_list: list<record<owner: string, target_file_abs_path: path, content: string>>, item_install_list: list<record<operation: string, owner: string, source_item_abs_path: path, target_item_abs_path: path>>, unit_group_list: list<record<user: string, dir_abs_path: string, enable_list: list<string>>>> {
+   let config_file_abs_path_list = collect-config-file-abs-path-list $config_file_rel_path
+   $config_file_abs_path_list | print
+   return
+
+   let config_raw_group_list = $config_file_abs_path_list | each {|config_file_abs_path|
+      {
+         config_file_rel_path: $config_file_abs_path
+         config_raw: (open $config_file_abs_path)
       }
+   }
 
-      file_spawn_list: ($config_list | get file_spawn_list | flatten)
-      item_install_list: ($config_list | get item_install_list | flatten)
+   let file_spawn_list = $config_raw_group_list.config_raw | each {|config_raw|
+      $config_raw
+      | get -o spawn-files
+      | default []
+      | each {|spawn_file|
+         {
+            owner: ($spawn_file | get owner)
+            target_file_abs_path: ($spawn_file | get target)
+            content: ($spawn_file | get content)
+         }
+      }
+   } | flatten | uniq
 
-      unit_group_list: (
-         $config_list
-         | get unit_group_list
-         | flatten
-         | group-by {|row|
-            $"($row.user):($row.dir_abs_path)"
+   let item_install_list = $config_raw_group_list | each {|config_raw_group|
+      let config_dir_rel_path = $config_raw_group.config_file_rel_path | path dirname
+
+      $config_raw_group.config_raw
+      | get -o install-items
+      | default []
+      | each {|install_item|
+         {
+            operation: ($install_item | get operation)
+            owner: ($install_item | get owner)
+
+            source_item_abs_path: (
+               $config_dir_rel_path
+               | path join ($install_item | get source)
+               | path expand
+            )
+
+            target_item_abs_path: ($install_item | get target)
          }
-         | values
-         | each {|group|
-            {
-               user: $group.0.user
-               dir_abs_path: $group.0.dir_abs_path
-               enable_list: ($group | get enable_list | flatten | uniq)
-            }
+      }
+   } | flatten | uniq
+
+   let package_list = $config_raw_group_list.config_raw | each {|config_raw|
+      $config_raw | get -o packages | default []
+   } | flatten | uniq
+
+   let package_duplicate_list = $package_list.name | uniq -d
+
+   if ($package_duplicate_list | is-not-empty) {
+      error make {
+         msg: "Duplicate package name is not allowed."
+         help: $"The following package(s) are duplicated: ($package_duplicate_list | str join ', ')"
+      }
+   }
+
+   let unit_group_list = $config_raw_group_list.config_raw | each {|config_raw|
+      $config_raw
+      | get -o services
+      | default []
+      | each {|service|
+         {
+            user: ($service | get user)
+            dir_abs_path: ($service | get path)
+            enable_list: ($service | get enable)
          }
-      )
+      }
+   }
+   | flatten
+   | group-by {|row|
+      $"($row.user):($row.dir_abs_path)"
+   }
+   | values
+   | each {|group|
+      {
+         user: $group.0.user
+         dir_abs_path: $group.0.dir_abs_path
+         enable_list: ($group | get enable_list | flatten | uniq)
+      }
+   }
+
+   {
+      file_spawn_list: $file_spawn_list
+      item_install_list: $item_install_list
+      package_list: $package_list
+      unit_group_list: $unit_group_list
    }
 }

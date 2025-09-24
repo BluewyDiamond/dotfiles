@@ -1,15 +1,15 @@
 [[services]]
 enable = [
-   # provided by chwd
-   "nvidia-resume",
-   "nvidia-suspend",
-   "nvidia-powerd",
-   "nvidia-hibernate",
-   "switcheroo-control",
-
    "systemd-timesyncd.service",
+   "acer-battery-limiter.service",
 
-   "acer-battery-limiter",
+   # by chwd
+   #
+   "nvidia-resume.service",
+   "nvidia-suspend.service",
+   "nvidia-powerd.service",
+   "nvidia-hibernate.service",
+   "switcheroo-control.service",
 ]
 path = "/etc/systemd/system"
 user = "root"
