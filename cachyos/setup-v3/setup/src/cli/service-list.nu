@@ -35,7 +35,7 @@ export def enable-unit-list [config] {
             } else if ($unit_group.user == $env.LOGNAME) {
                systemctl --user enable $unit_enable
             } else {
-               log error "skipped as conditions are not fufilled"
+               log error "skipped as there is no means to do so"
             }
          }
       } catch {|error|
@@ -106,7 +106,7 @@ export def cleanup-service-list [config] {
             } else if ($unit_group.user == $env.LOGNAME) {
                systemctl --user disable $unit_disable
             } else {
-               log error "skipped as conditions are not fufilled"
+               log error "skipped as there is no means to do so"
             }
          }
       } catch {|error|
