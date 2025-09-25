@@ -1,34 +1,52 @@
 packages = [
+   # console.audio
+   #
    { from = "std", name = "pipewire" },
    { from = "std", name = "pipewire-alsa" },
    { from = "std", name = "pipewire-pulse" },
    { from = "std", name = "pipewire-jack" },
    { from = "std", name = "wireplumber" },
 
+   # console.dev
+   #
    { from = "std", name = "rustup" },
    { from = "std", name = "jdk21-openjdk" },
 
+   # console.rice
+   #
+   { from = "std", name = "terminus-font" },
+   { from = "std", name = "fastfetch" },
+   { from = "std", name = "starship" },
+
+   # console.tools
+   #
    { from = "std", name = "zellij" },
    { from = "std", name = "paru" },
    { from = "std", name = "downgrade" },
    { from = "std", name = "git" },
    { from = "std", name = "less" },
-   { from = "std", name = "terminus-font" },
-   { from = "std", name = "fastfetch" },
-   { from = "std", name = "starship" },
+   { from = "std", name = "openssh" },
 
+   # console.hardware
+   #
    { from = "std", name = "power-profiles-daemon" },
    { from = "std", name = "python-gobject" },
 
    { from = "std", name = "wiremix" },
    { from = "std", name = "bluetui" },
 
+   # console.monitor
+   #
    { from = "std", name = "bottom" },
    { from = "std", name = "bandwhich" },
    { from = "std", name = "nvtop" },
 
+   # console.network
+   #
    { from = "std", name = "zerotier-one" },
 
+   # console.neovim
+   #
    { from = "std", name = "neovim" },
    { from = "std", name = "stylua" },
    { from = "std", name = "ripgrep" },
@@ -37,19 +55,30 @@ packages = [
    { from = "std", name = "eslint_d" },
    { from = "std", name = "taplo-cli" },
 
-   { from = "std", name = "openssh" },
-
+   # console.other
+   #
+   { from = "aur", name = "xdg-ninja-git", ignore = true },
    { from = "std", name = "flatpak" },
 
-   { from = "aur", name = "waydroid-image-gapps", ignore = true },
-   { from = "std", name = "waydroid", ignore = true },
+
+   # gui.fix
+   #
    { from = "aur", name = "glibc-eac", ignore = true },
 
+   # gui.android
+   #
+   { from = "aur", name = "waydroid-image-gapps", ignore = true },
+   { from = "std", name = "waydroid", ignore = true },
+
+   # gui.niri.base
+   #
    { from = "lcl", name = "niri-no-systemd", path = "../../../aur/niri-no-systemd" },
    { from = "std", name = "xwayland-satellite" },
    { from = "std", name = "xdg-desktop-portal-gnome" },
    { from = "std", name = "xdg-desktop-portal-gtk" },
 
+   # gui.niri.extra
+   #
    { from = "aur", name = "wayshot" },
    { from = "std", name = "hyprlock" },
    { from = "std", name = "hypridle" },
@@ -66,6 +95,8 @@ packages = [
    { from = "aur", name = "wezterm-git" },
    { from = "std", name = "libgit2" },
 
+   # gui.rice
+   #
    { from = "aur", name = "qt6ct-kde" },
    { from = "aur", name = "qt5ct-kde" },
    { from = "aur", name = "bibata-cursor-theme-bin" },
@@ -77,6 +108,8 @@ packages = [
    { from = "std", name = "kvantum-qt5" },
    { from = "std", name = "nwg-look" },
 
+   # gui.widgets
+   #
    { from = "aur", name = "libastal-io-git" },
    { from = "aur", name = "libastal-git" },
    { from = "aur", name = "libastal-4-git" },
@@ -96,6 +129,8 @@ packages = [
    { from = "std", name = "gjs" },
    { from = "std", name = "gtk4-layer-shell" },
 
+   # gui.gaming
+   #
    { from = "aur", name = "atlauncher-bin", ignore = true },
    { from = "aur", name = "r2modman-bin", ignore = true },
    { from = "aur", name = "osu-lazer-bin", ignore = true },
@@ -110,6 +145,8 @@ packages = [
    { from = "std", name = "gamescope" },
    { from = "std", name = "mangohud" },
 
+   # gui.apps
+   #
    { from = "std", name = "nautilus" },
    { from = "std", name = "vlc" },
    { from = "std", name = "vlc-plugins-all" },
