@@ -27,7 +27,11 @@ export def install-package-list [package_group_list] {
             $package_group_std_missing.name
          }
 
-         sudo pacman -S ...$package_std_missing
+         try {
+            pacman -S ...$package_std_missing
+         } catch {|$error|
+            $error.rendered | print
+         }
       }
    )
 
@@ -43,7 +47,11 @@ export def install-package-list [package_group_list] {
             $package_group_aur_missing.name
          }
 
-         paru -S --aur ...$package_aur_missing
+         try {
+            paru -S --aur ...$package_aur_missing
+         } catch {|$error|
+            $error.rendered | print
+         }
       }
    )
 
@@ -59,7 +67,11 @@ export def install-package-list [package_group_list] {
             $package_group_local_missing.path
          }
 
-         paru -Bi ...$package_local_path_missing
+         try {
+            paru -Bi ...$package_local_path_missing
+         } catch {|$error|
+            $error.rendered | print
+         }
       }
    )
 }
