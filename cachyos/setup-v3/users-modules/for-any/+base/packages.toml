@@ -146,26 +146,35 @@ packages = [
    { from = "std", name = "gamescope" },
    { from = "std", name = "mangohud" },
 
-   # [ gui.apps ]
+   # [ gui.apps.reader ]
    #
    { from = "std", name = "nautilus" },
    { from = "std", name = "vlc" },
    { from = "std", name = "vlc-plugins-all" },
    { from = "std", name = "loupe" },
    { from = "std", name = "evince" },
-   { from = "std", name = "ark" },
 
+   # [ gui.apps.hardware ]
+   #
    { from = "std", name = "gparted" },
 
+   # [ gui.apps.monitor ]
+   #
    { from = "std", name = "mission-center" },
    { from = "std", name = "qpwgraph" },
 
+   # [ gui.apps.share]
+   #
    { from = "std", name = "localsend" },
 
+   # [ gui.apps.browse ]
+   #
    { from = "std", name = "librewolf-bin" },
    { from = "std", name = "profile-sync-daemon" },
    { from = "std", name = "thunderbird" },
 
+   # [ gui.apps.production ]
+   #
    { from = "std", name = "vscodium", ignore = true },
    { from = "aur", name = "obs-pipewire-audio-capture" },
    { from = "std", name = "obs-studio" },
@@ -176,6 +185,7 @@ packages = [
    { from = "std", name = "libreoffice-fresh" },
    { from = "std", name = "hunspell-es_es" },
 
+   # [ gui.apps.comms ]
    { from = "std", name = "telegram-desktop" },
 
    { from = "aur", name = "equibop-bin" },
