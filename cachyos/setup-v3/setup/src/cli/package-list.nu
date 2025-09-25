@@ -3,16 +3,16 @@ use ../utils *
 export def install-package-list [package_group_list] {
    let package_installed_list = pacman -Qq | lines
 
-   let package_group_std_install_list = $package_group_list | where {|package|
-      $package.from == "std" and ($package.ignore == null or $package.ignore == false)
+   let package_group_std_install_list = $package_group_list | where {|package_group|
+      $package_group.from == "std" and ($package_group.ignore? == null or $package_group.ignore == false)
    }
 
-   let package_group_aur_install_list = $package_group_list | where {|package|
-      $package.from == "aur" and ($package.ignore == null or $package.ignore == false)
+   let package_group_aur_install_list = $package_group_list | where {|package_group|
+      $package_group.from == "aur" and ($package_group.ignore? == null or $package_group.ignore == false)
    }
 
-   let package_group_local_install_list = $package_group_list | where {|package|
-      $package.from == "lcl" and ($package.ignore == null or $package.ignore == false)
+   let package_group_local_install_list = $package_group_list | where {|package_group|
+      $package_group.from == "lcl" and ($package_group.ignore? == null or $package_group.ignore == false)
    }
 
    (
@@ -72,8 +72,8 @@ def _install-package-list [
 ] {
    log info $"checking ($label) packages to install"
 
-   let package_group_missing_list = $package_group_install_list | where {|package_install|
-      $package_install.name not-in $package_installed_list
+   let package_group_missing_list = $package_group_install_list | where {|package_group_install|
+      $package_group_install.name not-in $package_installed_list
    }
 
    if ($package_group_missing_list | is-empty) {
