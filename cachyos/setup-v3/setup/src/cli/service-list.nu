@@ -1,7 +1,7 @@
 use ../utils *
 
-export def enable-unit-list [config] {
-   $config.unit_group_list | each {|unit_group|
+export def enable-unit-list [unit_group_list] {
+   $unit_group_list | each {|unit_group|
       try {
          log info $"checking services with user=($unit_group.user) and dir_abs_path=($unit_group.dir_abs_path)"
 
@@ -44,8 +44,8 @@ export def enable-unit-list [config] {
    } | ignore
 }
 
-export def cleanup-service-list [config] {
-   $config.unit_group_list | each {|unit_group|
+export def cleanup-service-list [unit_group_list] {
+   $unit_group_list | each {|unit_group|
       try {
          log info $"checking units with user=($unit_group.user) and dir_abs_path=($unit_group.dir_abs_path)"
 

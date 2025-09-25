@@ -1,5 +1,5 @@
-export def spawn-file-list [config] {
-   $config.file_spawn_list | each {|file_spawn|
+export def spawn-file-list [file_spawn_list] {
+   $file_spawn_list | each {|file_spawn|
       try {
          spawn-file $file_spawn
          apply-ownership $file_spawn.owner $file_spawn.target_file_abs_path
@@ -9,8 +9,8 @@ export def spawn-file-list [config] {
    } | ignore
 }
 
-export def install-item-list [config] {
-   $config.item_install_list | each {|item_install|
+export def install-item-list [item_install_list] {
+   $item_install_list | each {|item_install|
       try {
          operate-item-install $item_install
          apply-ownership $item_install.owner $item_install.target_item_abs_path

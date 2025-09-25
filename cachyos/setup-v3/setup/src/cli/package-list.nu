@@ -169,27 +169,37 @@ def install-local-package-list [
    }
 }
 
-export def cleanup-package-list [config] {
+export def cleanup-package-list [package_group_list] {
    log info 'checking for packages to cleanup'
+   let package_installed_list = pacman -Qqee | lines
 
-   let package_local_list = $config.package.local_abs_path_list | each {|package_local_abs_path|
-      $package_local_abs_path | path basename
-   }
+   let package_std_install_list = $package_group_list | where {|package_group|
+      $package_group.from == "std" and ($package_group.ignore? == null or $package_group.ignore == false)
+   } | each {|package_group_std_install| $package_group_std_install.name }
 
-   let package_wanted_all_list = [
-      $config.package.std_list
-      $config.package.aur_list
-      $package_local_list
-      $config.package.ignore_list
+   let package_aur_install_list = $package_group_list | where {|package_group|
+      $package_group.from == "aur" and ($package_group.ignore? == null or $package_group.ignore == false)
+   } | each {|package_group_aur_install| $package_group_aur_install.name }
+
+   let package_local_install_list = $package_group_list | where {|package_group|
+      $package_group.from == "lcl" and ($package_group.ignore? == null or $package_group.ignore == false)
+   } | each {|package_group_local_install| $package_group_local_install.name }
+
+   let package_ignore_install_list = $package_group_list | where {|package_group|
+      $package_group.ignore? != null and $package_group.ignore == true
+   } | each {|package_group_ignore_install| $package_group_ignore_install.name }
+
+   let package_install_list = [
+      ...$package_std_install_list
+      ...$package_aur_install_list
+      ...$package_local_install_list
+      ...$package_ignore_install_list
    ]
-   | flatten
 
-   let package_all_installed_list = pacman -Qqee | lines
-
-   let package_unlisted_list = $package_all_installed_list | par-each {|package_installed|
+   let package_unlisted_list = $package_installed_list | par-each {|package_installed|
       if ($package_installed | is-package-a-dependency) {
          null
-      } else if ($package_installed not-in $package_wanted_all_list) {
+      } else if ($package_installed not-in $package_install_list) {
          $package_installed
       } else {
          null
@@ -198,7 +208,7 @@ export def cleanup-package-list [config] {
 
    if ($package_unlisted_list | is-not-empty) {
       log info 'cleaning up packages'
-      sudo pacman -Rns ...$package_unlisted_list
+      pacman -Rns ...$package_unlisted_list
    } else {
       log info 'skipping as there is no packages to cleanup'
    }
