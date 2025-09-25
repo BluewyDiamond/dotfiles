@@ -1,12 +1,91 @@
 use ../utils *
 
-export def install-package-list [config] {
-   let package_all_installed_list = pacman -Qq | lines
+export def install-package-list [package_group_list] {
+   let package_installed_list = pacman -Qq | lines
 
-   install-std-package-list $config.package.std_list $package_all_installed_list
-   install-aur-package-list $config.package.aur_list $package_all_installed_list
-   install-local-package-list $config.package.local_abs_path_list $package_all_installed_list
+   let package_group_std_install_list = $package_group_list | where {|package|
+      $package.from == "std" and ($package.ignore == null or $package.ignore == false)
+   }
+
+   let package_group_aur_install_list = $package_group_list | where {|package|
+      $package.from == "aur" and ($package.ignore == null or $package.ignore == false)
+   }
+
+   let package_group_local_install_list = $package_group_list | where {|package|
+      $package.from == "lcl" and ($package.ignore == null or $package.ignore == false)
+   }
+
+   (
+      _install-package-list
+      $package_group_std_install_list
+      $package_installed_list
+      "std"
+
+      {|package_group_std_missing_list|
+         let package_std_missing = $package_group_std_missing_list
+         | each {|package_group_std_missing|
+            $package_group_std_missing.name
+         }
+
+         sudo pacman -S ...$package_std_missing
+      }
+   )
+
+   (
+      _install-package-list
+      $package_group_aur_install_list
+      $package_installed_list
+      "aur"
+
+      {|package_group_aur_missing_list|
+         let package_aur_missing = $package_group_aur_missing_list
+         | each {|package_group_aur_missing|
+            $package_group_aur_missing.name
+         }
+
+         paru -S --aur ...$package_aur_missing
+      }
+   )
+
+   (
+      _install-package-list
+      $package_group_local_install_list
+      $package_installed_list
+      "local"
+
+      {|package_group_local_missing_list|
+         let package_local_path_missing = $package_group_local_missing_list
+         | each {|package_group_local_missing|
+            $package_group_local_missing.path
+         }
+
+         paru -Bi ...$package_local_path_missing
+      }
+   )
 }
+
+def _install-package-list [
+   package_group_install_list
+   package_installed_list: list<string>
+   label: string
+   on_install: closure
+] {
+   log info $"checking ($label) packages to install"
+
+   let package_group_missing_list = $package_group_install_list | where {|package_install|
+      $package_install.name not-in $package_installed_list
+   }
+
+   if ($package_group_missing_list | is-empty) {
+      log info $"skipping as there is no ($label) packages to install"
+      return
+   }
+
+   log info $"installing ($label) packages"
+   do $on_install $package_group_missing_list
+}
+
+# this could definetly be handled cleanly with a callback
 
 def install-std-package-list [
    package_std_wanted_list: list<string>

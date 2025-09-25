@@ -38,7 +38,7 @@ export def collect-config-file-abs-path-list [config_file_abs_path: path]: nothi
 
 export def build-config [
    config_file_rel_path: path
-]: nothing -> record<package_list: list<record<from: string, name: string, ignore: bool>>, file_spawn_list: list<record<owner: string, target_file_abs_path: path, content: string>>, item_install_list: list<record<operation: string, owner: string, source_item_abs_path: path, target_item_abs_path: path>>, unit_group_list: list<record<user: string, dir_abs_path: string, enable_list: list<string>>>> {
+]: nothing -> record<package_group_list: list<record<from: string, name: string, ignore: bool>>, file_spawn_list: list<record<owner: string, target_file_abs_path: path, content: string>>, item_install_list: list<record<operation: string, owner: string, source_item_abs_path: path, target_item_abs_path: path>>, unit_group_list: list<record<user: string, dir_abs_path: string, enable_list: list<string>>>> {
    let config_file_abs_path_list = collect-config-file-abs-path-list $config_file_rel_path
 
    let config_raw_group_list = $config_file_abs_path_list | each {|config_file_abs_path|
@@ -83,15 +83,15 @@ export def build-config [
       }
    } | flatten | uniq
 
-   let package_list = $config_raw_group_list.config_raw | each {|config_raw|
+   let package_group_list = $config_raw_group_list.config_raw | each {|config_raw|
       $config_raw | get -o packages | default []
    } | flatten | uniq
 
-   let package_duplicate_list = $package_list.name | uniq -d
+   let package_duplicate_list = $package_group_list.name | uniq -d
 
    if ($package_duplicate_list | is-not-empty) {
       error make {
-         msg: "Duplicate package name is not allowed."
+         msg: "Duplicate package name with slight fields variants is not allowed."
          help: $"The following package(s) are duplicated: ($package_duplicate_list | str join ', ')"
       }
    }
@@ -124,7 +124,7 @@ export def build-config [
    {
       file_spawn_list: $file_spawn_list
       item_install_list: $item_install_list
-      package_list: $package_list
+      package_group_list: $package_group_list
       unit_group_list: $unit_group_list
    }
 }
