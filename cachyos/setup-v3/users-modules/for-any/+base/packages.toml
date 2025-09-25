@@ -1,5 +1,5 @@
 packages = [
-   # console.audio
+   # [ console.audio ]
    #
    { from = "std", name = "pipewire" },
    { from = "std", name = "pipewire-alsa" },
@@ -7,27 +7,28 @@ packages = [
    { from = "std", name = "pipewire-jack" },
    { from = "std", name = "wireplumber" },
 
-   # console.dev
+   # [ console.dev ]
    #
    { from = "std", name = "rustup" },
    { from = "std", name = "jdk21-openjdk" },
 
-   # console.rice
+   { from = "std", name = "git" },
+   { from = "std", name = "less" },
+
+   # [ console.rice ]
    #
    { from = "std", name = "terminus-font" },
    { from = "std", name = "fastfetch" },
    { from = "std", name = "starship" },
 
-   # console.tools
+   # [ console.tools ]
    #
    { from = "std", name = "zellij" },
    { from = "std", name = "paru" },
    { from = "std", name = "downgrade" },
-   { from = "std", name = "git" },
-   { from = "std", name = "less" },
    { from = "std", name = "openssh" },
 
-   # console.hardware
+   # [ console.hardware ]
    #
    { from = "std", name = "power-profiles-daemon" },
    { from = "std", name = "python-gobject" },
@@ -41,11 +42,11 @@ packages = [
    { from = "std", name = "bandwhich" },
    { from = "std", name = "nvtop" },
 
-   # console.network
+   # [ console.network ]
    #
    { from = "std", name = "zerotier-one" },
 
-   # console.neovim
+   # [ console.neovim ]
    #
    { from = "std", name = "neovim" },
    { from = "std", name = "stylua" },
@@ -55,29 +56,29 @@ packages = [
    { from = "std", name = "eslint_d" },
    { from = "std", name = "taplo-cli" },
 
-   # console.other
+   # [ console.other ]
    #
    { from = "aur", name = "xdg-ninja-git", ignore = true },
    { from = "std", name = "flatpak" },
 
 
-   # gui.fix
+   # [ gui.fix ]
    #
    { from = "aur", name = "glibc-eac", ignore = true },
 
-   # gui.android
+   # [ gui.android ]
    #
    { from = "aur", name = "waydroid-image-gapps", ignore = true },
    { from = "std", name = "waydroid", ignore = true },
 
-   # gui.niri.base
+   # [ gui.niri.base ]
    #
    { from = "lcl", name = "niri-no-systemd", path = "../../../aur/niri-no-systemd" },
    { from = "std", name = "xwayland-satellite" },
    { from = "std", name = "xdg-desktop-portal-gnome" },
    { from = "std", name = "xdg-desktop-portal-gtk" },
 
-   # gui.niri.extra
+   # [ gui.niri.extra ]
    #
    { from = "aur", name = "wayshot" },
    { from = "std", name = "hyprlock" },
@@ -95,7 +96,7 @@ packages = [
    { from = "aur", name = "wezterm-git" },
    { from = "std", name = "libgit2" },
 
-   # gui.rice
+   # [ gui.rice ]
    #
    { from = "aur", name = "qt6ct-kde" },
    { from = "aur", name = "qt5ct-kde" },
@@ -108,7 +109,7 @@ packages = [
    { from = "std", name = "kvantum-qt5" },
    { from = "std", name = "nwg-look" },
 
-   # gui.widgets
+   # [ gui.widgets ]
    #
    { from = "aur", name = "libastal-io-git" },
    { from = "aur", name = "libastal-git" },
@@ -129,7 +130,7 @@ packages = [
    { from = "std", name = "gjs" },
    { from = "std", name = "gtk4-layer-shell" },
 
-   # gui.gaming
+   # [ gui.gaming ]
    #
    { from = "aur", name = "atlauncher-bin", ignore = true },
    { from = "aur", name = "r2modman-bin", ignore = true },
@@ -145,7 +146,7 @@ packages = [
    { from = "std", name = "gamescope" },
    { from = "std", name = "mangohud" },
 
-   # gui.apps
+   # [ gui.apps ]
    #
    { from = "std", name = "nautilus" },
    { from = "std", name = "vlc" },
