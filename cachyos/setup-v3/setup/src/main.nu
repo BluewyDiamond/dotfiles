@@ -17,7 +17,7 @@ def main [config_file_rel_path: path] {
 def "main install" [config_file_rel_path: path] {
    let config = build-config ($config_file_rel_path | path expand)
 
-   install-package-list $config
+   install-package-list $config.package_group_list
    spawn-file-list $config
    install-item-list $config
    enable-unit-list $config
