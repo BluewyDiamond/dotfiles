@@ -53,11 +53,11 @@ window-rule {
    match is-window-cast-target=true
 
    border {
-      inactive-gradient from="#8e9099" to="#7d0d2d" angle=90
+      inactive-gradient from="#3e4452" to="#7d0d2d" angle=90
    }
 
    tab-indicator {
-      inactive-gradient from="#8e9099" to="#7d0d2d" angle=90
+      inactive-gradient from="#3e4452" to="#7d0d2d" angle=90
    }
 }
 
@@ -65,13 +65,13 @@ window-rule {
    match is-active=true is-window-cast-target=true
 
    border {
-      active-gradient from="#80c8ff" to="#f38ba8" angle=90
-      inactive-gradient from="#8e9099" to="#7d0d2d" angle=90
+      active-gradient from="#61AFEF" to="#f38ba8" angle=90
+      inactive-gradient from="#3e4452" to="#7d0d2d" angle=90
    }
 
    tab-indicator {
-      active-gradient from="#80c8ff" to="#f38ba8" angle=90
-      inactive-gradient from="#8e9099" to="#7d0d2d" angle=90
+      active-gradient from="#61AFEF" to="#f38ba8" angle=90
+      inactive-gradient from="#3e4452" to="#7d0d2d" angle=90
    }
 }
 
@@ -105,9 +105,9 @@ layout {
 
    border {
       width 2
-      active-color "#9acbfa"
-      inactive-color "#8e9099"
-      urgent-color "#ecc06c"
+      active-color "#61AFEF"
+      inactive-color "#3e4452"
+      urgent-color "#E5C07B"
    }
 
    tab-indicator {
