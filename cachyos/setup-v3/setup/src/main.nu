@@ -24,8 +24,9 @@ def "main install" [config_file_rel_path: path] {
 }
 
 def "main cleanup" [config_file_rel_path: path] {
-   let config = build-config ($config_file_rel_path | path expand)
-
-   cleanup-package-list $config
-   cleanup-service-list $config
+   print "todo"
+   # let config = build-config ($config_file_rel_path | path expand)
+   #
+   # cleanup-package-list $config
+   # cleanup-service-list $config
 }
