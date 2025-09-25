@@ -14,9 +14,9 @@ packages = [
    { from = "std", name = "cachyos-hooks" },
    { from = "std", name = "cachyos-keyring" },
    { from = "std", name = "cachyos-mirrorlist" },
-   { from = "std", name = "cachyos-rate-mirrorlist" },
+   { from = "std", name = "cachyos-rate-mirrors" },
    { from = "std", name = "cachyos-v3-mirrorlist" },
    { from = "std", name = "cachyos-v4-mirrorlist" },
-   { from = "std", name = "cachyos-seettings" },
+   { from = "std", name = "cachyos-settings" },
    { from = "std", name = "chwd" },
 ]
