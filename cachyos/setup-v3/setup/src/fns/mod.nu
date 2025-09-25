@@ -84,6 +84,8 @@ export def build-config [
    } | flatten | uniq
 
    let package_group_list = $config_raw_group_list | each {|config_raw_group|
+      let config_dir_rel_path = $config_raw_group.config_file_rel_path | path dirname
+
       let package_group_list = $config_raw_group.config_raw
       | get -o packages
       | default []
@@ -98,7 +100,7 @@ export def build-config [
          }
 
          $package_group | update path {|row|
-            $config_raw_group.config_file_rel_path
+            $config_dir_rel_path
             | path join $row.path
             | path expand
          }
