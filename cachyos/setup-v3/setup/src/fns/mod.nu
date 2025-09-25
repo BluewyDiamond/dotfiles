@@ -83,8 +83,26 @@ export def build-config [
       }
    } | flatten | uniq
 
-   let package_group_list = $config_raw_group_list.config_raw | each {|config_raw|
-      $config_raw | get -o packages | default []
+   let package_group_list = $config_raw_group_list | each {|config_raw_group|
+      let package_group_list = $config_raw_group.config_raw
+      | get -o packages
+      | default []
+
+      if ($package_group_list.path? == null) {
+         return $package_group_list
+      }
+
+      $package_group_list | each {|package_group|
+         if ($package_group.path? == null) {
+            return $package_group
+         }
+
+         $package_group | update path {|row|
+            $config_raw_group.config_file_rel_path
+            | path join $row.path
+            | path expand
+         }
+      }
    } | flatten | uniq
 
    let package_duplicate_list = $package_group_list.name | uniq -d
