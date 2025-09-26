@@ -19,8 +19,8 @@ include = [
    "../../hosts-modules/for-any/lemurs/files.toml",
    "../../hosts-modules/for-any/lemurs/packages.toml",
    "../../hosts-modules/for-any/lemurs/services.toml",
-   "../../hosts-modules/for-any/rtcwake-for-mc-server-service/files.toml",
-   "../../hosts-modules/for-any/rtcwake-for-mc-server-service/services.toml",
+   "../../hosts-modules/for-any/rtcwake-for-mc-server-service#gpu-amd/files.toml",
+   "../../hosts-modules/for-any/rtcwake-for-mc-server-service#gpu-amd/services.toml",
 
    "../../users/bluewy/#server/index.toml",
    "../../users/yellowy/#server/index.toml",
