@@ -1,6 +1,18 @@
 [[items-install]]
 operation = "copy"
 owner = "root"
+source = "../../files/refind-any@uriel/refind.conf"
+target = "/boot/efi/Microsoft/Boot/refind.conf"
+
+[[items-install]]
+operation = "copy"
+owner = "root"
+source = "../../files/refind-any@uriel/extra.conf"
+target = "/boot/efi/Microsoft/Boot/extra.conf"
+
+[[items-install]]
+operation = "copy"
+owner = "root"
 source = "../../files/acer-battery-limit-service-any@uriel/acer-battery-limiter.service"
 target = "/etc/systemd/system/acer-battery-limiter.service"
 
