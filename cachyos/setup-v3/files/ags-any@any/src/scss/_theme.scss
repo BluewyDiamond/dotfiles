@@ -12,10 +12,11 @@ $purple: #c678dd;
 $white: #abb2bf;
 $grey: #5c6370;
 $grey-light: #7f848e;
-$black: #21252b;
-$black-light: #282c34;
-$black-dark: #1e2127;
-$black-darker: #17191d;
+$black: #282c34;
+$black-dark: #21252b;
+$black-darkest: #1e2127;
+$border: #4b5362;
+$border-darkest: #3e4452;
 
 // material theme
 
@@ -34,14 +35,14 @@ $on-tertiary: #462151;
 $tertiary-container: #5e3869;
 $on-tertiary-container: #fad7ff;
 
-$surface: $black-light;
-$surface-container: #33373E;
+$surface: $black-dark;
+$surface-container: $black;
 
 $on-surface: $white;
 $on-surface-variant: #c4c6cf;
 
-$outline: #4b5362;
-$outline-variant: #3e4452;
+$outline: $border;
+$outline-variant: $border-darkest;
 
 $error: #ffb3ae;
 $on-error: #571e1c;
