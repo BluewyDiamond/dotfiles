@@ -2,7 +2,7 @@
 
 def --wrapped main [...rest] {
    load-env {
-      LD_PRELOAD: ""
+      LD_PRELOAD: ''
    }
 
    exec ...$rest
