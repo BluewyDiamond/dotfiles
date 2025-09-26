@@ -1,6 +1,13 @@
 [[units]]
 enable = [
+   "getty@tty1.service",
+
+   # needed for proper env
+   #
    "systemd-timesyncd.service",
+
+   # by me
+   #
    "acer-battery-limiter.service",
 
    # by chwd
