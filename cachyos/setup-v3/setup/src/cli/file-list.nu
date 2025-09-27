@@ -75,7 +75,7 @@ def spawn-file [file_spawn] {
       _ => {
          log error (
             $"skipped as not implemeted for" +
-            " target_type=($target_item_abs_path_existing_type_or_null)"
+            $" target_type=($target_item_abs_path_existing_type_or_null)"
          )
       }
    }
