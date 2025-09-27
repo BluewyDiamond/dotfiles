@@ -4,15 +4,15 @@ export def install-package-list [package_group_list] {
    let package_installed_list = pacman -Qq | lines
 
    let package_group_std_install_list = $package_group_list | where {|package_group|
-      $package_group.from == "std" and ($package_group.ignore? == null or $package_group.ignore == false)
+      $package_group.from == "std" and ($package_group.ignore_or_null == null or $package_group.ignore_or_null == false)
    }
 
    let package_group_aur_install_list = $package_group_list | where {|package_group|
-      $package_group.from == "aur" and ($package_group.ignore? == null or $package_group.ignore == false)
+      $package_group.from == "aur" and ($package_group.ignore_or_null == null or $package_group.ignore_or_null == false)
    }
 
    let package_group_local_install_list = $package_group_list | where {|package_group|
-      $package_group.from == "lcl" and ($package_group.ignore? == null or $package_group.ignore == false)
+      $package_group.from == "lcl" and ($package_group.ignore_or_null == null or $package_group.ignore_or_null == false)
    }
 
    (
@@ -64,7 +64,7 @@ export def install-package-list [package_group_list] {
       {|package_group_local_missing_list|
          let package_local_path_missing = $package_group_local_missing_list
          | each {|package_group_local_missing|
-            $package_group_local_missing.path
+            $package_group_local_missing.dir_abs_path
          }
 
          try {
@@ -174,19 +174,19 @@ export def cleanup-package-list [package_group_list] {
    let package_installed_list = pacman -Qqee | lines
 
    let package_std_install_list = $package_group_list | where {|package_group|
-      $package_group.from == "std" and ($package_group.ignore? == null or $package_group.ignore == false)
+      $package_group.from == "std" and ($package_group.ignore_or_null == null or $package_group.ignore_or_null == false)
    } | each {|package_group_std_install| $package_group_std_install.name }
 
    let package_aur_install_list = $package_group_list | where {|package_group|
-      $package_group.from == "aur" and ($package_group.ignore? == null or $package_group.ignore == false)
+      $package_group.from == "aur" and ($package_group.ignore_or_null == null or $package_group.ignore_or_null == false)
    } | each {|package_group_aur_install| $package_group_aur_install.name }
 
    let package_local_install_list = $package_group_list | where {|package_group|
-      $package_group.from == "lcl" and ($package_group.ignore? == null or $package_group.ignore == false)
+      $package_group.from == "lcl" and ($package_group.ignore_or_null == null or $package_group.ignore_or_null == false)
    } | each {|package_group_local_install| $package_group_local_install.name }
 
    let package_ignore_install_list = $package_group_list | where {|package_group|
-      $package_group.ignore? != null and $package_group.ignore == true
+      $package_group.ignore_or_null != null and $package_group.ignore_or_null == true
    } | each {|package_group_ignore_install| $package_group_ignore_install.name }
 
    let package_install_list = [

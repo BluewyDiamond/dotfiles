@@ -54,9 +54,10 @@ export def build-config [
       | default []
       | each {|file_spawn|
          {
-            owner: ($file_spawn | get owner)
-            target_file_abs_path: ($file_spawn | get target)
-            content: ($file_spawn | get content)
+            owner: $file_spawn.owner
+            group: $file_spawn.group
+            target_file_abs_path: $file_spawn.target
+            content: $file_spawn.content
          }
       }
    } | flatten | uniq
@@ -69,16 +70,16 @@ export def build-config [
       | default []
       | each {|item_install|
          {
-            operation: ($item_install | get operation)
-            owner: ($item_install | get owner)
+            operation: $item_install.operation
+            owner: $item_install.owner
 
             source_item_abs_path: (
                $config_dir_rel_path
-               | path join ($item_install | get source)
+               | path join $item_install.source
                | path expand
             )
 
-            target_item_abs_path: ($item_install | get target)
+            target_item_abs_path: $item_install.target
          }
       }
    } | flatten | uniq
@@ -86,23 +87,21 @@ export def build-config [
    let package_group_list = $config_raw_group_list | each {|config_raw_group|
       let config_dir_rel_path = $config_raw_group.config_file_rel_path | path dirname
 
-      let package_group_list = $config_raw_group.config_raw
+      $config_raw_group.config_raw
       | get -o packages
       | default []
-
-      if ($package_group_list.path? == null) {
-         return $package_group_list
-      }
-
-      $package_group_list | each {|package_group|
-         if ($package_group.path? == null) {
-            return $package_group
+      | each {|package_raw_group|
+         let dir_abs_path_or_null = if ($package_raw_group.path? == null) {
+            null
+         } else {
+            $config_dir_rel_path | path join $package_raw_group.path | path expand
          }
 
-         $package_group | update path {|row|
-            $config_dir_rel_path
-            | path join $row.path
-            | path expand
+         {
+            from: $package_raw_group.from
+            name: $package_raw_group.name
+            ignore_or_null: $package_raw_group.ignore?
+            dir_abs_path_or_null: $dir_abs_path_or_null
          }
       }
    } | flatten | uniq
