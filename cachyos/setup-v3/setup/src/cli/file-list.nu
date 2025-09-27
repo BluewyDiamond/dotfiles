@@ -2,7 +2,7 @@ export def spawn-file-list [file_spawn_list] {
    $file_spawn_list | each {|file_spawn|
       try {
          spawn-file $file_spawn
-         apply-ownership $file_spawn.owner $file_spawn.target_file_abs_path
+         apply-ownership $file_spawn.owner $file_spawn.group $file_spawn.target_file_abs_path
       } catch {|error|
          $error.rendered | print
       }
@@ -13,7 +13,7 @@ export def install-item-list [item_install_list] {
    $item_install_list | each {|item_install|
       try {
          operate-item-install $item_install
-         apply-ownership $item_install.owner $item_install.target_item_abs_path
+         apply-ownership $item_install.owner $item_install.group $item_install.target_item_abs_path
       } catch {|error|
          $error.rendered | print
       }
@@ -249,7 +249,7 @@ def operate-item-install [item_install] {
    }
 }
 
-def apply-ownership [owner: string target_item_abs_path: path] {
+def apply-ownership [owner: string group: string target_item_abs_path: path] {
    if ($owner == $env.LOGNAME) {
       return
    }
@@ -260,7 +260,7 @@ def apply-ownership [owner: string target_item_abs_path: path] {
       return
    }
 
-   chown -R $"($owner):($owner)" $target_item_abs_path
+   chown -R $"($owner):($group)" $target_item_abs_path
 }
 
 # This is needed because it does not make sense for a user to have a symlink that they can not

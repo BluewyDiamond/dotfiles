@@ -4,6 +4,7 @@ content = """
 en_IE.UTF-8 UTF-8
 en_US.UTF-8 UTF-8
 """
+group = "root"
 owner = "root"
 target = "/etc/locale.gen"
 
@@ -20,22 +21,26 @@ LC_PAPER=en_IE.UTF-8
 LC_TELEPHONE=en_IE.UTF-8
 LC_TIME=en_IE.UTF-8
 """
+group = "root"
 owner = "root"
 target = "/etc/locale.conf"
 
 [[items-install]]
+group = "root"
 operation = "copy"
 owner = "root"
 source = "../../../files/kbd-any@any/colemak-dh-wide-custom-eu-ansi.map"
 target = "/usr/share/kbd/keymaps/colemak-dh-wide-custom-eu-ansi.map"
 
 [[items-install]]
+group = "root"
 operation = "copy"
 owner = "root"
 source = "../../../files/kbd-any@any/colemak-dh-wide-custom-eu-iso.map"
 target = "/usr/share/kbd/keymaps/colemak-dh-wide-custom-eu-iso.map"
 
 [[items-install]]
+group = "root"
 operation = "copy"
 owner = "root"
 source = "../../../files/xkb-any@any/symbols/bluewy"
@@ -48,5 +53,6 @@ FONT=ter-124n
 XKBMODEL=colemak-dh-wide-custom-eu-ansi
 KEYMAP=colemak-dh-wide-custom-eu-ansi
 """
+group = "root"
 owner = "root"
 target = "/etc/vconsole.conf"

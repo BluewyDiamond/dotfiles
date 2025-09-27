@@ -1,4 +1,5 @@
 [[install_files]]
+group = "bluewy"
 operation = "link"
 owner = "bluewy"
 source = "../../../files/niri-any@raphael"
@@ -7,5 +8,6 @@ target = "/home/bluewy/.config/niri"
 [[install_files]]
 operation = "link"
 owner = "bluewy"
+group = "bluewy"
 source = "../../../files/hypr-any@raphael"
 target = "/home/bluewy/.config/hypr"

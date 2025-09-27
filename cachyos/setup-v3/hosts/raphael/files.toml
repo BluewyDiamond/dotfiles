@@ -1,10 +1,12 @@
 [[items-install]]
+group = "root"
 operation = "copy"
 owner = "root"
 source = "../../files/refind-any@raphael/refind.conf"
 target = "/boot/efi/refind/refind.conf"
 
 [[items-install]]
+group = "root"
 operation = "copy"
 owner = "root"
 source = "../../files/refind-any@raphael/extra.conf"
@@ -24,6 +26,7 @@ RouteMetric=100
 [IPv6AcceptRA]
 RouteMetric=100
 """
+group = "root"
 owner = "root"
 target = "/etc/systemd/network/20-wired.network"
 
@@ -41,6 +44,7 @@ RouteMetric=600
 [IPv6AcceptRA]
 RouteMetric=600
 """
+group = "root"
 owner = "root"
 target = "/etc/systemd/network/21-wireless.network"
 
@@ -50,5 +54,6 @@ content = """
 DNS=1.1.1.1
 FallbackDNS=1.0.0.1
 """
+group = "root"
 owner = "root"
 target = "/etc/resolved.conf"
