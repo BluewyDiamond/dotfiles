@@ -41,14 +41,14 @@ export def build-config [
 ]: nothing -> record<package_group_list: list<record<from: string, name: string, ignore: bool>>, file_spawn_list: list<record<owner: string, target_file_abs_path: path, content: string>>, item_install_list: list<record<operation: string, owner: string, source_item_abs_path: path, target_item_abs_path: path>>, unit_group_list: list<record<user: string, dir_abs_path: string, enable_list: list<string>>>> {
    let config_file_abs_path_list = collect-config-file-abs-path-list $config_file_rel_path
 
-   let config_raw_group_list = $config_file_abs_path_list | each {|config_file_abs_path|
+   let config_group_raw_list = $config_file_abs_path_list | each {|config_file_abs_path|
       {
          config_file_rel_path: $config_file_abs_path
          config_raw: (open $config_file_abs_path)
       }
    }
 
-   let file_spawn_list = $config_raw_group_list.config_raw | each {|config_raw|
+   let file_spawn_list = $config_group_raw_list.config_raw | each {|config_raw|
       $config_raw
       | get -o files-spawn
       | default []
@@ -62,32 +62,33 @@ export def build-config [
       }
    } | flatten | uniq
 
-   let item_install_list = $config_raw_group_list | each {|config_raw_group|
-      let config_dir_rel_path = $config_raw_group.config_file_rel_path | path dirname
+   let item_install_list = $config_group_raw_list | each {|config_group_raw|
+      let config_dir_rel_path = $config_group_raw.config_file_rel_path | path dirname
 
-      $config_raw_group.config_raw
+      $config_group_raw.config_raw
       | get -o items-install
       | default []
-      | each {|item_install|
+      | each {|item_install_raw|
          {
-            operation: $item_install.operation
-            owner: $item_install.owner
+            operation: $item_install_raw.operation
+            owner: $item_install_raw.owner
+            group: $item_install_raw.group
 
             source_item_abs_path: (
                $config_dir_rel_path
-               | path join $item_install.source
+               | path join $item_install_raw.source
                | path expand
             )
 
-            target_item_abs_path: $item_install.target
+            target_item_abs_path: $item_install_raw.target
          }
       }
    } | flatten | uniq
 
-   let package_group_list = $config_raw_group_list | each {|config_raw_group|
-      let config_dir_rel_path = $config_raw_group.config_file_rel_path | path dirname
+   let package_group_list = $config_group_raw_list | each {|config_group_raw|
+      let config_dir_rel_path = $config_group_raw.config_file_rel_path | path dirname
 
-      $config_raw_group.config_raw
+      $config_group_raw.config_raw
       | get -o packages
       | default []
       | each {|package_raw_group|
@@ -115,7 +116,7 @@ export def build-config [
       }
    }
 
-   let unit_group_list = $config_raw_group_list.config_raw | each {|config_raw|
+   let unit_group_list = $config_group_raw_list.config_raw | each {|config_raw|
       $config_raw
       | get -o units
       | default []
