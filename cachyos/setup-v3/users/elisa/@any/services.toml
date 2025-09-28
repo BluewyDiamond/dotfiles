@@ -1,4 +1,4 @@
 [[units]]
-enable = ["wireplumber.service", "pipewire.service", "psd.service"]
+enable = ["wireplumber.service", "pipewire.service", "psd.service", "cosmic-greeter.service"]
 path = "/home/elisa/.config/systemd/user"
 user = "elisa"
