@@ -149,6 +149,11 @@ packages = [
    # [ gui.apps.reader ]
    #
    { from = "std", name = "nautilus" },
+   { from = "std", name = "gvfs" },
+   { from = "std", name = "gvfs-afc" },
+   { from = "std", name = "gvfs-dnssd" },
+   { from = "std", name = "gvfs-mtp" },
+   { from = "std", name = "gvfs-smb" },
    { from = "std", name = "vlc" },
    { from = "std", name = "vlc-plugins-all" },
    { from = "std", name = "loupe" },
