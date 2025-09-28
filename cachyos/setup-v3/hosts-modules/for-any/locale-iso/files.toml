@@ -46,6 +46,13 @@ owner = "root"
 source = "../../../files/xkb-any@any/symbols/bluewy"
 target = "/usr/share/X11/xkb/symbols/bluewy"
 
+[[items-install]]
+group = "root"
+operation = "copy"
+owner = "root"
+source = "../../../files/xkb-any@any/rules/evdev.xml"
+target = "/etc/X11/xkb/rules/evdev.xml"
+
 [[files-spawn]]
 content = """
 XKBLAYOUT=bluewy
