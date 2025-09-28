@@ -154,6 +154,7 @@ packages = [
    { from = "std", name = "gvfs-dnssd" },
    { from = "std", name = "gvfs-mtp" },
    { from = "std", name = "gvfs-smb" },
+   { from = "std", name = "gvfs-wsdd" },
    { from = "std", name = "vlc" },
    { from = "std", name = "vlc-plugins-all" },
    { from = "std", name = "loupe" },
