@@ -26,7 +26,5 @@ packages = [
    { from = "std", name = "lib32-vulkan-radeon" },
 
    { from = "std", name = "lib32-opencl-mesa" },
-   # { from = "std", name = "lib32-spirv-llvm-translator" },
-   # { from = "std", name = "lib32-clang" },
    { from = "std", name = "xf86-video-amdgpu" },
 ]
