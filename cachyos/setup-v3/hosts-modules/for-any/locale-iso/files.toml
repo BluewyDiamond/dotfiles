@@ -44,14 +44,14 @@ group = "root"
 operation = "copy"
 owner = "root"
 source = "../../../files/xkb-any@any/symbols/bluewy"
-target = "/usr/share/X11/xkb/symbols/bluewy"
+target = "/etc/xkb/symbols/bluewy"
 
 [[items-install]]
 group = "root"
 operation = "copy"
 owner = "root"
 source = "../../../files/xkb-any@any/rules/evdev.xml"
-target = "/etc/X11/xkb/rules/evdev.xml"
+target = "/etc/xkb/rules/evdev.xml"
 
 [[files-spawn]]
 content = """
