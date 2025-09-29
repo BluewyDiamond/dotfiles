@@ -11,4 +11,6 @@ packages = [
    { from = "std", name = "cachyos-firefox-settings" },
 
    { from = "std", name = "cosmic-session" },
+
+   { from = "std", name = "octopi" },
 ]
