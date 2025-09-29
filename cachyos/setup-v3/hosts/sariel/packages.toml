@@ -14,7 +14,7 @@ packages = [
    { from = "std", name = "lib32-audit" },
    { from = "std", name = "lib32-libcap" },
    { from = "std", name = "lib32-libgcrypt" },
-   { from = "std", name = "lib32-gpg-error" },
+   { from = "std", name = "lib32-libgpg-error" },
    { from = "std", name = "lib32-libnsl" },
    { from = "std", name = "lib32-libtirpc" },
    { from = "std", name = "lib32-pam" },
