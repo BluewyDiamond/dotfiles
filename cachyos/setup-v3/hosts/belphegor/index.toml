@@ -1,4 +1,4 @@
-source = [
+include = [
    "./files.toml",
    "./packages.toml",
    "./services.toml",
