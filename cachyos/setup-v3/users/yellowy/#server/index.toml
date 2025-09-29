@@ -1,4 +1,11 @@
 include = [
-   "../../../users-modules/for-yellowy/+base-minimal/files.toml",
-   "../../../users-modules/for-any/+base-minimal/packages.toml",
+   "./files.toml",
+
+   "../../../users-modules/for-bluewy/console-dev/packages.toml",
+   "../../../users-modules/for-bluewy/console-tools/packages.toml",
+   "../../../users-modules/for-bluewy/console-rice/packages.toml",
+   "../../../users-modules/for-bluewy/console-hardware/packages.toml",
+   "../../../users-modules/for-bluewy/console-monitor/packages.toml",
+   "../../../users-modules/for-bluewy/console-network/packages.toml",
+   "../../../users-modules/for-bluewy/console-neovim/packages.toml",
 ]
