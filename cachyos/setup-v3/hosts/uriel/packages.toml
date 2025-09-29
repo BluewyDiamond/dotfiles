@@ -1,7 +1,7 @@
 packages = [
-   { from = "std", name = "intel-ucode" },
    { from = "std", name = "linux-firmware" },
    { from = "std", name = "sof-firmware" },
+   { from = "std", name = "intel-ucode" },
 
    { from = "std", name = "linux-cachyos-headers" },
    { from = "std", name = "linux-cachyos-nvidia-open" },
