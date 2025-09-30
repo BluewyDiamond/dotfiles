@@ -57,12 +57,12 @@ function WindowButton({ window }: { window: AstalNiri.Window }) {
       const fallbackIcon = icons.fallback.executable;
 
       if (!windowAppId)
-         return options.bar.taskbar.flat ?
+         return options.bar.niriTaskbar.flat ?
                `${fallbackIcon}-symbolic`
             :  fallbackIcon;
 
       const icon =
-         options.bar.taskbar.flat ? `${windowAppId}-symbolic` : windowAppId;
+         options.bar.niriTaskbar.flat ? `${windowAppId}-symbolic` : windowAppId;
 
       return checkIconExists(icon) ? icon : fallbackIcon;
    };

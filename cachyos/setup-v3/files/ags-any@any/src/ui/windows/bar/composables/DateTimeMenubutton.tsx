@@ -1,8 +1,21 @@
+import { createState } from "ags";
 import { Gtk } from "ags/gtk4";
-import { createPoll } from "ags/time";
+import { interval } from "ags/time";
+import GLib from "gi://GLib";
 
 export default function () {
-   const datetime = createPoll("", 1000, 'date +"%a %d %b - %H:%M"');
+   const [labelState, setLabelState] = createState("");
+
+   interval(1000, () => {
+      let now = GLib.DateTime.new_now_local();
+      let label = now.format("%a %d %b - %H:%M");
+
+      if (label === null) {
+         return;
+      }
+
+      setLabelState(label);
+   });
 
    return (
       <menubutton
@@ -11,7 +24,7 @@ export default function () {
          hexpand
          halign={Gtk.Align.CENTER}
       >
-         <label cssClasses={["label"]} label={datetime} />
+         <label cssClasses={["label"]} label={labelState} />
 
          <popover>
             <Gtk.Calendar />
