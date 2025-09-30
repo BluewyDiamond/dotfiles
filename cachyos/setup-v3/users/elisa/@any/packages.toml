@@ -11,6 +11,8 @@ packages = [
    { from = "std", name = "cosmic-session" },
 
    { from = "std", name = "octopi" },
+   { from = "std", name = "flatpak" },
+
    { from = "std", name = "profile-sync-daemon" },
    { from = "std", name = "cachyos-firefox-settings" },
    { from = "aur", name = "equibop-bin" },
