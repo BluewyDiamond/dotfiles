@@ -1,18 +1,18 @@
-[[files-install]]
+[[items-install]]
 operation = "copy"
 owner = "root"
 group = "root"
 source = "../../../files/rtcwake-for-mc-server-service/do-rtcwake-for-mc-server"
 target = "/usr/local/bin/do-rtcwake-for-mc-server"
 
-[[files-install]]
+[[items-install]]
 operation = "copy"
 owner = "root"
 group = "root"
 source = "../../../files/rtcwake-for-mc-server-service/rtcwake-for-mc-server.timer"
 target = "/etc/systemd/system/rtcwake-for-mc-server.timer"
 
-[[files-install]]
+[[items-install]]
 operation = "copy"
 owner = "root"
 group = "root"
