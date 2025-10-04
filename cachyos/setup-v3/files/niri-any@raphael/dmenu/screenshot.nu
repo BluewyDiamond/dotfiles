@@ -3,6 +3,8 @@
 const script_dir_path = path self | path dirname
 const script_name = path self | path basename
 
+def main [] { }
+
 def 'main screen' [] {
    try {
       niri msg action screenshot-screen

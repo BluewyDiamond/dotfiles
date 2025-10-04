@@ -3,6 +3,10 @@
 const script_dir_abs_path = path self | path dirname
 const script_name = path self | path basename
 
+let screenshot_script_file_abs_path = $script_dir_abs_path | path join 'screenshot.nu'
+let kill_window_script_file_abs_path = $script_dir_abs_path | path join 'kill-window.nu'
+let pick_color_script_file_abs_path = $script_dir_abs_path | path join 'pick-color.nu'
+
 def main [] {
    let options = [
       "󰹑 Screenshot Screen"
@@ -32,13 +36,13 @@ def main [] {
 
    try {
       match $selected_option {
-         1 => { ($script_dir_abs_path | path join 'screenshot.nu')}
-         2 => { ./screenshot.nu window }
-         3 => { ./screenshot.nu region }
-         4 => { ./pick-color.nu }
+         1 => { nu $screenshot_script_file_abs_path screen }
+         2 => { nu $screenshot_script_file_abs_path window }
+         3 => { nu $screenshot_script_file_abs_path region }
+         4 => { nu $pick_color_script_file_abs_path }
 
          5 => {
-            ./kill-window.nu
+            nu $kill_window_script_file_abs_path
          }
 
          _ => {
