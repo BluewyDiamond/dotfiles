@@ -10,7 +10,7 @@ let pick_color_script_file_abs_path = $script_dir_abs_path | path join 'pick-col
 def main [] {
    let options = [
       "󰹑 Screenshot Screen"
-      "󰹑 Screenshot Window"
+      " Screenshot Window"
       "󰆞 Screenshot Region"
       " Color Pick"
       " Kill Window"
