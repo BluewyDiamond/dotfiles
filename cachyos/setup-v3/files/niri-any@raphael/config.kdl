@@ -288,7 +288,7 @@ binds {
    Mod+X { spawn "fish" "-c" "cliphist list | fuzzel --dmenu | cliphist decode | wl-copy"; }
    Mod+Alt+L allow-when-locked=true { spawn "uwsm" "app" "--" "hyprlock"; }
 
-   Mod+B { spawn "fish" "-c" "$HOME/.local/share/scripts/quick_menu.fish"; }
+   Mod+B { spawn "fish" "-c" "$HOME/.config/niri/dmenu/do-dmenu.nu"; }
 
    XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"; }
    XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"; }
