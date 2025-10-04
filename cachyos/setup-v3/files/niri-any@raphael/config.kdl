@@ -45,8 +45,11 @@ overview {
 window-rule {
    geometry-corner-radius 0
    clip-to-geometry true
+
+   open-focused true
    open-fullscreen false
    open-maximized true
+   open-floating false
 }
 
 window-rule {
