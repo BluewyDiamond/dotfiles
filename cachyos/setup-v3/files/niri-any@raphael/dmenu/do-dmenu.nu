@@ -1,6 +1,6 @@
 #!/usr/bin/env nu
 
-const script_dir_path = path self | path dirname
+const script_dir_abs_path = path self | path dirname
 const script_name = path self | path basename
 
 def main [] {
@@ -32,7 +32,7 @@ def main [] {
 
    try {
       match $selected_option {
-         1 => { ./screenshot.nu screen }
+         1 => { ($script_dir_abs_path | path join 'screenshot.nu')}
          2 => { ./screenshot.nu window }
          3 => { ./screenshot.nu region }
          4 => { ./pick-color.nu }
@@ -51,7 +51,7 @@ def main [] {
 }
 
 def save-to-log [data: any] {
-   let $script_log_dir_path = $script_dir_path | path join 'logs'
+   let $script_log_dir_path = $script_dir_abs_path | path join 'logs'
 
    let $script_log_file_path = $script_log_dir_path
    | path join ($script_name | path parse | get stem | $in + .log)
