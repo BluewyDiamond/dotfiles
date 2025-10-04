@@ -1,6 +1,6 @@
 #!/usr/bin/env nu
 
-const script_dir_path = path self | path dirname
+const script_dir_abs_path = path self | path dirname
 const script_name = path self | path basename
 
 def main [] { }
@@ -30,11 +30,11 @@ def 'main region' [] {
 }
 
 def save-to-log [data: any] {
-   let $script_log_dir_path = $script_dir_path | path join 'logs'
+   let script_log_dir_abs_path = $script_dir_abs_path | path join 'logs'
 
-   let $script_log_file_path = $script_log_dir_path
+   let script_log_file_abs_path = $script_log_dir_abs_path
    | path join ($script_name | path parse | get stem | $in + .log)
 
-   mkdir $script_log_dir_path
-   $data | to text | $in + "\n------------SEPARATOR------------\n" | save -a $script_log_file_path
+   mkdir $script_log_dir_abs_path
+   $data | to text | $in + "\n------------SEPARATOR------------\n" | save -a $script_log_file_abs_path
 }
