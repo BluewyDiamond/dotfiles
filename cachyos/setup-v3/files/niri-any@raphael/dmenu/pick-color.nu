@@ -5,7 +5,14 @@ const script_name = path self | path basename
 
 def main [] {
    let color = try {
-      niri msg pick-color | lines | parse "{label}: {value}"
+      let output = niri msg pick-color | str trim
+
+      if ($output == "No color was picked.") {
+         save-to-log "no color was picked"
+         return
+      }
+
+      $output | lines | parse "{label}: {value}"
    } catch {|error|
       save-to-log $error
       return
