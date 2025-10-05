@@ -48,7 +48,6 @@ window-rule {
 
    open-focused true
    open-fullscreen false
-   open-maximized true
    open-floating false
 }
 
@@ -76,6 +75,11 @@ window-rule {
       active-color "#E06C75"
       inactive-color "#5a2d32"
    }
+}
+
+window-rule {
+   match at-startup=true
+   open-maximized true
 }
 
 window-rule {
